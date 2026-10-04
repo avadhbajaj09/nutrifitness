@@ -63,13 +63,20 @@ export default async function sitemap({ id }: { id: string }): Promise<Entry[]> 
         '/coaching-nutritionnel-personnalise/',
         '/guide-des-complements-alimentaires/',
         '/boutique-geneve/', 
+        '/faq/',
+        '/faq-geneve-complements-alimentaires-proteines-en-poudre/',
+        '/mentions-legales/',
+        '/cgv/',
+        '/protection-donnees/',
+        '/retours/',
+        '/cookies/',
         '/panier/', 
         '/commande/'
       ].map(p => ({ 
         url: `${SITE}${p}/`.replace(/\/\/$/, '/'), 
         lastModified: new Date().toISOString(),
-        changeFrequency: 'daily' as const,
-        priority: p === '' ? 1.0 : 0.8 
+        changeFrequency: 'weekly' as const,
+        priority: p === '' ? 1.0 : (p.startsWith('/cgv') || p.startsWith('/mentions') || p.startsWith('/protection') || p.startsWith('/retours') || p.startsWith('/cookies')) ? 0.5 : 0.8 
       }));
   }
 }

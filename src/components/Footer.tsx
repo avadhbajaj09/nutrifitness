@@ -46,9 +46,10 @@ export default function Footer() {
               <li><Link href="/coaching-nutritionnel-personnalise/" className="hover:text-[#F80404] font-bold text-white transition-colors">✦ Coaching Nutritionnel (Bilan Gratuit)</Link></li>
               <li><Link href="/guide-des-complements-alimentaires/" className="hover:text-[#95d600] font-bold text-white transition-colors">✦ Le Guide Ultime (Ebook PDF)</Link></li>
               <li><Link href="/blog/" className="hover:text-[#F80404] font-bold text-white transition-colors">✦ Blog & Guides Nutrition (20 Dossiers)</Link></li>
+              <li><Link href="/faq/" className="hover:text-white transition-colors font-bold text-white">✦ FAQ Nutrition & Protéines</Link></li>
               <li><Link href="/boutique-geneve/" className="hover:text-white transition-colors">Boutique Genève & Click & Collect 2h</Link></li>
+              <li><Link href="/compte/" className="hover:text-white transition-colors">Mon Compte Client</Link></li>
               <li><Link href="/commande/" className="hover:text-white transition-colors">Suivi de Commande Suisse</Link></li>
-              <li><Link href="/panier/" className="hover:text-white transition-colors">Moyens de Paiement (TWINT)</Link></li>
             </ul>
           </div>
 
