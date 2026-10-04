@@ -10,49 +10,49 @@ const categories = [
     title: 'Protéines & Whey',
     tag: 'Musculation',
     image: '/images/fitrush/imgi_48_banner-h9-1.webp',
-    link: '/boutique/?cat=proteines'
+    link: '/categorie/proteines/'
   },
   {
     title: 'Créatines Creapure®',
     tag: 'Force & Puissance',
     image: '/images/fitrush/imgi_49_banner-h9-2.webp',
-    link: '/boutique/?cat=creatine'
+    link: '/categorie/creatine/'
   },
   {
     title: 'Pré-Workout & Énergie',
     tag: 'Focus & Pump',
     image: '/images/fitrush/imgi_50_banner-h9-3.webp',
-    link: '/boutique/?cat=pre-workout'
+    link: '/categorie/pre-workout-energie/'
   },
   {
     title: 'Sèche & Minceur',
     tag: 'Définition',
     image: '/images/fitrush/imgi_47_banner-h9-4.webp',
-    link: '/boutique/?cat=perte-de-poids'
+    link: '/categorie/perte-de-poids/'
   },
   {
     title: 'Santé & Vitamines',
     tag: 'Vitalité & Sommeil',
     image: '/images/fitrush/imgi_46_banner-h9-5.webp',
-    link: '/boutique/?cat=vitamines'
+    link: '/categorie/vitamines-mineraux/'
   },
   {
     title: 'Snacks & Barres Keto',
     tag: 'Gourmandise Saine',
     image: '/images/fitrush/imgi_250_img-1x1-1.webp',
-    link: '/boutique/?cat=snacks'
+    link: '/categorie/snacks-healthy-food/'
   },
   {
     title: 'Gainers & Masse',
     tag: 'Volume Extrême',
     image: '/images/fitrush/imgi_252_img-slider-9-4.webp',
-    link: '/boutique/?cat=prise-de-masse'
+    link: '/categorie/gainers-prise-de-masse/'
   },
   {
     title: 'Acides Aminés & BCAA',
     tag: 'Anti-Catabolisme',
     image: '/images/fitrush/imgi_254_img-slider-9-3.webp',
-    link: '/boutique/?cat=bcaa'
+    link: '/categorie/acides-amines-recuperation/'
   }
 ];
 
@@ -81,10 +81,10 @@ export default function CategorySection() {
 
         <div className="flex items-center gap-2">
           <Link 
-            href="/boutique/" 
+            href="/categorie/" 
             className="text-xs font-bold text-white/70 hover:text-white uppercase tracking-wider mr-2 hidden sm:inline-block transition-colors"
           >
-            Tout Voir →
+            Toutes les Catégories →
           </Link>
           <button 
             type="button"

@@ -104,7 +104,7 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
           </div>
 
           <Link 
-            href="/boutique/?cat=proteines" 
+            href="/categorie/proteines/" 
             onClick={onClose} 
             className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 text-white/90 hover:text-[#F80404] transition-colors"
           >
@@ -113,7 +113,7 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
           </Link>
 
           <Link 
-            href="/boutique/?cat=creatine" 
+            href="/categorie/creatine/" 
             onClick={onClose} 
             className="flex items-center justify-between p-3 rounded-xl hover:bg-white/5 text-white/90 hover:text-[#F80404] transition-colors"
           >

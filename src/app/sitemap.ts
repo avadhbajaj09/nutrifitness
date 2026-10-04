@@ -1,5 +1,6 @@
 import { getAllBlogPosts } from '@/lib/blog';
-import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
+import { PRODUCTS } from '@/lib/catalog';
+import { CATEGORIES_DATA } from '@/lib/categories';
 
 interface Entry { 
   url: string; 
@@ -20,8 +21,8 @@ async function products(): Promise<Source> {
 }
 
 async function categories(): Promise<Source> {
-  return CATEGORIES.map(c => ({
-    slug: c.slug.fr,
+  return CATEGORIES_DATA.map(c => ({
+    slug: c.slug,
     updatedAt: new Date().toISOString(),
   }));
 }
@@ -57,6 +58,7 @@ export default async function sitemap({ id }: { id: string }): Promise<Entry[]> 
       return [
         '', 
         '/boutique/', 
+        '/categorie/',
         '/blog/',
         '/coaching-nutritionnel-personnalise/',
         '/guide-des-complements-alimentaires/',

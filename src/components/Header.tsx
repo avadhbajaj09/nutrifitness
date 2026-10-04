@@ -160,14 +160,14 @@ export default function Header() {
 
             {/* 3. Direct Category Links */}
             <Link 
-              href="/boutique/?cat=proteines" 
+              href="/categorie/proteines/" 
               className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 font-heading"
             >
               {t.nav.proteins}
             </Link>
 
             <Link 
-              href="/boutique/?cat=creatine" 
+              href="/categorie/creatine/" 
               className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 font-heading"
             >
               {t.nav.creatines}
