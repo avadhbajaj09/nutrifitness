@@ -3,43 +3,50 @@
 import React, { useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { ChevronLeft, ChevronRight, Target } from 'lucide-react';
 
 const goals = [
   {
-    title: 'Prise de Masse & Muscle',
+    title: 'Prise de Masse & Volume',
     tag: 'Volume & Force',
-    desc: 'Whey Isolate, Mass Gainers & Créatines.',
+    desc: 'Mass Gainers, Whey Isolate & Glucides.',
     link: '/boutique/?goal=masse',
-    image: '/images/fitrush/imgi_48_banner-h9-1.webp'
+    image: '/images/categories/categorie-gainers-prise-de-masse.png'
   },
   {
     title: 'Sèche & Définition',
-    tag: 'Minceur & Ripped',
-    desc: 'Whey 0 Sucre, Thermogéniques & Carnitine.',
+    tag: 'Minceur & Brûleur',
+    desc: 'Fat Burn Thermo, L-Carnitine & CLA.',
     link: '/boutique/?goal=seche',
-    image: '/images/fitrush/imgi_47_banner-h9-4.webp'
+    image: '/images/categories/categorie-perte-de-poids.png'
   },
   {
     title: 'Force Pure & Explosivité',
     tag: 'Creapure® 99.9%',
-    desc: 'Créatines pharmaceutiques & Boosters NO.',
+    desc: 'Créatines monohydrate pures & ATP.',
     link: '/boutique/?goal=force',
-    image: '/images/fitrush/imgi_49_banner-h9-2.webp'
+    image: '/images/categories/categorie-creatine.png'
   },
   {
     title: 'Énergie & Pré-Workout',
-    tag: 'Focus Sans Crash',
-    desc: 'Bêta-alanine, Caféine & Citrulline malate.',
+    tag: 'Focus & Congestion',
+    desc: 'L-Citrulline Malate, Caféine & Boosters.',
     link: '/boutique/?goal=energie',
-    image: '/images/fitrush/imgi_50_banner-h9-3.webp'
+    image: '/images/categories/categorie-pre-workout-energie.png'
   },
   {
-    title: 'Santé & Récupération',
-    tag: 'Vitalité Quotidienne',
-    desc: 'Oméga-3 marin, Bisglycinate & Collagène.',
+    title: 'Santé & Vitalité',
+    tag: 'Immunité & Sommeil',
+    desc: 'Ashwagandha KSM-66, Zinc & Minéraux.',
     link: '/boutique/?goal=sante',
-    image: '/images/fitrush/imgi_46_banner-h9-5.webp'
+    image: '/images/categories/categorie-bien-etre-sommeil-digestion.png'
+  },
+  {
+    title: 'Snacks & Collation Saine',
+    tag: 'Keto & Sans Sucre',
+    desc: 'Barres sandwich protéinées & Purées bio.',
+    link: '/boutique/?goal=snacks',
+    image: '/images/categories/categorie-snacks-healthy-food.png'
   }
 ];
 
@@ -48,7 +55,7 @@ export default function ShopByGoal() {
 
   const scroll = (direction: 'left' | 'right') => {
     if (scrollRef.current) {
-      const scrollAmount = direction === 'left' ? -280 : 280;
+      const scrollAmount = direction === 'left' ? -260 : 260;
       scrollRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
@@ -58,8 +65,9 @@ export default function ShopByGoal() {
       {/* Header with Title & Navigation Controls */}
       <div className="flex items-end justify-between mb-5 pb-3 border-b border-white/10">
         <div>
-          <p className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-1 font-heading">
-            Vos Objectifs Physiques
+          <p className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-1 font-heading flex items-center gap-1.5">
+            <Target className="w-3.5 h-3.5" />
+            <span>Vos Objectifs Physiques</span>
           </p>
           <h2 className="text-xl sm:text-2xl font-black text-white uppercase font-heading">
             Acheter par Objectif Sportif
@@ -92,7 +100,7 @@ export default function ShopByGoal() {
         </div>
       </div>
 
-      {/* Horizontal Goal Carousel (Compact Cards) */}
+      {/* Horizontal Goal Carousel (Compact Cards with Authentic Product Packshots) */}
       <div 
         ref={scrollRef}
         className="flex gap-3.5 overflow-x-auto no-scrollbar scroll-smooth pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0"
@@ -101,28 +109,30 @@ export default function ShopByGoal() {
           <Link 
             key={idx}
             href={goal.link}
-            className="group relative rounded-2xl overflow-hidden w-[170px] sm:w-[210px] md:w-[230px] h-[210px] sm:h-[240px] shrink-0 border border-white/10 hover:border-[#F80404]/60 shadow-md transition-all duration-300 hover:-translate-y-1 flex flex-col justify-end p-4 bg-[#141414]"
+            className="group relative rounded-2xl overflow-hidden w-[160px] sm:w-[190px] md:w-[210px] h-[220px] sm:h-[245px] shrink-0 border border-white/10 hover:border-[#F80404]/60 shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between p-3.5 bg-[#141414]"
           >
-            <Image 
-              src={goal.image} 
-              alt={goal.title}
-              fill
-              sizes="(max-width: 640px) 170px, 230px"
-              className="object-cover transition-transform duration-500 group-hover:scale-108 filter brightness-[0.65] group-hover:brightness-80"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/40 to-transparent" />
+            {/* Real Product Packshot Showcase */}
+            <div className="relative w-full h-[120px] sm:h-[140px] flex items-center justify-center">
+              <Image 
+                src={goal.image} 
+                alt={`${goal.title} - Objectif Sportif NutriFitness`}
+                fill
+                sizes="(max-width: 640px) 160px, 210px"
+                className="object-contain p-1 filter drop-shadow-2xl transition-transform duration-500 group-hover:scale-110"
+              />
+            </div>
 
-            <div className="relative z-10 space-y-1">
-              <span className="inline-block px-2 py-0.5 bg-black/70 backdrop-blur-md border border-white/15 text-[9px] font-black uppercase text-[#F80404] tracking-wider rounded">
+            <div className="z-10 pt-2 border-t border-white/5 space-y-1">
+              <span className="inline-block px-1.5 py-0.5 bg-black/60 border border-white/10 text-[9px] font-black uppercase text-[#F80404] tracking-wider rounded truncate max-w-full">
                 {goal.tag}
               </span>
               <h3 className="text-xs sm:text-sm font-black text-white uppercase font-heading group-hover:text-[#F80404] transition-colors leading-tight line-clamp-1">
                 {goal.title}
               </h3>
-              <p className="text-[10px] text-white/60 line-clamp-2 leading-relaxed">
+              <p className="text-[10px] text-white/50 line-clamp-1 leading-relaxed">
                 {goal.desc}
               </p>
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-white/80 group-hover:text-[#F80404] pt-0.5 transition-colors">
+              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-white/70 group-hover:text-[#F80404] transition-colors pt-0.5">
                 Découvrir →
               </span>
             </div>
