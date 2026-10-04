@@ -132,76 +132,58 @@ export default function DynamicPricingBox({
   const benefits = getProductBenefits();
 
   return (
-    <div className="bg-[#111111] rounded-2xl border border-white/10 p-5 sm:p-6 text-white space-y-5 shadow-2xl">
+    <div className="bg-[#111111] rounded-2xl border border-white/10 p-4 sm:p-6 text-white space-y-4 shadow-2xl">
       
-      {/* Product Title (Lime Green) & SKU */}
-      <div>
-        <h2 className="text-xl sm:text-2xl font-black text-[#95d600] uppercase font-heading tracking-wide leading-tight">
-          {name}
-        </h2>
-        <p className="text-[11px] text-white/40 font-mono mt-0.5">
-          Item #: {itemSku}
-        </p>
-      </div>
-
-      <div className="h-px bg-white/10 w-full" />
-
-      {/* Dynamic Unit Price Display */}
-      <div className="flex items-baseline gap-3">
-        <span className="text-3xl sm:text-4xl font-black text-white font-heading tracking-tight">
-          {formatPrice(activeUnitPrice)}
-        </span>
-        {selectedTier > 1 && (
-          <span className="text-base text-white/40 line-through font-mono">
-            {formatPrice(basePrice)}
+      {/* Dynamic Unit Price Display & Stock */}
+      <div className="flex flex-wrap items-baseline justify-between gap-3 pb-3 border-b border-white/10">
+        <div className="flex items-baseline gap-3">
+          <span className="text-3xl sm:text-4xl font-black text-white font-heading tracking-tight">
+            {formatPrice(activeUnitPrice)}
           </span>
-        )}
-        {selectedTier > 1 && (
-          <span className="px-2.5 py-0.5 rounded-full bg-[#95d600]/20 text-[#95d600] text-xs font-black uppercase tracking-wider">
-            -{selectedTier === 2 ? '5%' : '10%'} Remise appliquée
-          </span>
-        )}
+          {selectedTier > 1 && (
+            <span className="text-base text-white/40 line-through font-mono">
+              {formatPrice(basePrice)}
+            </span>
+          )}
+          {selectedTier > 1 && (
+            <span className="px-2.5 py-0.5 rounded-full bg-[#95d600]/20 text-[#95d600] text-xs font-black uppercase tracking-wider">
+              -{selectedTier === 2 ? '5%' : '10%'} Remise
+            </span>
+          )}
+        </div>
+        <div className="flex items-center gap-1.5 text-xs font-bold text-[#95d600]">
+          <span className="w-2 h-2 rounded-full bg-[#95d600] animate-pulse" />
+          <span>En stock (Expédition 24h)</span>
+        </div>
       </div>
 
-      {/* Feature Bullet Points with checkmarks */}
-      <ul className="space-y-2 text-xs text-white/80">
-        {benefits.map((benefit, idx) => (
-          <li key={idx} className="flex items-start gap-2.5">
-            <Check className="w-4 h-4 text-white/50 shrink-0 mt-0.5 stroke-[2.5]" />
-            <span className="leading-snug">{benefit}</span>
-          </li>
-        ))}
-      </ul>
+      {/* Section: Obtenez plus, payez moins (Tiered Volume Discounts) */}
+      <div className="space-y-2">
+        <div className="flex items-center justify-between">
+          <h3 className="text-xs font-black uppercase text-white/90 font-heading tracking-wider flex items-center gap-1.5">
+            <Sparkles className="w-3.5 h-3.5 text-[#95d600]" />
+            <span>Obtenez plus, payez moins</span>
+          </h3>
+          <span className="text-[10px] text-white/40 font-mono">SKU: {itemSku}</span>
+        </div>
 
-      {/* Stock Status */}
-      <div className="flex items-center gap-2 text-xs font-bold text-[#95d600]">
-        <span className="w-2 h-2 rounded-full bg-[#95d600] animate-pulse" />
-        <span>En stock à Genève (Expédition 24h)</span>
-      </div>
-
-      {/* Section Header: Obtenez plus, payez moins */}
-      <div className="pt-2">
-        <h3 className="text-lg sm:text-xl font-black text-white uppercase font-heading tracking-wider mb-3">
-          Obtenez plus, payez moins
-        </h3>
-
-        {/* 3 Dynamic Pricing Tier Buttons */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+        {/* 3 Dynamic Pricing Tier Buttons in 3 columns for mobile & desktop */}
+        <div className="grid grid-cols-3 gap-2">
           
           {/* Tier 1: 1 piece */}
           <button
             type="button"
             onClick={() => handleSelectTier(1)}
-            className={`p-3.5 rounded-xl border text-left transition-all ${
+            className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all ${
               selectedTier === 1
-                ? 'border-white bg-white/10 ring-1 ring-white/50 shadow-lg'
+                ? 'border-white bg-white/10 ring-1 ring-white/50 shadow-md'
                 : 'border-white/15 bg-black/40 hover:border-white/40 hover:bg-white/5'
             }`}
           >
-            <div className="text-sm sm:text-base font-black text-white font-heading">
+            <div className="text-xs sm:text-sm font-black text-white font-heading">
               {formatPrice(tier1UnitPrice)}
             </div>
-            <div className="text-xs text-white/60 font-medium mt-0.5">
+            <div className="text-[11px] text-white/60 font-medium mt-0.5">
               1 pièce
             </div>
           </button>
@@ -210,22 +192,17 @@ export default function DynamicPricingBox({
           <button
             type="button"
             onClick={() => handleSelectTier(2)}
-            className={`p-3.5 rounded-xl border text-left transition-all relative overflow-hidden ${
+            className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all relative overflow-hidden ${
               selectedTier === 2
-                ? 'border-[#95d600] bg-[#95d600]/10 ring-1 ring-[#95d600] shadow-lg'
+                ? 'border-[#95d600] bg-[#95d600]/15 ring-1 ring-[#95d600] shadow-md'
                 : 'border-white/15 bg-black/40 hover:border-[#95d600]/60 hover:bg-white/5'
             }`}
           >
-            <div className="flex items-center justify-between">
-              <span className="text-sm sm:text-base font-black text-white font-heading">
-                {formatPrice(tier2UnitPrice)}
-              </span>
-              <span className="text-[10px] font-black text-[#95d600] bg-[#95d600]/20 px-1.5 py-0.5 rounded">
-                -5% remise
-              </span>
+            <div className="text-xs sm:text-sm font-black text-white font-heading">
+              {formatPrice(tier2UnitPrice)}
             </div>
-            <div className="text-xs text-white/60 font-medium mt-0.5">
-              2 pièces
+            <div className="text-[10px] font-black text-[#95d600] mt-0.5">
+              2 pcs (-5%)
             </div>
           </button>
 
@@ -233,24 +210,17 @@ export default function DynamicPricingBox({
           <button
             type="button"
             onClick={() => handleSelectTier(3)}
-            className={`sm:col-span-2 p-3.5 rounded-xl border text-left transition-all relative overflow-hidden ${
+            className={`p-2.5 sm:p-3 rounded-xl border text-center transition-all relative overflow-hidden ${
               selectedTier === 3
-                ? 'border-[#95d600] bg-[#95d600]/15 ring-2 ring-[#95d600] shadow-lg'
+                ? 'border-[#95d600] bg-[#95d600]/20 ring-2 ring-[#95d600] shadow-md'
                 : 'border-white/15 bg-black/40 hover:border-[#95d600]/60 hover:bg-white/5'
             }`}
           >
-            <div className="flex items-center justify-between">
-              <span className="text-sm sm:text-base font-black text-white font-heading flex items-center gap-2">
-                <span>{formatPrice(tier3UnitPrice)}</span>
-                <span className="text-xs text-white/40 line-through">{formatPrice(basePrice)}</span>
-              </span>
-              <span className="text-[10px] font-black text-black bg-[#95d600] px-2 py-0.5 rounded-full uppercase tracking-wider">
-                Meilleure Offre (-10%)
-              </span>
+            <div className="text-xs sm:text-sm font-black text-[#95d600] font-heading">
+              {formatPrice(tier3UnitPrice)}
             </div>
-            <div className="text-xs text-white/70 font-medium mt-0.5 flex items-center justify-between">
-              <span>3+ pièces (Remise maximale quantitative)</span>
-              <span className="text-[#95d600] font-bold">Économie max</span>
+            <div className="text-[10px] font-black text-white bg-[#95d600]/30 px-1 py-0.5 rounded mt-0.5">
+              3+ pcs (-10%)
             </div>
           </button>
         </div>
@@ -346,6 +316,18 @@ export default function DynamicPricingBox({
               💡 Sélectionnez 2 pièces pour économiser 5% ou 3+ pièces pour 10% de remise immédiate.
             </p>
           )}
+
+          {/* Feature Bullet Points with checkmarks */}
+          <div className="pt-2 border-t border-white/10">
+            <ul className="space-y-1.5 text-xs text-white/80">
+              {benefits.slice(0, 3).map((benefit, idx) => (
+                <li key={idx} className="flex items-start gap-2">
+                  <Check className="w-3.5 h-3.5 text-[#95d600] shrink-0 mt-0.5 stroke-[2.5]" />
+                  <span className="leading-snug">{benefit}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
     </div>

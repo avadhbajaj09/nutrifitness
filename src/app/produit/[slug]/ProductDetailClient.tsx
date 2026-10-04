@@ -33,52 +33,58 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   return (
     <div>
       {/* Breadcrumbs */}
-      <nav aria-label="Fil d'Ariane" className="py-3 text-xs text-white/50 mb-4 flex items-center gap-2">
-        <Link href="/" className="hover:text-white transition-colors">Accueil</Link>
-        <span>/</span>
-        <Link href="/boutique/" className="hover:text-white transition-colors">Boutique</Link>
-        <span>/</span>
-        <span className="text-white font-medium truncate">{name}</span>
+      <nav aria-label="Fil d'Ariane" className="py-2.5 text-[11px] sm:text-xs text-white/50 mb-3 flex items-center gap-1.5 overflow-hidden">
+        <Link href="/" className="hover:text-white transition-colors shrink-0">Accueil</Link>
+        <span className="text-white/30 shrink-0">/</span>
+        <Link href="/boutique/" className="hover:text-white transition-colors shrink-0">Boutique</Link>
+        <span className="text-white/30 shrink-0">/</span>
+        <span className="text-white/90 font-medium truncate">{name}</span>
       </nav>
 
+      {/* Mobile Product Header (Shown on mobile/tablet < lg before image) */}
+      <div className="lg:hidden mb-4 space-y-1.5">
+        <p className="text-xs font-black uppercase tracking-widest text-[#F80404] font-heading">
+          {product.brand}
+        </p>
+        <h1 className="text-2xl font-black text-white tracking-tight font-heading leading-tight">
+          {name}
+        </h1>
+        <div className="flex items-center gap-2 text-xs pt-0.5">
+          <div className="flex text-amber-400">★★★★★</div>
+          <span className="font-bold text-white">4.9 / 5</span>
+          <span className="text-white/40">· 58 avis vérifiés en Suisse</span>
+        </div>
+      </div>
+
       {/* Main Product Detail Grid (Desktop 2-Col) */}
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 py-6 items-start">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 py-2 sm:py-6 items-start">
         
-        {/* Gallery Column (7 cols) */}
-        <div className="lg:col-span-7 bg-[#141414] rounded-3xl border border-white/10 p-6 sm:p-10 flex flex-col items-center justify-center relative shadow-xl">
-          <div className="relative aspect-square w-full max-w-[480px] flex items-center justify-center">
-            {/* Badges */}
-            <div className="absolute top-0 left-0 z-10 flex flex-col gap-2">
-              <span className="inline-flex items-center gap-1.5 bg-[#F80404] text-white text-[11px] font-black uppercase tracking-wider px-3 py-1 rounded-full shadow-sm">
-                Stock Suisse 24h
-              </span>
-              {discountPercent > 0 && (
-                <span className="inline-flex items-center bg-black/80 backdrop-blur-md border border-[#F80404]/50 text-[#F80404] text-[10px] font-black px-2.5 py-1 rounded-full">
+        {/* Gallery Column (7 cols on lg, 2nd on mobile) */}
+        <div className="lg:col-span-7 bg-[#141414] rounded-2xl sm:rounded-3xl border border-white/10 p-4 sm:p-10 flex flex-col items-center justify-center relative shadow-xl">
+          <div className="relative aspect-square w-full max-w-[340px] sm:max-w-[480px] flex items-center justify-center">
+            {/* Badges (Stock Suisse removed, only discount shown) */}
+            {discountPercent > 0 && (
+              <div className="absolute top-0 left-0 z-10">
+                <span className="inline-flex items-center bg-[#F80404] text-black text-xs font-black px-2.5 py-1 rounded-full shadow-md">
                   -{discountPercent}% Remise
                 </span>
-              )}
-              {product.isSwissOrigin && (
-                <span className="inline-flex items-center gap-1.5 bg-black/80 backdrop-blur-md border border-white/20 text-white text-[11px] font-bold px-3 py-1 rounded-full">
-                  <span className="w-2.5 h-2.5 rounded-sm bg-[#D52B1E] inline-block" />
-                  Fabriqué en Suisse
-                </span>
-              )}
-            </div>
+              </div>
+            )}
 
             <Image 
               src={primaryImg} 
               alt={name}
               fill
               priority
-              className="object-contain object-center filter drop-shadow-2xl transition-transform duration-500 hover:scale-105 p-4"
+              className="object-contain object-center filter drop-shadow-2xl transition-transform duration-500 hover:scale-105 p-2 sm:p-4"
             />
           </div>
 
-          {/* Trust Pillars */}
-          <div className="grid grid-cols-3 gap-3 w-full mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/60">
+          {/* Trust Pillars - Hidden on mobile, shown on desktop below image */}
+          <div className="hidden lg:grid grid-cols-3 gap-3 w-full mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/60">
             <div className="p-2">
-              <p className="font-bold text-white text-sm mb-0.5">🇨🇭 Stock Suisse</p>
-              <p className="text-[11px]">Expédition sous 24h</p>
+              <p className="font-bold text-white text-sm mb-0.5">Expédition 24h</p>
+              <p className="text-[11px]">La Poste Suisse Priority</p>
             </div>
             <div className="p-2 border-x border-white/10">
               <p className="font-bold text-white text-sm mb-0.5">🧪 Pureté Testée</p>
@@ -86,14 +92,15 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             </div>
             <div className="p-2">
               <p className="font-bold text-white text-sm mb-0.5">📍 Boutique Genève</p>
-              <p className="text-[11px]">Retrait immédiat</p>
+              <p className="text-[11px]">Retrait immédiat en 2h</p>
             </div>
           </div>
         </div>
 
-        {/* Product Purchase Details (5 cols) */}
-        <div className="lg:col-span-5 flex flex-col space-y-6">
-          <div>
+        {/* Product Purchase Details (5 cols on lg, 3rd on mobile) */}
+        <div className="lg:col-span-5 flex flex-col space-y-5">
+          {/* Desktop Title Header (Hidden on mobile < lg) */}
+          <div className="hidden lg:block">
             <p className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-2 font-heading">
               {product.brand}
             </p>
@@ -107,54 +114,72 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               <span className="font-bold text-white">4.9 / 5</span>
               <span className="text-white/40">· 58 avis vérifiés en Suisse</span>
             </div>
-
-            {/* Short Description */}
-            <p className="text-xs sm:text-sm text-white/70 leading-relaxed mb-4">
-              {getLocalized(product.shortDescription, locale)}
-            </p>
-
-            {/* Flavor Selector */}
-            {product.variants.length > 0 && (
-              <div className="mb-4">
-                <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2 font-heading">
-                  Option / Parfum :
-                </label>
-                <div className="flex flex-wrap gap-2">
-                  {product.variants.map((v, i) => {
-                    const flv = v.flavorName.fr;
-                    const isSelected = selectedFlavor === flv;
-                    return (
-                      <button 
-                        key={i}
-                        type="button" 
-                        onClick={() => setSelectedFlavor(flv)}
-                        className={`min-h-[44px] px-4 py-2 text-xs font-bold rounded-xl border transition-all ${
-                          isSelected 
-                            ? 'border-[#95d600] bg-[#95d600]/20 text-white ring-1 ring-[#95d600]' 
-                            : 'border-white/15 bg-white/5 text-white/80 hover:border-white'
-                        }`}
-                      >
-                        {flv}
-                      </button>
-                    );
-                  })}
-                </div>
-              </div>
-            )}
           </div>
 
-          {/* DYNAMIC TIERED PRICING (Get more, pay less) */}
+          {/* Short Description - Right below image on mobile */}
+          <div className="bg-white/[0.03] lg:bg-transparent p-3.5 lg:p-0 rounded-2xl border border-white/10 lg:border-0">
+            <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
+              {getLocalized(product.shortDescription, locale)}
+            </p>
+          </div>
+
+          {/* Flavor / Option Selector */}
+          {product.variants.length > 0 && (
+            <div>
+              <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2 font-heading">
+                Option / Parfum :
+              </label>
+              <div className="flex flex-wrap gap-2">
+                {product.variants.map((v, i) => {
+                  const flv = v.flavorName.fr;
+                  const isSelected = selectedFlavor === flv;
+                  return (
+                    <button 
+                      key={i}
+                      type="button" 
+                      onClick={() => setSelectedFlavor(flv)}
+                      className={`min-h-[42px] px-4 py-2 text-xs font-bold rounded-xl border transition-all ${
+                        isSelected 
+                          ? 'border-[#95d600] bg-[#95d600]/20 text-white ring-1 ring-[#95d600]' 
+                          : 'border-white/15 bg-white/5 text-white/80 hover:border-white'
+                      }`}
+                    >
+                      {flv}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* DYNAMIC TIERED PRICING (Get more, pay less) + Add to Cart */}
           <DynamicPricingBox product={product} selectedFlavor={selectedFlavor} />
 
           {/* TWINT Direct Button */}
           <Link 
             href="/commande/"
             onClick={() => addToCart(product, { quantity: 1, flavor: selectedFlavor })}
-            className="w-full min-h-[50px] px-6 py-4 bg-white/10 hover:bg-white/15 text-white font-black uppercase tracking-wider text-xs rounded-xl border border-white/20 transition-all flex items-center justify-center gap-2 shadow-sm block text-center"
+            className="w-full min-h-[50px] px-6 py-4 bg-white/10 hover:bg-white/15 text-white font-black uppercase tracking-wider text-xs rounded-xl border border-white/20 transition-all flex items-center justify-center gap-2 shadow-sm block text-center active:scale-98"
           >
             <span>🇨🇭</span>
             {t.common.checkoutTwint}
           </Link>
+
+          {/* Mobile Trust Pillars (Below add-to-cart on mobile) */}
+          <div className="lg:hidden grid grid-cols-3 gap-2 w-full pt-4 border-t border-white/10 text-center text-xs text-white/60">
+            <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
+              <p className="font-bold text-white text-xs mb-0.5">⚡ 24h</p>
+              <p className="text-[10px]">Expédition express</p>
+            </div>
+            <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
+              <p className="font-bold text-white text-xs mb-0.5">🧪 Pureté</p>
+              <p className="text-[10px]">Testée certifiée</p>
+            </div>
+            <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
+              <p className="font-bold text-white text-xs mb-0.5">📍 Genève</p>
+              <p className="text-[10px]">Click & Collect 2h</p>
+            </div>
+          </div>
 
           {/* AEO Expert Direct Answer */}
           <div className="bg-white/5 border border-white/10 rounded-2xl p-4">

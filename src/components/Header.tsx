@@ -158,21 +158,6 @@ export default function Header() {
               )}
             </div>
 
-            {/* 3. Direct Category Links */}
-            <Link 
-              href="/categorie/proteines/" 
-              className="h-9 inline-flex items-center font-heading font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors leading-none"
-            >
-              <span>{t.nav.proteins}</span>
-            </Link>
-
-            <Link 
-              href="/categorie/creatine/" 
-              className="h-9 inline-flex items-center font-heading font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors leading-none"
-            >
-              <span>{t.nav.creatines}</span>
-            </Link>
-
             {/* Coaching Personnalisé */}
             <Link 
               href="/coaching-nutritionnel-personnalise/" 
@@ -198,48 +183,64 @@ export default function Header() {
             </Link>
           </nav>
 
-          {/* Right: Language/Currency, Search, Account, Cart */}
+          {/* Right: Language, Search, Account, Cart */}
           <div className="flex items-center gap-2 sm:gap-3">
             
-            {/* Language & Currency Switcher on top header */}
+            {/* Language Switcher on header */}
             <div className="hidden sm:block">
               <LanguageCurrencySwitcher variant="header" />
             </div>
 
-            {/* Search Trigger Button */}
+            {/* Spacious Search Trigger on Desktop / Icon on Mobile */}
             <button 
               type="button"
               onClick={openSearch}
-              className="inline-flex items-center gap-2 min-h-[40px] px-3 sm:px-3.5 py-1.5 bg-white/5 hover:bg-white/10 text-white rounded-full border border-white/10 text-xs transition-colors"
+              className="hidden md:flex items-center justify-between h-10 w-44 lg:w-60 xl:w-72 px-3.5 bg-white/5 hover:bg-white/10 hover:border-white/25 text-white rounded-full border border-white/15 text-xs transition-all group"
               aria-label="Rechercher des produits"
             >
-              <Search className="w-4 h-4 text-white/70" />
-              <span className="hidden md:inline text-white/50 text-[11px]">{t.nav.search.replace('...', '')}</span>
-              <kbd className="hidden md:inline text-[9px] bg-white/10 px-1.5 py-0.5 rounded text-white/40">ESC</kbd>
+              <span className="flex items-center gap-2 text-white/60 group-hover:text-white/80 transition-colors truncate">
+                <Search className="w-4 h-4 text-white/50 group-hover:text-[#F80404] transition-colors shrink-0" />
+                <span className="text-[12px] truncate">{t.nav.search.replace('...', '')}</span>
+              </span>
+              <kbd className="hidden lg:inline-flex items-center text-[9px] bg-white/10 group-hover:bg-white/15 px-1.5 py-0.5 rounded text-white/50 font-mono tracking-wider shrink-0 ml-1">
+                ESC
+              </kbd>
+            </button>
+
+            {/* Mobile Search Button */}
+            <button 
+              type="button"
+              onClick={openSearch}
+              className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors"
+              aria-label="Rechercher"
+            >
+              <Search className="w-4 h-4 text-white/80" />
             </button>
 
             {/* Account Icon */}
             <Link 
               href="/compte/"
-              className="inline-flex items-center justify-center min-h-[40px] min-w-[40px] p-2 bg-white/5 hover:bg-white/10 text-white rounded-full border border-white/10 transition-colors"
+              className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-white/10 text-white rounded-full border border-white/10 transition-colors"
               aria-label="Espace compte client"
               title={t.nav.account}
             >
               <User className="w-4 h-4 text-white/80 hover:text-[#F80404]" />
             </Link>
 
-            {/* Cart Trigger Button */}
+            {/* Cart Trigger Button - Clean Icon only with Badge */}
             <button 
-              type="button"
+              type="button" 
               onClick={openCart}
-              className="inline-flex items-center justify-center min-h-[40px] px-3.5 sm:px-4 py-2 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black rounded-full transition-all gap-2 shadow-md active:scale-95 group"
-              aria-label="Ouvrir le panier"
+              className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[#F80404] hover:bg-[#FF3D00] text-black transition-all shadow-md active:scale-95 group shrink-0"
+              aria-label={`Panier (${cartCount})`}
+              title={t.nav.cart}
             >
-              <ShoppingBag className="w-4 h-4 transition-transform group-hover:scale-110" />
-              <span className="text-xs font-black tracking-wider uppercase hidden sm:inline">{t.nav.cart}</span>
-              <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] font-black flex items-center justify-center">
-                {cartCount}
-              </span>
+              <ShoppingBag className="w-5 h-5 transition-transform group-hover:scale-110" />
+              {cartCount > 0 && (
+                <span className="absolute -top-1 -right-1 min-w-[19px] h-[19px] px-1 rounded-full bg-black text-[#F80404] text-[10px] font-black flex items-center justify-center border border-white/20 shadow">
+                  {cartCount}
+                </span>
+              )}
             </button>
           </div>
         </div>
