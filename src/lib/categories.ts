@@ -30,11 +30,13 @@ export interface CategoryData {
   internalLinks: InternalLinkItem[];
   featuredProductNames: string[];
   externalSources: { title: string; url: string }[];
+  image: string;
 }
 
 export const CATEGORIES_DATA: CategoryData[] = [
   {
     id: 'proteines',
+    image: '/images/categories/categorie-proteines.png',
     slug: 'proteines',
     name: 'Protéines & Whey',
     h1: 'Protéines : whey, isolate et protéines végétales',
@@ -119,6 +121,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'gainers-prise-de-masse',
+    image: '/images/categories/categorie-gainers-prise-de-masse.png',
     slug: 'gainers-prise-de-masse',
     name: 'Gainers & Masse',
     h1: 'Gainers et prise de masse musculaire',
@@ -183,6 +186,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'creatine',
+    image: '/images/categories/categorie-creatine.png',
     slug: 'creatine',
     name: 'Créatine Monohydrate',
     h1: 'Créatine : monohydrate pure et label Creapure®',
@@ -249,6 +253,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'acides-amines-recuperation',
+    image: '/images/categories/categorie-acides-amines-recuperation.png',
     slug: 'acides-amines-recuperation',
     name: 'Acides Aminés & BCAA',
     h1: 'Acides aminés et récupération : BCAA, EAA, glutamine',
@@ -301,6 +306,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'pre-workout-energie',
+    image: '/images/categories/categorie-pre-workout-energie.png',
     slug: 'pre-workout-energie',
     name: 'Pré-Workout & Énergie',
     h1: 'Pré-workout et boosters d\'énergie : avec ou sans stimulants',
@@ -353,6 +359,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'pendant-effort-hydratation',
+    image: '/images/categories/categorie-pendant-effort-hydratation.png',
     slug: 'pendant-effort-hydratation',
     name: 'Pendant l\'Effort & Hydratation',
     h1: 'Hydratation, électrolytes et glucides pendant l\'effort',
@@ -399,6 +406,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'vitamines-mineraux',
+    image: '/images/categories/categorie-vitamines-mineraux.png',
     slug: 'vitamines-mineraux',
     name: 'Vitamines & Minéraux',
     h1: 'Vitamines et minéraux : magnésium, zinc, vitamines C & D3',
@@ -451,6 +459,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'bien-etre-sommeil-digestion',
+    image: '/images/categories/categorie-bien-etre-sommeil-digestion.png',
     slug: 'bien-etre-sommeil-digestion',
     name: 'Bien-Être & Sommeil',
     h1: 'Bien-être, sommeil réparateur et confort digestif',
@@ -497,6 +506,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'perte-de-poids',
+    image: '/images/categories/categorie-perte-de-poids.png',
     slug: 'perte-de-poids',
     name: 'Perte de Poids & Définition',
     h1: 'Perte de poids : compléments et principes pour la sèche',
@@ -546,6 +556,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'snacks-healthy-food',
+    image: '/images/categories/categorie-snacks-healthy-food.png',
     slug: 'snacks-healthy-food',
     name: 'Snacks & Diététique',
     h1: 'Snacks et nutrition saine : barres, farines et petits-déjeuners',
@@ -595,6 +606,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'accessoires',
+    image: '/images/categories/categorie-accessoires.webp',
     slug: 'accessoires',
     name: 'Accessoires & Shakers',
     h1: 'Accessoires de sport : shakers antifuites et gourdes grand format',
@@ -639,6 +651,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
   },
   {
     id: 'guides-ebooks',
+    image: '/images/categories/categorie-guides-ebooks.webp',
     slug: 'guides-ebooks',
     name: 'Guides & Ebooks',
     h1: 'Guides d\'experts et ebooks de nutrition sportive',

@@ -8,51 +8,75 @@ import { ChevronLeft, ChevronRight } from 'lucide-react';
 const categories = [
   {
     title: 'Protéines & Whey',
-    tag: 'Musculation',
-    image: '/images/fitrush/imgi_48_banner-h9-1.webp',
+    tag: 'Isolate & Whey CFM',
+    image: '/images/categories/categorie-proteines.png',
     link: '/categorie/proteines/'
   },
   {
-    title: 'Créatines Creapure®',
-    tag: 'Force & Puissance',
-    image: '/images/fitrush/imgi_49_banner-h9-2.webp',
+    title: 'Créatine Monohydrate',
+    tag: 'Creapure® & Force',
+    image: '/images/categories/categorie-creatine.png',
     link: '/categorie/creatine/'
   },
   {
-    title: 'Pré-Workout & Énergie',
-    tag: 'Focus & Pump',
-    image: '/images/fitrush/imgi_50_banner-h9-3.webp',
-    link: '/categorie/pre-workout-energie/'
-  },
-  {
-    title: 'Sèche & Minceur',
-    tag: 'Définition',
-    image: '/images/fitrush/imgi_47_banner-h9-4.webp',
-    link: '/categorie/perte-de-poids/'
-  },
-  {
-    title: 'Santé & Vitamines',
-    tag: 'Vitalité & Sommeil',
-    image: '/images/fitrush/imgi_46_banner-h9-5.webp',
-    link: '/categorie/vitamines-mineraux/'
-  },
-  {
-    title: 'Snacks & Barres Keto',
-    tag: 'Gourmandise Saine',
-    image: '/images/fitrush/imgi_250_img-1x1-1.webp',
-    link: '/categorie/snacks-healthy-food/'
-  },
-  {
     title: 'Gainers & Masse',
-    tag: 'Volume Extrême',
-    image: '/images/fitrush/imgi_252_img-slider-9-4.webp',
+    tag: 'Prise de Volume',
+    image: '/images/categories/categorie-gainers-prise-de-masse.png',
     link: '/categorie/gainers-prise-de-masse/'
   },
   {
     title: 'Acides Aminés & BCAA',
-    tag: 'Anti-Catabolisme',
-    image: '/images/fitrush/imgi_254_img-slider-9-3.webp',
+    tag: 'EAA & Glutamine',
+    image: '/images/categories/categorie-acides-amines-recuperation.png',
     link: '/categorie/acides-amines-recuperation/'
+  },
+  {
+    title: 'Pré-Workout & Énergie',
+    tag: 'Focus & Congestion',
+    image: '/images/categories/categorie-pre-workout-energie.png',
+    link: '/categorie/pre-workout-energie/'
+  },
+  {
+    title: 'Perte de Poids & Sèche',
+    tag: 'Brûleur Thermogénique',
+    image: '/images/categories/categorie-perte-de-poids.png',
+    link: '/categorie/perte-de-poids/'
+  },
+  {
+    title: 'Santé & Vitamines',
+    tag: 'Zinc & Minéraux',
+    image: '/images/categories/categorie-vitamines-mineraux.png',
+    link: '/categorie/vitamines-mineraux/'
+  },
+  {
+    title: 'Bien-Être & Sommeil',
+    tag: 'Ashwagandha KSM-66',
+    image: '/images/categories/categorie-bien-etre-sommeil-digestion.png',
+    link: '/categorie/bien-etre-sommeil-digestion/'
+  },
+  {
+    title: 'Snacks & Barres Keto',
+    tag: 'Collation Protéinée',
+    image: '/images/categories/categorie-snacks-healthy-food.png',
+    link: '/categorie/snacks-healthy-food/'
+  },
+  {
+    title: 'Pendant Effort & Glucides',
+    tag: 'Crème de Riz & Énergie',
+    image: '/images/categories/categorie-pendant-effort-hydratation.png',
+    link: '/categorie/pendant-effort-hydratation/'
+  },
+  {
+    title: 'Accessoires & Shakers',
+    tag: 'Shakers Antifuites',
+    image: '/images/categories/categorie-accessoires.webp',
+    link: '/categorie/accessoires/'
+  },
+  {
+    title: 'Guide Ultime Ebook',
+    tag: 'Guide 66 Pages PDF',
+    image: '/images/categories/categorie-guides-ebooks.webp',
+    link: '/guide-des-complements-alimentaires/'
   }
 ];
 
@@ -105,7 +129,7 @@ export default function CategorySection() {
         </div>
       </div>
 
-      {/* Horizontal Category Slider (Compact Cards) */}
+      {/* Horizontal Category Slider (Compact Cards with Real Product Packshots) */}
       <div 
         ref={scrollRef}
         className="flex gap-3.5 overflow-x-auto no-scrollbar scroll-smooth pb-2 pt-1 -mx-4 px-4 sm:mx-0 sm:px-0"
@@ -114,22 +138,24 @@ export default function CategorySection() {
           <Link 
             key={idx}
             href={cat.link}
-            className="group relative rounded-2xl overflow-hidden w-[150px] sm:w-[180px] md:w-[200px] h-[190px] sm:h-[220px] shrink-0 border border-white/10 hover:border-[#F80404]/60 shadow-md transition-all duration-300 hover:-translate-y-1 bg-[#141414]"
+            className="group relative rounded-2xl overflow-hidden w-[145px] sm:w-[170px] md:w-[185px] h-[195px] sm:h-[220px] shrink-0 border border-white/10 hover:border-[#F80404]/60 shadow-lg transition-all duration-300 hover:-translate-y-1 bg-[#141414] flex flex-col justify-between p-3"
           >
-            <Image 
-              src={cat.image} 
-              alt={cat.title}
-              fill
-              sizes="(max-width: 640px) 150px, 200px"
-              className="object-cover transition-transform duration-500 group-hover:scale-108 filter brightness-[0.75] group-hover:brightness-90"
-            />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/30 to-transparent" />
+            {/* Real Product Packshot Image */}
+            <div className="relative w-full h-[115px] sm:h-[135px] flex items-center justify-center">
+              <Image 
+                src={cat.image} 
+                alt={`${cat.title} - NutriFitness Suisse`}
+                fill
+                sizes="(max-width: 640px) 145px, 185px"
+                className="object-contain p-1 filter drop-shadow-2xl transition-transform duration-500 group-hover:scale-110"
+              />
+            </div>
             
-            <div className="absolute bottom-3 left-3 right-3 z-10">
-              <span className="inline-block px-2 py-0.5 bg-black/60 backdrop-blur-md border border-white/15 text-[9px] font-black uppercase text-[#F80404] tracking-wider rounded mb-1">
+            <div className="z-10 pt-2 border-t border-white/5">
+              <span className="inline-block px-1.5 py-0.5 bg-black/60 border border-white/10 text-[9px] font-black uppercase text-[#F80404] tracking-wider rounded mb-1 truncate max-w-full">
                 {cat.tag}
               </span>
-              <h3 className="text-xs sm:text-sm font-black text-white uppercase font-heading group-hover:text-[#F80404] transition-colors leading-tight line-clamp-2">
+              <h3 className="text-xs font-black text-white uppercase font-heading group-hover:text-[#F80404] transition-colors leading-tight line-clamp-1">
                 {cat.title}
               </h3>
             </div>

@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { CATEGORIES_DATA } from '@/lib/categories';
 import { PRODUCTS } from '@/lib/catalog';
 import { getCanonicalCategorySlug } from '@/lib/categories';
@@ -64,20 +65,31 @@ export default function CategoryIndexPage() {
               className="bg-[#141414] rounded-3xl p-6 sm:p-7 border border-white/10 hover:border-[#F80404]/50 transition-all flex flex-col justify-between group shadow-lg hover:shadow-2xl"
             >
               <div>
-                <div className="flex items-center justify-between mb-4">
-                  <span className="px-3 py-1 rounded-full bg-[#F80404]/10 text-[#F80404] border border-[#F80404]/20 text-[10px] font-black uppercase tracking-wider">
-                    {cat.count} produit{cat.count > 1 ? 's' : ''}
-                  </span>
-                  <Layers className="w-4 h-4 text-white/30 group-hover:text-[#F80404] transition-colors" />
+                <div className="flex items-center gap-4 mb-4">
+                  <div className="relative w-20 h-20 rounded-2xl bg-black/40 border border-white/10 shrink-0 p-1 flex items-center justify-center group-hover:border-[#F80404]/40 transition-colors">
+                    <Image 
+                      src={cat.image} 
+                      alt={`${cat.name} - NutriFitness`} 
+                      fill 
+                      className="object-contain p-1 filter drop-shadow-md group-hover:scale-110 transition-transform duration-300" 
+                    />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center justify-between mb-1">
+                      <span className="px-2.5 py-0.5 rounded-full bg-[#F80404]/10 text-[#F80404] border border-[#F80404]/20 text-[10px] font-black uppercase tracking-wider">
+                        {cat.count} produit{cat.count > 1 ? 's' : ''}
+                      </span>
+                      <Layers className="w-4 h-4 text-white/30 group-hover:text-[#F80404] transition-colors" />
+                    </div>
+                    <h2 className="text-lg font-black uppercase text-white font-heading group-hover:text-[#F80404] transition-colors leading-snug">
+                      <Link href={`/categorie/${cat.slug}/`}>
+                        {cat.name}
+                      </Link>
+                    </h2>
+                  </div>
                 </div>
 
-                <h2 className="text-xl font-black uppercase text-white font-heading group-hover:text-[#F80404] transition-colors mb-2.5">
-                  <Link href={`/categorie/${cat.slug}/`}>
-                    {cat.name}
-                  </Link>
-                </h2>
-
-                <p className="text-xs text-white/60 line-clamp-3 mb-5 leading-relaxed">
+                <p className="text-xs text-white/60 line-clamp-2 mb-4 leading-relaxed">
                   {cat.intro[0]}
                 </p>
 

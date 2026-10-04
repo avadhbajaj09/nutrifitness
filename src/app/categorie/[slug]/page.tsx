@@ -1,6 +1,7 @@
 import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
+import Image from 'next/image';
 import { notFound } from 'next/navigation';
 import { 
   CATEGORIES_DATA, 
@@ -215,23 +216,36 @@ export default function CategoryDetailPage({ params }: CategoryPageProps) {
             </div>
           )}
 
-          {/* 2. Introduction (Displayed ABOVE the products, 150-250 words) */}
-          <div className="p-6 sm:p-8 rounded-3xl bg-[#141414] border border-white/10 shadow-xl space-y-3.5 text-sm sm:text-base text-white/80 leading-relaxed">
-            {category.intro.map((p, pIdx) => (
-              <p key={pIdx}>
-                {p}
-              </p>
-            ))}
-            
-            <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-bold text-white/60">
-              <span className="flex items-center gap-1.5 text-white">
-                <CheckCircle2 className="w-4 h-4 text-[#95d600]" />
-                Conforme aux normes suisses OSAV & DFI
-              </span>
-              <span className="flex items-center gap-1.5 text-white">
-                <MapPin className="w-4 h-4 text-[#F80404]" />
-                Conseils & retrait immédiat : 34 Rue des Pâquis, 1201 Genève
-              </span>
+          {/* 2. Introduction (Displayed ABOVE the products, 150-250 words) with Product Packshot */}
+          <div className="p-6 sm:p-8 rounded-3xl bg-[#141414] border border-white/10 shadow-xl flex flex-col md:flex-row gap-6 md:gap-8 items-center justify-between">
+            <div className="flex-1 space-y-3.5 text-sm sm:text-base text-white/80 leading-relaxed">
+              {category.intro.map((p, pIdx) => (
+                <p key={pIdx}>
+                  {p}
+                </p>
+              ))}
+              
+              <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-bold text-white/60">
+                <span className="flex items-center gap-1.5 text-white">
+                  <CheckCircle2 className="w-4 h-4 text-[#95d600]" />
+                  Conforme aux normes suisses OSAV & DFI
+                </span>
+                <span className="flex items-center gap-1.5 text-white">
+                  <MapPin className="w-4 h-4 text-[#F80404]" />
+                  Conseils & retrait immédiat : 34 Rue des Pâquis, 1201 Genève
+                </span>
+              </div>
+            </div>
+
+            {/* Representative Category Product Packshot */}
+            <div className="relative w-36 h-36 sm:w-44 sm:h-44 shrink-0 rounded-2xl bg-black/40 border border-white/10 p-2 flex items-center justify-center shadow-inner">
+              <Image 
+                src={category.image} 
+                alt={`${category.name} - Compléments Alimentaires NutriFitness Suisse`} 
+                fill 
+                priority
+                className="object-contain p-2 filter drop-shadow-2xl" 
+              />
             </div>
           </div>
         </header>
