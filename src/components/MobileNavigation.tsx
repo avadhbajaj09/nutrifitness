@@ -2,6 +2,7 @@
 
 import React, { useState } from 'react';
 import Link from 'next/link';
+import Image from 'next/image';
 import { ALL_BRANDS } from '@/lib/brands';
 import { useStore } from '@/context/StoreContext';
 import LanguageCurrencySwitcher from './LanguageCurrencySwitcher';
@@ -93,10 +94,20 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
                     key={brand.slug}
                     href={`/boutique/?brand=${encodeURIComponent(brand.name)}`}
                     onClick={onClose}
-                    className="flex items-center justify-between py-2 px-2.5 rounded-lg text-[11px] font-bold text-white/70 hover:text-white hover:bg-white/10 transition-colors"
+                    className="flex items-center justify-between py-2 px-2 rounded-lg text-[11px] font-bold text-white/70 hover:text-white hover:bg-white/10 transition-colors gap-2"
                   >
-                    <span className="truncate">{brand.displayName}</span>
-                    <span className="text-[10px] text-white/40 px-1.5 py-0.5 rounded bg-black/40">{brand.count}</span>
+                    <div className="flex items-center gap-2 min-w-0">
+                      <div className="relative w-7 h-4 shrink-0 bg-black/40 rounded p-0.5 border border-white/10 flex items-center justify-center">
+                        <Image 
+                          src={brand.logo} 
+                          alt={brand.displayName} 
+                          fill 
+                          className="object-contain filter brightness-110" 
+                        />
+                      </div>
+                      <span className="truncate">{brand.displayName}</span>
+                    </div>
+                    <span className="text-[10px] text-white/40 px-1.5 py-0.5 rounded bg-black/40 shrink-0">{brand.count}</span>
                   </Link>
                 ))}
               </div>

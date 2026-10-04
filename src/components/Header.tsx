@@ -133,12 +133,22 @@ export default function Header() {
                         key={brand.slug}
                         href={`/boutique/?brand=${encodeURIComponent(brand.name)}`}
                         onClick={() => setIsBrandsOpen(false)}
-                        className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 hover:bg-[#F80404]/10 hover:border-[#F80404]/40 border border-transparent transition-all group"
+                        className="flex items-center justify-between p-2 rounded-xl bg-white/5 hover:bg-[#F80404]/10 hover:border-[#F80404]/40 border border-transparent transition-all group gap-2"
                       >
-                        <span className="text-xs font-bold text-white/90 group-hover:text-white truncate">
-                          {brand.displayName}
-                        </span>
-                        <span className="text-[10px] font-bold text-white/40 group-hover:text-[#F80404] ml-2 shrink-0 px-1.5 py-0.5 rounded bg-black/40">
+                        <div className="flex items-center gap-2 min-w-0">
+                          <div className="relative w-8 h-5 shrink-0 bg-black/40 rounded p-0.5 border border-white/10 flex items-center justify-center">
+                            <Image 
+                              src={brand.logo} 
+                              alt={brand.displayName} 
+                              fill 
+                              className="object-contain p-0.5 filter brightness-110" 
+                            />
+                          </div>
+                          <span className="text-xs font-bold text-white/90 group-hover:text-white truncate">
+                            {brand.displayName}
+                          </span>
+                        </div>
+                        <span className="text-[10px] font-bold text-white/40 group-hover:text-[#F80404] shrink-0 px-1.5 py-0.5 rounded bg-black/40">
                           {brand.count}
                         </span>
                       </Link>
