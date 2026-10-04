@@ -1,0 +1,17 @@
+# Nutrifitness
+
+> Boutique suisse de nutrition sportive à Genève et en ligne. Compléments alimentaires (créatine, protéines, acides aminés, vitamines et minéraux), snacks et accessoires. Livraison en Suisse. Langue : français (Suisse).
+
+## Boutique
+- [Magasin à Genève](https://nutrifitness.ch/magasin-geneve/): adresse, horaires, accès
+- [Toutes les catégories](https://nutrifitness.ch/boutique/)
+
+## Guides
+- [Guides et conseils](https://nutrifitness.ch/blog/): comparatifs, dosages, conseils d'utilisation
+
+## Informations
+- [FAQ](https://nutrifitness.ch/faq/): livraison, retours, paiement
+- [Contact](https://nutrifitness.ch/contact/)
+
+## Notes
+Les compléments alimentaires ne remplacent pas une alimentation variée et équilibrée. Consultez un professionnel de santé en cas de doute.

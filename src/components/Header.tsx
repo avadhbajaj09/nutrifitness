@@ -1,0 +1,258 @@
+'use client';
+
+import React, { useState, useEffect, useRef } from 'react';
+import Link from 'next/link';
+import Image from 'next/image';
+import MegaMenu from './MegaMenu';
+import MobileNavigation from './MobileNavigation';
+import LanguageCurrencySwitcher from './LanguageCurrencySwitcher';
+import { useStore } from '@/context/StoreContext';
+import { ALL_BRANDS } from '@/lib/brands';
+import { ShoppingBag, Search, User, Menu, ChevronDown, Sparkles } from 'lucide-react';
+
+export default function Header() {
+  const { cartCount, openCart, openSearch, t } = useStore();
+  const [isScrolled, setIsScrolled] = useState(false);
+  const [isMegaOpen, setIsMegaOpen] = useState(false);
+  const [isBrandsOpen, setIsBrandsOpen] = useState(false);
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const brandsDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setIsScrolled(window.scrollY > 20);
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  // Close brands dropdown on outside click
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (brandsDropdownRef.current && !brandsDropdownRef.current.contains(event.target as Node)) {
+        setIsBrandsOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
+
+  return (
+    <>
+      <header 
+        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+          isScrolled 
+            ? 'bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-2.5' 
+            : 'bg-[#0A0A0A] border-b border-white/10 py-3.5'
+        }`}
+      >
+        <div className="max-w-7xl w-full mx-auto px-4 flex items-center justify-between gap-2 sm:gap-4 relative">
+          
+          {/* Left: Mobile Hamburger & Brand Logo */}
+          <div className="flex items-center gap-3">
+            {/* Mobile Hamburger Button */}
+            <button 
+              type="button" 
+              onClick={() => setIsMobileMenuOpen(true)}
+              className="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center border border-white/10 transition-colors"
+              aria-label="Ouvrir le menu"
+            >
+              <Menu className="w-5 h-5 text-white" />
+            </button>
+
+            {/* Brand Logo */}
+            <Link href="/" className="flex items-center shrink-0 py-1" aria-label="NutriFitness.ch Accueil">
+              <div className="relative h-9 w-36 sm:w-44">
+                <Image 
+                  src="/images/brand/logo.png" 
+                  alt="NutriFitness.ch" 
+                  fill
+                  priority
+                  className="object-contain object-left filter brightness-110"
+                />
+              </div>
+            </Link>
+          </div>
+
+          {/* Desktop Navigation Bar (Boosters & Geneva Boutique removed as requested) */}
+          <nav aria-label="Menu principal" className="hidden lg:flex items-center gap-5 xl:gap-7">
+            
+            {/* 1. BOUTIQUE / SHOP with Mega Menu Trigger */}
+            <div 
+              className="relative"
+              onMouseEnter={() => { setIsMegaOpen(true); setIsBrandsOpen(false); }}
+            >
+              <button 
+                type="button"
+                onClick={() => setIsMegaOpen(!isMegaOpen)}
+                className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 flex items-center gap-1 font-heading"
+              >
+                <span>{t.nav.shop}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isMegaOpen ? 'rotate-180 text-[#F80404]' : 'text-white/40'}`} />
+              </button>
+            </div>
+
+            {/* 2. SHOP BY BRAND / TOUTES LES MARQUES Dropdown */}
+            <div 
+              ref={brandsDropdownRef}
+              className="relative"
+              onMouseEnter={() => { setIsBrandsOpen(true); setIsMegaOpen(false); }}
+              onMouseLeave={() => setIsBrandsOpen(false)}
+            >
+              <button 
+                type="button"
+                onClick={() => setIsBrandsOpen(!isBrandsOpen)}
+                className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 flex items-center gap-1 font-heading"
+              >
+                <Sparkles className="w-3.5 h-3.5 text-[#F80404]" />
+                <span>{t.nav.brands}</span>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isBrandsOpen ? 'rotate-180 text-[#F80404]' : 'text-white/40'}`} />
+              </button>
+
+              {/* Brands Flyout Dropdown */}
+              {isBrandsOpen && (
+                <div 
+                  className="absolute top-full left-0 w-[420px] bg-[#141414] border border-white/10 rounded-2xl p-5 shadow-2xl z-50 animate-in fade-in slide-in-from-top-2 duration-200"
+                >
+                  <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
+                    <span className="text-xs font-black uppercase tracking-wider text-white font-heading">
+                      {t.nav.brands} ({ALL_BRANDS.length})
+                    </span>
+                    <Link 
+                      href="/boutique/"
+                      onClick={() => setIsBrandsOpen(false)}
+                      className="text-[11px] text-[#F80404] hover:underline font-bold"
+                    >
+                      {t.common.viewAll} →
+                    </Link>
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2 max-h-[360px] overflow-y-auto pr-1">
+                    {ALL_BRANDS.map(brand => (
+                      <Link
+                        key={brand.slug}
+                        href={`/boutique/?brand=${encodeURIComponent(brand.name)}`}
+                        onClick={() => setIsBrandsOpen(false)}
+                        className="flex items-center justify-between p-2.5 rounded-xl bg-white/5 hover:bg-[#F80404]/10 hover:border-[#F80404]/40 border border-transparent transition-all group"
+                      >
+                        <span className="text-xs font-bold text-white/90 group-hover:text-white truncate">
+                          {brand.displayName}
+                        </span>
+                        <span className="text-[10px] font-bold text-white/40 group-hover:text-[#F80404] ml-2 shrink-0 px-1.5 py-0.5 rounded bg-black/40">
+                          {brand.count}
+                        </span>
+                      </Link>
+                    ))}
+                  </div>
+
+                  <div className="mt-3 pt-3 border-t border-white/10 text-center">
+                    <Link
+                      href="/boutique/"
+                      onClick={() => setIsBrandsOpen(false)}
+                      className="inline-block w-full py-2 bg-white/5 hover:bg-[#F80404] hover:text-black text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all"
+                    >
+                      {t.nav.filterByBrand}
+                    </Link>
+                  </div>
+                </div>
+              )}
+            </div>
+
+            {/* 3. Direct Category Links */}
+            <Link 
+              href="/boutique/?cat=proteines" 
+              className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 font-heading"
+            >
+              {t.nav.proteins}
+            </Link>
+
+            <Link 
+              href="/boutique/?cat=creatine" 
+              className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 font-heading"
+            >
+              {t.nav.creatines}
+            </Link>
+
+            {/* Coaching Personnalisé */}
+            <Link 
+              href="/coaching-nutritionnel-personnalise/" 
+              className="font-bold text-xs uppercase tracking-wider text-[#F80404] hover:text-[#FF3D00] transition-colors py-2 font-heading"
+            >
+              {t.nav.coaching}
+            </Link>
+
+            {/* Ebook Guide Ultime */}
+            <Link 
+              href="/guide-des-complements-alimentaires/" 
+              className="font-bold text-xs uppercase tracking-wider text-[#95d600] hover:text-[#b0fa00] transition-colors py-2 font-heading"
+            >
+              {t.nav.ebook}
+            </Link>
+
+            {/* Blog & Guides */}
+            <Link 
+              href="/blog/" 
+              className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 font-heading"
+            >
+              {t.nav.blog}
+            </Link>
+          </nav>
+
+          {/* Right: Language/Currency, Search, Account, Cart */}
+          <div className="flex items-center gap-2 sm:gap-3">
+            
+            {/* Language & Currency Switcher on top header */}
+            <div className="hidden sm:block">
+              <LanguageCurrencySwitcher variant="header" />
+            </div>
+
+            {/* Search Trigger Button */}
+            <button 
+              type="button"
+              onClick={openSearch}
+              className="inline-flex items-center gap-2 min-h-[40px] px-3 sm:px-3.5 py-1.5 bg-white/5 hover:bg-white/10 text-white rounded-full border border-white/10 text-xs transition-colors"
+              aria-label="Rechercher des produits"
+            >
+              <Search className="w-4 h-4 text-white/70" />
+              <span className="hidden md:inline text-white/50 text-[11px]">{t.nav.search.replace('...', '')}</span>
+              <kbd className="hidden md:inline text-[9px] bg-white/10 px-1.5 py-0.5 rounded text-white/40">ESC</kbd>
+            </button>
+
+            {/* Account Icon */}
+            <Link 
+              href="/compte/"
+              className="inline-flex items-center justify-center min-h-[40px] min-w-[40px] p-2 bg-white/5 hover:bg-white/10 text-white rounded-full border border-white/10 transition-colors"
+              aria-label="Espace compte client"
+              title={t.nav.account}
+            >
+              <User className="w-4 h-4 text-white/80 hover:text-[#F80404]" />
+            </Link>
+
+            {/* Cart Trigger Button */}
+            <button 
+              type="button"
+              onClick={openCart}
+              className="inline-flex items-center justify-center min-h-[40px] px-3.5 sm:px-4 py-2 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black rounded-full transition-all gap-2 shadow-md active:scale-95 group"
+              aria-label="Ouvrir le panier"
+            >
+              <ShoppingBag className="w-4 h-4 transition-transform group-hover:scale-110" />
+              <span className="text-xs font-black tracking-wider uppercase hidden sm:inline">{t.nav.cart}</span>
+              <span className="w-5 h-5 rounded-full bg-black text-white text-[10px] font-black flex items-center justify-center">
+                {cartCount}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        {/* Mega Menu Dropdown */}
+        <MegaMenu isOpen={isMegaOpen} onClose={() => setIsMegaOpen(false)} />
+      </header>
+
+      {/* Mobile Navigation Drawer */}
+      <MobileNavigation 
+        isOpen={isMobileMenuOpen} 
+        onClose={() => setIsMobileMenuOpen(false)} 
+      />
+    </>
+  );
+}
