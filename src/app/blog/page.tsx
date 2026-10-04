@@ -3,6 +3,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 import { getAllBlogPosts } from '@/lib/blog';
 import BlogListClient from './BlogListClient';
+import BlogFAQ from '@/components/BlogFAQ';
 import { ChevronRight, Home, Sparkles, BookOpen } from 'lucide-react';
 
 export const metadata: Metadata = {
@@ -23,6 +24,33 @@ export const metadata: Metadata = {
 
 export default function BlogIndexPage() {
   const posts = getAllBlogPosts();
+
+  const blogFaqs = [
+    {
+      q: 'Que trouve-t-on dans le blog Nutrifitness ?',
+      a: 'Des guides pratiques et complets sur les compléments alimentaires : créatine, protéines (whey isolate, concentrée, caséine), pré-workout, vitamines et minéraux, ainsi que des conseils d\'alimentation et des recettes riches en protéines. Les articles sont courts, concrets et réactualisés régulièrement selon la science sportive.'
+    },
+    {
+      q: 'Qui écrit les articles et dossiers ?',
+      a: 'Les articles et guides sont rédigés et supervisés par Marco Scarpantoni (fondateur de NutriFitness et coach en nutrition sportive fort de plus de 20 ans d\'expérience) ainsi que nos spécialistes en préparation physique à Genève. Chaque dossier mentionne son auteur, sa date de mise à jour et s\'appuie sur la science ISSN. Ces informations ne remplacent pas un avis médical.'
+    },
+    {
+      q: 'Les informations des articles sont-elles sourcées scientifiquement ?',
+      a: 'Oui, sans exception. Chaque article s\'appuie sur des publications scientifiques reconnues (méta-analyses indexées PubMed, International Society of Sports Nutrition - ISSN, autorités sanitaires suisses OSAV) répertoriées avec transparence en fin de dossier.'
+    },
+    {
+      q: 'À quelle fréquence publiez-vous de nouveaux articles ?',
+      a: 'Nous publions régulièrement de nouveaux guides et passons en revue nos dossiers majeurs (créatine Creapure, whey isolate, caféine, récupération) tous les 2 à 3 mois afin d\'intégrer les dernières découvertes de la recherche et les actualisations légales suisses.'
+    },
+    {
+      q: 'Par quel article commencer quand on débute ?',
+      a: 'Si vous faites vos premiers pas en nutrition sportive, débutez par notre guide du débutant : « Premiers compléments alimentaires ». Si votre objectif est le développement musculaire et la récupération, continuez avec notre dossier pratique « Comment choisir sa whey : étiquettes et prix ».'
+    },
+    {
+      q: 'Puis-je poser une question qui n\'est pas encore traitée sur le blog ?',
+      a: 'Absolument ! Écrivez-nous via notre formulaire de Contact ou passez directement dans notre boutique à Genève (34 Rue des Pâquis). Vos questions récurrentes servent de base à la création de nos prochains dossiers thématiques.'
+    }
+  ];
 
   // Schema.org CollectionPage & ItemList
   const jsonLd = {
@@ -48,11 +76,28 @@ export default function BlogIndexPage() {
     },
   };
 
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: blogFaqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.q,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.a,
+      }
+    }))
+  };
+
   return (
     <div className="bg-[#0A0A0A] min-h-screen text-white pt-6 pb-20">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -87,6 +132,9 @@ export default function BlogIndexPage() {
 
         {/* Client-side search, categories, and articles */}
         <BlogListClient posts={posts} />
+
+        {/* FAQ Blog Section */}
+        <BlogFAQ />
       </div>
     </div>
   );

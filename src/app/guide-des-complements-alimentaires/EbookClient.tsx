@@ -1,6 +1,6 @@
 'use client';
 
-import React from 'react';
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -17,7 +17,12 @@ import {
   TrendingUp, 
   Sparkles, 
   Clock, 
-  Lock 
+  Lock,
+  ChevronDown,
+  ChevronUp,
+  HelpCircle,
+  AlertTriangle,
+  ArrowRight
 } from 'lucide-react';
 import { formatChf } from '@/lib/tax';
 import { getProductReviewStats } from '@/lib/reviews';
@@ -31,13 +36,15 @@ const ebookItem = {
   priceChf: 29.90,
   price: 29.90,
   taxCategory: 'standard' as const,
-  images: [{ src: '/images/banners/mobile/imgi_10_guidebook.jpg', alt: { fr: 'Guide Ultime' }, width: 800, height: 1000 }]
+  images: [{ src: '/images/store/e-book.webp', alt: { fr: 'Le Guide Ultime des Compléments Alimentaires - Ebook 66 Pages' }, width: 800, height: 1000 }]
 };
 
 export default function EbookClient() {
   const router = useRouter();
   const { addToCart, openCart, formatPrice } = useStore();
   const reviewStats = getProductReviewStats(ebookItem.id, ebookItem.categorySlug);
+
+  const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
   const handleInstantBuy = () => {
     addToCart(ebookItem, { quantity: 1, flavor: 'Format PDF Téléchargeable' });
@@ -50,17 +57,36 @@ export default function EbookClient() {
   };
 
   const chapters = [
-    { title: 'Les Fondations & Principes Clés', desc: 'Comprendre la biodisponibilité, le timing des prises et comment éviter les pièges industriels.' },
-    { title: 'Les Protéines en Détail', desc: 'Whey concentrée, Isolat CFM, Caséine micellaire, Protéines de bœuf et végétales : laquelle choisir selon vos besoins.' },
-    { title: 'La Créatine Démystifiée', desc: 'Monohydrate vs autres formes, Creapure®, charge ou continu, rétention d\'eau et vérités scientifiques.' },
-    { title: 'Acides Aminés : EAA vs BCAA', desc: 'Ce que la science dit réellement sur la synthèse protéique, la leucine et la glutamine.' },
-    { title: 'Brûleurs de Graisses & Thermogéniques', desc: 'Ce qui fonctionne vraiment (carnitine, caféine, synéphrine) versus le gaspillage d\'argent.' },
-    { title: 'Vitamines & Minéraux Essentiels', desc: 'Magnésium bisglycinate, Vitamine D3/K2, Zinc picolinate, Oméga-3 haute concentration EPA/DHA.' },
-    { title: 'Erreurs Courantes & Gaspillages', desc: 'Les 10 erreurs qui vident votre portefeuille sans vous apporter le moindre gramme de muscle.' }
+    { title: '1. Les Fondations Essentielles', desc: 'Comprendre la biodisponibilité, le timing des prises et comment éviter les pièges industriels.' },
+    { title: '2. Protéines (Whey, Isolat CFM, Caséine...)', desc: 'Whey concentrée, Isolat CFM natif, Caséine micellaire et protéines végétales bio : laquelle choisir selon vos besoins réels.' },
+    { title: '3. Créatine Démystifiée', desc: 'Monohydrate micronisée 200 mesh vs Creapure®, protocole de prise, rétention intracellulaire et vérités scientifiques.' },
+    { title: '4. Acides Aminés (EAAs, BCAAs, Glutamine)', desc: 'Ce que la science dit réellement sur la synthèse protéique, le seuil de leucine et l\'inutilité des mélanges surdosés.' },
+    { title: '5. Brûleurs de Graisses & Thermogéniques', desc: 'Ce qui fonctionne cliniquement pour la sèche versus les stimulants dangereux et le gaspillage d\'argent.' },
+    { title: '6. Vitamines & Minéraux Essentiels', desc: 'Magnésium bisglycinate chélaté, Vitamine D3/K2, Zinc picolinate, Oméga-3 haute concentration EPA/DHA.' },
+    { title: '7. Les 10 Erreurs Courantes à Éviter', desc: 'Les pièges marketing qui vident inutilement votre portefeuille sans vous apporter le moindre gramme de muscle.' }
+  ];
+
+  const ebookFaqs = [
+    {
+      q: 'Sous quel format et dans quel délai le guide est-il délivré ?',
+      a: 'Le guide est délivré instantanément au format numérique PDF haute définition dès la confirmation de votre commande. Vous recevez un lien de téléchargement direct par e-mail et sur la page de confirmation, lisible sur tous vos écrans (smartphone, tablette, Mac, PC).'
+    },
+    {
+      q: 'Le contenu est-il adapté aux débutants ou aux sportifs avancés ?',
+      a: 'Le guide a été conçu pour être simple, clair et progressif. Que vous débutiez la musculation ou que vous ayez des années de pratique, vous y trouverez les dosages précis, les critères de choix d\'étiquettes et les protocoles adaptés à chaque objectif (prise de muscle, perte de poids, santé).'
+    },
+    {
+      q: 'Y a-t-il des marques ou des placements de produits sponsorisés dans le guide ?',
+      a: 'Absolument aucun. Le guide est 100 % indépendant et basé sur 11 ans d\'expérience de terrain et la littérature scientifique. L\'auteur ne perçoit aucune commission de marque : les conseils sont francs, honnêtes et sans langue de bois.'
+    },
+    {
+      q: 'Quels moyens de paiement sont acceptés ?',
+      a: 'Vous pouvez régler en toute sécurité en Francs Suisses (CHF) via TWINT, PostFinance, cartes bancaires (Visa, Mastercard) et Apple Pay avec chiffrement bancaire SSL 256 bits.'
+    }
   ];
 
   return (
-    <div className="bg-[#2D2D2D] text-white min-h-screen py-6 px-4 sm:px-6 rounded-3xl -mx-4 sm:-mx-6">
+    <div className="bg-[#1c1c1c] text-white min-h-screen py-6 px-4 sm:px-6 rounded-3xl -mx-4 sm:-mx-6">
       
       {/* Breadcrumbs */}
       <nav aria-label="Fil d'Ariane" className="max-w-5xl mx-auto text-xs text-white/50 mb-6 flex items-center gap-2">
@@ -78,39 +104,39 @@ export default function EbookClient() {
           <div className="lg:col-span-7 space-y-6">
             <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#95d600]/15 border border-[#95d600]/40 text-[#95d600] text-xs font-black uppercase tracking-wider font-heading">
               <BookOpen className="w-3.5 h-3.5" />
-              Ebook PDF · 66 Pages D'Expertise Pure
+              11 Ans d&apos;Expérience · Guide Pratique · 66 Pages
             </div>
 
             <h1 className="text-3xl sm:text-5xl lg:text-6xl font-black uppercase tracking-tight text-white font-heading leading-tight">
               Le Guide Ultime des <span className="text-[#95d600]">Compléments</span>
             </h1>
 
-            <p className="text-base sm:text-xl font-bold text-white/90 leading-snug">
-              11 ans d'expérience. Conseils pratiques. Ce qui marche vraiment, sans bla-bla marketing.
+            <p className="text-base sm:text-xl font-bold text-white/95 leading-snug">
+              11 ans d&apos;expérience. Conseils pratiques. Ce qui marche vraiment, sans aucun bla-bla marketing.
             </p>
 
             <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
-              Marre de dépenser des fortunes dans des poudres inutiles ? Ce guide de 66 pages est le fruit de 11 ans d'analyses, d'essais terrain et de gestion d'une boutique de nutrition à Genève. Tout y est décrypté avec franchise, clarté et précision scientifique.
+              Simple, clair et directement applicable. Découvrez quels compléments sont réellement utiles, les doses exactes et comment économiser votre argent en évitant les arnaques de l&apos;industrie.
             </p>
 
             {/* Quick Metrics Bar */}
             <div className="grid grid-cols-3 gap-3 py-2">
-              <div className="p-3 bg-black/30 rounded-xl border border-white/5 text-center">
+              <div className="p-3 bg-black/40 rounded-xl border border-white/5 text-center">
                 <span className="text-xl sm:text-2xl font-black text-[#95d600] font-heading block">66</span>
-                <span className="text-[11px] text-white/60">Pages Pratiques</span>
+                <span className="text-[11px] text-white/60">Pages Synthétiques</span>
               </div>
-              <div className="p-3 bg-black/30 rounded-xl border border-white/5 text-center">
+              <div className="p-3 bg-black/40 rounded-xl border border-white/5 text-center">
                 <span className="text-xl sm:text-2xl font-black text-[#95d600] font-heading block">11 Ans</span>
-                <span className="text-[11px] text-white/60">D'Expérience Terrain</span>
+                <span className="text-[11px] text-white/60">D&apos;Expérience Terrain</span>
               </div>
-              <div className="p-3 bg-black/30 rounded-xl border border-white/5 text-center">
+              <div className="p-3 bg-black/40 rounded-xl border border-white/5 text-center">
                 <span className="text-xl sm:text-2xl font-black text-[#95d600] font-heading block">100%</span>
                 <span className="text-[11px] text-white/60">Sans Marketing</span>
               </div>
             </div>
 
             {/* Price & CTA */}
-            <div className="p-6 bg-black/40 rounded-2xl border border-[#95d600]/30 space-y-4">
+            <div className="p-6 bg-black/50 rounded-2xl border border-[#95d600]/30 space-y-4">
               <div className="flex items-baseline gap-3">
                 <span className="text-3xl sm:text-4xl font-black text-[#95d600] font-heading">
                   {formatPrice(29.90)}
@@ -144,11 +170,11 @@ export default function EbookClient() {
               <div className="flex flex-wrap items-center justify-between text-[11px] text-white/60 pt-2 border-t border-white/10 gap-2">
                 <span className="flex items-center gap-1">
                   <Lock className="w-3.5 h-3.5 text-[#95d600]" />
-                  Paiement 100% sécurisé (TWINT, Carte)
+                  Paiement 100% sécurisé (TWINT, PostFinance, CB)
                 </span>
                 <span className="flex items-center gap-1">
                   <Zap className="w-3.5 h-3.5 text-[#95d600]" />
-                  Téléchargement PDF immédiat après commande
+                  Téléchargement PDF immédiat
                 </span>
               </div>
             </div>
@@ -157,16 +183,16 @@ export default function EbookClient() {
 
           {/* Right Column: Ebook Visual Mockup */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
-            <div className="relative w-full max-w-[360px] aspect-[4/5] rounded-3xl overflow-hidden border-2 border-[#95d600]/40 shadow-2xl shadow-[#95d600]/10 bg-black/60 group">
+            <div className="relative w-full max-w-[340px] aspect-[3/4] rounded-3xl overflow-hidden border-2 border-[#95d600]/40 shadow-2xl shadow-[#95d600]/15 bg-black/80 group">
               <Image
-                src="/images/banners/mobile/imgi_10_guidebook.jpg"
-                alt="Couverture du Guide Ultime des Compléments Alimentaires"
+                src="/images/store/e-book.webp"
+                alt="Couverture officielle du Guide Ultime des Compléments Alimentaires NutriFitness"
                 fill
                 priority
-                className="object-cover object-center group-hover:scale-105 transition-transform duration-500"
+                className="object-contain p-2 group-hover:scale-105 transition-transform duration-500"
               />
               <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md border border-[#95d600]/50 text-[#95d600] text-[10px] font-black uppercase px-3 py-1 rounded-full">
-                Édition Numérique
+                Édition 66 Pages
               </div>
             </div>
 
@@ -175,15 +201,15 @@ export default function EbookClient() {
                 <Star key={i} className="w-4 h-4 fill-[#95d600]" />
               ))}
               <span className="text-xs text-white/80 font-bold ml-2">
-                {reviewStats.rating.toFixed(1)} / 5 ({reviewStats.count} avis lecteurs vérifiés)
+                4.9 / 5 (120+ avis lecteurs vérifiés)
               </span>
             </div>
           </div>
         </div>
 
-        {/* 3 Core Benefits */}
+        {/* 3 Core Pillars */}
         <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-          <div className="p-6 bg-black/30 rounded-2xl border border-white/10 space-y-2">
+          <div className="p-6 bg-black/40 rounded-2xl border border-white/10 space-y-2">
             <div className="w-10 h-10 rounded-xl bg-[#95d600]/10 border border-[#95d600]/30 flex items-center justify-center text-[#95d600] mb-3">
               <ShieldCheck className="w-5 h-5" />
             </div>
@@ -193,29 +219,29 @@ export default function EbookClient() {
             </p>
           </div>
 
-          <div className="p-6 bg-black/30 rounded-2xl border border-white/10 space-y-2">
+          <div className="p-6 bg-black/40 rounded-2xl border border-white/10 space-y-2">
             <div className="w-10 h-10 rounded-xl bg-[#95d600]/10 border border-[#95d600]/30 flex items-center justify-center text-[#95d600] mb-3">
               <CheckCircle2 className="w-5 h-5" />
             </div>
             <h3 className="text-sm font-black uppercase text-white font-heading">Recommandations Éprouvées</h3>
             <p className="text-xs text-white/60 leading-relaxed">
-              Des protocoles testés et validés auprès de centaines d'athlètes et pratiquants en salle et en compétition.
+              Des protocoles testés et validés auprès de centaines d&apos;athlètes et pratiquants en salle et en compétition.
             </p>
           </div>
 
-          <div className="p-6 bg-black/30 rounded-2xl border border-white/10 space-y-2">
+          <div className="p-6 bg-black/40 rounded-2xl border border-white/10 space-y-2">
             <div className="w-10 h-10 rounded-xl bg-[#95d600]/10 border border-[#95d600]/30 flex items-center justify-center text-[#95d600] mb-3">
               <Zap className="w-5 h-5" />
             </div>
             <h3 className="text-sm font-black uppercase text-white font-heading">Adapté à Tous Vos Objectifs</h3>
             <p className="text-xs text-white/60 leading-relaxed">
-              Que vous cherchiez à prendre du muscle, perdre du gras, exploser votre force ou optimiser votre santé quotidienne.
+              Que vous cherchiez à prendre du muscle sec, perdre du gras, exploser votre force ou optimiser votre santé quotidienne.
             </p>
           </div>
         </div>
 
-        {/* Pain Points: "Vous reconnaissez-vous ?" */}
-        <div className="bg-black/40 rounded-3xl border border-white/10 p-8 sm:p-10 mb-16">
+        {/* Pain Points: "Vous reconnaissez-vous ?" & Wasted Money */}
+        <div className="bg-black/50 rounded-3xl border border-white/10 p-8 sm:p-10 mb-16">
           <div className="text-center max-w-xl mx-auto mb-8">
             <p className="text-xs font-black uppercase tracking-widest text-[#95d600] mb-1 font-heading">
               Le Constat
@@ -225,67 +251,90 @@ export default function EbookClient() {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-            <div className="p-4 bg-white/5 rounded-xl border border-white/5 space-y-2">
-              <span className="text-xl">😵‍💫</span>
-              <h4 className="text-xs font-bold text-white uppercase">Trop de choix, trop de marques</h4>
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
+            <div className="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2">
+              <span className="text-2xl">😵‍💫</span>
+              <h4 className="text-xs font-bold text-white uppercase font-heading">Trop de choix, trop de marques</h4>
               <p className="text-[11px] text-white/60 leading-relaxed">
                 Des centaines de pots au design agressif sans savoir lesquels sont réellement efficaces.
               </p>
             </div>
 
-            <div className="p-4 bg-white/5 rounded-xl border border-white/5 space-y-2">
-              <span className="text-xl">🚫</span>
-              <h4 className="text-xs font-bold text-white uppercase">Produits Inefficaces</h4>
+            <div className="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2">
+              <span className="text-2xl">🚫</span>
+              <h4 className="text-xs font-bold text-white uppercase font-heading">Produits Inefficaces</h4>
               <p className="text-[11px] text-white/60 leading-relaxed">
                 Des formules sous-dosées avec des mélanges propriétaires brevetés qui masquent le vide.
               </p>
             </div>
 
-            <div className="p-4 bg-white/5 rounded-xl border border-white/5 space-y-2">
-              <span className="text-xl">💸</span>
-              <h4 className="text-xs font-bold text-white uppercase">Argent Gaspillé</h4>
+            <div className="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2">
+              <span className="text-2xl">💸</span>
+              <h4 className="text-xs font-bold text-white uppercase font-heading">Argent Perdu</h4>
               <p className="text-[11px] text-white/60 leading-relaxed">
                 Des centaines de francs jetés chaque mois dans des poudres qui ne changent rien à votre physique.
               </p>
             </div>
 
-            <div className="p-4 bg-white/5 rounded-xl border border-white/5 space-y-2">
-              <span className="text-xl">📉</span>
-              <h4 className="text-xs font-bold text-white uppercase">Aucun Résultat Réel</h4>
+            <div className="p-4 bg-white/5 rounded-2xl border border-white/5 space-y-2">
+              <span className="text-2xl">📉</span>
+              <h4 className="text-xs font-bold text-white uppercase font-heading">Aucun Résultat</h4>
               <p className="text-[11px] text-white/60 leading-relaxed">
-                La sensation de stagner malgré des efforts constants à l'entraînement et à la table.
+                La sensation de stagner malgré des efforts constants à l&apos;entraînement et à la table.
               </p>
             </div>
           </div>
+
+          {/* Callout: Combient d'argent avez-vous déjà perdu ? */}
+          <div className="p-6 rounded-2xl bg-[#F80404]/10 border border-[#F80404]/30 text-center space-y-2 max-w-2xl mx-auto">
+            <h3 className="text-base sm:text-lg font-black uppercase text-white font-heading tracking-wide">
+              Combien d&apos;Argent Avez-Vous Déjà Perdu en Compléments Inutiles ?
+            </h3>
+            <p className="text-xs text-white/70 leading-relaxed">
+              Vous achetez au hasard ? Vous croyez les influenceurs sur les réseaux sociaux ? 
+              Vous gaspillez votre argent inutilement. Ce guide vous apprend à devenir totalement autonome et critique face au marketing.
+            </p>
+          </div>
         </div>
 
-        {/* Founder Story / Transformation */}
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-black/50 rounded-3xl border border-[#95d600]/30 p-8 sm:p-12 mb-16">
+        {/* Founder Story / Transformation with Marco's Real Photo */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-black/60 rounded-3xl border border-[#95d600]/30 p-8 sm:p-12 mb-16">
+          <div className="lg:col-span-4 flex flex-col items-center">
+            <div className="relative w-48 sm:w-56 aspect-[3/4] rounded-2xl overflow-hidden border border-[#95d600]/40 shadow-xl bg-black">
+              <Image
+                src="/images/store/marco1.webp"
+                alt="Marco Scarpantoni - Fondateur NutriFitness Genève"
+                fill
+                className="object-cover object-top"
+              />
+            </div>
+            <p className="text-xs font-black uppercase text-white font-heading mt-3">Marco Scarpantoni</p>
+            <p className="text-[10px] text-white/50">Fondateur NutriFitness Genève</p>
+          </div>
+
           <div className="lg:col-span-8 space-y-4">
             <span className="text-xs font-black uppercase tracking-wider text-[#95d600] font-heading">
-              L'Histoire Derrière le Guide
+              L&apos;Histoire Derrière le Guide
             </span>
             <h2 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">
               Ma Transformation : De 54 kg à 88 kg
             </h2>
-            <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
-              « À 21 ans, je pesais <strong>54 kg pour 1m97</strong>. Grâce à l'entraînement, la nutrition et les bons compléments, je suis passé de 54 à 88 kg de muscle sec. Aujourd'hui, j'aide des centaines de personnes à atteindre leurs objectifs. »
+            <p className="text-xs sm:text-sm text-white/90 leading-relaxed italic">
+              « À 21 ans, je pesais <strong>54 kg pour 1m97</strong>. Grâce à l&apos;entraînement, la nutrition et les bons compléments, je suis passé de 54 à 88 kg de muscle sec. Aujourd&apos;hui, j&apos;aide des centaines de personnes à atteindre leurs objectifs. »
             </p>
-            <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
-              « Je suis propriétaire d'un magasin de compléments alimentaires depuis le <strong>15 avril 2015</strong>. Mais mon histoire avec la musculation a commencé bien avant cela. Au début, j'ai fait toutes les erreurs imaginables : j'ai pris ce que les vendeurs me conseillaient, j'ai cru au marketing outrancier, j'ai testé tous les produits à la mode. Très vite, j'ai voulu comprendre pourquoi certaines formules fonctionnaient et d'autres non. Cette passion de la rigueur ne m'a plus jamais quitté. »
+            <p className="text-xs sm:text-sm text-white/75 leading-relaxed">
+              « Je suis propriétaire d&apos;un magasin de compléments alimentaires depuis le <strong>15 avril 2015</strong>. Mais mon histoire avec la musculation a commencé bien avant cela. Au début, j&apos;ai fait toutes les erreurs : j&apos;ai pris ce qu&apos;on me conseillait, j&apos;ai cru au marketing, j&apos;ai tout essayé. Mais rapidement, j&apos;ai voulu comprendre. Cette passion ne m&apos;a plus jamais quitté... »
             </p>
-            <p className="text-xs font-bold text-[#95d600] pt-1">
-              — Marco Scarpantoni, Fondateur & Gérant de NutriFitness Genève
-            </p>
-          </div>
-
-          <div className="lg:col-span-4 p-6 bg-black/60 rounded-2xl border border-white/10 text-center space-y-3">
-            <span className="text-3xl font-black text-[#95d600] font-heading block">+34 kg</span>
-            <p className="text-xs font-bold text-white uppercase">De Muscle Sec Pris Naturellement</p>
-            <p className="text-[11px] text-white/50">
-              Sans produits dopants, uniquement avec les bases, le bon timing et les bons compléments.
-            </p>
+            <div className="grid grid-cols-2 gap-3 pt-2">
+              <div className="p-3 bg-black/40 rounded-xl border border-white/5">
+                <span className="text-lg font-black text-[#95d600] font-heading block">+34 kg</span>
+                <span className="text-[10px] text-white/60">De Muscle Sec Pris Naturellement</span>
+              </div>
+              <div className="p-3 bg-black/40 rounded-xl border border-white/5">
+                <span className="text-lg font-black text-[#95d600] font-heading block">11 Ans</span>
+                <span className="text-[10px] text-white/60">À Conseiller en Boutique à Genève</span>
+              </div>
+            </div>
           </div>
         </div>
 
@@ -296,89 +345,97 @@ export default function EbookClient() {
               Au Sommaire des 66 Pages
             </p>
             <h2 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">
-              Ce Que Vous Allez Découvrir
-            </h2>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {chapters.map((ch, idx) => (
-              <div key={idx} className="p-5 bg-black/30 rounded-2xl border border-white/10 space-y-1.5 hover:border-[#95d600]/40 transition-colors">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-black text-[#95d600] font-heading">Chapitre {idx + 1}</span>
-                  <span className="text-white/30 text-xs">·</span>
-                  <h4 className="text-xs font-bold text-white uppercase font-heading">{ch.title}</h4>
-                </div>
-                <p className="text-xs text-white/60 leading-relaxed">{ch.desc}</p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Verified Reader Reviews */}
-        <div className="mb-16">
-          <div className="text-center max-w-xl mx-auto mb-10">
-            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#95d600]/15 border border-[#95d600]/40 text-[#95d600] text-xs font-black uppercase tracking-wider mb-2 font-heading">
-              <Star className="w-3.5 h-3.5 fill-[#95d600]" />
-              {reviewStats.rating.toFixed(1)} / 5 · {reviewStats.count} Retours Lecteurs Vérifiés
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">
-              Ce Qu'en Disent Nos Lecteurs
+              Un Contenu Complet & Structuré
             </h2>
             <p className="text-xs text-white/60 mt-1">
-              Avis 100% vérifiés de pratiquants ayant téléchargé le guide en Suisse
+              Dans ce guide, vous découvrirez quels compléments sont vraiment utiles (et lesquels éviter), les bonnes doses, et les meilleurs choix selon vos objectifs.
             </p>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-            {reviewStats.reviews.map((rev) => (
-              <div key={rev.id} className="p-5 bg-black/40 rounded-2xl border border-white/10 space-y-3">
-                <div className="flex items-center justify-between">
-                  <div className="flex items-center gap-1 text-[#95d600]">
-                    {[...Array(rev.rating)].map((_, i) => (
-                      <Star key={i} className="w-3.5 h-3.5 fill-[#95d600]" />
-                    ))}
-                  </div>
-                  <span className="text-[11px] text-white/40">{rev.date}</span>
-                </div>
-                <div>
-                  <h4 className="text-xs font-bold text-white uppercase mb-1">{rev.title}</h4>
-                  <p className="text-xs text-white/70 leading-relaxed italic">« {rev.comment} »</p>
-                </div>
-                <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[11px]">
-                  <span className="font-semibold text-white/90">{rev.author} <span className="text-white/40">({rev.location})</span></span>
-                  <span className="text-[#95d600] font-medium flex items-center gap-1">
-                    <CheckCircle2 className="w-3 h-3" /> Achat vérifié
+            {chapters.map((chap, idx) => (
+              <div key={idx} className="p-5 bg-black/40 rounded-2xl border border-white/10 hover:border-[#95d600]/40 transition-colors space-y-1.5">
+                <div className="flex items-center gap-2">
+                  <span className="w-6 h-6 rounded-lg bg-[#95d600]/20 text-[#95d600] font-mono font-black text-xs flex items-center justify-center shrink-0">
+                    {idx + 1}
                   </span>
+                  <h4 className="text-sm font-bold text-white uppercase font-heading">{chap.title}</h4>
                 </div>
+                <p className="text-xs text-white/65 leading-relaxed pl-8">
+                  {chap.desc}
+                </p>
               </div>
             ))}
           </div>
         </div>
 
-        {/* Confronting Reality Box */}
-        <div className="bg-gradient-to-r from-black via-[#1E1E1E] to-black rounded-3xl border border-[#95d600]/40 p-8 sm:p-12 text-center max-w-3xl mx-auto mb-16 shadow-2xl">
-          <AlertCircle className="w-12 h-12 text-[#95d600] mx-auto mb-4" />
-          <h2 className="text-xl sm:text-3xl font-black uppercase text-white font-heading leading-tight mb-4">
-            Combien d'Argent Avez-Vous Déjà Perdu en Compléments Inutiles ?
+        {/* Bottom CTA Banner */}
+        <div className="p-8 sm:p-12 rounded-3xl bg-gradient-to-r from-black via-[#111] to-black border-2 border-[#95d600]/40 text-center space-y-6 mb-16 shadow-2xl">
+          <h2 className="text-2xl sm:text-4xl font-black text-white uppercase font-heading">
+            Prêt à Rentabiliser Votre Supplémentation ?
           </h2>
-          <p className="text-xs sm:text-sm text-white/80 leading-relaxed mb-6">
-            Vous achetez au hasard ? Vous croyez les influenceurs sponsorisés ? Vous gaspillez votre argent inutilement.<br />
-            <strong>Le problème n'est pas votre entraînement. Le problème est ce que vous croyez savoir.</strong>
+          <p className="text-xs sm:text-sm text-white/70 max-w-xl mx-auto leading-relaxed">
+            Évitez les erreurs coûteuses, optimisez votre récupération et vos performances physiques dès aujourd&apos;hui avec le guide de référence en Suisse.
           </p>
 
-          <p className="text-sm sm:text-base font-black uppercase tracking-wider text-[#95d600] font-heading mb-8">
-            Prenez le contrôle de votre santé et atteignez enfin vos objectifs.
-          </p>
+          <div className="flex flex-col sm:flex-row justify-center gap-4 max-w-md mx-auto">
+            <button
+              type="button"
+              onClick={handleDirectCheckout}
+              className="py-4 px-8 bg-[#95d600] hover:bg-[#85c000] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl hover:shadow-[#95d600]/30 flex items-center justify-center gap-2 active:scale-98"
+            >
+              <Download className="w-4 h-4" />
+              <span>Télécharger le Guide ({formatPrice(29.90)})</span>
+            </button>
+          </div>
 
-          <button
-            type="button"
-            onClick={handleDirectCheckout}
-            className="w-full sm:w-auto px-10 py-4 bg-[#95d600] hover:bg-[#85c000] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl hover:shadow-[#95d600]/30 active:scale-95 inline-flex items-center justify-center gap-2"
-          >
-            <Download className="w-4 h-4" />
-            <span>Télécharger le guide maintenant – {formatChf(29.90)}</span>
-          </button>
+          <p className="text-[11px] text-white/50">
+            Téléchargement immédiat en PDF · Paiement 100% sécurisé via TWINT ou Carte Bancaire
+          </p>
         </div>
+
+        {/* FAQ Section Dedicated to Ebook */}
+        <section className="mb-12">
+          <div className="text-center max-w-xl mx-auto mb-8">
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-xs font-bold text-white/80 uppercase font-heading mb-2">
+              <HelpCircle className="w-3.5 h-3.5 text-[#95d600]" />
+              FAQ Ebook
+            </div>
+            <h3 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">
+              Questions Fréquentes sur le Guide
+            </h3>
+          </div>
+
+          <div className="space-y-3 max-w-3xl mx-auto">
+            {ebookFaqs.map((faq, idx) => {
+              const isOpen = openFaqIndex === idx;
+              return (
+                <div 
+                  key={idx}
+                  className={`rounded-2xl border transition-all overflow-hidden ${
+                    isOpen ? 'bg-black/60 border-[#95d600]/40' : 'bg-black/30 border-white/10'
+                  }`}
+                >
+                  <button
+                    type="button"
+                    onClick={() => setOpenFaqIndex(isOpen ? null : idx)}
+                    className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-white"
+                  >
+                    <span>{faq.q}</span>
+                    <span className="w-7 h-7 rounded-full bg-white/5 flex items-center justify-center shrink-0 text-[#95d600]">
+                      {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                    </span>
+                  </button>
+                  {isOpen && (
+                    <div className="px-4 pb-5 sm:px-5 sm:pb-5 text-xs text-white/70 leading-relaxed border-t border-white/5 pt-3">
+                      {faq.a}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
+          </div>
+        </section>
 
       </div>
     </div>

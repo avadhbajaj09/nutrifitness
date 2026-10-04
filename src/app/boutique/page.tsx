@@ -3,6 +3,7 @@
 import React, { useState, useMemo, useEffect, Suspense } from 'react';
 import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
+import BoutiqueFAQ from '@/components/BoutiqueFAQ';
 import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
 
 function ShopContent() {
@@ -241,6 +242,9 @@ function ShopContent() {
           )}
         </div>
       </div>
+
+      {/* Boutique FAQ Section */}
+      <BoutiqueFAQ />
     </div>
   );
 }

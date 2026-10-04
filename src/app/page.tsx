@@ -13,6 +13,7 @@ import Newsletter from '@/components/Newsletter';
 import ProductCard from '@/components/ProductCard';
 import ProductMarquee from '@/components/ProductMarquee';
 import StoreMap from '@/components/StoreMap';
+import HomeFAQ from '@/components/HomeFAQ';
 import { PRODUCTS } from '@/lib/catalog';
 
 export default function HomePage() {
@@ -272,7 +273,10 @@ export default function HomePage() {
       {/* 14. SOCIAL GRID */}
       <SocialGrid />
 
-      {/* 15. VIP NEWSLETTER */}
+      {/* 15. FAQ NUTRIFITNESS ACCUEIL */}
+      <HomeFAQ />
+
+      {/* 16. VIP NEWSLETTER */}
       <Newsletter />
     </>
   );

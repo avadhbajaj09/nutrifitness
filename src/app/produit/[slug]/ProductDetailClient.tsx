@@ -9,6 +9,7 @@ import DynamicPricingBox from '@/components/DynamicPricingBox';
 import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
 import { getProductReviewStats } from '@/lib/reviews';
+import { getProductFaqs } from '@/lib/productFaq';
 
 interface Props {
   product: ProductItem;
@@ -17,11 +18,12 @@ interface Props {
 
 export default function ProductDetailClient({ product, relatedProducts }: Props) {
   const { addToCart, formatPrice, locale, t } = useStore();
-  const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'reviews'>('desc');
+  const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'reviews' | 'faq'>('desc');
   const [selectedFlavor, setSelectedFlavor] = useState<string>(
     getLocalized(product.variants?.[0]?.flavorName, locale) || 'Standard'
   );
   const [quantity, setQuantity] = useState<number>(1);
+  const productFaqs = getProductFaqs(product);
 
   const slug = getLocalized(product.slug, locale);
   const name = getLocalized(product.name, locale);
@@ -237,6 +239,15 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             >
               4. Avis Clients Vérifiés ({reviewStats.count})
             </button>
+            <button 
+              type="button"
+              onClick={() => setActiveTab('faq')}
+              className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+                activeTab === 'faq' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
+              }`}
+            >
+              5. Questions Fréquentes ({productFaqs.length})
+            </button>
           </div>
 
           {/* Tab 1: Description */}
@@ -354,6 +365,34 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                       <p className="text-xs font-bold text-white">{rev.title}</p>
                     )}
                     <p className="text-xs text-white/70 leading-relaxed">&quot;{rev.comment}&quot;</p>
+                  </div>
+                ))}
+              </div>
+            </div>
+          )}
+
+          {/* Tab 5: FAQ & Conseils */}
+          {activeTab === 'faq' && (
+            <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4 animate-in fade-in duration-150">
+              <div className="pb-3 border-b border-white/10">
+                <h3 className="text-base font-black uppercase text-white font-heading">
+                  Questions Fréquentes sur {name}
+                </h3>
+                <p className="text-xs text-white/50">
+                  Réponses directes et conseils pratiques basés sur l&apos;étiquette officielle et notre expertise à Genève.
+                </p>
+              </div>
+
+              <div className="space-y-3">
+                {productFaqs.map((faq, idx) => (
+                  <div key={idx} className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-1.5">
+                    <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                      <span className="text-[#F80404] font-black">Q.</span>
+                      {faq.question}
+                    </h4>
+                    <p className="text-xs text-white/75 leading-relaxed pl-4 border-l-2 border-[#F80404]/40">
+                      {faq.answer}
+                    </p>
                   </div>
                 ))}
               </div>

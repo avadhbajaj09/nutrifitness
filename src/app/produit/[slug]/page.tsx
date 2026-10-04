@@ -6,6 +6,7 @@ import type { Metadata } from 'next';
 import { formatChf } from '@/lib/tax';
 import { product as generateProductSchema } from '@/lib/schema';
 import { getLocalized } from '@/lib/types';
+import { getProductFaqs } from '@/lib/productFaq';
 
 interface Props {
   params: { slug: string };
@@ -65,11 +66,29 @@ export default function ProductDetailPage({ params }: Props) {
     }
   );
 
+  const productFaqs = getProductFaqs(product);
+  const faqSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: productFaqs.map(faq => ({
+      '@type': 'Question',
+      name: faq.question,
+      acceptedAnswer: {
+        '@type': 'Answer',
+        text: faq.answer,
+      }
+    }))
+  };
+
   return (
     <>
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
       />
       <ProductDetailClient product={product} relatedProducts={fallbackRelated} />
     </>

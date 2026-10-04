@@ -39,49 +39,56 @@ export default function Footer() {
             </address>
           </div>
 
-          {/* Col 2: Service & Shipping */}
+          {/* Col 2: Expertises & Coaching */}
           <div>
-            <h4 className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-4 font-heading">Services & Coaching</h4>
-            <ul className="space-y-2.5 text-xs text-white/70">
-              <li><Link href="/coaching-nutritionnel-personnalise/" className="hover:text-[#F80404] font-bold text-white transition-colors">✦ Coaching Nutritionnel (Bilan Gratuit)</Link></li>
-              <li><Link href="/guide-des-complements-alimentaires/" className="hover:text-[#95d600] font-bold text-white transition-colors">✦ Le Guide Ultime (Ebook PDF)</Link></li>
-              <li><Link href="/blog/" className="hover:text-[#F80404] font-bold text-white transition-colors">✦ Blog & Guides Nutrition (20 Dossiers)</Link></li>
-              <li><Link href="/faq/" className="hover:text-white transition-colors font-bold text-white">✦ FAQ Nutrition & Protéines</Link></li>
-              <li><Link href="/boutique-geneve/" className="hover:text-white transition-colors">Boutique Genève & Click & Collect 2h</Link></li>
-              <li><Link href="/compte/" className="hover:text-white transition-colors">Mon Compte Client</Link></li>
-              <li><Link href="/commande/" className="hover:text-white transition-colors">Suivi de Commande Suisse</Link></li>
+            <h4 className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-4 font-heading">Conseils & Expertises</h4>
+            <ul className="space-y-2 text-xs text-white/70">
+              <li><Link href="/coaching-nutritionnel-personnalise/" className="hover:text-[#F80404] font-bold text-white transition-colors">✦ Coaching Personnalisé (Bilan Gratuit)</Link></li>
+              <li><Link href="/guide-des-complements-alimentaires/" className="hover:text-[#95d600] font-bold text-white transition-colors">✦ Guide Ultime Ebook (66 pages PDF)</Link></li>
+              <li><Link href="/blog/" className="hover:text-[#F80404] font-bold text-white transition-colors">✦ Blog & Guides Scientifiques (20 Dossiers)</Link></li>
+              <li><Link href="/quel-complement-choisir/" className="hover:text-white transition-colors font-medium text-white/90">✦ Quel Complément Choisir ?</Link></li>
+              <li><Link href="/marques/" className="hover:text-white transition-colors">Nos Marques Officielles</Link></li>
+              <li><Link href="/a-propos/" className="hover:text-white transition-colors">À Propos & Notre Histoire (2015)</Link></li>
+              <li><Link href="/faq/" className="hover:text-white transition-colors font-bold text-white">Centre d&apos;Aide & FAQ Complète</Link></li>
             </ul>
           </div>
 
-          {/* Col 3: Legal & Privacy */}
+          {/* Col 3: Boutique & Livraison */}
           <div>
-            <h4 className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-4 font-heading">Informations Légales</h4>
-            <ul className="space-y-2.5 text-xs text-white/70">
+            <h4 className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-4 font-heading">Boutique & Livraison</h4>
+            <ul className="space-y-2 text-xs text-white/70">
+              <li><Link href="/magasin-geneve/" className="hover:text-white transition-colors font-bold text-white">📍 Boutique Genève & Click & Collect</Link></li>
+              <li><Link href="/livraison/" className="hover:text-white transition-colors">Livraison Express 24h & Tarifs</Link></li>
+              <li><Link href="/paiement/" className="hover:text-white transition-colors">Paiement Sécurisé (TWINT, Cartes)</Link></li>
+              <li><Link href="/retours/" className="hover:text-white transition-colors">Politique de Retours (14 Jours)</Link></li>
+              <li><Link href="/contact/" className="hover:text-white transition-colors">Contactez Notre Équipe</Link></li>
+              <li><Link href="/compte/" className="hover:text-white transition-colors">Mon Compte Client</Link></li>
+              <li><Link href="/commande/" className="hover:text-white transition-colors">Suivi de Commande en Ligne</Link></li>
+            </ul>
+          </div>
+
+          {/* Col 4: Sécurité & Newsletter */}
+          <div>
+            <h4 className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-4 font-heading">Conformité & Club</h4>
+            <ul className="space-y-1.5 text-[11px] text-white/60 mb-4">
+              <li><Link href="/qualite-conservation/" className="hover:text-white transition-colors">Qualité, Authenticité & DDM</Link></li>
+              <li><Link href="/sante-securite/" className="hover:text-white transition-colors">Santé, Sécurité & Mises en Garde</Link></li>
               <li><Link href="/mentions-legales/" className="hover:text-white transition-colors">Mentions Légales & Impressum</Link></li>
               <li><Link href="/cgv/" className="hover:text-white transition-colors">Conditions Générales de Vente (CGV)</Link></li>
               <li><Link href="/protection-donnees/" className="hover:text-white transition-colors">Protection des Données (nDSG Suisse)</Link></li>
-              <li><Link href="/retours/" className="hover:text-white transition-colors">Politique de Retour & Droit de Rétractation</Link></li>
               <li><Link href="/cookies/" className="hover:text-white transition-colors">Gestion des Cookies</Link></li>
             </ul>
-          </div>
-
-          {/* Col 4: Newsletter */}
-          <div>
-            <h4 className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-4 font-heading">Rejoignez le Club</h4>
-            <p className="text-xs text-white/60 mb-4 leading-relaxed">
-              Recevez nos alertes arrivages et offres exclusives réservées à nos athlètes suisses.
-            </p>
             <div className="space-y-2">
               <input 
                 type="email" 
                 placeholder="Votre adresse e-mail"
-                className="w-full min-h-[44px] px-3.5 text-xs bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none"
+                className="w-full min-h-[40px] px-3 text-xs bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none"
               />
               <button 
                 type="button"
-                className="w-full min-h-[44px] px-4 py-2 text-xs font-black uppercase tracking-wider text-black bg-[#F80404] hover:bg-[#FF3D00] rounded-xl transition-all shadow-md active:scale-98"
+                className="w-full min-h-[40px] px-4 py-2 text-xs font-black uppercase tracking-wider text-black bg-[#F80404] hover:bg-[#FF3D00] rounded-xl transition-all shadow-md active:scale-98"
               >
-                S&apos;inscrire
+                S&apos;inscrire au Club
               </button>
             </div>
           </div>

@@ -121,6 +121,55 @@ export const FAQ_DATA: FAQItem[] = [
     question: 'Dois-je faire une « phase de charge » avec la créatine ?',
     answer: 'Non, la phase de charge (consommer 20g par jour pendant 5 jours) n\'est pas obligatoire et peut occasionner de légers troubles digestifs chez certaines personnes. Les études scientifiques récentes démontrent qu\'une prise quotidienne constante de 3g à 5g de créatine monohydrate micronisée permet de saturer les réserves musculaires en 3 à 4 semaines de façon tout aussi efficace et beaucoup plus douce pour l\'organisme. La régularité de la prise (de préférence avec un repas contenant des glucides ou votre shake post-entraînement) est la clé principale.',
     keywords: ['creatine', 'charge', 'prise', 'dosage', 'grammes', 'timing']
+  },
+  // 5. Hub Specific Questions (PAGE 14)
+  {
+    id: 'faq-hub-1',
+    category: 'orders',
+    categoryLabel: 'Compte & Commandes',
+    question: 'Comment créer un compte client ou le supprimer ?',
+    answer: 'Vous pouvez créer un compte en quelques clics via notre page Mon Compte pour enregistrer vos adresses et retrouver vos commandes passées. La commande en tant qu\'invité sans création de compte est également possible. Pour supprimer votre compte ou vos données, il vous suffit de nous envoyer une simple demande via notre page Contact.',
+    keywords: ['compte', 'inscription', 'suppression', 'donnees', 'espace client', 'invité']
+  },
+  {
+    id: 'faq-hub-2',
+    category: 'orders',
+    categoryLabel: 'Compte & Commandes',
+    question: 'Comment me désabonner de la newsletter ?',
+    answer: 'Chaque email de newsletter NutriFitness comporte un lien de désinscription sécurisé en pied de page. Un simple clic vous désabonne instantanément. Vous pouvez également nous contacter pour retirer votre adresse de notre liste de diffusion.',
+    keywords: ['newsletter', 'email', 'desabonnement', 'courriel', 'optout']
+  },
+  {
+    id: 'faq-hub-3',
+    category: 'health',
+    categoryLabel: 'Santé, Données & Sécurité',
+    question: 'Mes données personnelles sont-elles protégées selon la loi suisse ?',
+    answer: 'Oui. Nous appliquons scrupuleusement la nouvelle loi fédérale sur la protection des données (nDSG suisse). Vos coordonnées et informations de commande ne sont jamais vendues ni cédées à des tiers. Tous les détails figurent sur notre page Protection des données.',
+    keywords: ['donnees', 'ndsg', 'rgpd', 'confidentialite', 'securite', 'suisse', 'protection']
+  },
+  {
+    id: 'faq-hub-4',
+    category: 'orders',
+    categoryLabel: 'Boutique & Services',
+    question: 'Proposez-vous des cartes cadeaux ou bons d\'achat ?',
+    answer: 'Oui, des bons d\'achat et cartes cadeaux personnalisées sont disponibles sur demande en boutique à Genève et en ligne, valables sur l\'ensemble du catalogue (protéines, créatine, barres, vêtements et accessoires).',
+    keywords: ['carte cadeau', 'bon d achat', 'cadeau', 'voucher', 'cheque cadeau']
+  },
+  {
+    id: 'faq-hub-5',
+    category: 'store',
+    categoryLabel: 'Boutique & Services',
+    question: 'Proposez-vous des tarifs pour les clubs, salles de sport ou entraîneurs ?',
+    answer: 'Oui, nous proposons des conditions partenaires spécifiques pour les coachs sportifs certifiés, préparateurs physiques, salles de sport et clubs sportifs en Suisse. Écrivez-nous via notre formulaire de Contact en précisant votre statut pour recevoir nos tarifs préférentiels.',
+    keywords: ['coach', 'club', 'salle de sport', 'tarifs pro', 'partenariat', 'b2b', 'remise']
+  },
+  {
+    id: 'faq-hub-6',
+    category: 'orders',
+    categoryLabel: 'Retours & Remboursements',
+    question: 'Les compléments alimentaires ouverts peuvent-ils être repris ?',
+    answer: 'Pour des impératifs stricts de sécurité sanitaire et d\'hygiène alimentaire (normes suisses OSAV), les compléments alimentaires dont l\'opercule de sécurité ou le scellé a été brisé ou ouvert ne peuvent pas être repris ni échangés, sauf défaut de fabrication avéré constaté.',
+    keywords: ['retours', 'produit ouvert', 'securite', 'hygiene', 'opercule', 'osav']
   }
 ];
 
@@ -139,8 +188,8 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
     { key: 'proteins', label: 'Protéines & Whey' },
     { key: 'creatine', label: 'Créatine & Performance' },
     { key: 'weightloss', label: 'Perte de Poids & Sèche' },
-    { key: 'health', label: 'Santé & Articulations' },
-    { key: 'orders', label: 'Commandes & TWINT' }
+    { key: 'health', label: 'Santé & Sécurité (OSAV)' },
+    { key: 'orders', label: 'Commandes, Paiement & Retours' }
   ];
 
   // Filtered Questions
@@ -298,6 +347,47 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
           </button>
         </div>
       )}
+
+      {/* 8 Thematic Pillars Cards */}
+      <section className="mb-14">
+        <h2 className="text-base sm:text-lg font-black uppercase text-white font-heading mb-4">
+          Consulter Nos Dossiers Détaillés par Thématique
+        </h2>
+        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
+          <Link href="/livraison/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">📦 Livraison 24h</p>
+            <p className="text-[11px] text-white/60 mt-1">PostPac Priority, tarifs et seuil franco dès 75 CHF.</p>
+          </Link>
+          <Link href="/paiement/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">💳 Paiement Sécurisé</p>
+            <p className="text-[11px] text-white/60 mt-1">TWINT, PostFinance, CB 3D Secure, Apple Pay.</p>
+          </Link>
+          <Link href="/retours/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">↩️ Retours 14 Jours</p>
+            <p className="text-[11px] text-white/60 mt-1">Délai 14 jours, scellés de sécurité et procédure.</p>
+          </Link>
+          <Link href="/magasin-geneve/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">📍 Boutique Genève</p>
+            <p className="text-[11px] text-white/60 mt-1">34 Rue des Pâquis, horaires, tram et Click & Collect.</p>
+          </Link>
+          <Link href="/quel-complement-choisir/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">🎯 Quel Choix Choisir ?</p>
+            <p className="text-[11px] text-white/60 mt-1">Masse, sèche, force, récupération ou vegan.</p>
+          </Link>
+          <Link href="/qualite-conservation/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">🛡️ Qualité & DDM</p>
+            <p className="text-[11px] text-white/60 mt-1">Normes OSAV/DFI, authenticité et conservation.</p>
+          </Link>
+          <Link href="/sante-securite/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">🩺 Santé & Sécurité</p>
+            <p className="text-[11px] text-white/60 mt-1">Contre-indications, caféine, jeunesse et grossesse.</p>
+          </Link>
+          <Link href="/contact/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">💬 Contact & Conseil</p>
+            <p className="text-[11px] text-white/60 mt-1">Téléphone +41 79 250 35 64 et formulaire direct.</p>
+          </Link>
+        </div>
+      </section>
 
       {/* Expert Advice CTA Box */}
       <section className="p-6 sm:p-8 rounded-3xl bg-gradient-to-br from-[#1a1a1a] to-[#0d0d0d] border border-white/15 relative overflow-hidden mb-12">
