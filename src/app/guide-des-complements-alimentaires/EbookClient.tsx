@@ -271,6 +271,9 @@ export default function EbookClient() {
             <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
               « Je suis propriétaire d'un magasin de compléments alimentaires depuis le <strong>15 avril 2015</strong>. Mais mon histoire avec la musculation a commencé bien avant cela. Au début, j'ai fait toutes les erreurs imaginables : j'ai pris ce que les vendeurs me conseillaient, j'ai cru au marketing outrancier, j'ai testé tous les produits à la mode. Très vite, j'ai voulu comprendre pourquoi certaines formules fonctionnaient et d'autres non. Cette passion de la rigueur ne m'a plus jamais quitté. »
             </p>
+            <p className="text-xs font-bold text-[#95d600] pt-1">
+              — Marco Scarpantoni, Fondateur & Gérant de NutriFitness Genève
+            </p>
           </div>
 
           <div className="lg:col-span-4 p-6 bg-black/60 rounded-2xl border border-white/10 text-center space-y-3">

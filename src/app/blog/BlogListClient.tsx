@@ -129,7 +129,7 @@ export default function BlogListClient({ posts }: BlogListClientProps) {
               <div className="flex items-center justify-between pt-6 border-t border-white/10">
                 <div className="flex items-center gap-3">
                   <div className="w-9 h-9 rounded-full bg-[#F80404]/20 border border-[#F80404]/40 flex items-center justify-center font-bold text-white text-xs">
-                    AF
+                    MS
                   </div>
                   <div>
                     <p className="text-xs font-bold text-white">{featuredPost.author}</p>
@@ -231,7 +231,7 @@ export default function BlogListClient({ posts }: BlogListClientProps) {
                 <div className="pt-4 border-t border-white/10 flex items-center justify-between mt-auto">
                   <div className="flex items-center gap-2">
                     <div className="w-6 h-6 rounded-full bg-white/10 flex items-center justify-center text-[10px] font-bold text-white/80">
-                      AF
+                      MS
                     </div>
                     <span className="text-[11px] text-white/70 truncate max-w-[120px]">{post.author}</span>
                   </div>

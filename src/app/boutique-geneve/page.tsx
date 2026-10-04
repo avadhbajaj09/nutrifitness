@@ -26,7 +26,11 @@ export default function BoutiqueGenevePage() {
       'latitude': 46.2120,
       'longitude': 6.1480
     },
-    'telephone': '+41 [TODO: Téléphone]',
+    'telephone': '+41 79 250 35 64',
+    'founder': {
+      '@type': 'Person',
+      'name': 'Marco Scarpantoni'
+    },
     'priceRange': 'CHF',
     'openingHoursSpecification': [
       {
@@ -111,7 +115,7 @@ export default function BoutiqueGenevePage() {
           </h1>
           <p className="text-base text-white/70 leading-relaxed mb-8">
             Située au cœur de Genève à 5 minutes de la Gare Cornavin, notre boutique vous accueille du lundi au samedi. 
-            Découvrez un catalogue complet de protéines, créatines et boosters avec les conseils de passionnés de musculation et fitness.
+            Fondée et dirigée par <strong>Marco Scarpantoni</strong>, découvrez un catalogue complet de protéines, créatines et boosters avec les conseils avisés de spécialistes de terrain.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">
@@ -173,7 +177,7 @@ export default function BoutiqueGenevePage() {
               <Phone className="w-5 h-5 text-[#F80404] shrink-0 mt-0.5" />
               <div>
                 <strong className="text-white block">Téléphone & WhatsApp</strong>
-                <p className="text-white/70">+41 [TODO: Téléphone]</p>
+                <p className="text-white/70">+41 79 250 35 64</p>
                 <p className="text-xs text-white/50 mt-1">Réponse directe pendant les heures d'ouverture</p>
               </div>
             </div>

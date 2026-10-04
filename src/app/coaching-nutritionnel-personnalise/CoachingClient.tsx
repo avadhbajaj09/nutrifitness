@@ -205,7 +205,7 @@ export default function CoachingClient() {
             Pourquoi Nous Faire Confiance ?
           </h2>
           <p className="text-xs sm:text-sm text-white/65 mt-2 leading-relaxed">
-            Depuis plus de 20 ans, nous accompagnons nos clients vers une meilleure santé, une transformation physique durable et des performances optimisées grâce à une approche personnalisée basée sur la science de la nutrition sportive.
+            Fondé et dirigé par <strong>Marco Scarpantoni</strong>, préparateur physique et spécialiste en nutrition sportive fort de plus de 20 ans d'expertise sur le terrain à Genève, NutriFitness vous garantit un accompagnement sérieux, scientifique et axé sur vos résultats durables.
           </p>
         </div>
 

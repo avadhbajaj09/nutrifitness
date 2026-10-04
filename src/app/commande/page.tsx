@@ -187,11 +187,11 @@ export default function CheckoutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Prénom *</label>
-                <input type="text" required placeholder="Alexandre" className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" />
+                <input type="text" required placeholder="Marco" className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" />
               </div>
               <div>
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Nom *</label>
-                <input type="text" required placeholder="Favre" className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" />
+                <input type="text" required placeholder="Scarpantoni" className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" />
               </div>
               <div className="sm:col-span-2">
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Rue et numéro *</label>

@@ -230,7 +230,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           <div className="flex flex-wrap items-center justify-between gap-4 p-4 rounded-2xl bg-[#141414] border border-white/10">
             <div className="flex items-center gap-3.5">
               <div className="w-11 h-11 rounded-full bg-[#F80404]/20 border border-[#F80404]/40 flex items-center justify-center font-black text-white text-sm">
-                AF
+                MS
               </div>
               <div>
                 <p className="text-sm font-bold text-white flex items-center gap-2">

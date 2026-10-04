@@ -32,6 +32,7 @@ export default function Footer() {
                 Boutique physique à Genève :
               </p>
               <p>34 Rue des Pâquis, 1201 Genève</p>
+              <p className="text-white/80">Fondateur & Gérant : <span className="font-bold text-white">Marco Scarpantoni</span></p>
               <p>Tél : <a href="tel:+41792503564" className="hover:text-[#F80404] transition-colors">+41 79 250 35 64</a></p>
               <p>E-mail : <a href="mailto:hello@nutrifitness.ch" className="hover:text-[#F80404] transition-colors">hello@nutrifitness.ch</a></p>
               <p className="text-[11px] text-white/40 pt-1">IDE / UID : [TODO: UID / CHE-XXX.XXX.XXX]</p>
