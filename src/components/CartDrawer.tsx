@@ -124,7 +124,14 @@ export default function CartDrawer() {
                     <div>
                       <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider">{item.brand}</p>
                       <h4 className="text-xs font-bold text-white line-clamp-1">{item.name}</h4>
-                      <p className="text-[11px] text-white/50">{item.flavor} · {item.size}</p>
+                      <p className="text-[11px] text-white/50">
+                        {item.flavor} · {item.size}
+                      </p>
+                      {item.isEbook && (
+                        <p className="text-[10px] text-[#95d600] font-bold pt-0.5">
+                          ✓ Exemplaire unique (téléchargement PDF)
+                        </p>
+                      )}
                     </div>
                     <button 
                       type="button" 
@@ -143,12 +150,19 @@ export default function CartDrawer() {
                         type="button" 
                         onClick={() => updateQuantity(item.itemKey, -1)}
                         className="w-7 h-7 flex items-center justify-center text-white/70 hover:text-white font-bold"
+                        title="Diminuer ou retirer"
                       >-</button>
                       <span className="w-7 text-center text-xs font-bold text-white">{item.quantity}</span>
                       <button 
                         type="button" 
+                        disabled={item.isEbook}
                         onClick={() => updateQuantity(item.itemKey, 1)}
-                        className="w-7 h-7 flex items-center justify-center text-white/70 hover:text-white font-bold"
+                        className={`w-7 h-7 flex items-center justify-center font-bold ${
+                          item.isEbook 
+                            ? 'opacity-20 cursor-not-allowed text-white/30' 
+                            : 'text-white/70 hover:text-white'
+                        }`}
+                        title={item.isEbook ? 'Format numérique : limité à 1 exemplaire par commande' : 'Augmenter la quantité'}
                       >+</button>
                     </div>
                     <div className="text-right">
@@ -173,6 +187,10 @@ export default function CartDrawer() {
                 </div>
                 <div>
                   <p className="text-[11px] font-bold text-white leading-tight">Shaker Pro 700ml Sans BPA</p>
+                  <div className="flex items-center gap-1 text-[10px] py-0.5">
+                    <span className="text-amber-400">★★★★★</span>
+                    <span className="text-white/50">4.9 (94 avis)</span>
+                  </div>
                   <p className="text-[10px] text-white/50">+{formatPrice(8.90)} · Accessoire</p>
                 </div>
               </div>

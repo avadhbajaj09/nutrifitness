@@ -5,6 +5,7 @@ import { getLocalized } from '@/lib/types';
 import type { SupportedLocale } from '@/lib/types';
 import { TRANSLATIONS, TranslationDictionary, SupportedCurrency } from '@/lib/translations';
 import { formatPrice as taxFormatPrice, convertPrice as taxConvertPrice } from '@/lib/tax';
+import { isEbookItem } from '@/lib/reviews';
 
 export interface CartItem {
   itemKey: string;
@@ -18,6 +19,7 @@ export interface CartItem {
   size: string;
   quantity: number;
   vatRate: number;
+  isEbook?: boolean;
 }
 
 interface ToastInfo {
@@ -162,9 +164,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const addToCart = (product: any, options: { quantity?: number; flavor?: string; size?: string; price?: number } = {}) => {
-    const quantity = options.quantity || 1;
+    const isEbook = isEbookItem(product);
+    const quantity = isEbook ? 1 : (options.quantity || 1);
     const flavor = options.flavor || product.flavor || 'Standard';
-    const size = options.size || product.size || 'Format standard';
+    const size = options.size || product.size || (isEbook ? 'Format PDF' : 'Format standard');
     const price = Number(options.price !== undefined ? options.price : (product.priceChf || product.price || 49.9));
     const image = product.image || (product.images && product.images[0] ? product.images[0].src : '/images/placeholder.webp');
     const slug = getLocalized(product.slug, locale) || product.id || 'produit';
@@ -172,9 +175,23 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const brand = product.brand || 'NutriFitness';
     const itemKey = `${product.id || slug}-${flavor}-${size}`;
 
+    let blockedDuplicateEbook = false;
+
     setCart(prev => {
+      if (isEbook) {
+        const alreadyHasEbook = prev.some(item => item.isEbook || isEbookItem(item));
+        if (alreadyHasEbook) {
+          blockedDuplicateEbook = true;
+          return prev;
+        }
+      }
+
       const index = prev.findIndex(item => item.itemKey === itemKey);
       if (index > -1) {
+        if (isEbook) {
+          blockedDuplicateEbook = true;
+          return prev;
+        }
         const next = [...prev];
         next[index] = { ...next[index], quantity: next[index].quantity + quantity };
         return next;
@@ -192,11 +209,21 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             flavor,
             size,
             quantity,
-            vatRate: product.vatRate || 2.6
+            vatRate: product.vatRate || 2.6,
+            isEbook
           }
         ];
       }
     });
+
+    if (blockedDuplicateEbook) {
+      showToast(
+        'Exemplaire unique',
+        'Le guide numérique est déjà dans votre panier (limité à 1 exemplaire par commande).'
+      );
+      setIsCartOpen(true);
+      return;
+    }
 
     showToast(
       locale === 'de' ? 'Warenkorb aktualisiert' : locale === 'it' ? 'Carrello aggiornato' : locale === 'en' ? 'Cart updated' : 'Panier mis à jour',
@@ -215,6 +242,17 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const updateQuantity = (itemKey: string, delta: number) => {
     setCart(prev => {
+      const target = prev.find(item => item.itemKey === itemKey || item.id === itemKey);
+      if (target && (target.isEbook || isEbookItem(target))) {
+        if (delta > 0) {
+          showToast('Exemplaire unique', 'Le guide numérique est limité à 1 exemplaire par commande.');
+          return prev;
+        }
+        if (delta < 0) {
+          return prev.filter(item => item.itemKey !== itemKey && item.id !== itemKey);
+        }
+      }
+
       return prev
         .map(item => {
           if (item.itemKey === itemKey || item.id === itemKey) {

@@ -20,6 +20,7 @@ import {
   Lock 
 } from 'lucide-react';
 import { formatChf } from '@/lib/tax';
+import { getProductReviewStats } from '@/lib/reviews';
 
 const ebookItem = {
   id: 'prod-25430',
@@ -36,6 +37,7 @@ const ebookItem = {
 export default function EbookClient() {
   const router = useRouter();
   const { addToCart, openCart, formatPrice } = useStore();
+  const reviewStats = getProductReviewStats(ebookItem.id, ebookItem.categorySlug);
 
   const handleInstantBuy = () => {
     addToCart(ebookItem, { quantity: 1, flavor: 'Format PDF Téléchargeable' });
@@ -172,7 +174,9 @@ export default function EbookClient() {
               {[...Array(5)].map((_, i) => (
                 <Star key={i} className="w-4 h-4 fill-[#95d600]" />
               ))}
-              <span className="text-xs text-white/80 font-bold ml-2">4.9 / 5 (Avis lecteurs vérifiés)</span>
+              <span className="text-xs text-white/80 font-bold ml-2">
+                {reviewStats.rating.toFixed(1)} / 5 ({reviewStats.count} avis lecteurs vérifiés)
+              </span>
             </div>
           </div>
         </div>
@@ -305,6 +309,47 @@ export default function EbookClient() {
                   <h4 className="text-xs font-bold text-white uppercase font-heading">{ch.title}</h4>
                 </div>
                 <p className="text-xs text-white/60 leading-relaxed">{ch.desc}</p>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Verified Reader Reviews */}
+        <div className="mb-16">
+          <div className="text-center max-w-xl mx-auto mb-10">
+            <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#95d600]/15 border border-[#95d600]/40 text-[#95d600] text-xs font-black uppercase tracking-wider mb-2 font-heading">
+              <Star className="w-3.5 h-3.5 fill-[#95d600]" />
+              {reviewStats.rating.toFixed(1)} / 5 · {reviewStats.count} Retours Lecteurs Vérifiés
+            </div>
+            <h2 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">
+              Ce Qu'en Disent Nos Lecteurs
+            </h2>
+            <p className="text-xs text-white/60 mt-1">
+              Avis 100% vérifiés de pratiquants ayant téléchargé le guide en Suisse
+            </p>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            {reviewStats.reviews.map((rev) => (
+              <div key={rev.id} className="p-5 bg-black/40 rounded-2xl border border-white/10 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-1 text-[#95d600]">
+                    {[...Array(rev.rating)].map((_, i) => (
+                      <Star key={i} className="w-3.5 h-3.5 fill-[#95d600]" />
+                    ))}
+                  </div>
+                  <span className="text-[11px] text-white/40">{rev.date}</span>
+                </div>
+                <div>
+                  <h4 className="text-xs font-bold text-white uppercase mb-1">{rev.title}</h4>
+                  <p className="text-xs text-white/70 leading-relaxed italic">« {rev.comment} »</p>
+                </div>
+                <div className="flex items-center justify-between pt-2 border-t border-white/5 text-[11px]">
+                  <span className="font-semibold text-white/90">{rev.author} <span className="text-white/40">({rev.location})</span></span>
+                  <span className="text-[#95d600] font-medium flex items-center gap-1">
+                    <CheckCircle2 className="w-3 h-3" /> Achat vérifié
+                  </span>
+                </div>
               </div>
             ))}
           </div>

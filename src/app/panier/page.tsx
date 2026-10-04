@@ -114,7 +114,11 @@ export default function CartPage() {
                       <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider font-heading">{item.brand}</p>
                       <h3 className="text-sm font-bold text-white line-clamp-1">{item.name}</h3>
                       <p className="text-xs text-white/50">{item.flavor} · {item.size}</p>
-                      <p className="text-[11px] text-emerald-400 font-bold mt-1">● {t.common.inStock}</p>
+                      {item.isEbook ? (
+                        <p className="text-[11px] text-[#95d600] font-bold mt-1">✓ Exemplaire unique (téléchargement immédiat)</p>
+                      ) : (
+                        <p className="text-[11px] text-emerald-400 font-bold mt-1">● {t.common.inStock}</p>
+                      )}
                     </div>
                   </div>
 
@@ -124,12 +128,19 @@ export default function CartPage() {
                         type="button" 
                         onClick={() => updateQuantity(item.itemKey, -1)}
                         className="w-9 h-9 flex items-center justify-center text-white/70 hover:text-white font-bold"
+                        title="Diminuer ou retirer"
                       >-</button>
                       <span className="w-9 text-center text-xs font-bold text-white">{item.quantity}</span>
                       <button 
                         type="button" 
+                        disabled={item.isEbook}
                         onClick={() => updateQuantity(item.itemKey, 1)}
-                        className="w-9 h-9 flex items-center justify-center text-white/70 hover:text-white font-bold"
+                        className={`w-9 h-9 flex items-center justify-center font-bold ${
+                          item.isEbook 
+                            ? 'opacity-20 cursor-not-allowed text-white/30' 
+                            : 'text-white/70 hover:text-white'
+                        }`}
+                        title={item.isEbook ? 'Format numérique limité à 1 exemplaire par commande' : 'Augmenter la quantité'}
                       >+</button>
                     </div>
 

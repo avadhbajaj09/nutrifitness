@@ -8,6 +8,7 @@ import ProductCarousel from '@/components/ProductCarousel';
 import DynamicPricingBox from '@/components/DynamicPricingBox';
 import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
+import { getProductReviewStats } from '@/lib/reviews';
 
 interface Props {
   product: ProductItem;
@@ -25,6 +26,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const slug = getLocalized(product.slug, locale);
   const name = getLocalized(product.name, locale);
   const vat = calculateVat(product.priceChf, product.taxCategory);
+  const reviewStats = getProductReviewStats(product.id, product.categorySlug, slug);
   const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
 
   const compareAtPrice = product.compareAtPriceChf || (product.priceChf > 40 ? Math.round((product.priceChf * 1.18) * 20) / 20 : undefined);
@@ -50,9 +52,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {name}
         </h1>
         <div className="flex items-center gap-2 text-xs pt-0.5">
-          <div className="flex text-amber-400">★★★★★</div>
-          <span className="font-bold text-white">4.9 / 5</span>
-          <span className="text-white/40">· 58 avis vérifiés en Suisse</span>
+          <div className="flex text-amber-400">{reviewStats.stars}</div>
+          <span className="font-bold text-white">{reviewStats.rating.toFixed(1)} / 5</span>
+          <span className="text-white/40">· {reviewStats.count} avis vérifiés en Suisse</span>
         </div>
       </div>
 
@@ -110,9 +112,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             </h1>
 
             <div className="flex items-center gap-2 text-xs mb-3">
-              <div className="flex text-amber-400">★★★★★</div>
-              <span className="font-bold text-white">4.9 / 5</span>
-              <span className="text-white/40">· 58 avis vérifiés en Suisse</span>
+              <div className="flex text-amber-400">{reviewStats.stars}</div>
+              <span className="font-bold text-white">{reviewStats.rating.toFixed(1)} / 5</span>
+              <span className="text-white/40">· {reviewStats.count} avis vérifiés en Suisse</span>
             </div>
           </div>
 
@@ -233,7 +235,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 activeTab === 'reviews' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
               }`}
             >
-              4. Avis Clients Vérifiés (58)
+              4. Avis Clients Vérifiés ({reviewStats.count})
             </button>
           </div>
 
@@ -322,30 +324,38 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
           {/* Tab 4: Reviews */}
           {activeTab === 'reviews' && (
-            <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4 animate-in fade-in duration-150">
+            <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-5 animate-in fade-in duration-150">
               <div className="flex items-center justify-between pb-4 border-b border-white/10">
                 <div>
                   <h3 className="text-base font-black uppercase text-white font-heading">Avis Clients Suisse</h3>
-                  <p className="text-xs text-white/50">Note moyenne de 4.9/5 basée sur 58 avis vérifiés</p>
+                  <p className="text-xs text-white/50">Note moyenne de {reviewStats.rating.toFixed(1)}/5 basée sur {reviewStats.count} avis vérifiés en Suisse</p>
                 </div>
-                <div className="flex text-amber-400 text-base">★★★★★</div>
+                <div className="flex text-amber-400 text-base">{reviewStats.stars}</div>
               </div>
 
               <div className="space-y-3">
-                <div className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-1">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold text-white">Robin D. (Genève)</span>
-                    <span className="text-amber-400">★★★★★</span>
+                {reviewStats.reviews.map((rev) => (
+                  <div key={rev.id} className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-1.5">
+                    <div className="flex justify-between items-center text-xs">
+                      <div className="flex items-center gap-2">
+                        <span className="font-bold text-white">{rev.author} ({rev.location})</span>
+                        {rev.verified && (
+                          <span className="text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.2 rounded font-medium">
+                            ✓ Achat vérifié
+                          </span>
+                        )}
+                      </div>
+                      <div className="flex items-center gap-2">
+                        <span className="text-[10px] text-white/40">{rev.date}</span>
+                        <span className="text-amber-400">{'★'.repeat(rev.rating)}</span>
+                      </div>
+                    </div>
+                    {rev.title && (
+                      <p className="text-xs font-bold text-white">{rev.title}</p>
+                    )}
+                    <p className="text-xs text-white/70 leading-relaxed">&quot;{rev.comment}&quot;</p>
                   </div>
-                  <p className="text-xs text-white/70">&quot;Goût excellent et très bonne miscibilité dans l&apos;eau. Expédition super rapide par la Poste Suisse.&quot;</p>
-                </div>
-                <div className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-1">
-                  <div className="flex justify-between items-center text-xs">
-                    <span className="font-bold text-white">Stéphane L. (Lausanne)</span>
-                    <span className="text-amber-400">★★★★★</span>
-                  </div>
-                  <p className="text-xs text-white/70">&quot;Produit de qualité irréprochable. Commande reçue en 24 heures sans frais de douane.&quot;</p>
-                </div>
+                ))}
               </div>
             </div>
           )}
