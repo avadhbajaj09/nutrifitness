@@ -8,6 +8,7 @@ import CartDrawer from '@/components/CartDrawer';
 import QuickViewModal from '@/components/QuickViewModal';
 import SearchOverlay from '@/components/SearchOverlay';
 import ToastContainer from '@/components/ToastContainer';
+import ChatBot from '@/components/ChatBot';
 import { organization, website } from '@/lib/schema';
 
 export const metadata: Metadata = {
@@ -55,6 +56,7 @@ export default function RootLayout({
           <QuickViewModal />
           <SearchOverlay />
           <ToastContainer />
+          <ChatBot />
         </StoreProvider>
       </body>
     </html>
