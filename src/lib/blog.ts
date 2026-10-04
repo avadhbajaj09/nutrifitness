@@ -58,7 +58,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-28',
     author: 'Alexandre Favre',
     authorRole: 'Coach Certifié & Préparateur Physique NutriFitness Genève',
-    image: '/images/fitrush/imgi_65_blog-post-1.webp',
+    image: '/images/blog/nutriftiness-images14.png',
     shortAnswer: 'La créatine monohydrate se prend tous les jours, à raison de 3 à 5 g, dans une boisson tempérée (eau, jus de raisin ou shaker de protéines). Le moment de la prise compte moins que la régularité quotidienne, y compris lors des jours de repos pour maintenir la saturation musculaire.',
     sections: [
       {
@@ -119,7 +119,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-25',
     author: 'Alexandre Favre',
     authorRole: 'Coach Certifié & Préparateur Physique NutriFitness Genève',
-    image: '/images/fitrush/imgi_64_blog-post-2.webp',
+    image: '/images/blog/nutriftiness-images3.jpg',
     shortAnswer: 'Creapure® n\'est pas une molécule différente, mais la marque déposée de créatine monohydrate la plus pure au monde, synthétisée en Allemagne par Alzchem Trostberg GmbH avec une pureté garantie à 99.99% sans traces de métaux lourds ni dérivés toxiques.',
     sections: [
       {
@@ -172,7 +172,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-22',
     author: 'Alexandre Favre',
     authorRole: 'Coach Certifié NutriFitness Genève',
-    image: '/images/fitrush/imgi_63_blog-post-5.webp',
+    image: '/images/blog/nutriftiness-images4.jpg',
     shortAnswer: 'Non, la phase de charge n\'est absolument pas obligatoire. Une dose régulière de 3 à 5 g par jour atteint le même niveau de saturation musculaire en 21 à 28 jours, tout en évitant les risques de crampes abdominales.',
     sections: [
       {
@@ -216,7 +216,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-20',
     author: 'Alexandre Favre',
     authorRole: 'Coach Certifié & Nutritionniste Sportif',
-    image: '/images/fitrush/imgi_62_blog-post-6.webp',
+    image: '/images/blog/nutriftiness-images52.png',
     shortAnswer: 'La Whey Isolate subit une microfiltration à flux croisé (CFM) lui conférant 88 à 93% de protéines pures avec moins de 1% de lactose et quasiment 0 g de lipides. La Whey Concentrée (75-80% de protéines) offre un rapport qualité/prix idéal si vous digérez bien les produits laitiers.',
     sections: [
       {
@@ -262,7 +262,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-18',
     author: 'Alexandre Favre',
     authorRole: 'Préparateur Physique NutriFitness',
-    image: '/images/fitrush/imgi_66_blog-post-7.webp',
+    image: '/images/blog/nutriftiness-images5.jpg',
     shortAnswer: 'La whey possède une concentration exceptionnelle en leucine stimulant directement l\'anabolisme (voie mTOR). Les poudres végétales combinant légumineuses et céréales (pois + riz) rivalisent désormais en qualité tout en étant 100% sans lactose, véganes et hypoallergéniques.',
     sections: [
       {
@@ -304,7 +304,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-15',
     author: 'Alexandre Favre',
     authorRole: 'Coach Certifié NutriFitness',
-    image: '/images/fitrush/imgi_65_blog-post-1.webp',
+    image: '/images/blog/nutriftiness-images20.jpg',
     shortAnswer: 'Pour un sportif pratiquant la musculation ou un entraînement régulier, visez entre 1.6 et 2.2 g de protéines par kilogramme de poids corporel et par jour. Pour un athlète de 75 kg, cela correspond à environ 120 à 165 g de protéines totales réparties sur la journée.',
     sections: [
       {
@@ -348,7 +348,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-12',
     author: 'Alexandre Favre',
     authorRole: 'Conseiller Technique NutriFitness Genève',
-    image: '/images/fitrush/imgi_64_blog-post-2.webp',
+    image: '/images/blog/nutriftiness-images13.png',
     shortAnswer: 'Ne jugez jamais une whey à son prix au kilo affiché : divisez le prix du pot par le nombre réel de portions de 25 g de protéines pures. Vérifiez ensuite le tableau nutritionnel pour 100 g et assurez-vous de l\'absence d\'aminospiking (acides aminés ajoutés artificiellement).',
     sections: [
       {
@@ -388,7 +388,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-10',
     author: 'Alexandre Favre',
     authorRole: 'Coach Prise de Masse NutriFitness',
-    image: '/images/fitrush/imgi_63_blog-post-5.webp',
+    image: '/images/blog/nutriftiness-images16.png',
     shortAnswer: 'Un gainer combine protéines et glucides pour créer un surplus calorique facile à boire. Il est particulièrement recommandé aux personnes à métabolisme très rapide ou en manque d\'appétit qui peinent à prendre du poids avec leurs repas ordinaires.',
     sections: [
       {
@@ -423,7 +423,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-08',
     author: 'Alexandre Favre',
     authorRole: 'Conseiller Technique NutriFitness Genève',
-    image: '/images/fitrush/imgi_62_blog-post-6.webp',
+    image: '/images/blog/nutriftiness-images9.jpg',
     shortAnswer: 'Les BCAA n\'apportent que 3 acides aminés (Leucine, Isoleucine, Valine). Les EAA apportent les 9 acides aminés essentiels dont le muscle a besoin pour synthétiser de nouvelles fibres. En l\'absence des 6 autres EAA, la synthèse musculaire est rapidement limitée.',
     sections: [
       {
@@ -463,7 +463,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-05',
     author: 'Alexandre Favre',
     authorRole: 'Préparateur Physique NutriFitness Genève',
-    image: '/images/fitrush/imgi_66_blog-post-7.webp',
+    image: '/images/blog/nutriftiness-images19.png',
     shortAnswer: 'La Citrulline booste l\'oxyde nitrique (NO) et la congestion musculaire. La Bêta-Alanine augmente les stocks de carnosine pour retarder la brûlure lactique lors des efforts intenses. La L-Glutamine soutient la récupération de la muqueuse intestinale et du système immunitaire.',
     sections: [
       {
@@ -503,7 +503,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-03-02',
     author: 'Alexandre Favre',
     authorRole: 'Coach & Conseiller NutriFitness',
-    image: '/images/fitrush/imgi_65_blog-post-1.webp',
+    image: '/images/blog/nutriftiness-images61.jpg',
     shortAnswer: 'Vérifiez systématiquement la teneur en caféine par dose (entre 150 et 300 mg) et privilégiez les formules aux dosages transparents (sans mélanges propriétaires cachés). Si vous vous entraînez après 17h, optez pour un booster sans stimulants (Pump non-stim).',
     sections: [
       {
@@ -538,7 +538,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-02-28',
     author: 'Alexandre Favre',
     authorRole: 'Coach NutriFitness Genève',
-    image: '/images/fitrush/imgi_64_blog-post-2.webp',
+    image: '/images/blog/nutriftiness-images22.png',
     shortAnswer: 'Pour un adulte en bonne santé, l\'EFSA juge sûre une dose quotidienne allant jusqu\'à 400 mg de caféine toutes sources confondues, et 200 mg par prise unitaire (environ 3 mg par kg de poids pour un effet ergogène sur la séance).',
     sections: [
       {
@@ -573,7 +573,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-02-24',
     author: 'Alexandre Favre',
     authorRole: 'Conseiller Technique NutriFitness Genève',
-    image: '/images/fitrush/imgi_63_blog-post-5.webp',
+    image: '/images/blog/nutriftiness-images8.jpg',
     shortAnswer: 'Le magnésium bisglycinate est chélaté à deux molécules d\'acide aminé glycine. Cette liaison organique protège le minéral contre l\'acidité gastrique et assure une biodisponibilité optimale sans le moindre effet laxatif.',
     sections: [
       {
@@ -607,7 +607,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-02-20',
     author: 'Alexandre Favre',
     authorRole: 'Coach NutriFitness Genève',
-    image: '/images/fitrush/imgi_62_blog-post-6.webp',
+    image: '/images/blog/nutriftiness-images7.png',
     shortAnswer: 'Le ZMA associe Zinc, Magnésium et Vitamine B6 sous des formes hautement biodisponibles. Il est conçu pour pallier les pertes minérales induites par la sudation abondante et soutenir les taux normaux de testostérone et la synthèse des protéines.',
     sections: [
       {
@@ -641,7 +641,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-02-16',
     author: 'Alexandre Favre',
     authorRole: 'Conseiller Technique NutriFitness Genève',
-    image: '/images/fitrush/imgi_66_blog-post-7.webp',
+    image: '/images/blog/nutriftiness-images59.jpg',
     shortAnswer: 'Ne regardez pas la quantité d\'huile de poisson totale, mais la teneur spécifique en acides gras essentiels EPA et DHA. Visez au minimum 500 à 800 mg d\'EPA/DHA combinés par dose journalière sous forme naturelle de triglycérides.',
     sections: [
       {
@@ -675,7 +675,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-02-12',
     author: 'Alexandre Favre',
     authorRole: 'Coach & Préparateur Physique NutriFitness Genève',
-    image: '/images/fitrush/imgi_65_blog-post-1.webp',
+    image: '/images/blog/nutriftiness-images36.jpg',
     shortAnswer: 'Lors d\'entraînements dépassant 60 minutes ou par temps chaud, l\'eau pure bue en grande quantité peut diluer le sodium sanguin (hyponatrémie). L\'apport conjoint d\'électrolytes permet de retenir l\'eau dans les cellules et d\'éviter les crampes musculaires.',
     sections: [
       {
@@ -709,7 +709,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-02-08',
     author: 'Alexandre Favre',
     authorRole: 'Nutritionniste & Fondateur NutriFitness',
-    image: '/images/fitrush/imgi_64_blog-post-2.webp',
+    image: '/images/blog/nutriftiness-images18.png',
     shortAnswer: 'Aucun complément alimentaire ne fait perdre du poids à lui seul sans déficit calorique modéré et régulier. Les protéines en poudre et la caféine sont les aides les plus efficaces pour préserver la masse musculaire et soutenir la satiété au cours d\'une sèche.',
     sections: [
       {
@@ -747,7 +747,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-02-04',
     author: 'Alexandre Favre',
     authorRole: 'Coach NutriFitness Genève',
-    image: '/images/fitrush/imgi_63_blog-post-5.webp',
+    image: '/images/blog/nutriftiness-images17.png',
     shortAnswer: 'Pour démarrer la journée avec 30 g de protéines sans perdre de temps : 1) Overnight oats à la whey et graines de chia préparés la veille, 2) Pancakes protéinés express, 3) Crème de riz tiède et isolate chocolat, 4) Smoothie banane-beurre de cacahuète.',
     sections: [
       {
@@ -782,7 +782,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-02-01',
     author: 'Alexandre Favre',
     authorRole: 'Conseiller Technique NutriFitness Genève',
-    image: '/images/fitrush/imgi_62_blog-post-6.webp',
+    image: '/images/blog/nutriftiness-images24.png',
     shortAnswer: 'Une excellente barre protéinée doit apporter au minimum 18 à 22 g de protéines de qualité pour moins de 2 à 3 g de sucres rapides. Évitez les produits où les sirops de glucose ou de fructose figurent en tête de la liste des ingrédients.',
     sections: [
       {
@@ -816,7 +816,7 @@ export const BLOG_POSTS: BlogPost[] = [
     publishedAt: '2026-01-28',
     author: 'Alexandre Favre',
     authorRole: 'Fondateur NutriFitness Genève (20+ ans d\'expérience)',
-    image: '/images/fitrush/imgi_66_blog-post-7.webp',
+    image: '/images/blog/nutriftiness-images33.jpg',
     shortAnswer: 'Ne commencez pas par acheter 10 compléments différents. La trilogie de base d\'une efficacité incontestable repose sur : 1) une bonne Whey pour sécuriser votre quota de protéines, 2) de la Créatine Monohydrate (Creapure®) pour la force, 3) des Oméga 3 et Magnésium pour la santé et le sommeil.',
     sections: [
       {

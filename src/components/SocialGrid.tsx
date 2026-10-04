@@ -2,11 +2,11 @@ import React from 'react';
 import Image from 'next/image';
 
 const posts = [
-  { img: '/images/fitrush/imgi_250_img-1x1-1.webp', tag: '#NutriFitnessCH' },
-  { img: '/images/fitrush/imgi_67_img.webp', tag: '#GenevaFitness' },
-  { img: '/images/fitrush/imgi_62_blog-post-6.webp', tag: '#SwissAthletes' },
-  { img: '/images/fitrush/imgi_66_blog-post-7.webp', tag: '#CreapureSuisse' },
-  { img: '/images/fitrush/imgi_252_img-slider-9-4.webp', tag: '#PostPacPriority' }
+  { img: '/images/blog/nutriftiness-images26.jpg', tag: '#NutriFitnessCH' },
+  { img: '/images/blog/nutriftiness-images29.jpg', tag: '#GenevaFitness' },
+  { img: '/images/blog/nutriftiness-images45.jpg', tag: '#SwissAthletes' },
+  { img: '/images/blog/nutriftiness-images27.jpg', tag: '#CreapureSuisse' },
+  { img: '/images/blog/nutriftiness-images32.jpg', tag: '#PostPacPriority' }
 ];
 
 export default function SocialGrid() {

@@ -43,7 +43,7 @@ export default function HomePage() {
       <section className="relative rounded-3xl overflow-hidden border border-white/15 my-16 shadow-2xl">
         <div className="relative w-full h-[360px] sm:h-[420px]">
           <Image 
-            src="/images/fitrush/imgi_256_section-banner-shop-1-scaled.webp" 
+            src="/images/blog/nutriftiness-images35.jpg" 
             alt="Offre exclusive NutriFitness Suisse"
             fill
             className="object-cover object-center filter brightness-90"
@@ -195,7 +195,7 @@ export default function HomePage() {
           >
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image 
-                src="/images/fitrush/imgi_65_blog-post-1.webp" 
+                src="/images/blog/nutriftiness-images14.png" 
                 alt="Créatine Monohydrate Guide Suisse" 
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -216,12 +216,12 @@ export default function HomePage() {
           </Link>
 
           <Link 
-            href="/blog/whey-isolate-ou-concentree/"
+            href="/blog/whey-concentree-ou-isolate/"
             className="bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group hover:border-[#F80404]/50 transition-all flex flex-col"
           >
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image 
-                src="/images/fitrush/imgi_64_blog-post-2.webp" 
+                src="/images/blog/nutriftiness-images20.jpg" 
                 alt="Whey Isolate vs Concentrée" 
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -230,7 +230,7 @@ export default function HomePage() {
             <div className="p-5 flex-1 flex flex-col">
               <span className="text-[10px] font-black uppercase tracking-wider text-[#F80404] mb-1">Protéines & Sèche</span>
               <h3 className="text-base font-bold text-white group-hover:text-[#F80404] transition-colors mb-2 line-clamp-2">
-                Whey isolate ou whey concentrée : que choisir ?
+                Whey concentrée ou isolate : que choisir ?
               </h3>
               <p className="text-xs text-white/60 mb-4 line-clamp-2">
                 Pureté, teneur en lactose, vitesse d&apos;assimilation et budget : notre comparatif complet pour faire le bon choix.
@@ -242,12 +242,12 @@ export default function HomePage() {
           </Link>
 
           <Link 
-            href="/blog/electrolytes-boisson-isotonique/"
+            href="/blog/electrolytes-hydratation-effort/"
             className="bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group hover:border-[#F80404]/50 transition-all flex flex-col"
           >
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image 
-                src="/images/fitrush/imgi_63_blog-post-5.webp" 
+                src="/images/blog/nutriftiness-images36.jpg" 
                 alt="Électrolytes et Hydratation" 
                 fill
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
@@ -256,13 +256,13 @@ export default function HomePage() {
             <div className="p-5 flex-1 flex flex-col">
               <span className="text-[10px] font-black uppercase tracking-wider text-[#F80404] mb-1">Endurance & Énergie</span>
               <h3 className="text-base font-bold text-white group-hover:text-[#F80404] transition-colors mb-2 line-clamp-2">
-                Électrolytes et boisson isotonique : pour qui et quand ?
+                Électrolytes et hydratation pendant l&apos;effort
               </h3>
               <p className="text-xs text-white/60 mb-4 line-clamp-2">
                 Sodium, potassium, magnésium : comment prévenir la déshydratation et les baisses de régime lors d&apos;efforts intenses.
               </p>
               <span className="mt-auto text-xs font-bold text-white group-hover:text-[#F80404] transition-colors">
-                Lire le dossier (4 min) →
+                Lire le dossier (5 min) →
               </span>
             </div>
           </Link>
