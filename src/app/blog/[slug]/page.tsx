@@ -6,6 +6,7 @@ import { notFound } from 'next/navigation';
 import { BLOG_POSTS, getBlogPostBySlug, type BlogPost } from '@/lib/blog';
 import { getProductBySlug } from '@/lib/catalog';
 import BlogFaqAccordion from '@/components/BlogFaqAccordion';
+import BlogProductCards, { type BlogProductItem } from '@/components/BlogProductCards';
 import { 
   ChevronRight, 
   Home, 
@@ -94,6 +95,16 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     const others = BLOG_POSTS.filter(p => p.slug !== post.slug && !readNextPosts.some(r => r.slug === p.slug));
     readNextPosts.push(...others.slice(0, 3 - readNextPosts.length));
   }
+
+  // Resolve full ProductItem data for suggestedProducts
+  const suggestedProductsWithData: BlogProductItem[] = (post.suggestedProducts || []).map(sp => {
+    const slug = sp.href.replace(/^\/produit\//, '').replace(/\/$/, '');
+    const product = getProductBySlug(slug, 'fr');
+    return {
+      ...sp,
+      product
+    };
+  });
 
   // Schema.org Article / BlogPosting
   const articleSchema = {
@@ -190,7 +201,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
 
-      <article className="max-w-4xl mx-auto px-4 sm:px-6">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         
         {/* Breadcrumb Navigation */}
         <nav aria-label="Fil d'Ariane" className="flex flex-wrap items-center gap-2 text-xs text-white/50 mb-8">
@@ -205,6 +216,12 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           <ChevronRight className="w-3 h-3 text-white/30" />
           <span className="text-[#F80404] font-bold">{post.category}</span>
         </nav>
+
+        {/* 2-Column Full-Width Editorial Layout */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+          
+          {/* Main Article Content (lg:col-span-8) */}
+          <article className="lg:col-span-8 min-w-0">
 
         {/* Header Section */}
         <header className="mb-8">
@@ -319,58 +336,30 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           ))}
         </div>
 
-        {/* Suggested Products (Internal Product Links) */}
-        {post.suggestedProducts && post.suggestedProducts.length > 0 && (
-          <div className="my-12 p-6 sm:p-8 rounded-3xl bg-[#141414] border border-[#F80404]/30 shadow-2xl">
+        {/* Suggested Products (Internal Product Links with Real Images & Cart) */}
+        {suggestedProductsWithData && suggestedProductsWithData.length > 0 && (
+          <div id="produits-recommandes" className="my-12 p-6 sm:p-8 rounded-3xl bg-gradient-to-b from-[#141414] to-[#0D0D0D] border border-[#F80404]/30 shadow-2xl">
             <div className="flex items-center justify-between mb-6 pb-4 border-b border-white/10">
               <div className="flex items-center gap-3">
-                <div className="w-10 h-10 rounded-xl bg-[#F80404]/10 border border-[#F80404]/20 flex items-center justify-center">
-                  <ShoppingBag className="w-5 h-5 text-[#F80404]" />
+                <div className="w-10 h-10 rounded-xl bg-[#F80404]/10 border border-[#F80404]/20 flex items-center justify-center text-[#F80404]">
+                  <ShoppingBag className="w-5 h-5" />
                 </div>
                 <div>
-                  <span className="text-[10px] font-black uppercase tracking-widest text-[#F80404] font-heading">
+                  <span className="text-[10px] font-black uppercase tracking-widest text-[#F80404] font-heading block">
                     Sélection NutriFitness
                   </span>
-                  <h3 className="text-lg sm:text-xl font-black text-white uppercase font-heading">
+                  <h3 className="text-lg sm:text-2xl font-black text-white uppercase font-heading">
                     Produits Recommandés dans ce Dossier
                   </h3>
                 </div>
               </div>
-              <span className="hidden sm:inline-block text-xs font-bold text-[#95d600]">
-                🇨🇭 En stock à Genève
+              <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-[#95d600] bg-[#95d600]/10 px-3 py-1 rounded-full border border-[#95d600]/20">
+                <span>🇨🇭</span>
+                <span>En stock à Genève · 24h</span>
               </span>
             </div>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4">
-              {post.suggestedProducts.map((prod, idx) => (
-                <div 
-                  key={idx}
-                  className="p-4 rounded-2xl bg-black/40 border border-white/10 hover:border-[#F80404]/50 transition-all flex flex-col justify-between group"
-                >
-                  <div>
-                    {prod.badge && (
-                      <span className="inline-block px-2 py-0.5 rounded text-[10px] font-black uppercase tracking-wider bg-[#F80404]/20 text-[#F80404] border border-[#F80404]/30 mb-2">
-                        {prod.badge}
-                      </span>
-                    )}
-                    <p className="text-[11px] font-bold text-white/50 uppercase tracking-wider mb-1">
-                      {prod.brand}
-                    </p>
-                    <h4 className="text-xs sm:text-sm font-bold text-white group-hover:text-[#F80404] transition-colors mb-3">
-                      {prod.name}
-                    </h4>
-                  </div>
-
-                  <Link 
-                    href={prod.href}
-                    className="w-full mt-3 py-2 px-3 rounded-xl bg-white/10 hover:bg-[#F80404] hover:text-black text-white text-xs font-black uppercase tracking-wider text-center transition-all flex items-center justify-center gap-1.5"
-                  >
-                    <span>Voir le produit</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
-              ))}
-            </div>
+            <BlogProductCards products={suggestedProductsWithData} variant="in-article" />
           </div>
         )}
 
@@ -503,6 +492,158 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         )}
 
       </article>
+
+          {/* Sticky Sidebar Column (lg:col-span-4) */}
+          <aside className="hidden lg:block lg:col-span-4 min-w-0 sticky top-24 space-y-6">
+            
+            {/* Sidebar Widget 1: Products in this guide */}
+            {suggestedProductsWithData.length > 0 && (
+              <div className="p-5 rounded-3xl bg-[#141414] border border-[#F80404]/30 shadow-2xl space-y-4">
+                <div className="flex items-center justify-between pb-3 border-b border-white/10">
+                  <div className="flex items-center gap-2">
+                    <ShoppingBag className="w-4 h-4 text-[#F80404]" />
+                    <h3 className="text-xs font-black uppercase tracking-wider text-white font-heading">
+                      Produits du Guide
+                    </h3>
+                  </div>
+                  <span className="text-[10px] text-[#95d600] font-bold">🇨🇭 Genève</span>
+                </div>
+
+                <BlogProductCards products={suggestedProductsWithData} variant="sidebar" />
+
+                <Link
+                  href="/boutique/"
+                  className="w-full py-2.5 px-3 rounded-xl bg-white/5 hover:bg-white/10 text-white/80 hover:text-white text-xs font-bold uppercase tracking-wider text-center transition-all flex items-center justify-center gap-1 border border-white/10"
+                >
+                  <span>Explorer toute la boutique</span>
+                  <ArrowRight className="w-3.5 h-3.5" />
+                </Link>
+              </div>
+            )}
+
+            {/* Sidebar Widget 2: Sticky Table of Contents */}
+            <div className="p-5 rounded-3xl bg-[#141414] border border-white/10 shadow-xl space-y-3">
+              <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-white/90 font-heading pb-2 border-b border-white/10">
+                <BookOpen className="w-4 h-4 text-[#F80404]" />
+                <span>Sommaire du Dossier</span>
+              </div>
+              <ul className="space-y-2 text-xs text-white/70">
+                {post.sections.map((sec, i) => (
+                  <li key={i}>
+                    <a 
+                      href={`#section-${i}`}
+                      className="hover:text-[#F80404] transition-colors flex items-start gap-2 group"
+                    >
+                      <span className="text-[#F80404] font-bold shrink-0">{i + 1}.</span>
+                      <span className="group-hover:underline line-clamp-1">{sec.title || `Partie ${i + 1}`}</span>
+                    </a>
+                  </li>
+                ))}
+                {suggestedProductsWithData.length > 0 && (
+                  <li>
+                    <a 
+                      href="#produits-recommandes"
+                      className="text-[#95d600] font-bold hover:underline flex items-center gap-2"
+                    >
+                      <span>★</span>
+                      <span>Produits Recommandés</span>
+                    </a>
+                  </li>
+                )}
+                <li>
+                  <a href="#faq-section" className="hover:text-[#F80404] transition-colors flex items-center gap-2">
+                    <span className="text-[#F80404] font-bold">•</span>
+                    <span className="hover:underline">Questions Fréquentes (FAQ)</span>
+                  </a>
+                </li>
+                {post.externalSources && post.externalSources.length > 0 && (
+                  <li>
+                    <a href="#scientific-sources" className="hover:text-[#F80404] transition-colors flex items-center gap-2">
+                      <span className="text-[#F80404] font-bold">•</span>
+                      <span className="hover:underline">Sources Scientifiques</span>
+                    </a>
+                  </li>
+                )}
+              </ul>
+            </div>
+
+            {/* Sidebar Widget 3: Ebook Promo */}
+            <div className="p-5 rounded-3xl bg-gradient-to-br from-[#1E1111] via-[#141414] to-[#141414] border border-[#95d600]/40 shadow-xl space-y-3 relative overflow-hidden">
+              <div className="flex items-center justify-between">
+                <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#95d600]/20 text-[#95d600] border border-[#95d600]/30 font-heading">
+                  Ebook PDF · 66 Pages
+                </span>
+                <span className="text-xs font-bold text-amber-400">★★★★★ 5.0</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <div className="relative w-14 h-16 shrink-0 rounded-lg overflow-hidden border border-[#95d600]/30 bg-black/60">
+                  <Image
+                    src="/images/banners/mobile/imgi_10_guidebook.jpg"
+                    alt="Guide Ultime Ebook"
+                    fill
+                    sizes="56px"
+                    className="object-cover"
+                  />
+                </div>
+                <div>
+                  <h4 className="text-xs font-black text-white uppercase font-heading leading-snug">
+                    Le Guide Ultime des Compléments
+                  </h4>
+                  <p className="text-[10px] text-white/60 mt-0.5 leading-tight">
+                    11 ans d&apos;expertise sans langue de bois.
+                  </p>
+                </div>
+              </div>
+              <div className="flex items-center justify-between pt-2 border-t border-white/10">
+                <span className="text-sm font-black text-[#95d600] font-heading">29.90 CHF</span>
+                <Link
+                  href="/guide-des-complements-alimentaires/"
+                  className="px-3.5 py-1.5 rounded-xl bg-[#95d600] hover:bg-[#85c000] text-black text-xs font-black uppercase tracking-wider transition-all shadow-md active:scale-95"
+                >
+                  Télécharger
+                </Link>
+              </div>
+            </div>
+
+            {/* Sidebar Widget 4: Swiss Trust Guarantee */}
+            <div className="p-5 rounded-3xl bg-[#141414] border border-white/10 shadow-xl space-y-3 text-xs">
+              <div className="flex items-center gap-2 font-black uppercase tracking-wider text-white font-heading">
+                <ShieldCheck className="w-4 h-4 text-[#95d600]" />
+                <span>Engagements NutriFitness</span>
+              </div>
+              <ul className="space-y-2 text-white/70 text-[11px]">
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#95d600] shrink-0" />
+                  <span>Stock 100% physique à Genève</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#95d600] shrink-0" />
+                  <span>Expédition 24h PostPac Priority</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#95d600] shrink-0" />
+                  <span>Livraison offerte dès 75 CHF</span>
+                </li>
+                <li className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-[#95d600] shrink-0" />
+                  <span>TVA 2.6% incluse · Zéro douane</span>
+                </li>
+              </ul>
+              <div className="pt-2 border-t border-white/5">
+                <Link
+                  href="/boutique-geneve/"
+                  className="text-[11px] text-[#F80404] hover:underline font-bold flex items-center gap-1"
+                >
+                  <span>Visiter la boutique aux Pâquis</span>
+                  <ChevronRight className="w-3 h-3" />
+                </Link>
+              </div>
+            </div>
+
+          </aside>
+
+        </div>
+      </div>
     </div>
   );
 }
