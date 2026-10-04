@@ -137,74 +137,49 @@ export default function LanguageCurrencySwitcher({ variant = 'header' }: Languag
     );
   }
 
-  // Default 'header' variant
+  // Default 'header' variant: Clean Language Selector only
   return (
-    <div className="flex items-center gap-1.5" ref={dropdownRef}>
-      {/* Language Dropdown */}
-      <div className="relative">
-        <button
-          type="button"
-          onClick={() => setIsLangOpen(!isLangOpen)}
-          className="h-9 px-2.5 bg-white/5 hover:bg-white/10 text-white rounded-xl border border-white/10 text-xs font-bold flex items-center gap-1.5 transition-colors"
-          aria-label="Sélectionner la langue"
-          aria-expanded={isLangOpen}
-        >
-          <span className="text-sm">{currentLang.flag}</span>
-          <span className="uppercase tracking-wider text-[11px] font-black">{currentLang.shortName}</span>
-          <ChevronDown className={`w-3 h-3 text-white/50 transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
-        </button>
+    <div className="relative" ref={dropdownRef}>
+      <button
+        type="button"
+        onClick={() => setIsLangOpen(!isLangOpen)}
+        className="h-9 px-2.5 bg-white/5 hover:bg-white/10 text-white rounded-xl border border-white/10 text-xs font-bold flex items-center gap-1.5 transition-colors"
+        aria-label="Sélectionner la langue"
+        aria-expanded={isLangOpen}
+      >
+        <span className="text-sm">{currentLang.flag}</span>
+        <span className="uppercase tracking-wider text-[11px] font-black">{currentLang.shortName}</span>
+        <ChevronDown className={`w-3 h-3 text-white/50 transition-transform ${isLangOpen ? 'rotate-180' : ''}`} />
+      </button>
 
-        {isLangOpen && (
-          <div className="absolute right-0 top-full mt-1.5 w-36 bg-[#161616] border border-white/15 rounded-2xl p-1.5 shadow-2xl z-50 animate-in fade-in duration-150">
-            {LANGUAGE_OPTIONS.map((item) => {
-              const active = item.code === locale;
-              return (
-                <button
-                  key={item.code}
-                  type="button"
-                  onClick={() => {
-                    setLocale(item.code);
-                    setIsLangOpen(false);
-                  }}
-                  className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-bold transition-colors ${
-                    active 
-                      ? 'bg-[#F80404] text-black font-black' 
-                      : 'text-white/80 hover:bg-white/10 hover:text-white'
-                  }`}
-                >
-                  <span className="flex items-center gap-2">
-                    <span>{item.flag}</span>
-                    <span>{item.label}</span>
-                  </span>
-                  {active && <Check className="w-3.5 h-3.5 stroke-[3]" />}
-                </button>
-              );
-            })}
-          </div>
-        )}
-      </div>
-
-      {/* Currency Switcher Toggle */}
-      <div className="flex items-center bg-white/5 border border-white/10 rounded-xl p-0.5 h-9">
-        {CURRENCY_OPTIONS.map((item) => {
-          const active = item.code === currency;
-          return (
-            <button
-              key={item.code}
-              type="button"
-              onClick={() => setCurrency(item.code)}
-              className={`px-2 h-full rounded-lg text-[11px] font-black transition-all flex items-center gap-1 ${
-                active 
-                  ? 'bg-white text-black shadow-sm' 
-                  : 'text-white/60 hover:text-white'
-              }`}
-              title={`Passer en ${item.label}`}
-            >
-              <span>{item.code}</span>
-            </button>
-          );
-        })}
-      </div>
+      {isLangOpen && (
+        <div className="absolute right-0 top-full mt-1.5 w-36 bg-[#161616] border border-white/15 rounded-2xl p-1.5 shadow-2xl z-50 animate-in fade-in duration-150">
+          {LANGUAGE_OPTIONS.map((item) => {
+            const active = item.code === locale;
+            return (
+              <button
+                key={item.code}
+                type="button"
+                onClick={() => {
+                  setLocale(item.code);
+                  setIsLangOpen(false);
+                }}
+                className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-bold transition-colors ${
+                  active 
+                    ? 'bg-[#F80404] text-black font-black' 
+                    : 'text-white/80 hover:bg-white/10 hover:text-white'
+                }`}
+              >
+                <span className="flex items-center gap-2">
+                  <span>{item.flag}</span>
+                  <span>{item.label}</span>
+                </span>
+                {active && <Check className="w-3.5 h-3.5 stroke-[3]" />}
+              </button>
+            );
+          })}
+        </div>
+      )}
     </div>
   );
 }

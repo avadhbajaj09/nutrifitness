@@ -2,7 +2,6 @@
 
 import React, { useState } from 'react';
 import { useStore } from '@/context/StoreContext';
-import LanguageCurrencySwitcher from './LanguageCurrencySwitcher';
 
 export default function TopBar() {
   const [closed, setClosed] = useState(false);
@@ -41,18 +40,15 @@ export default function TopBar() {
           </div>
         </div>
 
-        {/* TopBar controls: Language/Currency switcher for mobile/desktop + Close */}
-        <div className="flex items-center gap-2 shrink-0">
-          <LanguageCurrencySwitcher variant="topbar" />
-          <button 
-            type="button" 
-            onClick={() => setClosed(true)}
-            className="bg-black/10 hover:bg-black/20 text-black px-1.5 py-0.5 rounded text-[10px] font-bold transition-colors ml-1"
-            aria-label="Fermer le bandeau"
-          >
-            ✕
-          </button>
-        </div>
+        {/* Close Button only */}
+        <button 
+          type="button" 
+          onClick={() => setClosed(true)}
+          className="bg-black/10 hover:bg-black/20 text-black px-2 py-0.5 rounded text-[10px] font-black transition-colors shrink-0"
+          aria-label="Fermer le bandeau"
+        >
+          ✕
+        </button>
       </div>
     </div>
   );

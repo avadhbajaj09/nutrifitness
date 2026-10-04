@@ -74,18 +74,18 @@ export default function Header() {
             </Link>
           </div>
 
-          {/* Desktop Navigation Bar (Boosters & Geneva Boutique removed as requested) */}
-          <nav aria-label="Menu principal" className="hidden lg:flex items-center gap-5 xl:gap-7">
+          {/* Desktop Navigation Bar */}
+          <nav aria-label="Menu principal" className="hidden lg:flex items-center gap-5 xl:gap-6">
             
             {/* 1. BOUTIQUE / SHOP with Mega Menu Trigger */}
             <div 
-              className="relative"
+              className="relative flex items-center h-9"
               onMouseEnter={() => { setIsMegaOpen(true); setIsBrandsOpen(false); }}
             >
               <button 
                 type="button"
                 onClick={() => setIsMegaOpen(!isMegaOpen)}
-                className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 flex items-center gap-1 font-heading"
+                className="h-9 inline-flex items-center gap-1 font-heading font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors leading-none"
               >
                 <span>{t.nav.shop}</span>
                 <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-200 ${isMegaOpen ? 'rotate-180 text-[#F80404]' : 'text-white/40'}`} />
@@ -95,14 +95,14 @@ export default function Header() {
             {/* 2. SHOP BY BRAND / TOUTES LES MARQUES Dropdown */}
             <div 
               ref={brandsDropdownRef}
-              className="relative"
+              className="relative flex items-center h-9"
               onMouseEnter={() => { setIsBrandsOpen(true); setIsMegaOpen(false); }}
               onMouseLeave={() => setIsBrandsOpen(false)}
             >
               <button 
                 type="button"
                 onClick={() => setIsBrandsOpen(!isBrandsOpen)}
-                className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 flex items-center gap-1 font-heading"
+                className="h-9 inline-flex items-center gap-1 font-heading font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors leading-none"
               >
                 <Sparkles className="w-3.5 h-3.5 text-[#F80404]" />
                 <span>{t.nav.brands}</span>
@@ -161,40 +161,40 @@ export default function Header() {
             {/* 3. Direct Category Links */}
             <Link 
               href="/categorie/proteines/" 
-              className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 font-heading"
+              className="h-9 inline-flex items-center font-heading font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors leading-none"
             >
-              {t.nav.proteins}
+              <span>{t.nav.proteins}</span>
             </Link>
 
             <Link 
               href="/categorie/creatine/" 
-              className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 font-heading"
+              className="h-9 inline-flex items-center font-heading font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors leading-none"
             >
-              {t.nav.creatines}
+              <span>{t.nav.creatines}</span>
             </Link>
 
             {/* Coaching Personnalisé */}
             <Link 
               href="/coaching-nutritionnel-personnalise/" 
-              className="font-bold text-xs uppercase tracking-wider text-[#F80404] hover:text-[#FF3D00] transition-colors py-2 font-heading"
+              className="h-9 inline-flex items-center font-heading font-bold text-xs uppercase tracking-wider text-[#F80404] hover:text-[#FF3D00] transition-colors leading-none"
             >
-              {t.nav.coaching}
+              <span>{t.nav.coaching}</span>
             </Link>
 
             {/* Ebook Guide Ultime */}
             <Link 
               href="/guide-des-complements-alimentaires/" 
-              className="font-bold text-xs uppercase tracking-wider text-[#95d600] hover:text-[#b0fa00] transition-colors py-2 font-heading"
+              className="h-9 inline-flex items-center font-heading font-bold text-xs uppercase tracking-wider text-[#95d600] hover:text-[#b0fa00] transition-colors leading-none"
             >
-              {t.nav.ebook}
+              <span>{t.nav.ebook}</span>
             </Link>
 
             {/* Blog & Guides */}
             <Link 
               href="/blog/" 
-              className="font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors py-2 font-heading"
+              className="h-9 inline-flex items-center font-heading font-bold text-xs uppercase tracking-wider text-white/90 hover:text-[#F80404] transition-colors leading-none"
             >
-              {t.nav.blog}
+              <span>{t.nav.blog}</span>
             </Link>
           </nav>
 

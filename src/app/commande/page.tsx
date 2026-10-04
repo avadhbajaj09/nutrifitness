@@ -8,7 +8,7 @@ import ThankYouAnimation from '@/components/ThankYouAnimation';
 import { ShieldCheck, Truck, CreditCard, Sparkles } from 'lucide-react';
 
 export default function CheckoutPage() {
-  const { cart, cartCount, cartSubtotal, freeShippingProgress, clearCart, formatPrice, t, currency, locale } = useStore();
+  const { cart, cartCount, cartSubtotal, freeShippingProgress, clearCart, formatPrice, t, currency, setCurrency, locale } = useStore();
   const [shippingMethod, setShippingMethod] = useState<'postpac' | 'clickcollect'>('postpac');
   const [paymentMethod, setPaymentMethod] = useState<'twint' | 'postfinance' | 'card' | 'invoice'>('twint');
   const [customerEmail, setCustomerEmail] = useState('');
@@ -57,13 +57,31 @@ export default function CheckoutPage() {
             {t.checkout.subtitle}
           </p>
         </div>
-        <div className="flex items-center gap-3 text-xs font-bold text-white/60">
+        <div className="flex flex-wrap items-center gap-3 text-xs font-bold text-white/60">
           <span className="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
             <span>🇨🇭</span> 100% Stock Suisse
           </span>
-          <span className="flex items-center gap-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-400 px-3 py-1.5 rounded-full">
-            <ShieldCheck className="w-3.5 h-3.5" /> Devise : {currency}
-          </span>
+          <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 p-1 rounded-full">
+            <span className="text-[11px] text-white/50 pl-2">Devise :</span>
+            <button
+              type="button"
+              onClick={() => setCurrency('CHF')}
+              className={`px-2.5 py-0.5 rounded-full text-xs font-black transition-all ${
+                currency === 'CHF' ? 'bg-[#F80404] text-black shadow-sm' : 'text-white/70 hover:text-white'
+              }`}
+            >
+              🇨🇭 CHF
+            </button>
+            <button
+              type="button"
+              onClick={() => setCurrency('EUR')}
+              className={`px-2.5 py-0.5 rounded-full text-xs font-black transition-all ${
+                currency === 'EUR' ? 'bg-[#F80404] text-black shadow-sm' : 'text-white/70 hover:text-white'
+              }`}
+            >
+              🇪🇺 EUR (€)
+            </button>
+          </div>
         </div>
       </div>
 
@@ -307,6 +325,44 @@ export default function CheckoutPage() {
               {cartCount} articles
             </span>
           </h2>
+
+          {/* Devise Switcher */}
+          <div className="bg-black/50 border border-white/10 rounded-xl p-3 flex items-center justify-between gap-3">
+            <div>
+              <div className="text-[11px] font-black uppercase tracking-wider text-white flex items-center gap-1.5">
+                <span>Devise de facturation</span>
+              </div>
+              <div className="text-[10px] text-white/50">
+                Commandez en CHF ou en EUR (€)
+              </div>
+            </div>
+            <div className="inline-flex rounded-lg bg-black border border-white/15 p-1 gap-1 shrink-0">
+              <button
+                type="button"
+                onClick={() => setCurrency('CHF')}
+                className={`px-3 py-1 rounded-md text-xs font-black transition-all ${
+                  currency === 'CHF'
+                    ? 'bg-[#F80404] text-black shadow-md'
+                    : 'text-white/60 hover:text-white hover:bg-white/10'
+                }`}
+                title="Payer en CHF (Franc Suisse)"
+              >
+                CHF 🇨🇭
+              </button>
+              <button
+                type="button"
+                onClick={() => setCurrency('EUR')}
+                className={`px-3 py-1 rounded-md text-xs font-black transition-all ${
+                  currency === 'EUR'
+                    ? 'bg-[#F80404] text-black shadow-md'
+                    : 'text-white/60 hover:text-white hover:bg-white/10'
+                }`}
+                title="Payer en EUR (Euro)"
+              >
+                EUR (€) 🇪🇺
+              </button>
+            </div>
+          </div>
 
           <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
             {cart.map(item => (
