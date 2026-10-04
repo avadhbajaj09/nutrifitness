@@ -169,7 +169,7 @@ export default function CartDrawer() {
             <div className="bg-[#181818] p-3 rounded-xl border border-white/10 flex items-center justify-between gap-3">
               <div className="flex items-center gap-3">
                 <div className="relative w-10 h-10 rounded-lg bg-black/40 p-1 shrink-0 border border-white/10">
-                  <Image src="/images/fitrush/imgi_46_banner-h9-5.webp" alt="Shaker" fill className="object-contain p-1" />
+                  <Image src="/images/categories/categorie-accessoires.webp" alt="Shaker" fill className="object-contain p-1" />
                 </div>
                 <div>
                   <p className="text-[11px] font-bold text-white leading-tight">Shaker Pro 700ml Sans BPA</p>
@@ -186,7 +186,7 @@ export default function CartDrawer() {
                   priceChf: 8.90,
                   flavor: 'Noir Mat',
                   size: '600 ml',
-                  image: '/images/fitrush/imgi_46_banner-h9-5.webp'
+                  image: '/images/categories/categorie-accessoires.webp'
                 })}
                 className="px-2.5 py-1.5 bg-white/10 hover:bg-[#F80404] hover:text-black text-white text-[10px] font-bold uppercase rounded-lg border border-white/10 transition-colors shrink-0"
               >
