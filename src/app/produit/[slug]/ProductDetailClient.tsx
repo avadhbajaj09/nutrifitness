@@ -37,6 +37,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   );
   const activeImg = selectedImage || selectedVariant?.image || primaryImg;
   const currentPrice = selectedVariant?.priceChf || product.priceChf;
+  const isPortugal = product.shippingOrigin === 'portugal';
 
   const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;
@@ -119,18 +120,37 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
           {/* Trust Pillars - Hidden on mobile, shown on desktop below image */}
           <div className="hidden lg:grid grid-cols-3 gap-3 w-full mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/60">
-            <div className="p-2">
-              <p className="font-bold text-white text-sm mb-0.5">Expédition 24h</p>
-              <p className="text-[11px]">La Poste Suisse Priority</p>
-            </div>
-            <div className="p-2 border-x border-white/10">
-              <p className="font-bold text-white text-sm mb-0.5">🧪 Pureté Testée</p>
-              <p className="text-[11px]">Matières certifiées</p>
-            </div>
-            <div className="p-2">
-              <p className="font-bold text-white text-sm mb-0.5">📍 Boutique Genève</p>
-              <p className="text-[11px]">Retrait immédiat en 2h</p>
-            </div>
+            {isPortugal ? (
+              <>
+                <div className="p-2">
+                  <p className="font-bold text-white text-sm mb-0.5">🇵🇹 Expédié du Portugal</p>
+                  <p className="text-[11px]">Usine de fabrication</p>
+                </div>
+                <div className="p-2 border-x border-white/10">
+                  <p className="font-bold text-white text-sm mb-0.5">⚡ 3–5 Jours</p>
+                  <p className="text-[11px]">Livraison suivie</p>
+                </div>
+                <div className="p-2">
+                  <p className="font-bold text-white text-sm mb-0.5">🧪 Pureté Testée</p>
+                  <p className="text-[11px]">Normes certifiées EU</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="p-2">
+                  <p className="font-bold text-white text-sm mb-0.5">Expédition 24h</p>
+                  <p className="text-[11px]">La Poste Suisse Priority</p>
+                </div>
+                <div className="p-2 border-x border-white/10">
+                  <p className="font-bold text-white text-sm mb-0.5">🧪 Pureté Testée</p>
+                  <p className="text-[11px]">Matières certifiées</p>
+                </div>
+                <div className="p-2">
+                  <p className="font-bold text-white text-sm mb-0.5">📍 Boutique Genève</p>
+                  <p className="text-[11px]">Retrait immédiat en 2h</p>
+                </div>
+              </>
+            )}
           </div>
         </div>
 
@@ -159,6 +179,17 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               {getLocalized(product.shortDescription, locale)}
             </p>
           </div>
+
+          {/* Portugal Direct Plant Shipping Notice */}
+          {isPortugal && (
+            <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-amber-500/10 border border-amber-500/25 text-amber-200 shadow-sm">
+              <span className="text-2xl shrink-0">🇵🇹</span>
+              <div className="text-xs leading-tight">
+                <p className="font-bold text-white text-xs sm:text-sm">Expédié depuis notre usine au Portugal</p>
+                <p className="text-[11px] sm:text-xs text-amber-200/80 mt-0.5">Livraison directe & suivie en Suisse (3 à 5 jours ouvrés). Aucun frais de douane imprévu.</p>
+              </div>
+            </div>
+          )}
 
           {/* Flavor / Option Selector */}
           {product.variants.length > 0 && (
@@ -209,18 +240,37 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
           {/* Mobile Trust Pillars (Below add-to-cart on mobile) */}
           <div className="lg:hidden grid grid-cols-3 gap-2 w-full pt-4 border-t border-white/10 text-center text-xs text-white/60">
-            <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
-              <p className="font-bold text-white text-xs mb-0.5">⚡ 24h</p>
-              <p className="text-[10px]">Expédition express</p>
-            </div>
-            <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
-              <p className="font-bold text-white text-xs mb-0.5">🧪 Pureté</p>
-              <p className="text-[10px]">Testée certifiée</p>
-            </div>
-            <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
-              <p className="font-bold text-white text-xs mb-0.5">📍 Genève</p>
-              <p className="text-[10px]">Click & Collect 2h</p>
-            </div>
+            {isPortugal ? (
+              <>
+                <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
+                  <p className="font-bold text-white text-xs mb-0.5">🇵🇹 Portugal</p>
+                  <p className="text-[10px]">Usine certifiée</p>
+                </div>
+                <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
+                  <p className="font-bold text-white text-xs mb-0.5">📦 3–5j</p>
+                  <p className="text-[10px]">Livraison suivie</p>
+                </div>
+                <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
+                  <p className="font-bold text-white text-xs mb-0.5">🧪 Pureté</p>
+                  <p className="text-[10px]">Certifiée EU</p>
+                </div>
+              </>
+            ) : (
+              <>
+                <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
+                  <p className="font-bold text-white text-xs mb-0.5">⚡ 24h</p>
+                  <p className="text-[10px]">Expédition express</p>
+                </div>
+                <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
+                  <p className="font-bold text-white text-xs mb-0.5">🧪 Pureté</p>
+                  <p className="text-[10px]">Testée certifiée</p>
+                </div>
+                <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
+                  <p className="font-bold text-white text-xs mb-0.5">📍 Genève</p>
+                  <p className="text-[10px]">Click & Collect 2h</p>
+                </div>
+              </>
+            )}
           </div>
 
           {/* AEO Expert Direct Answer */}

@@ -116,6 +116,8 @@ export default function CartPage() {
                       <p className="text-xs text-white/50">{item.flavor} · {item.size}</p>
                       {item.isEbook ? (
                         <p className="text-[11px] text-[#95d600] font-bold mt-1">✓ Exemplaire unique (téléchargement immédiat)</p>
+                      ) : item.isPortugal ? (
+                        <p className="text-[11px] text-amber-300 font-bold mt-1">🇵🇹 Expédié depuis l'usine (Portugal) · 3–5 jours ouvrés</p>
                       ) : (
                         <p className="text-[11px] text-emerald-400 font-bold mt-1">● {t.common.inStock}</p>
                       )}

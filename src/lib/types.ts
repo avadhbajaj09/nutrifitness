@@ -52,6 +52,7 @@ export interface ProductItem {
   nutrition: ProductNutrition;
   variants: ProductVariant[];
   isSwissOrigin?: boolean;
+  shippingOrigin?: 'switzerland' | 'portugal';
 }
 
 export interface FaqItem {

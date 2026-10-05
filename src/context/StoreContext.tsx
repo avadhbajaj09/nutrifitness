@@ -20,6 +20,7 @@ export interface CartItem {
   quantity: number;
   vatRate: number;
   isEbook?: boolean;
+  isPortugal?: boolean;
 }
 
 interface ToastInfo {
@@ -195,6 +196,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const name = getLocalized(product.name, locale) || 'Produit';
     const brand = product.brand || 'NutriFitness';
     const itemKey = `${product.id || slug}-${flavor}-${size}`;
+    const isPortugal = Boolean(product.shippingOrigin === 'portugal' || (options as any).isPortugal);
 
     let blockedDuplicateEbook = false;
 
@@ -231,7 +233,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             size,
             quantity,
             vatRate: product.vatRate || 2.6,
-            isEbook
+            isEbook,
+            isPortugal
           }
         ];
       }
