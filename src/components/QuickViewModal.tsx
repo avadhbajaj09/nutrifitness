@@ -65,9 +65,16 @@ export default function QuickViewModal() {
             
             {/* Image */}
             <div className="relative bg-[#1C1C1C] rounded-2xl p-8 flex items-center justify-center border border-white/10 aspect-square sticky top-0">
-              <span className="absolute top-4 left-4 bg-[#F80404] text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full z-10">
-                🇨🇭 24h Express
-              </span>
+              {p.shippingOrigin === 'portugal' ? (
+                <span className="absolute top-4 left-4 bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-sm">
+                  <span>🇵🇹</span>
+                  <span>Portugal (3–5j)</span>
+                </span>
+              ) : (
+                <span className="absolute top-4 left-4 bg-[#F80404] text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full z-10">
+                  🇨🇭 24h Express
+                </span>
+              )}
               <div className="relative w-full h-full max-h-[280px]">
                 <Image src={image} alt={name} fill className="object-contain filter drop-shadow-2xl" />
               </div>

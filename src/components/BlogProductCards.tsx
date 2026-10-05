@@ -83,7 +83,7 @@ export default function BlogProductCards({ products, variant = 'in-article' }: B
                   </span>
                 )}
                 <span className="text-[#95d600] font-bold shrink-0">
-                  🇨🇭 En stock
+                  {product?.shippingOrigin === 'portugal' ? '🇵🇹 Portugal (3–5j)' : '🇨🇭 En stock'}
                 </span>
               </div>
 
@@ -206,7 +206,7 @@ export default function BlogProductCards({ products, variant = 'in-article' }: B
                   </span>
                 )}
                 <span className="text-[11px] font-bold text-[#95d600] shrink-0 flex items-center gap-1">
-                  🇨🇭 En stock
+                  {product?.shippingOrigin === 'portugal' ? '🇵🇹 Portugal (3–5j)' : '🇨🇭 En stock'}
                 </span>
               </div>
 

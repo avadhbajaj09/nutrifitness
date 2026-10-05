@@ -128,7 +128,9 @@ export default function DynamicPricingBox({
       'Formule hautement concentrée certifiée sans impuretés',
       'Matières premières de grade pharmaceutique testées en Suisse',
       'Efficacité démontrée scientifiquement pour sportifs exigeants',
-      'Traçabilité 100% garantie depuis notre stock de Genève',
+      product.shippingOrigin === 'portugal'
+        ? "Expédié directement depuis l'usine de fabrication au Portugal"
+        : 'Traçabilité 100% garantie depuis notre stock de Genève',
       'Conforme aux normes antidopage les plus strictes',
     ];
   };
@@ -157,7 +159,11 @@ export default function DynamicPricingBox({
         </div>
         <div className="flex items-center gap-1.5 text-xs font-bold text-[#95d600]">
           <span className="w-2 h-2 rounded-full bg-[#95d600] animate-pulse" />
-          <span>En stock (Expédition 24h)</span>
+          <span>
+            {product.shippingOrigin === 'portugal'
+              ? 'Expédié depuis le Portugal (3–5j)'
+              : 'En stock (Expédition 24h)'}
+          </span>
         </div>
       </div>
 

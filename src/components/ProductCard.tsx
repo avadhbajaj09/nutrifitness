@@ -44,13 +44,19 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               CH
             </span>
           )}
+          {product.shippingOrigin === 'portugal' && (
+            <span className="inline-flex items-center gap-1 bg-emerald-950/85 backdrop-blur-md border border-emerald-500/40 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+              <span>🇵🇹</span>
+              <span>{t.common.shippedFromPortugal || 'Expédié du Portugal'}</span>
+            </span>
+          )}
         </div>
 
         {/* Floating Action Buttons (Top Right) */}
         <div className="absolute top-3 right-3 z-20 flex flex-col gap-2">
           {/* Quick View Eye Button */}
           <button 
-            type="button"
+            type="button" 
             onClick={(e) => {
               e.preventDefault();
               openQuickView(product);
@@ -100,10 +106,19 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         {/* Stock Status */}
         <div className="flex items-center gap-1.5 text-xs font-semibold mb-4">
           {hasStock ? (
-            <>
-              <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-              <span className="text-emerald-400 text-[11px] font-bold">{t.common.inStock}</span>
-            </>
+            product.shippingOrigin === 'portugal' ? (
+              <>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+                <span className="text-emerald-400 text-[11px] font-bold">
+                  {t.common.inStockPortugal || 'Expédié depuis le Portugal (3–5j)'}
+                </span>
+              </>
+            ) : (
+              <>
+                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
+                <span className="text-emerald-400 text-[11px] font-bold">{t.common.inStock}</span>
+              </>
+            )
           ) : (
             <>
               <span className="w-2 h-2 rounded-full bg-red-500" aria-hidden="true" />

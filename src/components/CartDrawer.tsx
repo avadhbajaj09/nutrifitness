@@ -133,7 +133,7 @@ export default function CartDrawer() {
                         </p>
                       )}
                       {item.isPortugal && (
-                        <p className="text-[10px] text-amber-300 font-bold pt-0.5 flex items-center gap-1">
+                        <p className="text-[10px] text-emerald-400 font-bold pt-0.5 flex items-center gap-1">
                           <span>🇵🇹</span>
                           <span>Expédié d'usine (Portugal) · 3–5j</span>
                         </p>

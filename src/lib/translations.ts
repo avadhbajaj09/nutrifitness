@@ -47,6 +47,8 @@ export interface TranslationDictionary {
     addToCart: string;
     viewAll: string;
     inStock: string;
+    inStockPortugal: string;
+    shippedFromPortugal: string;
     outOfStock: string;
     quickView: string;
     freeShippingAbove: string;
@@ -115,6 +117,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       addToCart: 'Ajouter au Panier',
       viewAll: 'Tout Voir',
       inStock: 'En stock à Genève (24h)',
+      inStockPortugal: 'Expédié depuis le Portugal (3–5j)',
+      shippedFromPortugal: 'Expédié du Portugal',
       outOfStock: 'Rupture temporaire',
       quickView: 'Aperçu rapide',
       freeShippingAbove: 'Plus que {amount} pour la livraison offerte',
@@ -181,6 +185,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       addToCart: 'In den Warenkorb',
       viewAll: 'Alle anzeigen',
       inStock: 'Auf Lager in Genf (24h)',
+      inStockPortugal: 'Versand aus Portugal (3–5 Werktage)',
+      shippedFromPortugal: 'Versand aus Portugal',
       outOfStock: 'Vorübergehend vergriffen',
       quickView: 'Schnellansicht',
       freeShippingAbove: 'Noch {amount} bis zum kostenlosen Versand',
@@ -247,6 +253,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       addToCart: 'Aggiungi al Carrello',
       viewAll: 'Vedi Tutto',
       inStock: 'Disponibile a Ginevra (24h)',
+      inStockPortugal: 'Spedito dal Portogallo (3–5 giorni)',
+      shippedFromPortugal: 'Spedito dal Portogallo',
       outOfStock: 'Momentaneamente esaurito',
       quickView: 'Anteprima rapida',
       freeShippingAbove: 'Ancora {amount} per la spedizione gratuita',
@@ -313,6 +321,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       addToCart: 'Add to Cart',
       viewAll: 'View All',
       inStock: 'In stock in Geneva (24h)',
+      inStockPortugal: 'Shipped from Portugal (3–5 days)',
+      shippedFromPortugal: 'Shipped from Portugal',
       outOfStock: 'Temporarily out of stock',
       quickView: 'Quick view',
       freeShippingAbove: 'Add {amount} more for free Swiss delivery',

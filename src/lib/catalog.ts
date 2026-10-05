@@ -1893,7 +1893,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-25430",
@@ -2569,7 +2569,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-24655",
@@ -3477,7 +3477,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-22011",
@@ -3586,7 +3586,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-21979",
@@ -3792,7 +3792,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-21965",
@@ -4061,7 +4061,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-21951",
@@ -4304,7 +4304,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-21877",
@@ -4773,7 +4773,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-21724",
@@ -4881,8 +4881,8 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true
       }
     ],
-    "isSwissOrigin": true,
-    "shippingOrigin": "switzerland"
+    "isSwissOrigin": false,
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-21650",
@@ -5002,7 +5002,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-21419",
@@ -5111,7 +5111,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-21373",
@@ -5919,7 +5919,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-20929",
@@ -6372,7 +6372,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-20531",
@@ -6608,7 +6608,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-20464",
@@ -6717,7 +6717,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-20440",
@@ -6912,8 +6912,8 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": false
       }
     ],
-    "isSwissOrigin": true,
-    "shippingOrigin": "switzerland"
+    "isSwissOrigin": false,
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-20358",
@@ -7022,7 +7022,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-20353",
@@ -7131,7 +7131,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-20183",
@@ -8308,7 +8308,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-18240",
@@ -8515,7 +8515,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-15512",
@@ -8906,7 +8906,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-14597",
@@ -9574,7 +9574,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-14309",
@@ -10664,7 +10664,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-12913",
@@ -11438,7 +11438,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-11389",
@@ -11536,7 +11536,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-11379",
@@ -11634,7 +11634,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-11328",
@@ -11743,7 +11743,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-11296",
@@ -11905,7 +11905,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-11269",
@@ -12067,7 +12067,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-11236",
@@ -12568,7 +12568,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-9378",
@@ -12704,7 +12704,7 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "portugal"
   },
   {
     "id": "prod-8942",
