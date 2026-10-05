@@ -181,11 +181,11 @@ export default function EbookClient() {
 
           </div>
 
-          {/* Right Column: Ebook Visual Mockup */}
+          {/* Right Column: Ebook Official Product Packshot */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
             <div className="relative w-full max-w-[340px] aspect-[3/4] rounded-3xl overflow-hidden border-2 border-[#95d600]/40 shadow-2xl shadow-[#95d600]/15 bg-black/80 group">
               <Image
-                src="/images/store/e-book.webp"
+                src="/images/store/livre.webp"
                 alt="Couverture officielle du Guide Ultime des Compléments Alimentaires NutriFitness"
                 fill
                 priority
@@ -300,16 +300,18 @@ export default function EbookClient() {
         {/* Founder Story / Transformation with Marco's Real Photo */}
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-black/60 rounded-3xl border border-[#95d600]/30 p-8 sm:p-12 mb-16">
           <div className="lg:col-span-4 flex flex-col items-center">
-            <div className="relative w-48 sm:w-56 aspect-[3/4] rounded-2xl overflow-hidden border border-[#95d600]/40 shadow-xl bg-black">
-              <Image
-                src="/images/store/marco1.webp"
-                alt="Marco Scarpantoni - Fondateur NutriFitness Genève"
-                fill
-                className="object-cover object-top"
-              />
+            <div className="relative w-44 h-44 sm:w-52 sm:h-52 rounded-full overflow-hidden border-4 border-[#95d600] shadow-2xl shadow-[#95d600]/25 bg-black p-1 ring-4 ring-[#95d600]/20 flex items-center justify-center">
+              <div className="relative w-full h-full rounded-full overflow-hidden">
+                <Image
+                  src="/images/store/marco1.webp"
+                  alt="Marco Scarpantoni - Fondateur NutriFitness Genève"
+                  fill
+                  className="object-cover object-top scale-105"
+                />
+              </div>
             </div>
-            <p className="text-xs font-black uppercase text-white font-heading mt-3">Marco Scarpantoni</p>
-            <p className="text-[10px] text-white/50">Fondateur NutriFitness Genève</p>
+            <p className="text-sm font-black uppercase text-white font-heading mt-4 tracking-wide">Marco Scarpantoni</p>
+            <p className="text-xs text-white/60 font-medium">Fondateur NutriFitness Genève</p>
           </div>
 
           <div className="lg:col-span-8 space-y-4">
@@ -334,6 +336,55 @@ export default function EbookClient() {
                 <span className="text-lg font-black text-[#95d600] font-heading block">11 Ans</span>
                 <span className="text-[10px] text-white/60">À Conseiller en Boutique à Genève</span>
               </div>
+            </div>
+          </div>
+        </div>
+
+        {/* Multi-Device Instant Access Showcase with 3D Mockup */}
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center bg-gradient-to-br from-black/80 via-[#141414] to-black rounded-3xl border border-[#95d600]/30 p-8 sm:p-12 mb-16 shadow-2xl">
+          <div className="lg:col-span-6 relative aspect-square sm:aspect-[4/3] rounded-2xl overflow-hidden bg-black/40 border border-white/10 p-4 flex items-center justify-center">
+            <Image
+              src="/images/store/e-book.webp"
+              alt="Le Guide Ultime des Compléments sur tous vos écrans : Mobile, Tablette et Ordinateur"
+              fill
+              className="object-contain drop-shadow-2xl"
+            />
+          </div>
+
+          <div className="lg:col-span-6 space-y-4">
+            <span className="inline-flex items-center gap-1.5 text-xs font-black uppercase tracking-wider text-[#95d600] font-heading">
+              <Zap className="w-4 h-4" />
+              Accès Immédiat & Multi-Écrans
+            </span>
+            <h3 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">
+              Votre Guide Toujours Disponible, Partout avec Vous
+            </h3>
+            <p className="text-xs sm:text-sm text-white/75 leading-relaxed">
+              Dès la confirmation de votre commande, téléchargez instantanément votre exemplaire officiel de 66 pages au format PDF haute résolution.
+            </p>
+            <ul className="space-y-2.5 text-xs text-white/80">
+              <li className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#95d600] shrink-0" />
+                <span>Format universel PDF consultable sur smartphone (iOS / Android), tablette et ordinateur</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#95d600] shrink-0" />
+                <span>Fiches d&apos;action pratiques à emporter en magasin ou en salle d&apos;entraînement</span>
+              </li>
+              <li className="flex items-center gap-2">
+                <CheckCircle2 className="w-4 h-4 text-[#95d600] shrink-0" />
+                <span>Mises à jour scientifiques futures gratuites envoyées directement par email</span>
+              </li>
+            </ul>
+            <div className="pt-2 flex flex-wrap gap-3">
+              <button
+                type="button"
+                onClick={handleDirectCheckout}
+                className="py-3 px-6 bg-[#95d600] hover:bg-[#85c000] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all flex items-center gap-2 active:scale-98 shadow-lg"
+              >
+                <Download className="w-4 h-4" />
+                <span>Obtenir Mon Accès Immédiat (PDF)</span>
+              </button>
             </div>
           </div>
         </div>

@@ -110,8 +110,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
 
       const savedLocale = localStorage.getItem(LOCALE_KEY) as SupportedLocale;
+      const hasTransCookie = typeof document !== 'undefined' && document.cookie.includes('googtrans=/fr/');
       if (savedLocale && ['fr', 'de', 'it', 'en'].includes(savedLocale)) {
-        setLocaleState(savedLocale);
+        if (savedLocale !== 'fr' && !hasTransCookie) {
+          setLocaleState('fr');
+          localStorage.setItem(LOCALE_KEY, 'fr');
+        } else {
+          setLocaleState(savedLocale);
+        }
+      } else {
+        setLocaleState('fr');
       }
 
       const savedCurrency = localStorage.getItem(CURRENCY_KEY) as SupportedCurrency;

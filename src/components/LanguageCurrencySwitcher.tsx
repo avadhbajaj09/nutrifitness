@@ -5,6 +5,7 @@ import { useStore } from '@/context/StoreContext';
 import { LANGUAGE_OPTIONS, CURRENCY_OPTIONS, SupportedCurrency } from '@/lib/translations';
 import { SupportedLocale } from '@/lib/types';
 import { Globe, ChevronDown, Check } from 'lucide-react';
+import { applyLanguageTranslation } from './GoogleTranslate';
 
 interface LanguageCurrencySwitcherProps {
   variant?: 'topbar' | 'header' | 'mobile';
@@ -16,6 +17,12 @@ export default function LanguageCurrencySwitcher({ variant = 'header' }: Languag
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   const currentLang = LANGUAGE_OPTIONS.find(l => l.code === locale) || LANGUAGE_OPTIONS[0];
+
+  const handleLanguageSelect = (code: SupportedLocale) => {
+    setLocale(code);
+    applyLanguageTranslation(code);
+    setIsLangOpen(false);
+  };
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
@@ -42,7 +49,7 @@ export default function LanguageCurrencySwitcher({ variant = 'header' }: Languag
                 <button
                   key={item.code}
                   type="button"
-                  onClick={() => setLocale(item.code)}
+                  onClick={() => handleLanguageSelect(item.code)}
                   className={`py-2 px-1 rounded-xl text-xs font-bold flex flex-col items-center justify-center gap-1 border transition-all ${
                     active 
                       ? 'bg-[#F80404] text-black border-[#F80404] font-black shadow-md' 
@@ -98,7 +105,7 @@ export default function LanguageCurrencySwitcher({ variant = 'header' }: Languag
               <button
                 key={item.code}
                 type="button"
-                onClick={() => setLocale(item.code)}
+                onClick={() => handleLanguageSelect(item.code)}
                 className={`px-2 py-0.5 rounded-full text-[10px] font-black transition-all ${
                   active 
                     ? 'bg-black text-white shadow-sm' 
@@ -160,10 +167,7 @@ export default function LanguageCurrencySwitcher({ variant = 'header' }: Languag
               <button
                 key={item.code}
                 type="button"
-                onClick={() => {
-                  setLocale(item.code);
-                  setIsLangOpen(false);
-                }}
+                onClick={() => handleLanguageSelect(item.code)}
                 className={`w-full flex items-center justify-between px-2.5 py-2 rounded-xl text-xs font-bold transition-colors ${
                   active 
                     ? 'bg-[#F80404] text-black font-black' 

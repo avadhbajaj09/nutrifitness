@@ -106,15 +106,17 @@ export default function AProposPage() {
       <section className="p-6 sm:p-10 rounded-3xl bg-[#141414] border border-white/10 mb-12 space-y-6">
         <div className="grid grid-cols-1 md:grid-cols-12 gap-8 items-center">
           <div className="md:col-span-5 flex flex-col items-center">
-            <div className="relative w-52 sm:w-60 aspect-[3/4] rounded-3xl overflow-hidden border-2 border-[#F80404]/40 shadow-2xl bg-black">
-              <Image
-                src="/images/store/marco1.webp"
-                alt="Marco Scarpantoni - Fondateur NutriFitness Genève"
-                fill
-                className="object-cover object-top"
-              />
+            <div className="relative w-48 h-48 sm:w-56 sm:h-56 rounded-full overflow-hidden border-4 border-[#F80404] shadow-2xl shadow-[#F80404]/25 bg-black p-1 ring-4 ring-[#F80404]/20 flex items-center justify-center">
+              <div className="relative w-full h-full rounded-full overflow-hidden">
+                <Image
+                  src="/images/store/marco1.webp"
+                  alt="Marco Scarpantoni - Fondateur NutriFitness Genève"
+                  fill
+                  className="object-cover object-top scale-105"
+                />
+              </div>
             </div>
-            <p className="text-sm font-black uppercase text-white font-heading mt-3">Marco Scarpantoni</p>
+            <p className="text-sm font-black uppercase text-white font-heading mt-4 tracking-wide">Marco Scarpantoni</p>
             <p className="text-xs text-[#F80404] font-bold">Fondateur & Gérant</p>
           </div>
 
