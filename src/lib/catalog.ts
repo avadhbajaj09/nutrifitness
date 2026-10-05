@@ -2471,10 +2471,10 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "complements-avant-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 35,
+    "priceChf": 29.9,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FAT-BURN-60-CAPS-.png",
+        "src": "/images/products/dirtysquads/dirty-sqauds-wall4.jpg",
         "alt": {
           "fr": "fat burn 60 caps bruleur graisse thermogenique energie",
           "de": "fat burn 60 caps bruleur graisse thermogenique energie",
@@ -2555,7 +2555,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 35,
+        "priceChf": 29.9,
         "inventoryQuantity": 20,
         "inStock": true
       }
@@ -3282,7 +3282,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "prise-de-masse",
     "taxCategory": "food_reduced",
-    "priceChf": 60,
+    "priceChf": 52.0,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
@@ -3302,6 +3302,50 @@ export const PRODUCTS: ProductItem[] = [
           "de": "Anabolic Mass 2.5kg",
           "it": "Anabolic Mass 2.5kg",
           "en": "Anabolic Mass 2.5kg"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/anabolic-chocolate-.jpg",
+        "alt": {
+          "fr": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Chocolate",
+          "de": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Chocolate",
+          "it": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Chocolate",
+          "en": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Chocolate"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/anabolic-cookies-and-cream.jpg",
+        "alt": {
+          "fr": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Cookies and Cream",
+          "de": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Cookies and Cream",
+          "it": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Cookies and Cream",
+          "en": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Cookies and Cream"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/anabolic-stawberry.jpg",
+        "alt": {
+          "fr": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Starwberry",
+          "de": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Starwberry",
+          "it": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Starwberry",
+          "en": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Starwberry"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/anabolic-vanila.jpg",
+        "alt": {
+          "fr": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Vanilla",
+          "de": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Vanilla",
+          "it": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Vanilla",
+          "en": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité - Vanilla"
         },
         "width": 800,
         "height": 800
@@ -3357,18 +3401,64 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-22386",
-        "sku": "NF-22386",
+        "id": "var-ds-290",
+        "sku": "SKU-DS-290",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "Chocolate",
+          "de": "Chocolate",
+          "it": "Chocolate",
+          "en": "Chocolate"
         },
         "format": "1 unité",
-        "priceChf": 60,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "priceChf": 52.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/anabolic-chocolate-.jpg"
+      },
+      {
+        "id": "var-ds-291",
+        "sku": "SKU-DS-291",
+        "flavorName": {
+          "fr": "Cookies and Cream",
+          "de": "Cookies and Cream",
+          "it": "Cookies and Cream",
+          "en": "Cookies and Cream"
+        },
+        "format": "1 unité",
+        "priceChf": 52.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/anabolic-cookies-and-cream.jpg"
+      },
+      {
+        "id": "var-ds-292",
+        "sku": "SKU-DS-292",
+        "flavorName": {
+          "fr": "Starwberry",
+          "de": "Starwberry",
+          "it": "Starwberry",
+          "en": "Starwberry"
+        },
+        "format": "1 unité",
+        "priceChf": 52.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/anabolic-stawberry.jpg"
+      },
+      {
+        "id": "var-ds-293",
+        "sku": "SKU-DS-293",
+        "flavorName": {
+          "fr": "Vanilla",
+          "de": "Vanilla",
+          "it": "Vanilla",
+          "en": "Vanilla"
+        },
+        "format": "1 unité",
+        "priceChf": 52.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/anabolic-vanila.jpg"
       }
     ],
     "isSwissOrigin": false
@@ -3390,10 +3480,10 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "apres-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 40,
+    "priceChf": 39.9,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/Dirty-Cluster-Dextrin-1kg.png",
+        "src": "/images/products/dirtysquads/dirty-sqauds-wall2.jpg",
         "alt": {
           "fr": "Cluster Dex – Glucide HBCD à absorption rapide pour énergie et récupération",
           "de": "Cluster Dex – Glucide HBCD à absorption rapide pour énergie et récupération",
@@ -3474,7 +3564,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 40,
+        "priceChf": 39.9,
         "inventoryQuantity": 20,
         "inStock": true
       }
@@ -3498,7 +3588,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "apres-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 40,
+    "priceChf": 29.9,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-LEMON-FIRST-300g.png",
@@ -3554,6 +3644,39 @@ export const PRODUCTS: ProductItem[] = [
         },
         "width": 800,
         "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/dirty-watermelon.jpg",
+        "alt": {
+          "fr": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Watermelon",
+          "de": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Watermelon",
+          "it": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Watermelon",
+          "en": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Watermelon"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/dirty-flavors16.jpg",
+        "alt": {
+          "fr": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Lemon",
+          "de": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Lemon",
+          "it": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Lemon",
+          "en": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Lemon"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/amini-tutti-fruity.jpg",
+        "alt": {
+          "fr": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Tutti Frutti",
+          "de": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Tutti Frutti",
+          "it": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Tutti Frutti",
+          "en": "Dirty Squads Amino X9 EAA + BCAA 300g – Matrice Complète 9 Acides Aminés Essentiels - Tutti Frutti"
+        },
+        "width": 800,
+        "height": 800
       }
     ],
     "shortDescription": {
@@ -3606,18 +3729,49 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-21979",
-        "sku": "NF-21979",
+        "id": "var-ds-278",
+        "sku": "SKU-DS-278",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "Watermelon",
+          "de": "Watermelon",
+          "it": "Watermelon",
+          "en": "Watermelon"
         },
         "format": "1 unité",
-        "priceChf": 40,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "priceChf": 29.9,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/dirty-watermelon.jpg"
+      },
+      {
+        "id": "var-ds-279",
+        "sku": "SKU-DS-279",
+        "flavorName": {
+          "fr": "Lemon",
+          "de": "Lemon",
+          "it": "Lemon",
+          "en": "Lemon"
+        },
+        "format": "1 unité",
+        "priceChf": 29.9,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/dirty-flavors16.jpg"
+      },
+      {
+        "id": "var-ds-280",
+        "sku": "SKU-DS-280",
+        "flavorName": {
+          "fr": "Tutti Frutti",
+          "de": "Tutti Frutti",
+          "it": "Tutti Frutti",
+          "en": "Tutti Frutti"
+        },
+        "format": "1 unité",
+        "priceChf": 29.9,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/amini-tutti-fruity.jpg"
       }
     ],
     "isSwissOrigin": false
@@ -3639,7 +3793,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 60,
+    "priceChf": 55.0,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMELO.png",
@@ -3706,6 +3860,61 @@ export const PRODUCTS: ProductItem[] = [
         },
         "width": 800,
         "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/iso-90X2.jpg",
+        "alt": {
+          "fr": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Caramel",
+          "de": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Caramel",
+          "it": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Caramel",
+          "en": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Caramel"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/iso-choco-1.jpeg",
+        "alt": {
+          "fr": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Chocolate",
+          "de": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Chocolate",
+          "it": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Chocolate",
+          "en": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Chocolate"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/iso-90X3.jpg",
+        "alt": {
+          "fr": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Cookies and Cream",
+          "de": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Cookies and Cream",
+          "it": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Cookies and Cream",
+          "en": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Cookies and Cream"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/iso-90-strawberry.jpg",
+        "alt": {
+          "fr": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Starwberry",
+          "de": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Starwberry",
+          "it": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Starwberry",
+          "en": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Starwberry"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/iso-90X1.jpg",
+        "alt": {
+          "fr": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Vanilla",
+          "de": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Vanilla",
+          "it": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Vanilla",
+          "en": "Dirty Squads ISO 90X CFM Isolat de Whey 1kg – 90% Protéine Microfiltrée à Froid Sans Lactose - Vanilla"
+        },
+        "width": 800,
+        "height": 800
       }
     ],
     "shortDescription": {
@@ -3758,18 +3967,79 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-21965",
-        "sku": "NF-21965",
+        "id": "var-ds-306",
+        "sku": "SKU-DS-306",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "Caramel",
+          "de": "Caramel",
+          "it": "Caramel",
+          "en": "Caramel"
         },
         "format": "1 unité",
-        "priceChf": 60,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "priceChf": 55.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/iso-90X2.jpg"
+      },
+      {
+        "id": "var-ds-307",
+        "sku": "SKU-DS-307",
+        "flavorName": {
+          "fr": "Chocolate",
+          "de": "Chocolate",
+          "it": "Chocolate",
+          "en": "Chocolate"
+        },
+        "format": "1 unité",
+        "priceChf": 55.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/iso-choco-1.jpeg"
+      },
+      {
+        "id": "var-ds-308",
+        "sku": "SKU-DS-308",
+        "flavorName": {
+          "fr": "Cookies and Cream",
+          "de": "Cookies and Cream",
+          "it": "Cookies and Cream",
+          "en": "Cookies and Cream"
+        },
+        "format": "1 unité",
+        "priceChf": 55.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/iso-90X3.jpg"
+      },
+      {
+        "id": "var-ds-309",
+        "sku": "SKU-DS-309",
+        "flavorName": {
+          "fr": "Starwberry",
+          "de": "Starwberry",
+          "it": "Starwberry",
+          "en": "Starwberry"
+        },
+        "format": "1 unité",
+        "priceChf": 55.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/iso-90-strawberry.jpg"
+      },
+      {
+        "id": "var-ds-310",
+        "sku": "SKU-DS-310",
+        "flavorName": {
+          "fr": "Vanilla",
+          "de": "Vanilla",
+          "it": "Vanilla",
+          "en": "Vanilla"
+        },
+        "format": "1 unité",
+        "priceChf": 55.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/iso-90X1.jpg"
       }
     ],
     "isSwissOrigin": false
@@ -3791,7 +4061,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 89,
+    "priceChf": 80.0,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLAT-1.png",
@@ -3858,6 +4128,50 @@ export const PRODUCTS: ProductItem[] = [
         },
         "width": 800,
         "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/iso80x-chocolate-0.jpg",
+        "alt": {
+          "fr": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Chocolate",
+          "de": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Chocolate",
+          "it": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Chocolate",
+          "en": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Chocolate"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/iso80x-cokies-and-creams.jpg",
+        "alt": {
+          "fr": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Cookies and Cream",
+          "de": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Cookies and Cream",
+          "it": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Cookies and Cream",
+          "en": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Cookies and Cream"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/iso80xstawberry.jpg",
+        "alt": {
+          "fr": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Starwberry",
+          "de": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Starwberry",
+          "it": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Starwberry",
+          "en": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Starwberry"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/iso-80x-vanilla.jpg",
+        "alt": {
+          "fr": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Vanilla",
+          "de": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Vanilla",
+          "it": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Vanilla",
+          "en": "Dirty Squads ISO 80X Whey Concentrée Grass-Fed 2kg – Protéine de Lactosérum de Pâturage - Vanilla"
+        },
+        "width": 800,
+        "height": 800
       }
     ],
     "shortDescription": {
@@ -3910,18 +4224,64 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-21951",
-        "sku": "NF-21951",
+        "id": "var-ds-298",
+        "sku": "SKU-DS-298",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "Chocolate",
+          "de": "Chocolate",
+          "it": "Chocolate",
+          "en": "Chocolate"
         },
         "format": "1 unité",
-        "priceChf": 89,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "priceChf": 80.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/iso80x-chocolate-0.jpg"
+      },
+      {
+        "id": "var-ds-299",
+        "sku": "SKU-DS-299",
+        "flavorName": {
+          "fr": "Cookies and Cream",
+          "de": "Cookies and Cream",
+          "it": "Cookies and Cream",
+          "en": "Cookies and Cream"
+        },
+        "format": "1 unité",
+        "priceChf": 80.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/iso80x-cokies-and-creams.jpg"
+      },
+      {
+        "id": "var-ds-300",
+        "sku": "SKU-DS-300",
+        "flavorName": {
+          "fr": "Starwberry",
+          "de": "Starwberry",
+          "it": "Starwberry",
+          "en": "Starwberry"
+        },
+        "format": "1 unité",
+        "priceChf": 80.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/iso80xstawberry.jpg"
+      },
+      {
+        "id": "var-ds-301",
+        "sku": "SKU-DS-301",
+        "flavorName": {
+          "fr": "Vanilla",
+          "de": "Vanilla",
+          "it": "Vanilla",
+          "en": "Vanilla"
+        },
+        "format": "1 unité",
+        "priceChf": 80.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/iso-80x-vanilla.jpg"
       }
     ],
     "isSwissOrigin": false
@@ -17593,6 +17953,1159 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/hydralytes-lemon-mint.png"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-198",
+    "slug": {
+      "fr": "dirty-squads-stimx-pre-workout-hardcore",
+      "de": "dirty-squads-stimx-pre-workout-hardcore",
+      "it": "dirty-squads-stimx-pre-workout-hardcore",
+      "en": "dirty-squads-stimx-pre-workout-hardcore"
+    },
+    "name": {
+      "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
+      "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
+      "it": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
+      "en": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "pre-workout",
+    "taxCategory": "food_reduced",
+    "priceChf": 31.9,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/edx.jpg",
+        "alt": {
+          "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
+          "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
+          "it": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
+          "en": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/stim-x.png",
+        "alt": {
+          "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
+          "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
+          "it": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
+          "en": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/lemon-stim-x.jpg",
+        "alt": {
+          "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Lemon",
+          "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Lemon",
+          "it": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Lemon",
+          "en": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Lemon"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/red-cola-stim-x.jpg",
+        "alt": {
+          "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Red Cola",
+          "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Red Cola",
+          "it": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Red Cola",
+          "en": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Red Cola"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/tutti-fruity-stimx.jpg",
+        "alt": {
+          "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Tutti Fruity",
+          "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Tutti Fruity",
+          "it": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Tutti Fruity",
+          "en": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Tutti Fruity"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Unleash intense energy, laser focus, and powerful pumps with Stim X. Our high-stimulant \\npre-workout is engineered with premium ingredients like caffeine, citrulline malate, and \\nherbal extracts to dominate your most demanding training sessions.",
+      "de": "Unleash intense energy, laser focus, and powerful pumps with Stim X. Our high-stimulant \\npre-workout is engineered with premium ingredients like caffeine, citrulline malate, and \\nherbal extracts to dominate your most demanding training sessions.",
+      "it": "Unleash intense energy, laser focus, and powerful pumps with Stim X. Our high-stimulant \\npre-workout is engineered with premium ingredients like caffeine, citrulline malate, and \\nherbal extracts to dominate your most demanding training sessions.",
+      "en": "Unleash intense energy, laser focus, and powerful pumps with Stim X. Our high-stimulant \\npre-workout is engineered with premium ingredients like caffeine, citrulline malate, and \\nherbal extracts to dominate your most demanding training sessions."
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "Unleash intense energy, laser focus, and powerful pumps with Stim X. Our high-stimulant \\npre-workout is engineered with premium ingredients like caffeine, citrulline malate, and \\nherbal extracts to dominate your most demanding training sessions.\n\n\\n Long Description \\n What it is: \\nDirty Squads Stim X is a high-performance, high-stimulant pre-workout supplement designed \\nto elevate every aspect of your training. This potent formula delivers a powerful \\n 380mg dose of caffeine for explosive energy, combined with clinical doses \\nof pump ingredients like L-Citrulline Malate and vasodilators like \\n L-Arginine . It's further enhanced with focus agents like \\n Choline Bitartrate and adaptogens like Rhodiola Rosea \\nto help you push through mental and physical fatigue. \\n Who it's for: \\nStim X is designed for experienced athletes and seasoned gym-goers with a high tolerance \\nto stimulants who are looking for: \\n \\n A significant energy boost to power through heavy lifts and high-intensity workouts. \\n Enhanced muscle pumps and vascularity. \\n Improved mental focus and alertness. \\n A product that is gluten-free, soy-free, sugar-free, and vegan-friendly. \\n \\n Key Benefits: \\n \\n Explosive Energy: 380mg of anhydrous caffeine delivers a powerful and immediate energy surge. \\n Powerful Pumps: A 2:1 ratio of L-Citrulline DL-Malate (2500mg) and L-Arginine (1000mg) promotes nitric oxide production for enhanced blood flow, muscle pumps, and nutrient delivery. \\n Laser Focus & Mind-Muscle Connection: L-Tyrosine and Choline Bitartrate support cognitive function, alertness, and mental drive. \\n Performance & Endurance: Beta-Alanine (2000mg) helps combat muscular fatigue and improve endurance, while Taurine supports hydration and muscular function. \\n Advanced Stimulant Blend: Features Citrus Aurantium extract (95% synephrine) for an additional stimulant effect and Rhodiola Rosea to help the body adapt to physical stress. \\n \\n How to Use: \\n \\n Mix 1 scoop (10g) with 250 ml of water. \\n Consume 15–30 minutes before your workout. \\n Important: Assess your tolerance to caffeine and other stimulants before use. Do not exceed the recommended serving. \\n \\n",
+      "de": "Unleash intense energy, laser focus, and powerful pumps with Stim X. Our high-stimulant \\npre-workout is engineered with premium ingredients like caffeine, citrulline malate, and \\nherbal extracts to dominate your most demanding training sessions.\n\n\\n Long Description \\n What it is: \\nDirty Squads Stim X is a high-performance, high-stimulant pre-workout supplement designed \\nto elevate every aspect of your training. This potent formula delivers a powerful \\n 380mg dose of caffeine for explosive energy, combined with clinical doses \\nof pump ingredients like L-Citrulline Malate and vasodilators like \\n L-Arginine . It's further enhanced with focus agents like \\n Choline Bitartrate and adaptogens like Rhodiola Rosea \\nto help you push through mental and physical fatigue. \\n Who it's for: \\nStim X is designed for experienced athletes and seasoned gym-goers with a high tolerance \\nto stimulants who are looking for: \\n \\n A significant energy boost to power through heavy lifts and high-intensity workouts. \\n Enhanced muscle pumps and vascularity. \\n Improved mental focus and alertness. \\n A product that is gluten-free, soy-free, sugar-free, and vegan-friendly. \\n \\n Key Benefits: \\n \\n Explosive Energy: 380mg of anhydrous caffeine delivers a powerful and immediate energy surge. \\n Powerful Pumps: A 2:1 ratio of L-Citrulline DL-Malate (2500mg) and L-Arginine (1000mg) promotes nitric oxide production for enhanced blood flow, muscle pumps, and nutrient delivery. \\n Laser Focus & Mind-Muscle Connection: L-Tyrosine and Choline Bitartrate support cognitive function, alertness, and mental drive. \\n Performance & Endurance: Beta-Alanine (2000mg) helps combat muscular fatigue and improve endurance, while Taurine supports hydration and muscular function. \\n Advanced Stimulant Blend: Features Citrus Aurantium extract (95% synephrine) for an additional stimulant effect and Rhodiola Rosea to help the body adapt to physical stress. \\n \\n How to Use: \\n \\n Mix 1 scoop (10g) with 250 ml of water. \\n Consume 15–30 minutes before your workout. \\n Important: Assess your tolerance to caffeine and other stimulants before use. Do not exceed the recommended serving. \\n \\n",
+      "it": "Unleash intense energy, laser focus, and powerful pumps with Stim X. Our high-stimulant \\npre-workout is engineered with premium ingredients like caffeine, citrulline malate, and \\nherbal extracts to dominate your most demanding training sessions.\n\n\\n Long Description \\n What it is: \\nDirty Squads Stim X is a high-performance, high-stimulant pre-workout supplement designed \\nto elevate every aspect of your training. This potent formula delivers a powerful \\n 380mg dose of caffeine for explosive energy, combined with clinical doses \\nof pump ingredients like L-Citrulline Malate and vasodilators like \\n L-Arginine . It's further enhanced with focus agents like \\n Choline Bitartrate and adaptogens like Rhodiola Rosea \\nto help you push through mental and physical fatigue. \\n Who it's for: \\nStim X is designed for experienced athletes and seasoned gym-goers with a high tolerance \\nto stimulants who are looking for: \\n \\n A significant energy boost to power through heavy lifts and high-intensity workouts. \\n Enhanced muscle pumps and vascularity. \\n Improved mental focus and alertness. \\n A product that is gluten-free, soy-free, sugar-free, and vegan-friendly. \\n \\n Key Benefits: \\n \\n Explosive Energy: 380mg of anhydrous caffeine delivers a powerful and immediate energy surge. \\n Powerful Pumps: A 2:1 ratio of L-Citrulline DL-Malate (2500mg) and L-Arginine (1000mg) promotes nitric oxide production for enhanced blood flow, muscle pumps, and nutrient delivery. \\n Laser Focus & Mind-Muscle Connection: L-Tyrosine and Choline Bitartrate support cognitive function, alertness, and mental drive. \\n Performance & Endurance: Beta-Alanine (2000mg) helps combat muscular fatigue and improve endurance, while Taurine supports hydration and muscular function. \\n Advanced Stimulant Blend: Features Citrus Aurantium extract (95% synephrine) for an additional stimulant effect and Rhodiola Rosea to help the body adapt to physical stress. \\n \\n How to Use: \\n \\n Mix 1 scoop (10g) with 250 ml of water. \\n Consume 15–30 minutes before your workout. \\n Important: Assess your tolerance to caffeine and other stimulants before use. Do not exceed the recommended serving. \\n \\n",
+      "en": "Unleash intense energy, laser focus, and powerful pumps with Stim X. Our high-stimulant \\npre-workout is engineered with premium ingredients like caffeine, citrulline malate, and \\nherbal extracts to dominate your most demanding training sessions.\n\n\\n Long Description \\n What it is: \\nDirty Squads Stim X is a high-performance, high-stimulant pre-workout supplement designed \\nto elevate every aspect of your training. This potent formula delivers a powerful \\n 380mg dose of caffeine for explosive energy, combined with clinical doses \\nof pump ingredients like L-Citrulline Malate and vasodilators like \\n L-Arginine . It's further enhanced with focus agents like \\n Choline Bitartrate and adaptogens like Rhodiola Rosea \\nto help you push through mental and physical fatigue. \\n Who it's for: \\nStim X is designed for experienced athletes and seasoned gym-goers with a high tolerance \\nto stimulants who are looking for: \\n \\n A significant energy boost to power through heavy lifts and high-intensity workouts. \\n Enhanced muscle pumps and vascularity. \\n Improved mental focus and alertness. \\n A product that is gluten-free, soy-free, sugar-free, and vegan-friendly. \\n \\n Key Benefits: \\n \\n Explosive Energy: 380mg of anhydrous caffeine delivers a powerful and immediate energy surge. \\n Powerful Pumps: A 2:1 ratio of L-Citrulline DL-Malate (2500mg) and L-Arginine (1000mg) promotes nitric oxide production for enhanced blood flow, muscle pumps, and nutrient delivery. \\n Laser Focus & Mind-Muscle Connection: L-Tyrosine and Choline Bitartrate support cognitive function, alertness, and mental drive. \\n Performance & Endurance: Beta-Alanine (2000mg) helps combat muscular fatigue and improve endurance, while Taurine supports hydration and muscular function. \\n Advanced Stimulant Blend: Features Citrus Aurantium extract (95% synephrine) for an additional stimulant effect and Rhodiola Rosea to help the body adapt to physical stress. \\n \\n How to Use: \\n \\n Mix 1 scoop (10g) with 250 ml of water. \\n Consume 15–30 minutes before your workout. \\n Important: Assess your tolerance to caffeine and other stimulants before use. Do not exceed the recommended serving. \\n \\n"
+    },
+    "usageInstructions": {
+      "fr": "Prendre 1 dosette (10g) avec 250ml d'eau fraîche 20 minutes avant un entraînement intensif. Ne pas dépasser 1 dose par 24h.",
+      "de": "Prendre 1 dosette (10g) avec 250ml d'eau fraîche 20 minutes avant un entraînement intensif. Ne pas dépasser 1 dose par 24h.",
+      "it": "Prendre 1 dosette (10g) avec 250ml d'eau fraîche 20 minutes avant un entraînement intensif. Ne pas dépasser 1 dose par 24h.",
+      "en": "Prendre 1 dosette (10g) avec 250ml d'eau fraîche 20 minutes avant un entraînement intensif. Ne pas dépasser 1 dose par 24h."
+    },
+    "ingredients": {
+      "fr": "L-Citrulline Malate, Bêta-Alanine, Caféine Anhydre, Taurine, L-Tyrosine, Arômes naturels, Édulcorant (Sucralose).",
+      "de": "L-Citrulline Malate, Bêta-Alanine, Caféine Anhydre, Taurine, L-Tyrosine, Arômes naturels, Édulcorant (Sucralose).",
+      "it": "L-Citrulline Malate, Bêta-Alanine, Caféine Anhydre, Taurine, L-Tyrosine, Arômes naturels, Édulcorant (Sucralose).",
+      "en": "L-Citrulline Malate, Bêta-Alanine, Caféine Anhydre, Taurine, L-Tyrosine, Arômes naturels, Édulcorant (Sucralose)."
+    },
+    "allergens": {
+      "fr": "Teneur élevée en caféine (300mg/dose). Déconseillé aux enfants et aux femmes enceintes.",
+      "de": "Teneur élevée en caféine (300mg/dose). Déconseillé aux enfants et aux femmes enceintes.",
+      "it": "Teneur élevée en caféine (300mg/dose). Déconseillé aux enfants et aux femmes enceintes.",
+      "en": "Teneur élevée en caféine (300mg/dose). Déconseillé aux enfants et aux femmes enceintes."
+    },
+    "nutrition": {
+      "servingSize": "10g",
+      "servingsPerContainer": 30,
+      "energyKj": 20,
+      "energyKcal": 5,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0.8,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0.05
+    },
+    "variants": [
+      {
+        "id": "var-ds-284",
+        "sku": "SKU-DS-284",
+        "flavorName": {
+          "fr": "Lemon",
+          "de": "Lemon",
+          "it": "Lemon",
+          "en": "Lemon"
+        },
+        "format": "300g (30 doses)",
+        "priceChf": 31.9,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/lemon-stim-x.jpg"
+      },
+      {
+        "id": "var-ds-285",
+        "sku": "SKU-DS-285",
+        "flavorName": {
+          "fr": "Red Cola",
+          "de": "Red Cola",
+          "it": "Red Cola",
+          "en": "Red Cola"
+        },
+        "format": "300g (30 doses)",
+        "priceChf": 31.9,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/red-cola-stim-x.jpg"
+      },
+      {
+        "id": "var-ds-286",
+        "sku": "SKU-DS-286",
+        "flavorName": {
+          "fr": "Tutti Fruity",
+          "de": "Tutti Fruity",
+          "it": "Tutti Fruity",
+          "en": "Tutti Fruity"
+        },
+        "format": "300g (30 doses)",
+        "priceChf": 31.9,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/tutti-fruity-stimx.jpg"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-200",
+    "slug": {
+      "fr": "dirty-squads-multi-v-vitamines-mineraux",
+      "de": "dirty-squads-multi-v-vitamines-mineraux",
+      "it": "dirty-squads-multi-v-vitamines-mineraux",
+      "en": "dirty-squads-multi-v-vitamines-mineraux"
+    },
+    "name": {
+      "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
+      "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
+      "it": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
+      "en": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "vitamines",
+    "taxCategory": "food_reduced",
+    "priceChf": 18.0,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/dirty-sqauds-wall3.jpg",
+        "alt": {
+          "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
+          "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
+          "it": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
+          "en": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/vitamin.png",
+        "alt": {
+          "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
+          "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
+          "it": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
+          "en": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support.",
+      "de": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support.",
+      "it": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support.",
+      "en": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support."
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support.\n\n\\n What it is \\nThis is a comprehensive food supplement designed to provide a full spectrum of essential \\nvitamins and minerals. It is uniquely enhanced with a digestive enzyme complex containing \\n Bromelain, Papain, and Lactase to help break down food and improve the \\nabsorption of the nutrients within the formula, ensuring your body can use them effectively. \\n Who it's for \\n \\n Fill nutritional gaps in their diet. \\n Support overall health, immunity, and energy levels. \\n Benefit from added digestive enzymes for better nutrient absorption. \\n Follow a vegan or allergen-free lifestyle (free from gluten, soy, and sugar). \\n \\n Key Benefits \\n \\n Comprehensive Formula: Provides 100% or more of the NRV for most essential vitamins and key minerals. \\n Enhanced Absorption: Includes digestive enzymes (Bromelain, Papain, Lactase) to support the breakdown and absorption of nutrients. \\n High Potency Vitamin C: Delivers over 1390 mg per serving for immune and antioxidant support. \\n Vegan-Friendly: Carefully formulated to be free from animal products, gluten, soy, and added sugar. \\n Convenient Once-Daily Serving: Just one capsule per day with breakfast. \\n \\n How to Use \\nTake 1 capsule with breakfast. Do not exceed the recommended daily dose. \\n \\n",
+      "de": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support.\n\n\\n What it is \\nThis is a comprehensive food supplement designed to provide a full spectrum of essential \\nvitamins and minerals. It is uniquely enhanced with a digestive enzyme complex containing \\n Bromelain, Papain, and Lactase to help break down food and improve the \\nabsorption of the nutrients within the formula, ensuring your body can use them effectively. \\n Who it's for \\n \\n Fill nutritional gaps in their diet. \\n Support overall health, immunity, and energy levels. \\n Benefit from added digestive enzymes for better nutrient absorption. \\n Follow a vegan or allergen-free lifestyle (free from gluten, soy, and sugar). \\n \\n Key Benefits \\n \\n Comprehensive Formula: Provides 100% or more of the NRV for most essential vitamins and key minerals. \\n Enhanced Absorption: Includes digestive enzymes (Bromelain, Papain, Lactase) to support the breakdown and absorption of nutrients. \\n High Potency Vitamin C: Delivers over 1390 mg per serving for immune and antioxidant support. \\n Vegan-Friendly: Carefully formulated to be free from animal products, gluten, soy, and added sugar. \\n Convenient Once-Daily Serving: Just one capsule per day with breakfast. \\n \\n How to Use \\nTake 1 capsule with breakfast. Do not exceed the recommended daily dose. \\n \\n",
+      "it": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support.\n\n\\n What it is \\nThis is a comprehensive food supplement designed to provide a full spectrum of essential \\nvitamins and minerals. It is uniquely enhanced with a digestive enzyme complex containing \\n Bromelain, Papain, and Lactase to help break down food and improve the \\nabsorption of the nutrients within the formula, ensuring your body can use them effectively. \\n Who it's for \\n \\n Fill nutritional gaps in their diet. \\n Support overall health, immunity, and energy levels. \\n Benefit from added digestive enzymes for better nutrient absorption. \\n Follow a vegan or allergen-free lifestyle (free from gluten, soy, and sugar). \\n \\n Key Benefits \\n \\n Comprehensive Formula: Provides 100% or more of the NRV for most essential vitamins and key minerals. \\n Enhanced Absorption: Includes digestive enzymes (Bromelain, Papain, Lactase) to support the breakdown and absorption of nutrients. \\n High Potency Vitamin C: Delivers over 1390 mg per serving for immune and antioxidant support. \\n Vegan-Friendly: Carefully formulated to be free from animal products, gluten, soy, and added sugar. \\n Convenient Once-Daily Serving: Just one capsule per day with breakfast. \\n \\n How to Use \\nTake 1 capsule with breakfast. Do not exceed the recommended daily dose. \\n \\n",
+      "en": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support.\n\n\\n What it is \\nThis is a comprehensive food supplement designed to provide a full spectrum of essential \\nvitamins and minerals. It is uniquely enhanced with a digestive enzyme complex containing \\n Bromelain, Papain, and Lactase to help break down food and improve the \\nabsorption of the nutrients within the formula, ensuring your body can use them effectively. \\n Who it's for \\n \\n Fill nutritional gaps in their diet. \\n Support overall health, immunity, and energy levels. \\n Benefit from added digestive enzymes for better nutrient absorption. \\n Follow a vegan or allergen-free lifestyle (free from gluten, soy, and sugar). \\n \\n Key Benefits \\n \\n Comprehensive Formula: Provides 100% or more of the NRV for most essential vitamins and key minerals. \\n Enhanced Absorption: Includes digestive enzymes (Bromelain, Papain, Lactase) to support the breakdown and absorption of nutrients. \\n High Potency Vitamin C: Delivers over 1390 mg per serving for immune and antioxidant support. \\n Vegan-Friendly: Carefully formulated to be free from animal products, gluten, soy, and added sugar. \\n Convenient Once-Daily Serving: Just one capsule per day with breakfast. \\n \\n How to Use \\nTake 1 capsule with breakfast. Do not exceed the recommended daily dose. \\n \\n"
+    },
+    "usageInstructions": {
+      "fr": "Prendre 2 gélules chaque matin au cours du petit-déjeuner avec un grand verre d'eau.",
+      "de": "Prendre 2 gélules chaque matin au cours du petit-déjeuner avec un grand verre d'eau.",
+      "it": "Prendre 2 gélules chaque matin au cours du petit-déjeuner avec un grand verre d'eau.",
+      "en": "Prendre 2 gélules chaque matin au cours du petit-déjeuner avec un grand verre d'eau."
+    },
+    "ingredients": {
+      "fr": "Vitamines A, C, D3, E, K2, Complexe B complet (B1, B2, B3, B5, B6, B8, B9, B12), Zinc, Magnésium, Fer, Complexe enzymatique DigeZyme®.",
+      "de": "Vitamines A, C, D3, E, K2, Complexe B complet (B1, B2, B3, B5, B6, B8, B9, B12), Zinc, Magnésium, Fer, Complexe enzymatique DigeZyme®.",
+      "it": "Vitamines A, C, D3, E, K2, Complexe B complet (B1, B2, B3, B5, B6, B8, B9, B12), Zinc, Magnésium, Fer, Complexe enzymatique DigeZyme®.",
+      "en": "Vitamines A, C, D3, E, K2, Complexe B complet (B1, B2, B3, B5, B6, B8, B9, B12), Zinc, Magnésium, Fer, Complexe enzymatique DigeZyme®."
+    },
+    "allergens": {
+      "fr": "Sans gluten, sans lactose, convient aux végétariens.",
+      "de": "Sans gluten, sans lactose, convient aux végétariens.",
+      "it": "Sans gluten, sans lactose, convient aux végétariens.",
+      "en": "Sans gluten, sans lactose, convient aux végétariens."
+    },
+    "nutrition": {
+      "servingSize": "2 gélules",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-200-1",
+        "sku": "DS-MULTI-V",
+        "flavorName": {
+          "fr": "Standard",
+          "de": "Standard",
+          "it": "Standard",
+          "en": "Standard"
+        },
+        "format": "60 gélules",
+        "priceChf": 18.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall3.jpg"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-201",
+    "slug": {
+      "fr": "dirty-squads-testo-excess-booster-naturel",
+      "de": "dirty-squads-testo-excess-booster-naturel",
+      "it": "dirty-squads-testo-excess-booster-naturel",
+      "en": "dirty-squads-testo-excess-booster-naturel"
+    },
+    "name": {
+      "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
+      "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
+      "it": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
+      "en": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "sante-bien-etre",
+    "taxCategory": "food_reduced",
+    "priceChf": 42.0,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/dirty-sqauds-wall6.jpg",
+        "alt": {
+          "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
+          "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
+          "it": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
+          "en": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/testo-g.png",
+        "alt": {
+          "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
+          "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
+          "it": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
+          "en": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production.",
+      "de": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production.",
+      "it": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production.",
+      "en": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production."
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production.\n\n\\n Long Description \\n What it is: \\n \\nTesto Excess is a premium food supplement crafted with a powerful blend of scientifically \\nchosen ingredients to support male hormonal health. It features D-Aspartic Acid, a key \\namino acid in the testosterone production process, combined with renowned herbal extracts \\nlike Tribulus Terrestris, Fenugreek, Maca, Ashwagandha, and Saw Palmetto to create a \\ncomprehensive vitality and performance formula. \\n \\n Who it's for: \\n \\n Men looking to support their body's natural testosterone levels. \\n Those seeking to enhance vitality, energy, and overall male performance. \\n Adults interested in a natural approach to supporting strength, libido, and well-being. \\n Note: This product is only intended for healthy adults over 18. \\n \\n Key Benefits: \\n \\n Supports Testosterone Production: D-Aspartic Acid aids in luteinizing hormone and testosterone synthesis. \\n Enhances Vitality & Performance: Herbal adaptogens like Ashwagandha and Maca help the body manage stress and energy. \\n Promotes Male Health: Saw Palmetto supports prostate health. \\n Libido Support: Tribulus Terrestris and Fenugreek traditionally support libido and reproductive health. \\n Clean & Vegan-Friendly: Free from gluten, soy, and added sugar. \\n \\n How to Use: \\n \\nTake one serving (3 capsules) before your workout. \\n \\n",
+      "de": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production.\n\n\\n Long Description \\n What it is: \\n \\nTesto Excess is a premium food supplement crafted with a powerful blend of scientifically \\nchosen ingredients to support male hormonal health. It features D-Aspartic Acid, a key \\namino acid in the testosterone production process, combined with renowned herbal extracts \\nlike Tribulus Terrestris, Fenugreek, Maca, Ashwagandha, and Saw Palmetto to create a \\ncomprehensive vitality and performance formula. \\n \\n Who it's for: \\n \\n Men looking to support their body's natural testosterone levels. \\n Those seeking to enhance vitality, energy, and overall male performance. \\n Adults interested in a natural approach to supporting strength, libido, and well-being. \\n Note: This product is only intended for healthy adults over 18. \\n \\n Key Benefits: \\n \\n Supports Testosterone Production: D-Aspartic Acid aids in luteinizing hormone and testosterone synthesis. \\n Enhances Vitality & Performance: Herbal adaptogens like Ashwagandha and Maca help the body manage stress and energy. \\n Promotes Male Health: Saw Palmetto supports prostate health. \\n Libido Support: Tribulus Terrestris and Fenugreek traditionally support libido and reproductive health. \\n Clean & Vegan-Friendly: Free from gluten, soy, and added sugar. \\n \\n How to Use: \\n \\nTake one serving (3 capsules) before your workout. \\n \\n",
+      "it": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production.\n\n\\n Long Description \\n What it is: \\n \\nTesto Excess is a premium food supplement crafted with a powerful blend of scientifically \\nchosen ingredients to support male hormonal health. It features D-Aspartic Acid, a key \\namino acid in the testosterone production process, combined with renowned herbal extracts \\nlike Tribulus Terrestris, Fenugreek, Maca, Ashwagandha, and Saw Palmetto to create a \\ncomprehensive vitality and performance formula. \\n \\n Who it's for: \\n \\n Men looking to support their body's natural testosterone levels. \\n Those seeking to enhance vitality, energy, and overall male performance. \\n Adults interested in a natural approach to supporting strength, libido, and well-being. \\n Note: This product is only intended for healthy adults over 18. \\n \\n Key Benefits: \\n \\n Supports Testosterone Production: D-Aspartic Acid aids in luteinizing hormone and testosterone synthesis. \\n Enhances Vitality & Performance: Herbal adaptogens like Ashwagandha and Maca help the body manage stress and energy. \\n Promotes Male Health: Saw Palmetto supports prostate health. \\n Libido Support: Tribulus Terrestris and Fenugreek traditionally support libido and reproductive health. \\n Clean & Vegan-Friendly: Free from gluten, soy, and added sugar. \\n \\n How to Use: \\n \\nTake one serving (3 capsules) before your workout. \\n \\n",
+      "en": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production.\n\n\\n Long Description \\n What it is: \\n \\nTesto Excess is a premium food supplement crafted with a powerful blend of scientifically \\nchosen ingredients to support male hormonal health. It features D-Aspartic Acid, a key \\namino acid in the testosterone production process, combined with renowned herbal extracts \\nlike Tribulus Terrestris, Fenugreek, Maca, Ashwagandha, and Saw Palmetto to create a \\ncomprehensive vitality and performance formula. \\n \\n Who it's for: \\n \\n Men looking to support their body's natural testosterone levels. \\n Those seeking to enhance vitality, energy, and overall male performance. \\n Adults interested in a natural approach to supporting strength, libido, and well-being. \\n Note: This product is only intended for healthy adults over 18. \\n \\n Key Benefits: \\n \\n Supports Testosterone Production: D-Aspartic Acid aids in luteinizing hormone and testosterone synthesis. \\n Enhances Vitality & Performance: Herbal adaptogens like Ashwagandha and Maca help the body manage stress and energy. \\n Promotes Male Health: Saw Palmetto supports prostate health. \\n Libido Support: Tribulus Terrestris and Fenugreek traditionally support libido and reproductive health. \\n Clean & Vegan-Friendly: Free from gluten, soy, and added sugar. \\n \\n How to Use: \\n \\nTake one serving (3 capsules) before your workout. \\n \\n"
+    },
+    "usageInstructions": {
+      "fr": "Prendre 3 gélules par jour avec un repas, de préférence le matin ou 45 minutes avant l'exercice physique.",
+      "de": "Prendre 3 gélules par jour avec un repas, de préférence le matin ou 45 minutes avant l'exercice physique.",
+      "it": "Prendre 3 gélules par jour avec un repas, de préférence le matin ou 45 minutes avant l'exercice physique.",
+      "en": "Prendre 3 gélules par jour avec un repas, de préférence le matin ou 45 minutes avant l'exercice physique."
+    },
+    "ingredients": {
+      "fr": "Acide D-Aspartique (DAA), Extrait de Tribulus Terrestris titré à 90% saponines, Extrait de Fenugrec, Maca noire, Zinc bisglycinate, Vitamine B6.",
+      "de": "Acide D-Aspartique (DAA), Extrait de Tribulus Terrestris titré à 90% saponines, Extrait de Fenugrec, Maca noire, Zinc bisglycinate, Vitamine B6.",
+      "it": "Acide D-Aspartique (DAA), Extrait de Tribulus Terrestris titré à 90% saponines, Extrait de Fenugrec, Maca noire, Zinc bisglycinate, Vitamine B6.",
+      "en": "Acide D-Aspartique (DAA), Extrait de Tribulus Terrestris titré à 90% saponines, Extrait de Fenugrec, Maca noire, Zinc bisglycinate, Vitamine B6."
+    },
+    "allergens": {
+      "fr": "Sans allergènes majeurs. Ne convient pas aux femmes enceintes ni aux mineurs.",
+      "de": "Sans allergènes majeurs. Ne convient pas aux femmes enceintes ni aux mineurs.",
+      "it": "Sans allergènes majeurs. Ne convient pas aux femmes enceintes ni aux mineurs.",
+      "en": "Sans allergènes majeurs. Ne convient pas aux femmes enceintes ni aux mineurs."
+    },
+    "nutrition": {
+      "servingSize": "3 gélules",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-201-1",
+        "sku": "DS-TESTOEX",
+        "flavorName": {
+          "fr": "Standard",
+          "de": "Standard",
+          "it": "Standard",
+          "en": "Standard"
+        },
+        "format": "90 gélules",
+        "priceChf": 42.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall6.jpg"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-202",
+    "slug": {
+      "fr": "dirty-squads-omega-3-huile-poisson-pure",
+      "de": "dirty-squads-omega-3-huile-poisson-pure",
+      "it": "dirty-squads-omega-3-huile-poisson-pure",
+      "en": "dirty-squads-omega-3-huile-poisson-pure"
+    },
+    "name": {
+      "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
+      "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
+      "it": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
+      "en": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "sante-bien-etre",
+    "taxCategory": "food_reduced",
+    "priceChf": 18.0,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/dirty-sqauds-wall5.jpg",
+        "alt": {
+          "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
+          "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
+          "it": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
+          "en": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/omega-g.png",
+        "alt": {
+          "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
+          "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
+          "it": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
+          "en": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health.",
+      "de": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health.",
+      "it": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health.",
+      "en": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health."
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health.\n\nWhat it is: \\n \\nThis is a high-quality food supplement based on Omega-3 fatty acids sourced from cold-water fish. The oil undergoes molecular distillation, a process that helps purify it and increase the concentration of beneficial EPA and DHA. Each serving delivers a substantial dose of these essential fatty acids in an easy-to-swallow soft gel capsule. \\n \\n Who it's for: \\n \\n Individuals seeking to support cardiovascular and heart health. \\n Those looking to maintain healthy brain function and cognitive health. \\n People wanting to support joint mobility and reduce inflammation. \\n Anyone who doesn’t consume fatty fish regularly in their diet. \\n \\n Key Benefits: \\n \\n High Potency: Delivers 3000 mg of fish oil, including 900 mg of combined EPA and DHA per serving. \\n Premium Quality: Made from cold-water fish and purified through molecular distillation. \\n Supports Heart Health: EPA and DHA contribute to the normal function of the heart. \\n Brain & Vision Health: DHA supports normal brain function and vision. \\n Clean Formula: Free from gluten, soy, and added sugar. \\n Convenient Serving: Just 3 capsules per day with breakfast. \\n \\n How to Use: \\nTake 3 capsules with breakfast. Do not exceed the recommended daily dose.",
+      "de": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health.\n\nWhat it is: \\n \\nThis is a high-quality food supplement based on Omega-3 fatty acids sourced from cold-water fish. The oil undergoes molecular distillation, a process that helps purify it and increase the concentration of beneficial EPA and DHA. Each serving delivers a substantial dose of these essential fatty acids in an easy-to-swallow soft gel capsule. \\n \\n Who it's for: \\n \\n Individuals seeking to support cardiovascular and heart health. \\n Those looking to maintain healthy brain function and cognitive health. \\n People wanting to support joint mobility and reduce inflammation. \\n Anyone who doesn’t consume fatty fish regularly in their diet. \\n \\n Key Benefits: \\n \\n High Potency: Delivers 3000 mg of fish oil, including 900 mg of combined EPA and DHA per serving. \\n Premium Quality: Made from cold-water fish and purified through molecular distillation. \\n Supports Heart Health: EPA and DHA contribute to the normal function of the heart. \\n Brain & Vision Health: DHA supports normal brain function and vision. \\n Clean Formula: Free from gluten, soy, and added sugar. \\n Convenient Serving: Just 3 capsules per day with breakfast. \\n \\n How to Use: \\nTake 3 capsules with breakfast. Do not exceed the recommended daily dose.",
+      "it": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health.\n\nWhat it is: \\n \\nThis is a high-quality food supplement based on Omega-3 fatty acids sourced from cold-water fish. The oil undergoes molecular distillation, a process that helps purify it and increase the concentration of beneficial EPA and DHA. Each serving delivers a substantial dose of these essential fatty acids in an easy-to-swallow soft gel capsule. \\n \\n Who it's for: \\n \\n Individuals seeking to support cardiovascular and heart health. \\n Those looking to maintain healthy brain function and cognitive health. \\n People wanting to support joint mobility and reduce inflammation. \\n Anyone who doesn’t consume fatty fish regularly in their diet. \\n \\n Key Benefits: \\n \\n High Potency: Delivers 3000 mg of fish oil, including 900 mg of combined EPA and DHA per serving. \\n Premium Quality: Made from cold-water fish and purified through molecular distillation. \\n Supports Heart Health: EPA and DHA contribute to the normal function of the heart. \\n Brain & Vision Health: DHA supports normal brain function and vision. \\n Clean Formula: Free from gluten, soy, and added sugar. \\n Convenient Serving: Just 3 capsules per day with breakfast. \\n \\n How to Use: \\nTake 3 capsules with breakfast. Do not exceed the recommended daily dose.",
+      "en": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health.\n\nWhat it is: \\n \\nThis is a high-quality food supplement based on Omega-3 fatty acids sourced from cold-water fish. The oil undergoes molecular distillation, a process that helps purify it and increase the concentration of beneficial EPA and DHA. Each serving delivers a substantial dose of these essential fatty acids in an easy-to-swallow soft gel capsule. \\n \\n Who it's for: \\n \\n Individuals seeking to support cardiovascular and heart health. \\n Those looking to maintain healthy brain function and cognitive health. \\n People wanting to support joint mobility and reduce inflammation. \\n Anyone who doesn’t consume fatty fish regularly in their diet. \\n \\n Key Benefits: \\n \\n High Potency: Delivers 3000 mg of fish oil, including 900 mg of combined EPA and DHA per serving. \\n Premium Quality: Made from cold-water fish and purified through molecular distillation. \\n Supports Heart Health: EPA and DHA contribute to the normal function of the heart. \\n Brain & Vision Health: DHA supports normal brain function and vision. \\n Clean Formula: Free from gluten, soy, and added sugar. \\n Convenient Serving: Just 3 capsules per day with breakfast. \\n \\n How to Use: \\nTake 3 capsules with breakfast. Do not exceed the recommended daily dose."
+    },
+    "usageInstructions": {
+      "fr": "Prendre 2 à 3 capsules par jour avec les repas pour un soutien optimal cardiovasculaire et articulaire.",
+      "de": "Prendre 2 à 3 capsules par jour avec les repas pour un soutien optimal cardiovasculaire et articulaire.",
+      "it": "Prendre 2 à 3 capsules par jour avec les repas pour un soutien optimal cardiovasculaire et articulaire.",
+      "en": "Prendre 2 à 3 capsules par jour avec les repas pour un soutien optimal cardiovasculaire et articulaire."
+    },
+    "ingredients": {
+      "fr": "Huile de poisson sauvage purifiée et distillée moléculairement (35% EPA, 25% DHA), gélatine marine, glycérine, Vitamine E naturelle (antioxydant).",
+      "de": "Huile de poisson sauvage purifiée et distillée moléculairement (35% EPA, 25% DHA), gélatine marine, glycérine, Vitamine E naturelle (antioxydant).",
+      "it": "Huile de poisson sauvage purifiée et distillée moléculairement (35% EPA, 25% DHA), gélatine marine, glycérine, Vitamine E naturelle (antioxydant).",
+      "en": "Huile de poisson sauvage purifiée et distillée moléculairement (35% EPA, 25% DHA), gélatine marine, glycérine, Vitamine E naturelle (antioxydant)."
+    },
+    "allergens": {
+      "fr": "Contient du poisson.",
+      "de": "Contient du poisson.",
+      "it": "Contient du poisson.",
+      "en": "Contient du poisson."
+    },
+    "nutrition": {
+      "servingSize": "2 capsules",
+      "servingsPerContainer": 45,
+      "energyKj": 74,
+      "energyKcal": 18,
+      "fatG": 2.0,
+      "saturatedFatG": 0.2,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0.4,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-202-1",
+        "sku": "DS-OMEGA3",
+        "flavorName": {
+          "fr": "Standard",
+          "de": "Standard",
+          "it": "Standard",
+          "en": "Standard"
+        },
+        "format": "90 capsules",
+        "priceChf": 18.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall5.jpg"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-212",
+    "slug": {
+      "fr": "dirty-squads-creapure-creatine-pure",
+      "de": "dirty-squads-creapure-creatine-pure",
+      "it": "dirty-squads-creapure-creatine-pure",
+      "en": "dirty-squads-creapure-creatine-pure"
+    },
+    "name": {
+      "fr": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
+      "de": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
+      "it": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
+      "en": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "creatine",
+    "taxCategory": "food_reduced",
+    "priceChf": 29.0,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/dirty-sqauds-wall8.jpg",
+        "alt": {
+          "fr": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
+          "de": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
+          "it": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
+          "en": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/creatine-g.png",
+        "alt": {
+          "fr": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
+          "de": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
+          "it": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
+          "en": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Maximize your strength and power output with 100% pure Creapure® Creatine Monohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide for its proven efficacy and purity.",
+      "de": "Maximize your strength and power output with 100% pure Creapure® Creatine Monohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide for its proven efficacy and purity.",
+      "it": "Maximize your strength and power output with 100% pure Creapure® Creatine Monohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide for its proven efficacy and purity.",
+      "en": "Maximize your strength and power output with 100% pure Creapure® Creatine Monohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide for its proven efficacy and purity."
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99% de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99% von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99% di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99% by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "Maximize your strength and power output with 100% pure Creapure® Creatine Monohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide for its proven efficacy and purity.\n\nWhat it is: Dirty Squads Creatine is 100% pure Creapure® Creatine Monohydrate. Creapure® is a patented, pharmaceutical-grade form of creatine monohydrate manufactured in Germany, renowned for its exceptional purity and quality. This micronized powder is unflavored, mixes easily, and provides the most researched and effective form of creatine available to support high-intensity athletic performance. \\n Who it's for: This product is for athletes, bodybuilders, strength trainers, and fitness enthusiasts of all levels who want to: \\n \\n \\n Increase strength and power output during workouts. \\n Support muscle growth and volume. \\n Improve recovery between high-intensity efforts. \\n Use the most proven and reliable form of creatine on the market. \\n \\n Key Benefits: \\n \\n \\n 100% Creapure® Quality: Made in Germany, guaranteeing pharmaceutical-grade purity and potency. \\n Gold Standard Efficacy: Creatine Monohydrate is the most clinically researched form of creatine, proven to enhance strength, power, and muscle mass. \\n Unflavored & Versatile: Easily mixes into water, juice, or your favorite protein shake without altering the taste. \\n Easy to Mix: Micronized formula dissolves easily with minimal grit. \\n Value: 60 servings per container. \\n \\n How to Use: \\n \\n \\n Mix 1 scoop (5g) with 400-500 ml of water or your beverage of choice. \\n Close the shaker lid tightly and shake well until dissolved. \\n For best results, consume one serving immediately post-workout. \\n Recommended Daily Use: 5 g \\n \\n Nutrition Facts (Per Serving - 5g): \\n \\n \\n \\n \\n \\n \\n \\n \\n \\n \\n Ingredient \\n Amount \\n NRV%* \\n \\n \\n \\n \\n Creatine Monohydrate \\n 5000 mg \\n - \\n \\n \\n *NRV% (Nutritional Reference Value) not established. \\n \\n \\n \\n \\n \\n \\n \\n \\n Full Ingredients List: Creatine monohydrate (Creapure®). \\n Formula Breakdown: This is a single-ingredient product. The formula is 100% pure, micronized Creatine Monohydrate, sourced from the Creapure® brand, which is synonymous with the highest quality and purity standards in the industry. \\n Allergen Information: Contains: None of the main ingredients. Allergy Advice: Produced and packed in a factory that also processes Milk, Fish, Soy, Nuts, and Eggs. The product itself is pure creatine monohydrate. \\n Certifications: \\n \\n \\n Creapure® Certified (implies high purity and German manufacturing standards). \\n Unflavored \\n Gluten Free (by formulation) \\n Soy Free (by formulation) \\n \\n Warnings & Disclaimers: \\n \\n \\n WARNING: KEEP OUT OF REACH OF CHILDREN. \\n This product is only intended to be consumed by healthy adults 18 years of age or older. \\n Do not use if you are pregnant, breastfeeding, have known medical conditions (including but not limited to kidney, heart, or liver disease) or are taking prescription or OTC medication(s). \\n Consult with your health care practitioner before using this product, especially if you have pre-existing kidney conditions. \\n Food supplements should not be used as a substitute for a varied diet and a healthy lifestyle. \\n Do not exceed the recommended daily dose. \\n Ensure adequate water intake when using this product. \\n Store in a cool, dry place after opening. \\n",
+      "de": "Maximize your strength and power output with 100% pure Creapure® Creatine Monohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide for its proven efficacy and purity.\n\nWhat it is: Dirty Squads Creatine is 100% pure Creapure® Creatine Monohydrate. Creapure® is a patented, pharmaceutical-grade form of creatine monohydrate manufactured in Germany, renowned for its exceptional purity and quality. This micronized powder is unflavored, mixes easily, and provides the most researched and effective form of creatine available to support high-intensity athletic performance. \\n Who it's for: This product is for athletes, bodybuilders, strength trainers, and fitness enthusiasts of all levels who want to: \\n \\n \\n Increase strength and power output during workouts. \\n Support muscle growth and volume. \\n Improve recovery between high-intensity efforts. \\n Use the most proven and reliable form of creatine on the market. \\n \\n Key Benefits: \\n \\n \\n 100% Creapure® Quality: Made in Germany, guaranteeing pharmaceutical-grade purity and potency. \\n Gold Standard Efficacy: Creatine Monohydrate is the most clinically researched form of creatine, proven to enhance strength, power, and muscle mass. \\n Unflavored & Versatile: Easily mixes into water, juice, or your favorite protein shake without altering the taste. \\n Easy to Mix: Micronized formula dissolves easily with minimal grit. \\n Value: 60 servings per container. \\n \\n How to Use: \\n \\n \\n Mix 1 scoop (5g) with 400-500 ml of water or your beverage of choice. \\n Close the shaker lid tightly and shake well until dissolved. \\n For best results, consume one serving immediately post-workout. \\n Recommended Daily Use: 5 g \\n \\n Nutrition Facts (Per Serving - 5g): \\n \\n \\n \\n \\n \\n \\n \\n \\n \\n \\n Ingredient \\n Amount \\n NRV%* \\n \\n \\n \\n \\n Creatine Monohydrate \\n 5000 mg \\n - \\n \\n \\n *NRV% (Nutritional Reference Value) not established. \\n \\n \\n \\n \\n \\n \\n \\n \\n Full Ingredients List: Creatine monohydrate (Creapure®). \\n Formula Breakdown: This is a single-ingredient product. The formula is 100% pure, micronized Creatine Monohydrate, sourced from the Creapure® brand, which is synonymous with the highest quality and purity standards in the industry. \\n Allergen Information: Contains: None of the main ingredients. Allergy Advice: Produced and packed in a factory that also processes Milk, Fish, Soy, Nuts, and Eggs. The product itself is pure creatine monohydrate. \\n Certifications: \\n \\n \\n Creapure® Certified (implies high purity and German manufacturing standards). \\n Unflavored \\n Gluten Free (by formulation) \\n Soy Free (by formulation) \\n \\n Warnings & Disclaimers: \\n \\n \\n WARNING: KEEP OUT OF REACH OF CHILDREN. \\n This product is only intended to be consumed by healthy adults 18 years of age or older. \\n Do not use if you are pregnant, breastfeeding, have known medical conditions (including but not limited to kidney, heart, or liver disease) or are taking prescription or OTC medication(s). \\n Consult with your health care practitioner before using this product, especially if you have pre-existing kidney conditions. \\n Food supplements should not be used as a substitute for a varied diet and a healthy lifestyle. \\n Do not exceed the recommended daily dose. \\n Ensure adequate water intake when using this product. \\n Store in a cool, dry place after opening. \\n",
+      "it": "Maximize your strength and power output with 100% pure Creapure® Creatine Monohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide for its proven efficacy and purity.\n\nWhat it is: Dirty Squads Creatine is 100% pure Creapure® Creatine Monohydrate. Creapure® is a patented, pharmaceutical-grade form of creatine monohydrate manufactured in Germany, renowned for its exceptional purity and quality. This micronized powder is unflavored, mixes easily, and provides the most researched and effective form of creatine available to support high-intensity athletic performance. \\n Who it's for: This product is for athletes, bodybuilders, strength trainers, and fitness enthusiasts of all levels who want to: \\n \\n \\n Increase strength and power output during workouts. \\n Support muscle growth and volume. \\n Improve recovery between high-intensity efforts. \\n Use the most proven and reliable form of creatine on the market. \\n \\n Key Benefits: \\n \\n \\n 100% Creapure® Quality: Made in Germany, guaranteeing pharmaceutical-grade purity and potency. \\n Gold Standard Efficacy: Creatine Monohydrate is the most clinically researched form of creatine, proven to enhance strength, power, and muscle mass. \\n Unflavored & Versatile: Easily mixes into water, juice, or your favorite protein shake without altering the taste. \\n Easy to Mix: Micronized formula dissolves easily with minimal grit. \\n Value: 60 servings per container. \\n \\n How to Use: \\n \\n \\n Mix 1 scoop (5g) with 400-500 ml of water or your beverage of choice. \\n Close the shaker lid tightly and shake well until dissolved. \\n For best results, consume one serving immediately post-workout. \\n Recommended Daily Use: 5 g \\n \\n Nutrition Facts (Per Serving - 5g): \\n \\n \\n \\n \\n \\n \\n \\n \\n \\n \\n Ingredient \\n Amount \\n NRV%* \\n \\n \\n \\n \\n Creatine Monohydrate \\n 5000 mg \\n - \\n \\n \\n *NRV% (Nutritional Reference Value) not established. \\n \\n \\n \\n \\n \\n \\n \\n \\n Full Ingredients List: Creatine monohydrate (Creapure®). \\n Formula Breakdown: This is a single-ingredient product. The formula is 100% pure, micronized Creatine Monohydrate, sourced from the Creapure® brand, which is synonymous with the highest quality and purity standards in the industry. \\n Allergen Information: Contains: None of the main ingredients. Allergy Advice: Produced and packed in a factory that also processes Milk, Fish, Soy, Nuts, and Eggs. The product itself is pure creatine monohydrate. \\n Certifications: \\n \\n \\n Creapure® Certified (implies high purity and German manufacturing standards). \\n Unflavored \\n Gluten Free (by formulation) \\n Soy Free (by formulation) \\n \\n Warnings & Disclaimers: \\n \\n \\n WARNING: KEEP OUT OF REACH OF CHILDREN. \\n This product is only intended to be consumed by healthy adults 18 years of age or older. \\n Do not use if you are pregnant, breastfeeding, have known medical conditions (including but not limited to kidney, heart, or liver disease) or are taking prescription or OTC medication(s). \\n Consult with your health care practitioner before using this product, especially if you have pre-existing kidney conditions. \\n Food supplements should not be used as a substitute for a varied diet and a healthy lifestyle. \\n Do not exceed the recommended daily dose. \\n Ensure adequate water intake when using this product. \\n Store in a cool, dry place after opening. \\n",
+      "en": "Maximize your strength and power output with 100% pure Creapure® Creatine Monohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide for its proven efficacy and purity.\n\nWhat it is: Dirty Squads Creatine is 100% pure Creapure® Creatine Monohydrate. Creapure® is a patented, pharmaceutical-grade form of creatine monohydrate manufactured in Germany, renowned for its exceptional purity and quality. This micronized powder is unflavored, mixes easily, and provides the most researched and effective form of creatine available to support high-intensity athletic performance. \\n Who it's for: This product is for athletes, bodybuilders, strength trainers, and fitness enthusiasts of all levels who want to: \\n \\n \\n Increase strength and power output during workouts. \\n Support muscle growth and volume. \\n Improve recovery between high-intensity efforts. \\n Use the most proven and reliable form of creatine on the market. \\n \\n Key Benefits: \\n \\n \\n 100% Creapure® Quality: Made in Germany, guaranteeing pharmaceutical-grade purity and potency. \\n Gold Standard Efficacy: Creatine Monohydrate is the most clinically researched form of creatine, proven to enhance strength, power, and muscle mass. \\n Unflavored & Versatile: Easily mixes into water, juice, or your favorite protein shake without altering the taste. \\n Easy to Mix: Micronized formula dissolves easily with minimal grit. \\n Value: 60 servings per container. \\n \\n How to Use: \\n \\n \\n Mix 1 scoop (5g) with 400-500 ml of water or your beverage of choice. \\n Close the shaker lid tightly and shake well until dissolved. \\n For best results, consume one serving immediately post-workout. \\n Recommended Daily Use: 5 g \\n \\n Nutrition Facts (Per Serving - 5g): \\n \\n \\n \\n \\n \\n \\n \\n \\n \\n \\n Ingredient \\n Amount \\n NRV%* \\n \\n \\n \\n \\n Creatine Monohydrate \\n 5000 mg \\n - \\n \\n \\n *NRV% (Nutritional Reference Value) not established. \\n \\n \\n \\n \\n \\n \\n \\n \\n Full Ingredients List: Creatine monohydrate (Creapure®). \\n Formula Breakdown: This is a single-ingredient product. The formula is 100% pure, micronized Creatine Monohydrate, sourced from the Creapure® brand, which is synonymous with the highest quality and purity standards in the industry. \\n Allergen Information: Contains: None of the main ingredients. Allergy Advice: Produced and packed in a factory that also processes Milk, Fish, Soy, Nuts, and Eggs. The product itself is pure creatine monohydrate. \\n Certifications: \\n \\n \\n Creapure® Certified (implies high purity and German manufacturing standards). \\n Unflavored \\n Gluten Free (by formulation) \\n Soy Free (by formulation) \\n \\n Warnings & Disclaimers: \\n \\n \\n WARNING: KEEP OUT OF REACH OF CHILDREN. \\n This product is only intended to be consumed by healthy adults 18 years of age or older. \\n Do not use if you are pregnant, breastfeeding, have known medical conditions (including but not limited to kidney, heart, or liver disease) or are taking prescription or OTC medication(s). \\n Consult with your health care practitioner before using this product, especially if you have pre-existing kidney conditions. \\n Food supplements should not be used as a substitute for a varied diet and a healthy lifestyle. \\n Do not exceed the recommended daily dose. \\n Ensure adequate water intake when using this product. \\n Store in a cool, dry place after opening. \\n"
+    },
+    "usageInstructions": {
+      "fr": "Prendre 1 mesurette (3g) par jour diluée dans 200ml d'eau ou dans votre shake protéiné après l'entraînement.",
+      "de": "Prendre 1 mesurette (3g) par jour diluée dans 200ml d'eau ou dans votre shake protéiné après l'entraînement.",
+      "it": "Prendre 1 mesurette (3g) par jour diluée dans 200ml d'eau ou dans votre shake protéiné après l'entraînement.",
+      "en": "Prendre 1 mesurette (3g) par jour diluée dans 200ml d'eau ou dans votre shake protéiné après l'entraînement."
+    },
+    "ingredients": {
+      "fr": "100% Créatine Monohydrate Creapure® brevetée d'origine allemande de très haute pureté certifiée.",
+      "de": "100% Créatine Monohydrate Creapure® brevetée d'origine allemande de très haute pureté certifiée.",
+      "it": "100% Créatine Monohydrate Creapure® brevetée d'origine allemande de très haute pureté certifiée.",
+      "en": "100% Créatine Monohydrate Creapure® brevetée d'origine allemande de très haute pureté certifiée."
+    },
+    "allergens": {
+      "fr": "Végan, certifié sans gluten, sans lactose, sans métaux lourds.",
+      "de": "Végan, certifié sans gluten, sans lactose, sans métaux lourds.",
+      "it": "Végan, certifié sans gluten, sans lactose, sans métaux lourds.",
+      "en": "Végan, certifié sans gluten, sans lactose, sans métaux lourds."
+    },
+    "nutrition": {
+      "servingSize": "3g",
+      "servingsPerContainer": 100,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-212-1",
+        "sku": "DS-CREATINE-CP",
+        "flavorName": {
+          "fr": "Standard",
+          "de": "Standard",
+          "it": "Standard",
+          "en": "Standard"
+        },
+        "format": "300g (100 doses)",
+        "priceChf": 29.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall8.jpg"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-213",
+    "slug": {
+      "fr": "dirty-squads-creatine-monohydrate-micronisee",
+      "de": "dirty-squads-creatine-monohydrate-micronisee",
+      "it": "dirty-squads-creatine-monohydrate-micronisee",
+      "en": "dirty-squads-creatine-monohydrate-micronisee"
+    },
+    "name": {
+      "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
+      "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
+      "it": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
+      "en": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "creatine",
+    "taxCategory": "food_reduced",
+    "priceChf": 19.9,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/dirty-sqauds-wall13.jpg",
+        "alt": {
+          "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
+          "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
+          "it": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
+          "en": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/creatine-g.png",
+        "alt": {
+          "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
+          "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
+          "it": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
+          "en": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity.",
+      "de": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity.",
+      "it": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity.",
+      "en": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity."
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity.\n\n\\n What it is: \\nDirty Squads Creatine is 100% pure Creapure® Creatine Monohydrate. Creapure® is a patented, pharmaceutical-grade form of creatine monohydrate manufactured in Germany, renowned for its exceptional purity and quality. This micronized powder is unflavored, mixes easily, and provides the most researched and effective form of creatine available to support high-intensity athletic performance. \\n Who it's for: \\n \\n Athletes, bodybuilders, strength trainers, and fitness enthusiasts of all levels. \\n Those who want to increase strength and power output during workouts. \\n People aiming to support muscle growth and volume. \\n Anyone looking to improve recovery between high-intensity efforts. \\n Users seeking the most proven and reliable form of creatine on the market. \\n \\n Key Benefits: \\n \\n 100% Creapure® Quality: Made in Germany, guaranteeing pharmaceutical-grade purity and potency. \\n Gold Standard Efficacy: Clinically researched to enhance strength, power, and muscle mass. \\n Unflavored & Versatile: Mixes into water, juice, or protein shakes without altering taste. \\n Easy to Mix: Micronized formula dissolves with minimal grit. \\n Value: 60 servings per container. \\n \\n How to Use: \\n \\n Mix 1 scoop (5g) with 400–500 ml of water or your beverage of choice. \\n Shake well until dissolved. \\n Consume one serving immediately post-workout. \\n Recommended Daily Use: 5 g \\n \\n",
+      "de": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity.\n\n\\n What it is: \\nDirty Squads Creatine is 100% pure Creapure® Creatine Monohydrate. Creapure® is a patented, pharmaceutical-grade form of creatine monohydrate manufactured in Germany, renowned for its exceptional purity and quality. This micronized powder is unflavored, mixes easily, and provides the most researched and effective form of creatine available to support high-intensity athletic performance. \\n Who it's for: \\n \\n Athletes, bodybuilders, strength trainers, and fitness enthusiasts of all levels. \\n Those who want to increase strength and power output during workouts. \\n People aiming to support muscle growth and volume. \\n Anyone looking to improve recovery between high-intensity efforts. \\n Users seeking the most proven and reliable form of creatine on the market. \\n \\n Key Benefits: \\n \\n 100% Creapure® Quality: Made in Germany, guaranteeing pharmaceutical-grade purity and potency. \\n Gold Standard Efficacy: Clinically researched to enhance strength, power, and muscle mass. \\n Unflavored & Versatile: Mixes into water, juice, or protein shakes without altering taste. \\n Easy to Mix: Micronized formula dissolves with minimal grit. \\n Value: 60 servings per container. \\n \\n How to Use: \\n \\n Mix 1 scoop (5g) with 400–500 ml of water or your beverage of choice. \\n Shake well until dissolved. \\n Consume one serving immediately post-workout. \\n Recommended Daily Use: 5 g \\n \\n",
+      "it": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity.\n\n\\n What it is: \\nDirty Squads Creatine is 100% pure Creapure® Creatine Monohydrate. Creapure® is a patented, pharmaceutical-grade form of creatine monohydrate manufactured in Germany, renowned for its exceptional purity and quality. This micronized powder is unflavored, mixes easily, and provides the most researched and effective form of creatine available to support high-intensity athletic performance. \\n Who it's for: \\n \\n Athletes, bodybuilders, strength trainers, and fitness enthusiasts of all levels. \\n Those who want to increase strength and power output during workouts. \\n People aiming to support muscle growth and volume. \\n Anyone looking to improve recovery between high-intensity efforts. \\n Users seeking the most proven and reliable form of creatine on the market. \\n \\n Key Benefits: \\n \\n 100% Creapure® Quality: Made in Germany, guaranteeing pharmaceutical-grade purity and potency. \\n Gold Standard Efficacy: Clinically researched to enhance strength, power, and muscle mass. \\n Unflavored & Versatile: Mixes into water, juice, or protein shakes without altering taste. \\n Easy to Mix: Micronized formula dissolves with minimal grit. \\n Value: 60 servings per container. \\n \\n How to Use: \\n \\n Mix 1 scoop (5g) with 400–500 ml of water or your beverage of choice. \\n Shake well until dissolved. \\n Consume one serving immediately post-workout. \\n Recommended Daily Use: 5 g \\n \\n",
+      "en": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity.\n\n\\n What it is: \\nDirty Squads Creatine is 100% pure Creapure® Creatine Monohydrate. Creapure® is a patented, pharmaceutical-grade form of creatine monohydrate manufactured in Germany, renowned for its exceptional purity and quality. This micronized powder is unflavored, mixes easily, and provides the most researched and effective form of creatine available to support high-intensity athletic performance. \\n Who it's for: \\n \\n Athletes, bodybuilders, strength trainers, and fitness enthusiasts of all levels. \\n Those who want to increase strength and power output during workouts. \\n People aiming to support muscle growth and volume. \\n Anyone looking to improve recovery between high-intensity efforts. \\n Users seeking the most proven and reliable form of creatine on the market. \\n \\n Key Benefits: \\n \\n 100% Creapure® Quality: Made in Germany, guaranteeing pharmaceutical-grade purity and potency. \\n Gold Standard Efficacy: Clinically researched to enhance strength, power, and muscle mass. \\n Unflavored & Versatile: Mixes into water, juice, or protein shakes without altering taste. \\n Easy to Mix: Micronized formula dissolves with minimal grit. \\n Value: 60 servings per container. \\n \\n How to Use: \\n \\n Mix 1 scoop (5g) with 400–500 ml of water or your beverage of choice. \\n Shake well until dissolved. \\n Consume one serving immediately post-workout. \\n Recommended Daily Use: 5 g \\n \\n"
+    },
+    "usageInstructions": {
+      "fr": "Prendre 1 mesure (3.4g) quotidiennement avec un verre d'eau ou une boisson glucidique.",
+      "de": "Prendre 1 mesure (3.4g) quotidiennement avec un verre d'eau ou une boisson glucidique.",
+      "it": "Prendre 1 mesure (3.4g) quotidiennement avec un verre d'eau ou une boisson glucidique.",
+      "en": "Prendre 1 mesure (3.4g) quotidiennement avec un verre d'eau ou une boisson glucidique."
+    },
+    "ingredients": {
+      "fr": "100% Créatine monohydrate micronisée 200 mesh sans additifs.",
+      "de": "100% Créatine monohydrate micronisée 200 mesh sans additifs.",
+      "it": "100% Créatine monohydrate micronisée 200 mesh sans additifs.",
+      "en": "100% Créatine monohydrate micronisée 200 mesh sans additifs."
+    },
+    "allergens": {
+      "fr": "Végan, sans gluten ni lactose.",
+      "de": "Végan, sans gluten ni lactose.",
+      "it": "Végan, sans gluten ni lactose.",
+      "en": "Végan, sans gluten ni lactose."
+    },
+    "nutrition": {
+      "servingSize": "3.4g",
+      "servingsPerContainer": 88,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-213-1",
+        "sku": "SKU-DS-213",
+        "flavorName": {
+          "fr": "Standard",
+          "de": "Standard",
+          "it": "Standard",
+          "en": "Standard"
+        },
+        "format": "300g (88 doses)",
+        "priceChf": 19.9,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall13.jpg"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-591",
+    "slug": {
+      "fr": "dirty-squads-l-arginine-pure-300g",
+      "de": "dirty-squads-l-arginine-pure-300g",
+      "it": "dirty-squads-l-arginine-pure-300g",
+      "en": "dirty-squads-l-arginine-pure-300g"
+    },
+    "name": {
+      "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
+      "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
+      "it": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
+      "en": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "acides-amines",
+    "taxCategory": "food_reduced",
+    "priceChf": 25.0,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png",
+        "alt": {
+          "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
+          "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
+          "it": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
+          "en": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/ARGANINE-GADWAL-scaled.png",
+        "alt": {
+          "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
+          "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
+          "it": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
+          "en": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference.",
+      "de": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference.",
+      "it": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference.",
+      "en": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference."
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference.\n\nWhat It Is \\n Dirty Squads 100% Arginine is a food supplement based on pure L-Arginine , an amino acid that acts as a precursor to Nitric Oxide (NO) , helping to support blood flow and nutrient delivery to working muscles. Each serving provides 5,000 mg of L-Arginine . The product contains 50 servings per container. \\n \\n Who It's For \\n \\n Athletes and gym-goers looking to improve workout performance. \\n Individuals seeking enhanced muscle pumps during training. \\n People aiming to support blood circulation during exercise. \\n Those wanting a stimulant-free pre-workout ingredient. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Enhanced Muscle Pump during resistance training. \\n Improved Nutrient & Oxygen Delivery to muscles. \\n May Support Exercise Performance and training intensity. \\n 100% Pure L-Arginine Formula with no added fillers. \\n \\n How to Use \\n Serving Size: 1 scoop (6 g) \\n Directions: \\n \\n \\n Add 1 scoop (6 g) to 200–300 ml of water . \\n Close the shaker and shake well. \\n Consume 30 minutes before your workout . \\n",
+      "de": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference.\n\nWhat It Is \\n Dirty Squads 100% Arginine is a food supplement based on pure L-Arginine , an amino acid that acts as a precursor to Nitric Oxide (NO) , helping to support blood flow and nutrient delivery to working muscles. Each serving provides 5,000 mg of L-Arginine . The product contains 50 servings per container. \\n \\n Who It's For \\n \\n Athletes and gym-goers looking to improve workout performance. \\n Individuals seeking enhanced muscle pumps during training. \\n People aiming to support blood circulation during exercise. \\n Those wanting a stimulant-free pre-workout ingredient. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Enhanced Muscle Pump during resistance training. \\n Improved Nutrient & Oxygen Delivery to muscles. \\n May Support Exercise Performance and training intensity. \\n 100% Pure L-Arginine Formula with no added fillers. \\n \\n How to Use \\n Serving Size: 1 scoop (6 g) \\n Directions: \\n \\n \\n Add 1 scoop (6 g) to 200–300 ml of water . \\n Close the shaker and shake well. \\n Consume 30 minutes before your workout . \\n",
+      "it": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference.\n\nWhat It Is \\n Dirty Squads 100% Arginine is a food supplement based on pure L-Arginine , an amino acid that acts as a precursor to Nitric Oxide (NO) , helping to support blood flow and nutrient delivery to working muscles. Each serving provides 5,000 mg of L-Arginine . The product contains 50 servings per container. \\n \\n Who It's For \\n \\n Athletes and gym-goers looking to improve workout performance. \\n Individuals seeking enhanced muscle pumps during training. \\n People aiming to support blood circulation during exercise. \\n Those wanting a stimulant-free pre-workout ingredient. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Enhanced Muscle Pump during resistance training. \\n Improved Nutrient & Oxygen Delivery to muscles. \\n May Support Exercise Performance and training intensity. \\n 100% Pure L-Arginine Formula with no added fillers. \\n \\n How to Use \\n Serving Size: 1 scoop (6 g) \\n Directions: \\n \\n \\n Add 1 scoop (6 g) to 200–300 ml of water . \\n Close the shaker and shake well. \\n Consume 30 minutes before your workout . \\n",
+      "en": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference.\n\nWhat It Is \\n Dirty Squads 100% Arginine is a food supplement based on pure L-Arginine , an amino acid that acts as a precursor to Nitric Oxide (NO) , helping to support blood flow and nutrient delivery to working muscles. Each serving provides 5,000 mg of L-Arginine . The product contains 50 servings per container. \\n \\n Who It's For \\n \\n Athletes and gym-goers looking to improve workout performance. \\n Individuals seeking enhanced muscle pumps during training. \\n People aiming to support blood circulation during exercise. \\n Those wanting a stimulant-free pre-workout ingredient. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Enhanced Muscle Pump during resistance training. \\n Improved Nutrient & Oxygen Delivery to muscles. \\n May Support Exercise Performance and training intensity. \\n 100% Pure L-Arginine Formula with no added fillers. \\n \\n How to Use \\n Serving Size: 1 scoop (6 g) \\n Directions: \\n \\n \\n Add 1 scoop (6 g) to 200–300 ml of water . \\n Close the shaker and shake well. \\n Consume 30 minutes before your workout . \\n"
+    },
+    "usageInstructions": {
+      "fr": "Consommer 1 dosette (5g) 30 minutes avant l'effort dans 250ml d'eau pour maximiser la congestion.",
+      "de": "Consommer 1 dosette (5g) 30 minutes avant l'effort dans 250ml d'eau pour maximiser la congestion.",
+      "it": "Consommer 1 dosette (5g) 30 minutes avant l'effort dans 250ml d'eau pour maximiser la congestion.",
+      "en": "Consommer 1 dosette (5g) 30 minutes avant l'effort dans 250ml d'eau pour maximiser la congestion."
+    },
+    "ingredients": {
+      "fr": "100% L-Arginine pure issue de fermentation végétale naturelle.",
+      "de": "100% L-Arginine pure issue de fermentation végétale naturelle.",
+      "it": "100% L-Arginine pure issue de fermentation végétale naturelle.",
+      "en": "100% L-Arginine pure issue de fermentation végétale naturelle."
+    },
+    "allergens": {
+      "fr": "Végan, 100% pur.",
+      "de": "Végan, 100% pur.",
+      "it": "Végan, 100% pur.",
+      "en": "Végan, 100% pur."
+    },
+    "nutrition": {
+      "servingSize": "5g",
+      "servingsPerContainer": 60,
+      "energyKj": 85,
+      "energyKcal": 20,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 5.0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-591-1",
+        "sku": "SKU-DS-591",
+        "flavorName": {
+          "fr": "Standard",
+          "de": "Standard",
+          "it": "Standard",
+          "en": "Standard"
+        },
+        "format": "300g (60 doses)",
+        "priceChf": 25.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-596",
+    "slug": {
+      "fr": "dirty-squads-beta-alanine-pure-300g",
+      "de": "dirty-squads-beta-alanine-pure-300g",
+      "it": "dirty-squads-beta-alanine-pure-300g",
+      "en": "dirty-squads-beta-alanine-pure-300g"
+    },
+    "name": {
+      "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
+      "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
+      "it": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
+      "en": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "acides-amines",
+    "taxCategory": "food_reduced",
+    "priceChf": 25.0,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png",
+        "alt": {
+          "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
+          "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
+          "it": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
+          "en": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/BETA-ALNINE-DIRTYGADWAL-scaled.png",
+        "alt": {
+          "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
+          "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
+          "it": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
+          "en": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop",
+      "de": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop",
+      "it": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop",
+      "en": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop"
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop\n\nWhat It Is \\n Dirty Squads Beta Alanine is a food supplement containing 100% pure Beta-Alanine , a non-essential amino acid that serves as a precursor to Carnosine , a compound stored in muscles that helps buffer acid buildup during intense exercise. Each serving provides 2,000 mg of Beta-Alanine , with 150 servings per container. \\n \\n Who It's For \\n \\n Strength and power athletes. \\n Bodybuilders and fitness enthusiasts. \\n CrossFit and HIIT athletes. \\n Endurance athletes performing repeated high-intensity efforts. \\n Anyone looking to improve muscular endurance and delay fatigue during training. \\n \\n Key Benefits \\n \\n Supports Increased Muscle Carnosine Levels to improve exercise capacity. \\n Helps Delay Muscle Fatigue during high-intensity training. \\n Enhances Muscular Endurance for longer, more productive workouts. \\n Supports Improved Training Volume and performance. \\n Unflavoured 100% Pure Beta-Alanine with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (2 g) \\n Directions: \\n \\n \\n Mix 1 scoop (2 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume 30 minutes before your workout . \\n",
+      "de": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop\n\nWhat It Is \\n Dirty Squads Beta Alanine is a food supplement containing 100% pure Beta-Alanine , a non-essential amino acid that serves as a precursor to Carnosine , a compound stored in muscles that helps buffer acid buildup during intense exercise. Each serving provides 2,000 mg of Beta-Alanine , with 150 servings per container. \\n \\n Who It's For \\n \\n Strength and power athletes. \\n Bodybuilders and fitness enthusiasts. \\n CrossFit and HIIT athletes. \\n Endurance athletes performing repeated high-intensity efforts. \\n Anyone looking to improve muscular endurance and delay fatigue during training. \\n \\n Key Benefits \\n \\n Supports Increased Muscle Carnosine Levels to improve exercise capacity. \\n Helps Delay Muscle Fatigue during high-intensity training. \\n Enhances Muscular Endurance for longer, more productive workouts. \\n Supports Improved Training Volume and performance. \\n Unflavoured 100% Pure Beta-Alanine with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (2 g) \\n Directions: \\n \\n \\n Mix 1 scoop (2 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume 30 minutes before your workout . \\n",
+      "it": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop\n\nWhat It Is \\n Dirty Squads Beta Alanine is a food supplement containing 100% pure Beta-Alanine , a non-essential amino acid that serves as a precursor to Carnosine , a compound stored in muscles that helps buffer acid buildup during intense exercise. Each serving provides 2,000 mg of Beta-Alanine , with 150 servings per container. \\n \\n Who It's For \\n \\n Strength and power athletes. \\n Bodybuilders and fitness enthusiasts. \\n CrossFit and HIIT athletes. \\n Endurance athletes performing repeated high-intensity efforts. \\n Anyone looking to improve muscular endurance and delay fatigue during training. \\n \\n Key Benefits \\n \\n Supports Increased Muscle Carnosine Levels to improve exercise capacity. \\n Helps Delay Muscle Fatigue during high-intensity training. \\n Enhances Muscular Endurance for longer, more productive workouts. \\n Supports Improved Training Volume and performance. \\n Unflavoured 100% Pure Beta-Alanine with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (2 g) \\n Directions: \\n \\n \\n Mix 1 scoop (2 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume 30 minutes before your workout . \\n",
+      "en": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop\n\nWhat It Is \\n Dirty Squads Beta Alanine is a food supplement containing 100% pure Beta-Alanine , a non-essential amino acid that serves as a precursor to Carnosine , a compound stored in muscles that helps buffer acid buildup during intense exercise. Each serving provides 2,000 mg of Beta-Alanine , with 150 servings per container. \\n \\n Who It's For \\n \\n Strength and power athletes. \\n Bodybuilders and fitness enthusiasts. \\n CrossFit and HIIT athletes. \\n Endurance athletes performing repeated high-intensity efforts. \\n Anyone looking to improve muscular endurance and delay fatigue during training. \\n \\n Key Benefits \\n \\n Supports Increased Muscle Carnosine Levels to improve exercise capacity. \\n Helps Delay Muscle Fatigue during high-intensity training. \\n Enhances Muscular Endurance for longer, more productive workouts. \\n Supports Improved Training Volume and performance. \\n Unflavoured 100% Pure Beta-Alanine with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (2 g) \\n Directions: \\n \\n \\n Mix 1 scoop (2 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume 30 minutes before your workout . \\n"
+    },
+    "usageInstructions": {
+      "fr": "Prendre 3g par jour dans de l'eau ou un jus de fruit, de préférence avant l'exercice.",
+      "de": "Prendre 3g par jour dans de l'eau ou un jus de fruit, de préférence avant l'exercice.",
+      "it": "Prendre 3g par jour dans de l'eau ou un jus de fruit, de préférence avant l'exercice.",
+      "en": "Prendre 3g par jour dans de l'eau ou un jus de fruit, de préférence avant l'exercice."
+    },
+    "ingredients": {
+      "fr": "100% Bêta-Alanine pure sans aucun excipient.",
+      "de": "100% Bêta-Alanine pure sans aucun excipient.",
+      "it": "100% Bêta-Alanine pure sans aucun excipient.",
+      "en": "100% Bêta-Alanine pure sans aucun excipient."
+    },
+    "allergens": {
+      "fr": "Végan, sans gluten.",
+      "de": "Végan, sans gluten.",
+      "it": "Végan, sans gluten.",
+      "en": "Végan, sans gluten."
+    },
+    "nutrition": {
+      "servingSize": "3g",
+      "servingsPerContainer": 100,
+      "energyKj": 50,
+      "energyKcal": 12,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 3.0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-596-1",
+        "sku": "SKU-DS-596",
+        "flavorName": {
+          "fr": "Standard",
+          "de": "Standard",
+          "it": "Standard",
+          "en": "Standard"
+        },
+        "format": "300g (100 doses)",
+        "priceChf": 25.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-600",
+    "slug": {
+      "fr": "dirty-squads-citrulline-malate-pure-300g",
+      "de": "dirty-squads-citrulline-malate-pure-300g",
+      "it": "dirty-squads-citrulline-malate-pure-300g",
+      "en": "dirty-squads-citrulline-malate-pure-300g"
+    },
+    "name": {
+      "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
+      "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
+      "it": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
+      "en": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "acides-amines",
+    "taxCategory": "food_reduced",
+    "priceChf": 25.0,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png",
+        "alt": {
+          "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
+          "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
+          "it": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
+          "en": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/CITRULINE-GADWAL-scaled.png",
+        "alt": {
+          "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
+          "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
+          "it": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
+          "en": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery.",
+      "de": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery.",
+      "it": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery.",
+      "en": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery."
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery.\n\n\\n \\n \\n \\n \\n \\n \\n \\n What It Is \\n Dirty Squads Citrulline is a food supplement containing 100% pure L-Citrulline , a naturally occurring amino acid that helps increase nitric oxide production and support blood flow during exercise. Each serving provides 3,000 mg of L-Citrulline , with 100 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders seeking maximum muscle pumps. \\n Strength and power athletes. \\n Endurance athletes looking to improve circulation and performance. \\n Gym-goers wanting enhanced workout intensity and recovery. \\n Anyone looking for a stimulant-free performance enhancer. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Promotes Intense Muscle Pumps during training. \\n Enhances Nutrient and Oxygen Delivery to working muscles. \\n May Help Reduce Exercise Fatigue and improve endurance. \\n Supports Faster Recovery between training sessions. \\n 100% Pure L-Citrulline Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (3 g) \\n Directions: \\n \\n \\n Add 1 scoop (3 g) to 200–300 ml of water . \\n Shake thoroughly until dissolved. \\n Consume 30 minutes before your workou \\n \\n \\n \\n \\n \\n \\n \\n",
+      "de": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery.\n\n\\n \\n \\n \\n \\n \\n \\n \\n What It Is \\n Dirty Squads Citrulline is a food supplement containing 100% pure L-Citrulline , a naturally occurring amino acid that helps increase nitric oxide production and support blood flow during exercise. Each serving provides 3,000 mg of L-Citrulline , with 100 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders seeking maximum muscle pumps. \\n Strength and power athletes. \\n Endurance athletes looking to improve circulation and performance. \\n Gym-goers wanting enhanced workout intensity and recovery. \\n Anyone looking for a stimulant-free performance enhancer. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Promotes Intense Muscle Pumps during training. \\n Enhances Nutrient and Oxygen Delivery to working muscles. \\n May Help Reduce Exercise Fatigue and improve endurance. \\n Supports Faster Recovery between training sessions. \\n 100% Pure L-Citrulline Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (3 g) \\n Directions: \\n \\n \\n Add 1 scoop (3 g) to 200–300 ml of water . \\n Shake thoroughly until dissolved. \\n Consume 30 minutes before your workou \\n \\n \\n \\n \\n \\n \\n \\n",
+      "it": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery.\n\n\\n \\n \\n \\n \\n \\n \\n \\n What It Is \\n Dirty Squads Citrulline is a food supplement containing 100% pure L-Citrulline , a naturally occurring amino acid that helps increase nitric oxide production and support blood flow during exercise. Each serving provides 3,000 mg of L-Citrulline , with 100 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders seeking maximum muscle pumps. \\n Strength and power athletes. \\n Endurance athletes looking to improve circulation and performance. \\n Gym-goers wanting enhanced workout intensity and recovery. \\n Anyone looking for a stimulant-free performance enhancer. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Promotes Intense Muscle Pumps during training. \\n Enhances Nutrient and Oxygen Delivery to working muscles. \\n May Help Reduce Exercise Fatigue and improve endurance. \\n Supports Faster Recovery between training sessions. \\n 100% Pure L-Citrulline Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (3 g) \\n Directions: \\n \\n \\n Add 1 scoop (3 g) to 200–300 ml of water . \\n Shake thoroughly until dissolved. \\n Consume 30 minutes before your workou \\n \\n \\n \\n \\n \\n \\n \\n",
+      "en": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery.\n\n\\n \\n \\n \\n \\n \\n \\n \\n What It Is \\n Dirty Squads Citrulline is a food supplement containing 100% pure L-Citrulline , a naturally occurring amino acid that helps increase nitric oxide production and support blood flow during exercise. Each serving provides 3,000 mg of L-Citrulline , with 100 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders seeking maximum muscle pumps. \\n Strength and power athletes. \\n Endurance athletes looking to improve circulation and performance. \\n Gym-goers wanting enhanced workout intensity and recovery. \\n Anyone looking for a stimulant-free performance enhancer. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Promotes Intense Muscle Pumps during training. \\n Enhances Nutrient and Oxygen Delivery to working muscles. \\n May Help Reduce Exercise Fatigue and improve endurance. \\n Supports Faster Recovery between training sessions. \\n 100% Pure L-Citrulline Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (3 g) \\n Directions: \\n \\n \\n Add 1 scoop (3 g) to 200–300 ml of water . \\n Shake thoroughly until dissolved. \\n Consume 30 minutes before your workou \\n \\n \\n \\n \\n \\n \\n \\n"
+    },
+    "usageInstructions": {
+      "fr": "Prendre 1 dosette (5g) 30 minutes avant la séance pour booster l'afflux sanguin et l'oxygénation des muscles.",
+      "de": "Prendre 1 dosette (5g) 30 minutes avant la séance pour booster l'afflux sanguin et l'oxygénation des muscles.",
+      "it": "Prendre 1 dosette (5g) 30 minutes avant la séance pour booster l'afflux sanguin et l'oxygénation des muscles.",
+      "en": "Prendre 1 dosette (5g) 30 minutes avant la séance pour booster l'afflux sanguin et l'oxygénation des muscles."
+    },
+    "ingredients": {
+      "fr": "100% L-Citrulline Malate ratio optimal 2:1 issu de fermentation végétale.",
+      "de": "100% L-Citrulline Malate ratio optimal 2:1 issu de fermentation végétale.",
+      "it": "100% L-Citrulline Malate ratio optimal 2:1 issu de fermentation végétale.",
+      "en": "100% L-Citrulline Malate ratio optimal 2:1 issu de fermentation végétale."
+    },
+    "allergens": {
+      "fr": "Végan, sans additif.",
+      "de": "Végan, sans additif.",
+      "it": "Végan, sans additif.",
+      "en": "Végan, sans additif."
+    },
+    "nutrition": {
+      "servingSize": "5g",
+      "servingsPerContainer": 60,
+      "energyKj": 85,
+      "energyKcal": 20,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 5.0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-600-1",
+        "sku": "SKU-DS-600",
+        "flavorName": {
+          "fr": "Standard",
+          "de": "Standard",
+          "it": "Standard",
+          "en": "Standard"
+        },
+        "format": "300g (60 doses)",
+        "priceChf": 25.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png"
+      }
+    ],
+    "isSwissOrigin": false
+  },
+  {
+    "id": "prod-ds-604",
+    "slug": {
+      "fr": "dirty-squads-l-glutamine-pure-300g",
+      "de": "dirty-squads-l-glutamine-pure-300g",
+      "it": "dirty-squads-l-glutamine-pure-300g",
+      "en": "dirty-squads-l-glutamine-pure-300g"
+    },
+    "name": {
+      "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
+      "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
+      "it": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
+      "en": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "acides-amines",
+    "taxCategory": "food_reduced",
+    "priceChf": 25.0,
+    "images": [
+      {
+        "src": "/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png",
+        "alt": {
+          "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
+          "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
+          "it": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
+          "en": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "/images/products/dirtysquads/GLUTMINE-GADWAL-scaled.png",
+        "alt": {
+          "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
+          "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
+          "it": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
+          "en": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n",
+      "de": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n",
+      "it": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n",
+      "en": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n"
+    },
+    "directAnswerAeo": {
+      "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale de Dirty Squads garantit une pureté pharmaceutique et des matières premières certifiées pour maximiser vos résultats athlétiques. Stock en Suisse avec livraison 24h.",
+      "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale von Dirty Squads bietet maximale Reinheit für beste sportliche Ergebnisse. Schweizer Lager mit 24h Expressversand.",
+      "it": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale di Dirty Squads garantisce la massima purezza per risultati atletici superiori. Spedizione 24h in Svizzera.",
+      "en": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale by Dirty Squads delivers high-potency purity for peak athletic performance. In stock in Switzerland with 24h shipping."
+    },
+    "longDescription": {
+      "fr": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n\n\nWhat It Is \\n Dirty Squads Glutamine is a food supplement containing 100% Micronized L-Glutamine , one of the most abundant amino acids in muscle tissue. Glutamine plays a key role in muscle recovery, immune system support, and maintaining muscle protein balance during periods of intense training. Each serving provides 5,000 mg of L-Glutamine , with 60 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders and strength athletes. \\n Individuals training at high frequency or intensity. \\n Athletes looking to support recovery between workouts. \\n Anyone seeking to support immune function during demanding training periods. \\n Fitness enthusiasts aiming to preserve muscle mass during calorie-restricted diets. \\n \\n Key Benefits \\n \\n Supports Muscle Recovery following intense exercise. \\n Helps Reduce Muscle Breakdown during heavy training periods. \\n Supports Immune System Function , particularly during periods of physical stress. \\n Promotes Muscle Protein Balance and recovery processes. \\n Micronized for Easy Mixing and Absorption . \\n 100% Pure L-Glutamine Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (5 g) \\n Directions: \\n \\n \\n Mix 1 scoop (5 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume immediately after your workout for optimal recovery support. \\n",
+      "de": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n\n\nWhat It Is \\n Dirty Squads Glutamine is a food supplement containing 100% Micronized L-Glutamine , one of the most abundant amino acids in muscle tissue. Glutamine plays a key role in muscle recovery, immune system support, and maintaining muscle protein balance during periods of intense training. Each serving provides 5,000 mg of L-Glutamine , with 60 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders and strength athletes. \\n Individuals training at high frequency or intensity. \\n Athletes looking to support recovery between workouts. \\n Anyone seeking to support immune function during demanding training periods. \\n Fitness enthusiasts aiming to preserve muscle mass during calorie-restricted diets. \\n \\n Key Benefits \\n \\n Supports Muscle Recovery following intense exercise. \\n Helps Reduce Muscle Breakdown during heavy training periods. \\n Supports Immune System Function , particularly during periods of physical stress. \\n Promotes Muscle Protein Balance and recovery processes. \\n Micronized for Easy Mixing and Absorption . \\n 100% Pure L-Glutamine Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (5 g) \\n Directions: \\n \\n \\n Mix 1 scoop (5 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume immediately after your workout for optimal recovery support. \\n",
+      "it": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n\n\nWhat It Is \\n Dirty Squads Glutamine is a food supplement containing 100% Micronized L-Glutamine , one of the most abundant amino acids in muscle tissue. Glutamine plays a key role in muscle recovery, immune system support, and maintaining muscle protein balance during periods of intense training. Each serving provides 5,000 mg of L-Glutamine , with 60 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders and strength athletes. \\n Individuals training at high frequency or intensity. \\n Athletes looking to support recovery between workouts. \\n Anyone seeking to support immune function during demanding training periods. \\n Fitness enthusiasts aiming to preserve muscle mass during calorie-restricted diets. \\n \\n Key Benefits \\n \\n Supports Muscle Recovery following intense exercise. \\n Helps Reduce Muscle Breakdown during heavy training periods. \\n Supports Immune System Function , particularly during periods of physical stress. \\n Promotes Muscle Protein Balance and recovery processes. \\n Micronized for Easy Mixing and Absorption . \\n 100% Pure L-Glutamine Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (5 g) \\n Directions: \\n \\n \\n Mix 1 scoop (5 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume immediately after your workout for optimal recovery support. \\n",
+      "en": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n\n\nWhat It Is \\n Dirty Squads Glutamine is a food supplement containing 100% Micronized L-Glutamine , one of the most abundant amino acids in muscle tissue. Glutamine plays a key role in muscle recovery, immune system support, and maintaining muscle protein balance during periods of intense training. Each serving provides 5,000 mg of L-Glutamine , with 60 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders and strength athletes. \\n Individuals training at high frequency or intensity. \\n Athletes looking to support recovery between workouts. \\n Anyone seeking to support immune function during demanding training periods. \\n Fitness enthusiasts aiming to preserve muscle mass during calorie-restricted diets. \\n \\n Key Benefits \\n \\n Supports Muscle Recovery following intense exercise. \\n Helps Reduce Muscle Breakdown during heavy training periods. \\n Supports Immune System Function , particularly during periods of physical stress. \\n Promotes Muscle Protein Balance and recovery processes. \\n Micronized for Easy Mixing and Absorption . \\n 100% Pure L-Glutamine Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (5 g) \\n Directions: \\n \\n \\n Mix 1 scoop (5 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume immediately after your workout for optimal recovery support. \\n"
+    },
+    "usageInstructions": {
+      "fr": "Mélanger 1 dosette (5g) après l'entraînement ou avant le coucher dans votre boisson favorite.",
+      "de": "Mélanger 1 dosette (5g) après l'entraînement ou avant le coucher dans votre boisson favorite.",
+      "it": "Mélanger 1 dosette (5g) après l'entraînement ou avant le coucher dans votre boisson favorite.",
+      "en": "Mélanger 1 dosette (5g) après l'entraînement ou avant le coucher dans votre boisson favorite."
+    },
+    "ingredients": {
+      "fr": "100% L-Glutamine pure ultra micronisée grade pharmaceutique.",
+      "de": "100% L-Glutamine pure ultra micronisée grade pharmaceutique.",
+      "it": "100% L-Glutamine pure ultra micronisée grade pharmaceutique.",
+      "en": "100% L-Glutamine pure ultra micronisée grade pharmaceutique."
+    },
+    "allergens": {
+      "fr": "Végan, garanti sans lactose.",
+      "de": "Végan, garanti sans lactose.",
+      "it": "Végan, garanti sans lactose.",
+      "en": "Végan, garanti sans lactose."
+    },
+    "nutrition": {
+      "servingSize": "5g",
+      "servingsPerContainer": 60,
+      "energyKj": 85,
+      "energyKcal": 20,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 5.0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-604-1",
+        "sku": "SKU-DS-604",
+        "flavorName": {
+          "fr": "Standard",
+          "de": "Standard",
+          "it": "Standard",
+          "en": "Standard"
+        },
+        "format": "300g (60 doses)",
+        "priceChf": 25.0,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png"
       }
     ],
     "isSwissOrigin": false
