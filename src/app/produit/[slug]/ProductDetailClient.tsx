@@ -23,6 +23,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
     getLocalized(product.variants?.[0]?.flavorName, locale) || 'Standard'
   );
   const [quantity, setQuantity] = useState<number>(1);
+  const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const productFaqs = getProductFaqs(product);
 
   const slug = getLocalized(product.slug, locale);
@@ -31,8 +32,14 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const reviewStats = getProductReviewStats(product.id, product.categorySlug, slug);
   const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
 
-  const compareAtPrice = product.compareAtPriceChf || (product.priceChf > 40 ? Math.round((product.priceChf * 1.18) * 20) / 20 : undefined);
-  const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - product.priceChf) / compareAtPrice) * 100) : 0;
+  const selectedVariant = product.variants?.find(
+    v => (v.flavorName && (v.flavorName[locale] === selectedFlavor || v.flavorName.fr === selectedFlavor))
+  );
+  const activeImg = selectedImage || selectedVariant?.image || primaryImg;
+  const currentPrice = selectedVariant?.priceChf || product.priceChf;
+
+  const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
+  const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;
 
   return (
     <div>
@@ -76,13 +83,39 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             )}
 
             <Image 
-              src={primaryImg} 
+              src={activeImg} 
               alt={name}
               fill
               priority
               className="object-contain object-center filter drop-shadow-2xl transition-transform duration-500 hover:scale-105 p-2 sm:p-4"
             />
           </div>
+
+          {/* Thumbnail Gallery if multiple images exist */}
+          {product.images && product.images.length > 1 && (
+            <div className="flex flex-wrap gap-2 justify-center mt-4 max-w-full overflow-x-auto pb-1">
+              {product.images.slice(0, 8).map((img, idx) => {
+                const isCurrent = (activeImg === img.src);
+                return (
+                  <button
+                    key={idx}
+                    type="button"
+                    onClick={() => setSelectedImage(img.src)}
+                    className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl border bg-black/40 p-1 transition-all overflow-hidden ${
+                      isCurrent ? 'border-[#95d600] ring-2 ring-[#95d600]' : 'border-white/10 hover:border-white/30 opacity-70 hover:opacity-100'
+                    }`}
+                  >
+                    <Image
+                      src={img.src}
+                      alt={getLocalized(img.alt, locale) || name}
+                      fill
+                      className="object-contain p-1"
+                    />
+                  </button>
+                );
+              })}
+            </div>
+          )}
 
           {/* Trust Pillars - Hidden on mobile, shown on desktop below image */}
           <div className="hidden lg:grid grid-cols-3 gap-3 w-full mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/60">
@@ -141,7 +174,12 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                     <button 
                       key={i}
                       type="button" 
-                      onClick={() => setSelectedFlavor(flv)}
+                      onClick={() => {
+                        setSelectedFlavor(flv);
+                        if (v.image) {
+                          setSelectedImage(v.image);
+                        }
+                      }}
                       className={`min-h-[42px] px-4 py-2 text-xs font-bold rounded-xl border transition-all ${
                         isSelected 
                           ? 'border-[#95d600] bg-[#95d600]/20 text-white ring-1 ring-[#95d600]' 
@@ -162,7 +200,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {/* TWINT Direct Button */}
           <Link 
             href="/commande/"
-            onClick={() => addToCart(product, { quantity: 1, flavor: selectedFlavor })}
+            onClick={() => addToCart(product, { quantity: 1, flavor: selectedFlavor, price: currentPrice, image: activeImg })}
             className="w-full min-h-[50px] px-6 py-4 bg-white/10 hover:bg-white/15 text-white font-black uppercase tracking-wider text-xs rounded-xl border border-white/20 transition-all flex items-center justify-center gap-2 shadow-sm block text-center active:scale-98"
           >
             <span>🇨🇭</span>
@@ -413,12 +451,12 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
           <div className="min-w-0 flex-1">
             <p className="text-xs font-bold text-white truncate">{name}</p>
-            <p className="text-sm font-black text-[#F80404] font-heading">{formatPrice(product.priceChf)}</p>
+            <p className="text-sm font-black text-[#F80404] font-heading">{formatPrice(currentPrice)}</p>
           </div>
 
           <button 
             type="button"
-            onClick={() => addToCart(product, { quantity, flavor: selectedFlavor })}
+            onClick={() => addToCart(product, { quantity, flavor: selectedFlavor, price: currentPrice, image: activeImg })}
             className="shrink-0 min-h-[44px] px-5 py-2.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-colors flex items-center gap-2 active:scale-95"
           >
             <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

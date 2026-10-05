@@ -42,7 +42,7 @@ interface StoreContextType {
   t: TranslationDictionary;
   formatPrice: (amountChf: number) => string;
   convertPrice: (amountChf: number) => number;
-  addToCart: (product: any, options?: { quantity?: number; flavor?: string; size?: string; price?: number }) => void;
+  addToCart: (product: any, options?: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string }) => void;
   removeFromCart: (itemKey: string) => void;
   updateQuantity: (itemKey: string, delta: number) => void;
   clearCart: () => void;
@@ -171,13 +171,26 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     }, 3200);
   };
 
-  const addToCart = (product: any, options: { quantity?: number; flavor?: string; size?: string; price?: number } = {}) => {
+  const addToCart = (product: any, options: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string } = {}) => {
     const isEbook = isEbookItem(product);
     const quantity = isEbook ? 1 : (options.quantity || 1);
     const flavor = options.flavor || product.flavor || 'Standard';
     const size = options.size || product.size || (isEbook ? 'Format PDF' : 'Format standard');
     const price = Number(options.price !== undefined ? options.price : (product.priceChf || product.price || 49.9));
-    const image = product.image || (product.images && product.images[0] ? product.images[0].src : '/images/placeholder.webp');
+    
+    // Resolve specific flavor image if variant has packshot
+    let image = options.image || product.image;
+    if (!image && product.variants && flavor) {
+      const matchedVariant = product.variants.find((v: any) => 
+        (v.flavorName && (v.flavorName.fr === flavor || v.flavorName === flavor))
+      );
+      if (matchedVariant?.image) {
+        image = matchedVariant.image;
+      }
+    }
+    if (!image) {
+      image = (product.images && product.images[0] ? product.images[0].src : '/images/placeholder.webp');
+    }
     const slug = getLocalized(product.slug, locale) || product.id || 'produit';
     const name = getLocalized(product.name, locale) || 'Produit';
     const brand = product.brand || 'NutriFitness';

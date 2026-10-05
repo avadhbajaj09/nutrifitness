@@ -25,6 +25,7 @@ export interface ProductVariant {
   priceChf: number;
   inventoryQuantity: number;
   inStock: boolean;
+  image?: string;
 }
 
 export interface ProductItem {

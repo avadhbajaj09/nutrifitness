@@ -20,7 +20,10 @@ export default function DynamicPricingBox({
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedTier, setSelectedTier] = useState<1 | 2 | 3>(1);
 
-  const basePrice = product.priceChf;
+  const selectedVariant = product.variants?.find(
+    v => (v.flavorName && (v.flavorName[locale] === selectedFlavor || v.flavorName.fr === selectedFlavor))
+  );
+  const basePrice = selectedVariant?.priceChf || product.priceChf;
   const name = getLocalized(product.name, locale);
 
   // Generate deterministic Item SKU
@@ -74,6 +77,7 @@ export default function DynamicPricingBox({
       quantity,
       flavor: selectedFlavor,
       price: activeUnitPrice,
+      image: selectedVariant?.image,
     });
     if (onAddToCartSuccess) onAddToCartSuccess();
   };
