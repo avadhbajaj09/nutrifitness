@@ -11,42 +11,42 @@ const goals = [
     tag: 'Volume & Force',
     desc: 'Mass Gainers, Whey Isolate & Glucides.',
     link: '/boutique/?goal=masse',
-    image: '/images/categories/categorie-gainers-prise-de-masse.png'
+    image: '/images/goals/goal-masse.webp'
   },
   {
     title: 'Sèche & Définition',
     tag: 'Minceur & Brûleur',
     desc: 'Fat Burn Thermo, L-Carnitine & CLA.',
     link: '/boutique/?goal=seche',
-    image: '/images/categories/categorie-perte-de-poids.png'
+    image: '/images/goals/goal-seche.webp'
   },
   {
     title: 'Force Pure & Explosivité',
     tag: 'Creapure® 99.9%',
     desc: 'Créatines monohydrate pures & ATP.',
     link: '/boutique/?goal=force',
-    image: '/images/categories/categorie-creatine.png'
+    image: '/images/goals/goal-force.webp'
   },
   {
     title: 'Énergie & Pré-Workout',
     tag: 'Focus & Congestion',
     desc: 'L-Citrulline Malate, Caféine & Boosters.',
     link: '/boutique/?goal=energie',
-    image: '/images/categories/categorie-pre-workout-energie.png'
+    image: '/images/goals/goal-energie.webp'
   },
   {
     title: 'Santé & Vitalité',
     tag: 'Immunité & Sommeil',
     desc: 'Ashwagandha KSM-66, Zinc & Minéraux.',
     link: '/boutique/?goal=sante',
-    image: '/images/categories/categorie-bien-etre-sommeil-digestion.png'
+    image: '/images/goals/goal-sante.webp'
   },
   {
     title: 'Snacks & Collation Saine',
     tag: 'Keto & Sans Sucre',
     desc: 'Barres sandwich protéinées & Purées bio.',
     link: '/boutique/?goal=snacks',
-    image: '/images/categories/categorie-snacks-healthy-food.png'
+    image: '/images/goals/goal-snacks.webp'
   }
 ];
 
@@ -109,32 +109,39 @@ export default function ShopByGoal() {
           <Link 
             key={idx}
             href={goal.link}
-            className="group relative rounded-2xl overflow-hidden w-[160px] sm:w-[190px] md:w-[210px] h-[220px] sm:h-[245px] shrink-0 border border-white/10 hover:border-[#F80404]/60 shadow-lg transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between p-3.5 bg-[#141414]"
+            className="group relative rounded-2xl overflow-hidden w-[170px] sm:w-[200px] md:w-[220px] h-[250px] sm:h-[275px] shrink-0 border border-white/10 hover:border-[#F80404] shadow-xl transition-all duration-300 hover:-translate-y-1.5 flex flex-col justify-between p-4 bg-black"
           >
-            {/* Real Product Packshot Showcase */}
-            <div className="relative w-full h-[120px] sm:h-[140px] flex items-center justify-center">
-              <Image 
-                src={goal.image} 
-                alt={`${goal.title} - Objectif Sportif NutriFitness`}
-                fill
-                sizes="(max-width: 640px) 160px, 210px"
-                className="object-contain p-1 filter drop-shadow-2xl transition-transform duration-500 group-hover:scale-110"
-              />
-            </div>
+            {/* Real Human Athlete Background Representation */}
+            <Image 
+              src={goal.image} 
+              alt={`${goal.title} - Objectif Sportif NutriFitness`}
+              fill
+              sizes="(max-width: 640px) 170px, 220px"
+              className="object-cover object-center filter brightness-[0.75] contrast-[1.05] group-hover:scale-110 group-hover:brightness-[0.9] transition-all duration-500"
+            />
 
-            <div className="z-10 pt-2 border-t border-white/5 space-y-1">
-              <span className="inline-block px-1.5 py-0.5 bg-black/60 border border-white/10 text-[9px] font-black uppercase text-[#F80404] tracking-wider rounded truncate max-w-full">
+            {/* Dark Gradient Overlay for Clear Readability */}
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-black/20 pointer-events-none" />
+
+            {/* Top Category Tag Badge */}
+            <div className="relative z-10">
+              <span className="inline-block px-2.5 py-0.5 bg-black/80 backdrop-blur-md border border-[#F80404]/60 text-[9px] font-black uppercase text-[#F80404] tracking-wider rounded-full shadow-md">
                 {goal.tag}
               </span>
-              <h3 className="text-xs sm:text-sm font-black text-white uppercase font-heading group-hover:text-[#F80404] transition-colors leading-tight line-clamp-1">
+            </div>
+
+            {/* Bottom Content Panel */}
+            <div className="relative z-10 space-y-1 pt-4">
+              <h3 className="text-xs sm:text-sm font-black text-white uppercase font-heading group-hover:text-[#F80404] transition-colors leading-tight line-clamp-1 drop-shadow-md">
                 {goal.title}
               </h3>
-              <p className="text-[10px] text-white/50 line-clamp-1 leading-relaxed">
+              <p className="text-[10px] text-white/80 line-clamp-2 leading-relaxed drop-shadow">
                 {goal.desc}
               </p>
-              <span className="inline-flex items-center gap-1 text-[10px] font-bold text-white/70 group-hover:text-[#F80404] transition-colors pt-0.5">
-                Découvrir →
-              </span>
+              <div className="pt-1 flex items-center gap-1 text-[11px] font-black text-[#F80404] group-hover:translate-x-1 transition-transform">
+                <span>Découvrir</span>
+                <span>→</span>
+              </div>
             </div>
           </Link>
         ))}
