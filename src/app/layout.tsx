@@ -36,6 +36,7 @@ export default function RootLayout({
   return (
     <html lang="fr-CH" className="dark">
       <head>
+        <meta name="google" content="notranslate" />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

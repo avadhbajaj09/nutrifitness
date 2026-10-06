@@ -444,6 +444,23 @@ export default function AdminDashboardClient() {
   const [posSearch, setPosSearch] = useState<string>('');
   const [posCategoryFilter, setPosCategoryFilter] = useState<string>('all');
   const [posBrandFilter, setPosBrandFilter] = useState<string>('all');
+  const [adminLang, setAdminLang] = useState<'fr' | 'en'>('en');
+
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('nutrifitness_admin_lang');
+      if (saved === 'fr' || saved === 'en') {
+        setAdminLang(saved);
+      }
+    } catch {}
+  }, []);
+
+  const handleSetAdminLang = (lang: 'fr' | 'en') => {
+    setAdminLang(lang);
+    try {
+      localStorage.setItem('nutrifitness_admin_lang', lang);
+    } catch {}
+  };
 
   // Barcode / Quick scan field
   const [barcodeInput, setBarcodeInput] = useState<string>('');
@@ -605,7 +622,10 @@ export default function AdminDashboardClient() {
 
   const clearTicket = () => {
     if (ticketItems.length === 0) return;
-    if (confirm('Voulez-vous réinitialiser le ticket de caisse en cours ?')) {
+    const msg = adminLang === 'fr' 
+      ? 'Voulez-vous réinitialiser le ticket de caisse en cours ?' 
+      : 'Do you want to reset the current register ticket?';
+    if (confirm(msg)) {
       setTicketItems([]);
       setDiscountPercent(0);
       setClientName('');
@@ -613,13 +633,19 @@ export default function AdminDashboardClient() {
     }
   };
 
-  // Ticket calculations
+  // Robust ticket calculations with NaN and undefined protection
   const rawSubtotal = useMemo(() => {
-    return ticketItems.reduce((sum, item) => sum + item.price * item.quantity, 0);
+    if (!ticketItems || ticketItems.length === 0) return 0;
+    return ticketItems.reduce((sum, item) => {
+      const p = typeof item.price === 'number' && !isNaN(item.price) ? item.price : parseFloat(String(item.price || 0)) || 0;
+      const q = typeof item.quantity === 'number' && !isNaN(item.quantity) ? item.quantity : parseInt(String(item.quantity || 1), 10) || 1;
+      return sum + (p * q);
+    }, 0);
   }, [ticketItems]);
 
   const discountAmount = useMemo(() => {
-    return (rawSubtotal * discountPercent) / 100;
+    const pct = Number(discountPercent) || 0;
+    return (rawSubtotal * pct) / 100;
   }, [rawSubtotal, discountPercent]);
 
   const subtotalAfterDiscount = useMemo(() => {
@@ -843,17 +869,20 @@ export default function AdminDashboardClient() {
   };
 
   const shippingCost = shippingMethod === 'post_priority' ? 7.90 : shippingMethod === 'post_economy' ? 5.90 : shippingMethod === 'express_geneva' ? 12.00 : 0;
-  const grandTotalToPay = totalToPay + shippingCost;
+  const grandTotalToPay = (Number(totalToPay) || 0) + shippingCost;
 
   const cashNumeric = parseFloat(cashTendered) || 0;
   const cashChangeDue = paymentMethod === 'cash_chf' && cashNumeric >= grandTotalToPay 
-    ? cashNumeric - grandTotalToPay 
+    ? Math.max(0, cashNumeric - grandTotalToPay) 
     : 0;
 
   const handleValidateSale = () => {
     if (ticketItems.length === 0) return;
     if (paymentMethod === 'cash_chf' && cashNumeric < grandTotalToPay) {
-      alert(`Montant en espèces insuffisant. Total à payer : CHF ${grandTotalToPay.toFixed(2)}, reçu : CHF ${cashNumeric.toFixed(2)}`);
+      alert(adminLang === 'fr' 
+        ? `Montant en espèces insuffisant. Total à payer : CHF ${grandTotalToPay.toFixed(2)}, reçu : CHF ${cashNumeric.toFixed(2)}`
+        : `Insufficient cash amount. Total to pay: CHF ${grandTotalToPay.toFixed(2)}, received: CHF ${cashNumeric.toFixed(2)}`
+      );
       return;
     }
 
@@ -1367,7 +1396,7 @@ export default function AdminDashboardClient() {
   // RENDER 2: AUTHENTICATED DASHBOARD (Spacious, Clean, Light Theme)
   // -------------------------------------------------------------
   return (
-    <div className="min-h-screen bg-slate-100 text-slate-900 font-sans flex flex-col">
+    <div translate="no" className="notranslate min-h-screen bg-slate-100 text-slate-900 font-sans flex flex-col">
       
       {/* =========================================================
           TOP NAV BAR (Light, spacious, Shopify/WP Admin Style)
@@ -1410,7 +1439,7 @@ export default function AdminDashboardClient() {
               }`}
             >
               <Store className="w-4 h-4 text-emerald-600" />
-              <span>Caisse POS (Magasin)</span>
+              <span>{adminLang === 'fr' ? 'Caisse POS (Magasin)' : 'POS Register (Store)'}</span>
               <span className="px-1.5 py-0.2 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black">
                 {posProducts.length}
               </span>
@@ -1426,7 +1455,7 @@ export default function AdminDashboardClient() {
               }`}
             >
               <Package className="w-4 h-4 text-blue-600" />
-              <span>Catalogue Global</span>
+              <span>{adminLang === 'fr' ? 'Catalogue Global' : 'Global Catalog'}</span>
               <span className="px-1.5 py-0.2 rounded-md bg-slate-200 text-slate-700 text-[10px] font-black">
                 {allProducts.length}
               </span>
@@ -1442,8 +1471,8 @@ export default function AdminDashboardClient() {
               }`}
             >
               <Receipt className="w-4 h-4 text-amber-600" />
-              <span className="hidden sm:inline">Journal des Ventes</span>
-              <span className="sm:hidden">Ventes</span>
+              <span className="hidden sm:inline">{adminLang === 'fr' ? 'Journal des Ventes' : 'Sales Journal'}</span>
+              <span className="sm:hidden">{adminLang === 'fr' ? 'Ventes' : 'Sales'}</span>
               <span className="px-1.5 py-0.2 rounded-md bg-amber-100 text-amber-800 text-[10px] font-black">
                 {salesHistory.length}
               </span>
@@ -1459,7 +1488,35 @@ export default function AdminDashboardClient() {
                 : 'bg-amber-50 text-amber-800 border-amber-300'
             }`} title="Connexion temps-réel base de données Supabase">
               <span className={`w-2 h-2 rounded-full ${isSupabaseConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-              <span>{isSupabaseConnected ? 'Supabase Connecté' : 'Supabase Hors-ligne'}</span>
+              <span>{isSupabaseConnected ? (adminLang === 'fr' ? 'Supabase Connecté' : 'Supabase Live') : (adminLang === 'fr' ? 'Supabase Hors-ligne' : 'Supabase Offline')}</span>
+            </div>
+
+            {/* Bilingual Language Selector */}
+            <div className="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200 text-xs font-bold shadow-2xs">
+              <button
+                type="button"
+                onClick={() => handleSetAdminLang('fr')}
+                className={`px-2.5 py-1 rounded-lg transition-all ${
+                  adminLang === 'fr'
+                    ? 'bg-white text-slate-900 shadow-xs font-black'
+                    : 'text-slate-500 hover:text-slate-900'
+                }`}
+                title="Passer l'interface en Français"
+              >
+                🇫🇷 FR
+              </button>
+              <button
+                type="button"
+                onClick={() => handleSetAdminLang('en')}
+                className={`px-2.5 py-1 rounded-lg transition-all ${
+                  adminLang === 'en'
+                    ? 'bg-white text-slate-900 shadow-xs font-black'
+                    : 'text-slate-500 hover:text-slate-900'
+                }`}
+                title="Switch interface to English"
+              >
+                🇬🇧 EN
+              </button>
             </div>
 
             <Link
@@ -1470,17 +1527,17 @@ export default function AdminDashboardClient() {
               title="Voir la boutique en ligne"
             >
               <ExternalLink className="w-3.5 h-3.5" />
-              <span>Site Web</span>
+              <span>{adminLang === 'fr' ? 'Site Web' : 'Store'}</span>
             </Link>
 
             <button
               type="button"
               onClick={handleLogout}
               className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-xl border border-red-200 transition-colors"
-              title="Déconnexion"
+              title={adminLang === 'fr' ? 'Déconnexion' : 'Logout'}
             >
               <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">Quitter</span>
+              <span className="hidden sm:inline">{adminLang === 'fr' ? 'Quitter' : 'Logout'}</span>
             </button>
           </div>
         </div>
@@ -1705,7 +1762,7 @@ export default function AdminDashboardClient() {
           </div>
 
           {/* RIGHT 35%: LIVE TICKET & TOTALS */}
-          <div className="w-full lg:w-[460px] flex flex-col gap-4 shrink-0">
+          <div className="w-full lg:w-[480px] xl:w-[500px] flex flex-col gap-4 shrink-0">
             <div className="bg-white rounded-3xl border border-slate-200 shadow-md p-5 flex flex-col h-full justify-between">
               
               {/* Ticket Header */}
@@ -1713,9 +1770,9 @@ export default function AdminDashboardClient() {
                 <div className="flex items-center justify-between pb-3.5 border-b border-slate-100">
                   <div>
                     <span className="text-[11px] font-black uppercase text-slate-400 tracking-wider">
-                      Ticket de Caisse
+                      {adminLang === 'fr' ? 'Ticket de Caisse' : 'Current Register Ticket'}
                     </span>
-                    <h2 className="text-base font-black text-slate-900 font-heading">
+                    <h2 className="text-base font-black text-slate-900 font-heading notranslate">
                       {ticketNumber}
                     </h2>
                   </div>
@@ -1725,7 +1782,7 @@ export default function AdminDashboardClient() {
                       onClick={clearTicket}
                       disabled={ticketItems.length === 0}
                       className="p-2 text-slate-400 hover:text-red-600 disabled:opacity-30 rounded-xl hover:bg-red-50 transition-colors"
-                      title="Vider la caisse"
+                      title={adminLang === 'fr' ? 'Vider la caisse' : 'Clear register ticket'}
                     >
                       <Trash2 className="w-4 h-4" />
                     </button>
@@ -1738,7 +1795,7 @@ export default function AdminDashboardClient() {
                     type="text"
                     value={clientName}
                     onChange={(e) => setClientName(e.target.value)}
-                    placeholder="Nom ou remarque client (optionnel)..."
+                    placeholder={adminLang === 'fr' ? 'Nom ou remarque client (optionnel)...' : 'Customer name or note (optional)...'}
                     className="w-full px-3 py-1.5 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none"
                   />
                 </div>
@@ -1761,10 +1818,10 @@ export default function AdminDashboardClient() {
                             ✨ {item.flavor}
                           </span>
                           <span className="text-[11px] text-slate-500 font-medium">{item.format}</span>
-                          <span className="font-mono text-slate-400 text-[10px]">({item.sku})</span>
+                          <span className="font-mono text-slate-400 text-[10px] notranslate">({item.sku})</span>
                         </div>
-                        <p className="text-[11px] font-semibold text-emerald-700 mt-0.5">
-                          CHF {item.price.toFixed(2)} / u.
+                        <p className="text-[11px] font-semibold text-emerald-700 mt-0.5 notranslate">
+                          <span>CHF </span><span>{item.price.toFixed(2)}</span><span> / u.</span>
                         </p>
                       </div>
 
@@ -1777,7 +1834,7 @@ export default function AdminDashboardClient() {
                         >
                           <Minus className="w-3 h-3" />
                         </button>
-                        <span className="w-6 text-center font-bold text-slate-900">
+                        <span className="w-6 text-center font-bold text-slate-900 notranslate">
                           {item.quantity}
                         </span>
                         <button
@@ -1789,17 +1846,18 @@ export default function AdminDashboardClient() {
                         </button>
                       </div>
 
-                      {/* Line Total */}
-                      <div className="text-right shrink-0">
-                        <span className="font-black text-slate-900 text-sm font-heading">
-                          CHF {(item.price * item.quantity).toFixed(2)}
+                      {/* Line Total & Delete Icon (No text collision) */}
+                      <div className="text-right shrink-0 flex flex-col items-end gap-1">
+                        <span className="font-black text-slate-900 text-sm font-heading notranslate">
+                          <span>CHF </span><span>{(item.price * item.quantity).toFixed(2)}</span>
                         </span>
                         <button
                           type="button"
                           onClick={() => removeTicketItem(item.id)}
-                          className="block ml-auto text-[10px] text-slate-400 hover:text-red-500 mt-0.5"
+                          className="p-1 text-slate-400 hover:text-red-500 hover:bg-red-50 rounded-md transition-colors"
+                          title={adminLang === 'fr' ? 'Supprimer' : 'Remove item'}
                         >
-                          retirer
+                          <Trash2 className="w-3.5 h-3.5" />
                         </button>
                       </div>
                     </div>
@@ -1808,8 +1866,8 @@ export default function AdminDashboardClient() {
                   {ticketItems.length === 0 && (
                     <div className="py-12 text-center text-slate-400">
                       <ShoppingBag className="w-8 h-8 mx-auto text-slate-300 mb-2" />
-                      <p className="font-bold text-xs">La caisse est vide</p>
-                      <p className="text-[11px] mt-0.5">Scannez un code-barres ou sélectionnez un produit.</p>
+                      <p className="font-bold text-xs">{adminLang === 'fr' ? 'La caisse est vide' : 'The register is empty'}</p>
+                      <p className="text-[11px] mt-0.5">{adminLang === 'fr' ? 'Scannez un code-barres ou sélectionnez un produit.' : 'Scan a barcode or select a product.'}</p>
                     </div>
                   )}
                 </div>
@@ -1820,14 +1878,14 @@ export default function AdminDashboardClient() {
                 
                 {/* Discount selector */}
                 <div className="flex items-center justify-between text-xs">
-                  <span className="text-slate-500 font-medium">Remise fidélité / promo :</span>
+                  <span className="text-slate-500 font-medium">{adminLang === 'fr' ? 'Remise fidélité / promo :' : 'Loyalty / Promo Discount:'}</span>
                   <div className="flex items-center gap-1">
                     {[0, 5, 10, 15].map(pct => (
                       <button
                         key={pct}
                         type="button"
                         onClick={() => setDiscountPercent(pct)}
-                        className={`px-2 py-0.5 rounded-lg text-[11px] font-bold transition-all ${
+                        className={`px-2 py-0.5 rounded-lg text-[11px] font-bold transition-all notranslate ${
                           discountPercent === pct
                             ? 'bg-slate-900 text-white'
                             : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
@@ -1842,20 +1900,26 @@ export default function AdminDashboardClient() {
                 {/* Subtotal lines */}
                 <div className="space-y-1.5 text-xs text-slate-600">
                   <div className="flex justify-between">
-                    <span>Sous-total brut</span>
-                    <span className="font-semibold text-slate-900">CHF {rawSubtotal.toFixed(2)}</span>
+                    <span>{adminLang === 'fr' ? 'Sous-total brut' : 'Gross Subtotal'}</span>
+                    <span className="font-semibold text-slate-900 notranslate">
+                      <span>CHF </span><span>{rawSubtotal.toFixed(2)}</span>
+                    </span>
                   </div>
 
                   {discountAmount > 0 && (
                     <div className="flex justify-between text-emerald-700 font-bold">
-                      <span>Remise accordée ({discountPercent}%)</span>
-                      <span>- CHF {discountAmount.toFixed(2)}</span>
+                      <span>{adminLang === 'fr' ? `Remise accordée (${discountPercent}%)` : `Discount granted (${discountPercent}%)`}</span>
+                      <span className="notranslate">
+                        <span>- CHF </span><span>{discountAmount.toFixed(2)}</span>
+                      </span>
                     </div>
                   )}
 
                   <div className="flex justify-between text-slate-400 text-[11px]">
-                    <span>TVA suisse 2.6% (incluse)</span>
-                    <span>CHF {vatTotal.toFixed(2)}</span>
+                    <span>{adminLang === 'fr' ? 'TVA suisse 2.6% (incluse)' : 'Swiss VAT 2.6% (included)'}</span>
+                    <span className="notranslate">
+                      <span>CHF </span><span>{vatTotal.toFixed(2)}</span>
+                    </span>
                   </div>
                 </div>
 
@@ -1863,12 +1927,14 @@ export default function AdminDashboardClient() {
                 <div className="pt-3 border-t border-slate-100 flex items-baseline justify-between">
                   <div>
                     <span className="text-xs font-black uppercase text-slate-400 tracking-wider">
-                      Total Net TTC
+                      {adminLang === 'fr' ? 'Total Net TTC' : 'Total Net (incl. VAT)'}
                     </span>
-                    <p className="text-xs text-slate-500 font-medium">Devise : Franc suisse (CHF)</p>
+                    <p className="text-xs text-slate-500 font-medium">
+                      {adminLang === 'fr' ? 'Devise : Franc suisse (CHF)' : 'Currency: Swiss Franc (CHF)'}
+                    </p>
                   </div>
-                  <span className="text-3xl font-black text-emerald-700 font-heading">
-                    CHF {totalToPay.toFixed(2)}
+                  <span className="text-3xl font-black text-emerald-700 font-heading notranslate">
+                    <span>CHF </span><span>{totalToPay.toFixed(2)}</span>
                   </span>
                 </div>
 
@@ -1877,10 +1943,11 @@ export default function AdminDashboardClient() {
                   type="button"
                   onClick={() => setIsPaymentModalOpen(true)}
                   disabled={ticketItems.length === 0}
-                  className="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 disabled:pointer-events-none text-white font-black text-base uppercase tracking-wider rounded-2xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2"
+                  className="w-full py-4 px-6 bg-emerald-600 hover:bg-emerald-700 disabled:opacity-40 disabled:pointer-events-none text-white font-black text-base uppercase tracking-wider rounded-2xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 notranslate"
                 >
-                  <CreditCard className="w-5 h-5" />
-                  <span>Encaisser (CHF {totalToPay.toFixed(2)})</span>
+                  <CreditCard className="w-5 h-5 shrink-0" />
+                  <span>{adminLang === 'fr' ? 'Encaisser' : 'Collect'}</span>
+                  <span className="notranslate">(CHF {totalToPay.toFixed(2)})</span>
                 </button>
               </div>
 
@@ -2700,10 +2767,10 @@ export default function AdminDashboardClient() {
             <div className="flex items-center justify-between pb-4 border-b border-slate-100">
               <div>
                 <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">
-                  Règlement Caisse Magasin
+                  {adminLang === 'fr' ? 'Règlement Caisse Magasin' : 'Store POS Checkout'}
                 </span>
                 <h3 className="text-lg font-black text-slate-900 font-heading">
-                  Encaissement · {ticketNumber}
+                  {adminLang === 'fr' ? 'Encaissement' : 'Payment Collection'} · <span className="notranslate">{ticketNumber}</span>
                 </h3>
               </div>
               <button
@@ -2718,17 +2785,19 @@ export default function AdminDashboardClient() {
             {/* Total Display */}
             <div className="my-5 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-center">
               <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
-                Montant total à percevoir {shippingCost > 0 ? `(dont livraison CHF ${shippingCost.toFixed(2)})` : ''}
+                {adminLang === 'fr'
+                  ? `Montant total à percevoir ${shippingCost > 0 ? `(dont livraison CHF ${shippingCost.toFixed(2)})` : ''}`
+                  : `Total amount to collect ${shippingCost > 0 ? `(incl. shipping CHF ${shippingCost.toFixed(2)})` : ''}`}
               </span>
-              <div className="text-4xl font-black text-emerald-800 font-heading mt-1">
-                CHF {grandTotalToPay.toFixed(2)}
+              <div className="text-4xl font-black text-emerald-800 font-heading mt-1 notranslate">
+                <span>CHF </span><span>{grandTotalToPay.toFixed(2)}</span>
               </div>
             </div>
 
             {/* Payment Method Selector */}
             <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                Mode de paiement reçu :
+                {adminLang === 'fr' ? 'Mode de paiement reçu :' : 'Payment method received:'}
               </label>
 
               <div className="grid grid-cols-3 gap-2.5">
@@ -2742,7 +2811,7 @@ export default function AdminDashboardClient() {
                   }`}
                 >
                   <QrCode className="w-5 h-5 text-emerald-600" />
-                  <span className="text-xs">⚡ TWINT</span>
+                  <span className="text-xs font-bold">⚡ TWINT</span>
                 </button>
 
                 <button
@@ -2755,7 +2824,7 @@ export default function AdminDashboardClient() {
                   }`}
                 >
                   <CreditCard className="w-5 h-5 text-blue-600" />
-                  <span className="text-xs">💳 Carte / EFT</span>
+                  <span className="text-xs font-bold">{adminLang === 'fr' ? '💳 Carte' : '💳 Card'}</span>
                 </button>
 
                 <button
@@ -2768,7 +2837,7 @@ export default function AdminDashboardClient() {
                   }`}
                 >
                   <Banknote className="w-5 h-5 text-amber-600" />
-                  <span className="text-xs">💵 Espèces CHF</span>
+                  <span className="text-xs font-bold">{adminLang === 'fr' ? '💵 Espèces CHF' : '💵 Cash CHF'}</span>
                 </button>
               </div>
 
@@ -2776,11 +2845,15 @@ export default function AdminDashboardClient() {
               {paymentMethod === 'twint' && (
                 <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
                   <p className="text-xs text-slate-600 font-medium">
-                    Faites scanner le QR Code TWINT du comptoir au client ou validez via l'application.
+                    {adminLang === 'fr' 
+                      ? "Faites scanner le QR Code TWINT du comptoir au client ou validez via l'application." 
+                      : "Have the customer scan the counter TWINT QR code or confirm in app."}
                   </p>
                   <div>
                     <label className="block text-[11px] font-bold text-slate-500 mb-1">
-                      Numéro de transaction / Référence TWINT (facultatif) :
+                      {adminLang === 'fr' 
+                        ? 'Numéro de transaction / Référence TWINT (facultatif) :' 
+                        : 'TWINT Transaction reference / ID (optional):'}
                     </label>
                     <input
                       type="text"
@@ -2797,7 +2870,7 @@ export default function AdminDashboardClient() {
                 <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
                   <div>
                     <label className="block text-[11px] font-bold text-slate-500 mb-1">
-                      Terminal de paiement :
+                      {adminLang === 'fr' ? 'Terminal de paiement :' : 'Payment terminal:'}
                     </label>
                     <select
                       value={cardTerminalType}
@@ -2806,13 +2879,13 @@ export default function AdminDashboardClient() {
                     >
                       <option value="Terminal SumUp / PostFinance">Terminal SumUp / PostFinance</option>
                       <option value="Visa / Mastercard">Visa / Mastercard</option>
-                      <option value="Apple Pay / Google Pay">Apple Pay / Sans contact</option>
+                      <option value="Apple Pay / Google Pay">Apple Pay / Google Pay</option>
                       <option value="Maestro / Débit Suisse">Maestro / Débit Suisse</option>
                     </select>
                   </div>
                   <div>
                     <label className="block text-[11px] font-bold text-slate-500 mb-1">
-                      Code autorisation terminal (facultatif) :
+                      {adminLang === 'fr' ? 'Code autorisation terminal (facultatif) :' : 'Authorization code (optional):'}
                     </label>
                     <input
                       type="text"
@@ -2829,7 +2902,7 @@ export default function AdminDashboardClient() {
                 <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200 space-y-3">
                   <div>
                     <label className="block text-xs font-bold text-amber-900 mb-1.5">
-                      Montant reçu du client (CHF) :
+                      {adminLang === 'fr' ? 'Montant reçu du client (CHF) :' : 'Cash received from customer (CHF):'}
                     </label>
                     <div className="relative">
                       <span className="absolute left-3 top-2.5 font-bold text-slate-400 text-sm">CHF</span>
@@ -2867,13 +2940,15 @@ export default function AdminDashboardClient() {
 
                   {/* Change Calculator Output */}
                   <div className="p-3 bg-white rounded-xl border border-amber-200 flex items-center justify-between">
-                    <span className="text-xs font-bold text-slate-700">Monnaie à rendre :</span>
-                    <span className={`text-lg font-black font-heading ${
+                    <span className="text-xs font-bold text-slate-700">
+                      {adminLang === 'fr' ? 'Monnaie à rendre :' : 'Change due:'}
+                    </span>
+                    <span className={`text-lg font-black font-heading notranslate ${
                       cashNumeric >= grandTotalToPay ? 'text-emerald-600' : 'text-red-500'
                     }`}>
                       {cashNumeric >= grandTotalToPay 
                         ? `CHF ${cashChangeDue.toFixed(2)}` 
-                        : `Manque CHF ${(grandTotalToPay - cashNumeric).toFixed(2)}`}
+                        : `${adminLang === 'fr' ? 'Manque' : 'Short'} CHF ${(grandTotalToPay - cashNumeric).toFixed(2)}`}
                     </span>
                   </div>
                 </div>
@@ -2882,23 +2957,27 @@ export default function AdminDashboardClient() {
               {/* Client & Delivery Details */}
               <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
                 <span className="text-xs font-bold text-slate-800 uppercase tracking-wider block">
-                  Informations Client & Expédition :
+                  {adminLang === 'fr' ? 'Informations Client & Expédition :' : 'Customer Details & Shipping:'}
                 </span>
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Nom du client :</label>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                      {adminLang === 'fr' ? 'Nom du client :' : 'Customer name:'}
+                    </label>
                     <input
                       type="text"
                       value={clientName}
                       onChange={(e) => setClientName(e.target.value)}
-                      placeholder="Ex: Jean Dupont (ou Client Comptoir)"
+                      placeholder={adminLang === 'fr' ? 'Ex: Jean Dupont (ou Client Comptoir)' : 'e.g. Avadh Bajaj (or Walk-in)'}
                       className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Téléphone mobile :</label>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                      {adminLang === 'fr' ? 'Téléphone mobile :' : 'Mobile phone:'}
+                    </label>
                     <input
                       type="tel"
                       value={clientPhone}
@@ -2911,7 +2990,9 @@ export default function AdminDashboardClient() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Email :</label>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                      {adminLang === 'fr' ? 'Email :' : 'Email:'}
+                    </label>
                     <input
                       type="email"
                       value={clientEmail}
@@ -2922,7 +3003,9 @@ export default function AdminDashboardClient() {
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Adresse / Ville :</label>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                      {adminLang === 'fr' ? 'Adresse / Ville :' : 'Address / City:'}
+                    </label>
                     <input
                       type="text"
                       value={clientAddress}
@@ -2935,31 +3018,35 @@ export default function AdminDashboardClient() {
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Mode d'expédition :</label>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                      {adminLang === 'fr' ? "Mode d'expédition :" : 'Shipping method:'}
+                    </label>
                     <select
                       value={shippingMethod}
                       onChange={(e) => setShippingMethod(e.target.value as typeof shippingMethod)}
                       className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none font-medium"
                     >
-                      <option value="store_pickup">🛍️ Retrait Magasin Genève (Gratuit)</option>
-                      <option value="post_priority">📦 Poste Suisse Prioritaire 24h (+CHF 7.90)</option>
-                      <option value="post_economy">📬 Poste Suisse Économique 48h (+CHF 5.90)</option>
-                      <option value="express_geneva">⚡ Coursier Express Genève (+CHF 12.00)</option>
+                      <option value="store_pickup">{adminLang === 'fr' ? '🛍️ Retrait Magasin Genève (Gratuit)' : '🛍️ Geneva Store Pickup (Free)'}</option>
+                      <option value="post_priority">{adminLang === 'fr' ? '📦 Poste Suisse Prioritaire 24h (+CHF 7.90)' : '📦 Swiss Post Priority 24h (+CHF 7.90)'}</option>
+                      <option value="post_economy">{adminLang === 'fr' ? '📬 Poste Suisse Économique 48h (+CHF 5.90)' : '📬 Swiss Post Economy 48h (+CHF 5.90)'}</option>
+                      <option value="express_geneva">{adminLang === 'fr' ? '⚡ Coursier Express Genève (+CHF 12.00)' : '⚡ Geneva Express Courier (+CHF 12.00)'}</option>
                     </select>
                   </div>
 
                   <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Statut initial :</label>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                      {adminLang === 'fr' ? 'Statut initial :' : 'Initial status:'}
+                    </label>
                     <select
                       value={orderStatus}
                       onChange={(e) => setOrderStatus(e.target.value as OrderStatus)}
                       className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none font-bold"
                     >
-                      <option value="delivered">🟢 Livré / Remis en main propre</option>
-                      <option value="packed">🟠 Emballé / Prêt pour retrait</option>
-                      <option value="in_processing">🟡 En préparation (Processing)</option>
-                      <option value="shipped">🔵 Expédié par transporteur</option>
-                      <option value="pending">🟣 En attente</option>
+                      <option value="delivered">{adminLang === 'fr' ? '🟢 Livré / Remis en main propre' : '🟢 Delivered / Handed over'}</option>
+                      <option value="packed">{adminLang === 'fr' ? '🟠 Emballé / Prêt pour retrait' : '🟠 Packed / Ready for pickup'}</option>
+                      <option value="in_processing">{adminLang === 'fr' ? '🟡 En préparation (Processing)' : '🟡 In Processing'}</option>
+                      <option value="shipped">{adminLang === 'fr' ? '🔵 Expédié par transporteur' : '🔵 Shipped via carrier'}</option>
+                      <option value="pending">{adminLang === 'fr' ? '🟣 En attente' : '🟣 Pending'}</option>
                     </select>
                   </div>
                 </div>
@@ -2968,13 +3055,13 @@ export default function AdminDashboardClient() {
               {/* Notes input */}
               <div>
                 <label className="block text-[11px] font-bold text-slate-500 mb-1">
-                  Note interne / Vendeur :
+                  {adminLang === 'fr' ? 'Note interne / Vendeur :' : 'Internal cashier note:'}
                 </label>
                 <input
                   type="text"
                   value={paymentNotes}
                   onChange={(e) => setPaymentNotes(e.target.value)}
-                  placeholder="Ex: Servi par Marco au comptoir..."
+                  placeholder={adminLang === 'fr' ? 'Ex: Servi au comptoir...' : 'e.g. Counter sale note...'}
                   className="w-full px-3 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 focus:outline-none"
                 />
               </div>
@@ -2983,10 +3070,14 @@ export default function AdminDashboardClient() {
               <button
                 type="button"
                 onClick={handleValidateSale}
-                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 mt-4"
+                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 mt-4 notranslate"
               >
                 <Check className="w-5 h-5" />
-                <span>Valider l'Encaissement (CHF {grandTotalToPay.toFixed(2)}) & Émettre le Reçu</span>
+                <span>
+                  {adminLang === 'fr' 
+                    ? `Valider l'Encaissement (CHF ${grandTotalToPay.toFixed(2)}) & Émettre le Reçu` 
+                    : `Complete Payment (CHF ${grandTotalToPay.toFixed(2)}) & Issue Receipt`}
+                </span>
               </button>
             </div>
           </div>
