@@ -51,6 +51,7 @@ export default function ProductEditorModal({
   const [brand, setBrand] = useState<string>('NutriFitness');
   const [customBrand, setCustomBrand] = useState<string>('');
   const [categorySlug, setCategorySlug] = useState<string>('proteines');
+  const [categorySlugs, setCategorySlugs] = useState<string[]>(['proteines']);
   const [priceChf, setPriceChf] = useState<number>(29.90);
   const [compareAtPriceChf, setCompareAtPriceChf] = useState<string>('');
   const [taxCategory, setTaxCategory] = useState<TaxRateCategory>('food_reduced');
@@ -111,7 +112,13 @@ export default function ProductEditorModal({
         setCustomBrand(product.brand);
       }
 
-      setCategorySlug(product.categorySlug || 'proteines');
+      const initialCat = product.categorySlug || 'proteines';
+      setCategorySlug(initialCat);
+      const initialCats = Array.isArray(product.categorySlugs) && product.categorySlugs.length > 0
+        ? Array.from(new Set([initialCat, ...product.categorySlugs]))
+        : [initialCat];
+      setCategorySlugs(initialCats);
+
       setPriceChf(product.priceChf || 29.90);
       setCompareAtPriceChf(product.compareAtPriceChf ? String(product.compareAtPriceChf) : '');
       setTaxCategory(product.taxCategory || 'food_reduced');
@@ -170,6 +177,7 @@ export default function ProductEditorModal({
       setBrand('NutriFitness');
       setCustomBrand('');
       setCategorySlug('proteines');
+      setCategorySlugs(['proteines', 'meilleures-ventes']);
       setPriceChf(29.90);
       setCompareAtPriceChf('');
       setTaxCategory('food_reduced');
@@ -213,6 +221,22 @@ export default function ProductEditorModal({
     setActiveTab('info');
     setFormError(null);
   }, [isOpen, product, existingBrands]);
+
+  // Toggle multiple categories
+  const handleToggleCategory = (catId: string) => {
+    setCategorySlugs(prev => {
+      if (prev.includes(catId)) {
+        if (prev.length <= 1) return prev; // keep at least 1
+        const next = prev.filter(c => c !== catId);
+        if (categorySlug === catId && next.length > 0) {
+          setCategorySlug(next[0]);
+        }
+        return next;
+      } else {
+        return [...prev, catId];
+      }
+    });
+  };
 
   // Auto-generate slug when name changes for new product
   const handleNameChange = (val: string) => {
@@ -310,7 +334,8 @@ export default function ProductEditorModal({
         en: nameEn.trim() || nameFr.trim()
       },
       brand: finalBrand,
-      categorySlug,
+      categorySlug: categorySlug || categorySlugs[0] || 'proteines',
+      categorySlugs: categorySlugs.length > 0 ? categorySlugs : [categorySlug || 'proteines'],
       taxCategory,
       priceChf: Number(priceChf),
       compareAtPriceChf: finalCompareAt,
@@ -561,17 +586,65 @@ export default function ProductEditorModal({
 
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                    Catégorie Principale *
+                    Catégorie Principale (Navigation & URL) *
                   </label>
                   <select
                     value={categorySlug}
-                    onChange={(e) => setCategorySlug(e.target.value)}
+                    onChange={(e) => {
+                      const newCat = e.target.value;
+                      setCategorySlug(newCat);
+                      if (!categorySlugs.includes(newCat)) {
+                        setCategorySlugs(prev => [...prev, newCat]);
+                      }
+                    }}
                     className="w-full px-3 py-2.5 bg-slate-50 border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none"
                   >
                     {CATEGORIES.map(cat => (
                       <option key={cat.id} value={cat.id}>{cat.name.fr}</option>
                     ))}
                   </select>
+                </div>
+              </div>
+
+              {/* Multiple Categories & Shared Collections */}
+              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1">
+                  <label className="block text-xs font-black uppercase tracking-wider text-slate-900 font-heading">
+                    Catégories Multiples & Badges ({categorySlugs.length} active{categorySlugs.length > 1 ? 's' : ''})
+                  </label>
+                  <span className="text-[11px] text-slate-500">
+                    Ce produit apparaîtra dans toutes les catégories cochées ci-dessous :
+                  </span>
+                </div>
+                
+                <div className="flex flex-wrap gap-1.5 pt-1">
+                  {CATEGORIES.map(cat => {
+                    const isSelected = categorySlugs.includes(cat.id);
+                    const isPrimary = categorySlug === cat.id;
+
+                    return (
+                      <button
+                        key={cat.id}
+                        type="button"
+                        onClick={() => handleToggleCategory(cat.id)}
+                        className={`px-3 py-1.5 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 ${
+                          isSelected
+                            ? isPrimary
+                              ? 'bg-emerald-600 text-white shadow-xs ring-2 ring-emerald-500/20'
+                              : 'bg-slate-900 text-white shadow-xs'
+                            : 'bg-white border border-slate-200 text-slate-600 hover:bg-slate-100 hover:text-slate-900'
+                        }`}
+                      >
+                        {isSelected ? <Check className="w-3.5 h-3.5" /> : <Plus className="w-3 h-3 text-slate-400" />}
+                        <span>{cat.name.fr}</span>
+                        {isPrimary && (
+                          <span className="text-[9px] uppercase px-1 py-0.2 bg-emerald-800 rounded text-emerald-100 font-black">
+                            Principale
+                          </span>
+                        )}
+                      </button>
+                    );
+                  })}
                 </div>
               </div>
 
@@ -962,8 +1035,8 @@ export default function ProductEditorModal({
                       </div>
                     </div>
 
-                    <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-200 text-xs">
-                      <div className="flex items-center gap-3">
+                    <div className="pt-3 border-t border-slate-200 space-y-2.5">
+                      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
                         <label className="flex items-center gap-1.5 cursor-pointer font-bold text-slate-700">
                           <input
                             type="checkbox"
@@ -971,19 +1044,69 @@ export default function ProductEditorModal({
                             onChange={(e) => handleUpdateVariant(idx, { inStock: e.target.checked })}
                             className="rounded text-emerald-600"
                           />
-                          <span>En stock pour la vente</span>
+                          <span>En stock pour la vente (Magasin & Web)</span>
                         </label>
+
+                        {/* Quick pick from gallery thumbnails */}
+                        {images.length > 0 && (
+                          <div className="flex items-center gap-1.5">
+                            <span className="text-[11px] text-slate-400 font-medium">Choisir depuis la galerie :</span>
+                            <div className="flex items-center gap-1">
+                              {images.map((gImg, gIdx) => (
+                                <button
+                                  key={gIdx}
+                                  type="button"
+                                  onClick={() => handleUpdateVariant(idx, { image: gImg.src })}
+                                  className={`relative w-7 h-7 rounded-lg border overflow-hidden transition-all bg-white ${
+                                    v.image === gImg.src 
+                                      ? 'ring-2 ring-emerald-500 border-emerald-500 shadow-xs' 
+                                      : 'border-slate-300 opacity-60 hover:opacity-100 hover:border-slate-500'
+                                  }`}
+                                  title={`Affecter la photo #${gIdx + 1} à cette saveur`}
+                                >
+                                  <Image src={gImg.src} alt="" fill className="object-contain p-0.5" sizes="28px" />
+                                </button>
+                              ))}
+                            </div>
+                          </div>
+                        )}
                       </div>
 
-                      <div className="flex items-center gap-2">
-                        <span className="text-[11px] text-slate-500 font-bold">Image spécifique :</span>
-                        <input
-                          type="text"
-                          value={v.image || ''}
-                          onChange={(e) => handleUpdateVariant(idx, { image: e.target.value || undefined })}
-                          placeholder="URL optionnelle..."
-                          className="w-48 px-2 py-1 bg-white border border-slate-300 rounded-lg text-[11px]"
-                        />
+                      {/* Flavor Image Card with Live Preview */}
+                      <div className="flex items-center gap-3 p-2.5 bg-white rounded-xl border border-slate-200">
+                        <div className="relative w-12 h-12 rounded-lg bg-slate-50 border border-slate-200 overflow-hidden shrink-0 flex items-center justify-center">
+                          <Image
+                            src={v.image || images[0]?.src || '/images/placeholder.webp'}
+                            alt={v.flavorName.fr}
+                            fill
+                            sizes="48px"
+                            className="object-contain p-1"
+                          />
+                        </div>
+
+                        <div className="flex-1 min-w-0">
+                          <div className="flex items-center justify-between mb-1">
+                            <span className="text-[10px] font-black uppercase text-slate-500 tracking-wider">
+                              Photo Dédiée à la Saveur ({v.flavorName.fr})
+                            </span>
+                            {v.image && (
+                              <button
+                                type="button"
+                                onClick={() => handleUpdateVariant(idx, { image: undefined })}
+                                className="text-[10px] font-bold text-slate-400 hover:text-red-600 transition-colors"
+                              >
+                                Réinitialiser à l'image principale
+                              </button>
+                            )}
+                          </div>
+                          <input
+                            type="text"
+                            value={v.image || ''}
+                            onChange={(e) => handleUpdateVariant(idx, { image: e.target.value.trim() || undefined })}
+                            placeholder="URL personnalisée ou cliquez sur une photo ci-dessus..."
+                            className="w-full px-2.5 py-1.5 text-xs bg-slate-50 border border-slate-300 rounded-lg text-slate-900 focus:outline-none focus:bg-white focus:border-slate-400"
+                          />
+                        </div>
                       </div>
                     </div>
                   </div>

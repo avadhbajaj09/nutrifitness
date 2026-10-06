@@ -32,15 +32,69 @@ import {
   Clock, 
   Calendar, 
   Download, 
+  Upload,
   AlertCircle,
   ShoppingBag,
   Sparkles,
   ArrowRight,
-  Edit3
+  Edit3,
+  Truck,
+  Phone,
+  Mail,
+  MapPin,
+  User,
+  RefreshCw
 } from 'lucide-react';
 import ProductEditorModal from './ProductEditorModal';
 
 const ADMIN_PASSWORD = 'Geneva@03564';
+
+export type OrderStatus = 'pending' | 'in_processing' | 'packed' | 'shipped' | 'delivered' | 'cancelled';
+
+export const ORDER_STATUS_LABELS: Record<OrderStatus, { label: string; icon: string; bg: string; text: string; border: string }> = {
+  in_processing: {
+    label: 'En traitement',
+    icon: '🟡',
+    bg: 'bg-amber-50',
+    text: 'text-amber-800',
+    border: 'border-amber-300'
+  },
+  packed: {
+    label: 'Emballé',
+    icon: '📦',
+    bg: 'bg-orange-50',
+    text: 'text-orange-800',
+    border: 'border-orange-300'
+  },
+  shipped: {
+    label: 'Expédié',
+    icon: '🚚',
+    bg: 'bg-blue-50',
+    text: 'text-blue-800',
+    border: 'border-blue-300'
+  },
+  delivered: {
+    label: 'Livré / Remis',
+    icon: '✅',
+    bg: 'bg-emerald-50',
+    text: 'text-emerald-800',
+    border: 'border-emerald-300'
+  },
+  pending: {
+    label: 'En attente',
+    icon: '⏳',
+    bg: 'bg-purple-50',
+    text: 'text-purple-800',
+    border: 'border-purple-300'
+  },
+  cancelled: {
+    label: 'Annulé',
+    icon: '❌',
+    bg: 'bg-rose-50',
+    text: 'text-rose-800',
+    border: 'border-rose-300'
+  }
+};
 
 export interface PosTicketItem {
   id: string; // unique item key
@@ -67,6 +121,7 @@ export interface PosSaleRecord {
   discountAmount: number;
   vatAmount: number;
   total: number;
+  amountReceived: number;
   paymentMethod: 'twint' | 'card' | 'cash_chf' | 'cash_eur' | 'invoice';
   paymentDetails: {
     reference?: string;
@@ -76,7 +131,66 @@ export interface PosSaleRecord {
     notes?: string;
   };
   seller: string;
+  client?: {
+    name: string;
+    phone?: string;
+    email?: string;
+    address?: string;
+    city?: string;
+    postalCode?: string;
+  };
+  shipping?: {
+    method: 'store_pickup' | 'post_priority' | 'post_economy' | 'express_geneva';
+    label: string;
+    cost: number;
+    trackingNumber?: string;
+  };
+  status: OrderStatus;
   clientName?: string;
+}
+
+// CSV Parser Helper supporting quotes, multiline content, commas and semicolons
+function parseCsvText(text: string): string[][] {
+  const lines: string[][] = [];
+  let currentRow: string[] = [];
+  let currentCell = '';
+  let insideQuote = false;
+
+  for (let i = 0; i < text.length; i++) {
+    const char = text[i];
+    const nextChar = text[i + 1];
+
+    if (char === '"') {
+      if (insideQuote && nextChar === '"') {
+        currentCell += '"';
+        i++;
+      } else {
+        insideQuote = !insideQuote;
+      }
+    } else if ((char === ',' || char === ';') && !insideQuote) {
+      currentRow.push(currentCell);
+      currentCell = '';
+    } else if ((char === '\r' || char === '\n') && !insideQuote) {
+      if (char === '\r' && nextChar === '\n') {
+        i++;
+      }
+      currentRow.push(currentCell);
+      currentCell = '';
+      if (currentRow.length > 0 && currentRow.some(c => c.trim().length > 0)) {
+        lines.push(currentRow);
+      }
+      currentRow = [];
+    } else {
+      currentCell += char;
+    }
+  }
+
+  if (currentCell || currentRow.length > 0) {
+    currentRow.push(currentCell);
+    lines.push(currentRow);
+  }
+
+  return lines;
 }
 
 // Play pleasant POS beep when barcode is scanned or item added
@@ -157,7 +271,8 @@ export default function AdminDashboardClient() {
     const updateClock = () => {
       const now = new Date();
       setCurrentTime(
-        now.toLocaleDateString('fr-CH', {
+        now.toLocaleString('fr-CH', {
+          timeZone: 'Europe/Zurich',
           weekday: 'short',
           day: '2-digit',
           month: 'short',
@@ -290,8 +405,11 @@ export default function AdminDashboardClient() {
       if (catalogOriginFilter === 'geneva' && p.shippingOrigin === 'portugal') return false;
       if (catalogOriginFilter === 'portugal' && p.shippingOrigin !== 'portugal') return false;
 
-      // Category filter
-      if (catalogCategoryFilter !== 'all' && p.categorySlug !== catalogCategoryFilter) return false;
+      // Category filter (supports multiple categories)
+      if (catalogCategoryFilter !== 'all') {
+        const matchesCat = p.categorySlug === catalogCategoryFilter || (p.categorySlugs && p.categorySlugs.includes(catalogCategoryFilter));
+        if (!matchesCat) return false;
+      }
 
       // Brand filter
       if (catalogBrandFilter !== 'all' && p.brand !== catalogBrandFilter) return false;
@@ -354,7 +472,10 @@ export default function AdminDashboardClient() {
 
   const filteredPosProducts = useMemo(() => {
     return posProducts.filter(p => {
-      if (posCategoryFilter !== 'all' && p.categorySlug !== posCategoryFilter) return false;
+      if (posCategoryFilter !== 'all') {
+        const matchesCat = p.categorySlug === posCategoryFilter || (p.categorySlugs && p.categorySlugs.includes(posCategoryFilter));
+        if (!matchesCat) return false;
+      }
       if (posBrandFilter !== 'all' && p.brand !== posBrandFilter) return false;
       if (posSearch.trim()) {
         const q = posSearch.toLowerCase();
@@ -522,6 +643,21 @@ export default function AdminDashboardClient() {
   const [paymentNotes, setPaymentNotes] = useState<string>('');
   const [cardTerminalType, setCardTerminalType] = useState<string>('Terminal SumUp / PostFinance');
 
+  // Client Details & Shipping in POS Checkout
+  const [clientPhone, setClientPhone] = useState<string>('');
+  const [clientEmail, setClientEmail] = useState<string>('');
+  const [clientAddress, setClientAddress] = useState<string>('');
+  const [clientCity, setClientCity] = useState<string>('Genève');
+  const [shippingMethod, setShippingMethod] = useState<'store_pickup' | 'post_priority' | 'post_economy' | 'express_geneva'>('store_pickup');
+  const [orderStatus, setOrderStatus] = useState<OrderStatus>('delivered');
+
+  // Inspecting sale details modal
+  const [inspectingSale, setInspectingSale] = useState<PosSaleRecord | null>(null);
+
+  // CSV Catalog Import/Export state
+  const [importStatusMessage, setImportStatusMessage] = useState<string | null>(null);
+  const fileInputRef = useRef<HTMLInputElement>(null);
+
   // Completed sale receipt view
   const [completedSale, setCompletedSale] = useState<PosSaleRecord | null>(null);
 
@@ -548,15 +684,26 @@ export default function AdminDashboardClient() {
     }
   };
 
+  const updateSaleStatus = (saleId: string, newStatus: OrderStatus) => {
+    const updated = salesHistory.map(s => s.id === saleId ? { ...s, status: newStatus } : s);
+    saveSalesHistory(updated);
+    if (inspectingSale && inspectingSale.id === saleId) {
+      setInspectingSale({ ...inspectingSale, status: newStatus });
+    }
+  };
+
+  const shippingCost = shippingMethod === 'post_priority' ? 7.90 : shippingMethod === 'post_economy' ? 5.90 : shippingMethod === 'express_geneva' ? 12.00 : 0;
+  const grandTotalToPay = totalToPay + shippingCost;
+
   const cashNumeric = parseFloat(cashTendered) || 0;
-  const cashChangeDue = paymentMethod === 'cash_chf' && cashNumeric >= totalToPay 
-    ? cashNumeric - totalToPay 
+  const cashChangeDue = paymentMethod === 'cash_chf' && cashNumeric >= grandTotalToPay 
+    ? cashNumeric - grandTotalToPay 
     : 0;
 
   const handleValidateSale = () => {
     if (ticketItems.length === 0) return;
-    if (paymentMethod === 'cash_chf' && cashNumeric < totalToPay) {
-      alert(`Montant en espèces insuffisant. Total à payer : CHF ${totalToPay.toFixed(2)}, reçu : CHF ${cashNumeric.toFixed(2)}`);
+    if (paymentMethod === 'cash_chf' && cashNumeric < grandTotalToPay) {
+      alert(`Montant en espèces insuffisant. Total à payer : CHF ${grandTotalToPay.toFixed(2)}, reçu : CHF ${cashNumeric.toFixed(2)}`);
       return;
     }
 
@@ -569,7 +716,8 @@ export default function AdminDashboardClient() {
       discountPercent,
       discountAmount,
       vatAmount: vatTotal,
-      total: totalToPay,
+      total: grandTotalToPay,
+      amountReceived: paymentMethod === 'cash_chf' ? cashNumeric : grandTotalToPay,
       paymentMethod,
       paymentDetails: {
         reference: paymentReference || undefined,
@@ -579,7 +727,26 @@ export default function AdminDashboardClient() {
         notes: paymentNotes || undefined
       },
       seller: 'Marco (Rue des Pâquis 34)',
-      clientName: clientName || 'Client Comptoir'
+      client: {
+        name: clientName.trim() || 'Client Comptoir',
+        phone: clientPhone.trim() || undefined,
+        email: clientEmail.trim() || undefined,
+        address: clientAddress.trim() || undefined,
+        city: clientCity.trim() || undefined
+      },
+      shipping: {
+        method: shippingMethod,
+        label: shippingMethod === 'store_pickup' 
+          ? 'Retrait Immédiat Magasin (Genève)' 
+          : shippingMethod === 'post_priority' 
+          ? 'Poste Suisse Prioritaire (24h)' 
+          : shippingMethod === 'post_economy'
+          ? 'Poste Suisse Économique (48h)'
+          : 'Coursier Express Genève (Même jour)',
+        cost: shippingCost
+      },
+      status: orderStatus,
+      clientName: clientName.trim() || 'Client Comptoir'
     };
 
     // Save sale
@@ -594,6 +761,11 @@ export default function AdminDashboardClient() {
     setTicketItems([]);
     setDiscountPercent(0);
     setClientName('');
+    setClientPhone('');
+    setClientEmail('');
+    setClientAddress('');
+    setShippingMethod('store_pickup');
+    setOrderStatus('delivered');
     setCashTendered('');
     setPaymentReference('');
     setPaymentNotes('');
@@ -605,31 +777,342 @@ export default function AdminDashboardClient() {
     window.print();
   };
 
-  // Export sales to CSV
+  // Export sales journal to CSV
   const handleExportCsv = () => {
     if (salesHistory.length === 0) {
       alert('Aucune vente enregistrée à exporter.');
       return;
     }
-    const headers = ['Date', 'Ticket', 'Vendeur', 'Client', 'Total_CHF', 'Methode_Paiement', 'Reference', 'Articles'];
+    const headers = ['Date_Heure', 'N_Ticket', 'Statut', 'Client_Nom', 'Client_Tel', 'Client_Email', 'Client_Ville', 'Total_CHF', 'Montant_Recu_CHF', 'Mode_Paiement', 'Reference_Paiement', 'Mode_Expedition', 'Frais_Port_CHF', 'Vendeur', 'Articles'];
     const rows = salesHistory.map(s => [
-      `"${new Date(s.timestamp).toLocaleString('fr-CH')}"`,
+      `"${new Date(s.timestamp).toLocaleString('fr-CH', { timeZone: 'Europe/Zurich' })}"`,
       `"${s.ticketNumber}"`,
-      `"${s.seller}"`,
-      `"${s.clientName || 'Passager'}"`,
+      `"${s.status || 'delivered'}"`,
+      `"${s.client?.name || s.clientName || 'Client Comptoir'}"`,
+      `"${s.client?.phone || ''}"`,
+      `"${s.client?.email || ''}"`,
+      `"${s.client?.city || ''}"`,
       s.total.toFixed(2),
+      (s.amountReceived || s.total).toFixed(2),
       `"${s.paymentMethod}"`,
       `"${s.paymentDetails.reference || ''}"`,
+      `"${s.shipping?.label || 'Retrait Magasin'}"`,
+      (s.shipping?.cost || 0).toFixed(2),
+      `"${s.seller}"`,
       `"${s.items.map(i => `${i.quantity}x ${i.name} (${i.flavor})`).join(' | ')}"`
     ]);
-    const csvContent = 'data:text/csv;charset=utf-8,' + [headers.join(','), ...rows.map(r => r.join(','))].join('\n');
-    const encodedUri = encodeURI(csvContent);
+    const csvContent = '\uFEFF' + [headers.join(','), ...rows.map(r => r.join(','))].join('\r\n');
+    const blob = new Blob([csvContent], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
     const link = document.createElement('a');
-    link.setAttribute('href', encodedUri);
-    link.setAttribute('download', `ventes_pos_nutrifitness_${new Date().toISOString().slice(0, 10)}.csv`);
+    link.setAttribute('href', url);
+    link.setAttribute('download', `ventes_nutrifitness_geneve_${new Date().toISOString().slice(0, 10)}.csv`);
     document.body.appendChild(link);
     link.click();
     document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Export products catalog to CSV
+  const handleExportCatalogCsv = () => {
+    if (allProducts.length === 0) {
+      alert('Aucun produit à exporter.');
+      return;
+    }
+
+    const headers = [
+      'id',
+      'name_fr',
+      'name_de',
+      'name_it',
+      'name_en',
+      'slug',
+      'brand',
+      'primary_category',
+      'categories',
+      'price_chf',
+      'compare_at_price_chf',
+      'tax_category',
+      'shipping_origin',
+      'is_swiss_origin',
+      'images',
+      'short_description_fr',
+      'long_description_html',
+      'direct_answer_aeo_fr',
+      'ingredients_fr',
+      'allergens_fr',
+      'usage_instructions_fr',
+      'serving_size',
+      'servings_per_container',
+      'energy_kcal',
+      'energy_kj',
+      'protein_g',
+      'carbs_g',
+      'sugars_g',
+      'fat_g',
+      'saturated_fat_g',
+      'salt_g',
+      'bcaa_g',
+      'variants_data'
+    ];
+
+    const escapeCsv = (val: string | number | boolean | undefined | null): string => {
+      if (val === undefined || val === null) return '""';
+      const str = String(val).replace(/"/g, '""');
+      return `"${str}"`;
+    };
+
+    const rows = allProducts.map(p => {
+      const allCats = p.categorySlugs?.length ? p.categorySlugs.join(';') : p.categorySlug;
+      const allImgs = p.images?.map(img => img.src).join(';') || '';
+      const variantsSummary = p.variants?.map(v => 
+        `${v.flavorName.fr || 'Standard'}|${v.format || ''}|${v.sku || ''}|${v.priceChf || p.priceChf}|${v.inventoryQuantity || 0}|${v.image || ''}`
+      ).join(';;') || '';
+
+      return [
+        escapeCsv(p.id),
+        escapeCsv(p.name.fr),
+        escapeCsv(p.name.de),
+        escapeCsv(p.name.it),
+        escapeCsv(p.name.en),
+        escapeCsv(p.slug.fr),
+        escapeCsv(p.brand),
+        escapeCsv(p.categorySlug),
+        escapeCsv(allCats),
+        p.priceChf.toFixed(2),
+        p.compareAtPriceChf ? p.compareAtPriceChf.toFixed(2) : '""',
+        escapeCsv(p.taxCategory),
+        escapeCsv(p.shippingOrigin || 'switzerland'),
+        escapeCsv(Boolean(p.isSwissOrigin)),
+        escapeCsv(allImgs),
+        escapeCsv(p.shortDescription?.fr || ''),
+        escapeCsv(p.longDescription?.fr || ''),
+        escapeCsv(p.directAnswerAeo?.fr || ''),
+        escapeCsv(p.ingredients?.fr || ''),
+        escapeCsv(p.allergens?.fr || ''),
+        escapeCsv(p.usageInstructions?.fr || ''),
+        escapeCsv(p.nutrition?.servingSize || ''),
+        escapeCsv(p.nutrition?.servingsPerContainer || 0),
+        escapeCsv(p.nutrition?.energyKcal || 0),
+        escapeCsv(p.nutrition?.energyKj || 0),
+        escapeCsv(p.nutrition?.proteinG || 0),
+        escapeCsv(p.nutrition?.carbsG || 0),
+        escapeCsv(p.nutrition?.sugarsG || 0),
+        escapeCsv(p.nutrition?.fatG || 0),
+        escapeCsv(p.nutrition?.saturatedFatG || 0),
+        escapeCsv(p.nutrition?.saltG || 0),
+        escapeCsv(p.nutrition?.bcaaG || 0),
+        escapeCsv(variantsSummary)
+      ].join(',');
+    });
+
+    const csvData = '\uFEFF' + [headers.join(','), ...rows].join('\r\n');
+    const blob = new Blob([csvData], { type: 'text/csv;charset=utf-8;' });
+    const url = URL.createObjectURL(blob);
+    const link = document.createElement('a');
+    link.setAttribute('href', url);
+    link.setAttribute('download', `nutrifitness-catalogue-${new Date().toISOString().slice(0, 10)}.csv`);
+    document.body.appendChild(link);
+    link.click();
+    document.body.removeChild(link);
+    URL.revokeObjectURL(url);
+  };
+
+  // Import products catalog from CSV
+  const handleImportCatalogCsv = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      try {
+        const text = event.target?.result as string;
+        if (!text) return;
+
+        const parsedRows = parseCsvText(text);
+        if (parsedRows.length < 2) {
+          alert('Le fichier CSV est vide ou ne contient pas de lignes de données.');
+          return;
+        }
+
+        const headers = parsedRows[0].map(h => h.trim().toLowerCase().replace(/^["']|["']$/g, ''));
+        
+        let importedCount = 0;
+        let updatedCount = 0;
+        const newProductsMap = new Map<string, ProductItem>();
+
+        allProducts.forEach(p => newProductsMap.set(p.id, p));
+
+        for (let r = 1; r < parsedRows.length; r++) {
+          const row = parsedRows[r];
+          if (!row || row.length === 0 || row.every(cell => !cell.trim())) continue;
+
+          const getVal = (colNames: string[]): string => {
+            for (const col of colNames) {
+              const idx = headers.findIndex(h => h === col.toLowerCase() || h.includes(col.toLowerCase()));
+              if (idx >= 0 && row[idx] !== undefined) {
+                return row[idx].trim();
+              }
+            }
+            return '';
+          };
+
+          const nameFr = getVal(['name_fr', 'nom', 'name', 'title', 'post_title']);
+          if (!nameFr) continue;
+
+          const rawId = getVal(['id', 'id_produit', 'sku', 'ugs']) || `prod-csv-${Date.now()}-${r}`;
+          const existing = newProductsMap.get(rawId) || Array.from(newProductsMap.values()).find(p => p.name.fr.toLowerCase() === nameFr.toLowerCase());
+
+          const priceVal = parseFloat(getVal(['price_chf', 'tarif régulier', 'prix', 'price', 'regular_price'])) || (existing?.priceChf || 29.90);
+          const compareVal = parseFloat(getVal(['compare_at_price_chf', 'tarif promo', 'compare_price', 'sale_price'])) || undefined;
+          const brandVal = getVal(['brand', 'marque', 'fournisseur']) || existing?.brand || 'NutriFitness';
+          
+          const primaryCat = getVal(['primary_category', 'category_slug', 'catégorie']) || existing?.categorySlug || 'proteines';
+          const rawCats = getVal(['categories', 'catégories', 'category_slugs']);
+          const catSlugs = rawCats 
+            ? rawCats.split(/[;,|]/).map(c => c.trim().toLowerCase()).filter(Boolean)
+            : existing?.categorySlugs || [primaryCat];
+
+          const originVal = getVal(['shipping_origin', 'origine', 'stock_origin']) || existing?.shippingOrigin || 'switzerland';
+          const isSwiss = getVal(['is_swiss_origin', 'suisse', 'swiss_made']).toLowerCase() === 'true' || Boolean(existing?.isSwissOrigin);
+
+          const rawImgs = getVal(['images', 'image', 'photos']);
+          const imgList = rawImgs 
+            ? rawImgs.split(/[;,|]/).map(src => ({
+                src: src.trim(),
+                alt: { fr: nameFr, de: nameFr, it: nameFr, en: nameFr },
+                width: 800,
+                height: 800
+              })).filter(img => Boolean(img.src))
+            : existing?.images || [{ src: '/images/placeholder.webp', alt: { fr: nameFr, de: nameFr, it: nameFr, en: nameFr }, width: 800, height: 800 }];
+
+          const rawVariants = getVal(['variants_data', 'variantes', 'variants']);
+          let parsedVariants = existing?.variants;
+          if (rawVariants && rawVariants.includes('|')) {
+            parsedVariants = rawVariants.split(';;').map((vStr, vIdx) => {
+              const parts = vStr.split('|');
+              return {
+                id: `var-${r}-${vIdx}`,
+                flavorName: { fr: parts[0] || 'Standard', de: parts[0] || 'Standard', it: parts[0] || 'Standard', en: parts[0] || 'Standard' },
+                format: parts[1] || '1 unité',
+                sku: parts[2] || `SKU-${r}-${vIdx}`,
+                priceChf: parseFloat(parts[3]) || priceVal,
+                inventoryQuantity: parseInt(parts[4]) || 20,
+                inStock: true,
+                image: parts[5] || undefined
+              };
+            });
+          }
+
+          const productItem: ProductItem = {
+            id: existing ? existing.id : rawId,
+            slug: {
+              fr: getVal(['slug', 'identifiant']) || existing?.slug.fr || nameFr.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
+              de: existing?.slug.de || nameFr.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
+              it: existing?.slug.it || nameFr.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, ''),
+              en: existing?.slug.en || nameFr.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-+|-+$/g, '')
+            },
+            name: {
+              fr: nameFr,
+              de: getVal(['name_de']) || existing?.name.de || nameFr,
+              it: getVal(['name_it']) || existing?.name.it || nameFr,
+              en: getVal(['name_en']) || existing?.name.en || nameFr
+            },
+            brand: brandVal,
+            categorySlug: primaryCat,
+            categorySlugs: Array.from(new Set([primaryCat, ...catSlugs])),
+            taxCategory: getVal(['tax_category', 'tva']) === 'standard' ? 'standard' : (existing?.taxCategory || 'food_reduced'),
+            priceChf: priceVal,
+            compareAtPriceChf: compareVal || existing?.compareAtPriceChf,
+            isSwissOrigin: isSwiss,
+            shippingOrigin: originVal.includes('portugal') ? 'portugal' : 'switzerland',
+            images: imgList.length > 0 ? imgList : (existing?.images || [{ src: '/images/placeholder.webp', alt: { fr: nameFr, de: nameFr, it: nameFr, en: nameFr }, width: 800, height: 800 }]),
+            shortDescription: {
+              fr: getVal(['short_description_fr', 'description courte']) || existing?.shortDescription.fr || '',
+              de: existing?.shortDescription.de || getVal(['short_description_fr', 'description courte']) || '',
+              it: existing?.shortDescription.it || getVal(['short_description_fr', 'description courte']) || '',
+              en: existing?.shortDescription.en || getVal(['short_description_fr', 'description courte']) || ''
+            },
+            directAnswerAeo: {
+              fr: getVal(['direct_answer_aeo_fr', 'aeo']) || existing?.directAnswerAeo.fr || '',
+              de: existing?.directAnswerAeo.de || getVal(['direct_answer_aeo_fr', 'aeo']) || '',
+              it: existing?.directAnswerAeo.it || getVal(['direct_answer_aeo_fr', 'aeo']) || '',
+              en: existing?.directAnswerAeo.en || getVal(['direct_answer_aeo_fr', 'aeo']) || ''
+            },
+            longDescription: {
+              fr: getVal(['long_description_html', 'description', 'description longue']) || existing?.longDescription.fr || '',
+              de: existing?.longDescription.de || getVal(['long_description_html', 'description']) || '',
+              it: existing?.longDescription.it || getVal(['long_description_html', 'description']) || '',
+              en: existing?.longDescription.en || getVal(['long_description_html', 'description']) || ''
+            },
+            usageInstructions: {
+              fr: getVal(['usage_instructions_fr', 'conseils d\'utilisation']) || existing?.usageInstructions.fr || '',
+              de: existing?.usageInstructions.de || '',
+              it: existing?.usageInstructions.it || '',
+              en: existing?.usageInstructions.en || ''
+            },
+            ingredients: {
+              fr: getVal(['ingredients_fr', 'ingrédients']) || existing?.ingredients.fr || '',
+              de: existing?.ingredients.de || '',
+              it: existing?.ingredients.it || '',
+              en: existing?.ingredients.en || ''
+            },
+            allergens: {
+              fr: getVal(['allergens_fr', 'allergènes']) || existing?.allergens.fr || '',
+              de: existing?.allergens.de || '',
+              it: existing?.allergens.it || '',
+              en: existing?.allergens.en || ''
+            },
+            nutrition: {
+              servingSize: getVal(['serving_size', 'portion']) || existing?.nutrition.servingSize || '30 g',
+              servingsPerContainer: parseInt(getVal(['servings_per_container'])) || existing?.nutrition.servingsPerContainer || 30,
+              energyKcal: parseFloat(getVal(['energy_kcal'])) || existing?.nutrition.energyKcal || 0,
+              energyKj: parseFloat(getVal(['energy_kj'])) || existing?.nutrition.energyKj || 0,
+              proteinG: parseFloat(getVal(['protein_g'])) || existing?.nutrition.proteinG || 0,
+              carbsG: parseFloat(getVal(['carbs_g'])) || existing?.nutrition.carbsG || 0,
+              sugarsG: parseFloat(getVal(['sugars_g'])) || existing?.nutrition.sugarsG || 0,
+              fatG: parseFloat(getVal(['fat_g'])) || existing?.nutrition.fatG || 0,
+              saturatedFatG: parseFloat(getVal(['saturated_fat_g'])) || existing?.nutrition.saturatedFatG || 0,
+              saltG: parseFloat(getVal(['salt_g'])) || existing?.nutrition.saltG || 0,
+              bcaaG: parseFloat(getVal(['bcaa_g'])) || existing?.nutrition.bcaaG || undefined
+            },
+            variants: parsedVariants && parsedVariants.length > 0 ? parsedVariants : [
+              {
+                id: `var-${Date.now()}-${r}`,
+                sku: `SKU-${r}`,
+                flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
+                format: '1 unité',
+                priceChf: priceVal,
+                inventoryQuantity: 25,
+                inStock: true
+              }
+            ]
+          };
+
+          if (existing) {
+            updatedCount++;
+          } else {
+            importedCount++;
+          }
+          newProductsMap.set(productItem.id, productItem);
+        }
+
+        const mergedAll = Array.from(newProductsMap.values());
+        setAllProducts(mergedAll);
+        try {
+          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(mergedAll));
+        } catch (err) {
+          console.error(err);
+        }
+
+        setImportStatusMessage(`✓ Importation réussie : ${importedCount} nouveaux produits ajoutés, ${updatedCount} fiches existantes mises à jour !`);
+        setTimeout(() => setImportStatusMessage(null), 6000);
+      } catch (err) {
+        alert('Erreur lors du traitement du fichier CSV : ' + (err instanceof Error ? err.message : String(err)));
+      }
+    };
+    reader.readAsText(file, 'utf-8');
+    e.target.value = '';
   };
 
   // -------------------------------------------------------------
@@ -750,8 +1233,10 @@ export default function AdminDashboardClient() {
                   Boutique Genève
                 </span>
               </div>
-              <p className="text-xs text-slate-500 font-medium truncate hidden sm:block">
-                Rue des Pâquis 34, 1201 Genève · {currentTime}
+              <p className="text-xs text-slate-500 font-medium truncate flex items-center gap-1.5">
+                <span>📍 Rue des Pâquis 34, 1201 Genève</span>
+                <span>·</span>
+                <span className="font-bold text-slate-700">🇨🇭 {currentTime}</span>
               </p>
             </div>
           </div>
@@ -913,7 +1398,7 @@ export default function AdminDashboardClient() {
                   Tous ({posProducts.length})
                 </button>
                 {CATEGORIES.map(cat => {
-                  const count = posProducts.filter(p => p.categorySlug === cat.id).length;
+                  const count = posProducts.filter(p => p.categorySlug === cat.id || (p.categorySlugs && p.categorySlugs.includes(cat.id))).length;
                   if (count === 0) return null;
                   return (
                     <button
@@ -1228,27 +1713,76 @@ export default function AdminDashboardClient() {
         <div className="flex-1 max-w-[1720px] w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
           
           {/* Header with Title and Add Product Action */}
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+          <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
             <div>
               <h1 className="text-xl sm:text-2xl font-black text-slate-900 font-heading">
                 Catalogue Général & Gestion des Fiches
               </h1>
               <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
-                Modifiez les fiches existantes, gérez les stocks (Genève vs Portugal) ou publiez de nouveaux produits.
+                Modifiez les fiches existantes, gérez les stocks (Genève vs Portugal), importez/exportez en CSV ou publiez de nouveaux produits.
               </p>
             </div>
-            <button
-              type="button"
-              onClick={() => {
-                setEditingProduct(null);
-                setIsEditorOpen(true);
-              }}
-              className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider flex items-center gap-2 shadow-sm transition-all active:scale-95 shrink-0"
-            >
-              <Plus className="w-4 h-4" />
-              <span>Ajouter un Produit</span>
-            </button>
+
+            <div className="flex flex-wrap items-center gap-2.5">
+              {/* Hidden file input for CSV Import */}
+              <input
+                ref={fileInputRef}
+                type="file"
+                accept=".csv"
+                onChange={handleImportCatalogCsv}
+                className="hidden"
+              />
+
+              <button
+                type="button"
+                onClick={() => fileInputRef.current?.click()}
+                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 border border-slate-300 transition-all active:scale-95"
+                title="Importer des produits depuis un fichier CSV (format NutriFitness ou WooCommerce)"
+              >
+                <Upload className="w-4 h-4 text-slate-600" />
+                <span>Importer CSV</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={handleExportCatalogCsv}
+                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs sm:text-sm font-bold flex items-center gap-2 border border-slate-300 transition-all active:scale-95"
+                title="Télécharger l'intégralité du catalogue avec tous les détails en CSV Excel"
+              >
+                <Download className="w-4 h-4 text-slate-600" />
+                <span>Exporter CSV</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => {
+                  setEditingProduct(null);
+                  setIsEditorOpen(true);
+                }}
+                className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider flex items-center gap-2 shadow-sm transition-all active:scale-95"
+              >
+                <Plus className="w-4 h-4" />
+                <span>Ajouter un Produit</span>
+              </button>
+            </div>
           </div>
+
+          {/* Import Status Alert Banner */}
+          {importStatusMessage && (
+            <div className="p-4 rounded-2xl bg-emerald-50 border border-emerald-300 text-emerald-900 font-bold text-xs sm:text-sm flex items-center justify-between animate-in fade-in">
+              <div className="flex items-center gap-2">
+                <Check className="w-5 h-5 text-emerald-600" />
+                <span>{importStatusMessage}</span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setImportStatusMessage(null)}
+                className="text-emerald-700 hover:text-emerald-950 text-xs font-bold"
+              >
+                ✕
+              </button>
+            </div>
+          )}
 
           {/* Top Metric Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -1592,62 +2126,188 @@ export default function AdminDashboardClient() {
               <table className="w-full text-left border-collapse text-xs">
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
-                    <th className="py-3 px-4">Date / Heure</th>
+                    <th className="py-3 px-4">Date / Heure (CH)</th>
                     <th className="py-3 px-4">N° Ticket</th>
-                    <th className="py-3 px-4">Client</th>
-                    <th className="py-3 px-4">Articles</th>
-                    <th className="py-3 px-4">Paiement</th>
-                    <th className="py-3 px-4">Total CHF</th>
-                    <th className="py-3 px-4 text-right">Reçu</th>
+                    <th className="py-3 px-4">Statut Commande</th>
+                    <th className="py-3 px-4">Client & Contact</th>
+                    <th className="py-3 px-4">Articles & Saveurs</th>
+                    <th className="py-3 px-4">Paiement & Reçu</th>
+                    <th className="py-3 px-4">Expédition</th>
+                    <th className="py-3 px-4">Total TTC</th>
+                    <th className="py-3 px-4 text-right">Actions</th>
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {salesHistory.map(sale => (
-                    <tr key={sale.id} className="hover:bg-slate-50 transition-colors">
-                      <td className="py-3 px-4 text-slate-600 font-medium">
-                        {new Date(sale.timestamp).toLocaleString('fr-CH', {
-                          day: '2-digit',
-                          month: '2-digit',
-                          year: 'numeric',
-                          hour: '2-digit',
-                          minute: '2-digit'
-                        })}
-                      </td>
-                      <td className="py-3 px-4 font-mono font-bold text-slate-900">
-                        {sale.ticketNumber}
-                      </td>
-                      <td className="py-3 px-4 text-slate-700">
-                        {sale.clientName || 'Passager'}
-                      </td>
-                      <td className="py-3 px-4 max-w-xs text-slate-600 truncate">
-                        {sale.items.map(i => `${i.quantity}x ${i.name}`).join(', ')}
-                      </td>
-                      <td className="py-3 px-4">
-                        <span className="px-2 py-0.5 rounded-full bg-slate-100 text-slate-800 font-bold text-[11px] uppercase">
-                          {sale.paymentMethod}
-                        </span>
-                      </td>
-                      <td className="py-3 px-4 font-black text-slate-900 text-sm font-heading">
-                        CHF {sale.total.toFixed(2)}
-                      </td>
-                      <td className="py-3 px-4 text-right">
-                        <button
-                          type="button"
-                          onClick={() => setCompletedSale(sale)}
-                          className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold text-xs transition-colors"
-                        >
-                          Voir Reçu
-                        </button>
-                      </td>
-                    </tr>
-                  ))}
+                  {salesHistory.map(sale => {
+                    const statusConfig = ORDER_STATUS_LABELS[sale.status || 'delivered'] || ORDER_STATUS_LABELS.delivered;
+
+                    return (
+                      <tr key={sale.id} className="hover:bg-slate-50/80 transition-colors">
+                        {/* Swiss Date & Time */}
+                        <td className="py-3 px-4 text-slate-600 font-medium whitespace-nowrap">
+                          <div className="font-bold text-slate-900">
+                            {new Date(sale.timestamp).toLocaleDateString('fr-CH', {
+                              timeZone: 'Europe/Zurich',
+                              day: '2-digit',
+                              month: '2-digit',
+                              year: 'numeric'
+                            })}
+                          </div>
+                          <div className="text-[10px] text-slate-400 font-mono">
+                            {new Date(sale.timestamp).toLocaleTimeString('fr-CH', {
+                              timeZone: 'Europe/Zurich',
+                              hour: '2-digit',
+                              minute: '2-digit',
+                              second: '2-digit'
+                            })}
+                          </div>
+                        </td>
+
+                        {/* Ticket Number */}
+                        <td className="py-3 px-4">
+                          <span className="font-mono font-black text-slate-900 bg-slate-100 px-2 py-1 rounded-lg border border-slate-200 text-xs">
+                            {sale.ticketNumber}
+                          </span>
+                        </td>
+
+                        {/* Interactive Order Status Dropdown */}
+                        <td className="py-3 px-4">
+                          <select
+                            value={sale.status || 'delivered'}
+                            onChange={(e) => updateSaleStatus(sale.id, e.target.value as OrderStatus)}
+                            className={`text-[11px] font-bold px-2 py-1 rounded-lg border transition-all cursor-pointer shadow-2xs ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}
+                          >
+                            <option value="in_processing">🟡 En traitement</option>
+                            <option value="packed">📦 Emballé / Prêt</option>
+                            <option value="shipped">🚚 Expédié</option>
+                            <option value="delivered">✅ Livré / Remis</option>
+                            <option value="pending">⏳ En attente</option>
+                            <option value="cancelled">❌ Annulé</option>
+                          </select>
+                        </td>
+
+                        {/* Client details */}
+                        <td className="py-3 px-4">
+                          <div className="font-bold text-slate-900">
+                            {sale.client?.name || sale.clientName || 'Client Comptoir'}
+                          </div>
+                          {sale.client?.phone && (
+                            <div className="text-[11px] text-slate-500 flex items-center gap-1 mt-0.5">
+                              <Phone className="w-3 h-3 text-emerald-600 shrink-0" />
+                              <span>{sale.client.phone}</span>
+                            </div>
+                          )}
+                          {sale.client?.email && (
+                            <div className="text-[10px] text-slate-400 flex items-center gap-1 truncate max-w-[150px]">
+                              <Mail className="w-2.5 h-2.5 text-blue-500 shrink-0" />
+                              <span>{sale.client.email}</span>
+                            </div>
+                          )}
+                          {sale.client?.city && (
+                            <div className="text-[10px] text-slate-400 flex items-center gap-1">
+                              <MapPin className="w-2.5 h-2.5 text-slate-400 shrink-0" />
+                              <span>{sale.client.city}</span>
+                            </div>
+                          )}
+                        </td>
+
+                        {/* Articles & Flavors */}
+                        <td className="py-3 px-4 max-w-xs">
+                          <div className="space-y-0.5">
+                            {sale.items.slice(0, 2).map((i, idx) => (
+                              <div key={idx} className="text-[11px] text-slate-700 truncate">
+                                <span className="font-bold text-slate-900">{i.quantity}x</span> {i.name}{' '}
+                                {i.flavor && i.flavor !== 'Standard' && (
+                                  <span className="text-slate-500 text-[10px]">({i.flavor})</span>
+                                )}
+                              </div>
+                            ))}
+                            {sale.items.length > 2 && (
+                              <span className="text-[10px] text-slate-400 font-medium">
+                                +{sale.items.length - 2} autre{sale.items.length - 2 > 1 ? 's' : ''}...
+                              </span>
+                            )}
+                          </div>
+                        </td>
+
+                        {/* Payment Method & Received Amount */}
+                        <td className="py-3 px-4">
+                          <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md font-bold text-[10px] uppercase ${
+                            sale.paymentMethod === 'twint'
+                              ? 'bg-emerald-100 text-emerald-800'
+                              : sale.paymentMethod === 'card'
+                              ? 'bg-blue-100 text-blue-800'
+                              : 'bg-amber-100 text-amber-800'
+                          }`}>
+                            {sale.paymentMethod === 'twint' ? '⚡ TWINT' : sale.paymentMethod === 'card' ? '💳 Carte' : '💵 Espèces'}
+                          </span>
+                          <p className="text-[11px] text-slate-600 mt-0.5">
+                            Reçu: <strong className="text-slate-900">CHF {(sale.amountReceived || sale.total).toFixed(2)}</strong>
+                          </p>
+                          {sale.paymentDetails?.changeGiven ? (
+                            <p className="text-[10px] text-emerald-700 font-medium">
+                              Rendu: CHF {sale.paymentDetails.changeGiven.toFixed(2)}
+                            </p>
+                          ) : null}
+                        </td>
+
+                        {/* Shipping */}
+                        <td className="py-3 px-4">
+                          <span className="text-[11px] font-medium text-slate-800 flex items-center gap-1">
+                            <Truck className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+                            <span>
+                              {sale.shipping?.method === 'store_pickup' 
+                                ? 'Retrait Magasin' 
+                                : sale.shipping?.method === 'post_priority' 
+                                ? 'Poste Prioritaire' 
+                                : sale.shipping?.method === 'post_economy'
+                                ? 'Poste Éco'
+                                : 'Coursier Express'}
+                            </span>
+                          </span>
+                          <span className="text-[10px] text-slate-500 block">
+                            {sale.shipping?.cost ? `+CHF ${sale.shipping.cost.toFixed(2)}` : 'Gratuit'}
+                          </span>
+                        </td>
+
+                        {/* Total CHF */}
+                        <td className="py-3 px-4">
+                          <span className="font-black text-slate-900 text-sm font-heading whitespace-nowrap">
+                            CHF {sale.total.toFixed(2)}
+                          </span>
+                        </td>
+
+                        {/* Actions */}
+                        <td className="py-3 px-4 text-right whitespace-nowrap">
+                          <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => setInspectingSale(sale)}
+                              className="px-2.5 py-1 bg-slate-900 hover:bg-slate-800 text-white rounded-lg font-bold text-xs transition-colors"
+                              title="Voir tous les détails et modifier le statut"
+                            >
+                              Détails
+                            </button>
+                            <button
+                              type="button"
+                              onClick={() => setCompletedSale(sale)}
+                              className="px-2.5 py-1 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-lg font-bold text-xs transition-colors"
+                              title="Réimprimer le ticket de caisse"
+                            >
+                              Reçu
+                            </button>
+                          </div>
+                        </td>
+                      </tr>
+                    );
+                  })}
 
                   {salesHistory.length === 0 && (
                     <tr>
-                      <td colSpan={7} className="py-12 text-center text-slate-400">
+                      <td colSpan={9} className="py-12 text-center text-slate-400">
                         <Receipt className="w-8 h-8 mx-auto text-slate-300 mb-2" />
                         <p className="font-bold text-xs">Aucune vente enregistrée pour le moment.</p>
-                        <p className="text-[11px] mt-0.5">Les encaissements POS apparaîtront automatiquement ici.</p>
+                        <p className="text-[11px] mt-0.5">Les encaissements POS apparaîtront automatiquement ici avec tous les détails du client.</p>
                       </td>
                     </tr>
                   )}
@@ -1682,28 +2342,51 @@ export default function AdminDashboardClient() {
               </button>
             </div>
 
-            <div className="space-y-2 max-h-[320px] overflow-y-auto pr-1">
-              {variantPickerProduct.variants?.map(v => (
-                <button
-                  key={v.id || v.sku}
-                  type="button"
-                  onClick={() => {
-                    addToPosTicket(variantPickerProduct, v);
-                    setVariantPickerProduct(null);
-                  }}
-                  className="w-full p-3 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 rounded-xl text-left transition-all flex items-center justify-between group"
-                >
-                  <div>
-                    <p className="font-bold text-xs text-slate-900 group-hover:text-emerald-800">
-                      {v.flavorName.fr} · {v.format}
-                    </p>
-                    <p className="text-[10px] font-mono text-slate-400">SKU: {v.sku}</p>
-                  </div>
-                  <span className="font-black text-slate-900 text-sm font-heading group-hover:text-emerald-700">
-                    CHF {(v.priceChf || variantPickerProduct.priceChf).toFixed(2)}
-                  </span>
-                </button>
-              ))}
+            <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
+              {variantPickerProduct.variants?.map(v => {
+                const variantImg = v.image || variantPickerProduct.images[0]?.src || '/images/placeholder.webp';
+
+                return (
+                  <button
+                    key={v.id || v.sku}
+                    type="button"
+                    onClick={() => {
+                      addToPosTicket(variantPickerProduct, v);
+                      setVariantPickerProduct(null);
+                    }}
+                    className="w-full p-2.5 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 rounded-2xl text-left transition-all flex items-center justify-between group"
+                  >
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-12 h-12 bg-white rounded-xl border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center">
+                        <Image
+                          src={variantImg}
+                          alt={v.flavorName.fr}
+                          fill
+                          sizes="48px"
+                          className="object-contain p-1"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-bold text-xs text-slate-900 group-hover:text-emerald-800">
+                          {v.flavorName.fr}
+                        </p>
+                        <p className="text-[11px] text-slate-500 font-medium">
+                          {v.format}
+                        </p>
+                        <p className="text-[10px] font-mono text-slate-400">SKU: {v.sku}</p>
+                      </div>
+                    </div>
+                    <div className="text-right pl-2 shrink-0">
+                      <span className="font-black text-slate-900 text-sm font-heading group-hover:text-emerald-700 block">
+                        CHF {(v.priceChf || variantPickerProduct.priceChf).toFixed(2)}
+                      </span>
+                      <span className="text-[10px] text-emerald-600 font-bold group-hover:underline">
+                        Ajouter +
+                      </span>
+                    </div>
+                  </button>
+                );
+              })}
             </div>
           </div>
         </div>
@@ -1738,15 +2421,15 @@ export default function AdminDashboardClient() {
             {/* Total Display */}
             <div className="my-5 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-center">
               <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
-                Montant total à percevoir
+                Montant total à percevoir {shippingCost > 0 ? `(dont livraison CHF ${shippingCost.toFixed(2)})` : ''}
               </span>
               <div className="text-4xl font-black text-emerald-800 font-heading mt-1">
-                CHF {totalToPay.toFixed(2)}
+                CHF {grandTotalToPay.toFixed(2)}
               </div>
             </div>
 
             {/* Payment Method Selector */}
-            <div className="space-y-4">
+            <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
               <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
                 Mode de paiement reçu :
               </label>
@@ -1858,7 +2541,7 @@ export default function AdminDashboardClient() {
                         step="0.05"
                         value={cashTendered}
                         onChange={(e) => setCashTendered(e.target.value)}
-                        placeholder={totalToPay.toFixed(2)}
+                        placeholder={grandTotalToPay.toFixed(2)}
                         className="w-full pl-12 pr-4 py-2.5 bg-white border border-amber-300 rounded-xl font-black text-lg text-slate-900 focus:outline-none"
                         autoFocus
                       />
@@ -1868,7 +2551,7 @@ export default function AdminDashboardClient() {
                   {/* Quick Cash Buttons */}
                   <div className="flex flex-wrap gap-1.5">
                     {[
-                      { label: 'Exact', val: totalToPay },
+                      { label: 'Exact', val: grandTotalToPay },
                       { label: 'CHF 20', val: 20 },
                       { label: 'CHF 50', val: 50 },
                       { label: 'CHF 100', val: 100 },
@@ -1889,15 +2572,101 @@ export default function AdminDashboardClient() {
                   <div className="p-3 bg-white rounded-xl border border-amber-200 flex items-center justify-between">
                     <span className="text-xs font-bold text-slate-700">Monnaie à rendre :</span>
                     <span className={`text-lg font-black font-heading ${
-                      cashNumeric >= totalToPay ? 'text-emerald-600' : 'text-red-500'
+                      cashNumeric >= grandTotalToPay ? 'text-emerald-600' : 'text-red-500'
                     }`}>
-                      {cashNumeric >= totalToPay 
+                      {cashNumeric >= grandTotalToPay 
                         ? `CHF ${cashChangeDue.toFixed(2)}` 
-                        : `Manque CHF ${(totalToPay - cashNumeric).toFixed(2)}`}
+                        : `Manque CHF ${(grandTotalToPay - cashNumeric).toFixed(2)}`}
                     </span>
                   </div>
                 </div>
               )}
+
+              {/* Client & Delivery Details */}
+              <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-3">
+                <span className="text-xs font-bold text-slate-800 uppercase tracking-wider block">
+                  Informations Client & Expédition :
+                </span>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Nom du client :</label>
+                    <input
+                      type="text"
+                      value={clientName}
+                      onChange={(e) => setClientName(e.target.value)}
+                      placeholder="Ex: Jean Dupont (ou Client Comptoir)"
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Téléphone mobile :</label>
+                    <input
+                      type="tel"
+                      value={clientPhone}
+                      onChange={(e) => setClientPhone(e.target.value)}
+                      placeholder="+41 79 123 45 67"
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Email :</label>
+                    <input
+                      type="email"
+                      value={clientEmail}
+                      onChange={(e) => setClientEmail(e.target.value)}
+                      placeholder="client@gmail.com"
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none"
+                    />
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Adresse / Ville :</label>
+                    <input
+                      type="text"
+                      value={clientAddress}
+                      onChange={(e) => setClientAddress(e.target.value)}
+                      placeholder="Rue des Eaux-Vives 12, Genève"
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2.5 pt-1">
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Mode d'expédition :</label>
+                    <select
+                      value={shippingMethod}
+                      onChange={(e) => setShippingMethod(e.target.value as typeof shippingMethod)}
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none font-medium"
+                    >
+                      <option value="store_pickup">🛍️ Retrait Magasin Genève (Gratuit)</option>
+                      <option value="post_priority">📦 Poste Suisse Prioritaire 24h (+CHF 7.90)</option>
+                      <option value="post_economy">📬 Poste Suisse Économique 48h (+CHF 5.90)</option>
+                      <option value="express_geneva">⚡ Coursier Express Genève (+CHF 12.00)</option>
+                    </select>
+                  </div>
+
+                  <div>
+                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Statut initial :</label>
+                    <select
+                      value={orderStatus}
+                      onChange={(e) => setOrderStatus(e.target.value as OrderStatus)}
+                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none font-bold"
+                    >
+                      <option value="delivered">🟢 Livré / Remis en main propre</option>
+                      <option value="packed">🟠 Emballé / Prêt pour retrait</option>
+                      <option value="in_processing">🟡 En préparation (Processing)</option>
+                      <option value="shipped">🔵 Expédié par transporteur</option>
+                      <option value="pending">🟣 En attente</option>
+                    </select>
+                  </div>
+                </div>
+              </div>
 
               {/* Notes input */}
               <div>
@@ -1920,7 +2689,7 @@ export default function AdminDashboardClient() {
                 className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 mt-4"
               >
                 <Check className="w-5 h-5" />
-                <span>Valider l'Encaissement & Émettre le Reçu</span>
+                <span>Valider l'Encaissement (CHF {grandTotalToPay.toFixed(2)}) & Émettre le Reçu</span>
               </button>
             </div>
           </div>
@@ -2065,6 +2834,284 @@ export default function AdminDashboardClient() {
             >
               Fermer & Prêt pour la Prochaine Vente
             </button>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================
+          MODAL: FULL SALE / ORDER INSPECTOR ("all details of the client,
+          mode of payment, how much received, shipping and change status")
+          ========================================================= */}
+      {inspectingSale && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-2xl w-full border border-slate-200 shadow-2xl text-slate-900 max-h-[90vh] overflow-y-auto animate-in zoom-in-95 duration-200 space-y-6">
+            
+            {/* Header */}
+            <div className="flex items-start justify-between pb-4 border-b border-slate-200">
+              <div>
+                <div className="flex items-center gap-2 mb-1">
+                  <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 font-mono">
+                    Commande #{inspectingSale.ticketNumber}
+                  </span>
+                  <span className="text-xs text-slate-400">·</span>
+                  <span className="text-xs text-slate-500 font-medium">
+                    {new Date(inspectingSale.timestamp).toLocaleString('fr-CH', {
+                      timeZone: 'Europe/Zurich',
+                      day: '2-digit',
+                      month: 'short',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit'
+                    })}
+                  </span>
+                </div>
+                <h3 className="text-xl font-black text-slate-900 font-heading">
+                  Détails Commande & Client
+                </h3>
+              </div>
+
+              <button
+                type="button"
+                onClick={() => setInspectingSale(null)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition-colors"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Quick Status Bar */}
+            <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+              <div>
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider block">
+                  Statut de Traitement Actuel
+                </span>
+                <span className="text-xs font-bold text-slate-700">
+                  Modifiez le statut en direct ci-contre :
+                </span>
+              </div>
+              <div className="flex items-center gap-2">
+                <select
+                  value={inspectingSale.status || 'delivered'}
+                  onChange={(e) => updateSaleStatus(inspectingSale.id, e.target.value as OrderStatus)}
+                  className={`text-xs font-black px-3 py-2 rounded-xl border transition-all cursor-pointer shadow-xs ${
+                    ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.bg || 'bg-white'
+                  } ${
+                    ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.text || 'text-slate-900'
+                  } ${
+                    ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.border || 'border-slate-300'
+                  }`}
+                >
+                  <option value="in_processing">🟡 En traitement (In Processing)</option>
+                  <option value="packed">📦 Emballé / Prêt (Packed)</option>
+                  <option value="shipped">🚚 Expédié (Shipped)</option>
+                  <option value="delivered">✅ Livré / Remis (Delivered)</option>
+                  <option value="pending">⏳ En attente (Pending)</option>
+                  <option value="cancelled">❌ Annulé (Cancelled)</option>
+                </select>
+              </div>
+            </div>
+
+            {/* Two Column Grid: Client Info + Payment/Shipping */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              
+              {/* Client Info Card */}
+              <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-3">
+                <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
+                  <User className="w-4 h-4 text-emerald-600" />
+                  <span>Coordonnées Client</span>
+                </div>
+                
+                <div className="space-y-1.5 text-xs text-slate-700">
+                  <div>
+                    <span className="text-[10px] text-slate-400 block">Nom complet :</span>
+                    <strong className="text-slate-900 text-sm">
+                      {inspectingSale.client?.name || inspectingSale.clientName || 'Client Comptoir'}
+                    </strong>
+                  </div>
+
+                  {inspectingSale.client?.phone ? (
+                    <div>
+                      <span className="text-[10px] text-slate-400 block">Téléphone :</span>
+                      <a 
+                        href={`tel:${inspectingSale.client.phone}`}
+                        className="text-emerald-700 font-bold hover:underline flex items-center gap-1.5"
+                      >
+                        <Phone className="w-3.5 h-3.5" />
+                        <span>{inspectingSale.client.phone}</span>
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="text-slate-400 text-[11px]">Téléphone : Non renseigné</div>
+                  )}
+
+                  {inspectingSale.client?.email ? (
+                    <div>
+                      <span className="text-[10px] text-slate-400 block">Email :</span>
+                      <a 
+                        href={`mailto:${inspectingSale.client.email}`}
+                        className="text-blue-700 font-medium hover:underline flex items-center gap-1.5 break-all"
+                      >
+                        <Mail className="w-3.5 h-3.5" />
+                        <span>{inspectingSale.client.email}</span>
+                      </a>
+                    </div>
+                  ) : (
+                    <div className="text-slate-400 text-[11px]">Email : Non renseigné</div>
+                  )}
+
+                  {inspectingSale.client?.address || inspectingSale.client?.city ? (
+                    <div>
+                      <span className="text-[10px] text-slate-400 block">Adresse & Ville :</span>
+                      <p className="text-slate-800 font-medium flex items-start gap-1.5">
+                        <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
+                        <span>
+                          {inspectingSale.client?.address ? `${inspectingSale.client.address}, ` : ''}
+                          {inspectingSale.client?.city || 'Genève'}
+                        </span>
+                      </p>
+                    </div>
+                  ) : null}
+                </div>
+              </div>
+
+              {/* Payment & Shipping Card */}
+              <div className="p-4 bg-white rounded-2xl border border-slate-200 shadow-xs space-y-3">
+                <div className="flex items-center gap-2 text-slate-900 font-bold text-xs uppercase tracking-wider">
+                  <CreditCard className="w-4 h-4 text-blue-600" />
+                  <span>Règlement & Expédition</span>
+                </div>
+
+                <div className="space-y-2 text-xs">
+                  <div>
+                    <span className="text-[10px] text-slate-400 block">Mode de paiement :</span>
+                    <span className="font-bold text-slate-900 uppercase">
+                      {inspectingSale.paymentMethod === 'twint' ? '⚡ TWINT' : inspectingSale.paymentMethod === 'card' ? '💳 Carte Bancaire' : '💵 Espèces (Cash)'}
+                    </span>
+                    {inspectingSale.paymentDetails?.reference && (
+                      <span className="text-[11px] text-slate-500 block">Réf : {inspectingSale.paymentDetails.reference}</span>
+                    )}
+                    {inspectingSale.paymentDetails?.cardType && (
+                      <span className="text-[11px] text-slate-500 block">Type : {inspectingSale.paymentDetails.cardType}</span>
+                    )}
+                  </div>
+
+                  <div className="p-2.5 bg-slate-50 rounded-xl space-y-1">
+                    <div className="flex justify-between">
+                      <span className="text-slate-500">Montant Reçu :</span>
+                      <strong className="text-slate-900">CHF {(inspectingSale.amountReceived || inspectingSale.total).toFixed(2)}</strong>
+                    </div>
+                    {inspectingSale.paymentDetails?.changeGiven ? (
+                      <div className="flex justify-between text-emerald-700 font-bold">
+                        <span>Monnaie rendue :</span>
+                        <span>CHF {inspectingSale.paymentDetails.changeGiven.toFixed(2)}</span>
+                      </div>
+                    ) : null}
+                  </div>
+
+                  <div>
+                    <span className="text-[10px] text-slate-400 block">Mode d'expédition :</span>
+                    <p className="font-medium text-slate-800 flex items-center gap-1.5">
+                      <Truck className="w-3.5 h-3.5 text-slate-500" />
+                      <span>{inspectingSale.shipping?.label || 'Retrait Magasin Genève'}</span>
+                    </p>
+                    <span className="text-[11px] text-slate-500">
+                      Frais de port : {inspectingSale.shipping?.cost ? `CHF ${inspectingSale.shipping.cost.toFixed(2)}` : 'Gratuit'}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+            {/* Articles Purchased */}
+            <div className="space-y-3">
+              <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 font-heading">
+                Articles Commandés ({inspectingSale.items.length})
+              </h4>
+
+              <div className="space-y-2 border border-slate-200 rounded-2xl p-3 bg-slate-50/50 max-h-[220px] overflow-y-auto">
+                {inspectingSale.items.map((it, idx) => (
+                  <div key={idx} className="flex items-center justify-between p-2 bg-white rounded-xl border border-slate-200">
+                    <div className="flex items-center gap-3">
+                      <div className="relative w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 overflow-hidden shrink-0">
+                        <Image
+                          src={it.image || '/images/placeholder.webp'}
+                          alt={it.name}
+                          fill
+                          className="object-contain p-0.5"
+                          sizes="40px"
+                        />
+                      </div>
+                      <div>
+                        <p className="font-bold text-xs text-slate-900 leading-tight">{it.name}</p>
+                        <p className="text-[11px] text-slate-500 font-medium">
+                          {it.flavor} · {it.format}
+                        </p>
+                        <p className="text-[10px] font-mono text-slate-400">SKU: {it.sku}</p>
+                      </div>
+                    </div>
+                    <div className="text-right">
+                      <span className="font-bold text-xs text-slate-900">
+                        {it.quantity} x CHF {it.price.toFixed(2)}
+                      </span>
+                      <p className="font-black text-xs text-slate-900 font-heading">
+                        CHF {(it.price * it.quantity).toFixed(2)}
+                      </p>
+                    </div>
+                  </div>
+                ))}
+              </div>
+            </div>
+
+            {/* Total Recap */}
+            <div className="p-4 bg-emerald-50/60 rounded-2xl border border-emerald-200 space-y-1.5 text-xs">
+              <div className="flex justify-between text-slate-600">
+                <span>Sous-total articles :</span>
+                <span>CHF {inspectingSale.subtotal.toFixed(2)}</span>
+              </div>
+              {inspectingSale.discountAmount > 0 && (
+                <div className="flex justify-between text-emerald-700 font-bold">
+                  <span>Remise ({inspectingSale.discountPercent}%) :</span>
+                  <span>- CHF {inspectingSale.discountAmount.toFixed(2)}</span>
+                </div>
+              )}
+              {inspectingSale.shipping?.cost ? (
+                <div className="flex justify-between text-slate-600">
+                  <span>Frais de port :</span>
+                  <span>+ CHF {inspectingSale.shipping.cost.toFixed(2)}</span>
+                </div>
+              ) : null}
+              <div className="flex justify-between text-[11px] text-slate-500">
+                <span>Dont TVA suisse (2.6%) :</span>
+                <span>CHF {inspectingSale.vatAmount.toFixed(2)}</span>
+              </div>
+              <div className="flex justify-between text-base font-black text-slate-900 font-heading pt-2 border-t border-emerald-200">
+                <span>TOTAL PAYÉ :</span>
+                <span className="text-emerald-800">CHF {inspectingSale.total.toFixed(2)}</span>
+              </div>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex items-center justify-end gap-2.5 pt-2">
+              <button
+                type="button"
+                onClick={() => {
+                  setCompletedSale(inspectingSale);
+                }}
+                className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5"
+              >
+                <Printer className="w-4 h-4" />
+                <span>Imprimer Reçu</span>
+              </button>
+              <button
+                type="button"
+                onClick={() => setInspectingSale(null)}
+                className="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs uppercase tracking-wider rounded-xl transition-all"
+              >
+                Fermer
+              </button>
+            </div>
+
           </div>
         </div>
       )}

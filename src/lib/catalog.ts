@@ -1542,6 +1542,86 @@ export const CATEGORIES: CategoryItem[] = [
         }
       }
     ]
+  },
+  {
+    "id": "meilleures-ventes",
+    "slug": {
+      "fr": "meilleures-ventes",
+      "de": "bestseller",
+      "it": "piu-venduti",
+      "en": "best-sellers"
+    },
+    "name": {
+      "fr": "Meilleures Ventes (Best Sellers)",
+      "de": "Bestseller",
+      "it": "I Più Venduti",
+      "en": "Best Sellers"
+    },
+    "titleH1": {
+      "fr": "Meilleures Ventes Compléments Alimentaires en Suisse",
+      "de": "Bestseller Sportnahrung Schweiz",
+      "it": "I Più Venduti Svizzera",
+      "en": "Best Sellers Switzerland"
+    },
+    "metaTitle": {
+      "fr": "Meilleures Ventes | NutriFitness Genève",
+      "de": "Bestseller | NutriFitness",
+      "it": "I Più Venduti | NutriFitness",
+      "en": "Best Sellers | NutriFitness"
+    },
+    "metaDescription": {
+      "fr": "Les suppléments et protéines les plus vendus chez NutriFitness Genève. Stock en Suisse 24h.",
+      "de": "Die beliebtesten Produkte bei NutriFitness.",
+      "it": "I prodotti più venduti su NutriFitness.",
+      "en": "Best selling products at NutriFitness Geneva."
+    },
+    "directAnswerAeo": {
+      "fr": "Nos meilleures ventes regroupent les produits les plus commandés et plébiscités par nos athlètes suisses.",
+      "de": "Die meistverkauften Produkte bei NutriFitness.",
+      "it": "I prodotti più venduti su NutriFitness.",
+      "en": "Our top selling supplements in Switzerland."
+    },
+    "faqs": []
+  },
+  {
+    "id": "nouveautes",
+    "slug": {
+      "fr": "nouveautes",
+      "de": "neuheiten",
+      "it": "novita",
+      "en": "new-arrivals"
+    },
+    "name": {
+      "fr": "Nouveautés (Newly Added)",
+      "de": "Neuheiten",
+      "it": "Novità",
+      "en": "New Arrivals"
+    },
+    "titleH1": {
+      "fr": "Nouveautés Nutrition & Compléments en Suisse",
+      "de": "Neuheiten Sportnahrung Schweiz",
+      "it": "Nuovi Arrivi Svizzera",
+      "en": "New Arrivals Switzerland"
+    },
+    "metaTitle": {
+      "fr": "Nouveautés & Arrivages | NutriFitness Genève",
+      "de": "Neuheiten | NutriFitness",
+      "it": "Novità | NutriFitness",
+      "en": "New Arrivals | NutriFitness"
+    },
+    "metaDescription": {
+      "fr": "Derniers arrivages et nouvelles formules sportives disponibles chez NutriFitness Genève.",
+      "de": "Neueste Produkte bei NutriFitness.",
+      "it": "Ultime novità su NutriFitness.",
+      "en": "Latest arrivals at NutriFitness Geneva."
+    },
+    "directAnswerAeo": {
+      "fr": "Retrouvez les formules et innovations récemment ajoutées à la boutique NutriFitness.",
+      "de": "Neueste Ergänzungen im Sortiment.",
+      "it": "Nuove formule aggiunte a NutriFitness.",
+      "en": "New products recently added to the NutriFitness store."
+    },
+    "faqs": []
   }
 ];
 

@@ -33,7 +33,8 @@ export interface ProductItem {
   slug: Record<SupportedLocale, string>;
   name: Record<SupportedLocale, string>;
   brand: string;
-  categorySlug: string;
+  categorySlug: string; // Primary category
+  categorySlugs?: string[]; // Multiple categories (e.g. ['proteines', 'avant-sport', 'meilleures-ventes', 'nouveautes'])
   taxCategory: TaxRateCategory;
   priceChf: number;
   compareAtPriceChf?: number; // Lowest price in last 30 days if discounted
