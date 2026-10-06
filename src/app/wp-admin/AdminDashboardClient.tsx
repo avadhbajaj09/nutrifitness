@@ -661,10 +661,11 @@ export default function AdminDashboardClient() {
   // Completed sale receipt view
   const [completedSale, setCompletedSale] = useState<PosSaleRecord | null>(null);
 
-  // Sales journal history (saved to localStorage + synced with /api/orders)
+  // Sales journal history (saved to localStorage + synced with /api/orders & Supabase)
   const [salesHistory, setSalesHistory] = useState<PosSaleRecord[]>([]);
   const [isRefreshingSales, setIsRefreshingSales] = useState<boolean>(false);
   const [salesFilterOrigin, setSalesFilterOrigin] = useState<'all' | 'pos' | 'web'>('all');
+  const [isSupabaseConnected, setIsSupabaseConnected] = useState<boolean>(true);
 
   const syncOrders = async () => {
     setIsRefreshingSales(true);
@@ -673,6 +674,8 @@ export default function AdminDashboardClient() {
       const stored = localStorage.getItem('nutrifitness_pos_sales');
       if (stored) {
         local = JSON.parse(stored);
+        // Purge any older mock test entries
+        local = local.filter((s: PosSaleRecord) => s.client?.name !== 'Laurent Dubois' && s.clientName !== 'Laurent Dubois');
       }
     } catch {
       // ignore
@@ -682,13 +685,23 @@ export default function AdminDashboardClient() {
       const res = await fetch('/api/orders/');
       if (res.ok) {
         const data = await res.json();
+        setIsSupabaseConnected(data.supabaseConnected ?? true);
         if (data.orders && Array.isArray(data.orders)) {
           const map = new Map<string, PosSaleRecord>();
-          local.forEach(s => map.set(s.id || s.ticketNumber, s));
+          // Priority 1: Supabase real database orders
           data.orders.forEach((s: PosSaleRecord) => {
-            const key = s.id || s.ticketNumber;
-            if (!map.has(key)) {
+            if (s.client?.name !== 'Laurent Dubois' && s.clientName !== 'Laurent Dubois') {
+              const key = s.id || s.ticketNumber;
               map.set(key, s);
+            }
+          });
+          // Priority 2: Offline POS sales from local buffer
+          local.forEach((s: PosSaleRecord) => {
+            if (s.client?.name !== 'Laurent Dubois' && s.clientName !== 'Laurent Dubois') {
+              const key = s.id || s.ticketNumber;
+              if (!map.has(key)) {
+                map.set(key, s);
+              }
             }
           });
           const merged = Array.from(map.values()).sort(
@@ -698,18 +711,18 @@ export default function AdminDashboardClient() {
           try {
             localStorage.setItem('nutrifitness_pos_sales', JSON.stringify(merged));
           } catch {}
-          setTimeout(() => setIsRefreshingSales(false), 400);
+          setTimeout(() => setIsRefreshingSales(false), 300);
           return;
         }
       }
     } catch {
-      // ignore
+      setIsSupabaseConnected(false);
     }
 
     if (local.length > 0) {
       setSalesHistory(local);
     }
-    setTimeout(() => setIsRefreshingSales(false), 400);
+    setTimeout(() => setIsRefreshingSales(false), 300);
   };
 
   useEffect(() => {
@@ -774,46 +787,46 @@ export default function AdminDashboardClient() {
         },
         {
           id: `item-${Date.now()}-2`,
-          productId: 'prod-bar-snack',
+          productId: 'ashwagandha-ksm-66-600mg',
           variantId: 'var-2',
-          name: 'Sandwich Keto Bar Protéinée 60g',
-          brand: 'Applied Nutrition',
-          flavor: 'Chocolat Noisette',
-          format: 'Barre 60g',
-          sku: 'KETO-BAR-60',
-          price: 3.90,
-          quantity: 3,
-          image: 'https://images.unsplash.com/photo-1622484216258-297585093739?w=800&q=80',
+          name: 'Ashwagandha KSM-66 600mg Pure Bio-Active',
+          brand: 'NutriFitness Lab',
+          flavor: 'Gélules Végétales',
+          format: '60 gélules',
+          sku: 'ASHWA-600-BIO',
+          price: 34.90,
+          quantity: 1,
+          image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80',
           vatRate: 2.6
         }
       ],
-      subtotal: 71.50,
+      subtotal: 94.70,
       discountPercent: 0,
       discountAmount: 0,
-      vatAmount: 1.81,
-      total: 79.40,
-      amountReceived: 79.40,
+      vatAmount: 2.40,
+      total: 94.70,
+      amountReceived: 94.70,
       paymentMethod: 'twint',
       paymentDetails: {
         reference: `TW-WEB-${Date.now().toString().slice(-6)}`,
-        notes: 'Commande test en ligne nutrifitness.ch (Validation instantanée TWINT reçue)'
+        notes: 'Commande passée en ligne sur nutrifitness.ch (Paiement instantané TWINT validé)'
       },
       seller: 'Site Web Public (nutrifitness.ch)',
       client: {
-        name: 'Laurent Dubois',
-        phone: '+41 79 456 78 90',
-        email: 'laurent.dubois@bluewin.ch',
-        address: 'Route de Chêne 34',
+        name: 'Avadh Bajaj',
+        phone: '+91 88789 33778',
+        email: 'avadhbajaj09@gmail.com',
+        address: 'Rue des Pâquis 34',
         city: 'Genève',
-        postalCode: '1208'
+        postalCode: '1201'
       },
       shipping: {
         method: 'post_priority',
         label: 'PostPac Priority (La Poste Suisse 24h)',
-        cost: 7.90
+        cost: 0
       },
       status: 'in_processing',
-      clientName: 'Laurent Dubois'
+      clientName: 'Avadh Bajaj'
     };
 
     const updated = [testOrder, ...salesHistory];
@@ -824,8 +837,9 @@ export default function AdminDashboardClient() {
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(testOrder)
       });
+      syncOrders();
     } catch {}
-    alert(`Nouvelle commande test en ligne (${orderNum}) générée et enregistrée avec succès !`);
+    alert(`Nouvelle commande Web (${orderNum}) pour Avadh Bajaj (+91 88789 33778) enregistrée et synchronisée avec Supabase !`);
   };
 
   const shippingCost = shippingMethod === 'post_priority' ? 7.90 : shippingMethod === 'post_economy' ? 5.90 : shippingMethod === 'express_geneva' ? 12.00 : 0;
@@ -885,9 +899,16 @@ export default function AdminDashboardClient() {
       clientName: clientName.trim() || 'Client Comptoir'
     };
 
-    // Save sale
+    // Save sale locally and sync to Supabase
     const updatedHistory = [newSale, ...salesHistory];
     saveSalesHistory(updatedHistory);
+    try {
+      fetch('/api/orders/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newSale)
+      }).catch(() => {});
+    } catch {}
 
     // Show receipt
     setCompletedSale(newSale);
@@ -1431,6 +1452,16 @@ export default function AdminDashboardClient() {
 
           {/* Right Action Buttons */}
           <div className="flex items-center gap-2.5">
+            {/* Supabase Connection Status Badge */}
+            <div className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-colors ${
+              isSupabaseConnected 
+                ? 'bg-emerald-50 text-emerald-800 border-emerald-300' 
+                : 'bg-amber-50 text-amber-800 border-amber-300'
+            }`} title="Connexion temps-réel base de données Supabase">
+              <span className={`w-2 h-2 rounded-full ${isSupabaseConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+              <span>{isSupabaseConnected ? 'Supabase Connecté' : 'Supabase Hors-ligne'}</span>
+            </div>
+
             <Link
               href="/"
               target="_blank"
@@ -2277,11 +2308,21 @@ export default function AdminDashboardClient() {
           <div className="bg-white rounded-3xl border border-slate-200 shadow-xs p-6 space-y-4">
             <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
-                <h3 className="text-lg font-black text-slate-900 font-heading">
-                  Journal des Ventes & Commandes Web
-                </h3>
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <h3 className="text-lg font-black text-slate-900 font-heading">
+                    Journal des Ventes & Commandes Web
+                  </h3>
+                  <span className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-black border ${
+                    isSupabaseConnected 
+                      ? 'bg-emerald-50 text-emerald-800 border-emerald-300' 
+                      : 'bg-amber-50 text-amber-800 border-amber-300'
+                  }`}>
+                    <span className={`w-1.5 h-1.5 rounded-full ${isSupabaseConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+                    {isSupabaseConnected ? 'Supabase Connecté (punhmwlpaghmjndpyusf.supabase.co)' : 'Mode Local'}
+                  </span>
+                </div>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Toutes les ventes en boutique physique (POS) et commandes passées en ligne sur le site web.
+                  Toutes les ventes en boutique physique (POS) et commandes passées en ligne sur le site web synchronisées en direct.
                 </p>
               </div>
 

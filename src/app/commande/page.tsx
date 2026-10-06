@@ -33,7 +33,7 @@ export default function CheckoutPage() {
     setOrderNumber(generatedOrderNum);
     setFinalTotalFormatted(formatPrice(total));
 
-    const clientFullName = `${firstName} ${lastName}`.trim() || 'Client Web';
+    const clientFullName = `${firstName} ${lastName}`.trim() || 'Avadh Bajaj';
     const newOrder = {
       id: `order-web-${Date.now()}`,
       ticketNumber: generatedOrderNum,
@@ -82,11 +82,11 @@ export default function CheckoutPage() {
       seller: 'Site Web Public (nutrifitness.ch)',
       client: {
         name: clientFullName,
-        phone: customerPhone.trim() || undefined,
-        email: customerEmail.trim() || undefined,
-        address: customerAddress.trim() || undefined,
-        city: customerCity.trim() || undefined,
-        postalCode: customerPostalCode.trim() || undefined
+        phone: customerPhone.trim() || '+91 88789 33778',
+        email: customerEmail.trim() || 'avadhbajaj09@gmail.com',
+        address: customerAddress.trim() || 'Rue des Pâquis 34',
+        city: customerCity.trim() || 'Genève',
+        postalCode: customerPostalCode.trim() || '1201'
       },
       shipping: {
         method: shippingMethod === 'clickcollect' ? 'store_pickup' : 'post_priority',
