@@ -1919,7 +1919,7 @@ export default function AdminDashboardClient() {
                     <th className="py-3.5 px-4">Article & Marque</th>
                     <th className="py-3.5 px-4">Catégorie</th>
                     <th className="py-3.5 px-4">Origine & Expédition</th>
-                    <th className="py-3.5 px-4">Variantes & Saveurs</th>
+                    <th className="py-3.5 px-4">Stock en Rayon</th>
                     <th className="py-3.5 px-4">Prix Public</th>
                     <th className="py-3.5 px-4 text-right">Actions</th>
                   </tr>
@@ -1928,7 +1928,6 @@ export default function AdminDashboardClient() {
                   {filteredCatalog.map(product => {
                     const primaryImg = product.images[0]?.src || '/images/placeholder.webp';
                     const isPortugal = product.shippingOrigin === 'portugal';
-                    const variantsCount = product.variants?.length || 1;
 
                     return (
                       <tr 
@@ -1989,16 +1988,54 @@ export default function AdminDashboardClient() {
                           )}
                         </td>
 
-                        {/* Variants count */}
-                        <td className="py-3 px-4">
-                          <span className="font-semibold text-slate-700">
-                            {variantsCount} {variantsCount > 1 ? 'options' : 'format standard'}
-                          </span>
-                          {product.variants?.[0]?.flavorName?.fr && (
-                            <p className="text-[10px] text-slate-400 truncate max-w-[140px]">
-                              {product.variants.map(v => v.flavorName.fr).slice(0, 2).join(', ')}...
-                            </p>
-                          )}
+                        {/* Stock Column (Replaces Variations & Flavors) */}
+                        <td className="py-3 px-4" onClick={(e) => e.stopPropagation()}>
+                          {(() => {
+                            const totalStock = product.variants && product.variants.length > 0
+                              ? product.variants.reduce(
+                                  (sum, v) => sum + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0)), 
+                                  0
+                                )
+                              : 20;
+
+                            const isCritical = totalStock < 5;
+                            const isMedium = totalStock <= 10 && !isCritical;
+                            const isOptimal = totalStock > 10;
+
+                            return (
+                              <div className="flex flex-col gap-1 items-start">
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-black border shadow-2xs ${
+                                  isCritical
+                                    ? 'bg-red-50 text-red-700 border-red-300 ring-1 ring-red-400/20'
+                                    : isMedium
+                                    ? 'bg-amber-50 text-amber-800 border-amber-300 ring-1 ring-amber-400/20'
+                                    : 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-400/20'
+                                }`}>
+                                  <span className={`w-2 h-2 rounded-full ${
+                                    isCritical
+                                      ? 'bg-red-500 animate-pulse'
+                                      : isMedium
+                                      ? 'bg-amber-500'
+                                      : 'bg-emerald-500'
+                                  }`} />
+                                  <span>{totalStock} {totalStock <= 1 ? 'unité' : 'unités'}</span>
+                                </span>
+                                <span className={`text-[10px] font-bold ${
+                                  isCritical
+                                    ? 'text-red-600'
+                                    : isMedium
+                                    ? 'text-amber-700'
+                                    : 'text-emerald-700'
+                                }`}>
+                                  {isCritical
+                                    ? '🔴 Critique (< 5)'
+                                    : isMedium
+                                    ? '🟡 Moyen (≤ 10)'
+                                    : '🟢 En stock (> 10)'}
+                                </span>
+                              </div>
+                            );
+                          })()}
                         </td>
 
                         {/* Price */}

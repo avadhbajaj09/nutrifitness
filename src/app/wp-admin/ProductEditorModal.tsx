@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { CATEGORIES } from '@/lib/catalog';
 import type { ProductItem, ProductVariant, SupportedLocale, TaxRateCategory } from '@/lib/types';
@@ -252,6 +252,27 @@ export default function ProductEditorModal({
     }
   };
 
+  // Current total stock across variants
+  const currentTotalStock = useMemo(() => {
+    return variants.reduce((sum, v) => sum + (Number(v.inventoryQuantity) || 0), 0);
+  }, [variants]);
+
+  const handleGlobalStockChange = (newQty: number) => {
+    const qty = Math.max(0, newQty);
+    if (variants.length <= 1) {
+      setVariants(prev => prev.map(v => ({ ...v, inventoryQuantity: qty, inStock: qty > 0 })));
+    } else {
+      setVariants(prev => {
+        const perVar = Math.floor(qty / prev.length);
+        const remainder = qty % prev.length;
+        return prev.map((v, i) => {
+          const vQty = perVar + (i === 0 ? remainder : 0);
+          return { ...v, inventoryQuantity: vQty, inStock: vQty > 0 };
+        });
+      });
+    }
+  };
+
   // Add gallery image
   const handleAddImage = () => {
     if (!newImageUrl.trim()) return;
@@ -418,80 +439,83 @@ export default function ProductEditorModal({
     <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex justify-end animate-in fade-in duration-150">
       <div className="bg-white w-full max-w-4xl h-full shadow-2xl border-l border-slate-200 overflow-y-auto flex flex-col text-slate-900 animate-in slide-in-from-right duration-200">
         
-        {/* MODAL HEADER */}
-        <div className="p-6 border-b border-slate-200 bg-slate-50 sticky top-0 z-20 flex items-center justify-between gap-4">
-          <div>
-            <div className="flex items-center gap-2 mb-1">
-              <span className="text-[10px] font-black uppercase text-slate-400 font-heading">
-                {isEditing ? 'Éditeur de Fiche Produit' : 'Création de Nouvel Article'}
-              </span>
-              <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                shippingOrigin === 'switzerland'
-                  ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
-                  : 'bg-blue-50 text-blue-800 border border-blue-200'
-              }`}>
-                {shippingOrigin === 'switzerland' ? '🇨🇭 Stock Genève (POS Actif)' : '🇵🇹 Expédié Portugal'}
-              </span>
+        {/* UNIFIED STICKY HEADER & TAB BAR (Single container completely eliminates overlap) */}
+        <div className="sticky top-0 z-30 bg-white border-b border-slate-200 shadow-2xs shrink-0">
+          {/* Header Row */}
+          <div className="px-5 py-4 sm:px-6 bg-slate-50 border-b border-slate-100 flex items-center justify-between gap-4">
+            <div className="min-w-0 flex-1">
+              <div className="flex items-center gap-2 mb-1">
+                <span className="text-[10px] font-black uppercase text-slate-400 font-heading">
+                  {isEditing ? 'Éditeur de Fiche Produit' : 'Création de Nouvel Article'}
+                </span>
+                <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
+                  shippingOrigin === 'switzerland'
+                    ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
+                    : 'bg-blue-50 text-blue-800 border border-blue-200'
+                }`}>
+                  {shippingOrigin === 'switzerland' ? '🇨🇭 Stock Genève (POS Actif)' : '🇵🇹 Expédié Portugal'}
+                </span>
+              </div>
+              <h2 className="text-lg sm:text-xl font-black text-slate-900 font-heading truncate">
+                {isEditing ? (product?.name.fr || 'Modifier le produit') : 'Nouveau Produit au Catalogue'}
+              </h2>
             </div>
-            <h2 className="text-xl font-black text-slate-900 font-heading truncate max-w-xl">
-              {isEditing ? (product?.name.fr || 'Modifier le produit') : 'Nouveau Produit au Catalogue'}
-            </h2>
-          </div>
 
-          <div className="flex items-center gap-2 shrink-0">
-            {isEditing && onDelete && (
+            <div className="flex items-center gap-2 shrink-0">
+              {isEditing && onDelete && (
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (confirm(`Êtes-vous sûr de vouloir supprimer définitivement "${nameFr}" du catalogue ?`)) {
+                      onDelete(id);
+                      onClose();
+                    }
+                  }}
+                  className="px-3 py-1.5 text-xs font-bold text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl border border-red-200 transition-colors flex items-center gap-1.5"
+                  title="Supprimer définitivement"
+                >
+                  <Trash2 className="w-3.5 h-3.5" />
+                  <span className="hidden sm:inline">Supprimer</span>
+                </button>
+              )}
+
               <button
                 type="button"
-                onClick={() => {
-                  if (confirm(`Êtes-vous sûr de vouloir supprimer définitivement "${nameFr}" du catalogue ?`)) {
-                    onDelete(id);
-                    onClose();
-                  }
-                }}
-                className="px-3 py-2 text-xs font-bold text-red-600 hover:text-red-700 hover:bg-red-50 rounded-xl border border-red-200 transition-colors flex items-center gap-1.5"
-                title="Supprimer définitivement"
+                onClick={onClose}
+                className="p-2 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-200 transition-colors"
               >
-                <Trash2 className="w-3.5 h-3.5" />
-                <span className="hidden sm:inline">Supprimer</span>
+                <X className="w-5 h-5" />
               </button>
-            )}
-
-            <button
-              type="button"
-              onClick={onClose}
-              className="p-2 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-200 transition-colors"
-            >
-              <X className="w-5 h-5" />
-            </button>
+            </div>
           </div>
-        </div>
 
-        {/* TAB NAVIGATION BAR */}
-        <div className="flex items-center px-6 border-b border-slate-200 bg-white sticky top-[85px] z-10 overflow-x-auto gap-2 py-2">
-          {[
-            { id: 'info', label: '1. Informations & Prix', icon: Layers },
-            { id: 'images', label: '2. Photos & Galerie', icon: ImageIcon },
-            { id: 'descriptions', label: '3. Descriptions & SEO', icon: FileText },
-            { id: 'variants', label: '4. Saveurs & SKUs', icon: Sparkles },
-            { id: 'nutrition', label: '5. Nutrition & Ingrédients', icon: HelpCircle }
-          ].map(tab => {
-            const Icon = tab.icon;
-            return (
-              <button
-                key={tab.id}
-                type="button"
-                onClick={() => setActiveTab(tab.id as typeof activeTab)}
-                className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
-                  activeTab === tab.id
-                    ? 'bg-slate-900 text-white shadow-2xs font-black'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
-                }`}
-              >
-                <Icon className="w-3.5 h-3.5" />
-                <span>{tab.label}</span>
-              </button>
-            );
-          })}
+          {/* Tab Navigation Row */}
+          <div className="flex items-center px-4 sm:px-6 py-2 overflow-x-auto gap-2 bg-white">
+            {[
+              { id: 'info', label: '1. Informations & Prix', icon: Layers },
+              { id: 'images', label: '2. Photos & Galerie', icon: ImageIcon },
+              { id: 'descriptions', label: '3. Descriptions & SEO', icon: FileText },
+              { id: 'variants', label: '4. Saveurs & SKUs', icon: Sparkles },
+              { id: 'nutrition', label: '5. Nutrition & Ingrédients', icon: HelpCircle }
+            ].map(tab => {
+              const Icon = tab.icon;
+              return (
+                <button
+                  key={tab.id}
+                  type="button"
+                  onClick={() => setActiveTab(tab.id as typeof activeTab)}
+                  className={`flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-bold transition-all shrink-0 ${
+                    activeTab === tab.id
+                      ? 'bg-slate-900 text-white shadow-2xs font-black'
+                      : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100'
+                  }`}
+                >
+                  <Icon className="w-3.5 h-3.5" />
+                  <span>{tab.label}</span>
+                </button>
+              );
+            })}
+          </div>
         </div>
 
         {/* ERROR NOTICE */}
@@ -682,8 +706,8 @@ export default function ProductEditorModal({
                 )}
               </div>
 
-              {/* Pricing & VAT Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-200">
+              {/* Pricing, Stock & VAT Row */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-200">
                 <div>
                   <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
                     Prix Public (CHF) *
@@ -695,7 +719,7 @@ export default function ProductEditorModal({
                       step="0.05"
                       value={priceChf}
                       onChange={(e) => setPriceChf(parseFloat(e.target.value) || 0)}
-                      className="w-full pl-11 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-black text-slate-900 focus:outline-none"
+                      className="w-full pl-11 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900"
                       required
                     />
                   </div>
@@ -716,6 +740,43 @@ export default function ProductEditorModal({
                       className="w-full pl-11 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-bold text-slate-500 focus:outline-none"
                     />
                   </div>
+                </div>
+
+                {/* Stock en Rayon Field with Live Color Indicator */}
+                <div>
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                      Stock en Rayon *
+                    </label>
+                    <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md border ${
+                      currentTotalStock < 5
+                        ? 'bg-red-50 text-red-700 border-red-300'
+                        : currentTotalStock <= 10
+                        ? 'bg-amber-50 text-amber-800 border-amber-300'
+                        : 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                    }`}>
+                      {currentTotalStock < 5 ? '🔴 Critique' : currentTotalStock <= 10 ? '🟡 Moyen' : '🟢 En stock'}
+                    </span>
+                  </div>
+                  <input
+                    type="number"
+                    min="0"
+                    value={currentTotalStock}
+                    onChange={(e) => handleGlobalStockChange(parseInt(e.target.value) || 0)}
+                    className={`w-full px-3 py-2 bg-white border rounded-xl text-sm font-black focus:outline-none ${
+                      currentTotalStock < 5
+                        ? 'border-red-300 text-red-700 focus:ring-2 focus:ring-red-400/20'
+                        : currentTotalStock <= 10
+                        ? 'border-amber-300 text-amber-800 focus:ring-2 focus:ring-amber-400/20'
+                        : 'border-emerald-300 text-emerald-800 focus:ring-2 focus:ring-emerald-400/20'
+                    }`}
+                    required
+                  />
+                  {variants.length > 1 && (
+                    <span className="text-[10px] text-slate-400 mt-1 block">
+                      Total ({variants.length} saveurs · gérable dans l'onglet 4)
+                    </span>
+                  )}
                 </div>
 
                 <div>
