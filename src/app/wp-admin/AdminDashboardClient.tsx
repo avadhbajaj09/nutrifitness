@@ -679,7 +679,7 @@ export default function AdminDashboardClient() {
     }
 
     try {
-      const res = await fetch('/api/orders');
+      const res = await fetch('/api/orders/');
       if (res.ok) {
         const data = await res.json();
         if (data.orders && Array.isArray(data.orders)) {
@@ -744,7 +744,7 @@ export default function AdminDashboardClient() {
     if (inspectingSale && inspectingSale.id === saleId) {
       setInspectingSale({ ...inspectingSale, status: newStatus });
     }
-    fetch('/api/orders', {
+    fetch('/api/orders/', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id: saleId, status: newStatus })
@@ -819,7 +819,7 @@ export default function AdminDashboardClient() {
     const updated = [testOrder, ...salesHistory];
     saveSalesHistory(updated);
     try {
-      await fetch('/api/orders', {
+      await fetch('/api/orders/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(testOrder)

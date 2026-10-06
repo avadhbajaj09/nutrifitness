@@ -110,7 +110,7 @@ export default function CheckoutPage() {
 
     // 2. Post to /api/orders for server persistence
     try {
-      await fetch('/api/orders', {
+      await fetch('/api/orders/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newOrder)
