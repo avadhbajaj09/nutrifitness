@@ -1659,6 +1659,11 @@ export default function AdminDashboardClient() {
                         <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[9px] font-black">
                           🇨🇭 Rayon
                         </span>
+                        {hasMultipleVariants && (
+                          <span className="absolute top-2 right-2 px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-300 text-[9px] font-black shadow-2xs">
+                            {product.variants?.length} Saveurs
+                          </span>
+                        )}
                       </div>
 
                       {/* Brand & Name */}
@@ -1674,9 +1679,16 @@ export default function AdminDashboardClient() {
                       <span className="text-sm font-black text-slate-900 font-heading">
                         CHF {product.priceChf.toFixed(2)}
                       </span>
-                      <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 group-hover:bg-emerald-600 text-emerald-700 group-hover:text-white transition-colors">
-                        <Plus className="w-4 h-4 font-bold" />
-                      </span>
+                      {hasMultipleVariants ? (
+                        <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-50 group-hover:bg-amber-600 text-amber-800 group-hover:text-white text-[10px] font-black transition-colors border border-amber-200 group-hover:border-transparent">
+                          <span>Saveurs</span>
+                          <span>→</span>
+                        </span>
+                      ) : (
+                        <span className="inline-flex items-center justify-center w-7 h-7 rounded-lg bg-emerald-50 group-hover:bg-emerald-600 text-emerald-700 group-hover:text-white transition-colors">
+                          <Plus className="w-4 h-4 font-bold" />
+                        </span>
+                      )}
                     </div>
                   </div>
                 );
@@ -1744,9 +1756,13 @@ export default function AdminDashboardClient() {
                             {item.name}
                           </span>
                         </div>
-                        <p className="text-[11px] text-slate-500">
-                          {item.flavor} · {item.format} · <span className="font-mono text-slate-400">{item.sku}</span>
-                        </p>
+                        <div className="flex items-center gap-1.5 flex-wrap mt-0.5">
+                          <span className="px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-200 text-[10px] font-black">
+                            ✨ {item.flavor}
+                          </span>
+                          <span className="text-[11px] text-slate-500 font-medium">{item.format}</span>
+                          <span className="font-mono text-slate-400 text-[10px]">({item.sku})</span>
+                        </div>
                         <p className="text-[11px] font-semibold text-emerald-700 mt-0.5">
                           CHF {item.price.toFixed(2)} / u.
                         </p>
