@@ -35,8 +35,10 @@ import {
   AlertCircle,
   ShoppingBag,
   Sparkles,
-  ArrowRight
+  ArrowRight,
+  Edit3
 } from 'lucide-react';
+import ProductEditorModal from './ProductEditorModal';
 
 const ADMIN_PASSWORD = 'Geneva@03564';
 
@@ -172,8 +174,96 @@ export default function AdminDashboardClient() {
   }, []);
 
   // -------------------------------------------------------------
-  // 3. CATALOG TAB STATE & INSPECTOR DRAWER
+  // 3. CATALOG & PRODUCT STATE WITH LOCALSTORAGE PERSISTENCE
   // -------------------------------------------------------------
+  const [allProducts, setAllProducts] = useState<ProductItem[]>(PRODUCTS);
+  const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
+  const [editingProduct, setEditingProduct] = useState<ProductItem | null>(null);
+
+  // Load custom creations and edits on client mount
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('nutrifitness_custom_products');
+      if (saved) {
+        const customItems: ProductItem[] = JSON.parse(saved);
+        if (Array.isArray(customItems) && customItems.length > 0) {
+          const customMap = new Map(customItems.map(p => [p.id, p]));
+          const merged = PRODUCTS.map(p => customMap.get(p.id) || p);
+          const baseIds = new Set(PRODUCTS.map(p => p.id));
+          for (const item of customItems) {
+            if (!baseIds.has(item.id)) {
+              merged.unshift(item);
+            }
+          }
+          setAllProducts(merged);
+        }
+      }
+    } catch (err) {
+      console.error('Failed to load custom products from localStorage', err);
+    }
+  }, []);
+
+  const handleSaveProduct = (savedProduct: ProductItem) => {
+    setAllProducts(prev => {
+      const exists = prev.some(p => p.id === savedProduct.id);
+      let nextList: ProductItem[];
+      if (exists) {
+        nextList = prev.map(p => p.id === savedProduct.id ? savedProduct : p);
+      } else {
+        nextList = [savedProduct, ...prev];
+      }
+
+      try {
+        const saved = localStorage.getItem('nutrifitness_custom_products');
+        let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
+        const itemIndex = customItems.findIndex(p => p.id === savedProduct.id);
+        if (itemIndex >= 0) {
+          customItems[itemIndex] = savedProduct;
+        } else {
+          customItems = [savedProduct, ...customItems];
+        }
+        localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
+      } catch (e) {
+        console.error('Could not save to localStorage', e);
+      }
+
+      return nextList;
+    });
+
+    if (inspectingProduct && inspectingProduct.id === savedProduct.id) {
+      setInspectingProduct(savedProduct);
+    }
+
+    setIsEditorOpen(false);
+    setEditingProduct(null);
+  };
+
+  const handleDeleteProduct = (productId: string) => {
+    if (typeof window !== 'undefined' && !window.confirm('Êtes-vous certain de vouloir supprimer ce produit du catalogue ?')) {
+      return;
+    }
+    setAllProducts(prev => {
+      const nextList = prev.filter(p => p.id !== productId);
+      try {
+        const saved = localStorage.getItem('nutrifitness_custom_products');
+        if (saved) {
+          let customItems: ProductItem[] = JSON.parse(saved);
+          customItems = customItems.filter(p => p.id !== productId);
+          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
+        }
+      } catch (e) {
+        console.error('Could not delete from localStorage', e);
+      }
+      return nextList;
+    });
+
+    if (inspectingProduct && inspectingProduct.id === productId) {
+      setInspectingProduct(null);
+    }
+    setIsEditorOpen(false);
+    setEditingProduct(null);
+  };
+
   const [catalogSearch, setCatalogSearch] = useState<string>('');
   const [catalogOriginFilter, setCatalogOriginFilter] = useState<'all' | 'geneva' | 'portugal'>('all');
   const [catalogCategoryFilter, setCatalogCategoryFilter] = useState<string>('all');
@@ -191,11 +281,11 @@ export default function AdminDashboardClient() {
   }, [inspectingProduct]);
 
   const brandsList = useMemo(() => {
-    return Array.from(new Set(PRODUCTS.map(p => p.brand))).sort();
-  }, []);
+    return Array.from(new Set(allProducts.map(p => p.brand))).sort();
+  }, [allProducts]);
 
   const filteredCatalog = useMemo(() => {
-    return PRODUCTS.filter(p => {
+    return allProducts.filter(p => {
       // Origin filter
       if (catalogOriginFilter === 'geneva' && p.shippingOrigin === 'portugal') return false;
       if (catalogOriginFilter === 'portugal' && p.shippingOrigin !== 'portugal') return false;
@@ -223,15 +313,15 @@ export default function AdminDashboardClient() {
       if (catalogSort === 'name_asc') return a.name.fr.localeCompare(b.name.fr);
       return a.brand.localeCompare(b.brand);
     });
-  }, [catalogOriginFilter, catalogCategoryFilter, catalogBrandFilter, catalogSearch, catalogSort]);
+  }, [allProducts, catalogOriginFilter, catalogCategoryFilter, catalogBrandFilter, catalogSearch, catalogSort]);
 
   // -------------------------------------------------------------
   // 4. POS (POINT OF SALE) STATE — GENEVA STOCK ONLY
   // -------------------------------------------------------------
   // CRITICAL RULE: ONLY products from Geneva store (NOT from Portugal manufacturer)
   const posProducts = useMemo(() => {
-    return PRODUCTS.filter(p => p.shippingOrigin !== 'portugal');
-  }, []);
+    return allProducts.filter(p => p.shippingOrigin !== 'portugal');
+  }, [allProducts]);
 
   const [posSearch, setPosSearch] = useState<string>('');
   const [posCategoryFilter, setPosCategoryFilter] = useState<string>('all');
@@ -358,7 +448,7 @@ export default function AdminDashboardClient() {
       setBarcodeInput('');
     } else {
       // Check if product exists in Portugal instead
-      const isPortugal = PRODUCTS.some(p => 
+      const isPortugal = allProducts.some(p => 
         p.shippingOrigin === 'portugal' && 
         (p.variants?.some(v => v.sku.toLowerCase() === query) || p.slug.fr.toLowerCase() === query)
       );
@@ -696,7 +786,7 @@ export default function AdminDashboardClient() {
               <Package className="w-4 h-4 text-blue-600" />
               <span>Catalogue Global</span>
               <span className="px-1.5 py-0.2 rounded-md bg-slate-200 text-slate-700 text-[10px] font-black">
-                {PRODUCTS.length}
+                {allProducts.length}
               </span>
             </button>
 
@@ -1137,18 +1227,41 @@ export default function AdminDashboardClient() {
       {activeTab === 'catalog' && (
         <div className="flex-1 max-w-[1720px] w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
           
+          {/* Header with Title and Add Product Action */}
+          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <div>
+              <h1 className="text-xl sm:text-2xl font-black text-slate-900 font-heading">
+                Catalogue Général & Gestion des Fiches
+              </h1>
+              <p className="text-xs sm:text-sm text-slate-500 mt-0.5">
+                Modifiez les fiches existantes, gérez les stocks (Genève vs Portugal) ou publiez de nouveaux produits.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => {
+                setEditingProduct(null);
+                setIsEditorOpen(true);
+              }}
+              className="px-5 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider flex items-center gap-2 shadow-sm transition-all active:scale-95 shrink-0"
+            >
+              <Plus className="w-4 h-4" />
+              <span>Ajouter un Produit</span>
+            </button>
+          </div>
+
           {/* Top Metric Cards */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Catalogue</span>
-              <p className="text-2xl font-black text-slate-900 font-heading mt-1">{PRODUCTS.length} articles</p>
+              <p className="text-2xl font-black text-slate-900 font-heading mt-1">{allProducts.length} articles</p>
               <p className="text-xs text-slate-500 mt-1">100% fiches multilingues complètes</p>
             </div>
 
             <div className="bg-white p-5 rounded-2xl border border-emerald-200 bg-emerald-50/20 shadow-xs">
               <span className="text-xs font-bold text-emerald-700 uppercase tracking-wider">Stock Rayon Genève</span>
               <p className="text-2xl font-black text-emerald-800 font-heading mt-1">
-                {PRODUCTS.filter(p => p.shippingOrigin !== 'portugal').length} articles
+                {allProducts.filter(p => p.shippingOrigin !== 'portugal').length} articles
               </p>
               <p className="text-xs text-emerald-600 mt-1">Disponibles en caisse POS immédiate</p>
             </div>
@@ -1156,7 +1269,7 @@ export default function AdminDashboardClient() {
             <div className="bg-white p-5 rounded-2xl border border-blue-200 bg-blue-50/20 shadow-xs">
               <span className="text-xs font-bold text-blue-700 uppercase tracking-wider">Expédition Portugal</span>
               <p className="text-2xl font-black text-blue-800 font-heading mt-1">
-                {PRODUCTS.filter(p => p.shippingOrigin === 'portugal').length} articles
+                {allProducts.filter(p => p.shippingOrigin === 'portugal').length} articles
               </p>
               <p className="text-xs text-blue-600 mt-1">Livraison directe d'usine (3–5 jours)</p>
             </div>
@@ -1197,7 +1310,7 @@ export default function AdminDashboardClient() {
                       : 'text-slate-600 hover:text-slate-900'
                   }`}
                 >
-                  Tous ({PRODUCTS.length})
+                  Tous ({allProducts.length})
                 </button>
                 <button
                   type="button"
@@ -1208,7 +1321,7 @@ export default function AdminDashboardClient() {
                       : 'text-slate-600 hover:text-emerald-700'
                   }`}
                 >
-                  <span>🇨🇭 Genève ({PRODUCTS.filter(p => p.shippingOrigin !== 'portugal').length})</span>
+                  <span>🇨🇭 Genève ({allProducts.filter(p => p.shippingOrigin !== 'portugal').length})</span>
                 </button>
                 <button
                   type="button"
@@ -1219,7 +1332,7 @@ export default function AdminDashboardClient() {
                       : 'text-slate-600 hover:text-blue-700'
                   }`}
                 >
-                  <span>🇵🇹 Portugal ({PRODUCTS.filter(p => p.shippingOrigin === 'portugal').length})</span>
+                  <span>🇵🇹 Portugal ({allProducts.filter(p => p.shippingOrigin === 'portugal').length})</span>
                 </button>
               </div>
 
@@ -1369,6 +1482,19 @@ export default function AdminDashboardClient() {
                         {/* Actions */}
                         <td className="py-3 px-4 text-right" onClick={(e) => e.stopPropagation()}>
                           <div className="flex items-center justify-end gap-1.5">
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setEditingProduct(product);
+                                setIsEditorOpen(true);
+                              }}
+                              className="px-3 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 font-bold rounded-lg text-xs transition-colors flex items-center gap-1"
+                              title="Modifier tous les détails du produit"
+                            >
+                              <Edit3 className="w-3.5 h-3.5" />
+                              <span>Modifier</span>
+                            </button>
+
                             <button
                               type="button"
                               onClick={() => setInspectingProduct(product)}
@@ -1977,6 +2103,18 @@ export default function AdminDashboardClient() {
               </div>
 
               <div className="flex items-center gap-2 shrink-0">
+                <button
+                  type="button"
+                  onClick={() => {
+                    setEditingProduct(inspectingProduct);
+                    setIsEditorOpen(true);
+                  }}
+                  className="px-3 py-2 text-blue-700 bg-blue-50 hover:bg-blue-100 rounded-xl transition-colors flex items-center gap-1.5 text-xs font-bold"
+                  title="Modifier cette fiche produit"
+                >
+                  <Edit3 className="w-4 h-4" />
+                  <span className="hidden sm:inline">Modifier</span>
+                </button>
                 <Link
                   href={`/produit/${inspectingProduct.slug.fr}/`}
                   target="_blank"
@@ -2282,6 +2420,21 @@ export default function AdminDashboardClient() {
           </div>
         </div>
       )}
+
+      {/* =========================================================
+          MODAL D: PRODUCT EDITOR & CREATOR (SHOPIFY / WORDPRESS STYLE)
+          ========================================================= */}
+      <ProductEditorModal
+        isOpen={isEditorOpen}
+        onClose={() => {
+          setIsEditorOpen(false);
+          setEditingProduct(null);
+        }}
+        product={editingProduct}
+        onSave={handleSaveProduct}
+        onDelete={handleDeleteProduct}
+        existingBrands={brandsList}
+      />
 
     </div>
   );
