@@ -9,7 +9,7 @@ import QuickViewModal from '@/components/QuickViewModal';
 import SearchOverlay from '@/components/SearchOverlay';
 import ToastContainer from '@/components/ToastContainer';
 import ChatBot from '@/components/ChatBot';
-import GoogleTranslate from '@/components/GoogleTranslate';
+import AppShell from '@/components/AppShell';
 import { organization, website } from '@/lib/schema';
 
 export const metadata: Metadata = {
@@ -45,20 +45,9 @@ export default function RootLayout({
       </head>
       <body className="flex flex-col min-h-screen bg-[#0A0A0A] text-white antialiased">
         <StoreProvider>
-          <TopBar />
-          <Header />
-          <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+          <AppShell>
             {children}
-          </main>
-          <Footer />
-
-          {/* E-Commerce Overlays */}
-          <CartDrawer />
-          <QuickViewModal />
-          <SearchOverlay />
-          <ToastContainer />
-          <ChatBot />
-          <GoogleTranslate />
+          </AppShell>
         </StoreProvider>
       </body>
     </html>

@@ -9,7 +9,7 @@ export default function robots(): Robots {
   }
   return {
     rules: [
-      { userAgent: '*', allow: '/', disallow: ['/panier', '/commande', '/mon-compte', '/recherche', '/api/', '/*?orderby=', '/*?filter_'] },
+      { userAgent: '*', allow: '/', disallow: ['/panier', '/commande', '/mon-compte', '/recherche', '/wp-admin', '/wp-admin/', '/api/', '/*?orderby=', '/*?filter_'] },
       { userAgent: ['Googlebot', 'Googlebot-Image', 'Bingbot'], allow: '/' },
       // AI search crawlers: decide with the client. Allowed by default for visibility.
       { userAgent: ['OAI-SearchBot', 'PerplexityBot', 'Google-Extended'], allow: '/' },
