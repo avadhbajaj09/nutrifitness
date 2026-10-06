@@ -12,6 +12,13 @@ export default function CheckoutPage() {
   const [shippingMethod, setShippingMethod] = useState<'postpac' | 'clickcollect'>('postpac');
   const [paymentMethod, setPaymentMethod] = useState<'twint' | 'postfinance' | 'card' | 'invoice'>('twint');
   const [customerEmail, setCustomerEmail] = useState('');
+  const [customerPhone, setCustomerPhone] = useState('');
+  const [firstName, setFirstName] = useState('');
+  const [lastName, setLastName] = useState('');
+  const [customerAddress, setCustomerAddress] = useState('');
+  const [customerPostalCode, setCustomerPostalCode] = useState('');
+  const [customerCity, setCustomerCity] = useState('');
+
   const [isSuccess, setIsSuccess] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
   const [finalTotalFormatted, setFinalTotalFormatted] = useState('');
@@ -20,11 +27,98 @@ export default function CheckoutPage() {
   const vatEst = (cartSubtotal * 0.026) / 1.026;
   const total = cartSubtotal + shippingCost;
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const generatedOrderNum = `#NF-CH-${Math.floor(100000 + Math.random() * 900000)}`;
+    const generatedOrderNum = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
     setOrderNumber(generatedOrderNum);
     setFinalTotalFormatted(formatPrice(total));
+
+    const clientFullName = `${firstName} ${lastName}`.trim() || 'Client Web';
+    const newOrder = {
+      id: `order-web-${Date.now()}`,
+      ticketNumber: generatedOrderNum,
+      timestamp: new Date().toISOString(),
+      items: cart.length > 0 ? cart.map(item => ({
+        id: item.itemKey || `it-${item.id}-${Date.now()}`,
+        productId: item.id,
+        variantId: item.itemKey || item.id,
+        name: item.name,
+        brand: item.brand,
+        flavor: item.flavor || 'Standard',
+        format: item.size || '1 unité',
+        sku: item.id,
+        price: item.price,
+        quantity: item.quantity,
+        image: item.image || '/images/placeholder.webp',
+        vatRate: item.vatRate || 2.6
+      })) : [
+        {
+          id: `it-def-${Date.now()}`,
+          productId: 'prod-web-def',
+          variantId: 'var-std',
+          name: 'Applied Nutrition Créatine Monohydrate Pure 250g',
+          brand: 'Applied Nutrition',
+          flavor: 'Nature',
+          format: '250g',
+          sku: 'AP-CREAT-250',
+          price: 29.90,
+          quantity: 1,
+          image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=800&q=80',
+          vatRate: 2.6
+        }
+      ],
+      subtotal: cartSubtotal || 29.90,
+      discountPercent: 0,
+      discountAmount: 0,
+      vatAmount: vatEst || 0.76,
+      total: total || 29.90,
+      amountReceived: total || 29.90,
+      paymentMethod: paymentMethod === 'twint' ? 'twint' : paymentMethod === 'card' ? 'card' : paymentMethod === 'postfinance' ? 'card' : 'invoice',
+      paymentDetails: {
+        reference: `WEB-${paymentMethod.toUpperCase()}-${Date.now().toString().slice(-6)}`,
+        cardType: paymentMethod === 'card' ? 'Carte Bancaire Web (3D Secure)' : paymentMethod === 'postfinance' ? 'PostFinance E-Finance' : undefined,
+        notes: `Commande en ligne nutrifitness.ch (${shippingMethod === 'clickcollect' ? 'Click & Collect Boutique Genève' : 'Livraison Poste Suisse 24h'})`
+      },
+      seller: 'Site Web Public (nutrifitness.ch)',
+      client: {
+        name: clientFullName,
+        phone: customerPhone.trim() || undefined,
+        email: customerEmail.trim() || undefined,
+        address: customerAddress.trim() || undefined,
+        city: customerCity.trim() || undefined,
+        postalCode: customerPostalCode.trim() || undefined
+      },
+      shipping: {
+        method: shippingMethod === 'clickcollect' ? 'store_pickup' : 'post_priority',
+        label: shippingMethod === 'clickcollect' ? 'Click & Collect (Boutique Genève)' : 'PostPac Priority (La Poste Suisse 24h)',
+        cost: shippingCost
+      },
+      status: 'in_processing',
+      clientName: clientFullName
+    };
+
+    // 1. Immediately save to localStorage for instant local/tab synchronization
+    try {
+      const stored = localStorage.getItem('nutrifitness_pos_sales');
+      const currentList = stored ? JSON.parse(stored) : [];
+      const updatedList = [newOrder, ...currentList];
+      localStorage.setItem('nutrifitness_pos_sales', JSON.stringify(updatedList));
+      window.dispatchEvent(new Event('storage'));
+    } catch {
+      // ignore
+    }
+
+    // 2. Post to /api/orders for server persistence
+    try {
+      await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(newOrder)
+      });
+    } catch {
+      // ignore
+    }
+
     clearCart();
     setIsSuccess(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -113,6 +207,8 @@ export default function CheckoutPage() {
                 <input 
                   type="tel" 
                   required 
+                  value={customerPhone}
+                  onChange={(e) => setCustomerPhone(e.target.value)}
                   placeholder="+41 79 123 45 67" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
@@ -187,23 +283,58 @@ export default function CheckoutPage() {
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <div>
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Prénom *</label>
-                <input type="text" required placeholder="Marco" className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" />
+                <input 
+                  type="text" 
+                  required 
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                  placeholder="Marco" 
+                  className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
+                />
               </div>
               <div>
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Nom *</label>
-                <input type="text" required placeholder="Scarpantoni" className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" />
+                <input 
+                  type="text" 
+                  required 
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                  placeholder="Scarpantoni" 
+                  className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
+                />
               </div>
               <div className="sm:col-span-2">
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Rue et numéro *</label>
-                <input type="text" required placeholder="Rue du Rhône 42" className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" />
+                <input 
+                  type="text" 
+                  required 
+                  value={customerAddress}
+                  onChange={(e) => setCustomerAddress(e.target.value)}
+                  placeholder="Rue du Rhône 42" 
+                  className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
+                />
               </div>
               <div>
                 <label className="block text-xs font-bold text-white/80 mb-1.5">NPA (Code Postal) *</label>
-                <input type="text" required placeholder="1204" className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" />
+                <input 
+                  type="text" 
+                  required 
+                  value={customerPostalCode}
+                  onChange={(e) => setCustomerPostalCode(e.target.value)}
+                  placeholder="1204" 
+                  className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
+                />
               </div>
               <div>
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Ville *</label>
-                <input type="text" required placeholder="Genève" className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" />
+                <input 
+                  type="text" 
+                  required 
+                  value={customerCity}
+                  onChange={(e) => setCustomerCity(e.target.value)}
+                  placeholder="Genève" 
+                  className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
+                />
               </div>
             </div>
           </div>

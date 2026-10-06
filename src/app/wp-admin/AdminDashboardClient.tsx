@@ -661,18 +661,72 @@ export default function AdminDashboardClient() {
   // Completed sale receipt view
   const [completedSale, setCompletedSale] = useState<PosSaleRecord | null>(null);
 
-  // Sales journal history (saved to localStorage)
+  // Sales journal history (saved to localStorage + synced with /api/orders)
   const [salesHistory, setSalesHistory] = useState<PosSaleRecord[]>([]);
+  const [isRefreshingSales, setIsRefreshingSales] = useState<boolean>(false);
+  const [salesFilterOrigin, setSalesFilterOrigin] = useState<'all' | 'pos' | 'web'>('all');
 
-  useEffect(() => {
+  const syncOrders = async () => {
+    setIsRefreshingSales(true);
+    let local: PosSaleRecord[] = [];
     try {
       const stored = localStorage.getItem('nutrifitness_pos_sales');
       if (stored) {
-        setSalesHistory(JSON.parse(stored));
+        local = JSON.parse(stored);
       }
     } catch {
       // ignore
     }
+
+    try {
+      const res = await fetch('/api/orders');
+      if (res.ok) {
+        const data = await res.json();
+        if (data.orders && Array.isArray(data.orders)) {
+          const map = new Map<string, PosSaleRecord>();
+          local.forEach(s => map.set(s.id || s.ticketNumber, s));
+          data.orders.forEach((s: PosSaleRecord) => {
+            const key = s.id || s.ticketNumber;
+            if (!map.has(key)) {
+              map.set(key, s);
+            }
+          });
+          const merged = Array.from(map.values()).sort(
+            (a, b) => new Date(b.timestamp).getTime() - new Date(a.timestamp).getTime()
+          );
+          setSalesHistory(merged);
+          try {
+            localStorage.setItem('nutrifitness_pos_sales', JSON.stringify(merged));
+          } catch {}
+          setTimeout(() => setIsRefreshingSales(false), 400);
+          return;
+        }
+      }
+    } catch {
+      // ignore
+    }
+
+    if (local.length > 0) {
+      setSalesHistory(local);
+    }
+    setTimeout(() => setIsRefreshingSales(false), 400);
+  };
+
+  useEffect(() => {
+    syncOrders();
+
+    const handleStorage = (e: StorageEvent) => {
+      if (!e.key || e.key === 'nutrifitness_pos_sales') {
+        syncOrders();
+      }
+    };
+    window.addEventListener('storage', handleStorage);
+    const interval = setInterval(syncOrders, 8000);
+
+    return () => {
+      window.removeEventListener('storage', handleStorage);
+      clearInterval(interval);
+    };
   }, []);
 
   const saveSalesHistory = (updated: PosSaleRecord[]) => {
@@ -690,6 +744,88 @@ export default function AdminDashboardClient() {
     if (inspectingSale && inspectingSale.id === saleId) {
       setInspectingSale({ ...inspectingSale, status: newStatus });
     }
+    fetch('/api/orders', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id: saleId, status: newStatus })
+    }).catch(() => {});
+  };
+
+  const handleCreateTestWebOrder = async () => {
+    const orderNum = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
+    const testOrder: PosSaleRecord = {
+      id: `order-web-${Date.now()}`,
+      ticketNumber: orderNum,
+      timestamp: new Date().toISOString(),
+      items: [
+        {
+          id: `item-${Date.now()}-1`,
+          productId: 'prod-applied-creatine',
+          variantId: 'var-1',
+          name: 'Applied Nutrition Créatine Monohydrate Pure 250g',
+          brand: 'Applied Nutrition',
+          flavor: 'Nature',
+          format: '250g',
+          sku: 'AP-CREAT-250',
+          price: 29.90,
+          quantity: 2,
+          image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=800&q=80',
+          vatRate: 2.6
+        },
+        {
+          id: `item-${Date.now()}-2`,
+          productId: 'prod-bar-snack',
+          variantId: 'var-2',
+          name: 'Sandwich Keto Bar Protéinée 60g',
+          brand: 'Applied Nutrition',
+          flavor: 'Chocolat Noisette',
+          format: 'Barre 60g',
+          sku: 'KETO-BAR-60',
+          price: 3.90,
+          quantity: 3,
+          image: 'https://images.unsplash.com/photo-1622484216258-297585093739?w=800&q=80',
+          vatRate: 2.6
+        }
+      ],
+      subtotal: 71.50,
+      discountPercent: 0,
+      discountAmount: 0,
+      vatAmount: 1.81,
+      total: 79.40,
+      amountReceived: 79.40,
+      paymentMethod: 'twint',
+      paymentDetails: {
+        reference: `TW-WEB-${Date.now().toString().slice(-6)}`,
+        notes: 'Commande test en ligne nutrifitness.ch (Validation instantanée TWINT reçue)'
+      },
+      seller: 'Site Web Public (nutrifitness.ch)',
+      client: {
+        name: 'Laurent Dubois',
+        phone: '+41 79 456 78 90',
+        email: 'laurent.dubois@bluewin.ch',
+        address: 'Route de Chêne 34',
+        city: 'Genève',
+        postalCode: '1208'
+      },
+      shipping: {
+        method: 'post_priority',
+        label: 'PostPac Priority (La Poste Suisse 24h)',
+        cost: 7.90
+      },
+      status: 'in_processing',
+      clientName: 'Laurent Dubois'
+    };
+
+    const updated = [testOrder, ...salesHistory];
+    saveSalesHistory(updated);
+    try {
+      await fetch('/api/orders', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(testOrder)
+      });
+    } catch {}
+    alert(`Nouvelle commande test en ligne (${orderNum}) générée et enregistrée avec succès !`);
   };
 
   const shippingCost = shippingMethod === 'post_priority' ? 7.90 : shippingMethod === 'post_economy' ? 5.90 : shippingMethod === 'express_geneva' ? 12.00 : 0;
@@ -2139,24 +2275,73 @@ export default function AdminDashboardClient() {
 
           {/* Sales History Table */}
           <div className="bg-white rounded-3xl border border-slate-200 shadow-xs p-6 space-y-4">
-            <div className="flex items-center justify-between">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
               <div>
                 <h3 className="text-lg font-black text-slate-900 font-heading">
-                  Historique des Tickets de Caisse
+                  Journal des Ventes & Commandes Web
                 </h3>
                 <p className="text-xs text-slate-500 mt-0.5">
-                  Toutes les ventes réalisées physiquement au magasin NutriFitness Genève.
+                  Toutes les ventes en boutique physique (POS) et commandes passées en ligne sur le site web.
                 </p>
               </div>
 
-              <button
-                type="button"
-                onClick={handleExportCsv}
-                className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-xs flex items-center gap-2"
-              >
-                <Download className="w-4 h-4" />
-                <span>Exporter CSV (Comptabilité)</span>
-              </button>
+              <div className="flex flex-wrap items-center gap-2">
+                {/* Refresh Orders */}
+                <button
+                  type="button"
+                  onClick={syncOrders}
+                  disabled={isRefreshingSales}
+                  className="px-3 py-2 bg-white hover:bg-slate-50 text-slate-700 font-bold text-xs rounded-xl border border-slate-200 transition-all shadow-2xs flex items-center gap-1.5"
+                  title="Synchroniser immédiatement avec le serveur web"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isRefreshingSales ? 'animate-spin text-emerald-600' : 'text-slate-500'}`} />
+                  <span>{isRefreshingSales ? 'Synchronisation...' : 'Actualiser'}</span>
+                </button>
+
+                {/* Create Test Web Order */}
+                <button
+                  type="button"
+                  onClick={handleCreateTestWebOrder}
+                  className="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs rounded-xl border border-emerald-200 transition-all shadow-2xs flex items-center gap-1.5"
+                  title="Générer une commande test comme si elle avait été passée sur le site"
+                >
+                  <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />
+                  <span>Tester une Vente Web</span>
+                </button>
+
+                {/* Export CSV */}
+                <button
+                  type="button"
+                  onClick={handleExportCsv}
+                  className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase tracking-wider rounded-xl transition-all shadow-xs flex items-center gap-2"
+                >
+                  <Download className="w-4 h-4" />
+                  <span>Exporter CSV</span>
+                </button>
+              </div>
+            </div>
+
+            {/* Filter Pills */}
+            <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100">
+              <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">Canal de vente :</span>
+              {[
+                { id: 'all', label: `Toutes les ventes (${salesHistory.length})` },
+                { id: 'pos', label: `🇨🇭 Caisse Magasin (${salesHistory.filter(s => !s.ticketNumber.startsWith('WEB-') && !s.seller?.includes('Web')).length})` },
+                { id: 'web', label: `🌐 Site Web (${salesHistory.filter(s => s.ticketNumber.startsWith('WEB-') || s.seller?.includes('Web')).length})` },
+              ].map(pill => (
+                <button
+                  key={pill.id}
+                  type="button"
+                  onClick={() => setSalesFilterOrigin(pill.id as any)}
+                  className={`px-3 py-1 rounded-xl text-xs font-bold transition-all ${
+                    salesFilterOrigin === pill.id
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  {pill.label}
+                </button>
+              ))}
             </div>
 
             <div className="overflow-x-auto">
@@ -2164,7 +2349,7 @@ export default function AdminDashboardClient() {
                 <thead>
                   <tr className="bg-slate-50 border-b border-slate-200 text-slate-500 font-bold uppercase tracking-wider text-[10px]">
                     <th className="py-3 px-4">Date / Heure (CH)</th>
-                    <th className="py-3 px-4">N° Ticket</th>
+                    <th className="py-3 px-4">N° Ticket / Canal</th>
                     <th className="py-3 px-4">Statut Commande</th>
                     <th className="py-3 px-4">Client & Contact</th>
                     <th className="py-3 px-4">Articles & Saveurs</th>
@@ -2175,7 +2360,14 @@ export default function AdminDashboardClient() {
                   </tr>
                 </thead>
                 <tbody className="divide-y divide-slate-100">
-                  {salesHistory.map(sale => {
+                  {salesHistory
+                    .filter(sale => {
+                      const isWeb = sale.ticketNumber.startsWith('WEB-') || sale.seller?.includes('Web');
+                      if (salesFilterOrigin === 'pos') return !isWeb;
+                      if (salesFilterOrigin === 'web') return isWeb;
+                      return true;
+                    })
+                    .map(sale => {
                     const statusConfig = ORDER_STATUS_LABELS[sale.status || 'delivered'] || ORDER_STATUS_LABELS.delivered;
 
                     return (
@@ -2200,11 +2392,22 @@ export default function AdminDashboardClient() {
                           </div>
                         </td>
 
-                        {/* Ticket Number */}
+                        {/* Ticket Number & Channel Badge */}
                         <td className="py-3 px-4">
-                          <span className="font-mono font-black text-slate-900 bg-slate-100 px-2 py-1 rounded-lg border border-slate-200 text-xs">
-                            {sale.ticketNumber}
-                          </span>
+                          <div className="flex items-center gap-1.5 flex-wrap">
+                            <span className="font-mono font-black text-slate-900 bg-slate-100 px-2 py-1 rounded-lg border border-slate-200 text-xs">
+                              {sale.ticketNumber}
+                            </span>
+                            {sale.ticketNumber.startsWith('WEB-') || sale.seller?.includes('Web') ? (
+                              <span className="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-blue-100 text-blue-800 border border-blue-200">
+                                🌐 Web
+                              </span>
+                            ) : (
+                              <span className="px-1.5 py-0.5 rounded text-[9px] font-black uppercase bg-emerald-100 text-emerald-800 border border-emerald-200">
+                                🇨🇭 POS
+                              </span>
+                            )}
+                          </div>
                         </td>
 
                         {/* Interactive Order Status Dropdown */}
