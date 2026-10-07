@@ -10,6 +10,7 @@ import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
 import { getProductReviewStats } from '@/lib/reviews';
 import { getProductFaqs } from '@/lib/productFaq';
+import { DeliveryBadge } from '@/components/fulfillment/DeliveryBadge';
 
 interface Props {
   product: ProductItem;
@@ -180,16 +181,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             </p>
           </div>
 
-          {/* Portugal Direct Plant Shipping Notice */}
-          {isPortugal && (
-            <div className="flex items-center gap-3 p-3 sm:p-3.5 rounded-2xl bg-emerald-500/10 border border-emerald-500/30 text-emerald-200 shadow-sm">
-              <span className="text-2xl shrink-0">🇵🇹</span>
-              <div className="text-xs leading-tight">
-                <p className="font-bold text-white text-xs sm:text-sm">Expédié depuis notre usine au Portugal</p>
-                <p className="text-[11px] sm:text-xs text-emerald-300 mt-0.5">Livraison directe & suivie en Suisse (3 à 5 jours ouvrés). Aucun frais de douane imprévu.</p>
-              </div>
-            </div>
-          )}
+          {/* Delivery Availability Badge */}
+          <DeliveryBadge productId={product.id} shippingOrigin={product.shippingOrigin} />
+
 
           {/* Flavor / Option Selector */}
           {product.variants.length > 0 && (
