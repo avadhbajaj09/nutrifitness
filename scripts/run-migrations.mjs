@@ -18,6 +18,10 @@ try {
   const seed = readFileSync('supabase/migrations/002_fulfillment_seed.sql', 'utf8');
   await client.query(seed);
   console.log('Seed migration complete');
+
+  const catalog = readFileSync('supabase/migrations/003_catalog_and_locations.sql', 'utf8');
+  await client.query(catalog);
+  console.log('Catalog & locations migration complete');
 } catch(e) {
   console.error('Migration error:', e);
 } finally {
