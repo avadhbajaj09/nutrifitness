@@ -5,6 +5,8 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 
+import { CartShipmentGroups } from '@/components/fulfillment/CartShipmentGroups';
+
 export default function CartPage() {
   const { 
     cart, 
@@ -18,6 +20,8 @@ export default function CartPage() {
     t,
     currency
   } = useStore();
+
+  const countryCode = 'CH'; // TODO: read from cookie
 
   const [couponCode, setCouponCode] = useState('');
   const [discountRate, setDiscountRate] = useState(0);
@@ -83,6 +87,8 @@ export default function CartPage() {
               />
             </div>
           </div>
+
+          <CartShipmentGroups cartItems={cart} countryCode={countryCode} />
 
           {/* Items Container */}
           {cart.length === 0 ? (
