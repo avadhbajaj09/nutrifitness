@@ -222,6 +222,240 @@ function playScannerBeep() {
   }
 }
 
+
+// ─── Fulfillment sub-components ───────────────────────────────────────────────
+
+function FulfillmentStocksTab() {
+  const [stocks, setStocks] = useState<Record<string, unknown>[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [editingRow, setEditingRow] = useState<string | null>(null);
+  const [editVal, setEditVal] = useState<{ geneva: number; portugal: number }>({ geneva: 0, portugal: 0 });
+
+  useEffect(() => {
+    void fetch('/api/fulfillment/stock')
+      .then((r) => r.json())
+      .then((d) => { setStocks(d.stock ?? []); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  // Group stocks by product_id
+  const byProduct = useMemo(() => {
+    const map = new Map<string, { productId: string; productSku: string; genevaQty: number; ptQty: number }>();
+    for (const row of stocks) {
+      const pid = row.product_id as string;
+      const sk = row.product_sku as string;
+      if (!map.has(pid)) map.set(pid, { productId: pid, productSku: sk, genevaQty: 0, ptQty: 0 });
+      const entry = map.get(pid)!;
+      if (row.origin_id === 'GENEVA') entry.genevaQty += row.quantity as number;
+      else entry.ptQty += row.quantity as number;
+    }
+    return [...map.values()];
+  }, [stocks]);
+
+  async function handleSave(productId: string, productSku: string) {
+    for (const [originId, quantity] of [['GENEVA', editVal.geneva], ['PORTUGAL', editVal.portugal]] as const) {
+      await fetch('/api/fulfillment/stock', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ productId, productSku, originId, quantity }),
+      });
+    }
+    setEditingRow(null);
+    const d = await fetch('/api/fulfillment/stock').then((r) => r.json());
+    setStocks(d.stock ?? []);
+  }
+
+  if (loading) return <div className="text-center py-12 text-slate-400">Chargement des stocks...</div>;
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold text-slate-800">Inventaire par entrepôt</h3>
+        <span className="text-xs text-slate-400">{byProduct.length} produit(s) avec stock configuré</span>
+      </div>
+      {byProduct.length === 0 && (
+        <div className="text-center py-12 text-slate-400">
+          <p className="text-sm">Aucun stock configuré dans la base de données.</p>
+          <p className="text-xs mt-1">Utilisez les boutons Modifier pour ajouter du stock par entrepôt.</p>
+        </div>
+      )}
+      <div className="overflow-x-auto">
+        <table className="w-full text-left text-sm border-collapse">
+          <thead>
+            <tr className="bg-slate-50 border-b">
+              <th className="p-3 text-slate-600">Produit ID</th>
+              <th className="p-3 text-slate-600">SKU</th>
+              <th className="p-3 text-slate-600">🇨🇭 Genève</th>
+              <th className="p-3 text-slate-600">🇵🇹 Portugal</th>
+              <th className="p-3 text-slate-600">Type</th>
+              <th className="p-3"></th>
+            </tr>
+          </thead>
+          <tbody>
+            {byProduct.map((row) => {
+              const type = row.genevaQty > 0 && row.ptQty > 0 ? 'COMMON' : row.genevaQty > 0 ? 'GENÈVE' : 'PORTUGAL';
+              const typeColor = type === 'COMMON' ? 'bg-blue-100 text-blue-800' : type === 'GENÈVE' ? 'bg-emerald-100 text-emerald-800' : 'bg-orange-100 text-orange-800';
+              const isEditing = editingRow === row.productId;
+              return (
+                <tr key={row.productId} className="border-b hover:bg-slate-50">
+                  <td className="p-3 font-mono text-xs text-slate-600">{row.productId}</td>
+                  <td className="p-3 text-slate-500 text-xs">{row.productSku}</td>
+                  <td className="p-3">
+                    {isEditing
+                      ? <input type="number" min={0} value={editVal.geneva} onChange={(e) => setEditVal((v) => ({ ...v, geneva: Number(e.target.value) }))} className="w-20 border rounded px-2 py-1 text-xs" />
+                      : <span className={`font-bold ${row.genevaQty < 5 ? 'text-red-600' : row.genevaQty < 10 ? 'text-amber-600' : 'text-emerald-700'}`}>{row.genevaQty}</span>
+                    }
+                  </td>
+                  <td className="p-3">
+                    {isEditing
+                      ? <input type="number" min={0} value={editVal.portugal} onChange={(e) => setEditVal((v) => ({ ...v, portugal: Number(e.target.value) }))} className="w-20 border rounded px-2 py-1 text-xs" />
+                      : <span className={`font-bold ${row.ptQty < 5 ? 'text-red-600' : row.ptQty < 10 ? 'text-amber-600' : 'text-emerald-700'}`}>{row.ptQty}</span>
+                    }
+                  </td>
+                  <td className="p-3"><span className={`px-2 py-0.5 rounded text-xs font-bold ${typeColor}`}>{type}</span></td>
+                  <td className="p-3">
+                    {isEditing ? (
+                      <div className="flex gap-1">
+                        <button onClick={() => void handleSave(row.productId, row.productSku)} className="px-2 py-1 text-xs bg-emerald-600 text-white rounded">Sauver</button>
+                        <button onClick={() => setEditingRow(null)} className="px-2 py-1 text-xs border rounded text-slate-600">Annuler</button>
+                      </div>
+                    ) : (
+                      <button onClick={() => { setEditingRow(row.productId); setEditVal({ geneva: row.genevaQty, portugal: row.ptQty }); }} className="px-2 py-1 text-xs border rounded text-slate-600 hover:bg-slate-100">Modifier</button>
+                    )}
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+}
+
+function FulfillmentQueueTab({ origin }: { origin: 'GENEVA' | 'PORTUGAL' }) {
+  const [shipments, setShipments] = useState<Record<string, unknown>[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [updating, setUpdating] = useState<string | null>(null);
+
+  const load = () => {
+    setLoading(true);
+    void fetch(`/api/fulfillment/shipments?origin=${origin}&status=pending`)
+      .then((r) => r.json())
+      .then((d) => { setShipments(d.shipments ?? []); setLoading(false); })
+      .catch(() => setLoading(false));
+  };
+
+  useEffect(() => { load(); }, [origin]);
+
+  async function markShipped(id: string) {
+    setUpdating(id);
+    await fetch('/api/fulfillment/shipments', {
+      method: 'PATCH',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ id, status: 'in_transit' }),
+    });
+    setUpdating(null);
+    load();
+  }
+
+  if (loading) return <div className="text-center py-12 text-slate-400">Chargement...</div>;
+
+  const label = origin === 'GENEVA' ? '🇨🇭 Genève' : '🇵🇹 Portugal';
+
+  return (
+    <div className="space-y-4">
+      <div className="flex items-center justify-between">
+        <h3 className="font-bold text-slate-800">File d&apos;expédition {label}</h3>
+        <button onClick={load} className="text-xs text-slate-400 hover:text-slate-700 flex items-center gap-1">
+          <RefreshCw className="w-3 h-3" /> Actualiser
+        </button>
+      </div>
+      {shipments.length === 0 ? (
+        <div className="text-center py-12 text-slate-400">
+          <Truck className="w-8 h-8 mx-auto mb-2 opacity-30" />
+          <p className="text-sm">Aucune expédition en attente depuis {label}.</p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {shipments.map((s) => {
+            const items = s.items as { name?: string; quantity?: number }[];
+            return (
+              <div key={s.id as string} className="p-4 border rounded-xl flex justify-between items-start bg-slate-50">
+                <div>
+                  <p className="font-bold text-sm text-slate-800">Commande #{s.order_id as string}</p>
+                  <p className="text-xs text-slate-500 mt-0.5">
+                    {items.map((it, i) => `${it.quantity ?? 1}× ${it.name ?? 'Article'}`).join(', ')}
+                  </p>
+                  {s.tracking_number && <p className="text-xs text-blue-600 mt-1">📦 {s.tracking_number as string}</p>}
+                  {s.requires_customs && <span className="inline-block mt-1 text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded">🛃 Documents douane requis</span>}
+                </div>
+                <div className="flex gap-2 shrink-0 ml-3">
+                  {s.label_url && (
+                    <a href={s.label_url as string} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 text-xs font-bold border rounded bg-white text-slate-700 hover:bg-slate-100">
+                      🖨️ Étiquette
+                    </a>
+                  )}
+                  <button
+                    onClick={() => void markShipped(s.id as string)}
+                    disabled={updating === s.id}
+                    className="px-3 py-1.5 text-xs font-bold border border-emerald-600 bg-emerald-600 text-white rounded disabled:opacity-50"
+                  >
+                    {updating === s.id ? '...' : '✓ Expédié'}
+                  </button>
+                </div>
+              </div>
+            );
+          })}
+        </div>
+      )}
+    </div>
+  );
+}
+
+function FulfillmentAlertsTab() {
+  const [shipments, setShipments] = useState<Record<string, unknown>[]>([]);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    void fetch('/api/fulfillment/shipments?needs_attention=true')
+      .then((r) => r.json())
+      .then((d) => { setShipments(d.shipments ?? []); setLoading(false); })
+      .catch(() => setLoading(false));
+  }, []);
+
+  if (loading) return <div className="text-center py-12 text-slate-400">Chargement...</div>;
+
+  return (
+    <div className="space-y-4">
+      <h3 className="font-bold text-slate-800">Alertes &amp; Blocages</h3>
+      {shipments.length === 0 ? (
+        <div className="text-center py-12 text-emerald-600">
+          <CheckCircle2 className="w-8 h-8 mx-auto mb-2" />
+          <p className="text-sm font-medium">Aucune alerte. Tout est en ordre ✓</p>
+        </div>
+      ) : (
+        <div className="space-y-3">
+          {shipments.map((s) => (
+            <div key={s.id as string} className="p-4 border border-red-200 rounded-xl bg-red-50">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="font-bold text-sm text-red-800">⚠️ Commande #{s.order_id as string}</p>
+                  <p className="text-xs text-red-600 mt-0.5">{s.attention_reason as string || 'Problème d\'expédition détecté'}</p>
+                  <p className="text-xs text-slate-500 mt-1">Origine: {s.origin_id as string} · Statut: {s.status as string}</p>
+                </div>
+                <button className="px-3 py-1.5 text-xs font-bold bg-red-600 text-white rounded hover:bg-red-700">
+                  Re-router
+                </button>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  );
+}
+
 export default function AdminDashboardClient() {
   // -------------------------------------------------------------
   // 1. AUTHENTICATION STATE
@@ -3121,7 +3355,6 @@ export default function AdminDashboardClient() {
                 </table>
               </div>
             )}
-            
             {fulfillmentSubTab === 'queue_geneva' && (
               <div className="space-y-4">
                 <h3 className="font-bold text-slate-800">Commandes à expédier depuis Genève (Demo)</h3>
@@ -3137,14 +3370,12 @@ export default function AdminDashboardClient() {
                 </div>
               </div>
             )}
-
             {fulfillmentSubTab === 'queue_portugal' && (
               <div className="space-y-4">
                 <h3 className="font-bold text-slate-800">Commandes à expédier depuis le Portugal (Demo)</h3>
                 <p className="text-sm text-slate-500">Aucune commande en attente.</p>
               </div>
             )}
-
             {fulfillmentSubTab === 'alerts' && (
               <div className="space-y-4">
                 <h3 className="font-bold text-slate-800">Alertes et blocages (Demo)</h3>

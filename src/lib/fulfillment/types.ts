@@ -1,7 +1,7 @@
 import { z } from 'zod';
 
 export type OriginId = 'GENEVA' | 'PORTUGAL';
-export type ProductType = 'COMMON' | 'GENEVA_ONLY' | 'PORTUGAL_ONLY';
+export type ProductType = 'COMMON' | 'GENEVA_ONLY' | 'PORTUGAL_ONLY' | 'OUT_OF_STOCK';
 export type BlockReason = 'COUNTRY_NOT_SUPPORTED' | 'OUT_OF_STOCK' | 'ORIGIN_NOT_ALLOWED';
 
 export type ShipmentStatus =

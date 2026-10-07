@@ -1,7 +1,7 @@
 'use client';
 
-import { useEffect, useState } from 'react';
-import { AvailabilityResult } from '@/lib/fulfillment/types';
+import React, { useState, useEffect, useCallback } from 'react';
+import type { AvailabilityResult } from '@/lib/fulfillment/types';
 
 interface DeliveryBadgeProps {
   productId: string;
@@ -9,100 +9,129 @@ interface DeliveryBadgeProps {
   className?: string;
 }
 
-const COUNTRIES = [
-  { code: 'CH', name: 'Suisse' },
-  { code: 'LI', name: 'Liechtenstein' },
-  { code: 'FR', name: 'France' },
-  { code: 'DE', name: 'Allemagne' },
-  { code: 'IT', name: 'Italie' },
-  { code: 'AT', name: 'Autriche' },
-  { code: 'BE', name: 'Belgique' },
-  { code: 'ES', name: 'Espagne' },
-  { code: 'PT', name: 'Portugal' },
-  { code: 'PL', name: 'Pologne' },
-  { code: 'NL', name: 'Pays-Bas' },
-  { code: 'GB', name: 'Royaume-Uni' },
-  { code: 'NO', name: 'Norvège' },
-  { code: 'IS', name: 'Islande' },
+const COUNTRY_OPTIONS: { code: string; label: string }[] = [
+  { code: 'CH', label: '🇨🇭 Suisse' },
+  { code: 'LI', label: '🇱🇮 Liechtenstein' },
+  { code: 'FR', label: '🇫🇷 France' },
+  { code: 'DE', label: '🇩🇪 Allemagne' },
+  { code: 'IT', label: '🇮🇹 Italie' },
+  { code: 'AT', label: '🇦🇹 Autriche' },
+  { code: 'BE', label: '🇧🇪 Belgique' },
+  { code: 'ES', label: '🇪🇸 Espagne' },
+  { code: 'PT', label: '🇵🇹 Portugal' },
+  { code: 'NL', label: '🇳🇱 Pays-Bas' },
+  { code: 'PL', label: '🇵🇱 Pologne' },
+  { code: 'GB', label: '🇬🇧 Royaume-Uni' },
+  { code: 'NO', label: '🇳🇴 Norvège' },
+  { code: 'IS', label: '🇮🇸 Islande' },
+  { code: 'LU', label: '🇱🇺 Luxembourg' },
+  { code: 'SE', label: '🇸🇪 Suède' },
+  { code: 'DK', label: '🇩🇰 Danemark' },
+  { code: 'FI', label: '🇫🇮 Finlande' },
 ];
 
-export function DeliveryBadge({ productId, shippingOrigin, className = '' }: DeliveryBadgeProps) {
-  const [country, setCountry] = useState('CH');
-  const [availability, setAvailability] = useState<AvailabilityResult | null>(null);
+const COOKIE_NAME = 'nf_country';
+const COOKIE_DAYS = 30;
+
+function getCookie(name: string): string | null {
+  if (typeof document === 'undefined') return null;
+  const match = document.cookie.match(new RegExp(`(?:^|;\\s*)${name}=([^;]*)`));
+  return match ? decodeURIComponent(match[1]) : null;
+}
+
+function setCookie(name: string, value: string, days: number): void {
+  if (typeof document === 'undefined') return;
+  const expires = new Date(Date.now() + days * 86400000).toUTCString();
+  document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires}; path=/; SameSite=Lax`;
+}
+
+export default function DeliveryBadge({ productId, shippingOrigin, className = '' }: DeliveryBadgeProps) {
+  const [country, setCountry] = useState<string>('CH');
+  const [result, setResult] = useState<AvailabilityResult | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState(false);
 
   useEffect(() => {
-    // Read cookie
-    const match = document.cookie.match(new RegExp('(^| )nf_country=([^;]+)'));
-    if (match) {
-      setCountry(match[2]);
+    const saved = getCookie(COOKIE_NAME);
+    if (saved && COUNTRY_OPTIONS.some((c) => c.code === saved)) {
+      setCountry(saved);
     }
   }, []);
 
-  useEffect(() => {
-    async function fetchAvailability() {
-      setLoading(true);
-      setError(false);
-      try {
-        const res = await fetch(`/api/fulfillment/availability?productId=${productId}&country=${country}`);
-        if (!res.ok) throw new Error('Network response was not ok');
-        const data = await res.json();
-        setAvailability(data);
-        
-        // Save cookie
-        document.cookie = `nf_country=${country}; path=/; max-age=${30 * 24 * 60 * 60}`;
-      } catch (err) {
-        console.error(err);
-        setError(true);
-      } finally {
-        setLoading(false);
+  const fetchAvailability = useCallback(async (cc: string) => {
+    setLoading(true);
+    try {
+      const params = new URLSearchParams({
+        productId,
+        country: cc,
+        ...(shippingOrigin ? { origin: shippingOrigin } : {}),
+      });
+      const res = await fetch(`/api/fulfillment/availability?${params.toString()}`);
+      if (res.ok) {
+        const data = await res.json() as AvailabilityResult;
+        setResult(data);
       }
+    } catch {
+      const lbl = shippingOrigin === 'portugal'
+          ? '🇵🇹 Expédié depuis le Portugal – livraison en 3–7 jours ouvrables'
+          : '🇨🇭 Expédié depuis Genève – livraison en 1–3 jours ouvrables';
+      setResult({
+        available: true,
+        label: lbl,
+        labelFr: lbl,
+        labelEn: lbl
+      });
+    } finally {
+      setLoading(false);
     }
-    
-    fetchAvailability();
-  }, [productId, country]);
+  }, [productId, shippingOrigin]);
 
-  if (error) {
-    return (
-      <div className={`text-sm text-gray-400 ${className}`}>
-        Livraison depuis: {shippingOrigin === 'switzerland' ? 'Genève' : 'Portugal'}
-      </div>
-    );
+  useEffect(() => {
+    void fetchAvailability(country);
+  }, [country, fetchAvailability]);
+
+  function handleCountryChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const cc = e.target.value;
+    setCountry(cc);
+    setCookie(COOKIE_NAME, cc, COOKIE_DAYS);
   }
 
+  const badgeColor = !result
+    ? 'border-white/10 bg-white/5'
+    : !result.available
+    ? 'border-red-500/30 bg-red-500/10'
+    : result.origin === 'GENEVA'
+    ? 'border-emerald-500/30 bg-emerald-500/10'
+    : 'border-blue-500/30 bg-blue-500/10';
+
   return (
-    <div className={`flex flex-col gap-2 ${className}`}>
-      <div className="flex items-center gap-2 text-sm">
-        <span className="text-gray-400">Livrer à:</span>
-        <select 
-          value={country} 
-          onChange={(e) => setCountry(e.target.value)}
-          className="bg-[#1a1a1a] border border-gray-800 rounded px-2 py-1 text-white text-sm focus:outline-none focus:border-red-500"
+    <div className={`rounded-xl border ${badgeColor} p-3 text-xs ${className}`}>
+      <div className="flex items-center gap-2 mb-2">
+        <span className="text-white/50 shrink-0">🌍 Livraison vers :</span>
+        <select
+          value={country}
+          onChange={handleCountryChange}
+          className="bg-black/40 border border-white/10 text-white text-xs rounded-md px-2 py-0.5 focus:outline-none focus:border-white/30 cursor-pointer flex-1 min-w-0"
         >
-          {COUNTRIES.map(c => (
-            <option key={c.code} value={c.code}>{c.name}</option>
+          {COUNTRY_OPTIONS.map((opt) => (
+            <option key={opt.code} value={opt.code}>
+              {opt.label}
+            </option>
           ))}
         </select>
       </div>
 
       {loading ? (
-        <div className="h-6 w-64 bg-gray-800 animate-pulse rounded"></div>
-      ) : availability ? (
-        <div className="flex flex-col gap-1">
-          <div className={`inline-flex items-center gap-2 px-3 py-1.5 rounded text-sm w-fit ${
-            !availability.available ? 'bg-red-900/30 text-red-400 border border-red-900/50' :
-            availability.origin === 'GENEVA' ? 'bg-green-900/20 text-green-400 border border-green-900/30' :
-            'bg-blue-900/20 text-blue-400 border border-blue-900/30'
-          }`}>
-            <span>{availability.available ? '🚚' : '❌'}</span>
-            <span>{availability.labelFr}</span>
-          </div>
-          {availability.dutiesNote && (
-            <span className="text-xs text-yellow-500/80">{availability.dutiesNote}</span>
+        <div className="h-4 bg-white/10 rounded animate-pulse w-3/4" />
+      ) : (
+        <div>
+          <p className={`font-semibold ${result?.available === false ? 'text-red-400' : 'text-white'}`}>
+            {result?.label ?? ''}
+          </p>
+          {result?.dutiesNote && (
+            <p className="text-yellow-400/80 mt-1">⚠️ {result.dutiesNote}</p>
           )}
         </div>
-      ) : null}
+      )}
     </div>
   );
 }
