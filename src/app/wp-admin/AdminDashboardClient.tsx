@@ -272,7 +272,8 @@ export default function AdminDashboardClient() {
   // -------------------------------------------------------------
   // 2. DASHBOARD NAVIGATION & TIME
   // -------------------------------------------------------------
-  const [activeTab, setActiveTab] = useState<'catalog' | 'pos' | 'sales'>('pos');
+  const [activeTab, setActiveTab] = useState<'catalog' | 'pos' | 'sales' | 'fulfillment'>('pos');
+  const [fulfillmentSubTab, setFulfillmentSubTab] = useState<'stocks' | 'queue_geneva' | 'queue_portugal' | 'alerts'>('stocks');
   const [currentTime, setCurrentTime] = useState<string>('');
 
   useEffect(() => {
@@ -1799,6 +1800,21 @@ export default function AdminDashboardClient() {
                 {salesHistory.length}
               </span>
             </button>
+
+            <button
+              type="button"
+              onClick={() => setActiveTab('fulfillment')}
+              className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all ${
+                activeTab === 'fulfillment'
+                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/80 font-black'
+                  : 'text-slate-600 hover:text-slate-900'
+              }`}
+            >
+              <span className="text-lg leading-none text-purple-600">🚚</span>
+              <span className="hidden sm:inline">Expédition</span>
+              <span className="sm:hidden">Expédition</span>
+
+            </button>
           </nav>
 
           {/* Right Action Buttons */}
@@ -3040,6 +3056,101 @@ export default function AdminDashboardClient() {
                 </tbody>
               </table>
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================
+          FULFILLMENT TAB
+          ========================================================= */}
+      {activeTab === 'fulfillment' && (
+        <div className="flex-1 overflow-y-auto p-4 sm:p-6 sm:pl-8 lg:p-8 lg:pl-10 space-y-6">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+            <div>
+              <h2 className="text-xl sm:text-2xl font-black text-slate-900 uppercase font-heading tracking-tight flex items-center gap-2">
+                <span className="text-purple-600">🚚</span> 
+                {adminLang === 'fr' ? 'Gestion Expéditions & Stocks' : 'Fulfillment Management'}
+              </h2>
+              <p className="text-xs text-slate-500 font-medium">Multi-origine (Genève & Portugal)</p>
+            </div>
+            
+            <div className="flex gap-2 bg-slate-100 p-1 rounded-lg">
+              {(['stocks', 'queue_geneva', 'queue_portugal', 'alerts'] as const).map(tab => (
+                <button
+                  key={tab}
+                  onClick={() => setFulfillmentSubTab(tab)}
+                  className={`px-4 py-2 rounded-md text-xs font-bold transition-all ${
+                    fulfillmentSubTab === tab 
+                      ? 'bg-white shadow-sm text-purple-700' 
+                      : 'text-slate-500 hover:text-slate-700'
+                  }`}
+                >
+                  {tab === 'stocks' && 'Inventaire'}
+                  {tab === 'queue_geneva' && '🇨🇭 File Genève'}
+                  {tab === 'queue_portugal' && '🇵🇹 File Portugal'}
+                  {tab === 'alerts' && '⚠️ Alertes'}
+                </button>
+              ))}
+            </div>
+          </div>
+
+          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm min-h-[400px]">
+            {fulfillmentSubTab === 'stocks' && (
+              <div className="space-y-4">
+                <h3 className="font-bold text-slate-800">État des stocks multi-dépôts (Demo)</h3>
+                <p className="text-sm text-slate-500">Intégration API /api/fulfillment/stock à connecter.</p>
+                <table className="w-full text-left text-sm border-collapse">
+                  <thead>
+                    <tr className="bg-slate-50 border-b">
+                      <th className="p-3">Produit</th>
+                      <th className="p-3">SKU</th>
+                      <th className="p-3">🇨🇭 Genève</th>
+                      <th className="p-3">🇵🇹 Portugal</th>
+                      <th className="p-3">Type</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr className="border-b">
+                      <td className="p-3 font-medium">Whey Protein</td>
+                      <td className="p-3 text-slate-500">WP-01</td>
+                      <td className="p-3">10</td>
+                      <td className="p-3">50</td>
+                      <td className="p-3"><span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">COMMON</span></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            )}
+            
+            {fulfillmentSubTab === 'queue_geneva' && (
+              <div className="space-y-4">
+                <h3 className="font-bold text-slate-800">Commandes à expédier depuis Genève (Demo)</h3>
+                <div className="p-4 border rounded-xl flex justify-between items-center bg-slate-50">
+                  <div>
+                    <p className="font-bold text-sm">ORD-123 - Jean Dupont</p>
+                    <p className="text-xs text-slate-500">1x Whey Protein</p>
+                  </div>
+                  <div className="flex gap-2">
+                    <button className="px-3 py-1.5 text-xs font-bold border rounded bg-white text-slate-700">Étiquette</button>
+                    <button className="px-3 py-1.5 text-xs font-bold border border-green-600 bg-green-600 text-white rounded">Expédié</button>
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {fulfillmentSubTab === 'queue_portugal' && (
+              <div className="space-y-4">
+                <h3 className="font-bold text-slate-800">Commandes à expédier depuis le Portugal (Demo)</h3>
+                <p className="text-sm text-slate-500">Aucune commande en attente.</p>
+              </div>
+            )}
+
+            {fulfillmentSubTab === 'alerts' && (
+              <div className="space-y-4">
+                <h3 className="font-bold text-slate-800">Alertes et blocages (Demo)</h3>
+                <p className="text-sm text-slate-500">Aucune alerte.</p>
+              </div>
+            )}
           </div>
         </div>
       )}
