@@ -43,7 +43,12 @@ import {
   Mail,
   MapPin,
   User,
-  RefreshCw
+  RefreshCw,
+  Zap,
+  Split,
+  Sliders,
+  FileText,
+  CheckCircle2
 } from 'lucide-react';
 import ProductEditorModal from './ProductEditorModal';
 
@@ -122,13 +127,16 @@ export interface PosSaleRecord {
   vatAmount: number;
   total: number;
   amountReceived: number;
-  paymentMethod: 'twint' | 'card' | 'cash_chf' | 'cash_eur' | 'invoice';
+  paymentMethod: 'twint' | 'card' | 'cash_chf' | 'cash_eur' | 'invoice' | 'split';
   paymentDetails: {
     reference?: string;
     cashReceived?: number;
     changeGiven?: number;
     cardType?: string;
     notes?: string;
+    splitCash?: number;
+    splitOther?: number;
+    splitOtherMethod?: string;
   };
   seller: string;
   client?: {
@@ -469,6 +477,242 @@ export default function AdminDashboardClient() {
 
   // Variant selector modal for POS
   const [variantPickerProduct, setVariantPickerProduct] = useState<ProductItem | null>(null);
+  const [variantFilterQuery, setVariantFilterQuery] = useState<string>('');
+
+  // Quick Stock Editing modal state (Feature 1)
+  const [quickStockProduct, setQuickStockProduct] = useState<ProductItem | null>(null);
+  const [quickStockValues, setQuickStockValues] = useState<Record<string, number>>({});
+
+  // Quick Barcode / GTIN modal state (Feature 2)
+  const [barcodeModalProduct, setBarcodeModalProduct] = useState<ProductItem | null>(null);
+  const [barcodeModalValues, setBarcodeModalValues] = useState<Record<string, string>>({});
+
+  // Helper to calculate total stock for a product
+  const getProductTotalStock = (p: ProductItem): number => {
+    if (p.variants && p.variants.length > 0) {
+      return p.variants.reduce(
+        (sum, v) => sum + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0)),
+        0
+      );
+    }
+    return 20;
+  };
+
+  // Generate valid Swiss EAN-13 code (starts with 764)
+  const generateSwissEan13 = (): string => {
+    const prefix = '764';
+    let body = prefix;
+    for (let i = 0; i < 9; i++) {
+      body += Math.floor(Math.random() * 10).toString();
+    }
+    let sum = 0;
+    for (let i = 0; i < 12; i++) {
+      const digit = parseInt(body[i], 10);
+      sum += i % 2 === 0 ? digit * 1 : digit * 3;
+    }
+    const checksum = (10 - (sum % 10)) % 10;
+    return body + checksum.toString();
+  };
+
+  // Open Quick Stock modal
+  const openQuickStockModal = (product: ProductItem) => {
+    setQuickStockProduct(product);
+    const initial: Record<string, number> = {};
+    if (product.variants && product.variants.length > 0) {
+      product.variants.forEach(v => {
+        const key = v.id || v.sku;
+        initial[key] = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0);
+      });
+    } else {
+      initial['def'] = 20;
+    }
+    setQuickStockValues(initial);
+  };
+
+  // Save Quick Stock changes directly on the fly
+  const handleSaveQuickStock = () => {
+    if (!quickStockProduct) return;
+    const prodId = quickStockProduct.id;
+    setAllProducts(prev => {
+      const next = prev.map(p => {
+        if (p.id !== prodId) return p;
+        if (!p.variants || p.variants.length === 0) {
+          const newQty = Math.max(0, quickStockValues['def'] ?? 20);
+          return {
+            ...p,
+            variants: [{
+              id: 'def',
+              sku: p.id,
+              flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
+              format: '1 unité',
+              priceChf: p.priceChf,
+              inventoryQuantity: newQty,
+              inStock: newQty > 0
+            }]
+          };
+        }
+        const updatedVars = p.variants.map(v => {
+          const key = v.id || v.sku;
+          const newQty = Math.max(0, quickStockValues[key] ?? (v.inventoryQuantity || 0));
+          return {
+            ...v,
+            inventoryQuantity: newQty,
+            inStock: newQty > 0
+          };
+        });
+        return { ...p, variants: updatedVars };
+      });
+
+      try {
+        const saved = localStorage.getItem('nutrifitness_custom_products');
+        let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
+        const changedProd = next.find(p => p.id === prodId);
+        if (changedProd) {
+          const idx = customItems.findIndex(p => p.id === prodId);
+          if (idx >= 0) customItems[idx] = changedProd;
+          else customItems = [changedProd, ...customItems];
+          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      return next;
+    });
+
+    setScanFeedback({
+      message: `Stock mis à jour pour "${quickStockProduct.name.fr}" !`,
+      type: 'success'
+    });
+    setTimeout(() => setScanFeedback(null), 3000);
+    setQuickStockProduct(null);
+  };
+
+  // Open Barcode / GTIN modal
+  const openBarcodeModal = (product: ProductItem) => {
+    setBarcodeModalProduct(product);
+    const initial: Record<string, string> = {};
+    if (product.variants && product.variants.length > 0) {
+      product.variants.forEach(v => {
+        const key = v.id || v.sku;
+        initial[key] = v.gtin13 || v.sku || '';
+      });
+    } else {
+      initial['def'] = product.gtin13 || product.id || '';
+    }
+    setBarcodeModalValues(initial);
+  };
+
+  // Save Barcode changes
+  const handleSaveBarcodeModal = () => {
+    if (!barcodeModalProduct) return;
+    const prodId = barcodeModalProduct.id;
+    setAllProducts(prev => {
+      const next = prev.map(p => {
+        if (p.id !== prodId) return p;
+        const mainBarcode = (barcodeModalValues['def'] || barcodeModalValues[p.variants?.[0]?.id || p.variants?.[0]?.sku || ''] || p.gtin13 || '').trim();
+        if (!p.variants || p.variants.length === 0) {
+          return {
+            ...p,
+            gtin13: mainBarcode,
+            variants: [{
+              id: 'def',
+              sku: p.id,
+              gtin13: mainBarcode,
+              flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
+              format: '1 unité',
+              priceChf: p.priceChf,
+              inventoryQuantity: 20,
+              inStock: true
+            }]
+          };
+        }
+        const updatedVars = p.variants.map(v => {
+          const key = v.id || v.sku;
+          const barcodeVal = (barcodeModalValues[key] || '').trim();
+          return {
+            ...v,
+            gtin13: barcodeVal || v.gtin13
+          };
+        });
+        return { ...p, gtin13: mainBarcode, variants: updatedVars };
+      });
+
+      try {
+        const saved = localStorage.getItem('nutrifitness_custom_products');
+        let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
+        const changedProd = next.find(p => p.id === prodId);
+        if (changedProd) {
+          const idx = customItems.findIndex(p => p.id === prodId);
+          if (idx >= 0) customItems[idx] = changedProd;
+          else customItems = [changedProd, ...customItems];
+          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      return next;
+    });
+
+    setScanFeedback({
+      message: `Code-barres / GTIN enregistré pour "${barcodeModalProduct.name.fr}" !`,
+      type: 'success'
+    });
+    setTimeout(() => setScanFeedback(null), 3000);
+    setBarcodeModalProduct(null);
+  };
+
+  // Inline stock adjustment directly inside variant modal
+  const handleInlineVariantStockChange = (productId: string, variantKey: string, delta: number) => {
+    setAllProducts(prev => {
+      const next = prev.map(p => {
+        if (p.id !== productId) return p;
+        const updatedVars = (p.variants || []).map(v => {
+          if ((v.id || v.sku) === variantKey) {
+            const currentQty = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0);
+            const newQty = Math.max(0, currentQty + delta);
+            return {
+              ...v,
+              inventoryQuantity: newQty,
+              inStock: newQty > 0
+            };
+          }
+          return v;
+        });
+        return { ...p, variants: updatedVars };
+      });
+      try {
+        const saved = localStorage.getItem('nutrifitness_custom_products');
+        let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
+        const changedProd = next.find(p => p.id === productId);
+        if (changedProd) {
+          const idx = customItems.findIndex(p => p.id === productId);
+          if (idx >= 0) customItems[idx] = changedProd;
+          else customItems = [changedProd, ...customItems];
+          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
+        }
+      } catch (e) {
+        console.error(e);
+      }
+      return next;
+    });
+
+    setVariantPickerProduct(prev => {
+      if (!prev || prev.id !== productId) return prev;
+      const updatedVars = (prev.variants || []).map(v => {
+        if ((v.id || v.sku) === variantKey) {
+          const currentQty = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0);
+          const newQty = Math.max(0, currentQty + delta);
+          return {
+            ...v,
+            inventoryQuantity: newQty,
+            inStock: newQty > 0
+          };
+        }
+        return v;
+      });
+      return { ...prev, variants: updatedVars };
+    });
+  };
 
   // Current POS Ticket
   const [ticketItems, setTicketItems] = useState<PosTicketItem[]>([]);
@@ -498,8 +742,9 @@ export default function AdminDashboardClient() {
         const q = posSearch.toLowerCase();
         const inName = p.name.fr?.toLowerCase().includes(q);
         const inBrand = p.brand.toLowerCase().includes(q);
-        const inSku = p.variants?.some(v => v.sku.toLowerCase().includes(q));
-        if (!inName && !inBrand && !inSku) return false;
+        const inSku = p.variants?.some(v => v.sku.toLowerCase().includes(q) || v.gtin13?.toLowerCase().includes(q));
+        const inGtin = p.gtin13?.toLowerCase().includes(q);
+        if (!inName && !inBrand && !inSku && !inGtin) return false;
       }
       return true;
     });
@@ -558,6 +803,7 @@ export default function AdminDashboardClient() {
         variant => 
           variant.sku.toLowerCase() === query || 
           variant.gtin13?.toLowerCase() === query ||
+          (variant.gtin13 && query.includes(variant.gtin13.toLowerCase())) ||
           variant.sku.toLowerCase().includes(query)
       );
       if (v) {
@@ -565,8 +811,12 @@ export default function AdminDashboardClient() {
         foundVariant = v;
         break;
       }
-      // Check product ID or exact slug
-      if (prod.id.toLowerCase() === query || prod.slug.fr.toLowerCase() === query) {
+      // Check product ID or exact slug or product GTIN
+      if (
+        prod.id.toLowerCase() === query || 
+        prod.slug.fr.toLowerCase() === query ||
+        prod.gtin13?.toLowerCase() === query
+      ) {
         foundProduct = prod;
         foundVariant = prod.variants?.[0] || {
           id: 'def',
@@ -663,7 +913,12 @@ export default function AdminDashboardClient() {
   // 5. PAYMENT & RECEIPT MODAL
   // -------------------------------------------------------------
   const [isPaymentModalOpen, setIsPaymentModalOpen] = useState<boolean>(false);
-  const [paymentMethod, setPaymentMethod] = useState<'twint' | 'card' | 'cash_chf' | 'cash_eur' | 'invoice'>('twint');
+  const [tenderCategory, setTenderCategory] = useState<'cash' | 'other' | 'split'>('cash');
+  const [paymentMethod, setPaymentMethod] = useState<'twint' | 'card' | 'cash_chf' | 'cash_eur' | 'invoice' | 'split'>('cash_chf');
+  const [otherTenderType, setOtherTenderType] = useState<'twint' | 'card' | 'invoice' | 'postfinance'>('twint');
+  const [splitCashAmount, setSplitCashAmount] = useState<string>('');
+  const [splitOtherAmount, setSplitOtherAmount] = useState<string>('');
+  const [splitOtherMethod, setSplitOtherMethod] = useState<'twint' | 'card'>('twint');
   const [cashTendered, setCashTendered] = useState<string>('');
   const [paymentReference, setPaymentReference] = useState<string>('');
   const [paymentNotes, setPaymentNotes] = useState<string>('');
@@ -872,19 +1127,45 @@ export default function AdminDashboardClient() {
   const grandTotalToPay = (Number(totalToPay) || 0) + shippingCost;
 
   const cashNumeric = parseFloat(cashTendered) || 0;
-  const cashChangeDue = paymentMethod === 'cash_chf' && cashNumeric >= grandTotalToPay 
+  const cashChangeDue = tenderCategory === 'cash' && cashNumeric >= grandTotalToPay 
     ? Math.max(0, cashNumeric - grandTotalToPay) 
     : 0;
 
   const handleValidateSale = () => {
     if (ticketItems.length === 0) return;
-    if (paymentMethod === 'cash_chf' && cashNumeric < grandTotalToPay) {
-      alert(adminLang === 'fr' 
-        ? `Montant en espèces insuffisant. Total à payer : CHF ${grandTotalToPay.toFixed(2)}, reçu : CHF ${cashNumeric.toFixed(2)}`
-        : `Insufficient cash amount. Total to pay: CHF ${grandTotalToPay.toFixed(2)}, received: CHF ${cashNumeric.toFixed(2)}`
-      );
-      return;
+
+    const sCash = parseFloat(splitCashAmount) || 0;
+    const sOther = parseFloat(splitOtherAmount) || 0;
+
+    if (tenderCategory === 'cash') {
+      if (cashNumeric < grandTotalToPay) {
+        alert(adminLang === 'fr' 
+          ? `Montant en espèces insuffisant. Total à payer : CHF ${grandTotalToPay.toFixed(2)}, reçu : CHF ${cashNumeric.toFixed(2)}`
+          : `Insufficient cash amount. Total to pay: CHF ${grandTotalToPay.toFixed(2)}, received: CHF ${cashNumeric.toFixed(2)}`
+        );
+        return;
+      }
+    } else if (tenderCategory === 'split') {
+      if (sCash + sOther < grandTotalToPay - 0.05) {
+        alert(adminLang === 'fr' 
+          ? `Le montant partagé (CHF ${(sCash + sOther).toFixed(2)}) ne couvre pas le total de CHF ${grandTotalToPay.toFixed(2)}.`
+          : `Split payment (CHF ${(sCash + sOther).toFixed(2)}) does not cover total CHF ${grandTotalToPay.toFixed(2)}.`
+        );
+        return;
+      }
     }
+
+    const finalPaymentMethod = tenderCategory === 'cash' ? 'cash_chf'
+      : tenderCategory === 'other' ? (otherTenderType === 'twint' ? 'twint' : otherTenderType === 'invoice' ? 'invoice' : 'card')
+      : 'split';
+
+    const finalAmountReceived = tenderCategory === 'cash' ? cashNumeric
+      : tenderCategory === 'split' ? (sCash + sOther)
+      : grandTotalToPay;
+
+    const finalChangeDue = tenderCategory === 'cash' ? cashChangeDue
+      : tenderCategory === 'split' && (sCash + sOther > grandTotalToPay) ? Math.max(0, (sCash + sOther) - grandTotalToPay)
+      : 0;
 
     const newSale: PosSaleRecord = {
       id: `sale-${Date.now()}`,
@@ -896,13 +1177,16 @@ export default function AdminDashboardClient() {
       discountAmount,
       vatAmount: vatTotal,
       total: grandTotalToPay,
-      amountReceived: paymentMethod === 'cash_chf' ? cashNumeric : grandTotalToPay,
-      paymentMethod,
+      amountReceived: finalAmountReceived,
+      paymentMethod: finalPaymentMethod,
       paymentDetails: {
         reference: paymentReference || undefined,
-        cashReceived: paymentMethod === 'cash_chf' ? cashNumeric : undefined,
-        changeGiven: paymentMethod === 'cash_chf' ? cashChangeDue : undefined,
-        cardType: paymentMethod === 'card' ? cardTerminalType : undefined,
+        cashReceived: tenderCategory === 'cash' ? cashNumeric : tenderCategory === 'split' ? sCash : undefined,
+        changeGiven: finalChangeDue,
+        cardType: tenderCategory === 'other' ? (otherTenderType === 'card' ? cardTerminalType : otherTenderType.toUpperCase()) : undefined,
+        splitCash: tenderCategory === 'split' ? sCash : undefined,
+        splitOther: tenderCategory === 'split' ? sOther : undefined,
+        splitOtherMethod: tenderCategory === 'split' ? splitOtherMethod : undefined,
         notes: paymentNotes || undefined
       },
       seller: 'Marco (Rue des Pâquis 34)',
@@ -928,6 +1212,42 @@ export default function AdminDashboardClient() {
       clientName: clientName.trim() || 'Client Comptoir'
     };
 
+    // Live Stock Reduction on sale confirmation
+    setAllProducts(prev => {
+      const next = prev.map(p => {
+        const soldInTicket = ticketItems.filter(it => it.productId === p.id);
+        if (soldInTicket.length === 0) return p;
+        const updatedVariants = (p.variants || []).map(v => {
+          const matching = soldInTicket.find(it => it.variantId === v.id || it.variantId === v.sku || it.sku === v.sku);
+          if (matching) {
+            const currentStock = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : 15;
+            const newQty = Math.max(0, currentStock - matching.quantity);
+            return {
+              ...v,
+              inventoryQuantity: newQty,
+              inStock: newQty > 0
+            };
+          }
+          return v;
+        });
+        return { ...p, variants: updatedVariants };
+      });
+      try {
+        const saved = localStorage.getItem('nutrifitness_custom_products');
+        let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
+        ticketItems.forEach(it => {
+          const changed = next.find(p => p.id === it.productId);
+          if (changed) {
+            const idx = customItems.findIndex(p => p.id === changed.id);
+            if (idx >= 0) customItems[idx] = changed;
+            else customItems = [changed, ...customItems];
+          }
+        });
+        localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
+      } catch {}
+      return next;
+    });
+
     // Save sale locally and sync to Supabase
     const updatedHistory = [newSale, ...salesHistory];
     saveSalesHistory(updatedHistory);
@@ -939,7 +1259,7 @@ export default function AdminDashboardClient() {
       }).catch(() => {});
     } catch {}
 
-    // Show receipt
+    // Show receipt and invoice immediately
     setCompletedSale(newSale);
     setIsPaymentModalOpen(false);
 
@@ -953,6 +1273,8 @@ export default function AdminDashboardClient() {
     setShippingMethod('store_pickup');
     setOrderStatus('delivered');
     setCashTendered('');
+    setSplitCashAmount('');
+    setSplitOtherAmount('');
     setPaymentReference('');
     setPaymentNotes('');
     generateNewTicketNumber();
@@ -1681,6 +2003,10 @@ export default function AdminDashboardClient() {
               {filteredPosProducts.map(product => {
                 const img = product.images[0]?.src || '/images/placeholder.webp';
                 const hasMultipleVariants = (product.variants?.length || 0) > 1;
+                const stock = getProductTotalStock(product);
+                const isCritical = stock < 5;
+                const isMedium = stock <= 10 && !isCritical;
+                const isOptimal = stock > 10;
 
                 return (
                   <div
@@ -1730,15 +2056,51 @@ export default function AdminDashboardClient() {
                       <h3 className="text-xs font-bold text-slate-900 line-clamp-2 leading-snug group-hover:text-emerald-700 transition-colors">
                         {product.name.fr}
                       </h3>
+
+                      {/* Quick Stock & Barcode on-the-fly action chips */}
+                      <div className="mt-2 flex items-center gap-1.5 flex-wrap" onClick={(e) => e.stopPropagation()}>
+                        {/* Live Stock Badge (Click to quick-edit stock) */}
+                        <button
+                          type="button"
+                          onClick={() => openQuickStockModal(product)}
+                          title={adminLang === 'fr' ? 'Modifier le stock en direct (sans quitter la caisse)' : 'Quick edit stock on the fly'}
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold border transition-all hover:scale-102 active:scale-95 shadow-2xs ${
+                            isCritical
+                              ? 'bg-red-50 text-red-700 border-red-300 hover:bg-red-100 ring-1 ring-red-400/20'
+                              : isMedium
+                              ? 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100 ring-1 ring-amber-400/20'
+                              : 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100 ring-1 ring-emerald-400/20'
+                          }`}
+                        >
+                          <span className={`w-1.5 h-1.5 rounded-full ${
+                            isCritical ? 'bg-red-500 animate-pulse' : isMedium ? 'bg-amber-500' : 'bg-emerald-500'
+                          }`} />
+                          <span className="notranslate">{stock} en stock</span>
+                          <Edit3 className="w-2.5 h-2.5 opacity-60 ml-0.5" />
+                        </button>
+
+                        {/* Barcode / GTIN popup trigger button */}
+                        <button
+                          type="button"
+                          onClick={() => openBarcodeModal(product)}
+                          title={adminLang === 'fr' ? 'Gérer le code-barres / GTIN-13' : 'Manage barcode / GTIN'}
+                          className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-all hover:scale-102 active:scale-95 shadow-2xs"
+                        >
+                          <Barcode className="w-3 h-3 text-slate-600" />
+                          <span className="notranslate text-[9px] font-mono">
+                            {product.gtin13 ? 'GTIN' : '+ GTIN'}
+                          </span>
+                        </button>
+                      </div>
                     </div>
 
                     <div className="mt-3 pt-2 border-t border-slate-100 flex items-center justify-between">
-                      <span className="text-sm font-black text-slate-900 font-heading">
-                        CHF {product.priceChf.toFixed(2)}
+                      <span className="text-sm font-black text-slate-900 font-heading notranslate">
+                        <span>CHF </span><span>{product.priceChf.toFixed(2)}</span>
                       </span>
                       {hasMultipleVariants ? (
                         <span className="inline-flex items-center gap-1 px-2 py-1 rounded-lg bg-amber-50 group-hover:bg-amber-600 text-amber-800 group-hover:text-white text-[10px] font-black transition-colors border border-amber-200 group-hover:border-transparent">
-                          <span>Saveurs</span>
+                          <span>{adminLang === 'fr' ? 'Saveurs' : 'Flavors'}</span>
                           <span>→</span>
                         </span>
                       ) : (
@@ -2683,226 +3045,709 @@ export default function AdminDashboardClient() {
       )}
 
       {/* =========================================================
-          MODAL A: VARIANT SELECTOR FOR MULTI-FLAVOR PRODUCTS
+          MODAL 1: QUICK STOCK EDITING (ON-THE-FLY FROM POS GRID)
           ========================================================= */}
-      {variantPickerProduct && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 max-w-md w-full border border-slate-200 shadow-2xl text-slate-900 animate-in zoom-in-95 duration-150">
-            <div className="flex items-start justify-between mb-4">
-              <div>
-                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">
-                  Sélectionner la saveur / option
+      {quickStockProduct && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full border border-slate-200 shadow-2xl text-slate-900 animate-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col">
+            
+            {/* Header */}
+            <div className="flex items-start justify-between pb-4 border-b border-slate-100 shrink-0">
+              <div className="pr-4">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-black uppercase tracking-wider">
+                  <Zap className="w-3 h-3 text-emerald-600" />
+                  <span>Modification Rapide du Stock Caisse</span>
                 </span>
-                <h3 className="text-base font-bold text-slate-900 font-heading">
-                  {variantPickerProduct.name.fr}
+                <h3 className="text-base sm:text-lg font-black text-slate-900 font-heading mt-1">
+                  {quickStockProduct.name.fr}
                 </h3>
+                <p className="text-xs text-slate-400 font-medium">
+                  {quickStockProduct.brand} · Rayon physique Genève
+                </p>
               </div>
               <button
                 type="button"
-                onClick={() => setVariantPickerProduct(null)}
-                className="p-1 text-slate-400 hover:text-slate-700"
+                onClick={() => setQuickStockProduct(null)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition-colors shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            <div className="space-y-2 max-h-[360px] overflow-y-auto pr-1">
-              {variantPickerProduct.variants?.map(v => {
-                const variantImg = v.image || variantPickerProduct.images[0]?.src || '/images/placeholder.webp';
+            {/* Body */}
+            <div className="py-4 space-y-4 overflow-y-auto flex-1 pr-1">
+              {quickStockProduct.variants && quickStockProduct.variants.length > 0 ? (
+                <div className="space-y-3">
+                  <div className="flex items-center justify-between text-xs text-slate-500 font-medium px-1">
+                    <span>Variante / Parfum</span>
+                    <span>Quantité en rayon Genève</span>
+                  </div>
 
-                return (
-                  <button
-                    key={v.id || v.sku}
-                    type="button"
-                    onClick={() => {
-                      addToPosTicket(variantPickerProduct, v);
-                      setVariantPickerProduct(null);
-                    }}
-                    className="w-full p-2.5 bg-slate-50 hover:bg-emerald-50 hover:border-emerald-300 border border-slate-200 rounded-2xl text-left transition-all flex items-center justify-between group"
-                  >
-                    <div className="flex items-center gap-3">
-                      <div className="relative w-12 h-12 bg-white rounded-xl border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center">
-                        <Image
-                          src={variantImg}
-                          alt={v.flavorName.fr}
-                          fill
-                          sizes="48px"
-                          className="object-contain p-1"
-                        />
+                  {quickStockProduct.variants.map((v) => {
+                    const key = v.id || v.sku;
+                    const curVal = quickStockValues[key] ?? (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0));
+                    const isCrit = curVal < 5;
+                    const isMed = curVal >= 5 && curVal <= 10;
+                    const variantImg = v.image || quickStockProduct.images[0]?.src || '/images/placeholder.webp';
+
+                    return (
+                      <div
+                        key={key}
+                        className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
+                      >
+                        <div className="flex items-center gap-3 min-w-0">
+                          <div className="relative w-11 h-11 bg-white rounded-xl border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center">
+                            <Image
+                              src={variantImg}
+                              alt={v.flavorName.fr}
+                              fill
+                              sizes="44px"
+                              className="object-contain p-1"
+                            />
+                          </div>
+                          <div className="min-w-0">
+                            <p className="font-bold text-xs text-slate-900 truncate">
+                              {v.flavorName.fr}
+                            </p>
+                            <p className="text-[11px] text-slate-500">{v.format}</p>
+                            <span className={`inline-flex items-center gap-1 mt-0.5 px-2 py-0.5 rounded-md text-[10px] font-black border ${
+                              isCrit
+                                ? 'bg-red-50 text-red-700 border-red-300'
+                                : isMed
+                                ? 'bg-amber-50 text-amber-800 border-amber-300'
+                                : 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                            }`}>
+                              <span className={`w-1.5 h-1.5 rounded-full ${
+                                isCrit ? 'bg-red-500 animate-pulse' : isMed ? 'bg-amber-500' : 'bg-emerald-500'
+                              }`} />
+                              <span>{curVal} en rayon</span>
+                            </span>
+                          </div>
+                        </div>
+
+                        {/* Stepper buttons */}
+                        <div className="flex items-center gap-1.5 self-end sm:self-center shrink-0">
+                          <button
+                            type="button"
+                            onClick={() => setQuickStockValues(prev => ({ ...prev, [key]: Math.max(0, curVal - 5) }))}
+                            className="px-2 py-1 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-bold transition-colors"
+                            title="-5 unités"
+                          >
+                            -5
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setQuickStockValues(prev => ({ ...prev, [key]: Math.max(0, curVal - 1) }))}
+                            className="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center font-bold transition-colors"
+                            title="-1 unité"
+                          >
+                            <Minus className="w-3.5 h-3.5" />
+                          </button>
+                          <input
+                            type="number"
+                            min="0"
+                            value={curVal}
+                            onChange={(e) => {
+                              const val = parseInt(e.target.value, 10);
+                              setQuickStockValues(prev => ({ ...prev, [key]: isNaN(val) ? 0 : Math.max(0, val) }));
+                            }}
+                            className="w-14 px-2 py-1.5 bg-white border border-slate-300 rounded-lg text-center font-black text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setQuickStockValues(prev => ({ ...prev, [key]: curVal + 1 }))}
+                            className="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center font-bold transition-colors"
+                            title="+1 unité"
+                          >
+                            <Plus className="w-3.5 h-3.5" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setQuickStockValues(prev => ({ ...prev, [key]: curVal + 5 }))}
+                            className="px-2 py-1 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-bold transition-colors"
+                            title="+5 unités"
+                          >
+                            +5
+                          </button>
+                        </div>
                       </div>
-                      <div>
-                        <p className="font-bold text-xs text-slate-900 group-hover:text-emerald-800">
-                          {v.flavorName.fr}
-                        </p>
-                        <p className="text-[11px] text-slate-500 font-medium">
-                          {v.format}
-                        </p>
-                        <p className="text-[10px] font-mono text-slate-400">SKU: {v.sku}</p>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="space-y-4">
+                  {(() => {
+                    const curVal = quickStockValues['def'] ?? 20;
+                    const isCrit = curVal < 5;
+                    const isMed = curVal >= 5 && curVal <= 10;
+                    return (
+                      <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-4">
+                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black border ${
+                          isCrit
+                            ? 'bg-red-50 text-red-700 border-red-300'
+                            : isMed
+                            ? 'bg-amber-50 text-amber-800 border-amber-300'
+                            : 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                        }`}>
+                          <span className={`w-2 h-2 rounded-full ${
+                            isCrit ? 'bg-red-500 animate-pulse' : isMed ? 'bg-amber-500' : 'bg-emerald-500'
+                          }`} />
+                          <span>Stock actuel : {curVal} unités ({isCrit ? 'Critique < 5' : isMed ? 'Stock limité 5-10' : 'Optimal > 10'})</span>
+                        </span>
+
+                        <div className="flex items-center justify-center gap-2">
+                          <button
+                            type="button"
+                            onClick={() => setQuickStockValues(prev => ({ ...prev, def: Math.max(0, curVal - 10) }))}
+                            className="px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-xs"
+                          >
+                            -10
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setQuickStockValues(prev => ({ ...prev, def: Math.max(0, curVal - 1) }))}
+                            className="w-10 h-10 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center font-bold"
+                          >
+                            <Minus className="w-4 h-4" />
+                          </button>
+                          <input
+                            type="number"
+                            min="0"
+                            value={curVal}
+                            onChange={(e) => {
+                              const val = parseInt(e.target.value, 10);
+                              setQuickStockValues(prev => ({ ...prev, def: isNaN(val) ? 0 : Math.max(0, val) }));
+                            }}
+                            className="w-24 px-3 py-2 bg-white border border-slate-300 rounded-xl text-center font-black text-2xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
+                          />
+                          <button
+                            type="button"
+                            onClick={() => setQuickStockValues(prev => ({ ...prev, def: curVal + 1 }))}
+                            className="w-10 h-10 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center font-bold"
+                          >
+                            <Plus className="w-4 h-4" />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => setQuickStockValues(prev => ({ ...prev, def: curVal + 10 }))}
+                            className="px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-xs"
+                          >
+                            +10
+                          </button>
+                        </div>
+
+                        {/* Presets */}
+                        <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
+                          {[
+                            { label: '0 (Rupture)', val: 0 },
+                            { label: '4 (Critique)', val: 4 },
+                            { label: '10 (Moyen)', val: 10 },
+                            { label: '20 (Normal)', val: 20 },
+                            { label: '50 (Plein)', val: 50 },
+                          ].map(preset => (
+                            <button
+                              key={preset.label}
+                              type="button"
+                              onClick={() => setQuickStockValues(prev => ({ ...prev, def: preset.val }))}
+                              className="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition-colors"
+                            >
+                              {preset.label}
+                            </button>
+                          ))}
+                        </div>
                       </div>
-                    </div>
-                    <div className="text-right pl-2 shrink-0">
-                      <span className="font-black text-slate-900 text-sm font-heading group-hover:text-emerald-700 block">
-                        CHF {(v.priceChf || variantPickerProduct.priceChf).toFixed(2)}
-                      </span>
-                      <span className="text-[10px] text-emerald-600 font-bold group-hover:underline">
-                        Ajouter +
-                      </span>
-                    </div>
-                  </button>
-                );
-              })}
+                    );
+                  })()}
+                </div>
+              )}
             </div>
+
+            {/* Footer */}
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={() => setQuickStockProduct(null)}
+                className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs uppercase tracking-wider"
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                onClick={handleSaveQuickStock}
+                className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider shadow-sm flex items-center gap-2 transition-all active:scale-95"
+              >
+                <Check className="w-4 h-4" />
+                <span>Enregistrer le Stock en Direct</span>
+              </button>
+            </div>
+
           </div>
         </div>
       )}
 
       {/* =========================================================
-          MODAL B: PAYMENT DETAILS MODAL ("how he received the amount")
+          MODAL 2: GTIN / BARCODE MANAGEMENT (POPUP TOOL)
           ========================================================= */}
-      {isPaymentModalOpen && (
+      {barcodeModalProduct && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-slate-200 shadow-2xl text-slate-900 animate-in zoom-in-95 duration-200">
+          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full border border-slate-200 shadow-2xl text-slate-900 animate-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col">
             
-            {/* Modal Header */}
-            <div className="flex items-center justify-between pb-4 border-b border-slate-100">
-              <div>
-                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">
-                  {adminLang === 'fr' ? 'Règlement Caisse Magasin' : 'Store POS Checkout'}
+            {/* Header */}
+            <div className="flex items-start justify-between pb-4 border-b border-slate-100 shrink-0">
+              <div className="pr-4">
+                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-slate-100 border border-slate-200 text-slate-800 text-[10px] font-black uppercase tracking-wider">
+                  <Barcode className="w-3 h-3 text-slate-600" />
+                  <span>Gestion GTIN / Code-barres Lecteur Laser</span>
                 </span>
-                <h3 className="text-lg font-black text-slate-900 font-heading">
-                  {adminLang === 'fr' ? 'Encaissement' : 'Payment Collection'} · <span className="notranslate">{ticketNumber}</span>
+                <h3 className="text-base sm:text-lg font-black text-slate-900 font-heading mt-1">
+                  {barcodeModalProduct.name.fr}
                 </h3>
+                <p className="text-xs text-slate-400 font-medium">
+                  {barcodeModalProduct.brand} · Compatible lecteurs EAN-13, UPC & QR
+                </p>
               </div>
               <button
                 type="button"
-                onClick={() => setIsPaymentModalOpen(false)}
-                className="p-1 text-slate-400 hover:text-slate-700"
+                onClick={() => setBarcodeModalProduct(null)}
+                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition-colors shrink-0"
               >
                 <X className="w-5 h-5" />
               </button>
             </div>
 
-            {/* Total Display */}
-            <div className="my-5 p-4 rounded-2xl bg-emerald-50 border border-emerald-200 text-center">
-              <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider">
+            {/* Visual Barcode Graphic Preview */}
+            <div className="my-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col items-center justify-center gap-2">
+              <div className="flex items-center justify-center gap-[3px] h-12 py-1 px-4 bg-white border border-slate-200 rounded-lg shadow-2xs">
+                {Array.from({ length: 36 }).map((_, i) => (
+                  <span
+                    key={i}
+                    className={`h-full inline-block ${
+                      i % 7 === 0 || i % 11 === 0 ? 'w-[3px] bg-slate-900' : i % 3 === 0 ? 'w-[2px] bg-slate-800' : 'w-[1px] bg-slate-700'
+                    }`}
+                  />
+                ))}
+              </div>
+              <span className="font-mono text-xs font-black tracking-widest text-slate-600 notranslate">
+                {barcodeModalValues['def'] || Object.values(barcodeModalValues)[0] || barcodeModalProduct.gtin13 || '7640123456789'}
+              </span>
+              <p className="text-[11px] text-slate-500 text-center max-w-sm">
+                Scannez au lecteur laser ou saisissez le code-barres officiel. Le préfixe suisse standard est <strong className="text-slate-800">764</strong>.
+              </p>
+            </div>
+
+            {/* Body */}
+            <div className="py-2 space-y-4 overflow-y-auto flex-1 pr-1">
+              {barcodeModalProduct.variants && barcodeModalProduct.variants.length > 0 ? (
+                <div className="space-y-3">
+                  <span className="text-xs font-bold text-slate-700 block">
+                    Codes-barres par variante de saveur :
+                  </span>
+
+                  {barcodeModalProduct.variants.map((v) => {
+                    const key = v.id || v.sku;
+                    const curBarcode = barcodeModalValues[key] || '';
+                    const variantImg = v.image || barcodeModalProduct.images[0]?.src || '/images/placeholder.webp';
+
+                    return (
+                      <div key={key} className="p-3 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                        <div className="flex items-center justify-between">
+                          <div className="flex items-center gap-2.5 min-w-0">
+                            <div className="relative w-8 h-8 bg-white rounded-lg border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center">
+                              <Image
+                                src={variantImg}
+                                alt={v.flavorName.fr}
+                                fill
+                                sizes="32px"
+                                className="object-contain p-0.5"
+                              />
+                            </div>
+                            <span className="font-bold text-xs text-slate-900 truncate">
+                              {v.flavorName.fr} · {v.format}
+                            </span>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => setBarcodeModalValues(prev => ({ ...prev, [key]: generateSwissEan13() }))}
+                            className="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-[10px] font-bold flex items-center gap-1 transition-colors"
+                            title="Générer un EAN-13 suisse aléatoire valide"
+                          >
+                            <Zap className="w-3 h-3 text-emerald-600" />
+                            <span>Générer EAN-13</span>
+                          </button>
+                        </div>
+
+                        <div className="flex items-center gap-2">
+                          <input
+                            type="text"
+                            value={curBarcode}
+                            onChange={(e) => setBarcodeModalValues(prev => ({ ...prev, [key]: e.target.value }))}
+                            placeholder={`Code GTIN-13 (ex: 764... ou SKU ${v.sku})`}
+                            className="flex-1 px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
+                          />
+                        </div>
+                      </div>
+                    );
+                  })}
+                </div>
+              ) : (
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-bold text-slate-700">
+                      Code GTIN / EAN-13 du produit :
+                    </label>
+                    <button
+                      type="button"
+                      onClick={() => setBarcodeModalValues(prev => ({ ...prev, def: generateSwissEan13() }))}
+                      className="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold flex items-center gap-1 transition-colors"
+                    >
+                      <Zap className="w-3.5 h-3.5 text-emerald-600" />
+                      <span>⚡ Générer EAN-13 Suisse (764...)</span>
+                    </button>
+                  </div>
+
+                  <input
+                    type="text"
+                    value={barcodeModalValues['def'] || ''}
+                    onChange={(e) => setBarcodeModalValues(prev => ({ ...prev, def: e.target.value }))}
+                    placeholder="Ex: 7640123456789"
+                    className="w-full px-4 py-2.5 text-sm bg-white border border-slate-300 rounded-xl font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
+                    autoFocus
+                  />
+                </div>
+              )}
+            </div>
+
+            {/* Footer */}
+            <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 shrink-0">
+              <button
+                type="button"
+                onClick={() => setBarcodeModalProduct(null)}
+                className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs uppercase tracking-wider"
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                onClick={handleSaveBarcodeModal}
+                className="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs uppercase tracking-wider shadow-sm flex items-center gap-2 transition-all active:scale-95"
+              >
+                <Check className="w-4 h-4" />
+                <span>Enregistrer les Codes-Barres</span>
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================
+          MODAL 3: VARIANT SELECTOR FOR MULTI-FLAVOR PRODUCTS
+          ========================================================= */}
+      {variantPickerProduct && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-xl w-full border border-slate-200 shadow-2xl text-slate-900 animate-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col">
+            
+            {/* Header */}
+            <div className="flex items-start justify-between pb-3.5 border-b border-slate-100 shrink-0">
+              <div>
+                <span className="text-[10px] font-black uppercase text-amber-800 tracking-wider bg-amber-50 px-2 py-0.5 rounded-md border border-amber-200">
+                  ✨ Sélection de Parfum & Stock Temps Réel
+                </span>
+                <h3 className="text-base sm:text-lg font-black text-slate-900 font-heading mt-1 leading-snug">
+                  {variantPickerProduct.name.fr}
+                </h3>
+                <p className="text-xs text-slate-400 font-medium mt-0.5">
+                  {variantPickerProduct.brand} · {variantPickerProduct.variants?.length || 0} variations disponibles
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => {
+                  setVariantPickerProduct(null);
+                  setVariantFilterQuery('');
+                }}
+                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition-colors shrink-0"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Flavor Search Filter */}
+            <div className="my-3 shrink-0">
+              <div className="relative">
+                <Search className="w-4 h-4 absolute left-3 top-2.5 text-slate-400" />
+                <input
+                  type="text"
+                  value={variantFilterQuery}
+                  onChange={(e) => setVariantFilterQuery(e.target.value)}
+                  placeholder="Rechercher une saveur (ex: Chocolat, Vanille, Fraise, Cookies...)..."
+                  className="w-full pl-9 pr-8 py-2 text-xs bg-slate-50 border border-slate-200 rounded-xl text-slate-900 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+                {variantFilterQuery && (
+                  <button
+                    type="button"
+                    onClick={() => setVariantFilterQuery('')}
+                    className="absolute right-2.5 top-2.5 text-slate-400 hover:text-slate-600 text-xs"
+                  >
+                    ✕
+                  </button>
+                )}
+              </div>
+            </div>
+
+            {/* Flavor Variants List */}
+            <div className="space-y-2.5 overflow-y-auto flex-1 pr-1 py-1">
+              {variantPickerProduct.variants
+                ?.filter(v => {
+                  if (!variantFilterQuery.trim()) return true;
+                  const q = variantFilterQuery.toLowerCase();
+                  return (
+                    v.flavorName.fr?.toLowerCase().includes(q) ||
+                    v.format?.toLowerCase().includes(q) ||
+                    v.sku?.toLowerCase().includes(q)
+                  );
+                })
+                .map(v => {
+                  const key = v.id || v.sku;
+                  const variantImg = v.image || variantPickerProduct.images[0]?.src || '/images/placeholder.webp';
+                  const currentStock = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0);
+                  const isCrit = currentStock < 5;
+                  const isMed = currentStock >= 5 && currentStock <= 10;
+
+                  return (
+                    <div
+                      key={key}
+                      className="p-3 bg-slate-50 hover:bg-slate-100/80 rounded-2xl border border-slate-200 transition-all flex flex-col sm:flex-row sm:items-center justify-between gap-3 group"
+                    >
+                      <div className="flex items-center gap-3 min-w-0">
+                        <div className="relative w-12 h-12 bg-white rounded-xl border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center shadow-2xs">
+                          <Image
+                            src={variantImg}
+                            alt={v.flavorName.fr}
+                            fill
+                            sizes="48px"
+                            className="object-contain p-1 group-hover:scale-105 transition-transform"
+                          />
+                        </div>
+                        <div className="min-w-0">
+                          <h4 className="font-bold text-xs text-slate-900 leading-tight">
+                            {v.flavorName.fr}
+                          </h4>
+                          <p className="text-[11px] text-slate-500 font-medium mt-0.5">
+                            {v.format} · <span className="font-mono text-slate-400 text-[10px] notranslate">{v.sku}</span>
+                          </p>
+
+                          {/* Live Stock Badge with exact color rules */}
+                          <div className="mt-1 flex items-center gap-1.5 flex-wrap">
+                            <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-black border ${
+                              isCrit
+                                ? 'bg-red-50 text-red-700 border-red-300'
+                                : isMed
+                                ? 'bg-amber-50 text-amber-800 border-amber-300'
+                                : 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                            }`}>
+                              <span className={`w-1.5 h-1.5 rounded-full ${
+                                isCrit ? 'bg-red-500 animate-pulse' : isMed ? 'bg-amber-500' : 'bg-emerald-500'
+                              }`} />
+                              <span className="notranslate">
+                                {currentStock === 0 ? 'Rupture de stock' : `${currentStock} en stock`}
+                              </span>
+                            </span>
+
+                            {/* Mini inline stock adjustment steppers */}
+                            <div className="inline-flex items-center gap-0.5 bg-white border border-slate-200 rounded-lg p-0.5" title="Ajustement rapide du stock">
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleInlineVariantStockChange(variantPickerProduct.id, key, -1);
+                                }}
+                                className="w-5 h-5 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded text-xs"
+                                title="-1 stock"
+                              >
+                                <Minus className="w-2.5 h-2.5" />
+                              </button>
+                              <button
+                                type="button"
+                                onClick={(e) => {
+                                  e.stopPropagation();
+                                  handleInlineVariantStockChange(variantPickerProduct.id, key, 1);
+                                }}
+                                className="w-5 h-5 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded text-xs"
+                                title="+1 stock"
+                              >
+                                <Plus className="w-2.5 h-2.5" />
+                              </button>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Price & Add to Ticket action */}
+                      <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0 self-end sm:self-center">
+                        <div className="text-right">
+                          <span className="font-black text-slate-900 text-sm font-heading notranslate block">
+                            CHF {(v.priceChf || variantPickerProduct.priceChf).toFixed(2)}
+                          </span>
+                        </div>
+
+                        <button
+                          type="button"
+                          onClick={() => {
+                            addToPosTicket(variantPickerProduct, v);
+                            setVariantPickerProduct(null);
+                            setVariantFilterQuery('');
+                          }}
+                          className="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-black uppercase tracking-wider flex items-center gap-1.5 transition-all active:scale-95 shadow-2xs"
+                        >
+                          <Plus className="w-3.5 h-3.5" />
+                          <span>Ajouter au Ticket</span>
+                        </button>
+                      </div>
+                    </div>
+                  );
+                })}
+
+              {variantPickerProduct.variants?.filter(v => {
+                if (!variantFilterQuery.trim()) return true;
+                const q = variantFilterQuery.toLowerCase();
+                return (
+                  v.flavorName.fr?.toLowerCase().includes(q) ||
+                  v.format?.toLowerCase().includes(q) ||
+                  v.sku?.toLowerCase().includes(q)
+                );
+              }).length === 0 && (
+                <div className="py-8 text-center text-slate-400">
+                  <p className="text-xs font-bold">Aucune saveur ne correspond à &quot;{variantFilterQuery}&quot;.</p>
+                </div>
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="pt-3 border-t border-slate-100 flex items-center justify-end shrink-0">
+              <button
+                type="button"
+                onClick={() => {
+                  setVariantPickerProduct(null);
+                  setVariantFilterQuery('');
+                }}
+                className="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-colors"
+              >
+                Fermer
+              </button>
+            </div>
+
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================
+          MODAL 4: PAYMENT DETAILS MODAL (SEAMLESS FLEXIBLE & SPLIT CHECKOUT)
+          ========================================================= */}
+      {isPaymentModalOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 sm:p-8 max-w-lg w-full border border-slate-200 shadow-2xl text-slate-900 animate-in zoom-in-95 duration-200 max-h-[92vh] flex flex-col">
+            
+            {/* Modal Header */}
+            <div className="flex items-center justify-between pb-3 border-b border-slate-100 shrink-0">
+              <div>
+                <span className="text-[10px] font-black uppercase text-slate-400 tracking-wider">
+                  {adminLang === 'fr' ? 'Règlement Caisse Magasin' : 'Store POS Checkout'}
+                </span>
+                <h3 className="text-lg font-black text-slate-900 font-heading">
+                  {adminLang === 'fr' ? 'Encaissement & Règlement' : 'Payment Collection'} · <span className="notranslate">{ticketNumber}</span>
+                </h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsPaymentModalOpen(false)}
+                className="p-1 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Total Display Banner */}
+            <div className="my-3 p-3.5 rounded-2xl bg-emerald-50 border border-emerald-200 text-center shrink-0">
+              <span className="text-xs font-bold text-emerald-800 uppercase tracking-wider block">
                 {adminLang === 'fr'
-                  ? `Montant total à percevoir ${shippingCost > 0 ? `(dont livraison CHF ${shippingCost.toFixed(2)})` : ''}`
+                  ? `Montant Net à Encaisser ${shippingCost > 0 ? `(dont livraison CHF ${shippingCost.toFixed(2)})` : ''}`
                   : `Total amount to collect ${shippingCost > 0 ? `(incl. shipping CHF ${shippingCost.toFixed(2)})` : ''}`}
               </span>
-              <div className="text-4xl font-black text-emerald-800 font-heading mt-1 notranslate">
+              <div className="text-3xl sm:text-4xl font-black text-emerald-800 font-heading mt-0.5 notranslate">
                 <span>CHF </span><span>{grandTotalToPay.toFixed(2)}</span>
               </div>
             </div>
 
-            {/* Payment Method Selector */}
-            <div className="space-y-4 max-h-[70vh] overflow-y-auto pr-1">
-              <label className="block text-xs font-bold text-slate-700 uppercase tracking-wider">
-                {adminLang === 'fr' ? 'Mode de paiement reçu :' : 'Payment method received:'}
-              </label>
+            {/* Scrollable Content */}
+            <div className="space-y-4 overflow-y-auto flex-1 pr-1">
+              
+              {/* Tender Category Navigation Tabs */}
+              <div>
+                <label className="block text-xs font-black uppercase tracking-wider text-slate-700 mb-2">
+                  Mode de règlement choisi :
+                </label>
+                <div className="grid grid-cols-3 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTenderCategory('cash');
+                      setPaymentMethod('cash_chf');
+                    }}
+                    className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
+                      tenderCategory === 'cash'
+                        ? 'border-amber-600 bg-amber-50 text-amber-900 font-black shadow-xs ring-2 ring-amber-500/20'
+                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    <Banknote className="w-5 h-5 text-amber-600" />
+                    <span className="text-xs font-bold">💵 Espèces</span>
+                  </button>
 
-              <div className="grid grid-cols-3 gap-2.5">
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('twint')}
-                  className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
-                    paymentMethod === 'twint'
-                      ? 'border-emerald-600 bg-emerald-50 text-emerald-900 font-black shadow-xs ring-2 ring-emerald-500/20'
-                      : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  <QrCode className="w-5 h-5 text-emerald-600" />
-                  <span className="text-xs font-bold">⚡ TWINT</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTenderCategory('other');
+                      setPaymentMethod(otherTenderType === 'twint' ? 'twint' : otherTenderType === 'invoice' ? 'invoice' : 'card');
+                    }}
+                    className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
+                      tenderCategory === 'other'
+                        ? 'border-emerald-600 bg-emerald-50 text-emerald-900 font-black shadow-xs ring-2 ring-emerald-500/20'
+                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    <Zap className="w-5 h-5 text-emerald-600" />
+                    <span className="text-xs font-bold">⚡ Autre Moyen</span>
+                  </button>
 
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('card')}
-                  className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
-                    paymentMethod === 'card'
-                      ? 'border-blue-600 bg-blue-50 text-blue-900 font-black shadow-xs ring-2 ring-blue-500/20'
-                      : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  <CreditCard className="w-5 h-5 text-blue-600" />
-                  <span className="text-xs font-bold">{adminLang === 'fr' ? '💳 Carte' : '💳 Card'}</span>
-                </button>
-
-                <button
-                  type="button"
-                  onClick={() => setPaymentMethod('cash_chf')}
-                  className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
-                    paymentMethod === 'cash_chf'
-                      ? 'border-amber-600 bg-amber-50 text-amber-900 font-black shadow-xs ring-2 ring-amber-500/20'
-                      : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
-                  }`}
-                >
-                  <Banknote className="w-5 h-5 text-amber-600" />
-                  <span className="text-xs font-bold">{adminLang === 'fr' ? '💵 Espèces CHF' : '💵 Cash CHF'}</span>
-                </button>
+                  <button
+                    type="button"
+                    onClick={() => {
+                      setTenderCategory('split');
+                      setPaymentMethod('split');
+                      if (!splitCashAmount) {
+                        setSplitCashAmount((grandTotalToPay / 2).toFixed(2));
+                        setSplitOtherAmount((grandTotalToPay - (grandTotalToPay / 2)).toFixed(2));
+                      }
+                    }}
+                    className={`p-3 rounded-2xl border text-center transition-all flex flex-col items-center gap-1.5 ${
+                      tenderCategory === 'split'
+                        ? 'border-blue-600 bg-blue-50 text-blue-900 font-black shadow-xs ring-2 ring-blue-500/20'
+                        : 'border-slate-200 bg-white text-slate-700 hover:bg-slate-50'
+                    }`}
+                  >
+                    <Split className="w-5 h-5 text-blue-600" />
+                    <span className="text-xs font-bold">🔄 Partagé</span>
+                  </button>
+                </div>
               </div>
 
-              {/* Dynamic Payment Details Section */}
-              {paymentMethod === 'twint' && (
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-                  <p className="text-xs text-slate-600 font-medium">
-                    {adminLang === 'fr' 
-                      ? "Faites scanner le QR Code TWINT du comptoir au client ou validez via l'application." 
-                      : "Have the customer scan the counter TWINT QR code or confirm in app."}
-                  </p>
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">
-                      {adminLang === 'fr' 
-                        ? 'Numéro de transaction / Référence TWINT (facultatif) :' 
-                        : 'TWINT Transaction reference / ID (optional):'}
-                    </label>
-                    <input
-                      type="text"
-                      value={paymentReference}
-                      onChange={(e) => setPaymentReference(e.target.value)}
-                      placeholder="Ex: TW-984321..."
-                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {paymentMethod === 'card' && (
-                <div className="p-4 rounded-2xl bg-slate-50 border border-slate-200 space-y-2.5">
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">
-                      {adminLang === 'fr' ? 'Terminal de paiement :' : 'Payment terminal:'}
-                    </label>
-                    <select
-                      value={cardTerminalType}
-                      onChange={(e) => setCardTerminalType(e.target.value)}
-                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none"
-                    >
-                      <option value="Terminal SumUp / PostFinance">Terminal SumUp / PostFinance</option>
-                      <option value="Visa / Mastercard">Visa / Mastercard</option>
-                      <option value="Apple Pay / Google Pay">Apple Pay / Google Pay</option>
-                      <option value="Maestro / Débit Suisse">Maestro / Débit Suisse</option>
-                    </select>
-                  </div>
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">
-                      {adminLang === 'fr' ? 'Code autorisation terminal (facultatif) :' : 'Authorization code (optional):'}
-                    </label>
-                    <input
-                      type="text"
-                      value={paymentReference}
-                      onChange={(e) => setPaymentReference(e.target.value)}
-                      placeholder="Ex: AUTH-8291..."
-                      className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none"
-                    />
-                  </div>
-                </div>
-              )}
-
-              {paymentMethod === 'cash_chf' && (
-                <div className="p-4 rounded-2xl bg-amber-50/50 border border-amber-200 space-y-3">
+              {/* TAB 1: PAY BY CASH */}
+              {tenderCategory === 'cash' && (
+                <div className="p-4 rounded-2xl bg-amber-50/60 border border-amber-200 space-y-3">
                   <div>
                     <label className="block text-xs font-bold text-amber-900 mb-1.5">
-                      {adminLang === 'fr' ? 'Montant reçu du client (CHF) :' : 'Cash received from customer (CHF):'}
+                      {adminLang === 'fr' ? 'Montant reçu en espèces du client (CHF) :' : 'Cash received from customer (CHF):'}
                     </label>
                     <div className="relative">
                       <span className="absolute left-3 top-2.5 font-bold text-slate-400 text-sm">CHF</span>
@@ -2912,16 +3757,16 @@ export default function AdminDashboardClient() {
                         value={cashTendered}
                         onChange={(e) => setCashTendered(e.target.value)}
                         placeholder={grandTotalToPay.toFixed(2)}
-                        className="w-full pl-12 pr-4 py-2.5 bg-white border border-amber-300 rounded-xl font-black text-lg text-slate-900 focus:outline-none"
+                        className="w-full pl-12 pr-4 py-2.5 bg-white border border-amber-300 rounded-xl font-black text-lg text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                         autoFocus
                       />
                     </div>
                   </div>
 
-                  {/* Quick Cash Buttons */}
+                  {/* Banknote quick selectors */}
                   <div className="flex flex-wrap gap-1.5">
                     {[
-                      { label: 'Exact', val: grandTotalToPay },
+                      { label: `Exact (CHF ${grandTotalToPay.toFixed(2)})`, val: grandTotalToPay },
                       { label: 'CHF 20', val: 20 },
                       { label: 'CHF 50', val: 50 },
                       { label: 'CHF 100', val: 100 },
@@ -2938,12 +3783,12 @@ export default function AdminDashboardClient() {
                     ))}
                   </div>
 
-                  {/* Change Calculator Output */}
+                  {/* Real-time change due box */}
                   <div className="p-3 bg-white rounded-xl border border-amber-200 flex items-center justify-between">
                     <span className="text-xs font-bold text-slate-700">
                       {adminLang === 'fr' ? 'Monnaie à rendre :' : 'Change due:'}
                     </span>
-                    <span className={`text-lg font-black font-heading notranslate ${
+                    <span className={`text-base font-black font-heading notranslate ${
                       cashNumeric >= grandTotalToPay ? 'text-emerald-600' : 'text-red-500'
                     }`}>
                       {cashNumeric >= grandTotalToPay 
@@ -2951,6 +3796,221 @@ export default function AdminDashboardClient() {
                         : `${adminLang === 'fr' ? 'Manque' : 'Short'} CHF ${(grandTotalToPay - cashNumeric).toFixed(2)}`}
                     </span>
                   </div>
+                </div>
+              )}
+
+              {/* TAB 2: PAY BY OTHER */}
+              {tenderCategory === 'other' && (
+                <div className="space-y-3">
+                  <div className="grid grid-cols-2 gap-2">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOtherTenderType('twint');
+                        setPaymentMethod('twint');
+                      }}
+                      className={`p-2.5 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                        otherTenderType === 'twint'
+                          ? 'bg-emerald-600 text-white border-emerald-600 shadow-2xs'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      }`}
+                    >
+                      <QrCode className="w-4 h-4" />
+                      <span>⚡ TWINT QR</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOtherTenderType('card');
+                        setPaymentMethod('card');
+                      }}
+                      className={`p-2.5 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                        otherTenderType === 'card'
+                          ? 'bg-blue-600 text-white border-blue-600 shadow-2xs'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      }`}
+                    >
+                      <CreditCard className="w-4 h-4" />
+                      <span>💳 Carte / Terminal</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOtherTenderType('invoice');
+                        setPaymentMethod('invoice');
+                      }}
+                      className={`p-2.5 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                        otherTenderType === 'invoice'
+                          ? 'bg-purple-600 text-white border-purple-600 shadow-2xs'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      }`}
+                    >
+                      <FileText className="w-4 h-4" />
+                      <span>📄 Facture Client</span>
+                    </button>
+
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setOtherTenderType('postfinance');
+                        setPaymentMethod('card');
+                      }}
+                      className={`p-2.5 rounded-xl border text-xs font-bold flex items-center justify-center gap-1.5 transition-all ${
+                        otherTenderType === 'postfinance'
+                          ? 'bg-amber-600 text-white border-amber-600 shadow-2xs'
+                          : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
+                      }`}
+                    >
+                      <span>🟡 PostFinance Pay</span>
+                    </button>
+                  </div>
+
+                  {otherTenderType === 'twint' && (
+                    <div className="p-3 bg-emerald-50/60 rounded-xl border border-emerald-200 space-y-2 text-xs">
+                      <p className="text-emerald-900 font-medium">
+                        Présentez le QR Code TWINT au client au comptoir de la Rue des Pâquis.
+                      </p>
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                          Référence transaction TWINT (optionnel) :
+                        </label>
+                        <input
+                          type="text"
+                          value={paymentReference}
+                          onChange={(e) => setPaymentReference(e.target.value)}
+                          placeholder="Ex: TW-89421..."
+                          className="w-full px-3 py-1.5 text-xs bg-white border border-slate-200 rounded-lg text-slate-900 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {otherTenderType === 'card' && (
+                    <div className="p-3 bg-blue-50/60 rounded-xl border border-blue-200 space-y-2 text-xs">
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-600 mb-1">Terminal de paiement :</label>
+                        <select
+                          value={cardTerminalType}
+                          onChange={(e) => setCardTerminalType(e.target.value)}
+                          className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none"
+                        >
+                          <option value="Terminal SumUp / PostFinance">Terminal SumUp / PostFinance</option>
+                          <option value="Visa / Mastercard">Visa / Mastercard</option>
+                          <option value="Apple Pay / Google Pay">Apple Pay / Google Pay</option>
+                          <option value="Maestro / Débit Suisse">Maestro / Débit Suisse</option>
+                        </select>
+                      </div>
+                      <div>
+                        <label className="block text-[11px] font-bold text-slate-500 mb-1">Code autorisation / Référence (optionnel) :</label>
+                        <input
+                          type="text"
+                          value={paymentReference}
+                          onChange={(e) => setPaymentReference(e.target.value)}
+                          placeholder="Ex: AUTH-4912..."
+                          className="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs text-slate-900 focus:outline-none"
+                        />
+                      </div>
+                    </div>
+                  )}
+
+                  {otherTenderType === 'invoice' && (
+                    <div className="p-3 bg-purple-50/60 rounded-xl border border-purple-200 text-xs text-purple-900">
+                      <p className="font-semibold">Paiement sur facture à 30 jours (B2B ou Client Régulier).</p>
+                      <p className="text-[11px] text-purple-800 mt-1">Assurez-vous de renseigner l'adresse complète du client ci-dessous.</p>
+                    </div>
+                  )}
+                </div>
+              )}
+
+              {/* TAB 3: SPLIT TENDER */}
+              {tenderCategory === 'split' && (
+                <div className="p-4 rounded-2xl bg-blue-50/50 border border-blue-200 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <span className="text-xs font-bold text-blue-900 uppercase tracking-wider flex items-center gap-1.5">
+                      <Split className="w-4 h-4 text-blue-600" />
+                      <span>Répartition du Règlement</span>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const sC = parseFloat(splitCashAmount) || 0;
+                        const remainder = Math.max(0, grandTotalToPay - sC);
+                        setSplitOtherAmount(remainder.toFixed(2));
+                      }}
+                      className="text-[11px] text-blue-700 hover:text-blue-900 font-bold underline"
+                    >
+                      Équilibrer le reste
+                    </button>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {/* Portion Cash */}
+                    <div className="p-3 bg-white rounded-xl border border-blue-200 space-y-1">
+                      <label className="block text-[11px] font-bold text-slate-700">
+                        💵 Part Espèces (CHF) :
+                      </label>
+                      <input
+                        type="number"
+                        step="0.05"
+                        value={splitCashAmount}
+                        onChange={(e) => setSplitCashAmount(e.target.value)}
+                        placeholder="0.00"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg font-black text-sm text-slate-900 focus:outline-none notranslate"
+                      />
+                    </div>
+
+                    {/* Portion Other */}
+                    <div className="p-3 bg-white rounded-xl border border-blue-200 space-y-1">
+                      <div className="flex items-center justify-between">
+                        <label className="text-[11px] font-bold text-slate-700">
+                          Part Autre (CHF) :
+                        </label>
+                        <select
+                          value={splitOtherMethod}
+                          onChange={(e) => setSplitOtherMethod(e.target.value as 'twint' | 'card')}
+                          className="text-[10px] font-bold bg-slate-100 rounded px-1.5 py-0.5 border border-slate-200"
+                        >
+                          <option value="twint">⚡ TWINT</option>
+                          <option value="card">💳 Carte</option>
+                        </select>
+                      </div>
+                      <input
+                        type="number"
+                        step="0.05"
+                        value={splitOtherAmount}
+                        onChange={(e) => setSplitOtherAmount(e.target.value)}
+                        placeholder="0.00"
+                        className="w-full px-3 py-1.5 bg-slate-50 border border-slate-300 rounded-lg font-black text-sm text-slate-900 focus:outline-none notranslate"
+                      />
+                    </div>
+                  </div>
+
+                  {/* Reconciliation summary */}
+                  {(() => {
+                    const sCash = parseFloat(splitCashAmount) || 0;
+                    const sOther = parseFloat(splitOtherAmount) || 0;
+                    const sTotal = sCash + sOther;
+                    const isCovered = sTotal >= grandTotalToPay - 0.05;
+
+                    return (
+                      <div className={`p-2.5 rounded-xl border text-xs flex items-center justify-between ${
+                        isCovered
+                          ? 'bg-emerald-50 text-emerald-900 border-emerald-300'
+                          : 'bg-amber-50 text-amber-900 border-amber-300'
+                      }`}>
+                        <div>
+                          <span>Saisi : <strong>CHF {sTotal.toFixed(2)}</strong> sur <strong>CHF {grandTotalToPay.toFixed(2)}</strong></span>
+                        </div>
+                        <span className="font-black font-heading notranslate">
+                          {isCovered 
+                            ? '✅ Total couvert' 
+                            : `Reste CHF ${(grandTotalToPay - sTotal).toFixed(2)}`}
+                        </span>
+                      </div>
+                    );
+                  })()}
                 </div>
               )}
 
@@ -3066,26 +4126,30 @@ export default function AdminDashboardClient() {
                 />
               </div>
 
-              {/* Complete sale button */}
+            </div>
+
+            {/* Complete sale button */}
+            <div className="pt-3 border-t border-slate-100 shrink-0">
               <button
                 type="button"
                 onClick={handleValidateSale}
-                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 mt-4 notranslate"
+                className="w-full py-4 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-sm uppercase tracking-wider rounded-2xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2 notranslate"
               >
                 <Check className="w-5 h-5" />
                 <span>
                   {adminLang === 'fr' 
-                    ? `Valider l'Encaissement (CHF ${grandTotalToPay.toFixed(2)}) & Émettre le Reçu` 
-                    : `Complete Payment (CHF ${grandTotalToPay.toFixed(2)}) & Issue Receipt`}
+                    ? `Valider le Paiement & Générer la Facture (CHF ${grandTotalToPay.toFixed(2)})` 
+                    : `Confirm Payment & Generate Invoice (CHF ${grandTotalToPay.toFixed(2)})`}
                 </span>
               </button>
             </div>
+
           </div>
         </div>
       )}
 
       {/* =========================================================
-          MODAL C: PRINTABLE RECEIPT / TICKET DE CAISSE
+          MODAL 5: PRINTABLE RECEIPT / INVOICE (FACTURE & REÇU DE CAISSE)
           ========================================================= */}
       {completedSale && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
@@ -3094,7 +4158,7 @@ export default function AdminDashboardClient() {
             {/* Action Bar */}
             <div className="flex items-center justify-between pb-4 border-b border-slate-200">
               <span className="text-xs font-black uppercase text-emerald-700 flex items-center gap-1.5">
-                <Check className="w-4 h-4" /> Vente Confirmée
+                <Check className="w-4 h-4" /> Vente Confirmée & Facture Émise
               </span>
               <div className="flex items-center gap-2">
                 <button
@@ -3119,6 +4183,9 @@ export default function AdminDashboardClient() {
             <div id="pos-receipt-print" className="my-4 p-5 bg-slate-50 rounded-2xl border border-dashed border-slate-300 font-mono text-xs text-slate-800 space-y-3">
               {/* Header */}
               <div className="text-center space-y-0.5 border-b border-dashed border-slate-300 pb-3">
+                <span className="text-[10px] font-black uppercase tracking-wider text-slate-400 block">
+                  FACTURE & REÇU DE CAISSE (INVOICE / RECEIPT)
+                </span>
                 <h4 className="font-black text-sm text-slate-900">NUTRIFITNESS GENÈVE</h4>
                 <p className="text-[11px] text-slate-600">Rue des Pâquis 34, 1201 Genève</p>
                 <p className="text-[10px] text-slate-500">Tél: +41 22 731 12 34 · nutrifitness.ch</p>
@@ -3128,12 +4195,12 @@ export default function AdminDashboardClient() {
               {/* Meta */}
               <div className="text-[11px] space-y-0.5 border-b border-dashed border-slate-300 pb-2">
                 <div className="flex justify-between">
-                  <span>Ticket :</span>
+                  <span>Facture / Ticket :</span>
                   <span className="font-bold">{completedSale.ticketNumber}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Date :</span>
-                  <span>{new Date(completedSale.timestamp).toLocaleString('fr-CH')}</span>
+                  <span>{new Date(completedSale.timestamp).toLocaleString('fr-CH', { timeZone: 'Europe/Zurich' })}</span>
                 </div>
                 <div className="flex justify-between">
                   <span>Vendeur :</span>
@@ -3177,34 +4244,63 @@ export default function AdminDashboardClient() {
                   <span>CHF {completedSale.vatAmount.toFixed(2)}</span>
                 </div>
                 <div className="flex justify-between font-black text-sm text-slate-900 pt-1">
-                  <span>TOTAL PAYÉ :</span>
+                  <span>TOTAL NET PAYÉ :</span>
                   <span>CHF {completedSale.total.toFixed(2)}</span>
                 </div>
               </div>
 
               {/* Payment Details */}
-              <div className="text-[11px] space-y-0.5">
-                <div className="flex justify-between font-bold">
-                  <span>Mode de règlement :</span>
-                  <span className="uppercase">{completedSale.paymentMethod}</span>
-                </div>
-                {completedSale.paymentDetails.cashReceived && (
+              <div className="text-[11px] space-y-1">
+                {completedSale.paymentMethod === 'split' ? (
                   <>
-                    <div className="flex justify-between">
-                      <span>Espèces reçues :</span>
-                      <span>CHF {completedSale.paymentDetails.cashReceived.toFixed(2)}</span>
+                    <div className="flex justify-between font-bold text-slate-900">
+                      <span>Mode de règlement :</span>
+                      <span className="uppercase">PAIEMENT PARTAGÉ</span>
                     </div>
-                    <div className="flex justify-between font-bold text-emerald-700">
-                      <span>Monnaie rendue :</span>
-                      <span>CHF {(completedSale.paymentDetails.changeGiven || 0).toFixed(2)}</span>
-                    </div>
+                    {completedSale.paymentDetails.splitCash !== undefined && (
+                      <div className="flex justify-between text-slate-700">
+                        <span>💵 Espèces reçues :</span>
+                        <span>CHF {completedSale.paymentDetails.splitCash.toFixed(2)}</span>
+                      </div>
+                    )}
+                    {completedSale.paymentDetails.splitOther !== undefined && (
+                      <div className="flex justify-between text-slate-700">
+                        <span>{completedSale.paymentDetails.splitOtherMethod === 'twint' ? '⚡ TWINT :' : '💳 Carte Bancaire :'}</span>
+                        <span>CHF {completedSale.paymentDetails.splitOther.toFixed(2)}</span>
+                      </div>
+                    )}
+                    {completedSale.paymentDetails.changeGiven ? (
+                      <div className="flex justify-between font-bold text-emerald-700">
+                        <span>Monnaie rendue :</span>
+                        <span>CHF {completedSale.paymentDetails.changeGiven.toFixed(2)}</span>
+                      </div>
+                    ) : null}
                   </>
-                )}
-                {completedSale.paymentDetails.reference && (
-                  <div className="flex justify-between text-[10px] text-slate-500">
-                    <span>Réf :</span>
-                    <span>{completedSale.paymentDetails.reference}</span>
-                  </div>
+                ) : (
+                  <>
+                    <div className="flex justify-between font-bold">
+                      <span>Mode de règlement :</span>
+                      <span className="uppercase">{completedSale.paymentMethod}</span>
+                    </div>
+                    {completedSale.paymentDetails.cashReceived && (
+                      <>
+                        <div className="flex justify-between">
+                          <span>Espèces reçues :</span>
+                          <span>CHF {completedSale.paymentDetails.cashReceived.toFixed(2)}</span>
+                        </div>
+                        <div className="flex justify-between font-bold text-emerald-700">
+                          <span>Monnaie rendue :</span>
+                          <span>CHF {(completedSale.paymentDetails.changeGiven || 0).toFixed(2)}</span>
+                        </div>
+                      </>
+                    )}
+                    {completedSale.paymentDetails.reference && (
+                      <div className="flex justify-between text-[10px] text-slate-500">
+                        <span>Réf :</span>
+                        <span>{completedSale.paymentDetails.reference}</span>
+                      </div>
+                    )}
+                  </>
                 )}
               </div>
 

@@ -30,6 +30,7 @@ export interface ProductVariant {
 
 export interface ProductItem {
   id: string;
+  gtin13?: string;
   slug: Record<SupportedLocale, string>;
   name: Record<SupportedLocale, string>;
   brand: string;
