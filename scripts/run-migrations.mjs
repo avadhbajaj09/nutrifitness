@@ -1,0 +1,25 @@
+import pg from 'pg';
+import { readFileSync } from 'fs';
+
+const { Client } = pg;
+const client = new Client({
+  connectionString: 'postgresql://postgres:Not1just%25maddy@db.punhmwlpaghmjndpyusf.supabase.co:5432/postgres',
+  ssl: { rejectUnauthorized: false }
+});
+
+try {
+  await client.connect();
+  console.log('Connected to Supabase');
+  
+  const schema = readFileSync('supabase/migrations/001_fulfillment_schema.sql', 'utf8');
+  await client.query(schema);
+  console.log('Schema migration complete');
+  
+  const seed = readFileSync('supabase/migrations/002_fulfillment_seed.sql', 'utf8');
+  await client.query(seed);
+  console.log('Seed migration complete');
+} catch(e) {
+  console.error('Migration error:', e);
+} finally {
+  await client.end();
+}
