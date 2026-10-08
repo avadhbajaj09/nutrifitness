@@ -15,9 +15,16 @@ import ProductMarquee from '@/components/ProductMarquee';
 import StoreMap from '@/components/StoreMap';
 import HomeFAQ from '@/components/HomeFAQ';
 import { PRODUCTS } from '@/lib/catalog';
+import { getHiddenProductSlugs } from '@/lib/hiddenProducts';
 
-export default function HomePage() {
-  const physicalProducts = PRODUCTS.filter(p => p.categorySlug !== 'guides-ebooks' && p.id !== 'prod-25430');
+export default async function HomePage() {
+  const hiddenSlugs = await getHiddenProductSlugs();
+  const physicalProducts = PRODUCTS.filter(p => {
+    const slug = (p.slug?.fr || '').toLowerCase().trim();
+    const id = p.id || '';
+    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id)) return false;
+    return p.categorySlug !== 'guides-ebooks' && p.id !== 'prod-25430';
+  });
   const bestSellers = physicalProducts.slice(0, 8);
   const newArrivals = physicalProducts.slice(8, 16);
   const performanceCollection = physicalProducts.slice(16, 24);

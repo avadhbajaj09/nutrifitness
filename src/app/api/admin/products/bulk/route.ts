@@ -91,6 +91,8 @@ export async function POST(request: Request) {
 
     // Trigger instant Next.js cache revalidation
     try {
+      const { clearHiddenProductsCache } = await import('@/lib/hiddenProducts');
+      clearHiddenProductsCache();
       revalidatePath('/');
       revalidatePath('/boutique');
       revalidatePath('/categorie');

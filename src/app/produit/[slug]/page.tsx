@@ -61,8 +61,19 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound();
   }
 
-  const relatedProducts = PRODUCTS.filter(p => p.id !== product.id && p.categorySlug === product.categorySlug).slice(0, 8);
-  const fallbackRelated = relatedProducts.length > 0 ? relatedProducts : PRODUCTS.filter(p => p.id !== product.id).slice(0, 8);
+  const { getHiddenProductSlugs } = await import('@/lib/hiddenProducts');
+  const hiddenSlugs = await getHiddenProductSlugs();
+
+  const relatedProducts = PRODUCTS.filter(p => {
+    const slug = (p.slug?.fr || '').toLowerCase().trim();
+    if (hiddenSlugs.has(slug) || hiddenSlugs.has(p.id)) return false;
+    return p.id !== product.id && p.categorySlug === product.categorySlug;
+  }).slice(0, 8);
+  const fallbackRelated = relatedProducts.length > 0 ? relatedProducts : PRODUCTS.filter(p => {
+    const slug = (p.slug?.fr || '').toLowerCase().trim();
+    if (hiddenSlugs.has(slug) || hiddenSlugs.has(p.id)) return false;
+    return p.id !== product.id;
+  }).slice(0, 8);
 
   const productSchema = generateProductSchema(
     {

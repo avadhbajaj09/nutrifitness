@@ -1,39 +1,302 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useStore } from '@/context/StoreContext';
+import { useStore, CartItem } from '@/context/StoreContext';
 import ThankYouAnimation from '@/components/ThankYouAnimation';
-import { ShieldCheck, Truck, CreditCard, Sparkles } from 'lucide-react';
+import { 
+  ShieldCheck, 
+  Truck, 
+  CreditCard, 
+  Sparkles, 
+  AlertTriangle, 
+  CheckCircle2, 
+  MapPin, 
+  Package, 
+  AlertCircle,
+  HelpCircle,
+  Clock
+} from 'lucide-react';
+
+interface SupportedCountry {
+  code: string;
+  name: string;
+  isEu: boolean;
+  flag: string;
+}
+
+const SUPPORTED_COUNTRIES: SupportedCountry[] = [
+  { code: 'CH', name: 'Suisse', isEu: false, flag: '🇨🇭' },
+  { code: 'LI', name: 'Liechtenstein', isEu: false, flag: '🇱🇮' },
+  { code: 'FR', name: 'France', isEu: true, flag: '🇫🇷' },
+  { code: 'DE', name: 'Allemagne', isEu: true, flag: '🇩🇪' },
+  { code: 'IT', name: 'Italie', isEu: true, flag: '🇮🇹' },
+  { code: 'AT', name: 'Autriche', isEu: true, flag: '🇦🇹' },
+  { code: 'ES', name: 'Espagne', isEu: true, flag: '🇪🇸' },
+  { code: 'PT', name: 'Portugal', isEu: true, flag: '🇵🇹' },
+  { code: 'BE', name: 'Belgique', isEu: true, flag: '🇧🇪' },
+  { code: 'LU', name: 'Luxembourg', isEu: true, flag: '🇱🇺' },
+  { code: 'NL', name: 'Pays-Bas', isEu: true, flag: '🇳🇱' },
+  { code: 'PL', name: 'Pologne', isEu: true, flag: '🇵🇱' },
+  { code: 'SE', name: 'Suède', isEu: true, flag: '🇸🇪' },
+  { code: 'DK', name: 'Danemark', isEu: true, flag: '🇩🇰' },
+  { code: 'FI', name: 'Finlande', isEu: true, flag: '🇫🇮' },
+  { code: 'IE', name: 'Irlande', isEu: true, flag: '🇮🇪' },
+  { code: 'GB', name: 'Royaume-Uni', isEu: false, flag: '🇬🇧' },
+  { code: 'NO', name: 'Norvège', isEu: false, flag: '🇳🇴' },
+  { code: 'IS', name: 'Islande', isEu: false, flag: '🇮🇸' },
+];
 
 export default function CheckoutPage() {
-  const { cart, cartCount, cartSubtotal, freeShippingProgress, clearCart, formatPrice, t, currency, setCurrency, locale } = useStore();
-  const [shippingMethod, setShippingMethod] = useState<'postpac' | 'clickcollect'>('postpac');
-  const [paymentMethod, setPaymentMethod] = useState<'twint' | 'postfinance' | 'card' | 'invoice'>('twint');
+  const { 
+    cart, 
+    cartCount, 
+    cartSubtotal, 
+    clearCart, 
+    formatPrice, 
+    t, 
+    currency, 
+    setCurrency, 
+    locale, 
+    countryCode,
+    setCountryCode
+  } = useStore();
+
+  // Step 1: Customer Contact
   const [customerEmail, setCustomerEmail] = useState('');
   const [customerPhone, setCustomerPhone] = useState('');
+
+  // Step 2: Delivery Address
+  const [customerCountry, setCustomerCountry] = useState<string>(countryCode || 'CH');
   const [firstName, setFirstName] = useState('');
   const [lastName, setLastName] = useState('');
   const [customerAddress, setCustomerAddress] = useState('');
   const [customerPostalCode, setCustomerPostalCode] = useState('');
   const [customerCity, setCustomerCity] = useState('');
 
+  // Step 3: Shipping Method Selection
+  const [genevaShippingMethod, setGenevaShippingMethod] = useState<'postpac' | 'clickcollect'>('postpac');
+
+  // Step 4: Payment
+  const [paymentMethod, setPaymentMethod] = useState<'twint' | 'postfinance' | 'card' | 'invoice'>('twint');
+
+  // Submission & Success state
   const [isSuccess, setIsSuccess] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
   const [finalTotalFormatted, setFinalTotalFormatted] = useState('');
+  const [submitAttempted, setSubmitAttempted] = useState(false);
 
-  const shippingCost = shippingMethod === 'clickcollect' ? 0 : (freeShippingProgress.isFree ? 0 : 7.90);
+  // Sync countryCode from store context on mount
+  useEffect(() => {
+    if (countryCode && SUPPORTED_COUNTRIES.some(c => c.code === countryCode)) {
+      setCustomerCountry(countryCode);
+    }
+  }, [countryCode]);
+
+  // Keep StoreContext updated when user selects country in checkout
+  const handleCountryChange = (newCountry: string) => {
+    setCustomerCountry(newCountry);
+    setCountryCode(newCountry);
+  };
+
+  // Postal code validation
+  const postalValidation = useMemo(() => {
+    const raw = customerPostalCode.trim();
+    if (!raw) return { isValid: false, message: 'Code postal requis' };
+
+    // 1. Check if user typed an unsupported international format (like 6-digit Indian pincode 451001)
+    if (/^\d{6}$/.test(raw) && !['PL', 'RO'].includes(customerCountry)) {
+      return {
+        isValid: false,
+        message: '❌ Code postal non desservi. NutriFitness livre exclusivement en Suisse, au Liechtenstein et dans l\'Union Européenne.'
+      };
+    }
+
+    // 2. Switzerland validation
+    if (customerCountry === 'CH') {
+      const is4Digits = /^\d{4}$/.test(raw);
+      const val = parseInt(raw, 10);
+      if (!is4Digits || val < 1000 || val > 9999) {
+        return {
+          isValid: false,
+          message: '❌ Code postal suisse invalide. Le NPA suisse est composé de 4 chiffres (ex: 1204 Genève, 1003 Lausanne).'
+        };
+      }
+      return { isValid: true, message: '' };
+    }
+
+    // 3. Liechtenstein validation
+    if (customerCountry === 'LI') {
+      const is4Digits = /^\d{4}$/.test(raw);
+      const val = parseInt(raw, 10);
+      if (!is4Digits || val < 9485 || val > 9499) {
+        return {
+          isValid: false,
+          message: '❌ Code postal du Liechtenstein invalide (doit être entre 9485 et 9499, ex: 9490 Vaduz).'
+        };
+      }
+      return { isValid: true, message: '' };
+    }
+
+    // 4. France, Germany, Italy, Spain (5 digits)
+    if (['FR', 'DE', 'IT', 'ES'].includes(customerCountry)) {
+      if (!/^\d{5}$/.test(raw)) {
+        return {
+          isValid: false,
+          message: `❌ Code postal invalide. Il doit comporter 5 chiffres pour ce pays.`
+        };
+      }
+      return { isValid: true, message: '' };
+    }
+
+    // 5. Portugal (4 digits or 0000-000)
+    if (customerCountry === 'PT') {
+      if (!/^\d{4}(-\d{3})?$/.test(raw)) {
+        return {
+          isValid: false,
+          message: '❌ Code postal portugais invalide (ex: 3720-000 ou 3720).'
+        };
+      }
+      return { isValid: true, message: '' };
+    }
+
+    // 6. Generic EU check
+    if (!/^[a-zA-Z0-9 -]{3,10}$/.test(raw)) {
+      return {
+        isValid: false,
+        message: '❌ Format de code postal invalide.'
+      };
+    }
+
+    return { isValid: true, message: '' };
+  }, [customerPostalCode, customerCountry]);
+
+  // Is customer's address in Geneva canton?
+  // Only Geneva residents (NPA 1200-1299 or city 'Genève') have access to Click & Collect
+  const isGenevaAddress = useMemo(() => {
+    if (customerCountry !== 'CH') return false;
+    const npaNum = parseInt(customerPostalCode.trim(), 10);
+    const hasGenevaNpa = !isNaN(npaNum) && npaNum >= 1200 && npaNum <= 1299;
+    const hasGenevaCity = /gen[èe]ve/i.test(customerCity.trim());
+    return hasGenevaNpa || hasGenevaCity;
+  }, [customerCountry, customerPostalCode, customerCity]);
+
+  // If customer is NOT in Geneva, always reset to standard postal delivery
+  useEffect(() => {
+    if (!isGenevaAddress && genevaShippingMethod === 'clickcollect') {
+      setGenevaShippingMethod('postpac');
+    }
+  }, [isGenevaAddress, genevaShippingMethod]);
+
+  // Address completeness
+  const isAddressCompleted = Boolean(
+    customerAddress.trim().length >= 3 &&
+    customerPostalCode.trim().length >= 3 &&
+    customerCity.trim().length >= 2 &&
+    firstName.trim().length >= 1 &&
+    lastName.trim().length >= 1 &&
+    postalValidation.isValid
+  );
+
+  // Group cart items by origin based on destination country
+  const { genevaItems, portugalItems, isMixedCart } = useMemo(() => {
+    const destIsCH = customerCountry === 'CH' || customerCountry === 'LI';
+    const geList: CartItem[] = [];
+    const ptList: CartItem[] = [];
+
+    for (const item of cart) {
+      const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
+      const isPtOnly = item.shippingOrigin === 'portugal' && !isCommon;
+      const isGeOnly = item.locationType === 'GENEVA_ONLY' || (!isCommon && !isPtOnly);
+
+      if (destIsCH) {
+        if (isPtOnly) {
+          ptList.push(item);
+        } else {
+          // Common and Geneva-only ship from Geneva for CH/LI customers
+          geList.push(item);
+        }
+      } else {
+        // EU customers
+        if (isGeOnly) {
+          geList.push(item);
+        } else {
+          // Common and Portugal-only ship from Portugal for EU
+          ptList.push(item);
+        }
+      }
+    }
+
+    return {
+      genevaItems: geList,
+      portugalItems: ptList,
+      isMixedCart: geList.length > 0 && ptList.length > 0
+    };
+  }, [cart, customerCountry]);
+
+  // Calculate subtotals per origin
+  const genevaSubtotal = useMemo(() => {
+    return genevaItems.reduce((acc, it) => acc + (it.price * it.quantity), 0);
+  }, [genevaItems]);
+
+  const portugalSubtotal = useMemo(() => {
+    return portugalItems.reduce((acc, it) => acc + (it.price * it.quantity), 0);
+  }, [portugalItems]);
+
+  // Calculate shipping cost per origin
+  // Geneva: PostPac Priority 7.90 CHF (Free >= 75 CHF) or Click & Collect (0 CHF)
+  const genevaShippingCost = useMemo(() => {
+    if (genevaItems.length === 0) return 0;
+    if (genevaShippingMethod === 'clickcollect' && isGenevaAddress) return 0;
+    return genevaSubtotal >= 75 ? 0 : 7.90;
+  }, [genevaItems.length, genevaShippingMethod, isGenevaAddress, genevaSubtotal]);
+
+  // Portugal: Express Carrier 9.90 CHF (Free >= 120 CHF)
+  const portugalShippingCost = useMemo(() => {
+    if (portugalItems.length === 0) return 0;
+    return portugalSubtotal >= 120 ? 0 : 9.90;
+  }, [portugalItems.length, portugalSubtotal]);
+
+  // Total shipping fee
+  const totalShippingCost = useMemo(() => {
+    if (isMixedCart) {
+      return genevaShippingCost + portugalShippingCost;
+    }
+    if (genevaItems.length > 0) {
+      return genevaShippingCost;
+    }
+    if (portugalItems.length > 0) {
+      return portugalShippingCost;
+    }
+    return 0;
+  }, [isMixedCart, genevaShippingCost, portugalShippingCost, genevaItems.length, portugalItems.length]);
+
   const vatEst = (cartSubtotal * 0.026) / 1.026;
-  const total = cartSubtotal + shippingCost;
+  const grandTotal = cartSubtotal + totalShippingCost;
 
+  // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setSubmitAttempted(true);
+
+    if (!isAddressCompleted || !postalValidation.isValid) {
+      window.scrollTo({ top: 300, behavior: 'smooth' });
+      return;
+    }
+
     const generatedOrderNum = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
     setOrderNumber(generatedOrderNum);
-    setFinalTotalFormatted(formatPrice(total));
+    setFinalTotalFormatted(formatPrice(grandTotal));
 
-    const clientFullName = `${firstName} ${lastName}`.trim() || 'Avadh Bajaj';
+    const clientFullName = `${firstName} ${lastName}`.trim() || 'Client NutriFitness';
+
+    const shippingLabel = isMixedCart
+      ? `Expédition Multi-Origine (Colis 1: ${genevaShippingMethod === 'clickcollect' ? 'Click & Collect Genève' : 'Poste Suisse 24h'} + Colis 2: Usine Portugal)`
+      : genevaItems.length > 0
+      ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique Genève)' : 'PostPac Priority (La Poste Suisse 24h)')
+      : 'Transporteur Express (Usine Portugal 3-5j)';
+
     const newOrder = {
       id: `order-web-${Date.now()}`,
       ticketNumber: generatedOrderNum,
@@ -50,74 +313,60 @@ export default function CheckoutPage() {
         price: item.price,
         quantity: item.quantity,
         image: item.image || '/images/placeholder.webp',
-        vatRate: item.vatRate || 2.6
-      })) : [
-        {
-          id: `it-def-${Date.now()}`,
-          productId: 'prod-web-def',
-          variantId: 'var-std',
-          name: 'Applied Nutrition Créatine Monohydrate Pure 250g',
-          brand: 'Applied Nutrition',
-          flavor: 'Nature',
-          format: '250g',
-          sku: 'AP-CREAT-250',
-          price: 29.90,
-          quantity: 1,
-          image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=800&q=80',
-          vatRate: 2.6
-        }
-      ],
-      subtotal: cartSubtotal || 29.90,
+        vatRate: item.vatRate || 2.6,
+        shippingOrigin: item.shippingOrigin || 'switzerland'
+      })) : [],
+      subtotal: cartSubtotal,
       discountPercent: 0,
       discountAmount: 0,
-      vatAmount: vatEst || 0.76,
-      total: total || 29.90,
-      amountReceived: total || 29.90,
+      vatAmount: vatEst,
+      total: grandTotal,
+      amountReceived: grandTotal,
       paymentMethod: paymentMethod === 'twint' ? 'twint' : paymentMethod === 'card' ? 'card' : paymentMethod === 'postfinance' ? 'card' : 'invoice',
       paymentDetails: {
         reference: `WEB-${paymentMethod.toUpperCase()}-${Date.now().toString().slice(-6)}`,
         cardType: paymentMethod === 'card' ? 'Carte Bancaire Web (3D Secure)' : paymentMethod === 'postfinance' ? 'PostFinance E-Finance' : undefined,
-        notes: `Commande en ligne nutrifitness.ch (${shippingMethod === 'clickcollect' ? 'Click & Collect Boutique Genève' : 'Livraison Poste Suisse 24h'})`
+        notes: `Commande en ligne nutrifitness.ch · ${shippingLabel}`
       },
       seller: 'Site Web Public (nutrifitness.ch)',
       client: {
         name: clientFullName,
-        phone: customerPhone.trim() || '+91 88789 33778',
-        email: customerEmail.trim() || 'avadhbajaj09@gmail.com',
-        address: customerAddress.trim() || 'Rue des Pâquis 34',
-        city: customerCity.trim() || 'Genève',
-        postalCode: customerPostalCode.trim() || '1201'
+        phone: customerPhone.trim(),
+        email: customerEmail.trim(),
+        address: customerAddress.trim(),
+        city: customerCity.trim(),
+        postalCode: customerPostalCode.trim(),
+        country: customerCountry
       },
       shipping: {
-        method: shippingMethod === 'clickcollect' ? 'store_pickup' : 'post_priority',
-        label: shippingMethod === 'clickcollect' ? 'Click & Collect (Boutique Genève)' : 'PostPac Priority (La Poste Suisse 24h)',
-        cost: shippingCost
+        method: isMixedCart ? 'multi_origin' : (genevaShippingMethod === 'clickcollect' ? 'store_pickup' : 'post_priority'),
+        label: shippingLabel,
+        cost: totalShippingCost,
+        isMixedCart,
+        genevaCost: genevaShippingCost,
+        portugalCost: portugalShippingCost
       },
       status: 'in_processing',
       clientName: clientFullName
     };
 
-    // 1. Immediately save to localStorage for instant local/tab synchronization
+    // 1. Immediately save to localStorage for POS sync
     try {
       const stored = localStorage.getItem('nutrifitness_pos_sales');
       const currentList = stored ? JSON.parse(stored) : [];
       const updatedList = [newOrder, ...currentList];
       localStorage.setItem('nutrifitness_pos_sales', JSON.stringify(updatedList));
       window.dispatchEvent(new Event('storage'));
-    } catch {
-      // ignore
-    }
+    } catch {}
 
-    // 2. Post to /api/orders for server persistence
+    // 2. Post to /api/orders
     try {
       await fetch('/api/orders/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newOrder)
       });
-    } catch {
-      // ignore
-    }
+    } catch {}
 
     clearCart();
     setIsSuccess(true);
@@ -130,7 +379,7 @@ export default function CheckoutPage() {
         orderNumber={orderNumber}
         totalFormatted={finalTotalFormatted}
         paymentMethod={paymentMethod}
-        shippingMethod={shippingMethod}
+        shippingMethod={genevaShippingMethod}
         customerEmail={customerEmail}
       />
     );
@@ -153,7 +402,7 @@ export default function CheckoutPage() {
         </div>
         <div className="flex flex-wrap items-center gap-3 text-xs font-bold text-white/60">
           <span className="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
-            <span>🇨🇭</span> 100% Stock Suisse
+            <span>🇨🇭</span> Expédition Suisse &amp; Europe
           </span>
           <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 p-1 rounded-full">
             <span className="text-[11px] text-white/50 pl-2">Devise :</span>
@@ -161,7 +410,7 @@ export default function CheckoutPage() {
               type="button"
               onClick={() => setCurrency('CHF')}
               className={`px-2.5 py-0.5 rounded-full text-xs font-black transition-all ${
-                currency === 'CHF' ? 'bg-[#F80404] text-black shadow-sm' : 'text-white/70 hover:text-white'
+                currency === 'CHF' ? 'bg-[#F80404] text-black shadow-xs' : 'text-white/70 hover:text-white'
               }`}
             >
               🇨🇭 CHF
@@ -170,7 +419,7 @@ export default function CheckoutPage() {
               type="button"
               onClick={() => setCurrency('EUR')}
               className={`px-2.5 py-0.5 rounded-full text-xs font-black transition-all ${
-                currency === 'EUR' ? 'bg-[#F80404] text-black shadow-sm' : 'text-white/70 hover:text-white'
+                currency === 'EUR' ? 'bg-[#F80404] text-black shadow-xs' : 'text-white/70 hover:text-white'
               }`}
             >
               🇪🇺 EUR (€)
@@ -184,7 +433,7 @@ export default function CheckoutPage() {
         {/* Left Form (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
           
-          {/* Step 1: Coordonnées */}
+          {/* STEP 1: Coordonnées de Contact */}
           <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4">
             <h2 className="text-sm font-black uppercase tracking-wider text-white font-heading flex items-center gap-2.5">
               <span className="w-6 h-6 rounded-full bg-[#F80404] text-black text-xs font-black flex items-center justify-center">1</span>
@@ -216,71 +465,36 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Step 2: Shipping */}
+          {/* STEP 2: Adresse de Livraison (PLACED BEFORE SHIPPING METHOD) */}
           <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4">
-            <h2 className="text-sm font-black uppercase tracking-wider text-white font-heading flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-[#F80404] text-black text-xs font-black flex items-center justify-center">2</span>
-              {t.checkout.shippingMode}
-            </h2>
-            <div className="space-y-3">
-              <label 
-                className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
-                  shippingMethod === 'postpac' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
-                }`}
-              >
-                <input 
-                  type="radio" 
-                  name="shipping" 
-                  checked={shippingMethod === 'postpac'} 
-                  onChange={() => setShippingMethod('postpac')}
-                  className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
-                />
-                <div className="flex-1 text-xs">
-                  <div className="flex justify-between font-bold text-white mb-0.5">
-                    <span className="flex items-center gap-2">
-                      <Truck className="w-4 h-4 text-[#F80404]" />
-                      <span>PostPac Priority (La Poste Suisse)</span>
-                      <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">24h Express</span>
-                    </span>
-                    <span>{freeShippingProgress.isFree ? t.common.free : formatPrice(7.90)}</span>
-                  </div>
-                  <p className="text-white/50">Remise avec suivi en ligne Poste Suisse par SMS & e-mail.</p>
-                </div>
-              </label>
-
-              <label 
-                className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
-                  shippingMethod === 'clickcollect' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
-                }`}
-              >
-                <input 
-                  type="radio" 
-                  name="shipping" 
-                  checked={shippingMethod === 'clickcollect'} 
-                  onChange={() => setShippingMethod('clickcollect')}
-                  className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
-                />
-                <div className="flex-1 text-xs">
-                  <div className="flex justify-between font-bold text-white mb-0.5">
-                    <span className="flex items-center gap-2">
-                      <span>📍 Click & Collect Boutique Genève</span>
-                      <span className="text-[10px] bg-[#F80404]/20 text-[#F80404] px-2 py-0.5 rounded font-bold">Disponible en 2h</span>
-                    </span>
-                    <span className="text-emerald-400 font-bold">{t.common.free}</span>
-                  </div>
-                  <p className="text-white/50">34 Rue des Pâquis, 1201 Genève (Lun-Ven 12h30-19h / Sam 12h-17h).</p>
-                </div>
-              </label>
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-black uppercase tracking-wider text-white font-heading flex items-center gap-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#F80404] text-black text-xs font-black flex items-center justify-center">2</span>
+                Adresse de Livraison
+              </h2>
+              <span className="text-[11px] text-white/50 flex items-center gap-1">
+                <MapPin className="w-3.5 h-3.5 text-[#F80404]" />
+                Destination obligatoire
+              </span>
             </div>
-          </div>
 
-          {/* Step 3: Address */}
-          <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4">
-            <h2 className="text-sm font-black uppercase tracking-wider text-white font-heading flex items-center gap-2.5">
-              <span className="w-6 h-6 rounded-full bg-[#F80404] text-black text-xs font-black flex items-center justify-center">3</span>
-              Adresse de Livraison
-            </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {/* Country Selector */}
+              <div className="sm:col-span-2">
+                <label className="block text-xs font-bold text-white/80 mb-1.5">Pays de destination *</label>
+                <select
+                  value={customerCountry}
+                  onChange={(e) => handleCountryChange(e.target.value)}
+                  className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none cursor-pointer"
+                >
+                  {SUPPORTED_COUNTRIES.map(c => (
+                    <option key={c.code} value={c.code} className="bg-[#141414] text-white">
+                      {c.flag} {c.name} ({c.code})
+                    </option>
+                  ))}
+                </select>
+              </div>
+
               <div>
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Prénom *</label>
                 <input 
@@ -303,6 +517,7 @@ export default function CheckoutPage() {
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
               </div>
+
               <div className="sm:col-span-2">
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Rue et numéro *</label>
                 <input 
@@ -314,17 +529,25 @@ export default function CheckoutPage() {
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
               </div>
+
               <div>
-                <label className="block text-xs font-bold text-white/80 mb-1.5">NPA (Code Postal) *</label>
+                <label className="block text-xs font-bold text-white/80 mb-1.5">
+                  NPA / Code Postal *
+                </label>
                 <input 
                   type="text" 
                   required 
                   value={customerPostalCode}
                   onChange={(e) => setCustomerPostalCode(e.target.value)}
-                  placeholder="1204" 
-                  className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
+                  placeholder={customerCountry === 'CH' ? '1204 (4 chiffres)' : 'Code postal'} 
+                  className={`w-full min-h-[44px] px-3.5 text-xs bg-black/60 border rounded-xl text-white focus:outline-none ${
+                    customerPostalCode.trim() && !postalValidation.isValid
+                      ? 'border-red-500 bg-red-950/20 focus:border-red-500'
+                      : 'border-white/15 focus:border-[#F80404]'
+                  }`} 
                 />
               </div>
+
               <div>
                 <label className="block text-xs font-bold text-white/80 mb-1.5">Ville *</label>
                 <input 
@@ -332,14 +555,258 @@ export default function CheckoutPage() {
                   required 
                   value={customerCity}
                   onChange={(e) => setCustomerCity(e.target.value)}
-                  placeholder="Genève" 
+                  placeholder={customerCountry === 'CH' ? 'Genève' : 'Ville'} 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
               </div>
             </div>
+
+            {/* Pincode & Destination Validation Message */}
+            {customerPostalCode.trim().length > 0 && !postalValidation.isValid && (
+              <div className="p-3.5 rounded-xl bg-red-900/30 border border-red-500/40 text-red-300 text-xs flex items-start gap-2.5 animate-in fade-in duration-150">
+                <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
+                <div>
+                  <p className="font-bold text-white">Livraison non desservie pour cette destination</p>
+                  <p className="text-[11px] text-red-200/90 mt-0.5">{postalValidation.message}</p>
+                </div>
+              </div>
+            )}
+
+            {isAddressCompleted && postalValidation.isValid && (
+              <div className="p-3 rounded-xl bg-emerald-950/30 border border-emerald-500/30 text-emerald-300 text-xs flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <CheckCircle2 className="w-4 h-4 text-emerald-400" />
+                  <span>Adresse vérifiée pour {customerCity} ({customerPostalCode}, {customerCountry})</span>
+                </span>
+                {isGenevaAddress && (
+                  <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold">
+                    Zone Genève locale (Click &amp; Collect éligible)
+                  </span>
+                )}
+              </div>
+            )}
           </div>
 
-          {/* Step 4: Payments */}
+          {/* STEP 3: Mode de Livraison & Choix du Transporteur */}
+          <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-black uppercase tracking-wider text-white font-heading flex items-center gap-2.5">
+                <span className="w-6 h-6 rounded-full bg-[#F80404] text-black text-xs font-black flex items-center justify-center">3</span>
+                Mode de Livraison &amp; Expéditions
+              </h2>
+              {isMixedCart && (
+                <span className="text-[10px] uppercase font-black tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/30 px-2 py-0.5 rounded-full">
+                  📦 2 Colis Séparés
+                </span>
+              )}
+            </div>
+
+            {/* If address is not complete, show prompt */}
+            {!isAddressCompleted ? (
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-white/60 text-xs flex items-center gap-3">
+                <HelpCircle className="w-5 h-5 text-white/40 shrink-0" />
+                <p>
+                  Veuillez renseigner votre adresse de livraison complète ci-dessus pour calculer les options et tarifs d&apos;expédition exacts selon votre destination.
+                </p>
+              </div>
+            ) : (
+              <div className="space-y-4">
+
+                {/* MIXED CART: 2 SEPARATE SHIPMENTS */}
+                {isMixedCart ? (
+                  <div className="space-y-4">
+                    {/* Shipment 1: Geneva */}
+                    <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/10 p-4 space-y-3">
+                      <div className="flex items-center justify-between border-b border-emerald-500/20 pb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-base">🇨🇭</span>
+                          <span className="font-bold text-white text-xs">Colis 1 — Expédié depuis Genève (Marco)</span>
+                          <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">
+                            {genevaItems.length} article{genevaItems.length > 1 ? 's' : ''}
+                          </span>
+                        </div>
+                        <span className="text-xs font-bold text-emerald-400">
+                          {genevaShippingCost === 0 ? 'Livraison Offerte' : formatPrice(genevaShippingCost)}
+                        </span>
+                      </div>
+
+                      <div className="text-[11px] text-white/60">
+                        {genevaItems.map(it => it.name).join(', ')}
+                      </div>
+
+                      {/* Options for Geneva shipment */}
+                      <div className="space-y-2 pt-1">
+                        <label 
+                          className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-all ${
+                            genevaShippingMethod === 'postpac' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/10 bg-black/40'
+                          }`}
+                        >
+                          <input 
+                            type="radio" 
+                            name="geneva_shipping" 
+                            checked={genevaShippingMethod === 'postpac'} 
+                            onChange={() => setGenevaShippingMethod('postpac')}
+                            className="mt-0.5 text-[#F80404] focus:ring-[#F80404]" 
+                          />
+                          <div className="flex-1 text-xs">
+                            <div className="flex justify-between font-bold text-white">
+                              <span className="flex items-center gap-1.5">
+                                <Truck className="w-3.5 h-3.5 text-[#F80404]" />
+                                <span>PostPac Priority (La Poste Suisse)</span>
+                                <span className="text-[10px] text-emerald-400 font-bold">24h Express</span>
+                              </span>
+                              <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(7.90)}</span>
+                            </div>
+                            <p className="text-[11px] text-white/50 mt-0.5">Livraison directe à votre domicile avec numéro de suivi SMS.</p>
+                          </div>
+                        </label>
+
+                        {/* Click & Collect ONLY visible if Geneva resident */}
+                        {isGenevaAddress && (
+                          <label 
+                            className={`flex items-start gap-3 p-3 rounded-lg border cursor-pointer transition-all ${
+                              genevaShippingMethod === 'clickcollect' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/10 bg-black/40'
+                            }`}
+                          >
+                            <input 
+                              type="radio" 
+                              name="geneva_shipping" 
+                              checked={genevaShippingMethod === 'clickcollect'} 
+                              onChange={() => setGenevaShippingMethod('clickcollect')}
+                              className="mt-0.5 text-[#F80404] focus:ring-[#F80404]" 
+                            />
+                            <div className="flex-1 text-xs">
+                              <div className="flex justify-between font-bold text-white">
+                                <span className="flex items-center gap-1.5">
+                                  <span>📍 Click &amp; Collect Boutique Genève</span>
+                                  <span className="text-[10px] text-[#F80404] font-bold">Prêt en 2h</span>
+                                </span>
+                                <span className="text-emerald-400 font-bold">{t.common.free}</span>
+                              </div>
+                              <p className="text-[11px] text-white/50 mt-0.5">34 Rue des Pâquis, 1201 Genève (Lun-Ven 12h30-19h / Sam 12h-17h).</p>
+                            </div>
+                          </label>
+                        )}
+                      </div>
+                    </div>
+
+                    {/* Shipment 2: Portugal */}
+                    <div className="rounded-xl border border-blue-500/30 bg-blue-950/10 p-4 space-y-3">
+                      <div className="flex items-center justify-between border-b border-blue-500/20 pb-2">
+                        <div className="flex items-center gap-2">
+                          <span className="text-base">🇵🇹</span>
+                          <span className="font-bold text-white text-xs">Colis 2 — Expédié depuis le Portugal (Omar)</span>
+                          <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">
+                            {portugalItems.length} article{portugalItems.length > 1 ? 's' : ''}
+                          </span>
+                        </div>
+                        <span className="text-xs font-bold text-blue-400">
+                          {portugalShippingCost === 0 ? 'Livraison Offerte' : formatPrice(portugalShippingCost)}
+                        </span>
+                      </div>
+
+                      <div className="text-[11px] text-white/60">
+                        {portugalItems.map(it => it.name).join(', ')}
+                      </div>
+
+                      <div className="p-3 rounded-lg border border-white/10 bg-black/40 text-xs">
+                        <div className="flex justify-between font-bold text-white">
+                          <span className="flex items-center gap-1.5">
+                            <Truck className="w-3.5 h-3.5 text-blue-400" />
+                            <span>Transporteur Express Usine Portugal</span>
+                            <span className="text-[10px] text-blue-400 font-bold">3–5 jours</span>
+                          </span>
+                          <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
+                        </div>
+                        <p className="text-[11px] text-white/50 mt-0.5">
+                          Expédition directe depuis l&apos;usine fabricant. Suivi complet par e-mail.
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                ) : (
+                  /* SINGLE ORIGIN SHIPMENT */
+                  <div className="space-y-3">
+                    {/* Geneva only items */}
+                    {genevaItems.length > 0 && (
+                      <>
+                        <label 
+                          className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
+                            genevaShippingMethod === 'postpac' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
+                          }`}
+                        >
+                          <input 
+                            type="radio" 
+                            name="single_shipping" 
+                            checked={genevaShippingMethod === 'postpac'} 
+                            onChange={() => setGenevaShippingMethod('postpac')}
+                            className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
+                          />
+                          <div className="flex-1 text-xs">
+                            <div className="flex justify-between font-bold text-white mb-0.5">
+                              <span className="flex items-center gap-2">
+                                <Truck className="w-4 h-4 text-[#F80404]" />
+                                <span>PostPac Priority (La Poste Suisse)</span>
+                                <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">🇨🇭 24h Express</span>
+                              </span>
+                              <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(7.90)}</span>
+                            </div>
+                            <p className="text-white/50">Remise avec suivi en ligne Poste Suisse par SMS &amp; e-mail.</p>
+                          </div>
+                        </label>
+
+                        {/* Click & Collect ONLY visible if Geneva resident */}
+                        {isGenevaAddress && (
+                          <label 
+                            className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
+                              genevaShippingMethod === 'clickcollect' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
+                            }`}
+                          >
+                            <input 
+                              type="radio" 
+                              name="single_shipping" 
+                              checked={genevaShippingMethod === 'clickcollect'} 
+                              onChange={() => setGenevaShippingMethod('clickcollect')}
+                              className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
+                            />
+                            <div className="flex-1 text-xs">
+                              <div className="flex justify-between font-bold text-white mb-0.5">
+                                <span className="flex items-center gap-2">
+                                  <span>📍 Click &amp; Collect Boutique Genève</span>
+                                  <span className="text-[10px] bg-[#F80404]/20 text-[#F80404] px-2 py-0.5 rounded font-bold">Disponible en 2h</span>
+                                </span>
+                                <span className="text-emerald-400 font-bold">{t.common.free}</span>
+                              </div>
+                              <p className="text-white/50">34 Rue des Pâquis, 1201 Genève (Lun-Ven 12h30-19h / Sam 12h-17h).</p>
+                            </div>
+                          </label>
+                        )}
+                      </>
+                    )}
+
+                    {/* Portugal only items */}
+                    {portugalItems.length > 0 && genevaItems.length === 0 && (
+                      <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-950/10 text-xs space-y-1">
+                        <div className="flex justify-between font-bold text-white">
+                          <span className="flex items-center gap-2">
+                            <Truck className="w-4 h-4 text-blue-400" />
+                            <span>Transporteur Express Usine Portugal</span>
+                            <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">🇵🇹 3–5 jours</span>
+                          </span>
+                          <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
+                        </div>
+                        <p className="text-white/50">
+                          Colis expédié directement depuis l&apos;usine du fabricant au Portugal avec suivi en ligne.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                )}
+              </div>
+            )}
+          </div>
+
+          {/* STEP 4: Mode de Paiement */}
           <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4">
             <h2 className="text-sm font-black uppercase tracking-wider text-white font-heading flex items-center gap-2.5">
               <span className="w-6 h-6 rounded-full bg-[#F80404] text-black text-xs font-black flex items-center justify-center">4</span>
@@ -388,7 +855,7 @@ export default function CheckoutPage() {
                   <div className="flex justify-between font-bold text-white mb-0.5">
                     <span className="flex items-center gap-2">
                       <span className="px-1.5 py-0.5 rounded bg-yellow-400 text-black font-black text-[10px]">PF</span>
-                      <span>PostFinance Card & E-Finance</span>
+                      <span>PostFinance Card &amp; E-Finance</span>
                     </span>
                     <span className="text-white/70">Sécurisé</span>
                   </div>
@@ -441,7 +908,7 @@ export default function CheckoutPage() {
                     </span>
                     <span className="text-white/70">30 jours</span>
                   </div>
-                  <p className="text-white/50">Bulletin de versement QR joint au colis (sous réserve de solvabilité).</p>
+                  <p className="text-white/50">Bulletin de versement QR joint au colis (réservé aux résidents suisses).</p>
                 </div>
               </label>
             </div>
@@ -453,7 +920,7 @@ export default function CheckoutPage() {
           <h2 className="text-lg font-black uppercase text-white font-heading pb-3 border-b border-white/10 flex items-center justify-between">
             <span>{t.checkout.orderSummary}</span>
             <span className="text-xs text-[#F80404] bg-[#F80404]/10 px-2.5 py-0.5 rounded-full">
-              {cartCount} articles
+              {cartCount} article{cartCount > 1 ? 's' : ''}
             </span>
           </h2>
 
@@ -495,31 +962,79 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          <div className="space-y-3 max-h-64 overflow-y-auto pr-1">
-            {cart.map(item => (
-              <div key={item.itemKey} className="flex items-center gap-3 py-2 border-b border-white/5">
-                <div className="relative w-12 h-12 bg-black/40 rounded-lg p-1 shrink-0 border border-white/10 flex items-center justify-center">
-                  <Image src={item.image} alt={item.name} fill className="object-contain p-1" />
+          {/* Cart items list with Origin Badges */}
+          <div className="space-y-3 max-h-64 overflow-y-auto pr-1 divide-y divide-white/5">
+            {cart.map(item => {
+              const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
+              const isPt = (item.shippingOrigin === 'portugal' && !isCommon) || (!customerCountry.includes('CH') && isCommon);
+
+              return (
+                <div key={item.itemKey} className="flex items-center gap-3 pt-2">
+                  <div className="relative w-12 h-12 bg-black/40 rounded-lg p-1 shrink-0 border border-white/10 flex items-center justify-center">
+                    <Image src={item.image} alt={item.name} fill className="object-contain p-1" />
+                  </div>
+                  <div className="flex-1 min-w-0">
+                    <div className="flex items-center gap-1.5">
+                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider bg-white/10 text-white/80">
+                        {isPt ? '🇵🇹 Portugal' : '🇨🇭 Genève'}
+                      </span>
+                    </div>
+                    <h4 className="text-xs font-bold text-white truncate mt-0.5">{item.name}</h4>
+                    <p className="text-[10px] text-white/50">{item.flavor} · Qte: {item.quantity}</p>
+                  </div>
+                  <span className="text-xs font-black text-white font-heading">
+                    {formatPrice(item.price * item.quantity)}
+                  </span>
                 </div>
-                <div className="flex-1 min-w-0">
-                  <h4 className="text-xs font-bold text-white truncate">{item.name}</h4>
-                  <p className="text-[10px] text-white/50">{item.flavor} · Qte: {item.quantity}</p>
-                </div>
-                <span className="text-xs font-black text-white font-heading">{formatPrice(item.price * item.quantity)}</span>
-              </div>
-            ))}
+              );
+            })}
           </div>
 
+          {/* Price Breakdown */}
           <div className="space-y-2.5 text-xs text-white/70 pt-4 border-t border-white/10">
             <div className="flex justify-between">
               <span>{t.common.subtotal} ({currency}) :</span>
               <span className="font-bold text-white">{formatPrice(cartSubtotal)}</span>
             </div>
 
-            <div className="flex justify-between">
-              <span>{t.common.shipping} ({shippingMethod === 'clickcollect' ? 'Click & Collect Genève' : 'PostPac Priority'}) :</span>
-              <span className="font-bold text-white">{shippingCost === 0 ? t.common.free : formatPrice(shippingCost)}</span>
-            </div>
+            {/* Split Shipping charges breakdown */}
+            {isMixedCart ? (
+              <div className="space-y-1.5 bg-black/40 p-2.5 rounded-xl border border-white/5">
+                <div className="flex justify-between text-[11px]">
+                  <span className="text-white/80 flex items-center gap-1">
+                    <span>🇨🇭</span> Frais Colis 1 (Genève) :
+                  </span>
+                  <span className="font-bold text-white">
+                    {genevaShippingCost === 0 ? t.common.free : formatPrice(genevaShippingCost)}
+                  </span>
+                </div>
+                <div className="flex justify-between text-[11px]">
+                  <span className="text-white/80 flex items-center gap-1">
+                    <span>🇵🇹</span> Frais Colis 2 (Portugal) :
+                  </span>
+                  <span className="font-bold text-white">
+                    {portugalShippingCost === 0 ? t.common.free : formatPrice(portugalShippingCost)}
+                  </span>
+                </div>
+                <div className="flex justify-between text-[11px] pt-1 border-t border-white/10 text-white font-bold">
+                  <span>Total Frais de port :</span>
+                  <span>{totalShippingCost === 0 ? t.common.free : formatPrice(totalShippingCost)}</span>
+                </div>
+              </div>
+            ) : (
+              <div className="flex justify-between">
+                <span>
+                  {t.common.shipping} (
+                  {genevaItems.length > 0
+                    ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect Genève' : 'PostPac Priority')
+                    : 'Transporteur Portugal'}
+                  ) :
+                </span>
+                <span className="font-bold text-white">
+                  {totalShippingCost === 0 ? t.common.free : formatPrice(totalShippingCost)}
+                </span>
+              </div>
+            )}
 
             <div className="flex justify-between text-white/40 text-[11px]">
               <span>{t.common.vatIncluded} (2.6% / 8.1%) :</span>
@@ -528,15 +1043,28 @@ export default function CheckoutPage() {
 
             <div className="pt-3 border-t border-white/10 flex justify-between items-baseline text-white">
               <span className="text-sm font-black uppercase font-heading">{t.common.total} ({currency}) :</span>
-              <span className="text-2xl font-black text-white font-heading">{formatPrice(total)}</span>
+              <span className="text-2xl font-black text-white font-heading">{formatPrice(grandTotal)}</span>
             </div>
           </div>
 
+          {/* Validation Notice if address incomplete or postal invalid */}
+          {!isAddressCompleted && (
+            <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2">
+              <AlertTriangle className="w-4 h-4 shrink-0" />
+              <span>Complétez une adresse valide pour débloquer le paiement.</span>
+            </div>
+          )}
+
           <button 
             type="submit"
-            className="w-full min-h-[52px] px-6 py-4 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl hover:shadow-[#F80404]/30 flex items-center justify-center gap-2 active:scale-98"
+            disabled={!isAddressCompleted || !postalValidation.isValid}
+            className={`w-full min-h-[52px] px-6 py-4 font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl flex items-center justify-center gap-2 ${
+              isAddressCompleted && postalValidation.isValid
+                ? 'bg-[#F80404] hover:bg-[#FF3D00] text-black hover:shadow-[#F80404]/30 cursor-pointer active:scale-98'
+                : 'bg-white/10 text-white/40 cursor-not-allowed border border-white/10'
+            }`}
           >
-            <span>{t.checkout.confirmAndPay} ({formatPrice(total)})</span>
+            <span>{t.checkout.confirmAndPay} ({formatPrice(grandTotal)})</span>
             <span>→</span>
           </button>
 

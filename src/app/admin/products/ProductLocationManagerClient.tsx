@@ -92,6 +92,8 @@ export default function ProductLocationManagerClient() {
   const [auditProduct, setAuditProduct] = useState<ProductRow | null>(null);
   const [auditLogs, setAuditLogs] = useState<any[]>([]);
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
+  const [deleteConfirmProduct, setDeleteConfirmProduct] = useState<ProductRow | null>(null);
+  const [bulkDeleteConfirmOpen, setBulkDeleteConfirmOpen] = useState<boolean>(false);
 
   // Check auth
   useEffect(() => {
@@ -597,10 +599,10 @@ export default function ProductLocationManagerClient() {
                 </button>
               ) : (
                 <button
-                  onClick={() => handleBulkAction('delete_to_draft')}
+                  onClick={() => setBulkDeleteConfirmOpen(true)}
                   className="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-bold transition-colors"
                 >
-                  Mettre en brouillon
+                  Mettre en brouillon ({selectedIds.size})
                 </button>
               )}
               <button
@@ -630,7 +632,6 @@ export default function ProductLocationManagerClient() {
                   <th className="p-3">Produit &amp; SKU</th>
                   <th className="p-3 text-center">Origines Actives</th>
                   <th className="p-3 text-center">Type Dérivé</th>
-                  <th className="p-3 text-center">Origine Carte</th>
                   <th className="p-3 text-center">🇨🇭 Stock Genève</th>
                   <th className="p-3 text-center">🇵🇹 Stock Portugal</th>
                   <th className="p-3 text-right">Actions</th>
@@ -639,13 +640,13 @@ export default function ProductLocationManagerClient() {
               <tbody className="divide-y divide-slate-100">
                 {loading ? (
                   <tr>
-                    <td colSpan={8} className="p-12 text-center text-slate-400">
+                    <td colSpan={7} className="p-12 text-center text-slate-400">
                       Chargement des produits...
                     </td>
                   </tr>
                 ) : products.length === 0 ? (
                   <tr>
-                    <td colSpan={8} className="p-12 text-center text-slate-400">
+                    <td colSpan={7} className="p-12 text-center text-slate-400">
                       Aucun produit trouvé.
                     </td>
                   </tr>
@@ -754,18 +755,6 @@ export default function ProductLocationManagerClient() {
                             )}
                           </td>
 
-                          {/* Main Location Selector */}
-                          <td className="p-3 text-center">
-                            <select
-                              value={product.main_location}
-                              onChange={e => handleChangeMainLocation(product, e.target.value as 'GENEVA' | 'PORTUGAL')}
-                              className="bg-slate-50 border border-slate-200 text-slate-800 text-xs font-bold rounded-lg px-2 py-1 focus:outline-none focus:border-slate-400 cursor-pointer"
-                            >
-                              <option value="GENEVA">🇨🇭 Genève</option>
-                              <option value="PORTUGAL">🇵🇹 Portugal</option>
-                            </select>
-                          </td>
-
                           {/* Stock Genève (Inline Input) */}
                           <td className="p-3 text-center">
                             <input
@@ -821,9 +810,9 @@ export default function ProductLocationManagerClient() {
                                     <History className="w-4 h-4" />
                                   </button>
                                   <button
-                                    onClick={() => handleDeleteToDraft(product)}
+                                    onClick={() => setDeleteConfirmProduct(product)}
                                     className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
-                                    title="Mettre en brouillon (retirer du site)"
+                                    title="Supprimer / Retirer du site public"
                                   >
                                     <Trash2 className="w-4 h-4" />
                                   </button>
@@ -852,7 +841,7 @@ export default function ProductLocationManagerClient() {
                         {/* Expanded Variants Row */}
                         {isExpanded && product.variants.length > 0 && (
                           <tr className="bg-slate-50/50">
-                            <td colSpan={8} className="p-4 pl-14">
+                            <td colSpan={7} className="p-4 pl-14">
                               <div className="bg-white rounded-xl border border-slate-200 p-4 space-y-3">
                                 <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
                                   Variantes &amp; Parfums ({product.variants.length}) :
@@ -943,6 +932,112 @@ export default function ProductLocationManagerClient() {
           )}
         </div>
       </main>
+
+      {/* Delete Confirmation Popup Modal (Single Product) */}
+      {deleteConfirmProduct && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-md w-full border border-slate-200 shadow-2xl text-center space-y-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center mx-auto">
+              <AlertCircle className="w-8 h-8" />
+            </div>
+            <div>
+              <h3 className="font-black text-slate-900 text-lg">Confirmer la Suppression du Produit</h3>
+              <p className="text-xs text-red-600 font-bold mt-1">
+                ⚠️ Action majeure : Retrait immédiat de tout le site public
+              </p>
+            </div>
+
+            <div className="bg-slate-50 border border-slate-200 rounded-2xl p-3 flex items-center gap-3 text-left">
+              <div className="relative w-12 h-12 bg-white rounded-xl overflow-hidden shrink-0 border border-slate-200">
+                <Image
+                  src={deleteConfirmProduct.images?.[0]?.src || '/images/placeholder.webp'}
+                  alt={deleteConfirmProduct.name}
+                  fill
+                  className="object-contain p-1"
+                />
+              </div>
+              <div className="flex-1 min-w-0">
+                <p className="font-bold text-slate-900 text-xs truncate">{deleteConfirmProduct.name}</p>
+                <p className="text-[11px] text-slate-500">SKU: {deleteConfirmProduct.sku || 'N/A'}</p>
+                <p className="text-[10px] text-slate-400 mt-0.5">
+                  CHF {deleteConfirmProduct.base_price.toFixed(2)} · Stock Total: {deleteConfirmProduct.stock_geneva + deleteConfirmProduct.stock_portugal}
+                </p>
+              </div>
+            </div>
+
+            <div className="p-3 bg-red-50 rounded-xl border border-red-200 text-left text-xs text-red-800 space-y-1">
+              <p className="font-bold">Conséquences de cette confirmation :</p>
+              <ul className="list-disc pl-4 text-[11px] space-y-0.5 text-red-700">
+                <li>Le produit sera <strong>immédiatement masqué</strong> sur la boutique publique.</li>
+                <li>Il sera <strong>retiré des résultats de recherche</strong>, des catégories et des marques.</li>
+                <li>Aucun client ne pourra plus le commander ni accéder à sa page.</li>
+              </ul>
+            </div>
+
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmProduct(null)}
+                className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  const target = deleteConfirmProduct;
+                  setDeleteConfirmProduct(null);
+                  handleDeleteToDraft(target);
+                }}
+                className="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md hover:shadow-red-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>Confirmer la suppression</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Bulk Delete Confirmation Popup Modal */}
+      {bulkDeleteConfirmOpen && (
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
+          <div className="bg-white rounded-3xl p-6 max-w-md w-full border border-slate-200 shadow-2xl text-center space-y-4 animate-in fade-in zoom-in-95 duration-150">
+            <div className="w-14 h-14 rounded-2xl bg-red-100 text-red-600 flex items-center justify-center mx-auto">
+              <AlertCircle className="w-8 h-8" />
+            </div>
+            <div>
+              <h3 className="font-black text-slate-900 text-lg">Suppression Groupée</h3>
+              <p className="text-xs text-red-600 font-bold mt-1">
+                Retrait de {selectedIds.size} produits sélectionnés
+              </p>
+            </div>
+            <p className="text-xs text-slate-600 text-left">
+              Ces {selectedIds.size} produits seront déplacés en brouillon et immédiatement masqués de la boutique, de la recherche, des catégories et des marques.
+            </p>
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setBulkDeleteConfirmOpen(false)}
+                className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
+              >
+                Annuler
+              </button>
+              <button
+                type="button"
+                onClick={() => {
+                  setBulkDeleteConfirmOpen(false);
+                  handleBulkAction('delete_to_draft');
+                }}
+                className="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md hover:shadow-red-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <Trash2 className="w-4 h-4" />
+                <span>Supprimer les {selectedIds.size} produits</span>
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Double Confirmation Permanent Delete Modal */}
       {deleteConfirmId && (

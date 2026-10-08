@@ -9,7 +9,7 @@ import { useStore } from '@/context/StoreContext';
 
 function ShopContent() {
   const searchParams = useSearchParams();
-  const { countryCode } = useStore();
+  const { countryCode, isProductVisible } = useStore();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [swissOnly, setSwissOnly] = useState<boolean>(false);
@@ -28,14 +28,16 @@ function ShopContent() {
   }, [searchParams]);
 
   const brands = useMemo(() => {
-    return Array.from(new Set(PRODUCTS.map(p => p.brand))).sort();
-  }, []);
+    return Array.from(new Set(PRODUCTS.filter(p => isProductVisible(p)).map(p => p.brand))).sort();
+  }, [isProductVisible]);
 
   const filteredProducts = useMemo(() => {
     const cc = (countryCode || 'CH').toUpperCase();
     const genevaAllowList = ['CH', 'LI', 'FR', 'DE', 'IT', 'AT'];
 
     return PRODUCTS.filter(p => {
+      // Exclude deleted or draft products
+      if (!isProductVisible(p)) return false;
       // Ebook has its own dedicated landing page at /guide-des-complements-alimentaires/
       if (p.categorySlug === 'guides-ebooks' || p.id === 'prod-25430') return false;
       if (selectedCategory !== 'all' && p.categorySlug !== selectedCategory) return false;
@@ -65,7 +67,7 @@ function ShopContent() {
       if (sortBy === 'name-asc') return (a.name?.fr || '').localeCompare(b.name?.fr || '');
       return 0;
     });
-  }, [selectedCategory, selectedBrand, swissOnly, deliverableOnly, countryCode, sortBy]);
+  }, [selectedCategory, selectedBrand, swissOnly, deliverableOnly, countryCode, sortBy, isProductVisible]);
 
   const clearFilters = () => {
     setSelectedCategory('all');

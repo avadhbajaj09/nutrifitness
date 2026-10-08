@@ -68,6 +68,9 @@ interface StoreContextType {
     percentage: number;
     threshold: number;
   };
+  hiddenSlugs: Set<string>;
+  isProductVisible: (itemOrSlug: any) => boolean;
+  refreshHiddenProducts: () => Promise<void>;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -107,6 +110,51 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [currency, setCurrencyState] = useState<SupportedCurrency>('CHF');
   // Default shipping destination country: Switzerland ('CH')
   const [countryCode, setCountryCodeState] = useState<string>('CH');
+
+  // Track hidden/draft/deleted products to exclude them across the website
+  const [hiddenSlugs, setHiddenSlugs] = useState<Set<string>>(new Set());
+
+  const refreshHiddenProducts = async () => {
+    try {
+      const res = await fetch('/api/catalog/hidden/', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (Array.isArray(data.hiddenSlugs)) {
+          const set = new Set<string>(data.hiddenSlugs.map((s: string) => s.toLowerCase().trim()));
+          setHiddenSlugs(set);
+          // Purge any deleted product from cart and wishlist immediately
+          setCart(prev => prev.filter(item => {
+            const slug = (item.slug || '').toLowerCase().trim();
+            const id = (item.id || '').trim();
+            return !set.has(slug) && !set.has(id);
+          }));
+          setWishlist(prev => prev.filter(slug => !set.has(slug.toLowerCase().trim())));
+        }
+      }
+    } catch {}
+  };
+
+  useEffect(() => {
+    refreshHiddenProducts();
+  }, []);
+
+  const isProductVisible = (itemOrSlug: any): boolean => {
+    if (!itemOrSlug) return false;
+    let slug = '';
+    let id = '';
+    let sku = '';
+    if (typeof itemOrSlug === 'string') {
+      slug = itemOrSlug.toLowerCase().trim();
+    } else {
+      slug = (itemOrSlug.slug?.fr || itemOrSlug.slug || '').toLowerCase().trim();
+      id = itemOrSlug.id || '';
+      sku = (itemOrSlug.variants?.[0]?.sku || itemOrSlug.sku || '').toLowerCase().trim();
+    }
+    if (slug && hiddenSlugs.has(slug)) return false;
+    if (id && hiddenSlugs.has(id)) return false;
+    if (sku && hiddenSlugs.has(sku)) return false;
+    return true;
+  };
 
   // Load from localStorage & detect country on client mount
   useEffect(() => {
@@ -406,7 +454,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         showToast,
         cartCount,
         cartSubtotal,
-        freeShippingProgress
+        freeShippingProgress,
+        hiddenSlugs,
+        isProductVisible,
+        refreshHiddenProducts
       }}
     >
       {children}

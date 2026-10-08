@@ -9,7 +9,7 @@ import { formatChf } from '@/lib/tax';
 import { getLocalized } from '@/lib/types';
 
 export default function SearchOverlay() {
-  const { isSearchOpen, closeSearch } = useStore();
+  const { isSearchOpen, closeSearch, isProductVisible } = useStore();
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,13 +32,14 @@ export default function SearchOverlay() {
   if (!isSearchOpen) return null;
 
   const q = query.trim().toLowerCase();
+  const visibleProducts = PRODUCTS.filter(p => isProductVisible(p));
   const results = q 
-    ? PRODUCTS.filter(p => 
+    ? visibleProducts.filter(p => 
         (p.name?.fr && p.name.fr.toLowerCase().includes(q)) ||
         p.brand.toLowerCase().includes(q) ||
         p.categorySlug.toLowerCase().includes(q)
       ).slice(0, 12)
-    : PRODUCTS.slice(0, 9);
+    : visibleProducts.slice(0, 9);
 
   return (
     <div 

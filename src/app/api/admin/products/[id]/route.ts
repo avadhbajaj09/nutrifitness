@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
 import { revalidatePath, revalidateTag } from 'next/cache';
+import { clearHiddenProductsCache } from '@/lib/hiddenProducts';
 
 export const runtime = 'nodejs';
 
@@ -107,6 +108,7 @@ export async function POST(
 
     // Revalidate paths
     try {
+      clearHiddenProductsCache();
       revalidatePath('/');
       revalidatePath('/boutique');
       revalidatePath('/categorie');
@@ -147,6 +149,7 @@ export async function DELETE(
     }
 
     try {
+      clearHiddenProductsCache();
       revalidatePath('/');
       revalidatePath('/boutique');
       revalidatePath('/categorie');

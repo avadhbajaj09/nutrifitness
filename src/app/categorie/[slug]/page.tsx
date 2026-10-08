@@ -10,6 +10,7 @@ import {
   type CategoryData 
 } from '@/lib/categories';
 import { PRODUCTS } from '@/lib/catalog';
+import { getHiddenProductSlugs } from '@/lib/hiddenProducts';
 import CategoryProductsClient from './CategoryProductsClient';
 import BlogFaqAccordion from '@/components/BlogFaqAccordion';
 import { 
@@ -68,15 +69,22 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   };
 }
 
-export default function CategoryDetailPage({ params }: CategoryPageProps) {
+export default async function CategoryDetailPage({ params }: CategoryPageProps) {
   const category = getCategoryBySlug(params.slug);
 
   if (!category) {
     notFound();
   }
 
+  const hiddenSlugs = await getHiddenProductSlugs();
+
   // Filter products belonging to this category
   const categoryProducts = PRODUCTS.filter((p) => {
+    const slug = (p.slug?.fr || '').toLowerCase().trim();
+    const id = p.id || '';
+    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id)) {
+      return false;
+    }
     // Ebook has its own dedicated flow, only include in guides-ebooks
     if (category.slug !== 'guides-ebooks' && (p.categorySlug === 'guides-ebooks' || p.id === 'prod-25430')) {
       return false;
