@@ -3,7 +3,8 @@
 import React, { useState } from 'react';
 import { useStore } from '@/context/StoreContext';
 import { ProductItem, getLocalized } from '@/lib/types';
-import { Check, Sparkles, ShoppingBag } from 'lucide-react';
+import { Check, Sparkles, ShoppingBag, AlertCircle } from 'lucide-react';
+import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 interface DynamicPricingBoxProps {
   product: ProductItem;
@@ -269,15 +270,26 @@ export default function DynamicPricingBox({
           </button>
         </div>
 
-        {/* Lime Green Add to Cart Button (matching screenshot) */}
-        <button
-          type="button"
-          onClick={handleAddToCart}
-          className="flex-1 h-12 px-6 bg-[#95d600] hover:bg-[#85c000] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl hover:shadow-[#95d600]/30 flex items-center justify-center gap-2 active:scale-98"
-        >
-          <ShoppingBag className="w-4 h-4 stroke-[2.5]" />
-          <span>Ajouter au panier</span>
-        </button>
+        {/* Add to Cart Button (or disabled if non-deliverable) */}
+        {!isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin) ? (
+          <button
+            type="button"
+            disabled
+            className="flex-1 h-12 px-4 bg-red-950/40 text-red-300 font-black uppercase tracking-wider text-[11px] sm:text-xs rounded-xl border border-red-800/50 opacity-80 cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+            <span>Non livrable dans votre région</span>
+          </button>
+        ) : (
+          <button
+            type="button"
+            onClick={handleAddToCart}
+            className="flex-1 h-12 px-6 bg-[#95d600] hover:bg-[#85c000] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl hover:shadow-[#95d600]/30 flex items-center justify-center gap-2 active:scale-98"
+          >
+            <ShoppingBag className="w-4 h-4 stroke-[2.5]" />
+            <span>Ajouter au panier</span>
+          </button>
+        )}
       </div>
 
       {/* REMISE / SAVINGS BREAKDOWN */}

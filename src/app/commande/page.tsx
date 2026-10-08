@@ -18,6 +18,8 @@ import {
   HelpCircle,
   Clock
 } from 'lucide-react';
+import { FlagIcon } from '@/components/delivery/FlagIcon';
+import { useDeliveryEstimates } from '@/hooks/useDeliveryEstimate';
 
 interface SupportedCountry {
   code: string;
@@ -86,6 +88,7 @@ export default function CheckoutPage() {
   const [orderNumber, setOrderNumber] = useState('');
   const [finalTotalFormatted, setFinalTotalFormatted] = useState('');
   const [submitAttempted, setSubmitAttempted] = useState(false);
+  const [countryAutoSwitchedNotice, setCountryAutoSwitchedNotice] = useState<string | null>(null);
 
   // Sync countryCode from store context on mount
   useEffect(() => {
@@ -98,7 +101,87 @@ export default function CheckoutPage() {
   const handleCountryChange = (newCountry: string) => {
     setCustomerCountry(newCountry);
     setCountryCode(newCountry);
+    setCountryAutoSwitchedNotice(null);
   };
+
+  // Auto-detect country based on city name or specific postal code format
+  useEffect(() => {
+    const rawCity = customerCity.trim().toLowerCase();
+    const rawZip = customerPostalCode.trim();
+
+    if (!rawCity && !rawZip) return;
+
+    let targetCountry: string | null = null;
+    let detectedPlaceName: string | null = null;
+
+    // 1. Direct city check
+    if (rawCity) {
+      // Check Portuguese cities
+      const ptCities = [
+        'lisbon', 'lisboa', 'lisbonne', 'lissabon', 'porto', 'oporte', 'coimbra',
+        'braga', 'setubal', 'setúbal', 'faro', 'aveiro', 'funchal', 'amadora',
+        'almada', 'cascais', 'sintra', 'guimaraes', 'guimarães', 'evora', 'évora'
+      ];
+      if (ptCities.some(c => rawCity === c || rawCity.startsWith(c + ' '))) {
+        targetCountry = 'PT';
+        detectedPlaceName = 'Lisbonne / Portugal';
+      }
+
+      // Check French cities
+      const frCities = [
+        'paris', 'marseille', 'lyon', 'toulouse', 'nice', 'nantes', 'strasbourg',
+        'montpellier', 'bordeaux', 'lille', 'rennes', 'grenoble', 'annemasse', 'annecy'
+      ];
+      if (!targetCountry && frCities.some(c => rawCity === c || rawCity.startsWith(c + ' '))) {
+        targetCountry = 'FR';
+        detectedPlaceName = 'France';
+      }
+
+      // Check German cities
+      const deCities = ['berlin', 'munich', 'münchen', 'hamburg', 'frankfurt', 'köln', 'cologne', 'stuttgart', 'düsseldorf', 'dusseldorf'];
+      if (!targetCountry && deCities.some(c => rawCity === c || rawCity.startsWith(c + ' '))) {
+        targetCountry = 'DE';
+        detectedPlaceName = 'Allemagne';
+      }
+
+      // Check Italian cities
+      const itCities = ['roma', 'rome', 'milano', 'milan', 'napoli', 'naples', 'torino', 'turin', 'firenze', 'florence', 'venezia', 'venice'];
+      if (!targetCountry && itCities.some(c => rawCity === c || rawCity.startsWith(c + ' '))) {
+        targetCountry = 'IT';
+        detectedPlaceName = 'Italie';
+      }
+
+      // Check Spanish cities
+      const esCities = ['madrid', 'barcelona', 'valencia', 'sevilla', 'seville', 'zaragoza', 'malaga', 'málaga', 'bilbao'];
+      if (!targetCountry && esCities.some(c => rawCity === c || rawCity.startsWith(c + ' '))) {
+        targetCountry = 'ES';
+        detectedPlaceName = 'Espagne';
+      }
+    }
+
+    // 2. Postal code pattern check (e.g. Portuguese 4-3 digits: 1000-001)
+    if (!targetCountry && /^\d{4}-\d{3}$/.test(rawZip)) {
+      targetCountry = 'PT';
+      detectedPlaceName = 'Code postal portugais (XXXX-XXX)';
+    }
+
+    // 3. If targetCountry was identified and differs from customerCountry, auto-switch!
+    if (targetCountry && targetCountry !== customerCountry) {
+      setCustomerCountry(targetCountry);
+      setCountryCode(targetCountry);
+      const countryNames: Record<string, string> = {
+        PT: 'Portugal',
+        FR: 'France',
+        DE: 'Allemagne',
+        IT: 'Italie',
+        ES: 'Espagne',
+        CH: 'Suisse'
+      };
+      setCountryAutoSwitchedNotice(
+        `Destination ajustée automatiquement à ${countryNames[targetCountry] || targetCountry} (${detectedPlaceName}). Les modes et frais d'expédition ont été actualisés.`
+      );
+    }
+  }, [customerCity, customerPostalCode, customerCountry, setCountryCode]);
 
   // Postal code validation
   const postalValidation = useMemo(() => {
@@ -115,6 +198,15 @@ export default function CheckoutPage() {
 
     // 2. Switzerland validation
     if (customerCountry === 'CH') {
+      const normCity = customerCity.trim().toLowerCase();
+      const ptCities = ['lisbon', 'lisboa', 'lisbonne', 'lissabon', 'porto', 'coimbra', 'braga', 'faro', 'aveiro', 'funchal', 'setubal', 'setúbal'];
+      if (ptCities.some(c => normCity === c || normCity.startsWith(c + ' '))) {
+        return {
+          isValid: false,
+          message: '❌ Lisbonne se trouve au Portugal, pas en Suisse. Le pays a été automatiquement ajusté sur Portugal.'
+        };
+      }
+
       const is4Digits = /^\d{4}$/.test(raw);
       const val = parseInt(raw, 10);
       if (!is4Digits || val < 1000 || val > 9999) {
@@ -235,6 +327,26 @@ export default function CheckoutPage() {
     };
   }, [cart, customerCountry]);
 
+  // Dynamic delivery date estimates per shipment
+  const estimateInputs = useMemo(() => {
+    return cart.filter(it => !it.isEbook).map(it => ({
+      productId: it.id || it.slug,
+      shippingOriginHint: it.shippingOrigin,
+      quantity: it.quantity
+    }));
+  }, [cart]);
+
+  const { estimates } = useDeliveryEstimates(estimateInputs, customerCountry);
+
+  const genevaEstimate = genevaItems[0] ? estimates.get(genevaItems[0].id || genevaItems[0].slug) : undefined;
+  const ptEstimate = portugalItems[0] ? estimates.get(portugalItems[0].id || portugalItems[0].slug) : undefined;
+
+  const genevaPromiseDate = genevaEstimate?.estimate?.displayDate || genevaEstimate?.estimate?.latestDate || '2026-10-13';
+  const genevaPromiseFormatted = genevaEstimate?.displayDates?.fr || '1–2 jours ouvrables';
+
+  const ptPromiseDate = ptEstimate?.estimate?.displayDate || ptEstimate?.estimate?.latestDate || '2026-10-16';
+  const ptPromiseFormatted = ptEstimate?.displayDates?.fr || '3–5 jours ouvrables';
+
   // Calculate subtotals per origin
   const genevaSubtotal = useMemo(() => {
     return genevaItems.reduce((acc, it) => acc + (it.price * it.quantity), 0);
@@ -344,7 +456,31 @@ export default function CheckoutPage() {
         cost: totalShippingCost,
         isMixedCart,
         genevaCost: genevaShippingCost,
-        portugalCost: portugalShippingCost
+        portugalCost: portugalShippingCost,
+        promised_date: isMixedCart ? (ptPromiseDate > genevaPromiseDate ? ptPromiseDate : genevaPromiseDate) : (portugalItems.length > 0 ? ptPromiseDate : genevaPromiseDate),
+        promised_date_formatted: isMixedCart ? `${genevaPromiseFormatted} (Genève) / ${ptPromiseFormatted} (Portugal)` : (portugalItems.length > 0 ? ptPromiseFormatted : genevaPromiseFormatted),
+        fulfilment_location: isMixedCart ? 'MIXED' : (portugalItems.length > 0 ? 'PORTUGAL' : 'GENEVA'),
+        shipments: [
+          ...(genevaItems.length > 0 ? [{
+            origin: 'GENEVA',
+            fulfilment_location: 'GENEVA',
+            promised_date: genevaPromiseDate,
+            promised_date_formatted: genevaPromiseFormatted,
+            cost: genevaShippingCost,
+            carrier: genevaShippingMethod === 'clickcollect' ? 'Click & Collect Genève' : 'La Poste Suisse PostPac Priority',
+            items: genevaItems.map(it => ({ id: it.id, name: it.name, quantity: it.quantity }))
+          }] : []),
+          ...(portugalItems.length > 0 ? [{
+            origin: 'PORTUGAL',
+            fulfilment_location: 'PORTUGAL',
+            promised_date: ptPromiseDate,
+            promised_date_formatted: ptPromiseFormatted,
+            cost: portugalShippingCost,
+            carrier: 'Transporteur Express Direct Fabricant',
+            requires_customs: ['CH', 'LI', 'GB', 'NO', 'IS'].includes(customerCountry),
+            items: portugalItems.map(it => ({ id: it.id, name: it.name, quantity: it.quantity }))
+          }] : [])
+        ]
       },
       status: 'in_processing',
       clientName: clientFullName
@@ -561,6 +697,25 @@ export default function CheckoutPage() {
               </div>
             </div>
 
+            {/* Auto-detected Country Switch Notice */}
+            {countryAutoSwitchedNotice && (
+              <div className="p-3.5 rounded-xl bg-blue-950/40 border border-blue-500/40 text-blue-200 text-xs flex items-start gap-2.5 animate-in fade-in duration-150">
+                <Sparkles className="w-4 h-4 text-blue-400 shrink-0 mt-0.5" />
+                <div className="flex-1">
+                  <p className="font-bold text-white">Détection automatique du pays</p>
+                  <p className="text-[11px] text-blue-200 mt-0.5">{countryAutoSwitchedNotice}</p>
+                </div>
+                <button
+                  type="button"
+                  onClick={() => setCountryAutoSwitchedNotice(null)}
+                  className="text-white/50 hover:text-white text-xs px-1"
+                  aria-label="Fermer la notification"
+                >
+                  ✕
+                </button>
+              </div>
+            )}
+
             {/* Pincode & Destination Validation Message */}
             {customerPostalCode.trim().length > 0 && !postalValidation.isValid && (
               <div className="p-3.5 rounded-xl bg-red-900/30 border border-red-500/40 text-red-300 text-xs flex items-start gap-2.5 animate-in fade-in duration-150">
@@ -653,7 +808,10 @@ export default function CheckoutPage() {
                               <span className="flex items-center gap-1.5">
                                 <Truck className="w-3.5 h-3.5 text-[#F80404]" />
                                 <span>PostPac Priority (La Poste Suisse)</span>
-                                <span className="text-[10px] text-emerald-400 font-bold">24h Express</span>
+                                <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
+                                  <FlagIcon countryCode="CH" className="w-3 h-3" />
+                                  <span>{genevaPromiseFormatted}</span>
+                                </span>
                               </span>
                               <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(7.90)}</span>
                             </div>
@@ -694,7 +852,7 @@ export default function CheckoutPage() {
                     <div className="rounded-xl border border-blue-500/30 bg-blue-950/10 p-4 space-y-3">
                       <div className="flex items-center justify-between border-b border-blue-500/20 pb-2">
                         <div className="flex items-center gap-2">
-                          <span className="text-base">🇵🇹</span>
+                          <FlagIcon countryCode="PT" className="w-4 h-4 shrink-0" />
                           <span className="font-bold text-white text-xs">Colis 2 — Expédié depuis le Portugal (Omar)</span>
                           <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">
                             {portugalItems.length} article{portugalItems.length > 1 ? 's' : ''}
@@ -714,7 +872,10 @@ export default function CheckoutPage() {
                           <span className="flex items-center gap-1.5">
                             <Truck className="w-3.5 h-3.5 text-blue-400" />
                             <span>Transporteur Express Usine Portugal</span>
-                            <span className="text-[10px] text-blue-400 font-bold">3–5 jours</span>
+                            <span className="text-[10px] text-blue-400 font-bold flex items-center gap-1">
+                              <FlagIcon countryCode="PT" className="w-3 h-3" />
+                              <span>{ptPromiseFormatted}</span>
+                            </span>
                           </span>
                           <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
                         </div>
@@ -747,7 +908,10 @@ export default function CheckoutPage() {
                               <span className="flex items-center gap-2">
                                 <Truck className="w-4 h-4 text-[#F80404]" />
                                 <span>PostPac Priority (La Poste Suisse)</span>
-                                <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">🇨🇭 24h Express</span>
+                                <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold flex items-center gap-1">
+                                  <FlagIcon countryCode="CH" className="w-3 h-3" />
+                                  <span>{genevaPromiseFormatted}</span>
+                                </span>
                               </span>
                               <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(7.90)}</span>
                             </div>
@@ -791,7 +955,10 @@ export default function CheckoutPage() {
                           <span className="flex items-center gap-2">
                             <Truck className="w-4 h-4 text-blue-400" />
                             <span>Transporteur Express Usine Portugal</span>
-                            <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">🇵🇹 3–5 jours</span>
+                            <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold flex items-center gap-1">
+                              <FlagIcon countryCode="PT" className="w-3 h-3" />
+                              <span>{ptPromiseFormatted}</span>
+                            </span>
                           </span>
                           <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
                         </div>

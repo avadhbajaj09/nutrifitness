@@ -10,8 +10,8 @@ import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
 import { getProductReviewStats } from '@/lib/reviews';
 import { getProductFaqs } from '@/lib/productFaq';
-import DeliveryBadge from '@/components/fulfillment/DeliveryBadge';
-import ProductLocationBadge from '@/components/fulfillment/ProductLocationBadge';
+import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
+import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 interface Props {
   product: ProductItem;
@@ -43,6 +43,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
   const isSwissDestination = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
   const isPortugal = isCommon ? !isSwissDestination : product.shippingOrigin === 'portugal';
+  const isDeliverable = isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin);
 
   const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;
@@ -185,25 +186,12 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             </p>
           </div>
 
-          {/* Location & Flavor Live Stock Badge */}
-          <ProductLocationBadge
-            locationType={product.locationType}
-            shippingOrigin={product.shippingOrigin}
-            mainLocation={product.mainLocation}
-            stockGeneva={selectedVariant ? ((selectedVariant as any).stockGeneva ?? selectedVariant.inventoryQuantity) : product.stockGeneva}
-            stockPortugal={selectedVariant ? ((selectedVariant as any).stockPortugal ?? 0) : product.stockPortugal}
-            inStock={selectedVariant ? selectedVariant.inStock : true}
-            variant="pill"
-            className="w-fit"
-          />
-
-          {/* Delivery Availability Badge */}
-          <DeliveryBadge
+          {/* Dynamic Delivery Date, Live Origin & Stock Pill */}
+          <DeliveryEstimate
             productId={product.id}
-            shippingOrigin={product.shippingOrigin}
-            locationType={product.locationType}
-            stockGeneva={selectedVariant ? ((selectedVariant as any).stockGeneva ?? selectedVariant.inventoryQuantity) : product.stockGeneva}
-            stockPortugal={selectedVariant ? ((selectedVariant as any).stockPortugal ?? 0) : product.stockPortugal}
+            variantSku={selectedVariant?.sku}
+            shippingOriginHint={product.shippingOrigin}
+            mode="detail"
           />
 
 
@@ -244,15 +232,17 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {/* DYNAMIC TIERED PRICING (Get more, pay less) + Add to Cart */}
           <DynamicPricingBox product={product} selectedFlavor={selectedFlavor} />
 
-          {/* TWINT Direct Button */}
-          <Link 
-            href="/commande/"
-            onClick={() => addToCart(product, { quantity: 1, flavor: selectedFlavor, price: currentPrice, image: activeImg })}
-            className="w-full min-h-[50px] px-6 py-4 bg-white/10 hover:bg-white/15 text-white font-black uppercase tracking-wider text-xs rounded-xl border border-white/20 transition-all flex items-center justify-center gap-2 shadow-sm block text-center active:scale-98"
-          >
-            <span>🇨🇭</span>
-            {t.common.checkoutTwint}
-          </Link>
+          {/* TWINT Direct Button (Only if deliverable) */}
+          {isDeliverable && (
+            <Link 
+              href="/commande/"
+              onClick={() => addToCart(product, { quantity: 1, flavor: selectedFlavor, price: currentPrice, image: activeImg })}
+              className="w-full min-h-[50px] px-6 py-4 bg-white/10 hover:bg-white/15 text-white font-black uppercase tracking-wider text-xs rounded-xl border border-white/20 transition-all flex items-center justify-center gap-2 shadow-sm block text-center active:scale-98"
+            >
+              <span>🇨🇭</span>
+              {t.common.checkoutTwint}
+            </Link>
+          )}
 
           {/* Mobile Trust Pillars (Below add-to-cart on mobile) */}
           <div className="lg:hidden grid grid-cols-3 gap-2 w-full pt-4 border-t border-white/10 text-center text-xs text-white/60">
@@ -263,7 +253,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   <p className="text-[10px]">Usine certifiée</p>
                 </div>
                 <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
-                  <p className="font-bold text-white text-xs mb-0.5">📦 3–5j</p>
+                  <p className="font-bold text-white text-xs mb-0.5">📦 Suivi GPS</p>
                   <p className="text-[10px]">Livraison suivie</p>
                 </div>
                 <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
@@ -274,8 +264,8 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             ) : (
               <>
                 <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
-                  <p className="font-bold text-white text-xs mb-0.5">⚡ 24h</p>
-                  <p className="text-[10px]">Expédition express</p>
+                  <p className="font-bold text-white text-xs mb-0.5">⚡ Express</p>
+                  <p className="text-[10px]">Expédition prioritaire</p>
                 </div>
                 <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
                   <p className="font-bold text-white text-xs mb-0.5">🧪 Pureté</p>

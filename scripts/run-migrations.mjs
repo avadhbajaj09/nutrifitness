@@ -22,6 +22,10 @@ try {
   const catalog = readFileSync('supabase/migrations/003_catalog_and_locations.sql', 'utf8');
   await client.query(catalog);
   console.log('Catalog & locations migration complete');
+
+  const delivery = readFileSync('supabase/migrations/004_delivery_engine.sql', 'utf8');
+  await client.query(delivery);
+  console.log('Delivery engine migration complete');
 } catch(e) {
   console.error('Migration error:', e);
 } finally {

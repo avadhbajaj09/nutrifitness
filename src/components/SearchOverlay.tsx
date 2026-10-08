@@ -7,9 +7,10 @@ import { useStore } from '@/context/StoreContext';
 import { PRODUCTS } from '@/lib/catalog';
 import { formatChf } from '@/lib/tax';
 import { getLocalized } from '@/lib/types';
+import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 export default function SearchOverlay() {
-  const { isSearchOpen, closeSearch, isProductVisible } = useStore();
+  const { isSearchOpen, closeSearch, isProductVisible, countryCode } = useStore();
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,7 +33,10 @@ export default function SearchOverlay() {
   if (!isSearchOpen) return null;
 
   const q = query.trim().toLowerCase();
-  const visibleProducts = PRODUCTS.filter(p => isProductVisible(p));
+  const visibleProducts = PRODUCTS.filter(p => 
+    isProductVisible(p) && 
+    isProductDeliverableToCountry(countryCode || 'CH', p.locationType, p.shippingOrigin)
+  );
   const results = q 
     ? visibleProducts.filter(p => 
         (p.name?.fr && p.name.fr.toLowerCase().includes(q)) ||

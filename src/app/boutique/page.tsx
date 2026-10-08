@@ -6,6 +6,7 @@ import ProductCard from '@/components/ProductCard';
 import BoutiqueFAQ from '@/components/BoutiqueFAQ';
 import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
 import { useStore } from '@/context/StoreContext';
+import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 function ShopContent() {
   const searchParams = useSearchParams();
@@ -50,14 +51,9 @@ function ShopContent() {
       }
       if (swissOnly && !p.isSwissOrigin) return false;
 
-      // Filter by delivery destination availability if deliverableOnly is checked
-      if (deliverableOnly) {
-        const isCommon = p.locationType === 'COMMON' || p.shippingOrigin === 'common';
-        const isPortugal = p.shippingOrigin === 'portugal' && !isCommon;
-        const isGenevaOnly = !isCommon && !isPortugal;
-        if (isGenevaOnly && !genevaAllowList.includes(cc)) {
-          return false;
-        }
+      // Hide product if not deliverable to the selected country
+      if (!isProductDeliverableToCountry(countryCode || 'CH', p.locationType, p.shippingOrigin)) {
+        return false;
       }
 
       return true;

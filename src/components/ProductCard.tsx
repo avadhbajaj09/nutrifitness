@@ -7,7 +7,7 @@ import { useStore } from '@/context/StoreContext';
 import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
 import { getProductReviewStats } from '@/lib/reviews';
-import ProductLocationBadge from '@/components/fulfillment/ProductLocationBadge';
+import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
 
 interface ProductCardProps {
   product: ProductItem;
@@ -119,14 +119,11 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           <span className="text-white/40 text-[11px]">{reviewStats.rating.toFixed(1)} ({reviewStats.count})</span>
         </div>
 
-        {/* Product Location & Live Stock Badge */}
-        <ProductLocationBadge
-          locationType={product.locationType}
-          shippingOrigin={product.shippingOrigin}
-          mainLocation={product.mainLocation}
-          stockGeneva={product.stockGeneva}
-          stockPortugal={product.stockPortugal}
-          inStock={hasStock}
+        {/* Dynamic Delivery Date, Ships From & Live Stock Pill */}
+        <DeliveryEstimate
+          productId={product.id}
+          shippingOriginHint={product.shippingOrigin}
+          mode="card"
           className="mb-3.5"
         />
 

@@ -483,6 +483,12 @@ export default function ProductLocationManagerClient() {
           </div>
 
           <div className="flex items-center gap-2">
+            <Link
+              href="/admin/shipping"
+              className="text-xs font-bold text-slate-700 hover:text-slate-900 flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl transition-colors border border-slate-200"
+            >
+              <span>🚚 Règles de Livraison</span>
+            </Link>
             <button
               onClick={fetchProducts}
               className="p-2 border border-slate-200 hover:bg-slate-100 rounded-xl text-slate-600 transition-colors"
