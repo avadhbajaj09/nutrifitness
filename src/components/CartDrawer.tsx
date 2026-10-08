@@ -132,10 +132,15 @@ export default function CartDrawer() {
                           ✓ Exemplaire unique (téléchargement PDF)
                         </p>
                       )}
-                      {item.isPortugal && (
-                        <p className="text-[10px] text-emerald-400 font-bold pt-0.5 flex items-center gap-1">
+                      {item.isPortugal ? (
+                        <p className="text-[10px] text-blue-400 font-bold pt-0.5 flex items-center gap-1">
                           <span>🇵🇹</span>
-                          <span>Expédié d'usine (Portugal) · 3–5j</span>
+                          <span>Expédié du Portugal · 3–5j</span>
+                        </p>
+                      ) : !item.isEbook && (
+                        <p className="text-[10px] text-emerald-400 font-bold pt-0.5 flex items-center gap-1">
+                          <span>🇨🇭</span>
+                          <span>En stock à Genève</span>
                         </p>
                       )}
                     </div>

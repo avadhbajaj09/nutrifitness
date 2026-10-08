@@ -1,22 +1,23 @@
 import { NextResponse } from 'next/server';
 import { getAvailability } from '@/lib/fulfillment/availability';
-import { products } from '@/lib/catalog';
 
-export async function GET(req: Request) {
-  const { searchParams } = new URL(req.url);
-  const productId = searchParams.get('productId');
-  const country = searchParams.get('country') || 'CH';
+export const runtime = 'nodejs';
 
-  if (!productId) {
-    return NextResponse.json({ error: 'Missing productId' }, { status: 400 });
-  }
+export async function GET(request: Request) {
+  const { searchParams } = new URL(request.url);
+  const productId = searchParams.get('productId') ?? '';
+  const country = (searchParams.get('country') ?? 'CH').toUpperCase().slice(0, 2);
+  const originHint = searchParams.get('origin') as 'switzerland' | 'portugal' | null;
 
-  const product = products.find(p => p.id === productId);
-  if (!product) {
-    return NextResponse.json({ error: 'Product not found' }, { status: 404 });
-  }
+  const result = await getAvailability(
+    productId,
+    originHint ?? undefined,
+    country,
+  );
 
-  const result = await getAvailability(productId, product.shippingOrigin, country);
-  
-  return NextResponse.json(result);
+  return NextResponse.json(result, {
+    headers: {
+      'Cache-Control': 'public, s-maxage=300, stale-while-revalidate=600',
+    },
+  });
 }

@@ -2,6 +2,8 @@ import { getAllBlogPosts } from '@/lib/blog';
 import { PRODUCTS } from '@/lib/catalog';
 import { CATEGORIES_DATA } from '@/lib/categories';
 
+import { getAdminSupabase } from '@/lib/supabase';
+
 interface Entry { 
   url: string; 
   lastModified?: string | Date; 
@@ -14,7 +16,25 @@ const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nutrifitness.ch';
 type Source = { slug: string; updatedAt: string }[];
 
 async function products(): Promise<Source> {
-  return PRODUCTS.map(p => ({
+  try {
+    const supabase = getAdminSupabase();
+    const { data } = await supabase
+      .from('products')
+      .select('slug, updated_at')
+      .eq('status', 'published')
+      .is('deleted_at', null);
+
+    if (data && data.length > 0) {
+      return data.map(p => ({
+        slug: p.slug,
+        updatedAt: p.updated_at || new Date().toISOString(),
+      }));
+    }
+  } catch (err) {
+    console.warn('[Sitemap] Supabase products query error:', err);
+  }
+
+  return PRODUCTS.filter(p => p.status !== 'draft').map(p => ({
     slug: p.slug.fr,
     updatedAt: new Date().toISOString(),
   }));

@@ -55,6 +55,11 @@ export interface ProductItem {
   variants: ProductVariant[];
   isSwissOrigin?: boolean;
   shippingOrigin?: 'switzerland' | 'portugal';
+  locationType?: 'COMMON' | 'GENEVA_ONLY' | 'PORTUGAL_ONLY';
+  mainLocation?: 'GENEVA' | 'PORTUGAL';
+  stockGeneva?: number;
+  stockPortugal?: number;
+  status?: 'published' | 'draft';
 }
 
 export interface FaqItem {

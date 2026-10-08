@@ -2047,8 +2047,16 @@ export default function AdminDashboardClient() {
               <span className="text-lg leading-none text-purple-600">🚚</span>
               <span className="hidden sm:inline">Expédition</span>
               <span className="sm:hidden">Expédition</span>
-
             </button>
+
+            <Link
+              href="/admin/products"
+              className="flex items-center gap-1.5 px-3 sm:px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition-all"
+            >
+              <span>📍</span>
+              <span className="hidden sm:inline">Emplacements</span>
+              <span className="sm:hidden">Stocks</span>
+            </Link>
           </nav>
 
           {/* Right Action Buttons */}

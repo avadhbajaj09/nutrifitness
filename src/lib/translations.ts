@@ -47,9 +47,13 @@ export interface TranslationDictionary {
     addToCart: string;
     viewAll: string;
     inStock: string;
+    inStockGeneva: string;
     inStockPortugal: string;
     shippedFromPortugal: string;
     outOfStock: string;
+    ruptureStock: string;
+    onlyLeft: string;
+    unitsInStock: string;
     quickView: string;
     freeShippingAbove: string;
     freeShippingUnlocked: string;
@@ -117,9 +121,13 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       addToCart: 'Ajouter au Panier',
       viewAll: 'Tout Voir',
       inStock: 'En stock à Genève (24h)',
-      inStockPortugal: 'Expédié depuis le Portugal (3–5j)',
+      inStockGeneva: 'En stock à Genève',
+      inStockPortugal: 'Expédié du Portugal',
       shippedFromPortugal: 'Expédié du Portugal',
       outOfStock: 'Rupture temporaire',
+      ruptureStock: 'Rupture de stock',
+      onlyLeft: 'Plus que {count} en stock',
+      unitsInStock: '{count} en stock',
       quickView: 'Aperçu rapide',
       freeShippingAbove: 'Plus que {amount} pour la livraison offerte',
       freeShippingUnlocked: '🎉 Félicitations ! Livraison offerte partout en Suisse',
@@ -185,9 +193,13 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       addToCart: 'In den Warenkorb',
       viewAll: 'Alle anzeigen',
       inStock: 'Auf Lager in Genf (24h)',
-      inStockPortugal: 'Versand aus Portugal (3–5 Werktage)',
+      inStockGeneva: 'Auf Lager in Genf',
+      inStockPortugal: 'Versand aus Portugal',
       shippedFromPortugal: 'Versand aus Portugal',
       outOfStock: 'Vorübergehend vergriffen',
+      ruptureStock: 'Nicht vorrätig',
+      onlyLeft: 'Nur noch {count} auf Lager',
+      unitsInStock: '{count} auf Lager',
       quickView: 'Schnellansicht',
       freeShippingAbove: 'Noch {amount} bis zum kostenlosen Versand',
       freeShippingUnlocked: '🎉 Kostenloser Versand in der ganzen Schweiz',
@@ -253,9 +265,13 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       addToCart: 'Aggiungi al Carrello',
       viewAll: 'Vedi Tutto',
       inStock: 'Disponibile a Ginevra (24h)',
-      inStockPortugal: 'Spedito dal Portogallo (3–5 giorni)',
+      inStockGeneva: 'Disponibile a Ginevra',
+      inStockPortugal: 'Spedito dal Portogallo',
       shippedFromPortugal: 'Spedito dal Portogallo',
       outOfStock: 'Momentaneamente esaurito',
+      ruptureStock: 'Esaurito',
+      onlyLeft: 'Solo {count} rimasti',
+      unitsInStock: '{count} disponibili',
       quickView: 'Anteprima rapida',
       freeShippingAbove: 'Ancora {amount} per la spedizione gratuita',
       freeShippingUnlocked: '🎉 Spedizione gratuita sbloccata in Svizzera',
@@ -321,9 +337,13 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       addToCart: 'Add to Cart',
       viewAll: 'View All',
       inStock: 'In stock in Geneva (24h)',
-      inStockPortugal: 'Shipped from Portugal (3–5 days)',
+      inStockGeneva: 'In stock in Geneva',
+      inStockPortugal: 'Shipped from Portugal',
       shippedFromPortugal: 'Shipped from Portugal',
       outOfStock: 'Temporarily out of stock',
+      ruptureStock: 'Out of stock',
+      onlyLeft: 'Only {count} left in stock',
+      unitsInStock: '{count} in stock',
       quickView: 'Quick view',
       freeShippingAbove: 'Add {amount} more for free Swiss delivery',
       freeShippingUnlocked: '🎉 Congratulations! Free Swiss shipping unlocked',

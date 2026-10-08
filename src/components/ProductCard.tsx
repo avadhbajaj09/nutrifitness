@@ -7,6 +7,7 @@ import { useStore } from '@/context/StoreContext';
 import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
 import { getProductReviewStats } from '@/lib/reviews';
+import ProductLocationBadge from '@/components/fulfillment/ProductLocationBadge';
 
 interface ProductCardProps {
   product: ProductItem;
@@ -103,29 +104,16 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           <span className="text-white/40 text-[11px]">{reviewStats.rating.toFixed(1)} ({reviewStats.count})</span>
         </div>
 
-        {/* Stock Status */}
-        <div className="flex items-center gap-1.5 text-xs font-semibold mb-4">
-          {hasStock ? (
-            product.shippingOrigin === 'portugal' ? (
-              <>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-                <span className="text-emerald-400 text-[11px] font-bold">
-                  {t.common.inStockPortugal || 'Expédié depuis le Portugal (3–5j)'}
-                </span>
-              </>
-            ) : (
-              <>
-                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" aria-hidden="true" />
-                <span className="text-emerald-400 text-[11px] font-bold">{t.common.inStock}</span>
-              </>
-            )
-          ) : (
-            <>
-              <span className="w-2 h-2 rounded-full bg-red-500" aria-hidden="true" />
-              <span className="text-red-400 text-[11px] font-bold">{t.common.outOfStock}</span>
-            </>
-          )}
-        </div>
+        {/* Product Location & Live Stock Badge */}
+        <ProductLocationBadge
+          locationType={product.locationType}
+          shippingOrigin={product.shippingOrigin}
+          mainLocation={product.mainLocation}
+          stockGeneva={product.stockGeneva}
+          stockPortugal={product.stockPortugal}
+          inStock={hasStock}
+          className="mb-3.5"
+        />
 
         {/* Price & Add to Cart Row */}
         <div className="mt-auto pt-3 border-t border-white/10 flex items-center justify-between gap-3">

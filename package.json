@@ -7,7 +7,8 @@
     "typecheck": "tsc --noEmit",
     "redirects": "tsx scripts/build-redirects.ts data/redirect-map.csv",
     "test:routing": "tsx src/lib/fulfillment/__tests__/routing.test.ts",
-    "import:woo": "tsx scripts/import-woocommerce.ts"
+    "import:woo": "tsx scripts/import-woocommerce.ts",
+    "test:acceptance": "tsx scripts/verify-acceptance.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",

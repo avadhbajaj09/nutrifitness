@@ -10,7 +10,8 @@ import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
 import { getProductReviewStats } from '@/lib/reviews';
 import { getProductFaqs } from '@/lib/productFaq';
-import { DeliveryBadge } from '@/components/fulfillment/DeliveryBadge';
+import DeliveryBadge from '@/components/fulfillment/DeliveryBadge';
+import ProductLocationBadge from '@/components/fulfillment/ProductLocationBadge';
 
 interface Props {
   product: ProductItem;
@@ -180,6 +181,18 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               {getLocalized(product.shortDescription, locale)}
             </p>
           </div>
+
+          {/* Location & Flavor Live Stock Badge */}
+          <ProductLocationBadge
+            locationType={product.locationType}
+            shippingOrigin={product.shippingOrigin}
+            mainLocation={product.mainLocation}
+            stockGeneva={selectedVariant ? ((selectedVariant as any).stockGeneva ?? selectedVariant.inventoryQuantity) : product.stockGeneva}
+            stockPortugal={selectedVariant ? ((selectedVariant as any).stockPortugal ?? 0) : product.stockPortugal}
+            inStock={selectedVariant ? selectedVariant.inStock : true}
+            variant="pill"
+            className="w-fit"
+          />
 
           {/* Delivery Availability Badge */}
           <DeliveryBadge productId={product.id} shippingOrigin={product.shippingOrigin} />

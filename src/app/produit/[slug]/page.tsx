@@ -7,6 +7,7 @@ import { formatChf } from '@/lib/tax';
 import { product as generateProductSchema } from '@/lib/schema';
 import { getLocalized } from '@/lib/types';
 import { getProductFaqs } from '@/lib/productFaq';
+import { getAdminSupabase } from '@/lib/supabase';
 
 interface Props {
   params: { slug: string };
@@ -37,7 +38,23 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   };
 }
 
-export default function ProductDetailPage({ params }: Props) {
+export default async function ProductDetailPage({ params }: Props) {
+  // Check if draft or deleted in DB
+  try {
+    const supabase = getAdminSupabase();
+    const { data: dbProduct } = await supabase
+      .from('products')
+      .select('id, status, deleted_at')
+      .eq('slug', params.slug)
+      .single();
+
+    if (dbProduct && (dbProduct.status === 'draft' || dbProduct.deleted_at !== null)) {
+      notFound();
+    }
+  } catch (err) {
+    // Non-blocking fallback
+  }
+
   const product = getProductBySlug(params.slug, 'fr');
 
   if (!product) {

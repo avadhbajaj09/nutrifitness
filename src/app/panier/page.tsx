@@ -5,7 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 
-import { CartShipmentGroups } from '@/components/fulfillment/CartShipmentGroups';
+import CartShipmentGroups from '@/components/fulfillment/CartShipmentGroups';
 
 export default function CartPage() {
   const { 
@@ -123,9 +123,9 @@ export default function CartPage() {
                       {item.isEbook ? (
                         <p className="text-[11px] text-[#95d600] font-bold mt-1">✓ Exemplaire unique (téléchargement immédiat)</p>
                       ) : item.isPortugal ? (
-                        <p className="text-[11px] text-emerald-400 font-bold mt-1">🇵🇹 Expédié depuis l'usine (Portugal) · 3–5 jours ouvrés</p>
+                        <p className="text-[11px] text-blue-400 font-bold mt-1">🇵🇹 Expédié du Portugal (3–5j)</p>
                       ) : (
-                        <p className="text-[11px] text-emerald-400 font-bold mt-1">● {t.common.inStock}</p>
+                        <p className="text-[11px] text-emerald-400 font-bold mt-1">🇨🇭 En stock à Genève (24h)</p>
                       )}
                     </div>
                   </div>
