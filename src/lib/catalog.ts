@@ -1883,7 +1883,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "recuperation-acides-amines",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/marvelous/glutmine-red-and-yellow-mockup-scaled.png",
@@ -1967,13 +1967,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-25430",
@@ -2645,11 +2650,16 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 29.9,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-24655",
@@ -3377,7 +3387,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "prise-de-masse",
     "taxCategory": "food_reduced",
-    "priceChf": 52.0,
+    "priceChf": 52,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
@@ -3505,10 +3515,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate"
         },
         "format": "1 unité",
-        "priceChf": 52.0,
+        "priceChf": 52,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/anabolic-chocolate-.jpg"
+        "image": "/images/products/dirtysquads/anabolic-chocolate-.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-291",
@@ -3520,10 +3532,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies and Cream"
         },
         "format": "1 unité",
-        "priceChf": 52.0,
+        "priceChf": 52,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/anabolic-cookies-and-cream.jpg"
+        "image": "/images/products/dirtysquads/anabolic-cookies-and-cream.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-292",
@@ -3535,10 +3549,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Starwberry"
         },
         "format": "1 unité",
-        "priceChf": 52.0,
+        "priceChf": 52,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/anabolic-stawberry.jpg"
+        "image": "/images/products/dirtysquads/anabolic-stawberry.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-293",
@@ -3550,14 +3566,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Vanilla"
         },
         "format": "1 unité",
-        "priceChf": 52.0,
+        "priceChf": 52,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/anabolic-vanila.jpg"
+        "image": "/images/products/dirtysquads/anabolic-vanila.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-22011",
@@ -3662,11 +3683,16 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 39.9,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-21979",
@@ -3838,7 +3864,9 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 29.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-watermelon.jpg"
+        "image": "/images/products/dirtysquads/dirty-watermelon.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-279",
@@ -3853,7 +3881,9 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 29.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-flavors16.jpg"
+        "image": "/images/products/dirtysquads/dirty-flavors16.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-280",
@@ -3868,11 +3898,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 29.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/amini-tutti-fruity.jpg"
+        "image": "/images/products/dirtysquads/amini-tutti-fruity.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-21965",
@@ -3891,7 +3926,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 55.0,
+    "priceChf": 55,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMELO.png",
@@ -4074,10 +4109,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Caramel"
         },
         "format": "1 unité",
-        "priceChf": 55.0,
+        "priceChf": 55,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-90X2.jpg"
+        "image": "/images/products/dirtysquads/iso-90X2.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-307",
@@ -4089,10 +4126,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate"
         },
         "format": "1 unité",
-        "priceChf": 55.0,
+        "priceChf": 55,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-choco-1.jpeg"
+        "image": "/images/products/dirtysquads/iso-choco-1.jpeg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-308",
@@ -4104,10 +4143,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies and Cream"
         },
         "format": "1 unité",
-        "priceChf": 55.0,
+        "priceChf": 55,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-90X3.jpg"
+        "image": "/images/products/dirtysquads/iso-90X3.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-309",
@@ -4119,10 +4160,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Starwberry"
         },
         "format": "1 unité",
-        "priceChf": 55.0,
+        "priceChf": 55,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-90-strawberry.jpg"
+        "image": "/images/products/dirtysquads/iso-90-strawberry.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-310",
@@ -4134,14 +4177,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Vanilla"
         },
         "format": "1 unité",
-        "priceChf": 55.0,
+        "priceChf": 55,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-90X1.jpg"
+        "image": "/images/products/dirtysquads/iso-90X1.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-21951",
@@ -4160,7 +4208,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 80.0,
+    "priceChf": 80,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLAT-1.png",
@@ -4332,10 +4380,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate"
         },
         "format": "1 unité",
-        "priceChf": 80.0,
+        "priceChf": 80,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso80x-chocolate-0.jpg"
+        "image": "/images/products/dirtysquads/iso80x-chocolate-0.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-299",
@@ -4347,10 +4397,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies and Cream"
         },
         "format": "1 unité",
-        "priceChf": 80.0,
+        "priceChf": 80,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso80x-cokies-and-creams.jpg"
+        "image": "/images/products/dirtysquads/iso80x-cokies-and-creams.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-300",
@@ -4362,10 +4414,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Starwberry"
         },
         "format": "1 unité",
-        "priceChf": 80.0,
+        "priceChf": 80,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso80xstawberry.jpg"
+        "image": "/images/products/dirtysquads/iso80xstawberry.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-301",
@@ -4377,14 +4431,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Vanilla"
         },
         "format": "1 unité",
-        "priceChf": 80.0,
+        "priceChf": 80,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-80x-vanilla.jpg"
+        "image": "/images/products/dirtysquads/iso-80x-vanilla.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-21877",
@@ -4849,11 +4908,16 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 15.9,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-21724",
@@ -4872,7 +4936,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 33.0,
+    "priceChf": 33,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous12.png",
@@ -4956,13 +5020,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 33.0,
+        "priceChf": 33,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-21650",
@@ -4981,7 +5050,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 35.0,
+    "priceChf": 35,
     "images": [
       {
         "src": "/images/products/marvelous/80.png",
@@ -5076,13 +5145,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 35.0,
+        "priceChf": 35,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-21419",
@@ -5101,7 +5175,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 17.0,
+    "priceChf": 17,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous34.png",
@@ -5185,13 +5259,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 17.0,
+        "priceChf": 17,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-21373",
@@ -5898,7 +5977,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "complements-avant-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 26.0,
+    "priceChf": 26,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous31.png",
@@ -5993,13 +6072,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 26.0,
+        "priceChf": 26,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-20929",
@@ -6138,7 +6222,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 79.0,
+    "priceChf": 79,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
@@ -6310,10 +6394,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cinaboom"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/muscles-cinaboom.png"
+        "image": "/images/products/marvelous/muscles-cinaboom.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5765",
@@ -6325,10 +6411,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "White Chocolate peanut Butter Cups"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/MUSCLE-white-cholate-penut-buttewr-NEW-final-mockup.png"
+        "image": "/images/products/marvelous/MUSCLE-white-cholate-penut-buttewr-NEW-final-mockup.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5766",
@@ -6340,10 +6428,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Vanilla Mexicana"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/MUSCLE-vanilla-mockup.png"
+        "image": "/images/products/marvelous/MUSCLE-vanilla-mockup.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5767",
@@ -6355,10 +6445,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Starwberry Milkshake"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/muscles-strawberry.png"
+        "image": "/images/products/marvelous/muscles-strawberry.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5769",
@@ -6370,10 +6462,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies & Cream"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/muscles-cookies-2.png"
+        "image": "/images/products/marvelous/muscles-cookies-2.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5770",
@@ -6385,10 +6479,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate Peanut Butter Cups"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/muscles-choco-penut-butter-cups.png"
+        "image": "/images/products/marvelous/muscles-choco-penut-butter-cups.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5771",
@@ -6400,10 +6496,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate Milkshake"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/muscles-choco.png"
+        "image": "/images/products/marvelous/muscles-choco.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5792",
@@ -6415,10 +6513,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Banana"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/muscles-banana.png"
+        "image": "/images/products/marvelous/muscles-banana.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5808",
@@ -6430,10 +6530,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Salted caramel"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/muscles-salted-carmel.png"
+        "image": "/images/products/marvelous/muscles-salted-carmel.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5809",
@@ -6445,14 +6547,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Dubai white chocolate"
         },
         "format": "1 unité",
-        "priceChf": 79.0,
+        "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "https://nutrifitness.ch/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png"
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-20531",
@@ -6471,7 +6578,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "glucides",
     "taxCategory": "food_reduced",
-    "priceChf": 22.0,
+    "priceChf": 22,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
@@ -6621,10 +6728,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "BROWNIES"
         },
         "format": "1 unité",
-        "priceChf": 22.0,
+        "priceChf": 22,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/59.jpg"
+        "image": "/images/products/marvelous/59.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5799",
@@ -6636,10 +6745,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Creme Brulee"
         },
         "format": "1 unité",
-        "priceChf": 22.0,
+        "priceChf": 22,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/56.jpg"
+        "image": "/images/products/marvelous/56.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5800",
@@ -6651,10 +6762,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "CARAMEL"
         },
         "format": "1 unité",
-        "priceChf": 22.0,
+        "priceChf": 22,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/60.jpg"
+        "image": "/images/products/marvelous/60.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5802",
@@ -6666,10 +6779,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "VANILLA CUSTARD"
         },
         "format": "1 unité",
-        "priceChf": 22.0,
+        "priceChf": 22,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/55.jpg"
+        "image": "/images/products/marvelous/55.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5803",
@@ -6681,14 +6796,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies & Cream"
         },
         "format": "1 unité",
-        "priceChf": 22.0,
+        "priceChf": 22,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/58.jpg"
+        "image": "/images/products/marvelous/58.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-20464",
@@ -6707,7 +6827,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 33.0,
+    "priceChf": 33,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous-56.png",
@@ -6791,13 +6911,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 33.0,
+        "priceChf": 33,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-20440",
@@ -6914,7 +7039,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "apres-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 35.0,
+    "priceChf": 35,
     "images": [
       {
         "src": "/images/products/marvelous/83.png",
@@ -6987,13 +7112,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 35.0,
+        "priceChf": 35,
         "inventoryQuantity": 20,
-        "inStock": false
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-20358",
@@ -7012,7 +7142,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "perte-de-poids",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous-64.png",
@@ -7096,13 +7226,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 20,
-        "inStock": false
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-20353",
@@ -7121,7 +7256,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 16.0,
+    "priceChf": 16,
     "images": [
       {
         "src": "/images/products/marvelous/81.png",
@@ -7205,13 +7340,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 16.0,
+        "priceChf": 16,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-20183",
@@ -8384,11 +8524,16 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 15.9,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-18240",
@@ -8407,7 +8552,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "NutriFitness",
     "categorySlug": "complements-avant-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 28.0,
+    "priceChf": 28,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous43.png",
@@ -8480,7 +8625,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 28.0,
+        "priceChf": 28,
         "inventoryQuantity": 20,
         "inStock": true
       }
@@ -8505,7 +8650,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 30.0,
+    "priceChf": 30,
     "images": [
       {
         "src": "/images/products/marvelous/alive.png",
@@ -8589,13 +8734,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 30.0,
+        "priceChf": 30,
         "inventoryQuantity": 20,
-        "inStock": false
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-15512",
@@ -8832,7 +8982,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 72.0,
+    "priceChf": 72,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
@@ -8949,10 +9099,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Watermelon"
         },
         "format": "1 unité",
-        "priceChf": 72.0,
+        "priceChf": 72,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Electro-flvours-3.jpg"
+        "image": "/images/products/marvelous/Electro-flvours-3.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5788",
@@ -8964,10 +9116,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Ice tea peach"
         },
         "format": "1 unité",
-        "priceChf": 72.0,
+        "priceChf": 72,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Electro-flvours-2.jpg"
+        "image": "/images/products/marvelous/Electro-flvours-2.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5789",
@@ -8979,14 +9133,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Orange mango"
         },
         "format": "1 unité",
-        "priceChf": 72.0,
+        "priceChf": 72,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Electro-flvours-1.jpg"
+        "image": "/images/products/marvelous/Electro-flvours-1.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-14597",
@@ -9463,7 +9622,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 100.0,
+    "priceChf": 100,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/ISO-BULK-CHOCO-1.8KG.png",
@@ -9602,10 +9761,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate Fudge"
         },
         "format": "1 unité",
-        "priceChf": 100.0,
+        "priceChf": 100,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/bulk-choco-fudge.png"
+        "image": "/images/products/marvelous/bulk-choco-fudge.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5722",
@@ -9617,10 +9778,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies and Cream"
         },
         "format": "1 unité",
-        "priceChf": 100.0,
+        "priceChf": 100,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/bulk-cookies.png"
+        "image": "/images/products/marvelous/bulk-cookies.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5723",
@@ -9632,10 +9795,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Strawberry"
         },
         "format": "1 unité",
-        "priceChf": 100.0,
+        "priceChf": 100,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/bulk-strawberry.png"
+        "image": "/images/products/marvelous/bulk-strawberry.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5724",
@@ -9647,14 +9812,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Vanilla"
         },
         "format": "1 unité",
-        "priceChf": 100.0,
+        "priceChf": 100,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/bulk-vanilla.png"
+        "image": "/images/products/marvelous/bulk-vanilla.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-14309",
@@ -10654,7 +10824,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "decuple-votre-energie-et-recuperation",
     "taxCategory": "food_reduced",
-    "priceChf": 20.0,
+    "priceChf": 20,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous32.png",
@@ -10738,13 +10908,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 20.0,
+        "priceChf": 20,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-12913",
@@ -11428,7 +11603,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 20.0,
+    "priceChf": 20,
     "images": [
       {
         "src": "/images/products/marvelous/73.png",
@@ -11512,13 +11687,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 20.0,
+        "priceChf": 20,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-11389",
@@ -11537,7 +11717,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "complements-de-qualite-pendant-le-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/marvelous/glycrol-mockup-scaled.png",
@@ -11610,13 +11790,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-11379",
@@ -11635,7 +11820,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 15.0,
+    "priceChf": 15,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous46.png",
@@ -11708,13 +11893,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 15.0,
+        "priceChf": 15,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-11328",
@@ -11819,11 +12009,16 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 40,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-11296",
@@ -11842,7 +12037,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "bcaa",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2024/04/HYPE-EAA-300G.webp",
@@ -11948,10 +12143,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Peach mango"
         },
         "format": "1 unité",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Hype-flvours-1.jpg"
+        "image": "/images/products/marvelous/Hype-flvours-1.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5746",
@@ -11963,10 +12160,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Pineapple"
         },
         "format": "1 unité",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Hype-flvours-3.jpg"
+        "image": "/images/products/marvelous/Hype-flvours-3.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5747",
@@ -11978,14 +12177,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Strawberry lemonade"
         },
         "format": "1 unité",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Hype-flvours-2.jpg"
+        "image": "/images/products/marvelous/Hype-flvours-2.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-11269",
@@ -12004,7 +12208,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "prise-de-masse",
     "taxCategory": "food_reduced",
-    "priceChf": 59.0,
+    "priceChf": 59,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2024/04/BIG-LEAN-GAINER-3KG.webp",
@@ -12110,10 +12314,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate"
         },
         "format": "1 unité",
-        "priceChf": 59.0,
+        "priceChf": 59,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/big-choco.png"
+        "image": "/images/products/marvelous/big-choco.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5921",
@@ -12125,10 +12331,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies and Cream"
         },
         "format": "1 unité",
-        "priceChf": 59.0,
+        "priceChf": 59,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/big-cookies.png"
+        "image": "/images/products/marvelous/big-cookies.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5922",
@@ -12140,14 +12348,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Vanilla"
         },
         "format": "1 unité",
-        "priceChf": 59.0,
+        "priceChf": 59,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/big-vanilla.png"
+        "image": "/images/products/marvelous/big-vanilla.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-11236",
@@ -12569,7 +12782,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "apres-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 22.0,
+    "priceChf": 22,
     "images": [
       {
         "src": "/images/products/marvelous/crearine-old-school.png",
@@ -12642,13 +12855,18 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "1 unité",
-        "priceChf": 22.0,
+        "priceChf": 22,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-9378",
@@ -12667,7 +12885,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "apres-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 42.0,
+    "priceChf": 42,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2023/03/SAVIOR-CREATINE-950G.webp",
@@ -12762,10 +12980,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Fruit Punch"
         },
         "format": "1 unité",
-        "priceChf": 42.0,
+        "priceChf": 42,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Savior-flvours-1.jpg"
+        "image": "/images/products/marvelous/Savior-flvours-1.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5719",
@@ -12777,14 +12997,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Pineapple"
         },
         "format": "1 unité",
-        "priceChf": 42.0,
+        "priceChf": 42,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Savior-flvours-2.jpg"
+        "image": "/images/products/marvelous/Savior-flvours-2.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-8942",
@@ -13544,7 +13769,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "pre-workout",
     "taxCategory": "food_reduced",
-    "priceChf": 32.0,
+    "priceChf": 32,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous27.png",
@@ -13628,10 +13853,12 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Fruit Punch"
         },
         "format": "300g (30 doses)",
-        "priceChf": 32.0,
+        "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/50.jpg"
+        "image": "/images/products/marvelous/50.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5699",
@@ -13643,14 +13870,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Watermelon"
         },
         "format": "300g (30 doses)",
-        "priceChf": 32.0,
+        "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/50.jpg"
+        "image": "/images/products/marvelous/50.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-mv-5640",
@@ -13669,7 +13901,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "pre-workout",
     "taxCategory": "food_reduced",
-    "priceChf": 32.0,
+    "priceChf": 32,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous48.png",
@@ -13742,7 +13974,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "mango peach"
         },
         "format": "300g (30 doses)",
-        "priceChf": 32.0,
+        "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous48.png"
@@ -13757,7 +13989,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "tropical fruit"
         },
         "format": "300g (30 doses)",
-        "priceChf": 32.0,
+        "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous48.png"
@@ -13772,7 +14004,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "pink strawberry"
         },
         "format": "300g (30 doses)",
-        "priceChf": 32.0,
+        "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous48.png"
@@ -13798,7 +14030,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "sommeil",
     "taxCategory": "food_reduced",
-    "priceChf": 29.0,
+    "priceChf": 29,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous-63.png",
@@ -13871,7 +14103,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "90 gélules",
-        "priceChf": 29.0,
+        "priceChf": 29,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous-63.png"
@@ -13897,7 +14129,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "perte-de-poids",
     "taxCategory": "food_reduced",
-    "priceChf": 30.0,
+    "priceChf": 30,
     "images": [
       {
         "src": "/images/products/marvelous/79-1.png",
@@ -13970,7 +14202,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "90 gélules",
-        "priceChf": 30.0,
+        "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/79-1.png"
@@ -13996,7 +14228,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 12.0,
+    "priceChf": 12,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous37.png",
@@ -14069,7 +14301,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille S"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous37.png"
@@ -14084,7 +14316,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille M"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous37.png"
@@ -14099,7 +14331,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille L"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous37.png"
@@ -14114,7 +14346,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille XL"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous37.png"
@@ -14129,7 +14361,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille XXL"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous37.png"
@@ -14155,7 +14387,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 12.0,
+    "priceChf": 12,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous28.png",
@@ -14228,7 +14460,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille S"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous28.png"
@@ -14243,7 +14475,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille M"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous28.png"
@@ -14258,7 +14490,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille L"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous28.png"
@@ -14273,7 +14505,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille XL"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous28.png"
@@ -14288,7 +14520,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille XXL"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous28.png"
@@ -14314,7 +14546,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 12.0,
+    "priceChf": 12,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous29.png",
@@ -14387,7 +14619,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille S"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous29.png"
@@ -14402,7 +14634,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille M"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous29.png"
@@ -14417,7 +14649,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille L"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous29.png"
@@ -14432,7 +14664,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille XL"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous29.png"
@@ -14447,7 +14679,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Taille XXL"
         },
         "format": "Textile Sport",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous29.png"
@@ -14473,7 +14705,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 12.0,
+    "priceChf": 12,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous45.png",
@@ -14546,7 +14778,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "700 ml",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous45.png"
@@ -14572,7 +14804,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 12.0,
+    "priceChf": 12,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous30.png",
@@ -14645,7 +14877,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "700 ml",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous30.png"
@@ -14671,7 +14903,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 12.0,
+    "priceChf": 12,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous6.png",
@@ -14744,7 +14976,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "700 ml",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous6.png"
@@ -14770,7 +15002,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 12.0,
+    "priceChf": 12,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous13.png",
@@ -14843,7 +15075,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "Taille Unique Réglable",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous13.png"
@@ -14869,7 +15101,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 12.0,
+    "priceChf": 12,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous26.png",
@@ -14942,7 +15174,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "Taille Unique",
-        "priceChf": 12.0,
+        "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous26.png"
@@ -14968,7 +15200,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous42.png",
@@ -15041,7 +15273,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "Grand Volume 45L",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous42.png"
@@ -15067,7 +15299,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous21.png",
@@ -15140,7 +15372,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "30L Ergonomique",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous21.png"
@@ -15166,7 +15398,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "acides-amines",
     "taxCategory": "food_reduced",
-    "priceChf": 35.0,
+    "priceChf": 35,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous5.png",
@@ -15260,7 +15492,7 @@ export const PRODUCTS: ProductItem[] = [
       "sugarsG": 0,
       "proteinG": 8.5,
       "saltG": 0.15,
-      "bcaaG": 5.0
+      "bcaaG": 5
     },
     "variants": [
       {
@@ -15273,7 +15505,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Fruit Punch"
         },
         "format": "300g (30 doses)",
-        "priceChf": 35.0,
+        "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/49.jpg"
@@ -15288,7 +15520,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Mango"
         },
         "format": "300g (30 doses)",
-        "priceChf": 35.0,
+        "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/48.jpg"
@@ -15303,7 +15535,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Strawberry"
         },
         "format": "300g (30 doses)",
-        "priceChf": 35.0,
+        "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/47.jpg"
@@ -15318,7 +15550,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Watermelon"
         },
         "format": "300g (30 doses)",
-        "priceChf": 35.0,
+        "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/49.jpg"
@@ -15344,7 +15576,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "acides-amines",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous47.png",
@@ -15403,7 +15635,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0,
       "sugarsG": 0,
-      "proteinG": 5.0,
+      "proteinG": 5,
       "saltG": 0
     },
     "variants": [
@@ -15417,7 +15649,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (60 doses)",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous47.png"
@@ -15443,7 +15675,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 35.0,
+    "priceChf": 35,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous25.png",
@@ -15534,7 +15766,7 @@ export const PRODUCTS: ProductItem[] = [
       "fatG": 1.2,
       "saturatedFatG": 0.7,
       "carbsG": 1.8,
-      "sugarsG": 1.0,
+      "sugarsG": 1,
       "proteinG": 24.5,
       "saltG": 0.25,
       "bcaaG": 5.6
@@ -15550,7 +15782,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate Peanut Butter"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 35.0,
+        "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/66.jpg"
@@ -15565,7 +15797,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies and Cream"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 35.0,
+        "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/65.jpg"
@@ -15580,7 +15812,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Strawberry"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 35.0,
+        "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/64.jpg"
@@ -15606,7 +15838,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "sante-bien-etre",
     "taxCategory": "food_reduced",
-    "priceChf": 28.0,
+    "priceChf": 28,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous33.png",
@@ -15690,7 +15922,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Orange"
         },
         "format": "300g (30 doses)",
-        "priceChf": 28.0,
+        "priceChf": 28,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/63.jpg"
@@ -15716,7 +15948,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "perte-de-poids",
     "taxCategory": "food_reduced",
-    "priceChf": 30.0,
+    "priceChf": 30,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous50.png",
@@ -15789,7 +16021,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "90 gélules",
-        "priceChf": 30.0,
+        "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous50.png"
@@ -15815,7 +16047,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "acides-amines",
     "taxCategory": "food_reduced",
-    "priceChf": 24.0,
+    "priceChf": 24,
     "images": [
       {
         "src": "/images/products/marvelous/Untitled-design-14-1.png",
@@ -15874,7 +16106,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0,
       "sugarsG": 0,
-      "proteinG": 3.0,
+      "proteinG": 3,
       "saltG": 0
     },
     "variants": [
@@ -15888,14 +16120,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (100 doses)",
-        "priceChf": 24.0,
+        "priceChf": 24,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Untitled-design-14-1.png"
+        "image": "/images/products/marvelous/Untitled-design-14-1.png",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-mv-5741",
@@ -15914,7 +16151,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines",
     "taxCategory": "food_reduced",
-    "priceChf": 23.0,
+    "priceChf": 23,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous-53.png",
@@ -15987,7 +16224,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "90 gélules",
-        "priceChf": 23.0,
+        "priceChf": 23,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous-53.png"
@@ -16013,7 +16250,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 70.0,
+    "priceChf": 70,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous-51.png",
@@ -16138,7 +16375,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0.1,
       "carbsG": 0.5,
       "sugarsG": 0.2,
-      "proteinG": 27.0,
+      "proteinG": 27,
       "saltG": 0.2,
       "bcaaG": 6.2
     },
@@ -16153,7 +16390,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate Peanut Butter"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 75.0,
+        "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Lean-AF-flvours-5.jpg"
@@ -16168,7 +16405,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Belgium Chocolate"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 75.0,
+        "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Lean-AF-flvours-6.jpg"
@@ -16183,7 +16420,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 75.0,
+        "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Lean-AF-flvours-4.jpg"
@@ -16198,7 +16435,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Creme Brulee"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 75.0,
+        "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Lean-AF-flvours-3.jpg"
@@ -16213,7 +16450,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Pinacolada"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 70.0,
+        "priceChf": 70,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Lean-AF-flvours-2.jpg"
@@ -16228,7 +16465,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "White Chocolate Raspberry"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 75.0,
+        "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Lean-AF-flvours-1.jpg"
@@ -16254,7 +16491,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "creatine",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/marvelous/creatine.png",
@@ -16327,7 +16564,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (88 doses)",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/creatine.png"
@@ -16353,7 +16590,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines",
     "taxCategory": "food_reduced",
-    "priceChf": 39.0,
+    "priceChf": 39,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous20.png",
@@ -16426,7 +16663,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "60 gélules",
-        "priceChf": 39.0,
+        "priceChf": 39,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous20.png"
@@ -16452,7 +16689,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "sante-bien-etre",
     "taxCategory": "food_reduced",
-    "priceChf": 30.0,
+    "priceChf": 30,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous7.png",
@@ -16525,7 +16762,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "90 gélules",
-        "priceChf": 30.0,
+        "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous7.png"
@@ -16551,7 +16788,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "perte-de-poids",
     "taxCategory": "food_reduced",
-    "priceChf": 18.0,
+    "priceChf": 18,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous2.png",
@@ -16624,7 +16861,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "60 gélules",
-        "priceChf": 18.0,
+        "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous2.png"
@@ -16650,7 +16887,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "pre-workout",
     "taxCategory": "food_reduced",
-    "priceChf": 30.0,
+    "priceChf": 30,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous23.png",
@@ -16745,7 +16982,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Blue razz"
         },
         "format": "300g (30 doses)",
-        "priceChf": 30.0,
+        "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/61.jpg"
@@ -16760,7 +16997,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Sweet Lemonade"
         },
         "format": "300g (30 doses)",
-        "priceChf": 30.0,
+        "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/62.jpg"
@@ -16786,7 +17023,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "creatine",
     "taxCategory": "food_reduced",
-    "priceChf": 27.0,
+    "priceChf": 27,
     "images": [
       {
         "src": "/images/products/marvelous/Marveleous-52.png",
@@ -16892,7 +17129,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Mango"
         },
         "format": "300g (60 doses)",
-        "priceChf": 27.0,
+        "priceChf": 27,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Creatine-flvours-1.jpg"
@@ -16907,7 +17144,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Watermelon"
         },
         "format": "300g (60 doses)",
-        "priceChf": 27.0,
+        "priceChf": 27,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Creatine-flvours-2.jpg"
@@ -16922,7 +17159,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Pinacolada"
         },
         "format": "300g (60 doses)",
-        "priceChf": 27.0,
+        "priceChf": 27,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Creatine-flvours-3.jpg"
@@ -16948,7 +17185,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "peau-et-articulations",
     "taxCategory": "food_reduced",
-    "priceChf": 29.0,
+    "priceChf": 29,
     "images": [
       {
         "src": "/images/products/marvelous/collagen-Flavored.png",
@@ -17007,7 +17244,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0.1,
       "sugarsG": 0,
-      "proteinG": 9.0,
+      "proteinG": 9,
       "saltG": 0.08
     },
     "variants": [
@@ -17021,7 +17258,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (30 doses)",
-        "priceChf": 29.0,
+        "priceChf": 29,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/collagen-Flavored.png"
@@ -17205,7 +17442,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0,
       "sugarsG": 0,
-      "proteinG": 3.0,
+      "proteinG": 3,
       "saltG": 0
     },
     "variants": [
@@ -17304,7 +17541,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0,
       "sugarsG": 0,
-      "proteinG": 5.0,
+      "proteinG": 5,
       "saltG": 0
     },
     "variants": [
@@ -17403,7 +17640,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0,
       "sugarsG": 0,
-      "proteinG": 5.0,
+      "proteinG": 5,
       "saltG": 0
     },
     "variants": [
@@ -17443,7 +17680,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 85.0,
+    "priceChf": 85,
     "images": [
       {
         "src": "/images/products/marvelous/hydro-mockup-choco.png",
@@ -17572,7 +17809,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Capuccino"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 85.0,
+        "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/hydro-cuppcino.png"
@@ -17587,7 +17824,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Chocolate"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 85.0,
+        "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/hydro-choco.png"
@@ -17602,7 +17839,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Cookies & Cream"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 85.0,
+        "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/hydro-cookie-sbiscuit.png"
@@ -17617,7 +17854,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Strawberry"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 85.0,
+        "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/hydro-strawberry.png"
@@ -17632,7 +17869,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Vanilla"
         },
         "format": "2 kg (66 doses)",
-        "priceChf": 85.0,
+        "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/hydro-vanilla.png"
@@ -17658,7 +17895,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "pre-workout",
     "taxCategory": "food_reduced",
-    "priceChf": 30.0,
+    "priceChf": 30,
     "images": [
       {
         "src": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png",
@@ -17731,7 +17968,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (30 doses)",
-        "priceChf": 30.0,
+        "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png"
@@ -17757,7 +17994,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "sante-bien-etre",
     "taxCategory": "food_reduced",
-    "priceChf": 18.0,
+    "priceChf": 18,
     "images": [
       {
         "src": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png",
@@ -17830,7 +18067,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "60 gélules",
-        "priceChf": 18.0,
+        "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png"
@@ -17856,7 +18093,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "sante-bien-etre",
     "taxCategory": "food_reduced",
-    "priceChf": 14.0,
+    "priceChf": 14,
     "images": [
       {
         "src": "/images/products/marvelous/caffine-gadwel-1.png",
@@ -17929,7 +18166,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "60 gélules",
-        "priceChf": 14.0,
+        "priceChf": 14,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/caffine-gadwel-1.png"
@@ -17955,7 +18192,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "sante-bien-etre",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/marvelous/nad-mockup.png",
@@ -18028,7 +18265,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "60 gélules",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/nad-mockup.png"
@@ -18054,7 +18291,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines",
     "taxCategory": "food_reduced",
-    "priceChf": 20.0,
+    "priceChf": 20,
     "images": [
       {
         "src": "/images/products/marvelous/ChatGPT-Image-Sep-30-2026-09_25_14-PM.png",
@@ -18133,7 +18370,7 @@ export const PRODUCTS: ProductItem[] = [
       "energyKcal": 18,
       "fatG": 0,
       "saturatedFatG": 0,
-      "carbsG": 4.0,
+      "carbsG": 4,
       "sugarsG": 1.2,
       "proteinG": 0,
       "saltG": 0.65
@@ -18149,7 +18386,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "coconut water"
         },
         "format": "300g (30 doses)",
-        "priceChf": 20.0,
+        "priceChf": 20,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/hydralytes-cocnut-water.png"
@@ -18164,7 +18401,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "lemon mint"
         },
         "format": "300g (30 doses)",
-        "priceChf": 20.0,
+        "priceChf": 20,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/hydralytes-lemon-mint.png"
@@ -18310,7 +18547,9 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 31.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/lemon-stim-x.jpg"
+        "image": "/images/products/dirtysquads/lemon-stim-x.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-285",
@@ -18325,7 +18564,9 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 31.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/red-cola-stim-x.jpg"
+        "image": "/images/products/dirtysquads/red-cola-stim-x.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-286",
@@ -18340,11 +18581,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 31.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/tutti-fruity-stimx.jpg"
+        "image": "/images/products/dirtysquads/tutti-fruity-stimx.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-ds-200",
@@ -18363,7 +18609,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "vitamines",
     "taxCategory": "food_reduced",
-    "priceChf": 18.0,
+    "priceChf": 18,
     "images": [
       {
         "src": "/images/products/dirtysquads/dirty-sqauds-wall3.jpg",
@@ -18447,7 +18693,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "60 gélules",
-        "priceChf": 18.0,
+        "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/dirty-sqauds-wall3.jpg"
@@ -18473,7 +18719,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "sante-bien-etre",
     "taxCategory": "food_reduced",
-    "priceChf": 42.0,
+    "priceChf": 42,
     "images": [
       {
         "src": "/images/products/dirtysquads/dirty-sqauds-wall6.jpg",
@@ -18557,7 +18803,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "90 gélules",
-        "priceChf": 42.0,
+        "priceChf": 42,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/dirty-sqauds-wall6.jpg"
@@ -18583,7 +18829,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "sante-bien-etre",
     "taxCategory": "food_reduced",
-    "priceChf": 18.0,
+    "priceChf": 18,
     "images": [
       {
         "src": "/images/products/dirtysquads/dirty-sqauds-wall5.jpg",
@@ -18649,7 +18895,7 @@ export const PRODUCTS: ProductItem[] = [
       "servingsPerContainer": 45,
       "energyKj": 74,
       "energyKcal": 18,
-      "fatG": 2.0,
+      "fatG": 2,
       "saturatedFatG": 0.2,
       "carbsG": 0,
       "sugarsG": 0,
@@ -18667,7 +18913,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "90 capsules",
-        "priceChf": 18.0,
+        "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/dirty-sqauds-wall5.jpg"
@@ -18693,7 +18939,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "creatine",
     "taxCategory": "food_reduced",
-    "priceChf": 29.0,
+    "priceChf": 29,
     "images": [
       {
         "src": "/images/products/dirtysquads/dirty-sqauds-wall8.jpg",
@@ -18777,14 +19023,19 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (100 doses)",
-        "priceChf": 29.0,
+        "priceChf": 29,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall8.jpg"
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall8.jpg",
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-ds-213",
@@ -18913,7 +19164,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "acides-amines",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png",
@@ -18983,7 +19234,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0,
       "sugarsG": 0,
-      "proteinG": 5.0,
+      "proteinG": 5,
       "saltG": 0
     },
     "variants": [
@@ -18997,7 +19248,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (60 doses)",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png"
@@ -19023,7 +19274,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "acides-amines",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png",
@@ -19093,7 +19344,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0,
       "sugarsG": 0,
-      "proteinG": 3.0,
+      "proteinG": 3,
       "saltG": 0
     },
     "variants": [
@@ -19107,7 +19358,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (100 doses)",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png"
@@ -19133,7 +19384,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "acides-amines",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png",
@@ -19203,7 +19454,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0,
       "sugarsG": 0,
-      "proteinG": 5.0,
+      "proteinG": 5,
       "saltG": 0
     },
     "variants": [
@@ -19217,7 +19468,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (60 doses)",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png"
@@ -19243,7 +19494,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Dirty Squads",
     "categorySlug": "acides-amines",
     "taxCategory": "food_reduced",
-    "priceChf": 25.0,
+    "priceChf": 25,
     "images": [
       {
         "src": "/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png",
@@ -19313,7 +19564,7 @@ export const PRODUCTS: ProductItem[] = [
       "saturatedFatG": 0,
       "carbsG": 0,
       "sugarsG": 0,
-      "proteinG": 5.0,
+      "proteinG": 5,
       "saltG": 0
     },
     "variants": [
@@ -19327,7 +19578,7 @@ export const PRODUCTS: ProductItem[] = [
           "en": "Standard"
         },
         "format": "300g (60 doses)",
-        "priceChf": 25.0,
+        "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png"

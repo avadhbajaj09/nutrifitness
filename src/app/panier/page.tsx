@@ -18,19 +18,20 @@ export default function CartPage() {
     showToast,
     formatPrice,
     t,
-    currency
+    currency,
+    countryCode
   } = useStore();
 
-  const [countryCode, setCountryCode] = useState('CH');
-
-  useEffect(() => {
-    if (typeof document !== 'undefined') {
-      const match = document.cookie.match(/(?:^|;\s*)nf_country=([^;]*)/);
-      if (match && match[1]) {
-        setCountryCode(decodeURIComponent(match[1]));
-      }
-    }
-  }, []);
+  const genevaAllowList = ['CH', 'LI', 'FR', 'DE', 'IT', 'AT'];
+  const currentCc = (countryCode || 'CH').toUpperCase();
+  const blockedItems = cart.filter(item => {
+    if (item.isEbook) return false;
+    const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
+    const isPortugal = item.shippingOrigin === 'portugal' && !isCommon;
+    const isGenevaOnly = !isCommon && !isPortugal;
+    return isGenevaOnly && !genevaAllowList.includes(currentCc);
+  });
+  const hasBlockedItems = blockedItems.length > 0;
 
   const [couponCode, setCouponCode] = useState('');
   const [discountRate, setDiscountRate] = useState(0);
@@ -96,6 +97,27 @@ export default function CartPage() {
               />
             </div>
           </div>
+
+          {/* Blocked Items Warning for Selected Destination */}
+          {hasBlockedItems && (
+            <div className="p-4 rounded-2xl border border-red-500/40 bg-red-950/40 text-red-200 text-xs space-y-1.5 animate-in fade-in duration-200">
+              <p className="font-bold flex items-center gap-2 text-red-300">
+                <span>⚠️</span>
+                <span>Articles non livrables vers votre pays ({currentCc}) :</span>
+              </p>
+              <ul className="list-disc list-inside space-y-1 text-[11px] text-red-200/90 pl-1">
+                {blockedItems.map((b) => (
+                  <li key={b.itemKey}>
+                    <span className="font-semibold text-white">{b.name}</span>
+                    <span className="text-red-300/80"> — stocké uniquement à Genève, non expédiable vers {currentCc}</span>
+                  </li>
+                ))}
+              </ul>
+              <p className="text-[11px] text-white/70 pt-1">
+                Veuillez retirer ces articles de votre panier ou choisir un autre pays de livraison dans l&apos;en-tête pour pouvoir finaliser votre commande.
+              </p>
+            </div>
+          )}
 
           <CartShipmentGroups cartItems={cart} countryCode={countryCode} />
 
@@ -272,13 +294,20 @@ export default function CartPage() {
           </div>
 
           {/* Checkout CTA */}
-          <Link 
-            href="/commande/"
-            className="w-full min-h-[48px] px-6 py-3.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-lg hover:shadow-[#F80404]/25 flex items-center justify-center gap-2 active:scale-98"
-          >
-            <span>{t.common.checkout}</span>
-            <span>→</span>
-          </Link>
+          {hasBlockedItems ? (
+            <div className="w-full min-h-[48px] px-6 py-3.5 bg-red-950/60 border border-red-500/50 text-red-200 font-bold uppercase tracking-wider text-xs rounded-xl flex items-center justify-center text-center gap-2">
+              <span>⚠️</span>
+              <span>Retirez les articles non livrables pour commander</span>
+            </div>
+          ) : (
+            <Link 
+              href="/commande/"
+              className="w-full min-h-[48px] px-6 py-3.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-lg hover:shadow-[#F80404]/25 flex items-center justify-center gap-2 active:scale-98"
+            >
+              <span>{t.common.checkout}</span>
+              <span>→</span>
+            </Link>
+          )}
 
           {/* Trust strip */}
           <div className="pt-4 border-t border-white/10 space-y-2 text-[11px] text-white/50">

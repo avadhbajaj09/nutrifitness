@@ -2,7 +2,6 @@
 
 import React from 'react';
 import { useStore } from '@/context/StoreContext';
-import { MapPin } from 'lucide-react';
 
 export interface ProductLocationBadgeProps {
   locationType?: 'COMMON' | 'GENEVA_ONLY' | 'PORTUGAL_ONLY';
@@ -15,6 +14,8 @@ export interface ProductLocationBadgeProps {
   variant?: 'card' | 'pill' | 'compact';
 }
 
+const GENEVA_ALLOW_LIST = new Set(['CH', 'LI', 'FR', 'DE', 'IT', 'AT']);
+
 export default function ProductLocationBadge({
   locationType,
   shippingOrigin,
@@ -25,86 +26,88 @@ export default function ProductLocationBadge({
   className = '',
   variant = 'card'
 }: ProductLocationBadgeProps) {
-  const { t } = useStore();
+  const { t, countryCode } = useStore();
 
   const isCommon = locationType === 'COMMON' || shippingOrigin === 'common';
   const isPortugalOnly =
     locationType === 'PORTUGAL_ONLY' ||
     (shippingOrigin === 'portugal' && !isCommon);
 
-  // Effective location displayed for non-common products
-  const displayLocation = isCommon ? 'COMMON' : isPortugalOnly ? 'PORTUGAL' : 'GENEVA';
-
-  // Stock count determination
-  let effectiveStock: number;
+  // Stock status determination without exposing numeric quantities
+  let hasStock = inStock;
   if (isCommon) {
-    const sGen = typeof stockGeneva === 'number' ? stockGeneva : inStock ? 10 : 0;
-    const sPt = typeof stockPortugal === 'number' ? stockPortugal : inStock ? 10 : 0;
-    effectiveStock = sGen + sPt;
-  } else if (displayLocation === 'GENEVA') {
-    effectiveStock = typeof stockGeneva === 'number' ? stockGeneva : inStock ? 15 : 0;
+    const sGen = typeof stockGeneva === 'number' ? stockGeneva : 25;
+    const sPt = typeof stockPortugal === 'number' ? stockPortugal : 25;
+    hasStock = inStock && (sGen > 0 || sPt > 0);
+  } else if (isPortugalOnly) {
+    const sPt = typeof stockPortugal === 'number' ? stockPortugal : 25;
+    hasStock = inStock && sPt > 0;
   } else {
-    effectiveStock = typeof stockPortugal === 'number' ? stockPortugal : inStock ? 15 : 0;
+    const sGen = typeof stockGeneva === 'number' ? stockGeneva : 25;
+    hasStock = inStock && sGen > 0;
   }
 
-  const isOutOfStock = effectiveStock <= 0;
-  const isLowStock = !isCommon && effectiveStock > 0 && effectiveStock <= 5;
+  const isOutOfStock = !hasStock;
 
-  // Labels & Icons
+  // Destination context
+  const currentCc = (countryCode || 'CH').toUpperCase();
+  const isSwissDestination = currentCc === 'CH' || currentCc === 'LI';
+  const isGenevaAllowed = GENEVA_ALLOW_LIST.has(currentCc);
+
+  let isBlocked = false;
   let locationLabel: string;
   let flagIcon: string;
+  let activeOrigin: 'GENEVA' | 'PORTUGAL' = 'GENEVA';
 
   if (isCommon) {
-    locationLabel = 'Genève & Portugal';
-    flagIcon = '🇨🇭 🇵🇹';
-  } else if (displayLocation === 'GENEVA') {
-    locationLabel = t.common.inStockGeneva || 'En stock à Genève';
-    flagIcon = '🇨🇭';
-  } else {
-    locationLabel = t.common.inStockPortugal || 'Expédié du Portugal';
-    flagIcon = '🇵🇹';
-  }
-
-  // Stock count text formatting
-  let stockText: string;
-  if (isOutOfStock) {
-    stockText = t.common.ruptureStock || 'Rupture de stock';
-  } else if (isCommon) {
-    if (typeof stockGeneva === 'number' && typeof stockPortugal === 'number') {
-      if (stockGeneva > 0 && stockPortugal > 0) {
-        stockText = `CH: ${stockGeneva} · PT: ${stockPortugal}`;
-      } else if (stockGeneva > 0) {
-        stockText = `CH: ${stockGeneva}`;
-      } else {
-        stockText = `PT: ${stockPortugal}`;
-      }
+    // COMMON: auto-select nearest origin based on customer country
+    if (isSwissDestination) {
+      activeOrigin = 'GENEVA';
+      locationLabel = 'Expédié de Genève (24h)';
+      flagIcon = '🇨🇭';
     } else {
-      stockText = `${effectiveStock} en stock`;
+      activeOrigin = 'PORTUGAL';
+      locationLabel = 'Expédié du Portugal (3–5j)';
+      flagIcon = '🇵🇹';
     }
-  } else if (isLowStock) {
-    stockText = (t.common.onlyLeft || 'Plus que {count} en stock').replace(
-      '{count}',
-      effectiveStock.toString()
-    );
+  } else if (isPortugalOnly) {
+    activeOrigin = 'PORTUGAL';
+    locationLabel = 'Expédié du Portugal (3–5j)';
+    flagIcon = '🇵🇹';
   } else {
-    stockText = (t.common.unitsInStock || '{count} en stock').replace(
-      '{count}',
-      effectiveStock.toString()
-    );
+    // GENEVA ONLY
+    activeOrigin = 'GENEVA';
+    if (!isGenevaAllowed) {
+      isBlocked = true;
+      locationLabel = 'Stock Genève';
+      flagIcon = '🇨🇭';
+    } else {
+      locationLabel = 'Expédié de Genève (24h)';
+      flagIcon = '🇨🇭';
+    }
   }
 
-  // Compact Pill (e.g. over image corner or in tight spaces)
+  // Stock text strictly without numbers: "En stock" / "Rupture de stock" / "Non livrable"
+  let stockText: string;
+  if (isBlocked) {
+    stockText = `Non livrable (${currentCc})`;
+  } else if (isOutOfStock) {
+    stockText = t.common.ruptureStock || 'Rupture de stock';
+  } else {
+    stockText = 'En stock';
+  }
+
+  const isGreen = !isBlocked && !isOutOfStock && activeOrigin === 'GENEVA';
+  const isBlue = !isBlocked && !isOutOfStock && activeOrigin === 'PORTUGAL';
+
+  // Compact Pill (e.g. over image corner or in product detail)
   if (variant === 'pill') {
     return (
       <span
         className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold backdrop-blur-md border shadow-xs transition-colors ${
-          isOutOfStock
+          isBlocked || isOutOfStock
             ? 'bg-red-950/80 text-red-400 border-red-500/30'
-            : isCommon
-            ? 'bg-purple-950/85 text-purple-200 border-purple-500/40'
-            : isLowStock
-            ? 'bg-amber-950/80 text-amber-300 border-amber-500/40'
-            : displayLocation === 'GENEVA'
+            : isGreen
             ? 'bg-emerald-950/85 text-emerald-300 border-emerald-500/40'
             : 'bg-blue-950/85 text-blue-300 border-blue-500/40'
         } ${className}`}
@@ -125,26 +128,22 @@ export default function ProductLocationBadge({
       <div className="flex items-center gap-1.5 min-w-0">
         <span
           className={`w-2 h-2 rounded-full shrink-0 ${
-            isOutOfStock
+            isBlocked || isOutOfStock
               ? 'bg-red-500'
-              : isCommon
-              ? 'bg-purple-400 animate-pulse'
-              : isLowStock
-              ? 'bg-amber-400 animate-pulse'
-              : 'bg-emerald-400 animate-pulse'
+              : isGreen
+              ? 'bg-emerald-400 animate-pulse'
+              : 'bg-blue-400 animate-pulse'
           }`}
           aria-hidden="true"
         />
         <span className="text-xs leading-none">{flagIcon}</span>
         <span
           className={`truncate font-bold ${
-            isOutOfStock
+            isBlocked || isOutOfStock
               ? 'text-red-400'
-              : isCommon
-              ? 'text-purple-300'
-              : isLowStock
-              ? 'text-amber-300'
-              : 'text-emerald-400'
+              : isGreen
+              ? 'text-emerald-400'
+              : 'text-blue-300'
           }`}
         >
           {locationLabel}
@@ -153,13 +152,11 @@ export default function ProductLocationBadge({
 
       <span
         className={`shrink-0 font-extrabold text-[10px] px-2 py-0.5 rounded-full border ${
-          isOutOfStock
+          isBlocked || isOutOfStock
             ? 'bg-red-500/10 text-red-400 border-red-500/30'
-            : isCommon
-            ? 'bg-purple-500/15 text-purple-200 border-purple-500/40'
-            : isLowStock
-            ? 'bg-amber-500/15 text-amber-300 border-amber-500/40'
-            : 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+            : isGreen
+            ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
+            : 'bg-blue-500/10 text-blue-300 border-blue-500/30'
         }`}
       >
         {stockText}

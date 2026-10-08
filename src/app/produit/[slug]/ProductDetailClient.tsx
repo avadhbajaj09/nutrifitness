@@ -19,7 +19,7 @@ interface Props {
 }
 
 export default function ProductDetailClient({ product, relatedProducts }: Props) {
-  const { addToCart, formatPrice, locale, t } = useStore();
+  const { addToCart, formatPrice, locale, countryCode, t } = useStore();
   const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'reviews' | 'faq'>('desc');
   const [selectedFlavor, setSelectedFlavor] = useState<string>(
     getLocalized(product.variants?.[0]?.flavorName, locale) || 'Standard'
@@ -39,7 +39,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   );
   const activeImg = selectedImage || selectedVariant?.image || primaryImg;
   const currentPrice = selectedVariant?.priceChf || product.priceChf;
-  const isPortugal = product.shippingOrigin === 'portugal';
+
+  const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
+  const isSwissDestination = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
+  const isPortugal = isCommon ? !isSwissDestination : product.shippingOrigin === 'portugal';
 
   const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;

@@ -15,11 +15,14 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const { addToCart, openQuickView, formatPrice, locale, t } = useStore();
+  const { addToCart, openQuickView, formatPrice, locale, countryCode, t } = useStore();
 
   const slug = getLocalized(product.slug, locale);
   const name = getLocalized(product.name, locale);
   const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
+
+  const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
+  const isSwissDestination = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
 
   const compareAtPrice = product.compareAtPriceChf || (product.priceChf > 40 ? Math.round((product.priceChf * 1.18) * 20) / 20 : undefined);
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - product.priceChf) / compareAtPrice) * 100) : 0;
@@ -45,12 +48,24 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               CH
             </span>
           )}
-          {product.shippingOrigin === 'portugal' && (
-            <span className="inline-flex items-center gap-1 bg-emerald-950/85 backdrop-blur-md border border-emerald-500/40 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+          {isCommon ? (
+            isSwissDestination ? (
+              <span className="inline-flex items-center gap-1 bg-emerald-950/85 backdrop-blur-md border border-emerald-500/40 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                <span>🇨🇭</span>
+                <span>Expédié de Genève (24h)</span>
+              </span>
+            ) : (
+              <span className="inline-flex items-center gap-1 bg-blue-950/85 backdrop-blur-md border border-blue-500/40 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+                <span>🇵🇹</span>
+                <span>Expédié du Portugal (3–5j)</span>
+              </span>
+            )
+          ) : product.shippingOrigin === 'portugal' ? (
+            <span className="inline-flex items-center gap-1 bg-blue-950/85 backdrop-blur-md border border-blue-500/40 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
               <span>🇵🇹</span>
               <span>{t.common.shippedFromPortugal || 'Expédié du Portugal'}</span>
             </span>
-          )}
+          ) : null}
         </div>
 
         {/* Floating Action Buttons (Top Right) */}

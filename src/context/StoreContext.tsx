@@ -42,6 +42,8 @@ interface StoreContextType {
   setLocale: (loc: SupportedLocale) => void;
   currency: SupportedCurrency;
   setCurrency: (curr: SupportedCurrency) => void;
+  countryCode: string;
+  setCountryCode: (code: string) => void;
   t: TranslationDictionary;
   formatPrice: (amountChf: number) => string;
   convertPrice: (amountChf: number) => number;
@@ -74,6 +76,7 @@ const CART_KEY = 'nutrifitness_next_cart_v1';
 const WISHLIST_KEY = 'nutrifitness_next_wishlist_v1';
 const LOCALE_KEY = 'nutrifitness_locale_v1';
 const CURRENCY_KEY = 'nutrifitness_currency_v1';
+const COUNTRY_KEY = 'nutrifitness_country_v1';
 const FREE_SHIPPING_THRESHOLD_CHF = 75.0; // CHF
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
@@ -102,8 +105,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [locale, setLocaleState] = useState<SupportedLocale>('fr');
   // Default primary currency: CHF
   const [currency, setCurrencyState] = useState<SupportedCurrency>('CHF');
+  // Default shipping destination country: Switzerland ('CH')
+  const [countryCode, setCountryCodeState] = useState<string>('CH');
 
-  // Load from localStorage on client mount
+  // Load from localStorage & detect country on client mount
   useEffect(() => {
     try {
       const savedCart = localStorage.getItem(CART_KEY);
@@ -128,6 +133,37 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const savedCurrency = localStorage.getItem(CURRENCY_KEY) as SupportedCurrency;
       if (savedCurrency && ['CHF', 'EUR'].includes(savedCurrency)) {
         setCurrencyState(savedCurrency);
+      }
+
+      // Country initialization & auto-detection
+      const savedCountry = localStorage.getItem(COUNTRY_KEY);
+      const cookieMatch = typeof document !== 'undefined'
+        ? document.cookie.match(/(?:^|;\s*)nf_country=([^;]*)/)
+        : null;
+      const cookieCountry = cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
+      const initialCountry = savedCountry || cookieCountry;
+
+      if (initialCountry && /^[A-Z]{2}$/i.test(initialCountry)) {
+        const upper = initialCountry.toUpperCase();
+        setCountryCodeState(upper);
+        try {
+          document.cookie = `nf_country=${upper}; path=/; max-age=2592000; SameSite=Lax`;
+        } catch (_) {}
+      } else {
+        // Auto-detect country via IP header
+        fetch('/api/fulfillment/availability/?detect=1')
+          .then(r => r.json())
+          .then(data => {
+            if (data?.country && typeof data.country === 'string' && /^[A-Z]{2}$/i.test(data.country)) {
+              const detected = data.country.toUpperCase();
+              setCountryCodeState(detected);
+              try {
+                localStorage.setItem(COUNTRY_KEY, detected);
+                document.cookie = `nf_country=${detected}; path=/; max-age=2592000; SameSite=Lax`;
+              } catch (_) {}
+            }
+          })
+          .catch(() => {});
       }
     } catch (e) {
       console.warn('Storage read error:', e);
@@ -158,6 +194,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     setCurrencyState(newCurrency);
     try {
       localStorage.setItem(CURRENCY_KEY, newCurrency);
+    } catch (e) {}
+  };
+
+  const setCountryCode = (newCode: string) => {
+    const upper = (newCode || 'CH').toUpperCase().trim();
+    setCountryCodeState(upper);
+    try {
+      localStorage.setItem(COUNTRY_KEY, upper);
+      document.cookie = `nf_country=${upper}; path=/; max-age=2592000; SameSite=Lax`;
     } catch (e) {}
   };
 
@@ -341,6 +386,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         setLocale,
         currency,
         setCurrency,
+        countryCode,
+        setCountryCode,
         t,
         formatPrice,
         convertPrice,

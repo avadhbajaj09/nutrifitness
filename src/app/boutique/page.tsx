@@ -5,12 +5,15 @@ import { useSearchParams } from 'next/navigation';
 import ProductCard from '@/components/ProductCard';
 import BoutiqueFAQ from '@/components/BoutiqueFAQ';
 import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
+import { useStore } from '@/context/StoreContext';
 
 function ShopContent() {
   const searchParams = useSearchParams();
+  const { countryCode } = useStore();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [swissOnly, setSwissOnly] = useState<boolean>(false);
+  const [deliverableOnly, setDeliverableOnly] = useState<boolean>(true);
   const [sortBy, setSortBy] = useState<string>('featured');
 
   useEffect(() => {
@@ -29,6 +32,9 @@ function ShopContent() {
   }, []);
 
   const filteredProducts = useMemo(() => {
+    const cc = (countryCode || 'CH').toUpperCase();
+    const genevaAllowList = ['CH', 'LI', 'FR', 'DE', 'IT', 'AT'];
+
     return PRODUCTS.filter(p => {
       // Ebook has its own dedicated landing page at /guide-des-complements-alimentaires/
       if (p.categorySlug === 'guides-ebooks' || p.id === 'prod-25430') return false;
@@ -41,6 +47,17 @@ function ShopContent() {
         }
       }
       if (swissOnly && !p.isSwissOrigin) return false;
+
+      // Filter by delivery destination availability if deliverableOnly is checked
+      if (deliverableOnly) {
+        const isCommon = p.locationType === 'COMMON' || p.shippingOrigin === 'common';
+        const isPortugal = p.shippingOrigin === 'portugal' && !isCommon;
+        const isGenevaOnly = !isCommon && !isPortugal;
+        if (isGenevaOnly && !genevaAllowList.includes(cc)) {
+          return false;
+        }
+      }
+
       return true;
     }).sort((a, b) => {
       if (sortBy === 'price-asc') return a.priceChf - b.priceChf;
@@ -48,12 +65,13 @@ function ShopContent() {
       if (sortBy === 'name-asc') return (a.name?.fr || '').localeCompare(b.name?.fr || '');
       return 0;
     });
-  }, [selectedCategory, selectedBrand, swissOnly, sortBy]);
+  }, [selectedCategory, selectedBrand, swissOnly, deliverableOnly, countryCode, sortBy]);
 
   const clearFilters = () => {
     setSelectedCategory('all');
     setSelectedBrand('all');
     setSwissOnly(false);
+    setDeliverableOnly(false);
     setSortBy('featured');
   };
 
@@ -174,6 +192,22 @@ function ShopContent() {
                 </label>
               ))}
             </div>
+          </div>
+
+          {/* Deliverable to Selected Country Filter */}
+          <div className="pt-4 border-t border-white/10">
+            <label className="flex items-center gap-2 text-xs font-bold text-white cursor-pointer">
+              <input 
+                type="checkbox" 
+                checked={deliverableOnly} 
+                onChange={(e) => setDeliverableOnly(e.target.checked)}
+                className="rounded text-[#F80404] focus:ring-[#F80404]" 
+              />
+              <span className="flex items-center gap-1.5">
+                <span>🚚</span>
+                <span>Livrable en {countryCode || 'CH'}</span>
+              </span>
+            </label>
           </div>
 
           {/* Swiss Origin Filter */}

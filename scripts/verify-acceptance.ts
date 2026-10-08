@@ -210,46 +210,61 @@ async function runAcceptanceChecks() {
     // -------------------------------------------------------------------------
     // TEST 9: Badge Logic Verification for 3 Product Types
     // -------------------------------------------------------------------------
+    // -------------------------------------------------------------------------
+    // TEST 9: Location Badge Logic (3 Types) with Dynamic Origin & No Numeric Stock
+    // -------------------------------------------------------------------------
     console.log('\n--- TEST 9: Location Badge Logic (3 Types) ---');
-    function computeBadge(locType: string, isPtOnly: boolean, stockGen: number, stockPt: number) {
+    function computeBadge(locType: string, isPtOnly: boolean, stockGen: number, stockPt: number, countryCode: string = 'CH') {
       const isCommon = locType === 'COMMON';
-      const displayLocation = isCommon ? 'COMMON' : (locType === 'PORTUGAL_ONLY' || isPtOnly) ? 'PORTUGAL' : 'GENEVA';
-      const effectiveStock = isCommon ? stockGen + stockPt : displayLocation === 'GENEVA' ? stockGen : stockPt;
+      const isSwiss = countryCode === 'CH' || countryCode === 'LI';
+      const isPortugalOnly = locType === 'PORTUGAL_ONLY' || isPtOnly;
+      
+      let activeOrigin = 'GENEVA';
+      let label = '';
+      if (isCommon) {
+        activeOrigin = isSwiss ? 'GENEVA' : 'PORTUGAL';
+        label = isSwiss ? 'Expédié de Genève (24h)' : 'Expédié du Portugal (3–5j)';
+      } else if (isPortugalOnly) {
+        activeOrigin = 'PORTUGAL';
+        label = 'Expédié du Portugal (3–5j)';
+      } else {
+        activeOrigin = 'GENEVA';
+        label = 'Expédié de Genève (24h)';
+      }
+
+      const effectiveStock = isCommon ? stockGen + stockPt : activeOrigin === 'GENEVA' ? stockGen : stockPt;
       const isOutOfStock = effectiveStock <= 0;
-      const isLowStock = !isCommon && effectiveStock > 0 && effectiveStock <= 5;
-      const label = isCommon ? 'Genève & Portugal' : displayLocation === 'GENEVA' ? 'En stock à Genève' : 'Expédié du Portugal';
+      const stockText = isOutOfStock ? 'Rupture de stock' : 'En stock';
 
-      let stockText = '';
-      if (isOutOfStock) stockText = 'Rupture de stock';
-      else if (isCommon) {
-        if (stockGen > 0 && stockPt > 0) stockText = `CH: ${stockGen} · PT: ${stockPt}`;
-        else if (stockGen > 0) stockText = `CH: ${stockGen}`;
-        else stockText = `PT: ${stockPt}`;
-      } else if (isLowStock) stockText = `Plus que ${effectiveStock} en stock`;
-      else stockText = `${effectiveStock} en stock`;
-
-      return { displayLocation, label, effectiveStock, stockText, isOutOfStock, isLowStock };
+      return { isCommon, activeOrigin, label, stockText, isOutOfStock };
     }
 
-    // 1. COMMON
-    const commonBadge = computeBadge('COMMON', false, 12, 50);
-    assert(commonBadge.displayLocation === 'COMMON', `COMMON product badge displays both locations (COMMON)`);
-    assert(commonBadge.label === 'Genève & Portugal', `COMMON product badge label is "Genève & Portugal"`);
-    assert(commonBadge.stockText === 'CH: 12 · PT: 50', `COMMON product displays dual stock (CH: 12 · PT: 50)`);
+    // 1. COMMON in Switzerland -> Routes to Geneva, shows En stock
+    const commonBadgeCH = computeBadge('COMMON', false, 12, 50, 'CH');
+    assert(commonBadgeCH.isCommon === true, `COMMON product identified`);
+    assert(commonBadgeCH.activeOrigin === 'GENEVA', `COMMON product for CH visitor routes to Geneva`);
+    assert(commonBadgeCH.label === 'Expédié de Genève (24h)', `COMMON product for CH visitor displays "Expédié de Genève (24h)"`);
+    assert(commonBadgeCH.stockText === 'En stock', `Stock displays strictly "En stock" (no numeric count)`);
 
-    // 2. GENEVA_ONLY
-    const genBadge = computeBadge('GENEVA_ONLY', false, 4, 0);
-    assert(genBadge.displayLocation === 'GENEVA', `GENEVA_ONLY product displays Geneva location`);
-    assert(genBadge.isLowStock && genBadge.stockText === 'Plus que 4 en stock', `Low stock (<=5) displays "Plus que X en stock"`);
+    // 2. COMMON in Portugal/EU -> Routes to Portugal, shows En stock
+    const commonBadgePT = computeBadge('COMMON', false, 12, 50, 'PT');
+    assert(commonBadgePT.activeOrigin === 'PORTUGAL', `COMMON product for PT visitor routes to Portugal`);
+    assert(commonBadgePT.label === 'Expédié du Portugal (3–5j)', `COMMON product for PT visitor displays "Expédié du Portugal (3–5j)"`);
+    assert(commonBadgePT.stockText === 'En stock', `Stock displays strictly "En stock"`);
 
-    // 3. PORTUGAL_ONLY
-    const ptBadge = computeBadge('PORTUGAL_ONLY', true, 0, 25);
-    assert(ptBadge.displayLocation === 'PORTUGAL', `PORTUGAL_ONLY product displays PORTUGAL location`);
-    assert(ptBadge.label === 'Expédié du Portugal', `PORTUGAL_ONLY label is "Expédié du Portugal"`);
-    assert(ptBadge.stockText === '25 en stock', `PORTUGAL_ONLY displays Portugal stock (25 en stock)`);
+    // 3. GENEVA_ONLY in Switzerland
+    const genBadge = computeBadge('GENEVA_ONLY', false, 4, 0, 'CH');
+    assert(genBadge.activeOrigin === 'GENEVA', `GENEVA_ONLY product displays Geneva location`);
+    assert(genBadge.stockText === 'En stock', `In-stock displays "En stock"`);
 
-    // 4. Out of Stock
-    const oosBadge = computeBadge('GENEVA_ONLY', false, 0, 0);
+    // 4. PORTUGAL_ONLY
+    const ptBadge = computeBadge('PORTUGAL_ONLY', true, 0, 25, 'CH');
+    assert(ptBadge.activeOrigin === 'PORTUGAL', `PORTUGAL_ONLY product displays PORTUGAL location`);
+    assert(ptBadge.label === 'Expédié du Portugal (3–5j)', `PORTUGAL_ONLY label is "Expédié du Portugal (3–5j)"`);
+    assert(ptBadge.stockText === 'En stock', `PORTUGAL_ONLY displays "En stock"`);
+
+    // 5. Out of Stock
+    const oosBadge = computeBadge('GENEVA_ONLY', false, 0, 0, 'CH');
     assert(oosBadge.isOutOfStock && oosBadge.stockText === 'Rupture de stock', `Stock 0 displays "Rupture de stock"`);
 
     // -------------------------------------------------------------------------

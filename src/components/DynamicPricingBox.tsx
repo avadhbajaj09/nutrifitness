@@ -16,7 +16,7 @@ export default function DynamicPricingBox({
   selectedFlavor = 'Standard',
   onAddToCartSuccess,
 }: DynamicPricingBoxProps) {
-  const { formatPrice, addToCart, locale, t } = useStore();
+  const { formatPrice, addToCart, locale, countryCode, t } = useStore();
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedTier, setSelectedTier] = useState<1 | 2 | 3>(1);
 
@@ -157,14 +157,22 @@ export default function DynamicPricingBox({
             </span>
           )}
         </div>
-        <div className="flex items-center gap-1.5 text-xs font-bold text-[#95d600]">
-          <span className="w-2 h-2 rounded-full bg-[#95d600] animate-pulse" />
-          <span>
-            {product.shippingOrigin === 'portugal'
-              ? 'Expédié depuis le Portugal (3–5j)'
-              : 'En stock (Expédition 24h)'}
-          </span>
-        </div>
+        {(() => {
+          const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
+          const isSwiss = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
+          let label = '🇨🇭 Expédié depuis Genève (24h) · En stock';
+          if (isCommon) {
+            label = isSwiss ? '🇨🇭 Expédié depuis Genève (24h) · En stock' : '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
+          } else if (product.shippingOrigin === 'portugal') {
+            label = '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
+          }
+          return (
+            <div className="flex items-center gap-1.5 text-xs font-bold text-[#95d600]">
+              <span className="w-2 h-2 rounded-full bg-[#95d600] animate-pulse" />
+              <span>{label}</span>
+            </div>
+          );
+        })()}
       </div>
 
       {/* Section: Obtenez plus, payez moins (Tiered Volume Discounts) */}

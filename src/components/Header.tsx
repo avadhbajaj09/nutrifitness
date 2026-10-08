@@ -6,6 +6,7 @@ import Image from 'next/image';
 import MegaMenu from './MegaMenu';
 import MobileNavigation from './MobileNavigation';
 import LanguageCurrencySwitcher from './LanguageCurrencySwitcher';
+import CountrySelector from './CountrySelector';
 import { useStore } from '@/context/StoreContext';
 import { ALL_BRANDS } from '@/lib/brands';
 import { ShoppingBag, Search, User, Menu, ChevronDown, Sparkles } from 'lucide-react';
@@ -196,8 +197,9 @@ export default function Header() {
           {/* Right: Language, Search, Account, Cart */}
           <div className="flex items-center gap-2 sm:gap-3">
             
-            {/* Language Switcher on header */}
-            <div className="hidden sm:block">
+            {/* Country & Language Switchers on header */}
+            <div className="hidden sm:flex items-center gap-1.5">
+              <CountrySelector variant="header" />
               <LanguageCurrencySwitcher variant="header" />
             </div>
 

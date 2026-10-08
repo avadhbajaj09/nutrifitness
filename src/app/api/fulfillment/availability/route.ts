@@ -5,6 +5,11 @@ export const runtime = 'nodejs';
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
+  if (searchParams.get('detect') === '1') {
+    const detected = request.headers.get('x-vercel-ip-country') || 'CH';
+    return NextResponse.json({ country: detected.toUpperCase() });
+  }
+
   const productId = searchParams.get('productId') ?? '';
   const country = (searchParams.get('country') ?? 'CH').toUpperCase().slice(0, 2);
   const originHint = searchParams.get('origin') as 'switzerland' | 'portugal' | 'common' | null;
