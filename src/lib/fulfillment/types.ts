@@ -41,7 +41,7 @@ export interface CartItemForRouting {
   hsCode?: string;
   countryOfManufacture?: string;
   name: string;
-  shippingOriginHint?: 'switzerland' | 'portugal'; // from catalog
+  shippingOriginHint?: 'switzerland' | 'portugal' | 'common'; // from catalog
 }
 
 export interface RoutedShipment {
@@ -75,6 +75,8 @@ export interface AvailabilityResult {
   label: string;
   labelFr: string;
   labelEn: string;
+  isCommon?: boolean;
+  commonNote?: string;
 }
 
 // Zod validators
@@ -87,7 +89,7 @@ export const CartItemForRoutingSchema = z.object({
   hsCode: z.string().optional(),
   countryOfManufacture: z.string().optional(),
   name: z.string(),
-  shippingOriginHint: z.enum(['switzerland', 'portugal']).optional(),
+  shippingOriginHint: z.enum(['switzerland', 'portugal', 'common']).optional(),
 });
 
 export const RatesRequestSchema = z.object({

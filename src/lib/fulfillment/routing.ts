@@ -41,6 +41,8 @@ export function resolveShipments(
     if (!stock) {
       if (item.shippingOriginHint === 'portugal') {
         stock = { genevaQty: 0, genevaReserved: 0, portugalQty: 20, portugalReserved: 0 };
+      } else if (item.shippingOriginHint === 'common') {
+        stock = { genevaQty: 20, genevaReserved: 0, portugalQty: 20, portugalReserved: 0 };
       } else {
         stock = { genevaQty: 20, genevaReserved: 0, portugalQty: 0, portugalReserved: 0 };
       }

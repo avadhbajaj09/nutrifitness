@@ -55,7 +55,7 @@ export default function ProductEditorModal({
   const [priceChf, setPriceChf] = useState<number>(29.90);
   const [compareAtPriceChf, setCompareAtPriceChf] = useState<string>('');
   const [taxCategory, setTaxCategory] = useState<TaxRateCategory>('food_reduced');
-  const [shippingOrigin, setShippingOrigin] = useState<'switzerland' | 'portugal'>('switzerland');
+  const [shippingOrigin, setShippingOrigin] = useState<'switzerland' | 'portugal' | 'common'>('switzerland');
   const [isSwissOrigin, setIsSwissOrigin] = useState<boolean>(false);
 
   // Images state
@@ -122,7 +122,7 @@ export default function ProductEditorModal({
       setPriceChf(product.priceChf || 29.90);
       setCompareAtPriceChf(product.compareAtPriceChf ? String(product.compareAtPriceChf) : '');
       setTaxCategory(product.taxCategory || 'food_reduced');
-      setShippingOrigin(product.shippingOrigin || 'switzerland');
+      setShippingOrigin(product.shippingOrigin || (product.locationType === 'COMMON' ? 'common' : 'switzerland'));
       setIsSwissOrigin(Boolean(product.isSwissOrigin));
 
       setImages(
@@ -362,6 +362,10 @@ export default function ProductEditorModal({
       compareAtPriceChf: finalCompareAt,
       isSwissOrigin,
       shippingOrigin,
+      locationType: shippingOrigin === 'common' ? 'COMMON' : shippingOrigin === 'portugal' ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY',
+      mainLocation: shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA',
+      stockGeneva: variants.reduce((acc, v) => acc + (typeof v.stockGeneva === 'number' ? v.stockGeneva : shippingOrigin === 'portugal' ? 0 : Number(v.inventoryQuantity) || 0), 0),
+      stockPortugal: variants.reduce((acc, v) => acc + (typeof v.stockPortugal === 'number' ? v.stockPortugal : shippingOrigin === 'switzerland' ? 0 : Number(v.inventoryQuantity) || 0), 0),
       images: images.map(img => ({
         src: img.src,
         alt: {
@@ -422,11 +426,17 @@ export default function ProductEditorModal({
         saltG: Number(saltG),
         bcaaG: finalBcaa
       },
-      variants: variants.map(v => ({
-        ...v,
-        priceChf: v.priceChf ? Number(v.priceChf) : Number(priceChf),
-        inventoryQuantity: Number(v.inventoryQuantity) || 0
-      }))
+      variants: variants.map(v => {
+        const genQty = typeof v.stockGeneva === 'number' ? v.stockGeneva : shippingOrigin === 'portugal' ? 0 : Number(v.inventoryQuantity) || 0;
+        const ptQty = typeof v.stockPortugal === 'number' ? v.stockPortugal : shippingOrigin === 'switzerland' ? 0 : Number(v.inventoryQuantity) || 0;
+        return {
+          ...v,
+          priceChf: v.priceChf ? Number(v.priceChf) : Number(priceChf),
+          inventoryQuantity: shippingOrigin === 'common' ? (genQty + ptQty) : (Number(v.inventoryQuantity) || 0),
+          stockGeneva: genQty,
+          stockPortugal: ptQty
+        };
+      })
     };
 
     onSave(savedProduct);
@@ -449,11 +459,17 @@ export default function ProductEditorModal({
                   {isEditing ? 'Éditeur de Fiche Produit' : 'Création de Nouvel Article'}
                 </span>
                 <span className={`px-2 py-0.5 rounded-full text-[10px] font-bold ${
-                  shippingOrigin === 'switzerland'
+                  shippingOrigin === 'common'
+                    ? 'bg-purple-50 text-purple-800 border border-purple-200'
+                    : shippingOrigin === 'switzerland'
                     ? 'bg-emerald-50 text-emerald-800 border border-emerald-200'
                     : 'bg-blue-50 text-blue-800 border border-blue-200'
                 }`}>
-                  {shippingOrigin === 'switzerland' ? '🇨🇭 Stock Genève (POS Actif)' : '🇵🇹 Expédié Portugal'}
+                  {shippingOrigin === 'common'
+                    ? '🌍 🇨🇭 🇵🇹 Genève & Portugal (COMMON)'
+                    : shippingOrigin === 'switzerland'
+                    ? '🇨🇭 Stock Genève (POS Actif)'
+                    : '🇵🇹 Expédié Portugal'}
                 </span>
               </div>
               <h2 className="text-lg sm:text-xl font-black text-slate-900 font-heading truncate">
@@ -799,7 +815,7 @@ export default function ProductEditorModal({
                 <label className="block text-xs font-black uppercase tracking-wider text-slate-900 font-heading">
                   Lieu de Stockage & Disponibilité Caisse Magasin (POS) *
                 </label>
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
                   <label className={`p-4 rounded-xl border-2 cursor-pointer flex items-start gap-3 transition-all ${
                     shippingOrigin === 'switzerland'
                       ? 'border-emerald-600 bg-emerald-50/60 ring-2 ring-emerald-500/20'
@@ -844,6 +860,30 @@ export default function ProductEditorModal({
                       </p>
                       <p className="text-[11px] text-blue-800 font-medium mt-0.5">
                         ✕ EXCLU DU POS MAGASIN (Expédié par transporteur depuis l'usine)
+                      </p>
+                    </div>
+                  </label>
+
+                  <label className={`p-4 rounded-xl border-2 cursor-pointer flex items-start gap-3 transition-all ${
+                    shippingOrigin === 'common'
+                      ? 'border-purple-600 bg-purple-50/60 ring-2 ring-purple-500/20'
+                      : 'border-slate-200 hover:border-slate-300 bg-slate-50'
+                  }`}>
+                    <input
+                      type="radio"
+                      name="shippingOrigin"
+                      value="common"
+                      checked={shippingOrigin === 'common'}
+                      onChange={() => setShippingOrigin('common')}
+                      className="mt-0.5 text-purple-600"
+                    />
+                    <div>
+                      <p className="font-black text-xs text-slate-900 flex items-center gap-1.5">
+                        <span>🌍</span>
+                        <span>Disponible aux 2 Endroits (COMMON — Genève & Portugal)</span>
+                      </p>
+                      <p className="text-[11px] text-purple-800 font-medium mt-0.5">
+                        ✓ DISPONIBLE EN CAISSE POS (Genève) + EXPÉDIÉ DU PORTUGAL (Pour l&apos;Europe). Routage automatique selon le pays client !
                       </p>
                     </div>
                   </label>
@@ -1047,7 +1087,7 @@ export default function ProductEditorModal({
                       </button>
                     </div>
 
-                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
+                    <div className={`grid grid-cols-2 ${shippingOrigin === 'common' ? 'sm:grid-cols-5' : 'sm:grid-cols-4'} gap-3 text-xs`}>
                       <div>
                         <label className="block text-[11px] font-bold text-slate-500 mb-1">Nom Saveur (FR)</label>
                         <input
@@ -1085,15 +1125,60 @@ export default function ProductEditorModal({
                         />
                       </div>
 
-                      <div>
-                        <label className="block text-[11px] font-bold text-slate-500 mb-1">Quantité Stock</label>
-                        <input
-                          type="number"
-                          value={v.inventoryQuantity}
-                          onChange={(e) => handleUpdateVariant(idx, { inventoryQuantity: parseInt(e.target.value) || 0 })}
-                          className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-900 font-bold"
-                        />
-                      </div>
+                      {shippingOrigin === 'common' ? (
+                        <>
+                          <div>
+                            <label className="block text-[11px] font-bold text-emerald-700 mb-1">🇨🇭 Stock Genève</label>
+                            <input
+                              type="number"
+                              value={v.stockGeneva ?? v.inventoryQuantity ?? 0}
+                              onChange={(e) => {
+                                const genQty = parseInt(e.target.value) || 0;
+                                const ptQty = v.stockPortugal ?? 0;
+                                handleUpdateVariant(idx, {
+                                  stockGeneva: genQty,
+                                  inventoryQuantity: genQty + ptQty,
+                                });
+                              }}
+                              className="w-full px-2.5 py-1.5 bg-emerald-50/50 border border-emerald-300 rounded-lg text-slate-900 font-bold"
+                            />
+                          </div>
+
+                          <div>
+                            <label className="block text-[11px] font-bold text-blue-700 mb-1">🇵🇹 Stock Portugal</label>
+                            <input
+                              type="number"
+                              value={v.stockPortugal ?? 0}
+                              onChange={(e) => {
+                                const ptQty = parseInt(e.target.value) || 0;
+                                const genQty = v.stockGeneva ?? v.inventoryQuantity ?? 0;
+                                handleUpdateVariant(idx, {
+                                  stockPortugal: ptQty,
+                                  inventoryQuantity: genQty + ptQty,
+                                });
+                              }}
+                              className="w-full px-2.5 py-1.5 bg-blue-50/50 border border-blue-300 rounded-lg text-slate-900 font-bold"
+                            />
+                          </div>
+                        </>
+                      ) : (
+                        <div>
+                          <label className="block text-[11px] font-bold text-slate-500 mb-1">Quantité Stock</label>
+                          <input
+                            type="number"
+                            value={v.inventoryQuantity}
+                            onChange={(e) => {
+                              const qty = parseInt(e.target.value) || 0;
+                              handleUpdateVariant(idx, {
+                                inventoryQuantity: qty,
+                                stockGeneva: shippingOrigin === 'switzerland' ? qty : 0,
+                                stockPortugal: shippingOrigin === 'portugal' ? qty : 0,
+                              });
+                            }}
+                            className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-900 font-bold"
+                          />
+                        </div>
+                      )}
                     </div>
 
                     <div className="pt-3 border-t border-slate-200 space-y-2.5">

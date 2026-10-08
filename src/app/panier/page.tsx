@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
@@ -21,7 +21,16 @@ export default function CartPage() {
     currency
   } = useStore();
 
-  const countryCode = 'CH'; // TODO: read from cookie
+  const [countryCode, setCountryCode] = useState('CH');
+
+  useEffect(() => {
+    if (typeof document !== 'undefined') {
+      const match = document.cookie.match(/(?:^|;\s*)nf_country=([^;]*)/);
+      if (match && match[1]) {
+        setCountryCode(decodeURIComponent(match[1]));
+      }
+    }
+  }, []);
 
   const [couponCode, setCouponCode] = useState('');
   const [discountRate, setDiscountRate] = useState(0);
@@ -122,7 +131,16 @@ export default function CartPage() {
                       <p className="text-xs text-white/50">{item.flavor} · {item.size}</p>
                       {item.isEbook ? (
                         <p className="text-[11px] text-[#95d600] font-bold mt-1">✓ Exemplaire unique (téléchargement immédiat)</p>
-                      ) : item.isPortugal ? (
+                      ) : (item.locationType === 'COMMON' || item.shippingOrigin === 'common') ? (
+                        <div className="mt-1 flex items-center gap-1.5 flex-wrap">
+                          <span className="text-[11px] text-purple-300 font-bold">
+                            🇨🇭 🇵🇹 Dispo Genève & Portugal
+                          </span>
+                          <span className="text-[10px] text-white/50">
+                            · {countryCode === 'CH' || countryCode === 'LI' ? 'Expédié depuis Genève (1–3j)' : 'Expédié du Portugal (3–7j)'}
+                          </span>
+                        </div>
+                      ) : item.isPortugal || item.locationType === 'PORTUGAL_ONLY' || item.shippingOrigin === 'portugal' ? (
                         <p className="text-[11px] text-blue-400 font-bold mt-1">🇵🇹 Expédié du Portugal (3–5j)</p>
                       ) : (
                         <p className="text-[11px] text-emerald-400 font-bold mt-1">🇨🇭 En stock à Genève (24h)</p>

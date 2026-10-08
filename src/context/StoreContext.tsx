@@ -21,6 +21,8 @@ export interface CartItem {
   vatRate: number;
   isEbook?: boolean;
   isPortugal?: boolean;
+  shippingOrigin?: 'switzerland' | 'portugal' | 'common';
+  locationType?: 'COMMON' | 'GENEVA_ONLY' | 'PORTUGAL_ONLY';
 }
 
 interface ToastInfo {
@@ -196,7 +198,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const name = getLocalized(product.name, locale) || 'Produit';
     const brand = product.brand || 'NutriFitness';
     const itemKey = `${product.id || slug}-${flavor}-${size}`;
-    const isPortugal = Boolean(product.shippingOrigin === 'portugal' || (options as any).isPortugal);
+    const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
+    const isPortugal = Boolean(product.shippingOrigin === 'portugal' || (options as any).isPortugal || (product.locationType === 'PORTUGAL_ONLY' && !isCommon));
+    const shippingOrigin = product.shippingOrigin || (isCommon ? 'common' : isPortugal ? 'portugal' : 'switzerland');
+    const locationType = product.locationType || (isCommon ? 'COMMON' : isPortugal ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY');
 
     let blockedDuplicateEbook = false;
 
@@ -234,7 +239,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             quantity,
             vatRate: product.vatRate || 2.6,
             isEbook,
-            isPortugal
+            isPortugal,
+            shippingOrigin,
+            locationType
           }
         ];
       }

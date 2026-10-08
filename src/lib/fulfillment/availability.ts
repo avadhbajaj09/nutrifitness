@@ -6,14 +6,20 @@ export function detectCountryFromHeaders(headers: Headers): string {
 
 export async function getAvailability(
   productId: string,
-  shippingOrigin: 'switzerland' | 'portugal' | undefined,
-  countryCode: string
+  shippingOrigin: 'switzerland' | 'portugal' | 'common' | undefined,
+  countryCode: string,
+  locationType?: 'COMMON' | 'GENEVA_ONLY' | 'PORTUGAL_ONLY',
+  stockGeneva?: number,
+  stockPortugal?: number
 ): Promise<AvailabilityResult> {
-  const isPortugal = shippingOrigin === 'portugal';
+  const isCommon = locationType === 'COMMON' || shippingOrigin === 'common';
+  const isPortugalOnly =
+    locationType === 'PORTUGAL_ONLY' ||
+    (shippingOrigin === 'portugal' && !isCommon);
+
   const euCountries = new Set([
     'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'
   ]);
-  const nonEuSupported = new Set(['CH', 'LI', 'GB', 'NO', 'IS', 'UK']);
 
   const getResult = (
     available: boolean,
@@ -21,7 +27,8 @@ export async function getAvailability(
     etaMin?: number,
     etaMax?: number,
     duties?: boolean,
-    labelFrOverride?: string
+    labelOverride?: string,
+    commonNote?: string
   ): AvailabilityResult => {
     let label = '❌ Non disponible dans votre pays';
     if (available && origin === 'GENEVA') {
@@ -30,8 +37,8 @@ export async function getAvailability(
       label = `🇵🇹 Expédié depuis le Portugal – livraison en ${etaMin}–${etaMax} jours ouvrables`;
     }
     
-    if (labelFrOverride) {
-      label = labelFrOverride;
+    if (labelOverride) {
+      label = labelOverride;
     }
 
     return {
@@ -43,18 +50,87 @@ export async function getAvailability(
       label,
       labelFr: label,
       labelEn: label,
+      isCommon,
+      commonNote,
     };
   };
 
-  if (!isPortugal) { // GENEVA
+  // COMMON PRODUCT (Stocked in both Geneva and Portugal)
+  if (isCommon) {
+    // 1. Switzerland or Liechtenstein -> Nearest is GENEVA (1-3 days)
     if (['CH', 'LI'].includes(countryCode)) {
-      return getResult(true, 'GENEVA', 1, 3, false);
+      if (stockGeneva === undefined || stockGeneva > 0) {
+        return getResult(
+          true,
+          'GENEVA',
+          1,
+          3,
+          false,
+          '🇨🇭 Expédié depuis Genève – livraison en 1–3 jours ouvrables',
+          '🌍 Disponible aux 2 endroits (Genève & Portugal). Auto-sélection : expédié depuis Genève pour la Suisse.'
+        );
+      } else if (stockPortugal === undefined || stockPortugal > 0) {
+        // Geneva out of stock -> fallback to Portugal warehouse
+        return getResult(
+          true,
+          'PORTUGAL',
+          4,
+          8,
+          true,
+          '🇵🇹 Expédié depuis le Portugal – livraison en 4–8 jours ouvrables',
+          'Stock boutique Genève temporairement épuisé – expédié depuis l\'usine au Portugal.'
+        );
+      }
+      return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
     }
-    if (['FR', 'DE', 'IT', 'AT'].includes(countryCode)) {
-      return getResult(true, 'GENEVA', 1, 3, false);
+
+    // 2. European Union countries -> Nearest & cheapest is PORTUGAL (3-7 days, intra-EU no customs)
+    if (euCountries.has(countryCode)) {
+      if (stockPortugal === undefined || stockPortugal > 0) {
+        return getResult(
+          true,
+          'PORTUGAL',
+          3,
+          7,
+          false,
+          '🇵🇹 Expédié depuis le Portugal – livraison en 3–7 jours ouvrables',
+          '🌍 Disponible aux 2 endroits (Genève & Portugal). Auto-sélection : expédié depuis le Portugal pour l\'Europe (sans frais de douane).'
+        );
+      } else if (stockGeneva === undefined || stockGeneva > 0) {
+        // Portugal OOS -> fallback to Geneva if country is in Geneva nearby allow-list
+        if (['FR', 'DE', 'IT', 'AT'].includes(countryCode)) {
+          return getResult(
+            true,
+            'GENEVA',
+            1,
+            3,
+            false,
+            '🇨🇭 Expédié depuis Genève – livraison en 1–3 jours ouvrables',
+            'Stock usine Portugal épuisé – expédié exceptionnellement depuis la boutique de Genève.'
+          );
+        }
+      }
+      return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
     }
+
+    // 3. Other supported non-EU European countries (UK, NO, IS)
+    if (['UK', 'GB', 'NO', 'IS'].includes(countryCode)) {
+      return getResult(
+        true,
+        'PORTUGAL',
+        5,
+        10,
+        true,
+        '🇵🇹 Expédié depuis le Portugal – livraison en 5–10 jours ouvrables',
+        '🌍 Disponible aux 2 endroits (Genève & Portugal).'
+      );
+    }
+
     return getResult(false);
-  } else { // PORTUGAL
+  }
+
+  // PORTUGAL_ONLY PRODUCT
+  if (isPortugalOnly) {
     if (euCountries.has(countryCode)) {
       return getResult(true, 'PORTUGAL', 3, 7, false);
     }
@@ -66,4 +142,13 @@ export async function getAvailability(
     }
     return getResult(false);
   }
+
+  // GENEVA_ONLY PRODUCT
+  if (['CH', 'LI'].includes(countryCode)) {
+    return getResult(true, 'GENEVA', 1, 3, false);
+  }
+  if (['FR', 'DE', 'IT', 'AT'].includes(countryCode)) {
+    return getResult(true, 'GENEVA', 1, 3, false);
+  }
+  return getResult(false);
 }

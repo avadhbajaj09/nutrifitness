@@ -26,6 +26,8 @@ export interface ProductVariant {
   inventoryQuantity: number;
   inStock: boolean;
   image?: string;
+  stockGeneva?: number;
+  stockPortugal?: number;
 }
 
 export interface ProductItem {
@@ -54,7 +56,7 @@ export interface ProductItem {
   nutrition: ProductNutrition;
   variants: ProductVariant[];
   isSwissOrigin?: boolean;
-  shippingOrigin?: 'switzerland' | 'portugal';
+  shippingOrigin?: 'switzerland' | 'portugal' | 'common';
   locationType?: 'COMMON' | 'GENEVA_ONLY' | 'PORTUGAL_ONLY';
   mainLocation?: 'GENEVA' | 'PORTUGAL';
   stockGeneva?: number;

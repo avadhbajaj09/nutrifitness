@@ -195,7 +195,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           />
 
           {/* Delivery Availability Badge */}
-          <DeliveryBadge productId={product.id} shippingOrigin={product.shippingOrigin} />
+          <DeliveryBadge
+            productId={product.id}
+            shippingOrigin={product.shippingOrigin}
+            locationType={product.locationType}
+            stockGeneva={selectedVariant ? ((selectedVariant as any).stockGeneva ?? selectedVariant.inventoryQuantity) : product.stockGeneva}
+            stockPortugal={selectedVariant ? ((selectedVariant as any).stockPortugal ?? 0) : product.stockPortugal}
+          />
 
 
           {/* Flavor / Option Selector */}

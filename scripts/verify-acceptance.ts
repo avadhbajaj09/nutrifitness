@@ -213,15 +213,19 @@ async function runAcceptanceChecks() {
     console.log('\n--- TEST 9: Location Badge Logic (3 Types) ---');
     function computeBadge(locType: string, isPtOnly: boolean, stockGen: number, stockPt: number) {
       const isCommon = locType === 'COMMON';
-      const displayLocation = (locType === 'PORTUGAL_ONLY' || isPtOnly) && !isCommon ? 'PORTUGAL' : 'GENEVA';
-      const effectiveStock = displayLocation === 'GENEVA' ? stockGen : stockPt;
-      const isOutOfStock = effectiveStock <= 0 && !(isCommon && stockPt > 0);
-      const isLowStock = effectiveStock > 0 && effectiveStock <= 5;
-      const label = displayLocation === 'GENEVA' ? 'En stock à Genève' : 'Expédié du Portugal';
+      const displayLocation = isCommon ? 'COMMON' : (locType === 'PORTUGAL_ONLY' || isPtOnly) ? 'PORTUGAL' : 'GENEVA';
+      const effectiveStock = isCommon ? stockGen + stockPt : displayLocation === 'GENEVA' ? stockGen : stockPt;
+      const isOutOfStock = effectiveStock <= 0;
+      const isLowStock = !isCommon && effectiveStock > 0 && effectiveStock <= 5;
+      const label = isCommon ? 'Genève & Portugal' : displayLocation === 'GENEVA' ? 'En stock à Genève' : 'Expédié du Portugal';
 
       let stockText = '';
       if (isOutOfStock) stockText = 'Rupture de stock';
-      else if (isLowStock) stockText = `Plus que ${effectiveStock} en stock`;
+      else if (isCommon) {
+        if (stockGen > 0 && stockPt > 0) stockText = `CH: ${stockGen} · PT: ${stockPt}`;
+        else if (stockGen > 0) stockText = `CH: ${stockGen}`;
+        else stockText = `PT: ${stockPt}`;
+      } else if (isLowStock) stockText = `Plus que ${effectiveStock} en stock`;
       else stockText = `${effectiveStock} en stock`;
 
       return { displayLocation, label, effectiveStock, stockText, isOutOfStock, isLowStock };
@@ -229,9 +233,9 @@ async function runAcceptanceChecks() {
 
     // 1. COMMON
     const commonBadge = computeBadge('COMMON', false, 12, 50);
-    assert(commonBadge.displayLocation === 'GENEVA', `COMMON product badge displays GENEVA location`);
-    assert(commonBadge.label === 'En stock à Genève', `COMMON product badge label is "En stock à Genève"`);
-    assert(commonBadge.stockText === '12 en stock', `COMMON product displays Geneva stock (12 en stock)`);
+    assert(commonBadge.displayLocation === 'COMMON', `COMMON product badge displays both locations (COMMON)`);
+    assert(commonBadge.label === 'Genève & Portugal', `COMMON product badge label is "Genève & Portugal"`);
+    assert(commonBadge.stockText === 'CH: 12 · PT: 50', `COMMON product displays dual stock (CH: 12 · PT: 50)`);
 
     // 2. GENEVA_ONLY
     const genBadge = computeBadge('GENEVA_ONLY', false, 4, 0);
