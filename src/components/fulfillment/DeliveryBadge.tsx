@@ -65,7 +65,7 @@ export default function DeliveryBadge({ productId, shippingOrigin, className = '
         country: cc,
         ...(shippingOrigin ? { origin: shippingOrigin } : {}),
       });
-      const res = await fetch(`/api/fulfillment/availability?${params.toString()}`);
+      const res = await fetch(`/api/fulfillment/availability/?${params.toString()}`);
       if (res.ok) {
         const data = await res.json() as AvailabilityResult;
         setResult(data);

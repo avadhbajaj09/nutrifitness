@@ -232,7 +232,7 @@ function FulfillmentStocksTab() {
   const [editVal, setEditVal] = useState<{ geneva: number; portugal: number }>({ geneva: 0, portugal: 0 });
 
   useEffect(() => {
-    void fetch('/api/fulfillment/stock')
+    void fetch('/api/fulfillment/stock/')
       .then((r) => r.json())
       .then((d) => { setStocks(d.stock ?? []); setLoading(false); })
       .catch(() => setLoading(false));
@@ -254,14 +254,14 @@ function FulfillmentStocksTab() {
 
   async function handleSave(productId: string, productSku: string) {
     for (const [originId, quantity] of [['GENEVA', editVal.geneva], ['PORTUGAL', editVal.portugal]] as const) {
-      await fetch('/api/fulfillment/stock', {
+      await fetch('/api/fulfillment/stock/', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ productId, productSku, originId, quantity }),
       });
     }
     setEditingRow(null);
-    const d = await fetch('/api/fulfillment/stock').then((r) => r.json());
+    const d = await fetch('/api/fulfillment/stock/').then((r) => r.json());
     setStocks(d.stock ?? []);
   }
 
@@ -340,7 +340,7 @@ function FulfillmentQueueTab({ origin }: { origin: 'GENEVA' | 'PORTUGAL' }) {
 
   const load = () => {
     setLoading(true);
-    void fetch(`/api/fulfillment/shipments?origin=${origin}&status=pending`)
+    void fetch(`/api/fulfillment/shipments/?origin=${origin}&status=pending`)
       .then((r) => r.json())
       .then((d) => { setShipments(d.shipments ?? []); setLoading(false); })
       .catch(() => setLoading(false));
@@ -350,7 +350,7 @@ function FulfillmentQueueTab({ origin }: { origin: 'GENEVA' | 'PORTUGAL' }) {
 
   async function markShipped(id: string) {
     setUpdating(id);
-    await fetch('/api/fulfillment/shipments', {
+    await fetch('/api/fulfillment/shipments/', {
       method: 'PATCH',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ id, status: 'in_transit' }),
@@ -418,7 +418,7 @@ function FulfillmentAlertsTab() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    void fetch('/api/fulfillment/shipments?needs_attention=true')
+    void fetch('/api/fulfillment/shipments/?needs_attention=true')
       .then((r) => r.json())
       .then((d) => { setShipments(d.shipments ?? []); setLoading(false); })
       .catch(() => setLoading(false));
