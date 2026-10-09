@@ -62,19 +62,19 @@ export function formatStockPill(
     };
   }
 
-  if (quantity <= 5) {
+  if (quantity < 5) {
     return {
       status: 'low_stock',
-      fr: `Plus que ${quantity} en stock`,
-      en: `Only ${quantity} left`,
-      de: `Nur noch ${quantity} verfügbar`
+      fr: 'Stock limité – vite épuisé',
+      en: 'Few items left – selling fast',
+      de: 'Geringer Bestand – fast ausverkauft'
     };
   }
 
   return {
     status: 'in_stock',
-    fr: `En stock · ${quantity}`,
-    en: `In stock · ${quantity}`,
-    de: `Auf Lager · ${quantity}`
+    fr: 'En stock',
+    en: 'In stock',
+    de: 'Auf Lager'
   };
 }

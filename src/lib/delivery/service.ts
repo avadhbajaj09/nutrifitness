@@ -249,7 +249,7 @@ export async function resolveBatchEstimates(
       variantSku: item.variantSku,
       resolvedOrigin,
       isAvailable: true,
-      stockStatus: availableStock <= 5 ? 'low_stock' : 'in_stock',
+      stockStatus: availableStock < 5 ? 'low_stock' : 'in_stock',
       stockCount: availableStock,
       stockPillText: formatStockPill(availableStock, 'fr'),
       estimate,

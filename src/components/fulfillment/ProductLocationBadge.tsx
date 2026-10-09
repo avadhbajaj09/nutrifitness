@@ -87,18 +87,29 @@ export default function ProductLocationBadge({
     }
   }
 
-  // Stock text strictly without numbers: "En stock" / "Rupture de stock" / "Non livrable"
+  // Stock text strictly without numbers: "En stock" / "Stock limité – vite épuisé" / "Rupture de stock" / "Non livrable"
+  const activeStockQty = isCommon
+    ? (activeOrigin === 'GENEVA' ? (typeof stockGeneva === 'number' ? stockGeneva : 25) : (typeof stockPortugal === 'number' ? stockPortugal : 25))
+    : isPortugalOnly
+    ? (typeof stockPortugal === 'number' ? stockPortugal : 25)
+    : (typeof stockGeneva === 'number' ? stockGeneva : 25);
+
+  const isLowStock = !isBlocked && !isOutOfStock && activeStockQty < 5;
+
   let stockText: string;
   if (isBlocked) {
     stockText = `Non livrable (${currentCc})`;
   } else if (isOutOfStock) {
     stockText = t.common.ruptureStock || 'Rupture de stock';
+  } else if (isLowStock) {
+    stockText = 'Stock limité – vite épuisé';
   } else {
     stockText = 'En stock';
   }
 
-  const isGreen = !isBlocked && !isOutOfStock && activeOrigin === 'GENEVA';
-  const isBlue = !isBlocked && !isOutOfStock && activeOrigin === 'PORTUGAL';
+  const isGreen = !isBlocked && !isOutOfStock && !isLowStock && activeOrigin === 'GENEVA';
+  const isBlue = !isBlocked && !isOutOfStock && !isLowStock && activeOrigin === 'PORTUGAL';
+  const isAmber = !isBlocked && !isOutOfStock && isLowStock;
 
   // Compact Pill (e.g. over image corner or in product detail)
   if (variant === 'pill') {
@@ -107,6 +118,8 @@ export default function ProductLocationBadge({
         className={`inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full text-[10px] font-bold backdrop-blur-md border shadow-xs transition-colors ${
           isBlocked || isOutOfStock
             ? 'bg-red-950/80 text-red-400 border-red-500/30'
+            : isAmber
+            ? 'bg-amber-950/85 text-amber-300 border-amber-500/40'
             : isGreen
             ? 'bg-emerald-950/85 text-emerald-300 border-emerald-500/40'
             : 'bg-blue-950/85 text-blue-300 border-blue-500/40'
@@ -130,6 +143,8 @@ export default function ProductLocationBadge({
           className={`w-2 h-2 rounded-full shrink-0 ${
             isBlocked || isOutOfStock
               ? 'bg-red-500'
+              : isAmber
+              ? 'bg-amber-400 animate-pulse'
               : isGreen
               ? 'bg-emerald-400 animate-pulse'
               : 'bg-blue-400 animate-pulse'
@@ -141,6 +156,8 @@ export default function ProductLocationBadge({
           className={`truncate font-bold ${
             isBlocked || isOutOfStock
               ? 'text-red-400'
+              : isAmber
+              ? 'text-amber-300'
               : isGreen
               ? 'text-emerald-400'
               : 'text-blue-300'
@@ -154,6 +171,8 @@ export default function ProductLocationBadge({
         className={`shrink-0 font-extrabold text-[10px] px-2 py-0.5 rounded-full border ${
           isBlocked || isOutOfStock
             ? 'bg-red-500/10 text-red-400 border-red-500/30'
+            : isAmber
+            ? 'bg-amber-500/10 text-amber-400 border-amber-500/30'
             : isGreen
             ? 'bg-emerald-500/10 text-emerald-400 border-emerald-500/30'
             : 'bg-blue-500/10 text-blue-300 border-blue-500/30'

@@ -109,12 +109,15 @@ export function DeliveryEstimate({
     resolvedOrigin === 'GENEVA' ? 'Expédié de Genève' : 'Expédié du Portugal'
   );
 
-  // Stock Pill
+  // Stock Pill (Strictly no quantities shown on customer storefront)
   const stockCount = estimate?.stockCount ?? 20;
-  const isLowStock = stockCount <= 5;
-  const stockText = isLowStock
-    ? (currentLocale === 'en' ? `Only ${stockCount} left` : currentLocale === 'de' ? `Nur noch ${stockCount} verfügbar` : `Plus que ${stockCount} en stock`)
-    : (currentLocale === 'en' ? `In stock · ${stockCount}` : currentLocale === 'de' ? `Auf Lager · ${stockCount}` : `En stock · ${stockCount}`);
+  const isOutOfStock = estimate?.stockStatus === 'out_of_stock' || stockCount <= 0;
+  const isLowStock = !isOutOfStock && stockCount < 5;
+  const stockText = isOutOfStock
+    ? (estimate?.stockPillText?.[currentLocale] || (currentLocale === 'en' ? 'Out of stock' : currentLocale === 'de' ? 'Nicht vorrätig' : 'Rupture de stock'))
+    : isLowStock
+    ? (estimate?.stockPillText?.[currentLocale] || (currentLocale === 'en' ? 'Few items left – selling fast' : currentLocale === 'de' ? 'Geringer Bestand – fast ausverkauft' : 'Stock limité – vite épuisé'))
+    : (estimate?.stockPillText?.[currentLocale] || (currentLocale === 'en' ? 'In stock' : currentLocale === 'de' ? 'Auf Lager' : 'En stock'));
 
   // 1. PRODUCT CARD MODE
   if (mode === 'card') {
@@ -137,7 +140,9 @@ export function DeliveryEstimate({
         <div className="pt-0.5">
           <span
             className={`inline-block text-[10px] font-black px-2 py-0.5 rounded-md tracking-wider uppercase ${
-              isLowStock
+              isOutOfStock
+                ? 'bg-red-500/15 text-red-400 border border-red-500/30'
+                : isLowStock
                 ? 'bg-amber-500/15 text-amber-400 border border-amber-500/30'
                 : 'bg-emerald-500/10 text-emerald-400 border border-emerald-500/20'
             }`}
@@ -170,7 +175,9 @@ export function DeliveryEstimate({
 
           <span
             className={`text-[10px] font-black px-2 py-0.5 rounded-md uppercase tracking-wider ${
-              isLowStock
+              isOutOfStock
+                ? 'bg-red-500/20 text-red-300 border border-red-500/30'
+                : isLowStock
                 ? 'bg-amber-500/20 text-amber-300 border border-amber-500/30'
                 : 'bg-emerald-500/20 text-emerald-300 border border-emerald-500/30'
             }`}
