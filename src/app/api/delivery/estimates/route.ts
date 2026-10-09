@@ -6,11 +6,8 @@ export const runtime = 'nodejs';
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const { country = 'CH', items = [] } = body;
-
-    if (!Array.isArray(items)) {
-      return NextResponse.json({ error: 'items must be an array' }, { status: 400 });
-    }
+    const country = (body.country || body.countryCode || 'CH').toUpperCase().trim();
+    const items = Array.isArray(body.items) ? body.items : [];
 
     const response = await resolveBatchEstimates(country, items);
 
