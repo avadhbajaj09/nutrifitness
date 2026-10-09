@@ -61,13 +61,13 @@ export async function GET(request: Request) {
       const genevaStockEntry = parentStocks.find(s => s.origin_id === 'GENEVA');
       const portugalStockEntry = parentStocks.find(s => s.origin_id === 'PORTUGAL');
 
-      const isGenevaActive = Boolean(genevaStockEntry ? genevaStockEntry.is_active : true);
-      const isPortugalActive = Boolean(portugalStockEntry ? portugalStockEntry.is_active : false);
+      const isGenevaActive = Boolean(genevaStockEntry ? genevaStockEntry.is_active : (p.main_location !== 'PORTUGAL'));
+      const isPortugalActive = Boolean(portugalStockEntry ? portugalStockEntry.is_active : (p.main_location === 'PORTUGAL' || p.main_location === 'COMMON'));
 
       let locationType: 'GENEVA_ONLY' | 'PORTUGAL_ONLY' | 'COMMON' = 'GENEVA_ONLY';
-      if (isGenevaActive && isPortugalActive) {
+      if (p.main_location === 'COMMON' || (isGenevaActive && isPortugalActive)) {
         locationType = 'COMMON';
-      } else if (isPortugalActive && !isGenevaActive) {
+      } else if (p.main_location === 'PORTUGAL' || (isPortugalActive && !isGenevaActive)) {
         locationType = 'PORTUGAL_ONLY';
       } else {
         locationType = 'GENEVA_ONLY';
@@ -135,9 +135,9 @@ export async function GET(request: Request) {
     if (locationFilter === 'GENEVA') {
       filtered = filtered.filter(p => p.location_type === 'GENEVA_ONLY');
     } else if (locationFilter === 'PORTUGAL') {
-      filtered = filtered.filter(p => p.location_type === 'PORTUGAL_ONLY');
+      filtered = filtered.filter(p => p.location_type === 'PORTUGAL_ONLY' || p.main_location === 'PORTUGAL');
     } else if (locationFilter === 'COMMON') {
-      filtered = filtered.filter(p => p.location_type === 'COMMON');
+      filtered = filtered.filter(p => p.location_type === 'COMMON' || p.main_location === 'COMMON');
     }
 
     const totalFiltered = filtered.length;

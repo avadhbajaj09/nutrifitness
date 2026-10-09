@@ -3,6 +3,8 @@
 import React, { useState, useEffect, useMemo, useRef } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
+import { useSearchParams } from 'next/navigation';
+import AdminSidebar from '@/components/admin/AdminSidebar';
 import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
 import type { ProductItem, ProductVariant, SupportedLocale } from '@/lib/types';
 import { 
@@ -505,8 +507,15 @@ export default function AdminDashboardClient() {
 
   // -------------------------------------------------------------
   // 2. DASHBOARD NAVIGATION & TIME
-  // -------------------------------------------------------------
+  const searchParams = useSearchParams();
+  const tabParam = searchParams.get('tab');
   const [activeTab, setActiveTab] = useState<'catalog' | 'pos' | 'sales' | 'fulfillment'>('pos');
+
+  useEffect(() => {
+    if (tabParam === 'catalog' || tabParam === 'pos' || tabParam === 'sales' || tabParam === 'fulfillment') {
+      setActiveTab(tabParam);
+    }
+  }, [tabParam]);
   const [fulfillmentSubTab, setFulfillmentSubTab] = useState<'stocks' | 'queue_geneva' | 'queue_portugal' | 'alerts'>('stocks');
   const [currentTime, setCurrentTime] = useState<string>('');
 
@@ -1953,181 +1962,96 @@ export default function AdminDashboardClient() {
   // RENDER 2: AUTHENTICATED DASHBOARD (Spacious, Clean, Light Theme)
   // -------------------------------------------------------------
   return (
-    <div translate="no" className="notranslate min-h-screen bg-slate-100 text-slate-900 font-sans flex flex-col">
-      
-      {/* =========================================================
-          TOP NAV BAR (Light, spacious, Shopify/WP Admin Style)
-          ========================================================= */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-40 shadow-xs">
-        <div className="max-w-[1720px] mx-auto px-4 sm:px-6 lg:px-8 h-18 flex items-center justify-between gap-4">
-          
-          {/* Brand & Store Badge */}
-          <div className="flex items-center gap-3.5 min-w-0">
-            <div className="w-10 h-10 rounded-xl bg-slate-900 text-white flex items-center justify-center font-black font-heading text-lg shrink-0 shadow-xs">
-              NF
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-black text-base tracking-tight text-slate-900 font-heading">
-                  NutriFitness OS
-                </span>
-                <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[11px] font-bold">
-                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
-                  Boutique Genève
-                </span>
-              </div>
-              <p className="text-xs text-slate-500 font-medium truncate flex items-center gap-1.5">
-                <span>📍 Rue des Pâquis 34, 1201 Genève</span>
+    <div translate="no" className="notranslate min-h-screen bg-slate-50 text-slate-900 flex antialiased font-sans">
+      <AdminSidebar
+        activeTab={activeTab}
+        onSelectTab={setActiveTab}
+        posCount={posProducts.length}
+        catalogCount={allProducts.length}
+        salesCount={salesHistory.length}
+      />
+      <div className="flex-1 min-w-0 flex flex-col pb-20">
+        {/* Top Header */}
+        <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-2xs">
+          <div className="w-full px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
+            <div className="flex items-center gap-3 min-w-0">
+              <h1 className="text-base font-bold text-slate-900 tracking-tight truncate">
+                {activeTab === 'pos' && (adminLang === 'fr' ? 'Caisse POS (Magasin Genève)' : 'Point of Sale (POS Register)')}
+                {activeTab === 'catalog' && (adminLang === 'fr' ? 'Catalogue Général' : 'Global Products Catalog')}
+                {activeTab === 'sales' && (adminLang === 'fr' ? 'Journal des Ventes' : 'Orders & Sales Journal')}
+                {activeTab === 'fulfillment' && (adminLang === 'fr' ? 'File d\'Expédition & Stocks' : 'Fulfillment & Shipping Queue')}
+              </h1>
+              <span className="text-slate-300">/</span>
+              <span className="text-xs text-slate-500 font-medium truncate flex items-center gap-1.5">
+                <span>Rue des Pâquis 34, Geneva</span>
                 <span>·</span>
-                <span className="font-bold text-slate-700">🇨🇭 {currentTime}</span>
-              </p>
+                <span className="font-semibold text-slate-700">🇨🇭 {currentTime}</span>
+              </span>
             </div>
-          </div>
-
-          {/* Center Navigation Tabs (Large & High Contrast) */}
-          <nav className="flex items-center bg-slate-100 p-1 rounded-2xl border border-slate-200">
-            <button
-              type="button"
-              onClick={() => setActiveTab('pos')}
-              className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all ${
-                activeTab === 'pos'
-                  ? 'bg-white text-emerald-700 shadow-sm border border-slate-200/80 font-black'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Store className="w-4 h-4 text-emerald-600" />
-              <span>{adminLang === 'fr' ? 'Caisse POS (Magasin)' : 'POS Register (Store)'}</span>
-              <span className="px-1.5 py-0.2 rounded-md bg-emerald-100 text-emerald-800 text-[10px] font-black">
-                {posProducts.length}
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('catalog')}
-              className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all ${
-                activeTab === 'catalog'
-                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/80 font-black'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Package className="w-4 h-4 text-blue-600" />
-              <span>{adminLang === 'fr' ? 'Catalogue Global' : 'Global Catalog'}</span>
-              <span className="px-1.5 py-0.2 rounded-md bg-slate-200 text-slate-700 text-[10px] font-black">
-                {allProducts.length}
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('sales')}
-              className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all ${
-                activeTab === 'sales'
-                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/80 font-black'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <Receipt className="w-4 h-4 text-amber-600" />
-              <span className="hidden sm:inline">{adminLang === 'fr' ? 'Journal des Ventes' : 'Sales Journal'}</span>
-              <span className="sm:hidden">{adminLang === 'fr' ? 'Ventes' : 'Sales'}</span>
-              <span className="px-1.5 py-0.2 rounded-md bg-amber-100 text-amber-800 text-[10px] font-black">
-                {salesHistory.length}
-              </span>
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setActiveTab('fulfillment')}
-              className={`flex items-center gap-2 px-4 sm:px-6 py-2.5 rounded-xl font-bold text-xs sm:text-sm transition-all ${
-                activeTab === 'fulfillment'
-                  ? 'bg-white text-slate-900 shadow-sm border border-slate-200/80 font-black'
-                  : 'text-slate-600 hover:text-slate-900'
-              }`}
-            >
-              <span className="text-lg leading-none text-purple-600">🚚</span>
-              <span className="hidden sm:inline">Expédition</span>
-              <span className="sm:hidden">Expédition</span>
-            </button>
-
-            <Link
-              href="/admin/products"
-              className="flex items-center gap-1.5 px-3 sm:px-4 py-2.5 rounded-xl font-bold text-xs sm:text-sm text-slate-700 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 transition-all"
-            >
-              <span>📍</span>
-              <span className="hidden sm:inline">Emplacements</span>
-              <span className="sm:hidden">Stocks</span>
-            </Link>
-          </nav>
-
-          {/* Right Action Buttons */}
-          <div className="flex items-center gap-2.5">
-            {/* Supabase Connection Status Badge */}
-            <div className={`hidden sm:flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-[11px] font-bold border transition-colors ${
-              isSupabaseConnected 
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-300' 
-                : 'bg-amber-50 text-amber-800 border-amber-300'
-            }`} title="Connexion temps-réel base de données Supabase">
-              <span className={`w-2 h-2 rounded-full ${isSupabaseConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-              <span>{isSupabaseConnected ? (adminLang === 'fr' ? 'Supabase Connecté' : 'Supabase Live') : (adminLang === 'fr' ? 'Supabase Hors-ligne' : 'Supabase Offline')}</span>
-            </div>
-
-            {/* Bilingual Language Selector */}
-            <div className="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200 text-xs font-bold shadow-2xs">
+            <div className="flex items-center gap-3 shrink-0">
+              <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-semibold border ${
+                isSupabaseConnected 
+                  ? 'bg-emerald-50 text-emerald-800 border-emerald-200' 
+                  : 'bg-amber-50 text-amber-800 border-amber-200'
+              }`}>
+                <span className={`w-2 h-2 rounded-full ${isSupabaseConnected ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
+                <span>{isSupabaseConnected ? 'Supabase Live' : 'Supabase Offline'}</span>
+              </div>
+              <div className="flex items-center bg-slate-100 p-0.5 rounded-xl border border-slate-200 text-xs font-bold shadow-2xs">
+                <button
+                  type="button"
+                  onClick={() => handleSetAdminLang('fr')}
+                  className={`px-2.5 py-1 rounded-lg transition-all ${
+                    adminLang === 'fr'
+                      ? 'bg-white text-slate-900 shadow-xs font-black'
+                      : 'text-slate-500 hover:text-slate-900'
+                  }`}
+                  title="Passer en Français"
+                >
+                  FR
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSetAdminLang('en')}
+                  className={`px-2.5 py-1 rounded-lg transition-all ${
+                    adminLang === 'en'
+                      ? 'bg-white text-slate-900 shadow-xs font-black'
+                      : 'text-slate-500 hover:text-slate-900'
+                  }`}
+                  title="Switch to English"
+                >
+                  EN
+                </button>
+              </div>
+              <Link
+                href="/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="hidden md:flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-slate-700 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors"
+                title="View online store"
+              >
+                <ExternalLink className="w-3.5 h-3.5" />
+                <span>Store</span>
+              </Link>
               <button
                 type="button"
-                onClick={() => handleSetAdminLang('fr')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
-                  adminLang === 'fr'
-                    ? 'bg-white text-slate-900 shadow-xs font-black'
-                    : 'text-slate-500 hover:text-slate-900'
-                }`}
-                title="Passer l'interface en Français"
+                onClick={handleLogout}
+                className="flex items-center gap-1.5 px-3 py-1.5 text-xs font-semibold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-xl border border-red-200 transition-colors"
+                title="Logout"
               >
-                🇫🇷 FR
-              </button>
-              <button
-                type="button"
-                onClick={() => handleSetAdminLang('en')}
-                className={`px-2.5 py-1 rounded-lg transition-all ${
-                  adminLang === 'en'
-                    ? 'bg-white text-slate-900 shadow-xs font-black'
-                    : 'text-slate-500 hover:text-slate-900'
-                }`}
-                title="Switch interface to English"
-              >
-                🇬🇧 EN
+                <LogOut className="w-3.5 h-3.5" />
+                <span className="hidden sm:inline">Logout</span>
               </button>
             </div>
-
-            <Link
-              href="/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden lg:flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-slate-700 hover:text-slate-900 bg-slate-50 hover:bg-slate-100 rounded-xl border border-slate-200 transition-colors"
-              title="Voir la boutique en ligne"
-            >
-              <ExternalLink className="w-3.5 h-3.5" />
-              <span>{adminLang === 'fr' ? 'Site Web' : 'Store'}</span>
-            </Link>
-
-            <button
-              type="button"
-              onClick={handleLogout}
-              className="flex items-center gap-1.5 px-3 py-2 text-xs font-bold text-red-600 hover:text-red-700 bg-red-50 hover:bg-red-100 rounded-xl border border-red-200 transition-colors"
-              title={adminLang === 'fr' ? 'Déconnexion' : 'Logout'}
-            >
-              <LogOut className="w-3.5 h-3.5" />
-              <span className="hidden sm:inline">{adminLang === 'fr' ? 'Quitter' : 'Logout'}</span>
-            </button>
           </div>
-        </div>
-      </header>
+        </header>
 
-      {/* =========================================================
-          MAIN BODY: TAB 1 — IN-STORE POS SYSTEM (GENEVA STOCK ONLY)
-          ========================================================= */}
-      {activeTab === 'pos' && (
-        <div className="flex-1 max-w-[1720px] w-full mx-auto p-4 sm:p-6 lg:p-8 flex flex-col lg:flex-row gap-6">
+        <div className="w-full flex-1 min-w-0">
+          {/* =========================================================
+              MAIN BODY: TAB 1 — IN-STORE POS SYSTEM (GENEVA STOCK ONLY)
+              ========================================================= */}
+          {activeTab === 'pos' && (
+            <div className="w-full p-4 sm:p-6 flex flex-col lg:flex-row gap-6">
           
           {/* LEFT 65%: PRODUCT BROWSER & SCANNER */}
           <div className="flex-1 flex flex-col gap-4 min-w-0">
@@ -2580,7 +2504,7 @@ export default function AdminDashboardClient() {
           MAIN BODY: TAB 2 — GLOBAL PRODUCT CATALOG (SHOPIFY/WP STYLE)
           ========================================================= */}
       {activeTab === 'catalog' && (
-        <div className="flex-1 max-w-[1720px] w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+        <div className="w-full p-4 sm:p-6 space-y-6">
           
           {/* Header with Title and Add Product Action */}
           <div className="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-4">
@@ -2970,7 +2894,7 @@ export default function AdminDashboardClient() {
           MAIN BODY: TAB 3 — POS SALES JOURNAL & METRICS
           ========================================================= */}
       {activeTab === 'sales' && (
-        <div className="flex-1 max-w-[1720px] w-full mx-auto p-4 sm:p-6 lg:p-8 space-y-6">
+        <div className="w-full p-4 sm:p-6 space-y-6">
           
           {/* Metrics summary */}
           <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
@@ -3306,7 +3230,7 @@ export default function AdminDashboardClient() {
           FULFILLMENT TAB
           ========================================================= */}
       {activeTab === 'fulfillment' && (
-        <div className="flex-1 overflow-y-auto p-4 sm:p-6 sm:pl-8 lg:p-8 lg:pl-10 space-y-6">
+        <div className="w-full p-4 sm:p-6 space-y-6">
           <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
             <div>
               <h2 className="text-xl sm:text-2xl font-black text-slate-900 uppercase font-heading tracking-tight flex items-center gap-2">
@@ -3393,6 +3317,9 @@ export default function AdminDashboardClient() {
           </div>
         </div>
       )}
+
+        </div>
+      </div>
 
       {/* =========================================================
           MODAL 1: QUICK STOCK EDITING (ON-THE-FLY FROM POS GRID)

@@ -26,12 +26,12 @@ export const ORIGIN_TIMEZONES: Record<OriginId, string> = {
 
 export const DEFAULT_CUTOFFS: Record<OriginId, string> = {
   GENEVA: '14:00',
-  PORTUGAL: '12:00'
+  PORTUGAL: '14:00'
 };
 
 export const DEFAULT_HANDLING: Record<OriginId, number> = {
   GENEVA: 0,
-  PORTUGAL: 1
+  PORTUGAL: 0
 };
 
 interface ZonedDateParts {
@@ -122,7 +122,8 @@ export function isOriginWorkingDay(
 ): boolean {
   const date = parseDateString(dateStr);
   const dayOfWeek = date.getUTCDay(); // 0=Sun, 6=Sat
-  if (dayOfWeek === 0 || dayOfWeek === 6) return false;
+  // Operating schedule: 6 days a week (Mon-Sat), only Sunday is a holiday
+  if (dayOfWeek === 0) return false;
 
   const originCal = origin;
   const countryCal = origin === 'GENEVA' ? 'CH' : 'PT';
@@ -139,7 +140,7 @@ export function isOriginWorkingDay(
 export function isTransitWorkingDay(
   dateStr: string,
   destinationCountry: string,
-  deliversSaturday: boolean = false,
+  deliversSaturday: boolean = true,
   holidays: HolidayEntry[] = []
 ): boolean {
   const date = parseDateString(dateStr);

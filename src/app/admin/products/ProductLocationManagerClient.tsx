@@ -23,6 +23,7 @@ import {
   RefreshCw,
   Package
 } from 'lucide-react';
+import AdminSidebar from '@/components/admin/AdminSidebar';
 
 const ADMIN_PASSWORD = 'Geneva@03564';
 
@@ -460,112 +461,98 @@ export default function ProductLocationManagerClient() {
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 pb-20">
-      {/* Top Header */}
-      <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-xs">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <Link
-              href="/wp-admin/"
-              className="text-xs font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-lg transition-colors"
-            >
-              ← Retour Caisse POS
-            </Link>
-            <div className="h-5 w-px bg-slate-200" />
-            <div>
-              <h1 className="text-lg sm:text-xl font-black text-slate-900 uppercase font-heading flex items-center gap-2">
-                <span>📍 Gestion des Emplacements & Stocks</span>
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex antialiased font-sans">
+      <AdminSidebar />
+      <div className="flex-1 min-w-0 flex flex-col pb-20">
+        {/* Top Header */}
+        <header className="bg-white border-b border-slate-200 sticky top-0 z-30 shadow-2xs">
+          <div className="w-full px-6 py-4 flex flex-wrap items-center justify-between gap-4">
+            <div className="min-w-0">
+              <h1 className="text-lg sm:text-xl font-bold text-slate-900 tracking-tight flex items-center gap-2">
+                <span>Inventory &amp; Location Manager</span>
               </h1>
-              <p className="text-xs text-slate-500">
-                Genève (Marco) · Portugal (Omar) · Multi-origine synchronisé
+              <p className="text-xs text-slate-500 truncate">
+                Geneva Store (Marco) · Portugal Warehouse (Omar) · Multi-Origin Fulfillment
               </p>
+            </div>
+
+            <div className="flex items-center gap-3">
+              <button
+                onClick={fetchProducts}
+                className="p-2 border border-slate-200 hover:bg-slate-100 rounded-xl text-slate-600 transition-colors"
+                title="Refresh products"
+              >
+                <RefreshCw className="w-4 h-4" />
+              </button>
+              <span className="text-xs font-bold px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
+                {totalCount} Products
+              </span>
             </div>
           </div>
 
-          <div className="flex items-center gap-2">
-            <Link
-              href="/admin/shipping"
-              className="text-xs font-bold text-slate-700 hover:text-slate-900 flex items-center gap-1.5 bg-slate-100 hover:bg-slate-200 px-3 py-1.5 rounded-xl transition-colors border border-slate-200"
-            >
-              <span>🚚 Règles de Livraison</span>
-            </Link>
+          {/* Sub Tabs: Active vs Drafts */}
+          <div className="w-full px-6 flex border-t border-slate-100">
             <button
-              onClick={fetchProducts}
-              className="p-2 border border-slate-200 hover:bg-slate-100 rounded-xl text-slate-600 transition-colors"
-              title="Rafraîchir"
+              onClick={() => { setStatusTab('published'); setPage(1); }}
+              className={`py-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+                statusTab === 'published'
+                  ? 'border-red-600 text-red-600'
+                  : 'border-transparent text-slate-500 hover:text-slate-900'
+              }`}
             >
-              <RefreshCw className="w-4 h-4" />
+              <span>Active Catalog</span>
             </button>
-            <span className="text-xs font-bold px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
-              {totalCount} Produits
-            </span>
+            <button
+              onClick={() => { setStatusTab('draft'); setPage(1); }}
+              className={`py-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
+                statusTab === 'draft'
+                  ? 'border-red-600 text-red-600'
+                  : 'border-transparent text-slate-500 hover:text-slate-900'
+              }`}
+            >
+              <Trash2 className="w-3.5 h-3.5" />
+              <span>Drafts &amp; Archived</span>
+            </button>
           </div>
-        </div>
+        </header>
 
-        {/* Sub Tabs: Actif vs Brouillons */}
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex border-t border-slate-100">
-          <button
-            onClick={() => { setStatusTab('published'); setPage(1); }}
-            className={`py-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
-              statusTab === 'published'
-                ? 'border-[#F80404] text-[#F80404]'
-                : 'border-transparent text-slate-500 hover:text-slate-900'
-            }`}
-          >
-            <span>Catalogue Actif</span>
-          </button>
-          <button
-            onClick={() => { setStatusTab('draft'); setPage(1); }}
-            className={`py-3 px-4 font-bold text-xs uppercase tracking-wider border-b-2 transition-all flex items-center gap-2 ${
-              statusTab === 'draft'
-                ? 'border-[#F80404] text-[#F80404]'
-                : 'border-transparent text-slate-500 hover:text-slate-900'
-            }`}
-          >
-            <Trash2 className="w-3.5 h-3.5" />
-            <span>Brouillons &amp; Retirés</span>
-          </button>
-        </div>
-      </header>
+        {/* Main Content Area */}
+        <main className="w-full px-6 pt-6 space-y-6">
+          {/* Filter & Search Bar */}
+          <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-2xs flex flex-wrap items-center justify-between gap-4">
+            <div className="flex-1 min-w-[280px] relative">
+              <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
+              <input
+                type="text"
+                placeholder="Search products by name, SKU, or ID..."
+                value={search}
+                onChange={e => { setSearch(e.target.value); setPage(1); }}
+                className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-red-500 transition-colors"
+              />
+            </div>
 
-      {/* Main Content Area */}
-      <main className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-6 space-y-6">
-        
-        {/* Filter & Search Bar */}
-        <div className="bg-white p-4 rounded-2xl border border-slate-200 shadow-xs flex flex-wrap items-center justify-between gap-4">
-          <div className="flex-1 min-w-[280px] relative">
-            <Search className="w-4 h-4 text-slate-400 absolute left-3.5 top-1/2 -translate-y-1/2" />
-            <input
-              type="text"
-              placeholder="Rechercher par nom, SKU ou code Woo..."
-              value={search}
-              onChange={e => { setSearch(e.target.value); setPage(1); }}
-              className="w-full pl-10 pr-4 py-2 bg-slate-50 border border-slate-200 rounded-xl text-xs text-slate-900 focus:outline-none focus:border-[#F80404] transition-colors"
-            />
+            <div className="flex flex-wrap items-center gap-2">
+              <span className="text-xs text-slate-500 font-bold flex items-center gap-1">
+                <Filter className="w-3.5 h-3.5" /> Origin:
+              </span>
+              {(['all', 'GENEVA', 'PORTUGAL', 'COMMON'] as const).map(loc => (
+                <button
+                  key={loc}
+                  onClick={() => { setLocationFilter(loc); setPage(1); }}
+                  className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
+                    locationFilter === loc
+                      ? 'bg-slate-900 text-white shadow-xs'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  {loc === 'all' && 'All Origins'}
+                  {loc === 'GENEVA' && '🇨🇭 Geneva Only'}
+                  {loc === 'PORTUGAL' && '🇵🇹 Portugal Only'}
+                  {loc === 'COMMON' && '🌍 Both (COMMON)'}
+                </button>
+              ))}
+            </div>
           </div>
-
-          <div className="flex flex-wrap items-center gap-2">
-            <span className="text-xs text-slate-500 font-bold flex items-center gap-1">
-              <Filter className="w-3.5 h-3.5" /> Origine :
-            </span>
-            {(['all', 'GENEVA', 'PORTUGAL', 'COMMON'] as const).map(loc => (
-              <button
-                key={loc}
-                onClick={() => { setLocationFilter(loc); setPage(1); }}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all ${
-                  locationFilter === loc
-                    ? 'bg-slate-900 text-white shadow-xs'
-                    : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
-                }`}
-              >
-                {loc === 'all' && 'Tous'}
-                {loc === 'GENEVA' && '🇨🇭 Genève Uniq.'}
-                {loc === 'PORTUGAL' && '🇵🇹 Portugal Uniq.'}
-                {loc === 'COMMON' && '🌍 Les Deux (COMMON)'}
-              </button>
-            ))}
-          </div>
-        </div>
 
         {/* Floating Bulk Actions Bar (when items selected) */}
         {selectedIds.size > 0 && (
@@ -582,40 +569,40 @@ export default function ProductLocationManagerClient() {
                 onClick={() => handleBulkAction('set_location_geneva')}
                 className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold transition-colors"
               >
-                🇨🇭 Définir Genève
+                🇨🇭 Set Geneva
               </button>
               <button
                 onClick={() => handleBulkAction('set_location_portugal')}
                 className="px-3 py-1.5 bg-slate-800 hover:bg-slate-700 text-white rounded-lg text-xs font-bold transition-colors"
               >
-                🇵🇹 Définir Portugal
+                🇵🇹 Set Portugal
               </button>
               <button
                 onClick={() => handleBulkAction('set_location_both')}
                 className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-bold transition-colors"
               >
-                🌍 Activer les Deux (COMMON)
+                🌍 Set Both (COMMON)
               </button>
               {statusTab === 'draft' ? (
                 <button
                   onClick={() => handleBulkAction('publish')}
                   className="px-3 py-1.5 bg-blue-600 hover:bg-blue-500 text-white rounded-lg text-xs font-bold transition-colors"
                 >
-                  ✓ Re-publier
+                  ✓ Re-publish
                 </button>
               ) : (
                 <button
                   onClick={() => setBulkDeleteConfirmOpen(true)}
                   className="px-3 py-1.5 bg-red-600 hover:bg-red-500 text-white rounded-lg text-xs font-bold transition-colors"
                 >
-                  Mettre en brouillon ({selectedIds.size})
+                  Move to Draft ({selectedIds.size})
                 </button>
               )}
               <button
                 onClick={() => setSelectedIds(new Set())}
                 className="px-2 py-1 text-slate-400 hover:text-white text-xs font-medium"
               >
-                Désélectionner
+                Deselect
               </button>
             </div>
           </div>
@@ -632,14 +619,14 @@ export default function ProductLocationManagerClient() {
                       type="checkbox"
                       checked={products.length > 0 && selectedIds.size === products.length}
                       onChange={toggleSelectAll}
-                      className="rounded border-slate-300 text-[#F80404] focus:ring-0 cursor-pointer"
+                      className="rounded border-slate-300 text-red-600 focus:ring-0 cursor-pointer"
                     />
                   </th>
-                  <th className="p-3">Produit &amp; SKU</th>
-                  <th className="p-3 text-center">Origines Actives</th>
-                  <th className="p-3 text-center">Type Dérivé</th>
-                  <th className="p-3 text-center">🇨🇭 Stock Genève</th>
-                  <th className="p-3 text-center">🇵🇹 Stock Portugal</th>
+                  <th className="p-3">Product &amp; SKU</th>
+                  <th className="p-3 text-center">Active Origins</th>
+                  <th className="p-3 text-center">Routing Type</th>
+                  <th className="p-3 text-center">🇨🇭 Geneva Stock</th>
+                  <th className="p-3 text-center">🇵🇹 Portugal Stock</th>
                   <th className="p-3 text-right">Actions</th>
                 </tr>
               </thead>
@@ -647,13 +634,13 @@ export default function ProductLocationManagerClient() {
                 {loading ? (
                   <tr>
                     <td colSpan={7} className="p-12 text-center text-slate-400">
-                      Chargement des produits...
+                      Loading products...
                     </td>
                   </tr>
                 ) : products.length === 0 ? (
                   <tr>
                     <td colSpan={7} className="p-12 text-center text-slate-400">
-                      Aucun produit trouvé.
+                      No products found.
                     </td>
                   </tr>
                 ) : (
@@ -698,7 +685,7 @@ export default function ProductLocationManagerClient() {
                                       onClick={() => setExpandedRow(isExpanded ? null : product.id)}
                                       className="inline-flex items-center gap-0.5 text-blue-600 hover:underline font-bold"
                                     >
-                                      {product.variants.length} parfums
+                                      {product.variants.length} variants
                                       {isExpanded ? <ChevronDown className="w-3 h-3" /> : <ChevronRight className="w-3 h-3" />}
                                     </button>
                                   )}
@@ -719,10 +706,10 @@ export default function ProductLocationManagerClient() {
                                     ? 'bg-emerald-600 text-white shadow-xs'
                                     : 'text-slate-400 hover:text-slate-700'
                                 }`}
-                                title="Activer / Désactiver Genève"
+                                title="Toggle Geneva fulfillment"
                               >
                                 <span>🇨🇭</span>
-                                <span>Genève</span>
+                                <span>Geneva</span>
                               </button>
 
                               {/* Portugal Toggle */}
@@ -734,7 +721,7 @@ export default function ProductLocationManagerClient() {
                                     ? 'bg-blue-600 text-white shadow-xs'
                                     : 'text-slate-400 hover:text-slate-700'
                                 }`}
-                                title="Activer / Désactiver Portugal"
+                                title="Toggle Portugal fulfillment"
                               >
                                 <span>🇵🇹</span>
                                 <span>Portugal</span>
@@ -751,12 +738,12 @@ export default function ProductLocationManagerClient() {
                             )}
                             {product.location_type === 'GENEVA_ONLY' && (
                               <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-emerald-50 text-emerald-700 border border-emerald-200">
-                                🇨🇭 GENÈVE SEUL
+                                🇨🇭 GENEVA ONLY
                               </span>
                             )}
                             {product.location_type === 'PORTUGAL_ONLY' && (
                               <span className="px-2.5 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-50 text-blue-700 border border-blue-200">
-                                🇵🇹 PORTUGAL SEUL
+                                🇵🇹 PORTUGAL ONLY
                               </span>
                             )}
                           </td>
@@ -804,21 +791,21 @@ export default function ProductLocationManagerClient() {
                                     href={`/produit/${product.slug}`}
                                     target="_blank"
                                     className="p-1.5 text-slate-400 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors"
-                                    title="Voir sur le site public"
+                                    title="View on store"
                                   >
                                     <ExternalLink className="w-4 h-4" />
                                   </Link>
                                   <button
                                     onClick={() => openAuditLog(product)}
                                     className="p-1.5 text-slate-400 hover:text-slate-800 rounded-lg hover:bg-slate-100 transition-colors"
-                                    title="Historique des modifications"
+                                    title="Audit history"
                                   >
                                     <History className="w-4 h-4" />
                                   </button>
                                   <button
                                     onClick={() => setDeleteConfirmProduct(product)}
                                     className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
-                                    title="Supprimer / Retirer du site public"
+                                    title="Remove product"
                                   >
                                     <Trash2 className="w-4 h-4" />
                                   </button>
@@ -829,12 +816,12 @@ export default function ProductLocationManagerClient() {
                                     onClick={() => handleRestore(product)}
                                     className="px-2.5 py-1 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-[11px] font-bold transition-colors"
                                   >
-                                    Restaurer
+                                    Restore
                                   </button>
                                   <button
                                     onClick={() => setDeleteConfirmId(product.id)}
                                     className="p-1.5 text-red-400 hover:text-red-700 rounded-lg hover:bg-red-50"
-                                    title="Supprimer définitivement"
+                                    title="Delete permanently"
                                   >
                                     <Trash2 className="w-4 h-4" />
                                   </button>
@@ -850,7 +837,7 @@ export default function ProductLocationManagerClient() {
                             <td colSpan={7} className="p-4 pl-14">
                               <div className="bg-white rounded-xl border border-slate-200 p-4 space-y-3">
                                 <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                                  Variantes &amp; Parfums ({product.variants.length}) :
+                                  Variants &amp; Options ({product.variants.length}):
                                 </h4>
                                 <div className="divide-y divide-slate-100">
                                   {product.variants.map(variant => (
@@ -874,7 +861,7 @@ export default function ProductLocationManagerClient() {
 
                                       <div className="flex items-center gap-6">
                                         <div className="flex items-center gap-2">
-                                          <span className="text-[11px] text-slate-500">🇨🇭 Genève :</span>
+                                          <span className="text-[11px] text-slate-500">🇨🇭 Geneva:</span>
                                           <input
                                             type="number"
                                             min={0}
@@ -885,7 +872,7 @@ export default function ProductLocationManagerClient() {
                                         </div>
 
                                         <div className="flex items-center gap-2">
-                                          <span className="text-[11px] text-slate-500">🇵🇹 Portugal :</span>
+                                          <span className="text-[11px] text-slate-500">🇵🇹 Portugal:</span>
                                           <input
                                             type="number"
                                             min={0}
@@ -917,21 +904,21 @@ export default function ProductLocationManagerClient() {
           {/* Pagination */}
           {totalPages > 1 && (
             <div className="p-4 border-t border-slate-200 flex items-center justify-between text-xs text-slate-600">
-              <span>Page {page} sur {totalPages}</span>
+              <span>Page {page} of {totalPages}</span>
               <div className="flex gap-1">
                 <button
                   disabled={page <= 1}
                   onClick={() => setPage(p => Math.max(1, p - 1))}
                   className="px-3 py-1.5 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-100"
                 >
-                  Précédent
+                  Previous
                 </button>
                 <button
                   disabled={page >= totalPages}
                   onClick={() => setPage(p => Math.min(totalPages, p + 1))}
                   className="px-3 py-1.5 rounded-lg border border-slate-200 disabled:opacity-40 hover:bg-slate-100"
                 >
-                  Suivant
+                  Next
                 </button>
               </div>
             </div>
@@ -947,9 +934,9 @@ export default function ProductLocationManagerClient() {
               <AlertCircle className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-black text-slate-900 text-lg">Confirmer la Suppression du Produit</h3>
+              <h3 className="font-bold text-slate-900 text-lg">Confirm Product Removal</h3>
               <p className="text-xs text-red-600 font-bold mt-1">
-                ⚠️ Action majeure : Retrait immédiat de tout le site public
+                ⚠️ Major action: Immediate removal from the storefront
               </p>
             </div>
 
@@ -966,17 +953,17 @@ export default function ProductLocationManagerClient() {
                 <p className="font-bold text-slate-900 text-xs truncate">{deleteConfirmProduct.name}</p>
                 <p className="text-[11px] text-slate-500">SKU: {deleteConfirmProduct.sku || 'N/A'}</p>
                 <p className="text-[10px] text-slate-400 mt-0.5">
-                  CHF {deleteConfirmProduct.base_price.toFixed(2)} · Stock Total: {deleteConfirmProduct.stock_geneva + deleteConfirmProduct.stock_portugal}
+                  CHF {deleteConfirmProduct.base_price.toFixed(2)} · Total Stock: {deleteConfirmProduct.stock_geneva + deleteConfirmProduct.stock_portugal}
                 </p>
               </div>
             </div>
 
             <div className="p-3 bg-red-50 rounded-xl border border-red-200 text-left text-xs text-red-800 space-y-1">
-              <p className="font-bold">Conséquences de cette confirmation :</p>
+              <p className="font-bold">Consequences of this action:</p>
               <ul className="list-disc pl-4 text-[11px] space-y-0.5 text-red-700">
-                <li>Le produit sera <strong>immédiatement masqué</strong> sur la boutique publique.</li>
-                <li>Il sera <strong>retiré des résultats de recherche</strong>, des catégories et des marques.</li>
-                <li>Aucun client ne pourra plus le commander ni accéder à sa page.</li>
+                <li>The product will be <strong>immediately hidden</strong> from the public store.</li>
+                <li>It will be <strong>removed from search results</strong>, categories, and brand pages.</li>
+                <li>Customers will no longer be able to purchase or view this product.</li>
               </ul>
             </div>
 
@@ -986,7 +973,7 @@ export default function ProductLocationManagerClient() {
                 onClick={() => setDeleteConfirmProduct(null)}
                 className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
               >
-                Annuler
+                Cancel
               </button>
               <button
                 type="button"
@@ -998,7 +985,7 @@ export default function ProductLocationManagerClient() {
                 className="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md hover:shadow-red-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Trash2 className="w-4 h-4" />
-                <span>Confirmer la suppression</span>
+                <span>Confirm Removal</span>
               </button>
             </div>
           </div>
@@ -1013,13 +1000,13 @@ export default function ProductLocationManagerClient() {
               <AlertCircle className="w-8 h-8" />
             </div>
             <div>
-              <h3 className="font-black text-slate-900 text-lg">Suppression Groupée</h3>
+              <h3 className="font-bold text-slate-900 text-lg">Bulk Removal</h3>
               <p className="text-xs text-red-600 font-bold mt-1">
-                Retrait de {selectedIds.size} produits sélectionnés
+                Removing {selectedIds.size} selected products
               </p>
             </div>
             <p className="text-xs text-slate-600 text-left">
-              Ces {selectedIds.size} produits seront déplacés en brouillon et immédiatement masqués de la boutique, de la recherche, des catégories et des marques.
+              These {selectedIds.size} products will be moved to drafts and immediately hidden from the public storefront, search results, categories, and brand catalogs.
             </p>
             <div className="flex gap-3 pt-2">
               <button
@@ -1027,7 +1014,7 @@ export default function ProductLocationManagerClient() {
                 onClick={() => setBulkDeleteConfirmOpen(false)}
                 className="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl transition-colors cursor-pointer"
               >
-                Annuler
+                Cancel
               </button>
               <button
                 type="button"
@@ -1038,7 +1025,7 @@ export default function ProductLocationManagerClient() {
                 className="flex-1 py-3 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl shadow-md hover:shadow-red-500/25 transition-all flex items-center justify-center gap-2 cursor-pointer"
               >
                 <Trash2 className="w-4 h-4" />
-                <span>Supprimer les {selectedIds.size} produits</span>
+                <span>Remove {selectedIds.size} products</span>
               </button>
             </div>
           </div>
@@ -1052,22 +1039,22 @@ export default function ProductLocationManagerClient() {
             <div className="w-12 h-12 rounded-full bg-red-100 text-red-600 flex items-center justify-center mx-auto">
               <AlertCircle className="w-6 h-6" />
             </div>
-            <h3 className="font-black text-slate-900 text-base">Suppression Définitive</h3>
+            <h3 className="font-bold text-slate-900 text-base">Permanent Deletion</h3>
             <p className="text-xs text-slate-500">
-              Cette action est irréversible. Le produit, ses variantes et ses stocks seront définitivement supprimés.
+              This action cannot be undone. The product, variants, and stock records will be permanently removed.
             </p>
             <div className="flex gap-2 pt-2">
               <button
                 onClick={() => setDeleteConfirmId(null)}
                 className="flex-1 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-xs rounded-xl"
               >
-                Annuler
+                Cancel
               </button>
               <button
                 onClick={() => handlePermanentDelete(deleteConfirmId)}
                 className="flex-1 py-2 bg-red-600 hover:bg-red-700 text-white font-bold text-xs rounded-xl"
               >
-                Confirmer
+                Confirm
               </button>
             </div>
           </div>
@@ -1081,7 +1068,7 @@ export default function ProductLocationManagerClient() {
             <div>
               <div className="flex items-center justify-between pb-4 border-b border-slate-100">
                 <div>
-                  <h3 className="font-bold text-slate-900 text-sm">Journal des Modifications</h3>
+                  <h3 className="font-bold text-slate-900 text-sm">Audit Activity Log</h3>
                   <p className="text-xs text-slate-400 truncate max-w-[280px]">{auditProduct.name}</p>
                 </div>
                 <button
@@ -1094,17 +1081,17 @@ export default function ProductLocationManagerClient() {
 
               <div className="py-4 space-y-3 overflow-y-auto max-h-[calc(100vh-140px)]">
                 {auditLogs.length === 0 ? (
-                  <p className="text-xs text-slate-400 text-center py-8">Aucun historique enregistré.</p>
+                  <p className="text-xs text-slate-400 text-center py-8">No activity logged yet.</p>
                 ) : (
                   auditLogs.map((log: any) => (
                     <div key={log.id} className="p-3 bg-slate-50 rounded-xl border border-slate-200/60 text-xs space-y-1">
                       <div className="flex items-center justify-between font-bold text-slate-700">
                         <span>{log.action}</span>
                         <span className="text-[10px] text-slate-400 font-normal">
-                          {new Date(log.created_at).toLocaleString('fr-CH')}
+                          {new Date(log.created_at).toLocaleString('en-GB')}
                         </span>
                       </div>
-                      <p className="text-[11px] text-slate-500">Par: {log.user_id}</p>
+                      <p className="text-[11px] text-slate-500">By: {log.user_id}</p>
                       {log.new_values && (
                         <pre className="text-[10px] bg-white p-2 rounded border border-slate-100 overflow-x-auto text-slate-600">
                           {JSON.stringify(log.new_values, null, 2)}
@@ -1120,7 +1107,7 @@ export default function ProductLocationManagerClient() {
               onClick={() => setAuditProduct(null)}
               className="w-full py-2.5 bg-slate-100 text-slate-700 font-bold text-xs rounded-xl hover:bg-slate-200"
             >
-              Fermer
+              Close
             </button>
           </div>
         </div>
@@ -1146,11 +1133,12 @@ export default function ProductLocationManagerClient() {
                 className="inline-flex items-center gap-1 px-2.5 py-1 bg-white/10 hover:bg-white/20 text-white rounded-lg text-xs font-bold shrink-0 transition-colors"
               >
                 <RotateCcw className="w-3 h-3" />
-                <span>Annuler</span>
+                <span>Undo</span>
               </button>
             )}
           </div>
         ))}
+      </div>
       </div>
     </div>
   );

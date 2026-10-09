@@ -27,7 +27,7 @@ const ex1 = estimateDelivery({
 
 assert(ex1.isAllowed === true, 'Example 1 is allowed');
 assert(ex1.dispatchDate === '2026-10-09', `Example 1 dispatchDate is Fri 9 Oct (got ${ex1.dispatchDate})`);
-assert(ex1.earliestDate === '2026-10-12', `Example 1 earliestDate is Mon 12 Oct (got ${ex1.earliestDate})`);
+assert(ex1.earliestDate === '2026-10-10', `Example 1 earliestDate is Sat 10 Oct (got ${ex1.earliestDate})`);
 assert(ex1.latestDate === '2026-10-13', `Example 1 latestDate is Tue 13 Oct (got ${ex1.latestDate})`);
 assert(ex1.displayDate === '2026-10-13', `Example 1 displayDate is Tue 13 Oct (got ${ex1.displayDate})`);
 assert(ex1.cutoffPassed === false, 'Example 1 cutoff not passed');
@@ -48,8 +48,8 @@ const ex2 = estimateDelivery({
 
 assert(ex2.isAllowed === true, 'Example 2 is allowed');
 assert(ex2.cutoffPassed === true, 'Example 2 cutoff passed');
-assert(ex2.dispatchDate === '2026-10-12', `Example 2 dispatchDate is Mon 12 Oct (got ${ex2.dispatchDate})`);
-assert(ex2.earliestDate === '2026-10-13', `Example 2 earliestDate is Tue 13 Oct (got ${ex2.earliestDate})`);
+assert(ex2.dispatchDate === '2026-10-10', `Example 2 dispatchDate is Sat 10 Oct (got ${ex2.dispatchDate})`);
+assert(ex2.earliestDate === '2026-10-12', `Example 2 earliestDate is Mon 12 Oct (got ${ex2.earliestDate})`);
 assert(ex2.latestDate === '2026-10-14', `Example 2 latestDate is Wed 14 Oct (got ${ex2.latestDate})`);
 assert(ex2.displayDate === '2026-10-14', `Example 2 displayDate is Wed 14 Oct (got ${ex2.displayDate})`);
 
@@ -84,10 +84,10 @@ const ex3 = estimateDelivery({
 });
 
 assert(ex3.isAllowed === true, 'Example 3 is allowed');
-assert(ex3.dispatchDate === '2026-10-12', `Example 3 dispatchDate is Mon 12 Oct (got ${ex3.dispatchDate})`);
-assert(ex3.earliestDate === '2026-10-15', `Example 3 earliestDate is Thu 15 Oct (got ${ex3.earliestDate})`);
-assert(ex3.latestDate === '2026-10-16', `Example 3 latestDate is Fri 16 Oct (got ${ex3.latestDate})`);
-assert(ex3.displayDate === '2026-10-16', `Example 3 displayDate is Fri 16 Oct (got ${ex3.displayDate})`);
+assert(ex3.dispatchDate === '2026-10-10', `Example 3 dispatchDate is Sat 10 Oct (got ${ex3.dispatchDate})`);
+assert(ex3.earliestDate === '2026-10-14', `Example 3 earliestDate is Wed 14 Oct (got ${ex3.earliestDate})`);
+assert(ex3.latestDate === '2026-10-15', `Example 3 latestDate is Thu 15 Oct (got ${ex3.latestDate})`);
+assert(ex3.displayDate === '2026-10-15', `Example 3 displayDate is Thu 15 Oct (got ${ex3.displayDate})`);
 
 // 4. Test Holiday inside transit window
 const ex4 = estimateDelivery({
