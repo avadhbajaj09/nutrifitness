@@ -52,7 +52,7 @@ function ShopContent() {
       if (swissOnly && !p.isSwissOrigin) return false;
 
       // Hide product if not deliverable to the selected country
-      if (!isProductDeliverableToCountry(countryCode || 'CH', p.locationType, p.shippingOrigin)) {
+      if (!isProductDeliverableToCountry(countryCode || 'CH', p.locationType, p.shippingOrigin, p.stockGeneva, p.stockPortugal)) {
         return false;
       }
 

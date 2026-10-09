@@ -15,7 +15,9 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const { addToCart, openQuickView, formatPrice, locale, countryCode, t } = useStore();
+  const { addToCart, openQuickView, formatPrice, locale, countryCode, t, isProductDeliverable } = useStore();
+
+  const isDeliverable = isProductDeliverable(product);
 
   const slug = getLocalized(product.slug, locale);
   const name = getLocalized(product.name, locale);
@@ -145,17 +147,26 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             </p>
           </div>
 
-          <button 
-            type="button"
-            onClick={() => addToCart(product)}
-            className="inline-flex items-center justify-center min-h-[40px] px-3.5 py-2 text-xs font-black uppercase tracking-wider text-black bg-[#F80404] hover:bg-[#FF3D00] rounded-xl transition-all shadow-sm active:scale-95 gap-1.5"
-            aria-label={`${t.common.addToCart}: ${name}`}
-          >
-            <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
-            </svg>
-            <span>+</span>
-          </button>
+          {!isDeliverable ? (
+            <span 
+              className="inline-flex items-center justify-center min-h-[40px] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-red-300/80 bg-red-950/40 rounded-xl border border-red-800/40 cursor-not-allowed"
+              title="Article non livrable dans votre pays"
+            >
+              Non livrable
+            </span>
+          ) : (
+            <button 
+              type="button"
+              onClick={() => addToCart(product)}
+              className="inline-flex items-center justify-center min-h-[40px] px-3.5 py-2 text-xs font-black uppercase tracking-wider text-black bg-[#F80404] hover:bg-[#FF3D00] rounded-xl transition-all shadow-sm active:scale-95 gap-1.5"
+              aria-label={`${t.common.addToCart}: ${name}`}
+            >
+              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
+              </svg>
+              <span>+</span>
+            </button>
+          )}
         </div>
       </div>
     </article>

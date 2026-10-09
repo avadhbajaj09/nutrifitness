@@ -3,19 +3,22 @@ import Link from 'next/link';
 import Image from 'next/image';
 import HeroSlider from '@/components/HeroSlider';
 import CategorySection from '@/components/CategorySection';
-import ProductCarousel from '@/components/ProductCarousel';
 import ShopByGoal from '@/components/ShopByGoal';
 import BrandShowcase from '@/components/BrandShowcase';
 import TrustStrip from '@/components/TrustStrip';
 import Testimonials from '@/components/Testimonials';
 import SocialGrid from '@/components/SocialGrid';
 import Newsletter from '@/components/Newsletter';
-import ProductCard from '@/components/ProductCard';
-import ProductMarquee from '@/components/ProductMarquee';
 import StoreMap from '@/components/StoreMap';
 import HomeFAQ from '@/components/HomeFAQ';
 import { PRODUCTS } from '@/lib/catalog';
 import { getHiddenProductSlugs } from '@/lib/hiddenProducts';
+import { 
+  HomeMarqueeSection, 
+  HomeBestsellersSection, 
+  HomeNewArrivalsSection, 
+  HomePerformanceSection 
+} from '@/components/HomeProductFeed';
 
 export default async function HomePage() {
   const hiddenSlugs = await getHiddenProductSlugs();
@@ -25,27 +28,20 @@ export default async function HomePage() {
     if (hiddenSlugs.has(slug) || hiddenSlugs.has(id)) return false;
     return p.categorySlug !== 'guides-ebooks' && p.id !== 'prod-25430';
   });
-  const bestSellers = physicalProducts.slice(0, 8);
-  const newArrivals = physicalProducts.slice(8, 16);
-  const performanceCollection = physicalProducts.slice(16, 24);
 
   return (
     <>
       {/* 1. HERO SLIDER */}
       <HeroSlider />
 
-      {/* 2. RUNNING PRODUCT IMAGES MARQUEE */}
-      <ProductMarquee products={physicalProducts} />
+      {/* 2. RUNNING PRODUCT IMAGES MARQUEE (Filtered by country) */}
+      <HomeMarqueeSection products={physicalProducts} />
 
       {/* 3. CATEGORIES SECTION (5 FITRUSH BANNERS) */}
       <CategorySection />
 
-      {/* 4. BEST SELLERS CAROUSEL */}
-      <ProductCarousel 
-        title="Bestsellers & Tendances en Suisse"
-        subtitle="Les Plus Plébiscités"
-        products={bestSellers}
-      />
+      {/* 4. BEST SELLERS CAROUSEL (Filtered by country) */}
+      <HomeBestsellersSection products={physicalProducts} />
 
       {/* 5. LARGE PROMOTIONAL BANNER */}
       <section className="relative rounded-3xl overflow-hidden border border-white/15 my-16 shadow-2xl">
@@ -84,35 +80,11 @@ export default async function HomePage() {
       {/* 6. SHOP BY GOAL */}
       <ShopByGoal />
 
-      {/* 7. NEW ARRIVALS CAROUSEL */}
-      <ProductCarousel 
-        title="Nouveautés & Derniers Arrivages"
-        subtitle="Fraîchement Entrés en Stock"
-        products={newArrivals}
-      />
+      {/* 7. NEW ARRIVALS CAROUSEL (Filtered by country) */}
+      <HomeNewArrivalsSection products={physicalProducts} />
 
-      {/* 8. PERFORMANCE COLLECTION (Curated Grid) */}
-      <section className="mb-16">
-        <div className="flex items-end justify-between mb-8 pb-4 border-b border-white/10">
-          <div>
-            <p className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-1 font-heading">
-              Gamme Force & Endurance
-            </p>
-            <h2 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">
-              Collection Performance Suisse
-            </h2>
-          </div>
-          <Link href="/boutique/?cat=pre-workout" className="text-xs font-bold text-white/70 hover:text-white uppercase tracking-wider">
-            Boosters & Créatines →
-          </Link>
-        </div>
-
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-          {performanceCollection.map((product) => (
-            <ProductCard key={product.id} product={product} />
-          ))}
-        </div>
-      </section>
+      {/* 8. PERFORMANCE COLLECTION (Curated Grid filtered by country) */}
+      <HomePerformanceSection products={physicalProducts} />
 
       {/* 9. GENEVA BOUTIQUE SHOWCASE */}
       <section className="bg-[#121212] rounded-3xl border border-white/10 p-8 sm:p-12 mb-16 shadow-xl">

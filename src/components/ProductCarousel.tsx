@@ -1,8 +1,9 @@
 'use client';
 
-import React, { useRef } from 'react';
+import React, { useRef, useMemo } from 'react';
 import ProductCard from './ProductCard';
 import type { ProductItem } from '@/lib/types';
+import { useStore } from '@/context/StoreContext';
 
 interface ProductCarouselProps {
   title: string;
@@ -13,6 +14,11 @@ interface ProductCarouselProps {
 
 export default function ProductCarousel({ title, subtitle, products }: ProductCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null);
+  const { isProductVisible, isProductDeliverable, countryCode } = useStore();
+
+  const visibleProducts = useMemo(() => {
+    return products.filter(p => isProductVisible(p) && isProductDeliverable(p));
+  }, [products, isProductVisible, isProductDeliverable, countryCode]);
 
   const scroll = (direction: 'left' | 'right') => {
     if (trackRef.current) {
@@ -20,6 +26,8 @@ export default function ProductCarousel({ title, subtitle, products }: ProductCa
       trackRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' });
     }
   };
+
+  if (visibleProducts.length === 0) return null;
 
   return (
     <section className="mb-16">
@@ -68,7 +76,7 @@ export default function ProductCarousel({ title, subtitle, products }: ProductCa
         className="flex gap-6 overflow-x-auto pb-4 scrollbar-none snap-x snap-mandatory scroll-smooth"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
-        {products.map((product, idx) => (
+        {visibleProducts.map((product, idx) => (
           <div key={product.id || idx} className="w-[260px] sm:w-[280px] lg:w-[290px] shrink-0 snap-start">
             <ProductCard product={product} priority={idx < 2} />
           </div>

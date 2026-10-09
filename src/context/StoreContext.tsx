@@ -6,6 +6,7 @@ import type { SupportedLocale } from '@/lib/types';
 import { TRANSLATIONS, TranslationDictionary, SupportedCurrency } from '@/lib/translations';
 import { formatPrice as taxFormatPrice, convertPrice as taxConvertPrice } from '@/lib/tax';
 import { isEbookItem } from '@/lib/reviews';
+import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 export interface CartItem {
   itemKey: string;
@@ -70,6 +71,7 @@ interface StoreContextType {
   };
   hiddenSlugs: Set<string>;
   isProductVisible: (itemOrSlug: any) => boolean;
+  isProductDeliverable: (itemOrSlug: any, targetCountry?: string) => boolean;
   refreshHiddenProducts: () => Promise<void>;
 }
 
@@ -83,21 +85,7 @@ const COUNTRY_KEY = 'nutrifitness_country_v1';
 const FREE_SHIPPING_THRESHOLD_CHF = 75.0; // CHF
 
 export function StoreProvider({ children }: { children: React.ReactNode }) {
-  const [cart, setCart] = useState<CartItem[]>([
-    {
-      itemKey: 'ultimate-whey-bigman-2kg-Chocolat Suisse-2 kg',
-      id: 'ultimate-whey-bigman-2kg',
-      slug: 'ultimate-whey-bigman-2kg',
-      name: 'Ultimate Whey Protein (2 kg)',
-      brand: 'BigMan Nutrition',
-      image: '/images/fitrush/imgi_48_banner-h9-1.webp',
-      price: 64.90,
-      flavor: 'Chocolat Suisse',
-      size: '2 kg',
-      quantity: 1,
-      vatRate: 2.6
-    }
-  ]);
+  const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>(['creapure-bigman-300g']);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isSearchOpen, setIsSearchOpen] = useState(false);
@@ -138,6 +126,21 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     refreshHiddenProducts();
   }, []);
 
+  const isProductDeliverable = (itemOrSlug: any, targetCountry: string = countryCode): boolean => {
+    if (!itemOrSlug) return false;
+    if (typeof itemOrSlug === 'object') {
+      if (itemOrSlug.isEbook || itemOrSlug.categorySlug === 'guides-ebooks') return true;
+      return isProductDeliverableToCountry(
+        targetCountry || 'CH',
+        itemOrSlug.locationType,
+        itemOrSlug.shippingOrigin,
+        itemOrSlug.stockGeneva,
+        itemOrSlug.stockPortugal
+      );
+    }
+    return true;
+  };
+
   const isProductVisible = (itemOrSlug: any): boolean => {
     if (!itemOrSlug) return false;
     let slug = '';
@@ -149,6 +152,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       slug = (itemOrSlug.slug?.fr || itemOrSlug.slug || '').toLowerCase().trim();
       id = itemOrSlug.id || '';
       sku = (itemOrSlug.variants?.[0]?.sku || itemOrSlug.sku || '').toLowerCase().trim();
+      // Enforce strict deliverability by country
+      if (!isProductDeliverable(itemOrSlug)) {
+        return false;
+      }
     }
     if (slug && hiddenSlugs.has(slug)) return false;
     if (id && hiddenSlugs.has(id)) return false;
@@ -295,6 +302,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const isPortugal = Boolean(product.shippingOrigin === 'portugal' || (options as any).isPortugal || (product.locationType === 'PORTUGAL_ONLY' && !isCommon));
     const shippingOrigin = product.shippingOrigin || (isCommon ? 'common' : isPortugal ? 'portugal' : 'switzerland');
     const locationType = product.locationType || (isCommon ? 'COMMON' : isPortugal ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY');
+
+    // Hard deliverability check: block non-deliverable items for selected country
+    if (!isEbook && !isProductDeliverableToCountry(countryCode || 'CH', locationType, shippingOrigin, product.stockGeneva, product.stockPortugal)) {
+      showToast(
+        'Non livrable dans votre pays',
+        `Cet article (${name}) n'est pas disponible pour la livraison en ${countryCode}.`
+      );
+      return;
+    }
 
     let blockedDuplicateEbook = false;
 
@@ -457,6 +473,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         freeShippingProgress,
         hiddenSlugs,
         isProductVisible,
+        isProductDeliverable,
         refreshHiddenProducts
       }}
     >

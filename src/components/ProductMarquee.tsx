@@ -1,18 +1,25 @@
 'use client';
 
-import React from 'react';
+import React, { useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ProductItem, getLocalized } from '@/lib/types';
 import { formatChf } from '@/lib/tax';
+import { useStore } from '@/context/StoreContext';
 
 interface ProductMarqueeProps {
   products: ProductItem[];
 }
 
 export default function ProductMarquee({ products }: ProductMarqueeProps) {
-  // Select 10 diverse iconic products with nice packshots
-  const marqueeItems = products.slice(0, 12);
+  const { isProductVisible, isProductDeliverable, countryCode } = useStore();
+  const visibleProducts = useMemo(() => {
+    return products.filter(p => isProductVisible(p) && isProductDeliverable(p));
+  }, [products, isProductVisible, isProductDeliverable, countryCode]);
+
+  // Select up to 12 diverse iconic products
+  const marqueeItems = visibleProducts.slice(0, 12);
+  if (marqueeItems.length === 0) return null;
   // Duplicate for seamless infinite marquee loop
   const displayItems = [...marqueeItems, ...marqueeItems];
 

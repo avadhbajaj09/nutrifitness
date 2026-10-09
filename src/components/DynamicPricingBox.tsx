@@ -271,7 +271,7 @@ export default function DynamicPricingBox({
         </div>
 
         {/* Add to Cart Button (or disabled if non-deliverable) */}
-        {!isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin) ? (
+        {!isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal) ? (
           <button
             type="button"
             disabled

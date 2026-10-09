@@ -5,6 +5,7 @@ import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import type { ProductItem } from '@/lib/types';
 import { Filter, ArrowUpDown, ShieldCheck, Sparkles } from 'lucide-react';
+import { useStore } from '@/context/StoreContext';
 
 interface CategoryProductsClientProps {
   products: ProductItem[];
@@ -12,16 +13,21 @@ interface CategoryProductsClientProps {
 }
 
 export default function CategoryProductsClient({ products, categoryName }: CategoryProductsClientProps) {
+  const { isProductVisible, isProductDeliverable, countryCode } = useStore();
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [swissOnly, setSwissOnly] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<string>('featured');
 
+  const deliverableProducts = useMemo(() => {
+    return products.filter(p => isProductVisible(p) && isProductDeliverable(p));
+  }, [products, isProductVisible, isProductDeliverable, countryCode]);
+
   const availableBrands = useMemo(() => {
-    return Array.from(new Set(products.map(p => p.brand))).filter(Boolean).sort();
-  }, [products]);
+    return Array.from(new Set(deliverableProducts.map(p => p.brand))).filter(Boolean).sort();
+  }, [deliverableProducts]);
 
   const filteredProducts = useMemo(() => {
-    return products
+    return deliverableProducts
       .filter(p => {
         if (selectedBrand !== 'all' && p.brand !== selectedBrand) return false;
         if (swissOnly && !p.isSwissOrigin) return false;
@@ -33,7 +39,7 @@ export default function CategoryProductsClient({ products, categoryName }: Categ
         if (sortBy === 'name-asc') return (a.name?.fr || '').localeCompare(b.name?.fr || '');
         return 0;
       });
-  }, [products, selectedBrand, swissOnly, sortBy]);
+  }, [deliverableProducts, selectedBrand, swissOnly, sortBy]);
 
   return (
     <div className="space-y-6">
@@ -55,7 +61,7 @@ export default function CategoryProductsClient({ products, categoryName }: Categ
                 : 'bg-white/5 hover:bg-white/10 text-white/70 hover:text-white'
             }`}
           >
-            Toutes ({products.length})
+            Toutes ({deliverableProducts.length})
           </button>
           {availableBrands.map(brand => (
             <button

@@ -20,6 +20,7 @@ import {
 } from 'lucide-react';
 import { FlagIcon } from '@/components/delivery/FlagIcon';
 import { useDeliveryEstimates } from '@/hooks/useDeliveryEstimate';
+import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 interface SupportedCountry {
   code: string;
@@ -291,6 +292,15 @@ export default function CheckoutPage() {
     postalValidation.isValid
   );
 
+  // Track non-deliverable items for selected customer destination
+  const nonDeliverableItems = useMemo(() => {
+    return cart.filter(item => {
+      if (item.isEbook) return false;
+      return !isProductDeliverableToCountry(customerCountry, item.locationType, item.shippingOrigin);
+    });
+  }, [cart, customerCountry]);
+  const hasBlockedItems = nonDeliverableItems.length > 0;
+
   // Group cart items by origin based on destination country
   const { genevaItems, portugalItems, isMixedCart } = useMemo(() => {
     const destIsCH = customerCountry === 'CH' || customerCountry === 'LI';
@@ -298,6 +308,12 @@ export default function CheckoutPage() {
     const ptList: CartItem[] = [];
 
     for (const item of cart) {
+      if (item.isEbook) continue;
+      // If item cannot be delivered to customerCountry, do NOT group into valid shipments
+      if (!isProductDeliverableToCountry(customerCountry, item.locationType, item.shippingOrigin)) {
+        continue;
+      }
+
       const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
       const isPtOnly = item.shippingOrigin === 'portugal' && !isCommon;
       const isGeOnly = item.locationType === 'GENEVA_ONLY' || (!isCommon && !isPtOnly);
@@ -391,6 +407,11 @@ export default function CheckoutPage() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setSubmitAttempted(true);
+
+    if (hasBlockedItems) {
+      window.scrollTo({ top: 150, behavior: 'smooth' });
+      return;
+    }
 
     if (!isAddressCompleted || !postalValidation.isValid) {
       window.scrollTo({ top: 300, behavior: 'smooth' });
@@ -566,6 +587,37 @@ export default function CheckoutPage() {
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
+        {/* Blocked Items Warning across entire width of checkout */}
+        {hasBlockedItems && (
+          <div className="lg:col-span-12 p-5 rounded-2xl border border-red-500/50 bg-red-950/60 text-red-200 text-xs space-y-2.5 animate-in fade-in duration-200 shadow-xl">
+            <div className="flex items-center justify-between gap-3 flex-wrap">
+              <div className="flex items-center gap-2 text-red-300 font-bold text-sm">
+                <AlertCircle className="w-5 h-5 text-red-400 shrink-0" />
+                <span>Articles non livrables vers votre destination ({customerCountry})</span>
+              </div>
+              <Link
+                href="/panier/"
+                className="px-3.5 py-1.5 bg-red-800 hover:bg-red-700 text-white font-bold text-xs rounded-xl transition-colors shadow-sm"
+              >
+                Gérer le panier →
+              </Link>
+            </div>
+            <p className="text-white/80">
+              Les articles suivants sont stockés uniquement à Genève et ne peuvent pas être expédiés vers {customerCountry} :
+            </p>
+            <ul className="list-disc list-inside space-y-1 text-red-200/90 pl-1">
+              {nonDeliverableItems.map(item => (
+                <li key={item.itemKey}>
+                  <span className="font-semibold text-white">{item.name}</span>
+                </li>
+              ))}
+            </ul>
+            <p className="text-[11px] text-white/60 pt-1 border-t border-red-500/30">
+              Veuillez retirer ces articles de votre panier pour pouvoir finaliser votre commande.
+            </p>
+          </div>
+        )}
+
         {/* Left Form (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
           
@@ -1214,19 +1266,24 @@ export default function CheckoutPage() {
             </div>
           </div>
 
-          {/* Validation Notice if address incomplete or postal invalid */}
-          {!isAddressCompleted && (
+          {/* Validation Notice if address incomplete, postal invalid or items blocked */}
+          {hasBlockedItems ? (
+            <div className="p-3.5 rounded-xl bg-red-950/70 border border-red-500/50 text-red-200 text-xs flex items-center gap-2.5">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+              <span>Articles non livrables vers {customerCountry} dans le panier. Retirez-les pour commander.</span>
+            </div>
+          ) : !isAddressCompleted ? (
             <div className="p-3 rounded-xl bg-amber-500/10 border border-amber-500/30 text-amber-300 text-xs flex items-center gap-2">
               <AlertTriangle className="w-4 h-4 shrink-0" />
               <span>Complétez une adresse valide pour débloquer le paiement.</span>
             </div>
-          )}
+          ) : null}
 
           <button 
             type="submit"
-            disabled={!isAddressCompleted || !postalValidation.isValid}
+            disabled={!isAddressCompleted || !postalValidation.isValid || hasBlockedItems}
             className={`w-full min-h-[52px] px-6 py-4 font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl flex items-center justify-center gap-2 ${
-              isAddressCompleted && postalValidation.isValid
+              isAddressCompleted && postalValidation.isValid && !hasBlockedItems
                 ? 'bg-[#F80404] hover:bg-[#FF3D00] text-black hover:shadow-[#F80404]/30 cursor-pointer active:scale-98'
                 : 'bg-white/10 text-white/40 cursor-not-allowed border border-white/10'
             }`}

@@ -138,20 +138,24 @@ export function isGenevaAllowed(countryCode: string): boolean {
 export function isProductDeliverableToCountry(
   countryCode: string,
   locationType?: string,
-  shippingOrigin?: string
+  shippingOrigin?: string,
+  stockGeneva?: number,
+  stockPortugal?: number
 ): boolean {
   const code = (countryCode || 'CH').toUpperCase().trim();
   if (!isCountrySupported(code)) return false;
 
-  const isCommon = locationType === 'COMMON' || shippingOrigin === 'common';
-  const isPtOnly = shippingOrigin === 'portugal' && !isCommon;
+  const isStockCommon = (typeof stockGeneva === 'number' && stockGeneva > 0 && typeof stockPortugal === 'number' && stockPortugal > 0);
+  const isCommon = locationType === 'COMMON' || shippingOrigin === 'common' || isStockCommon;
+  const isPtOnly = (locationType === 'PORTUGAL_ONLY' || shippingOrigin === 'portugal') && !isCommon;
 
   if (isCommon) {
     return true; // Deliverable to all supported countries via Geneva (CH/LI) or Portugal (EU/UK/NO/IS)
   }
   if (isPtOnly) {
-    return true; // Portugal delivers to all supported destinations
+    return true; // Portugal delivers to all supported destinations (all EU-27, CH, LI, UK, NO, IS)
   }
-  // Geneva only products ship only to Geneva allow-list
+  // Geneva only products ship exclusively to Geneva allow-list (CH, LI, FR, DE, IT, AT)
   return isGenevaAllowed(code);
 }
+

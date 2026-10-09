@@ -9,7 +9,7 @@ import { getLocalized } from '@/lib/types';
 import { Heart, ShoppingBag, ArrowRight, Trash2 } from 'lucide-react';
 
 export default function WishlistClient() {
-  const { wishlist, addToCart, showToast } = useStore();
+  const { wishlist, addToCart, showToast, isProductDeliverable } = useStore();
 
   // Find products in catalog that are wishlisted
   const wishlistedProducts = PRODUCTS.filter(p => {
@@ -19,15 +19,22 @@ export default function WishlistClient() {
 
   const handleAddAllToCart = () => {
     let addedCount = 0;
+    let blockedCount = 0;
     wishlistedProducts.forEach(p => {
       const inStock = p.variants?.some(v => v.inStock) ?? true;
       if (inStock) {
-        addToCart(p, { quantity: 1 });
-        addedCount++;
+        if (isProductDeliverable(p)) {
+          addToCart(p, { quantity: 1 });
+          addedCount++;
+        } else {
+          blockedCount++;
+        }
       }
     });
     if (addedCount > 0) {
       showToast('Panier', `${addedCount} produit(s) ajoutés au panier !`);
+    } else if (blockedCount > 0) {
+      showToast('Non disponible', 'Ces articles ne sont pas livrables vers votre pays.');
     }
   };
 

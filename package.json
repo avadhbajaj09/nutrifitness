@@ -8,6 +8,7 @@
     "redirects": "tsx scripts/build-redirects.ts data/redirect-map.csv",
     "test:routing": "tsx src/lib/fulfillment/__tests__/routing.test.ts",
     "test:delivery": "tsx src/lib/delivery/__tests__/estimate.test.ts",
+    "test:gating": "tsx src/lib/delivery/__tests__/gating.test.ts",
     "import:woo": "tsx scripts/import-woocommerce.ts",
     "test:acceptance": "tsx scripts/verify-acceptance.ts"
   },

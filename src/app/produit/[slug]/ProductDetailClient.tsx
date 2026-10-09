@@ -43,7 +43,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
   const isSwissDestination = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
   const isPortugal = isCommon ? !isSwissDestination : product.shippingOrigin === 'portugal';
-  const isDeliverable = isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin);
+  const isDeliverable = isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal);
 
   const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;

@@ -4,6 +4,7 @@ import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
+import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 import CartShipmentGroups from '@/components/fulfillment/CartShipmentGroups';
 
@@ -14,22 +15,18 @@ export default function CartPage() {
     freeShippingProgress, 
     updateQuantity, 
     removeFromCart, 
-    clearCart,
-    showToast,
-    formatPrice,
-    t,
-    currency,
-    countryCode
+    clearCart, 
+    showToast, 
+    formatPrice, 
+    t, 
+    currency, 
+    countryCode 
   } = useStore();
 
-  const genevaAllowList = ['CH', 'LI', 'FR', 'DE', 'IT', 'AT'];
   const currentCc = (countryCode || 'CH').toUpperCase();
   const blockedItems = cart.filter(item => {
     if (item.isEbook) return false;
-    const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
-    const isPortugal = item.shippingOrigin === 'portugal' && !isCommon;
-    const isGenevaOnly = !isCommon && !isPortugal;
-    return isGenevaOnly && !genevaAllowList.includes(currentCc);
+    return !isProductDeliverableToCountry(currentCc, item.locationType, item.shippingOrigin);
   });
   const hasBlockedItems = blockedItems.length > 0;
 
@@ -100,20 +97,32 @@ export default function CartPage() {
 
           {/* Blocked Items Warning for Selected Destination */}
           {hasBlockedItems && (
-            <div className="p-4 rounded-2xl border border-red-500/40 bg-red-950/40 text-red-200 text-xs space-y-1.5 animate-in fade-in duration-200">
-              <p className="font-bold flex items-center gap-2 text-red-300">
-                <span>⚠️</span>
-                <span>Articles non livrables vers votre pays ({currentCc}) :</span>
-              </p>
+            <div className="p-4 rounded-2xl border border-red-500/40 bg-red-950/40 text-red-200 text-xs space-y-2 animate-in fade-in duration-200">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <p className="font-bold flex items-center gap-2 text-red-300">
+                  <span>⚠️</span>
+                  <span>Articles non livrables vers votre pays ({currentCc}) :</span>
+                </p>
+                <button
+                  type="button"
+                  onClick={() => {
+                    blockedItems.forEach(b => removeFromCart(b.itemKey));
+                    showToast('Panier mis à jour', 'Articles non livrables retirés du panier.');
+                  }}
+                  className="px-3 py-1 bg-red-800/60 hover:bg-red-700 text-white rounded-lg font-bold text-[11px] transition-colors"
+                >
+                  Retirer ces articles
+                </button>
+              </div>
               <ul className="list-disc list-inside space-y-1 text-[11px] text-red-200/90 pl-1">
                 {blockedItems.map((b) => (
                   <li key={b.itemKey}>
                     <span className="font-semibold text-white">{b.name}</span>
-                    <span className="text-red-300/80"> — stocké uniquement à Genève, non expédiable vers {currentCc}</span>
+                    <span className="text-red-300/80"> — non expédiable vers {currentCc}</span>
                   </li>
                 ))}
               </ul>
-              <p className="text-[11px] text-white/70 pt-1">
+              <p className="text-[11px] text-white/70 pt-0.5">
                 Veuillez retirer ces articles de votre panier ou choisir un autre pays de livraison dans l&apos;en-tête pour pouvoir finaliser votre commande.
               </p>
             </div>
