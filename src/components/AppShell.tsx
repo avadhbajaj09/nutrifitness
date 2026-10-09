@@ -14,7 +14,7 @@ import GoogleTranslate from '@/components/GoogleTranslate';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAdmin = pathname?.startsWith('/wp-admin') || pathname?.startsWith('/admin');
+  const isAdmin = pathname?.startsWith('/wp-admin') || pathname?.startsWith('/admin') || pathname?.startsWith('/teamomar');
 
   useEffect(() => {
     if (isAdmin) {

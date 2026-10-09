@@ -45,6 +45,9 @@ function supabaseRowToSaleRecord(row: any): any {
     : rawPayment === 'invoice' ? 'invoice'
     : 'card';
 
+  const fulfilledBy = row.fulfilled_by || addr.fulfilled_by || undefined;
+  const fulfillmentOrigin = row.fulfillment_origin || addr.fulfillment_origin || undefined;
+
   return {
     id: row.id,
     ticketNumber: row.order_number || `NF-${row.id.slice(0, 8)}`,
@@ -77,8 +80,13 @@ function supabaseRowToSaleRecord(row: any): any {
       method: addr.shippingMethod || (isPos ? 'store_pickup' : 'post_priority'),
       label: addr.shippingLabel || (isPos ? 'Retrait Boutique Genève' : 'PostPac Priority (La Poste Suisse 24h)'),
       cost: Number(addr.shippingCost) || 0,
-      trackingNumber: addr.trackingNumber || undefined
+      trackingNumber: addr.trackingNumber || undefined,
+      carrier: addr.carrier || undefined,
+      fulfilled_by: fulfilledBy,
+      fulfillment_origin: fulfillmentOrigin,
     },
+    fulfilled_by: fulfilledBy,
+    fulfillment_origin: fulfillmentOrigin,
     status: (['pending', 'in_processing', 'packed', 'shipped', 'delivered', 'cancelled'].includes(row.status))
       ? row.status
       : 'in_processing',
@@ -215,14 +223,38 @@ export async function POST(req: Request) {
 
 export async function PATCH(req: Request) {
   try {
-    const { id, status } = await req.json();
+    const { id, status, caller } = await req.json();
     if (!id || !status) {
       return NextResponse.json({ error: 'Données manquantes' }, { status: 400 });
     }
 
+    const supabase = getAdminSupabase();
+
+    // Check if order is fulfilled by Omar team
+    try {
+      let checkRes = await supabase.from('orders').select('id, order_number, fulfilled_by, shipping_address').eq('order_number', id);
+      let existingOrder = checkRes.data?.[0];
+      if (!existingOrder && /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+        const byId = await supabase.from('orders').select('id, order_number, fulfilled_by, shipping_address').eq('id', id);
+        existingOrder = byId.data?.[0];
+      }
+
+      if (existingOrder) {
+        const addr = (existingOrder.shipping_address && typeof existingOrder.shipping_address === 'object') ? existingOrder.shipping_address : {};
+        const isOmarOrder = existingOrder.fulfilled_by === 'omar' || addr.fulfilled_by === 'omar';
+        if (isOmarOrder && caller !== 'omar') {
+          return NextResponse.json({
+            error: "This order is fulfilled by Omar's Portugal team. Marco's team cannot modify its status.",
+            isOmarOrder: true,
+          }, { status: 403 });
+        }
+      }
+    } catch (checkErr) {
+      console.warn('[Orders API] Omar fulfillment check notice:', checkErr);
+    }
+
     let isSupabaseOk = false;
     try {
-      const supabase = getAdminSupabase();
       // Try updating by order_number first (e.g. WEB-882049, TKT-1001)
       const resByNum = await supabase
         .from('orders')

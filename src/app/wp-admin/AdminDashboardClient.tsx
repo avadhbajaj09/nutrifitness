@@ -150,11 +150,16 @@ export interface PosSaleRecord {
     postalCode?: string;
   };
   shipping?: {
-    method: 'store_pickup' | 'post_priority' | 'post_economy' | 'express_geneva';
+    method: 'store_pickup' | 'post_priority' | 'post_economy' | 'express_geneva' | string;
     label: string;
     cost: number;
     trackingNumber?: string;
+    carrier?: string;
+    fulfilled_by?: 'omar' | 'marco';
+    fulfillment_origin?: 'PORTUGAL' | 'GENEVA';
   };
+  fulfilled_by?: 'omar' | 'marco';
+  fulfillment_origin?: 'PORTUGAL' | 'GENEVA';
   status: OrderStatus;
   clientName?: string;
 }
@@ -1277,6 +1282,12 @@ export default function AdminDashboardClient() {
   };
 
   const updateSaleStatus = (saleId: string, newStatus: OrderStatus) => {
+    const targetSale = salesHistory.find(s => s.id === saleId);
+    if (targetSale && (targetSale.fulfilled_by === 'omar' || targetSale.shipping?.fulfilled_by === 'omar')) {
+      alert("⚠️ Cette commande est expédiée et gérée par l'équipe Omar (Portugal). Seule l'équipe Omar peut modifier son statut depuis son portail.");
+      return;
+    }
+
     const updated = salesHistory.map(s => s.id === saleId ? { ...s, status: newStatus } : s);
     saveSalesHistory(updated);
     if (inspectingSale && inspectingSale.id === saleId) {
@@ -3080,18 +3091,29 @@ export default function AdminDashboardClient() {
 
                         {/* Interactive Order Status Dropdown */}
                         <td className="py-3 px-4">
-                          <select
-                            value={sale.status || 'delivered'}
-                            onChange={(e) => updateSaleStatus(sale.id, e.target.value as OrderStatus)}
-                            className={`text-[11px] font-bold px-2 py-1 rounded-lg border transition-all cursor-pointer shadow-2xs ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}
-                          >
-                            <option value="in_processing">🟡 En traitement</option>
-                            <option value="packed">📦 Emballé / Prêt</option>
-                            <option value="shipped">🚚 Expédié</option>
-                            <option value="delivered">✅ Livré / Remis</option>
-                            <option value="pending">⏳ En attente</option>
-                            <option value="cancelled">❌ Annulé</option>
-                          </select>
+                          {sale.fulfilled_by === 'omar' || sale.shipping?.fulfilled_by === 'omar' ? (
+                            <div className="flex flex-col gap-1 items-start">
+                              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-bold bg-purple-50 text-purple-700 border border-purple-200" title="Commande gérée exclusivement par l'équipe Omar au Portugal">
+                                🔒 🇵🇹 Omar Team
+                              </span>
+                              <span className={`text-[11px] font-bold px-2 py-0.5 rounded-lg border ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}>
+                                {statusConfig.label}
+                              </span>
+                            </div>
+                          ) : (
+                            <select
+                              value={sale.status || 'delivered'}
+                              onChange={(e) => updateSaleStatus(sale.id, e.target.value as OrderStatus)}
+                              className={`text-[11px] font-bold px-2 py-1 rounded-lg border transition-all cursor-pointer shadow-2xs ${statusConfig.bg} ${statusConfig.text} ${statusConfig.border}`}
+                            >
+                              <option value="in_processing">🟡 En traitement</option>
+                              <option value="packed">📦 Emballé / Prêt</option>
+                              <option value="shipped">🚚 Expédié</option>
+                              <option value="delivered">✅ Livré / Remis</option>
+                              <option value="pending">⏳ En attente</option>
+                              <option value="cancelled">❌ Annulé</option>
+                            </select>
+                          )}
                         </td>
 
                         {/* Client details */}
@@ -4651,24 +4673,41 @@ export default function AdminDashboardClient() {
                 </span>
               </div>
               <div className="flex items-center gap-2">
-                <select
-                  value={inspectingSale.status || 'delivered'}
-                  onChange={(e) => updateSaleStatus(inspectingSale.id, e.target.value as OrderStatus)}
-                  className={`text-xs font-black px-3 py-2 rounded-xl border transition-all cursor-pointer shadow-xs ${
-                    ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.bg || 'bg-white'
-                  } ${
-                    ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.text || 'text-slate-900'
-                  } ${
-                    ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.border || 'border-slate-300'
-                  }`}
-                >
-                  <option value="in_processing">🟡 En traitement (In Processing)</option>
-                  <option value="packed">📦 Emballé / Prêt (Packed)</option>
-                  <option value="shipped">🚚 Expédié (Shipped)</option>
-                  <option value="delivered">✅ Livré / Remis (Delivered)</option>
-                  <option value="pending">⏳ En attente (Pending)</option>
-                  <option value="cancelled">❌ Annulé (Cancelled)</option>
-                </select>
+                {inspectingSale.fulfilled_by === 'omar' || inspectingSale.shipping?.fulfilled_by === 'omar' ? (
+                  <div className="flex items-center gap-2">
+                    <span className="inline-flex items-center gap-1 px-3 py-2 rounded-xl text-xs font-bold bg-purple-50 text-purple-700 border border-purple-200">
+                      🔒 🇵🇹 Géré par Omar (Portugal) · Verrouillé
+                    </span>
+                    <span className={`text-xs font-black px-3 py-2 rounded-xl border ${
+                      ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.bg || 'bg-white'
+                    } ${
+                      ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.text || 'text-slate-900'
+                    } ${
+                      ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.border || 'border-slate-300'
+                    }`}>
+                      {ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.label || inspectingSale.status}
+                    </span>
+                  </div>
+                ) : (
+                  <select
+                    value={inspectingSale.status || 'delivered'}
+                    onChange={(e) => updateSaleStatus(inspectingSale.id, e.target.value as OrderStatus)}
+                    className={`text-xs font-black px-3 py-2 rounded-xl border transition-all cursor-pointer shadow-xs ${
+                      ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.bg || 'bg-white'
+                    } ${
+                      ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.text || 'text-slate-900'
+                    } ${
+                      ORDER_STATUS_LABELS[inspectingSale.status || 'delivered']?.border || 'border-slate-300'
+                    }`}
+                  >
+                    <option value="in_processing">🟡 En traitement (In Processing)</option>
+                    <option value="packed">📦 Emballé / Prêt (Packed)</option>
+                    <option value="shipped">🚚 Expédié (Shipped)</option>
+                    <option value="delivered">✅ Livré / Remis (Delivered)</option>
+                    <option value="pending">⏳ En attente (Pending)</option>
+                    <option value="cancelled">❌ Annulé (Cancelled)</option>
+                  </select>
+                )}
               </div>
             </div>
 
