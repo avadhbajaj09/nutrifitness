@@ -119,5 +119,5 @@ export async function getAvailability(
   }
 
   // Blocked for Europe (Swiss shop ships exclusively to Switzerland)
-  return getResult(false, undefined, undefined, undefined, false, "❌ Non livrable dans l'UE (exclusivité boutique Suisse)");
+  return getResult(false, undefined, undefined, undefined, false, "❌ Non disponible dans votre pays");
 }

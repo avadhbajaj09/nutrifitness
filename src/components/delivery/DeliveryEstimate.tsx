@@ -133,10 +133,12 @@ export function DeliveryEstimate({
           </span>
         </div>
 
-        {/* 2. Secondary, small and muted: Ships from */}
-        <div className="text-[10px] text-white/50 leading-none">
-          {shipsFrom}
-        </div>
+        {/* 2. Secondary, small and muted: Ships from (Only show for Portugal imports, never Expédié de Suisse) */}
+        {resolvedOrigin === 'PORTUGAL' && (
+          <div className="text-[10px] text-white/50 leading-none">
+            {shipsFrom}
+          </div>
+        )}
 
         {/* 3. Stock pill on its own */}
         <div className="pt-0.5">

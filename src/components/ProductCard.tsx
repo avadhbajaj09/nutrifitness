@@ -52,17 +52,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             </span>
           )}
           {isCommon ? (
-            isSwissDestination ? (
-              <span className="inline-flex items-center gap-1 bg-emerald-950/85 backdrop-blur-md border border-emerald-500/40 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
-                <span>🇨🇭</span>
-                <span>Expédié de Suisse (24h)</span>
-              </span>
-            ) : (
+            !isSwissDestination ? (
               <span className="inline-flex items-center gap-1 bg-blue-950/85 backdrop-blur-md border border-blue-500/40 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
                 <span>🇵🇹</span>
                 <span>Expédié du Portugal (3–5j)</span>
               </span>
-            )
+            ) : null
           ) : product.shippingOrigin === 'portugal' ? (
             <span className="inline-flex items-center gap-1 bg-blue-950/85 backdrop-blur-md border border-blue-500/40 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
               <span>🇵🇹</span>
@@ -150,10 +145,18 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
 
           {!isDeliverable ? (
             <span 
-              className="inline-flex items-center justify-center min-h-[40px] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-red-300/80 bg-red-950/40 rounded-xl border border-red-800/40 cursor-not-allowed"
-              title="Article non livrable dans votre pays"
+              className="inline-flex items-center justify-center min-h-[40px] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-red-300/80 bg-red-950/40 rounded-xl border border-red-800/40 cursor-not-allowed text-center leading-tight"
+              title={
+                locale === 'en'
+                  ? 'Not available in your country'
+                  : locale === 'de'
+                  ? 'In Ihrem Land nicht verfügbar'
+                  : locale === 'it'
+                  ? 'Non disponibile nel tuo paese'
+                  : 'Non disponible dans votre pays'
+              }
             >
-              Non livrable
+              {locale === 'en' ? 'Not available in your country' : 'Non disponible dans votre pays'}
             </span>
           ) : (
             <button 

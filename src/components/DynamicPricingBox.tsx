@@ -164,10 +164,29 @@ export default function DynamicPricingBox({
         {(() => {
           const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
           const isSwiss = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
-          let label = '🇨🇭 Expédié depuis la Suisse (24h) · En stock';
-          if (isCommon) {
-            label = isSwiss ? '🇨🇭 Expédié depuis la Suisse (24h) · En stock' : '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
-          } else if (product.shippingOrigin === 'portugal') {
+          const isDeliverable = isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal);
+
+          if (!isDeliverable) {
+            return (
+              <div className="flex items-center gap-1.5 text-xs font-bold text-red-400">
+                <AlertCircle className="w-3.5 h-3.5" />
+                <span>
+                  {locale === 'en'
+                    ? 'Not available in your country'
+                    : locale === 'de'
+                    ? 'In Ihrem Land nicht verfügbar'
+                    : locale === 'it'
+                    ? 'Non disponibile nel tuo paese'
+                    : 'Non disponible dans votre pays'}
+                </span>
+              </div>
+            );
+          }
+
+          let label = 'En stock';
+          if (product.shippingOrigin === 'portugal') {
+            label = '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
+          } else if (isCommon && !isSwiss) {
             label = '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
           }
           return (
@@ -281,7 +300,15 @@ export default function DynamicPricingBox({
             className="flex-1 h-12 px-4 bg-red-950/40 text-red-300 font-black uppercase tracking-wider text-[11px] sm:text-xs rounded-xl border border-red-800/50 opacity-80 cursor-not-allowed flex items-center justify-center gap-2"
           >
             <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
-            <span>Non livrable dans votre région</span>
+            <span>
+              {locale === 'en'
+                ? 'Not available in your country'
+                : locale === 'de'
+                ? 'In Ihrem Land nicht verfügbar'
+                : locale === 'it'
+                ? 'Non disponible nel tuo paese'
+                : 'Non disponible dans votre pays'}
+            </span>
           </button>
         ) : (
           <button

@@ -63,8 +63,8 @@ export default function ProductLocationBadge({
     // COMMON: auto-select nearest origin based on customer country
     if (isSwissDestination) {
       activeOrigin = 'GENEVA';
-      locationLabel = 'Expédié de Suisse (24h)';
-      flagIcon = '🇨🇭';
+      locationLabel = 'En stock';
+      flagIcon = '';
     } else {
       activeOrigin = 'PORTUGAL';
       locationLabel = 'Expédié du Portugal (3–5j)';
@@ -73,8 +73,8 @@ export default function ProductLocationBadge({
   } else if (isPortugalOnly) {
     activeOrigin = 'PORTUGAL';
     if (isSwissDestination) {
-      isBlocked = true;
-      locationLabel = 'Stock Portugal';
+      isBlocked = false;
+      locationLabel = 'Expédié du Portugal (3–5j)';
       flagIcon = '🇵🇹';
     } else {
       locationLabel = 'Expédié du Portugal (3–5j)';
@@ -85,11 +85,11 @@ export default function ProductLocationBadge({
     activeOrigin = 'GENEVA';
     if (!isGenevaAllowed) {
       isBlocked = true;
-      locationLabel = 'Stock Suisse';
-      flagIcon = '🇨🇭';
+      locationLabel = 'Non disponible dans votre pays';
+      flagIcon = '';
     } else {
-      locationLabel = 'Expédié de Suisse (24h)';
-      flagIcon = '🇨🇭';
+      locationLabel = 'En stock';
+      flagIcon = '';
     }
   }
 
