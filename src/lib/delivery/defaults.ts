@@ -149,28 +149,29 @@ export function isProductDeliverableToCountry(
 
   const isSwissDestination = code === 'CH' || code === 'LI';
 
-  // Check if item is stocked in both / common
-  const isStockCommon = (typeof stockGeneva === 'number' && stockGeneva > 0 && typeof stockPortugal === 'number' && stockPortugal > 0);
-  const isCommon = locationType === 'COMMON' || shippingOrigin === 'common' || isStockCommon;
-
-  if (isCommon) {
-    if (isSwissDestination) {
-      return stockGeneva === undefined || stockGeneva > 0;
-    }
-    return stockPortugal === undefined || stockPortugal > 0;
-  }
-
-  const isPtOnly = (locationType === 'PORTUGAL_ONLY' || shippingOrigin === 'portugal') && !isCommon;
-  const isSwissOnly = (locationType === 'GENEVA_ONLY' || shippingOrigin === 'switzerland' || (!isPtOnly && !isCommon));
-
+  // In Switzerland: ALL products from both Swiss shop and Portugal warehouse are available!
+  // Do NOT hide products in Switzerland.
   if (isSwissDestination) {
-    // Switzerland shop only serves Switzerland: Swiss shop products only, Portugal-only hidden
-    if (isPtOnly) return false;
-    return stockGeneva === undefined || stockGeneva > 0;
-  } else {
-    // Rest of Europe is handled by Omar from Portugal: Portugal products only, Swiss-only hidden
-    if (isSwissOnly) return false;
-    return stockPortugal === undefined || stockPortugal > 0;
+    if (typeof stockGeneva === 'number' || typeof stockPortugal === 'number') {
+      const g = typeof stockGeneva === 'number' ? stockGeneva : 0;
+      const p = typeof stockPortugal === 'number' ? stockPortugal : 0;
+      return (g + p) > 0;
+    }
+    return true;
   }
+
+  // Rest of Europe / Other destinations:
+  // Handled by Portugal warehouse. Swiss shop-only items do not ship to Europe.
+  const isCommon = locationType === 'COMMON' || shippingOrigin === 'common';
+  const isSwissOnly = (locationType === 'GENEVA_ONLY' || shippingOrigin === 'switzerland') && !isCommon;
+
+  if (isSwissOnly) {
+    return false;
+  }
+
+  if (typeof stockPortugal === 'number') {
+    return stockPortugal > 0;
+  }
+  return true;
 }
 

@@ -30,9 +30,9 @@ assert(isProductDeliverableToCountry('DE', 'COMMON', 'common'), 'COMMON is allow
 assert(isProductDeliverableToCountry('FR', 'COMMON', 'common'), 'COMMON is allowed for France (FR)');
 assert(!isProductDeliverableToCountry('IN', 'COMMON', 'common'), 'COMMON is blocked for non-supported destination (IN)');
 
-// 3. Portugal only product (ships to Europe; blocked in Switzerland as Omar handles Europe)
+// 3. Portugal only product (ships to Europe and allowed in Switzerland)
 assert(isProductDeliverableToCountry('PT', 'PORTUGAL_ONLY', 'portugal'), 'PORTUGAL_ONLY is allowed for Portugal (PT)');
-assert(!isProductDeliverableToCountry('CH', 'PORTUGAL_ONLY', 'portugal'), 'PORTUGAL_ONLY is blocked for Switzerland (CH)');
+assert(isProductDeliverableToCountry('CH', 'PORTUGAL_ONLY', 'portugal'), 'PORTUGAL_ONLY is allowed for Switzerland (CH)');
 assert(isProductDeliverableToCountry('ES', 'PORTUGAL_ONLY', 'portugal'), 'PORTUGAL_ONLY is allowed for Spain (ES)');
 assert(isProductDeliverableToCountry('FR', 'PORTUGAL_ONLY', 'portugal'), 'PORTUGAL_ONLY is allowed for France (FR)');
 assert(!isProductDeliverableToCountry('IN', 'PORTUGAL_ONLY', 'portugal'), 'PORTUGAL_ONLY is blocked for non-supported destination (IN)');
@@ -41,6 +41,6 @@ assert(!isProductDeliverableToCountry('IN', 'PORTUGAL_ONLY', 'portugal'), 'PORTU
 assert(isProductDeliverableToCountry('PT', undefined, undefined, 10, 10), 'Stock-derived common (10 GE, 10 PT) is deliverable to Portugal');
 assert(isProductDeliverableToCountry('CH', undefined, undefined, 10, 10), 'Stock-derived common (10 GE, 10 PT) is deliverable to Switzerland');
 assert(!isProductDeliverableToCountry('PT', undefined, undefined, 10, 0), 'Stock-derived Geneva only (10 GE, 0 PT) is blocked for Portugal');
-assert(!isProductDeliverableToCountry('CH', undefined, undefined, 0, 10), 'Stock-derived Portugal only (0 GE, 10 PT) is blocked for Switzerland');
+assert(isProductDeliverableToCountry('CH', undefined, undefined, 0, 10), 'Stock-derived Portugal only (0 GE, 10 PT) is deliverable to Switzerland');
 
 console.log('\nAll storefront gating assertions passed successfully!');

@@ -94,14 +94,20 @@ export async function getAvailability(
 
   // PORTUGAL_ONLY PRODUCT
   if (isPortugalOnly) {
-    if (euCountries.has(countryCode) || ['UK', 'GB', 'NO', 'IS'].includes(countryCode)) {
+    if (['CH', 'LI'].includes(countryCode) || euCountries.has(countryCode) || ['UK', 'GB', 'NO', 'IS'].includes(countryCode)) {
       if (stockPortugal === undefined || stockPortugal > 0) {
-        return getResult(true, 'PORTUGAL', 3, 5, false);
+        return getResult(
+          true,
+          'PORTUGAL',
+          3,
+          5,
+          false,
+          '🇵🇹 Expédié depuis le Portugal – livraison en 3–5 jours ouvrables'
+        );
       }
       return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
     }
-    // Blocked for Switzerland (Swiss shop only delivers Swiss catalog)
-    return getResult(false, undefined, undefined, undefined, false, '❌ Non livrable en Suisse (stock usine Europe)');
+    return getResult(false);
   }
 
   // SWITZERLAND_ONLY PRODUCT (GENEVA_ONLY)

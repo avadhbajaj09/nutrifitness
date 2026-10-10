@@ -296,25 +296,29 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     let activeCurrency: SupportedCurrency = (isSwiss && currency === 'CHF') ? 'CHF' : 'EUR';
 
     if (isSwiss) {
-      if (isShopAvailable) {
-        // Swiss shop stock available -> Swiss prices
+      // Check if product is a COMMON item out of stock in the Swiss shop
+      const isCommonOutOfShop = (product?.locationType === 'COMMON' || product?.shippingOrigin === 'common') &&
+        typeof product?.stockGeneva === 'number' && product.stockGeneva <= 0;
+
+      if (isCommonOutOfShop) {
+        // Common product not in Swiss shop -> Whole Europe price
+        currentPrice = variant?.priceEurEurope ?? product?.priceEurEurope ?? variant?.priceEur ?? product?.priceEur ?? Math.round(baseChf * 0.95 * 100) / 100;
+        currentCompareAt = variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope ?? variant?.compareAtPriceEur ?? product?.compareAtPriceEur;
+        activeCurrency = 'EUR';
+      } else {
+        // Show prices selected for Switzerland (Box 1 CHF or Box 2 EUR)
         if (currency === 'EUR') {
-          currentPrice = variant?.priceEurSwiss ?? product?.priceEurSwiss ?? Math.round(baseChf * 1.05 * 100) / 100;
-          currentCompareAt = variant?.compareAtPriceEurSwiss ?? product?.compareAtPriceEurSwiss;
+          currentPrice = variant?.priceEurSwiss ?? product?.priceEurSwiss ?? variant?.priceEurEurope ?? product?.priceEurEurope ?? Math.round(baseChf * 1.05 * 100) / 100;
+          currentCompareAt = variant?.compareAtPriceEurSwiss ?? product?.compareAtPriceEurSwiss ?? variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope;
           activeCurrency = 'EUR';
         } else {
           currentPrice = baseChf;
           currentCompareAt = baseCompareChf;
           activeCurrency = 'CHF';
         }
-      } else {
-        // Not in Swiss shop -> Whole Europe price
-        currentPrice = variant?.priceEurEurope ?? product?.priceEurEurope ?? variant?.priceEur ?? product?.priceEur ?? Math.round(baseChf * 0.95 * 100) / 100;
-        currentCompareAt = variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope ?? variant?.compareAtPriceEur ?? product?.compareAtPriceEur;
-        activeCurrency = 'EUR';
       }
     } else {
-      // Outside Switzerland -> Whole Europe price
+      // Outside Switzerland -> Whole Europe price (Box 3)
       currentPrice = variant?.priceEurEurope ?? product?.priceEurEurope ?? variant?.priceEur ?? product?.priceEur ?? Math.round(baseChf * 0.95 * 100) / 100;
       currentCompareAt = variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope ?? variant?.compareAtPriceEur ?? product?.compareAtPriceEur;
       activeCurrency = 'EUR';
