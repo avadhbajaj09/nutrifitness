@@ -43,6 +43,7 @@ export interface ProductItem {
   priceChf: number;
   priceEur?: number;
   compareAtPriceChf?: number; // Lowest price in last 30 days if discounted
+  compareAtPriceEur?: number;
   images: {
     src: string;
     alt: Record<SupportedLocale, string>;

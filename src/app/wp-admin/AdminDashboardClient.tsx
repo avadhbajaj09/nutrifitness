@@ -2845,14 +2845,21 @@ export default function AdminDashboardClient() {
 
                         {/* Price */}
                         <td className="py-3 px-4">
-                          <span className="font-black text-slate-900 text-sm font-heading">
-                            CHF {product.priceChf.toFixed(2)}
-                          </span>
-                          {product.compareAtPriceChf && (
-                            <span className="block text-[10px] text-slate-400 line-through">
-                              CHF {product.compareAtPriceChf.toFixed(2)}
+                          <div className="flex flex-col gap-0.5">
+                            <span className="font-black text-slate-900 text-sm font-heading flex items-center gap-1">
+                              <span>CHF</span>
+                              <span>{product.priceChf.toFixed(2)}</span>
                             </span>
-                          )}
+                            <span className="text-[11px] font-bold text-blue-700 flex items-center gap-0.5" title="Prix Europe (EUR €)">
+                              <span>€</span>
+                              <span>{(product.priceEur ?? Math.round(product.priceChf * 1.05 * 100) / 100).toFixed(2)}</span>
+                            </span>
+                            {product.compareAtPriceChf && (
+                              <span className="text-[10px] text-slate-400 line-through">
+                                CHF {product.compareAtPriceChf.toFixed(2)}
+                              </span>
+                            )}
+                          </div>
                         </td>
 
                         {/* Actions */}

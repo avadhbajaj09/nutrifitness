@@ -54,7 +54,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             isSwissDestination ? (
               <span className="inline-flex items-center gap-1 bg-emerald-950/85 backdrop-blur-md border border-emerald-500/40 text-emerald-400 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
                 <span>🇨🇭</span>
-                <span>Expédié de Genève (24h)</span>
+                <span>Expédié de Suisse (24h)</span>
               </span>
             ) : (
               <span className="inline-flex items-center gap-1 bg-blue-950/85 backdrop-blur-md border border-blue-500/40 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">

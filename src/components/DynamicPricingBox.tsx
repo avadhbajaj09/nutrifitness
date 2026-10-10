@@ -131,7 +131,7 @@ export default function DynamicPricingBox({
       'Efficacité démontrée scientifiquement pour sportifs exigeants',
       product.shippingOrigin === 'portugal'
         ? "Expédié directement depuis l'usine de fabrication au Portugal"
-        : 'Traçabilité 100% garantie depuis notre stock de Genève',
+        : 'Traçabilité 100% garantie depuis notre stock en Suisse',
       'Conforme aux normes antidopage les plus strictes',
     ];
   };
@@ -145,11 +145,11 @@ export default function DynamicPricingBox({
       <div className="flex flex-wrap items-baseline justify-between gap-3 pb-3 border-b border-white/10">
         <div className="flex items-baseline gap-3">
           <span className="text-3xl sm:text-4xl font-black text-white font-heading tracking-tight">
-            {formatPrice(activeUnitPrice)}
+            {formatPrice(activeUnitPrice, product.priceEur ? activeUnitPrice * (product.priceEur / (product.priceChf || 1)) : undefined)}
           </span>
           {selectedTier > 1 && (
             <span className="text-base text-white/40 line-through font-mono">
-              {formatPrice(basePrice)}
+              {formatPrice(basePrice, product.priceEur)}
             </span>
           )}
           {selectedTier > 1 && (
@@ -161,9 +161,9 @@ export default function DynamicPricingBox({
         {(() => {
           const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
           const isSwiss = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
-          let label = '🇨🇭 Expédié depuis Genève (24h) · En stock';
+          let label = '🇨🇭 Expédié depuis la Suisse (24h) · En stock';
           if (isCommon) {
-            label = isSwiss ? '🇨🇭 Expédié depuis Genève (24h) · En stock' : '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
+            label = isSwiss ? '🇨🇭 Expédié depuis la Suisse (24h) · En stock' : '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
           } else if (product.shippingOrigin === 'portugal') {
             label = '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
           }

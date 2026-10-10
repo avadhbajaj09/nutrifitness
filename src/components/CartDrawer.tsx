@@ -51,7 +51,7 @@ export default function CartDrawer() {
               <h3 className="text-xs font-black uppercase tracking-wider text-white font-heading">
                 {t.nav.cart} ({cartCount})
               </h3>
-              <p className="text-[10px] text-white/50">Expédié depuis Genève, Suisse</p>
+              <p className="text-[10px] text-white/50">Expédié depuis la Suisse</p>
             </div>
           </div>
 
@@ -140,7 +140,7 @@ export default function CartDrawer() {
                       ) : !item.isEbook && (
                         <p className="text-[10px] text-emerald-400 font-bold pt-0.5 flex items-center gap-1">
                           <span>🇨🇭</span>
-                          <span>En stock à Genève</span>
+                          <span>En stock en Suisse</span>
                         </p>
                       )}
                     </div>

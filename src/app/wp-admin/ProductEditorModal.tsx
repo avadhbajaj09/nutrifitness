@@ -54,6 +54,8 @@ export default function ProductEditorModal({
   const [categorySlugs, setCategorySlugs] = useState<string[]>(['proteines']);
   const [priceChf, setPriceChf] = useState<number>(29.90);
   const [compareAtPriceChf, setCompareAtPriceChf] = useState<string>('');
+  const [priceEur, setPriceEur] = useState<number | string>(31.40);
+  const [compareAtPriceEur, setCompareAtPriceEur] = useState<string>('');
   const [taxCategory, setTaxCategory] = useState<TaxRateCategory>('food_reduced');
   const [shippingOrigin, setShippingOrigin] = useState<'switzerland' | 'portugal' | 'common'>('switzerland');
   const [isSwissOrigin, setIsSwissOrigin] = useState<boolean>(false);
@@ -121,6 +123,8 @@ export default function ProductEditorModal({
 
       setPriceChf(product.priceChf || 29.90);
       setCompareAtPriceChf(product.compareAtPriceChf ? String(product.compareAtPriceChf) : '');
+      setPriceEur(product.priceEur !== undefined ? product.priceEur : Math.round((product.priceChf || 29.90) * 1.05 * 100) / 100);
+      setCompareAtPriceEur(product.compareAtPriceEur ? String(product.compareAtPriceEur) : '');
       setTaxCategory(product.taxCategory || 'food_reduced');
       setShippingOrigin(product.shippingOrigin || (product.locationType === 'COMMON' ? 'common' : 'switzerland'));
       setIsSwissOrigin(Boolean(product.isSwissOrigin));
@@ -180,14 +184,16 @@ export default function ProductEditorModal({
       setCategorySlugs(['proteines', 'meilleures-ventes']);
       setPriceChf(29.90);
       setCompareAtPriceChf('');
+      setPriceEur(31.40);
+      setCompareAtPriceEur('');
       setTaxCategory('food_reduced');
-      setShippingOrigin('switzerland'); // Default to Geneva stock for new items in shop
+      setShippingOrigin('switzerland'); // Default to Switzerland stock for new items in shop
       setIsSwissOrigin(false);
 
       setImages([{ src: '/images/placeholder.webp', altText: 'Nouveau produit' }]);
       setShortDescFr('Formule haute performance développée selon les normes de qualité suisses les plus exigeantes.');
       setLongDescFr(`<h2>Pourquoi choisir ce produit ?</h2>\n<p>Élaboré avec des ingrédients de qualité supérieure, ce complément alimentaire apporte une réponse ciblée à vos besoins sportifs et nutritionnels.</p>\n<h2>Conseils d'utilisation</h2>\n<p>Consommer selon les recommandations indiquées sur l'emballage.</p>`);
-      setDirectAnswerAeoFr('Produit de nutrition sportive haut de gamme disponible chez NutriFitness Genève avec livraison 24h en Suisse.');
+      setDirectAnswerAeoFr('Produit de nutrition sportive haut de gamme disponible chez NutriFitness avec livraison 24h en Suisse.');
 
       setIngredientsFr('Ingrédients de haute qualité alimentaire contrôlés selon les normes de sécurité suisses.');
       setAllergensFr('Voir emballage pour la liste détaillée des allergènes.');
@@ -295,7 +301,8 @@ export default function ProductEditorModal({
         sku: randomSku,
         flavorName: { fr: 'Nouvelle saveur', de: 'Neue Sorte', it: 'Nuovo gusto', en: 'New flavor' },
         format: '1 unité',
-        priceChf: priceChf,
+        priceChf: Number(priceChf),
+        priceEur: priceEur !== '' && !isNaN(Number(priceEur)) ? Number(priceEur) : Math.round(Number(priceChf) * 1.05 * 100) / 100,
         inventoryQuantity: 25,
         inStock: true
       }
@@ -338,6 +345,8 @@ export default function ProductEditorModal({
 
     const finalBrand = brand === 'CUSTOM' ? (customBrand.trim() || 'NutriFitness') : brand;
     const finalCompareAt = compareAtPriceChf.trim() ? parseFloat(compareAtPriceChf) : undefined;
+    const finalPriceEur = priceEur !== '' && !isNaN(Number(priceEur)) ? Number(priceEur) : Math.round(Number(priceChf) * 1.05 * 100) / 100;
+    const finalCompareAtEur = compareAtPriceEur.trim() ? parseFloat(compareAtPriceEur) : undefined;
     const finalBcaa = bcaaG.trim() ? parseFloat(bcaaG) : undefined;
 
     const savedProduct: ProductItem = {
@@ -359,7 +368,9 @@ export default function ProductEditorModal({
       categorySlugs: categorySlugs.length > 0 ? categorySlugs : [categorySlug || 'proteines'],
       taxCategory,
       priceChf: Number(priceChf),
+      priceEur: finalPriceEur,
       compareAtPriceChf: finalCompareAt,
+      compareAtPriceEur: finalCompareAtEur,
       isSwissOrigin,
       shippingOrigin,
       locationType: shippingOrigin === 'common' ? 'COMMON' : shippingOrigin === 'portugal' ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY',
@@ -432,6 +443,7 @@ export default function ProductEditorModal({
         return {
           ...v,
           priceChf: v.priceChf ? Number(v.priceChf) : Number(priceChf),
+          priceEur: v.priceEur ? Number(v.priceEur) : finalPriceEur,
           inventoryQuantity: shippingOrigin === 'common' ? (genQty + ptQty) : (Number(v.inventoryQuantity) || 0),
           stockGeneva: genQty,
           stockPortugal: ptQty
@@ -466,9 +478,9 @@ export default function ProductEditorModal({
                     : 'bg-blue-50 text-blue-800 border border-blue-200'
                 }`}>
                   {shippingOrigin === 'common'
-                    ? '🌍 🇨🇭 🇵🇹 Genève & Portugal (COMMON)'
+                    ? '🌍 🇨🇭 🇵🇹 Suisse & Portugal (COMMON)'
                     : shippingOrigin === 'switzerland'
-                    ? '🇨🇭 Stock Genève (POS Actif)'
+                    ? '🇨🇭 Stock Suisse (POS Actif)'
                     : '🇵🇹 Expédié Portugal'}
                 </span>
               </div>
@@ -722,91 +734,155 @@ export default function ProductEditorModal({
                 )}
               </div>
 
-              {/* Pricing, Stock & VAT Row */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 p-5 bg-slate-50 rounded-2xl border border-slate-200">
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                    Prix Public (CHF) *
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">CHF</span>
+              {/* Dual Pricing, Stock & VAT Section */}
+              <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
+                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                  {/* Suisse CHF */}
+                  <div className="p-4 bg-white rounded-xl border-2 border-emerald-200/80 shadow-2xs space-y-3">
+                    <div className="flex items-center justify-between pb-2 border-b border-emerald-100">
+                      <span className="text-xs font-black uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
+                        <span>🇨🇭</span> Tarification Suisse (CHF)
+                      </span>
+                      <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
+                        Suisse uniquement
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Prix Public (CHF) *
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">CHF</span>
+                          <input
+                            type="number"
+                            step="0.05"
+                            value={priceChf}
+                            onChange={(e) => setPriceChf(parseFloat(e.target.value) || 0)}
+                            className="w-full pl-11 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Prix Barré / Ancien (CHF)
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">CHF</span>
+                          <input
+                            type="number"
+                            step="0.05"
+                            value={compareAtPriceChf}
+                            onChange={(e) => setCompareAtPriceChf(e.target.value)}
+                            placeholder="Optionnel"
+                            className="w-full pl-11 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-bold text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Europe EUR */}
+                  <div className="p-4 bg-white rounded-xl border-2 border-blue-200/80 shadow-2xs space-y-3">
+                    <div className="flex items-center justify-between pb-2 border-b border-blue-100">
+                      <span className="text-xs font-black uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
+                        <span>🇪🇺</span> Tarification Europe (EUR €)
+                      </span>
+                      <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
+                        Reste de l'Europe
+                      </span>
+                    </div>
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Prix Public Europe (€) *
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">EUR €</span>
+                          <input
+                            type="number"
+                            step="0.05"
+                            value={priceEur}
+                            onChange={(e) => setPriceEur(e.target.value)}
+                            className="w-full pl-14 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                          Prix Barré Europe (€)
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">EUR €</span>
+                          <input
+                            type="number"
+                            step="0.05"
+                            value={compareAtPriceEur}
+                            onChange={(e) => setCompareAtPriceEur(e.target.value)}
+                            placeholder="Optionnel"
+                            className="w-full pl-14 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-bold text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
+                  {/* Stock en Rayon Field with Live Color Indicator */}
+                  <div>
+                    <div className="flex items-center justify-between mb-1.5">
+                      <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
+                        Stock en Rayon *
+                      </label>
+                      <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md border ${
+                        currentTotalStock < 5
+                          ? 'bg-red-50 text-red-700 border-red-300'
+                          : currentTotalStock <= 10
+                          ? 'bg-amber-50 text-amber-800 border-amber-300'
+                          : 'bg-emerald-50 text-emerald-800 border-emerald-300'
+                      }`}>
+                        {currentTotalStock < 5 ? '🔴 Critique' : currentTotalStock <= 10 ? '🟡 Moyen' : '🟢 En stock'}
+                      </span>
+                    </div>
                     <input
                       type="number"
-                      step="0.05"
-                      value={priceChf}
-                      onChange={(e) => setPriceChf(parseFloat(e.target.value) || 0)}
-                      className="w-full pl-11 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-slate-900"
+                      min="0"
+                      value={currentTotalStock}
+                      onChange={(e) => handleGlobalStockChange(parseInt(e.target.value) || 0)}
+                      className={`w-full px-3 py-2 bg-white border rounded-xl text-sm font-black focus:outline-none ${
+                        currentTotalStock < 5
+                          ? 'border-red-300 text-red-700 focus:ring-2 focus:ring-red-400/20'
+                          : currentTotalStock <= 10
+                          ? 'border-amber-300 text-amber-800 focus:ring-2 focus:ring-amber-400/20'
+                          : 'border-emerald-300 text-emerald-800 focus:ring-2 focus:ring-emerald-400/20'
+                      }`}
                       required
                     />
+                    {variants.length > 1 && (
+                      <span className="text-[10px] text-slate-400 mt-1 block">
+                        Total ({variants.length} saveurs · gérable dans l'onglet 4)
+                      </span>
+                    )}
                   </div>
-                </div>
 
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                    Prix Barré / Ancien (CHF)
-                  </label>
-                  <div className="relative">
-                    <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">CHF</span>
-                    <input
-                      type="number"
-                      step="0.05"
-                      value={compareAtPriceChf}
-                      onChange={(e) => setCompareAtPriceChf(e.target.value)}
-                      placeholder="Optionnel"
-                      className="w-full pl-11 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-bold text-slate-500 focus:outline-none"
-                    />
-                  </div>
-                </div>
-
-                {/* Stock en Rayon Field with Live Color Indicator */}
-                <div>
-                  <div className="flex items-center justify-between mb-1.5">
-                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                      Stock en Rayon *
+                  <div>
+                    <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                      Régime de TVA Suisse
                     </label>
-                    <span className={`text-[10px] font-black px-1.5 py-0.5 rounded-md border ${
-                      currentTotalStock < 5
-                        ? 'bg-red-50 text-red-700 border-red-300'
-                        : currentTotalStock <= 10
-                        ? 'bg-amber-50 text-amber-800 border-amber-300'
-                        : 'bg-emerald-50 text-emerald-800 border-emerald-300'
-                    }`}>
-                      {currentTotalStock < 5 ? '🔴 Critique' : currentTotalStock <= 10 ? '🟡 Moyen' : '🟢 En stock'}
-                    </span>
+                    <select
+                      value={taxCategory}
+                      onChange={(e) => setTaxCategory(e.target.value as TaxRateCategory)}
+                      className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none"
+                    >
+                      <option value="food_reduced">2.6% (Alimentaire / Protéines)</option>
+                      <option value="standard">8.1% (Standard / Shakers & Textiles)</option>
+                    </select>
                   </div>
-                  <input
-                    type="number"
-                    min="0"
-                    value={currentTotalStock}
-                    onChange={(e) => handleGlobalStockChange(parseInt(e.target.value) || 0)}
-                    className={`w-full px-3 py-2 bg-white border rounded-xl text-sm font-black focus:outline-none ${
-                      currentTotalStock < 5
-                        ? 'border-red-300 text-red-700 focus:ring-2 focus:ring-red-400/20'
-                        : currentTotalStock <= 10
-                        ? 'border-amber-300 text-amber-800 focus:ring-2 focus:ring-amber-400/20'
-                        : 'border-emerald-300 text-emerald-800 focus:ring-2 focus:ring-emerald-400/20'
-                    }`}
-                    required
-                  />
-                  {variants.length > 1 && (
-                    <span className="text-[10px] text-slate-400 mt-1 block">
-                      Total ({variants.length} saveurs · gérable dans l'onglet 4)
-                    </span>
-                  )}
-                </div>
-
-                <div>
-                  <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                    Régime de TVA Suisse
-                  </label>
-                  <select
-                    value={taxCategory}
-                    onChange={(e) => setTaxCategory(e.target.value as TaxRateCategory)}
-                    className="w-full px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs font-bold text-slate-800 focus:outline-none"
-                  >
-                    <option value="food_reduced">2.6% (Alimentaire / Protéines)</option>
-                    <option value="standard">8.1% (Standard / Shakers & Textiles)</option>
-                  </select>
                 </div>
               </div>
 
@@ -832,7 +908,7 @@ export default function ProductEditorModal({
                     <div>
                       <p className="font-black text-xs text-slate-900 flex items-center gap-1.5">
                         <span>🇨🇭</span>
-                        <span>Stock Magasin Genève (24h)</span>
+                        <span>Stock Magasin Suisse (24h)</span>
                       </p>
                       <p className="text-[11px] text-emerald-800 font-medium mt-0.5">
                         ✓ DISPONIBLE EN CAISSE POS (Scannable et vendable directement en boutique)
@@ -880,10 +956,10 @@ export default function ProductEditorModal({
                     <div>
                       <p className="font-black text-xs text-slate-900 flex items-center gap-1.5">
                         <span>🌍</span>
-                        <span>Disponible aux 2 Endroits (COMMON — Genève & Portugal)</span>
+                        <span>Disponible aux 2 Endroits (COMMON — Suisse & Portugal)</span>
                       </p>
                       <p className="text-[11px] text-purple-800 font-medium mt-0.5">
-                        ✓ DISPONIBLE EN CAISSE POS (Genève) + EXPÉDIÉ DU PORTUGAL (Pour l&apos;Europe). Routage automatique selon le pays client !
+                        ✓ DISPONIBLE EN CAISSE POS (Suisse) + EXPÉDIÉ DU PORTUGAL (Pour l&apos;Europe). Routage automatique selon le pays client !
                       </p>
                     </div>
                   </label>
@@ -1017,7 +1093,7 @@ export default function ProductEditorModal({
                   rows={3}
                   value={directAnswerAeoFr}
                   onChange={(e) => setDirectAnswerAeoFr(e.target.value)}
-                  placeholder="Réponse directe de 40 à 60 mots définissant la formule, le public cible et la disponibilité à Genève..."
+                  placeholder="Réponse directe de 40 à 60 mots définissant la formule, le public cible et la disponibilité en Suisse..."
                   className="w-full p-3 bg-emerald-50/50 border border-emerald-300 rounded-xl text-xs text-emerald-950 font-medium focus:outline-none focus:bg-white"
                 />
               </div>
@@ -1128,7 +1204,7 @@ export default function ProductEditorModal({
                       {shippingOrigin === 'common' ? (
                         <>
                           <div>
-                            <label className="block text-[11px] font-bold text-emerald-700 mb-1">🇨🇭 Stock Genève</label>
+                            <label className="block text-[11px] font-bold text-emerald-700 mb-1">🇨🇭 Stock Suisse</label>
                             <input
                               type="number"
                               value={v.stockGeneva ?? v.inventoryQuantity ?? 0}

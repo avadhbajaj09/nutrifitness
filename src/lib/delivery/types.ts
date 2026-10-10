@@ -100,8 +100,8 @@ export interface DeliveryEstimateItemResult {
     de: string; // e.g. "Lieferung bis Di., 13. Okt."
   } | null;
   shipsFromText: {
-    fr: string; // "Expédié de Genève" / "Expédié du Portugal"
-    en: string; // "Ships from Geneva" / "Ships from Portugal"
+    fr: string; // "Expédié de Suisse" / "Expédié du Portugal"
+    en: string; // "Ships from Switzerland" / "Ships from Portugal"
     de: string; // "Versand aus Genf" / "Versand aus Portugal"
   };
 }

@@ -891,7 +891,7 @@ export default function ChatBot() {
           <div className="px-4 py-2 bg-[#0E0E0E] border-t border-white/5 flex items-center justify-between text-[10px] text-white/50">
             <span className="flex items-center gap-1">
               <span className="w-1.5 h-1.5 rounded-full bg-[#95d600]" />
-              Stock physique à Genève
+              Stock physique en Suisse
             </span>
             <span>🇨🇭 Expédition 24h</span>
           </div>

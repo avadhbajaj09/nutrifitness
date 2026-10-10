@@ -39,9 +39,9 @@ export function formatDeliveryPromise(dateStr: string, locale: 'fr' | 'en' | 'de
 
 export function formatShipsFrom(origin: 'GENEVA' | 'PORTUGAL', locale: 'fr' | 'en' | 'de' = 'fr'): string {
   if (origin === 'GENEVA') {
-    if (locale === 'fr') return 'Expédié de Genève';
-    if (locale === 'de') return 'Versand aus Genf';
-    return 'Ships from Geneva';
+    if (locale === 'fr') return 'Expédié de Suisse';
+    if (locale === 'de') return 'Versand aus der Schweiz';
+    return 'Ships from Switzerland';
   } else {
     if (locale === 'fr') return 'Expédié du Portugal';
     if (locale === 'de') return 'Versand aus Portugal';

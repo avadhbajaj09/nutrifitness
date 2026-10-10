@@ -106,7 +106,9 @@ export function DeliveryEstimate({
     currentLocale === 'en' ? 'Fast tracked delivery' : 'Livraison express suivie'
   );
   const shipsFrom = estimate?.shipsFromText?.[currentLocale] || (
-    resolvedOrigin === 'GENEVA' ? 'Expédié de Genève' : 'Expédié du Portugal'
+    resolvedOrigin === 'GENEVA' 
+      ? (currentLocale === 'en' ? 'Shipped from Switzerland' : 'Expédié de Suisse')
+      : (currentLocale === 'en' ? 'Shipped from Portugal' : 'Expédié du Portugal')
   );
 
   // Stock Pill (Strictly no quantities shown on customer storefront)
@@ -245,14 +247,14 @@ export function DeliveryEstimate({
             <div className="flex justify-between text-[11px]">
               <span className="text-white/50">{currentLocale === 'en' ? 'Order cutoff time:' : 'Heure limite quotidienne :'}</span>
               <span className="font-semibold text-white">
-                {resolvedOrigin === 'GENEVA' ? '14:00 (Genève)' : '12:00 (Lisbonne)'}
+                {resolvedOrigin === 'GENEVA' ? '14:00 (Suisse)' : '12:00 (Lisbonne)'}
               </span>
             </div>
 
             <div className="flex justify-between text-[11px]">
               <span className="text-white/50">{currentLocale === 'en' ? 'Fulfilment center:' : 'Centre logistique :'}</span>
               <span className="font-bold text-white">
-                {resolvedOrigin === 'GENEVA' ? '🇨🇭 Genève, Suisse' : '🇵🇹 Oliveira de Azeméis, Portugal'}
+                {resolvedOrigin === 'GENEVA' ? '🇨🇭 Suisse' : '🇵🇹 Oliveira de Azeméis, Portugal'}
               </span>
             </div>
 
