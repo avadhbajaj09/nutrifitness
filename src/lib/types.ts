@@ -23,7 +23,13 @@ export interface ProductVariant {
   flavorName: Record<SupportedLocale, string>;
   format: string; // e.g. "2 kg"
   priceChf: number;
-  priceEur?: number;
+  compareAtPriceChf?: number;
+  priceEurSwiss?: number; // Box 2: Price in EUR for Switzerland
+  compareAtPriceEurSwiss?: number;
+  priceEurEurope?: number; // Box 3: Price in EUR for outside Switzerland
+  compareAtPriceEurEurope?: number;
+  priceEur?: number; // fallback / alias
+  compareAtPriceEur?: number; // fallback / alias
   inventoryQuantity: number;
   inStock: boolean;
   image?: string;
@@ -41,9 +47,13 @@ export interface ProductItem {
   categorySlugs?: string[]; // Multiple categories (e.g. ['proteines', 'avant-sport', 'meilleures-ventes', 'nouveautes'])
   taxCategory: TaxRateCategory;
   priceChf: number;
-  priceEur?: number;
-  compareAtPriceChf?: number; // Lowest price in last 30 days if discounted
-  compareAtPriceEur?: number;
+  compareAtPriceChf?: number; // Box 1: CHF
+  priceEurSwiss?: number; // Box 2: Price in EUR for Switzerland
+  compareAtPriceEurSwiss?: number;
+  priceEurEurope?: number; // Box 3: Price in EUR for outside Switzerland
+  compareAtPriceEurEurope?: number;
+  priceEur?: number; // fallback / alias
+  compareAtPriceEur?: number; // fallback / alias
   images: {
     src: string;
     alt: Record<SupportedLocale, string>;

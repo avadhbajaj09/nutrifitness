@@ -54,8 +54,10 @@ export default function ProductEditorModal({
   const [categorySlugs, setCategorySlugs] = useState<string[]>(['proteines']);
   const [priceChf, setPriceChf] = useState<number>(29.90);
   const [compareAtPriceChf, setCompareAtPriceChf] = useState<string>('');
-  const [priceEur, setPriceEur] = useState<number | string>(31.40);
-  const [compareAtPriceEur, setCompareAtPriceEur] = useState<string>('');
+  const [priceEurSwiss, setPriceEurSwiss] = useState<number | string>(31.40);
+  const [compareAtPriceEurSwiss, setCompareAtPriceEurSwiss] = useState<string>('');
+  const [priceEurEurope, setPriceEurEurope] = useState<number | string>(28.40);
+  const [compareAtPriceEurEurope, setCompareAtPriceEurEurope] = useState<string>('');
   const [taxCategory, setTaxCategory] = useState<TaxRateCategory>('food_reduced');
   const [shippingOrigin, setShippingOrigin] = useState<'switzerland' | 'portugal' | 'common'>('switzerland');
   const [isSwissOrigin, setIsSwissOrigin] = useState<boolean>(false);
@@ -123,8 +125,10 @@ export default function ProductEditorModal({
 
       setPriceChf(product.priceChf || 29.90);
       setCompareAtPriceChf(product.compareAtPriceChf ? String(product.compareAtPriceChf) : '');
-      setPriceEur(product.priceEur !== undefined ? product.priceEur : Math.round((product.priceChf || 29.90) * 1.05 * 100) / 100);
-      setCompareAtPriceEur(product.compareAtPriceEur ? String(product.compareAtPriceEur) : '');
+      setPriceEurSwiss(product.priceEurSwiss !== undefined ? product.priceEurSwiss : Math.round((product.priceChf || 29.90) * 1.05 * 100) / 100);
+      setCompareAtPriceEurSwiss(product.compareAtPriceEurSwiss ? String(product.compareAtPriceEurSwiss) : '');
+      setPriceEurEurope(product.priceEurEurope !== undefined ? product.priceEurEurope : (product.priceEur !== undefined ? product.priceEur : Math.round((product.priceChf || 29.90) * 0.95 * 100) / 100));
+      setCompareAtPriceEurEurope(product.compareAtPriceEurEurope ? String(product.compareAtPriceEurEurope) : (product.compareAtPriceEur ? String(product.compareAtPriceEur) : ''));
       setTaxCategory(product.taxCategory || 'food_reduced');
       setShippingOrigin(product.shippingOrigin || (product.locationType === 'COMMON' ? 'common' : 'switzerland'));
       setIsSwissOrigin(Boolean(product.isSwissOrigin));
@@ -184,8 +188,10 @@ export default function ProductEditorModal({
       setCategorySlugs(['proteines', 'meilleures-ventes']);
       setPriceChf(29.90);
       setCompareAtPriceChf('');
-      setPriceEur(31.40);
-      setCompareAtPriceEur('');
+      setPriceEurSwiss(31.40);
+      setCompareAtPriceEurSwiss('');
+      setPriceEurEurope(28.40);
+      setCompareAtPriceEurEurope('');
       setTaxCategory('food_reduced');
       setShippingOrigin('switzerland'); // Default to Switzerland stock for new items in shop
       setIsSwissOrigin(false);
@@ -301,8 +307,10 @@ export default function ProductEditorModal({
         sku: randomSku,
         flavorName: { fr: 'Nouvelle saveur', de: 'Neue Sorte', it: 'Nuovo gusto', en: 'New flavor' },
         format: '1 unité',
-        priceChf: Number(priceChf),
-        priceEur: priceEur !== '' && !isNaN(Number(priceEur)) ? Number(priceEur) : Math.round(Number(priceChf) * 1.05 * 100) / 100,
+        priceChf: Number(priceChf) || 29.90,
+        priceEurSwiss: priceEurSwiss !== '' && !isNaN(Number(priceEurSwiss)) ? Number(priceEurSwiss) : Math.round((Number(priceChf) || 29.90) * 1.05 * 100) / 100,
+        priceEurEurope: priceEurEurope !== '' && !isNaN(Number(priceEurEurope)) ? Number(priceEurEurope) : Math.round((Number(priceChf) || 29.90) * 0.95 * 100) / 100,
+        priceEur: priceEurEurope !== '' && !isNaN(Number(priceEurEurope)) ? Number(priceEurEurope) : Math.round((Number(priceChf) || 29.90) * 0.95 * 100) / 100,
         inventoryQuantity: 25,
         inStock: true
       }
@@ -344,9 +352,12 @@ export default function ProductEditorModal({
     }
 
     const finalBrand = brand === 'CUSTOM' ? (customBrand.trim() || 'NutriFitness') : brand;
-    const finalCompareAt = compareAtPriceChf.trim() ? parseFloat(compareAtPriceChf) : undefined;
-    const finalPriceEur = priceEur !== '' && !isNaN(Number(priceEur)) ? Number(priceEur) : Math.round(Number(priceChf) * 1.05 * 100) / 100;
-    const finalCompareAtEur = compareAtPriceEur.trim() ? parseFloat(compareAtPriceEur) : undefined;
+    const finalPriceChf = Number(priceChf) || 29.90;
+    const finalCompareAtChf = compareAtPriceChf.trim() ? parseFloat(compareAtPriceChf) : undefined;
+    const finalPriceEurSwiss = priceEurSwiss !== '' && !isNaN(Number(priceEurSwiss)) ? Number(priceEurSwiss) : Math.round(finalPriceChf * 1.05 * 100) / 100;
+    const finalCompareAtEurSwiss = compareAtPriceEurSwiss.trim() ? parseFloat(compareAtPriceEurSwiss) : undefined;
+    const finalPriceEurEurope = priceEurEurope !== '' && !isNaN(Number(priceEurEurope)) ? Number(priceEurEurope) : Math.round(finalPriceChf * 0.95 * 100) / 100;
+    const finalCompareAtEurEurope = compareAtPriceEurEurope.trim() ? parseFloat(compareAtPriceEurEurope) : undefined;
     const finalBcaa = bcaaG.trim() ? parseFloat(bcaaG) : undefined;
 
     const savedProduct: ProductItem = {
@@ -367,10 +378,14 @@ export default function ProductEditorModal({
       categorySlug: categorySlug || categorySlugs[0] || 'proteines',
       categorySlugs: categorySlugs.length > 0 ? categorySlugs : [categorySlug || 'proteines'],
       taxCategory,
-      priceChf: Number(priceChf),
-      priceEur: finalPriceEur,
-      compareAtPriceChf: finalCompareAt,
-      compareAtPriceEur: finalCompareAtEur,
+      priceChf: finalPriceChf,
+      compareAtPriceChf: finalCompareAtChf,
+      priceEurSwiss: finalPriceEurSwiss,
+      compareAtPriceEurSwiss: finalCompareAtEurSwiss,
+      priceEurEurope: finalPriceEurEurope,
+      compareAtPriceEurEurope: finalCompareAtEurEurope,
+      priceEur: finalPriceEurEurope,
+      compareAtPriceEur: finalCompareAtEurEurope,
       isSwissOrigin,
       shippingOrigin,
       locationType: shippingOrigin === 'common' ? 'COMMON' : shippingOrigin === 'portugal' ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY',
@@ -442,8 +457,14 @@ export default function ProductEditorModal({
         const ptQty = typeof v.stockPortugal === 'number' ? v.stockPortugal : shippingOrigin === 'switzerland' ? 0 : Number(v.inventoryQuantity) || 0;
         return {
           ...v,
-          priceChf: v.priceChf ? Number(v.priceChf) : Number(priceChf),
-          priceEur: v.priceEur ? Number(v.priceEur) : finalPriceEur,
+          priceChf: v.priceChf ? Number(v.priceChf) : finalPriceChf,
+          compareAtPriceChf: v.compareAtPriceChf ?? finalCompareAtChf,
+          priceEurSwiss: v.priceEurSwiss ?? finalPriceEurSwiss,
+          compareAtPriceEurSwiss: v.compareAtPriceEurSwiss ?? finalCompareAtEurSwiss,
+          priceEurEurope: v.priceEurEurope ?? finalPriceEurEurope,
+          compareAtPriceEurEurope: v.compareAtPriceEurEurope ?? finalCompareAtEurEurope,
+          priceEur: v.priceEurEurope ?? v.priceEur ?? finalPriceEurEurope,
+          compareAtPriceEur: v.compareAtPriceEurEurope ?? v.compareAtPriceEur ?? finalCompareAtEurEurope,
           inventoryQuantity: shippingOrigin === 'common' ? (genQty + ptQty) : (Number(v.inventoryQuantity) || 0),
           stockGeneva: genQty,
           stockPortugal: ptQty
@@ -734,97 +755,156 @@ export default function ProductEditorModal({
                 )}
               </div>
 
-              {/* Dual Pricing, Stock & VAT Section */}
+              {/* 3 Pricing Boxes: Swiss CHF, Swiss EUR, Europe EUR */}
               <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
-                <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
-                  {/* Suisse CHF */}
-                  <div className="p-4 bg-white rounded-xl border-2 border-emerald-200/80 shadow-2xs space-y-3">
-                    <div className="flex items-center justify-between pb-2 border-b border-emerald-100">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-1 pb-1">
+                  <label className="text-xs font-black uppercase tracking-wider text-slate-800 font-heading flex items-center gap-2">
+                    <span>💳</span>
+                    <span>Tarification Multi-Zones (3 Prix Configurables)</span>
+                  </label>
+                  <span className="text-[10px] font-bold text-slate-500 bg-white px-2 py-0.5 rounded-md border border-slate-200 w-fit">
+                    Automatisé selon la provenance du visiteur
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-1 lg:grid-cols-3 gap-3.5">
+                  {/* Box 1: Suisse CHF */}
+                  <div className="p-4 bg-white rounded-xl border-2 border-emerald-300 shadow-2xs space-y-3">
+                    <div className="flex items-center justify-between pb-1.5 border-b border-emerald-100">
                       <span className="text-xs font-black uppercase tracking-wider text-emerald-900 flex items-center gap-1.5">
-                        <span>🇨🇭</span> Tarification Suisse (CHF)
+                        <span>🇨🇭</span> 1. Suisse (CHF)
                       </span>
                       <span className="text-[10px] font-bold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200">
-                        Suisse uniquement
+                        Clients en Suisse
                       </span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-2.5">
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
+                        <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1">
                           Prix Public (CHF) *
                         </label>
                         <div className="relative">
-                          <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">CHF</span>
+                          <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">CHF</span>
                           <input
                             type="number"
                             step="0.05"
                             value={priceChf}
                             onChange={(e) => setPriceChf(parseFloat(e.target.value) || 0)}
-                            className="w-full pl-11 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            className="w-full pl-11 pr-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-sm font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                             required
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Prix Barré / Ancien (CHF)
+                        <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1">
+                          Prix Barré (CHF)
                         </label>
                         <div className="relative">
-                          <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">CHF</span>
+                          <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">CHF</span>
                           <input
                             type="number"
                             step="0.05"
                             value={compareAtPriceChf}
                             onChange={(e) => setCompareAtPriceChf(e.target.value)}
                             placeholder="Optionnel"
-                            className="w-full pl-11 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-bold text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                            className="w-full pl-11 pr-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-500 focus:outline-none focus:ring-2 focus:ring-emerald-500"
                           />
                         </div>
                       </div>
                     </div>
                   </div>
 
-                  {/* Europe EUR */}
-                  <div className="p-4 bg-white rounded-xl border-2 border-blue-200/80 shadow-2xs space-y-3">
-                    <div className="flex items-center justify-between pb-2 border-b border-blue-100">
-                      <span className="text-xs font-black uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
-                        <span>🇪🇺</span> Tarification Europe (EUR €)
+                  {/* Box 2: Suisse en EUR */}
+                  <div className="p-4 bg-white rounded-xl border-2 border-amber-300 shadow-2xs space-y-3">
+                    <div className="flex items-center justify-between pb-1.5 border-b border-amber-100">
+                      <span className="text-xs font-black uppercase tracking-wider text-amber-900 flex items-center gap-1.5">
+                        <span>🇨🇭</span> 2. Suisse en EUR (€)
                       </span>
-                      <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
-                        Reste de l'Europe
+                      <span className="text-[10px] font-bold text-amber-800 bg-amber-50 px-2 py-0.5 rounded-full border border-amber-200">
+                        Suisse en Euros
                       </span>
                     </div>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="space-y-2.5">
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Prix Public Europe (€) *
+                        <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1">
+                          Prix Suisse (€) *
                         </label>
                         <div className="relative">
-                          <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">EUR €</span>
+                          <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">EUR €</span>
                           <input
                             type="number"
                             step="0.05"
-                            value={priceEur}
-                            onChange={(e) => setPriceEur(e.target.value)}
-                            className="w-full pl-14 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            value={priceEurSwiss}
+                            onChange={(e) => setPriceEurSwiss(e.target.value)}
+                            placeholder="Ex: 10.00"
+                            className="w-full pl-14 pr-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-sm font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-amber-500"
                             required
                           />
                         </div>
                       </div>
 
                       <div>
-                        <label className="block text-xs font-bold uppercase tracking-wider text-slate-700 mb-1.5">
-                          Prix Barré Europe (€)
+                        <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1">
+                          Prix Barré Suisse (€)
                         </label>
                         <div className="relative">
-                          <span className="absolute left-3 top-2.5 text-xs font-bold text-slate-400">EUR €</span>
+                          <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">EUR €</span>
                           <input
                             type="number"
                             step="0.05"
-                            value={compareAtPriceEur}
-                            onChange={(e) => setCompareAtPriceEur(e.target.value)}
+                            value={compareAtPriceEurSwiss}
+                            onChange={(e) => setCompareAtPriceEurSwiss(e.target.value)}
                             placeholder="Optionnel"
-                            className="w-full pl-14 pr-3 py-2 bg-white border border-slate-300 rounded-xl text-sm font-bold text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            className="w-full pl-14 pr-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-500 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+
+                  {/* Box 3: Europe Hors-Suisse */}
+                  <div className="p-4 bg-white rounded-xl border-2 border-blue-300 shadow-2xs space-y-3">
+                    <div className="flex items-center justify-between pb-1.5 border-b border-blue-100">
+                      <span className="text-xs font-black uppercase tracking-wider text-blue-900 flex items-center gap-1.5">
+                        <span>🇪🇺</span> 3. Europe Hors-Suisse (€)
+                      </span>
+                      <span className="text-[10px] font-bold text-blue-700 bg-blue-50 px-2 py-0.5 rounded-full border border-blue-200">
+                        Reste de l'Europe
+                      </span>
+                    </div>
+                    <div className="space-y-2.5">
+                      <div>
+                        <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1">
+                          Prix Hors-Suisse (€) *
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">EUR €</span>
+                          <input
+                            type="number"
+                            step="0.05"
+                            value={priceEurEurope}
+                            onChange={(e) => setPriceEurEurope(e.target.value)}
+                            placeholder="Ex: 8.00"
+                            className="w-full pl-14 pr-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-sm font-black text-slate-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                            required
+                          />
+                        </div>
+                      </div>
+
+                      <div>
+                        <label className="block text-[11px] font-bold uppercase text-slate-700 mb-1">
+                          Prix Barré Europe (€)
+                        </label>
+                        <div className="relative">
+                          <span className="absolute left-3 top-2 text-xs font-bold text-slate-400">EUR €</span>
+                          <input
+                            type="number"
+                            step="0.05"
+                            value={compareAtPriceEurEurope}
+                            onChange={(e) => setCompareAtPriceEurEurope(e.target.value)}
+                            placeholder="Optionnel"
+                            className="w-full pl-14 pr-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-xs font-bold text-slate-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
                           />
                         </div>
                       </div>

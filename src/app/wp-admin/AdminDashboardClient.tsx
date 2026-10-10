@@ -2846,16 +2846,20 @@ export default function AdminDashboardClient() {
                         {/* Price */}
                         <td className="py-3 px-4">
                           <div className="flex flex-col gap-0.5">
-                            <span className="font-black text-slate-900 text-sm font-heading flex items-center gap-1">
-                              <span>CHF</span>
+                            <span className="font-black text-slate-900 text-xs font-heading flex items-center gap-1" title="Prix Suisse (CHF)">
+                              <span className="text-[10px] text-emerald-700 font-bold">🇨🇭 CHF</span>
                               <span>{product.priceChf.toFixed(2)}</span>
                             </span>
-                            <span className="text-[11px] font-bold text-blue-700 flex items-center gap-0.5" title="Prix Europe (EUR €)">
-                              <span>€</span>
-                              <span>{(product.priceEur ?? Math.round(product.priceChf * 1.05 * 100) / 100).toFixed(2)}</span>
+                            <span className="text-[10px] font-bold text-amber-800 flex items-center gap-1" title="Prix Suisse en EUR (€)">
+                              <span className="text-[9px] text-amber-700">🇨🇭 €</span>
+                              <span>{(product.priceEurSwiss ?? Math.round(product.priceChf * 1.05 * 100) / 100).toFixed(2)}</span>
+                            </span>
+                            <span className="text-[10px] font-bold text-blue-700 flex items-center gap-1" title="Prix Europe Hors-Suisse (€)">
+                              <span className="text-[9px] text-blue-600">🇪🇺 €</span>
+                              <span>{(product.priceEurEurope ?? product.priceEur ?? Math.round(product.priceChf * 0.95 * 100) / 100).toFixed(2)}</span>
                             </span>
                             {product.compareAtPriceChf && (
-                              <span className="text-[10px] text-slate-400 line-through">
+                              <span className="text-[9px] text-slate-400 line-through">
                                 CHF {product.compareAtPriceChf.toFixed(2)}
                               </span>
                             )}

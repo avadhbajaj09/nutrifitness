@@ -17,15 +17,18 @@ export default function DynamicPricingBox({
   selectedFlavor = 'Standard',
   onAddToCartSuccess,
 }: DynamicPricingBoxProps) {
-  const { formatPrice, addToCart, locale, countryCode, t } = useStore();
+  const { getProductPricing, addToCart, locale, countryCode, t } = useStore();
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedTier, setSelectedTier] = useState<1 | 2 | 3>(1);
 
   const selectedVariant = product.variants?.find(
     v => (v.flavorName && (v.flavorName[locale] === selectedFlavor || v.flavorName.fr === selectedFlavor))
   );
-  const basePrice = selectedVariant?.priceChf || product.priceChf;
+  const pricingInfo = getProductPricing(product, selectedVariant);
+  const basePrice = pricingInfo.price;
   const name = getLocalized(product.name, locale);
+
+  const fmtCurrency = (val: number) => pricingInfo.currency === 'EUR' ? `€ ${val.toFixed(2)}` : `CHF ${val.toFixed(2)}`;
 
   // Generate deterministic Item SKU
   const itemSku = product.variants?.[0]?.sku || 
@@ -145,11 +148,11 @@ export default function DynamicPricingBox({
       <div className="flex flex-wrap items-baseline justify-between gap-3 pb-3 border-b border-white/10">
         <div className="flex items-baseline gap-3">
           <span className="text-3xl sm:text-4xl font-black text-white font-heading tracking-tight">
-            {formatPrice(activeUnitPrice, product.priceEur ? activeUnitPrice * (product.priceEur / (product.priceChf || 1)) : undefined)}
+            {fmtCurrency(activeUnitPrice)}
           </span>
           {selectedTier > 1 && (
             <span className="text-base text-white/40 line-through font-mono">
-              {formatPrice(basePrice, product.priceEur)}
+              {fmtCurrency(basePrice)}
             </span>
           )}
           {selectedTier > 1 && (
@@ -200,7 +203,7 @@ export default function DynamicPricingBox({
             }`}
           >
             <div className="text-xs sm:text-sm font-black text-white font-heading">
-              {formatPrice(tier1UnitPrice)}
+              {fmtCurrency(tier1UnitPrice)}
             </div>
             <div className="text-[11px] text-white/60 font-medium mt-0.5">
               1 pièce
@@ -218,7 +221,7 @@ export default function DynamicPricingBox({
             }`}
           >
             <div className="text-xs sm:text-sm font-black text-white font-heading">
-              {formatPrice(tier2UnitPrice)}
+              {fmtCurrency(tier2UnitPrice)}
             </div>
             <div className="text-[10px] font-black text-[#95d600] mt-0.5">
               2 pcs (-5%)
@@ -236,7 +239,7 @@ export default function DynamicPricingBox({
             }`}
           >
             <div className="text-xs sm:text-sm font-black text-[#95d600] font-heading">
-              {formatPrice(tier3UnitPrice)}
+              {fmtCurrency(tier3UnitPrice)}
             </div>
             <div className="text-[10px] font-black text-white bg-[#95d600]/30 px-1 py-0.5 rounded mt-0.5">
               3+ pcs (-10%)
@@ -315,11 +318,11 @@ export default function DynamicPricingBox({
             <div className="text-right">
               {selectedTier > 1 && (
                 <span className="text-[11px] text-white/40 line-through mr-2">
-                  {formatPrice(regularTotal)}
+                  {fmtCurrency(regularTotal)}
                 </span>
               )}
               <span className="text-sm font-black text-white font-heading">
-                {formatPrice(currentTotal)}
+                {fmtCurrency(currentTotal)}
               </span>
             </div>
           </div>
@@ -327,7 +330,7 @@ export default function DynamicPricingBox({
           {/* Unit price note */}
           <div className="flex justify-between items-center text-[11px] text-white/50 pt-1 border-t border-white/5">
             <span>Prix unitaire appliqué :</span>
-            <span className="font-mono text-white/80 font-bold">{formatPrice(activeUnitPrice)} / pièce</span>
+            <span className="font-mono text-white/80 font-bold">{fmtCurrency(activeUnitPrice)} / pièce</span>
           </div>
 
           {/* Savings Highlight Badge when clicking tier buttons */}
@@ -338,7 +341,7 @@ export default function DynamicPricingBox({
                 <span>Économie réalisée :</span>
               </span>
               <span className="font-black text-sm text-[#95d600] font-heading bg-[#95d600]/10 px-2 py-0.5 rounded">
-                +{formatPrice(currentSavings)} de gain
+                +{fmtCurrency(currentSavings)} de gain
               </span>
             </div>
           ) : (

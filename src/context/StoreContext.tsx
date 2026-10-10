@@ -15,7 +15,11 @@ export interface CartItem {
   name: string;
   brand: string;
   image: string;
-  price: number; // in CHF
+  price: number; // resolved unit price
+  priceChf?: number;
+  priceEurSwiss?: number;
+  priceEurEurope?: number;
+  priceEur?: number;
   flavor: string;
   size: string;
   quantity: number;
@@ -46,8 +50,15 @@ interface StoreContextType {
   countryCode: string;
   setCountryCode: (code: string) => void;
   t: TranslationDictionary;
-  formatPrice: (amountChf: number, amountEur?: number) => string;
-  convertPrice: (amountChf: number, amountEur?: number) => number;
+  getProductPricing: (product: any, variant?: any) => {
+    price: number;
+    compareAt?: number;
+    formatted: string;
+    formattedCompareAt?: string;
+    currency: SupportedCurrency;
+  };
+  formatPrice: (amountChfOrProduct: any, amountEur?: number) => string;
+  convertPrice: (amountChfOrProduct: any, amountEur?: number) => number;
   addToCart: (product: any, options?: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string }) => void;
   removeFromCart: (itemKey: string) => void;
   updateQuantity: (itemKey: string, delta: number) => void;
@@ -271,18 +282,83 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const t = TRANSLATIONS[locale] || TRANSLATIONS.fr;
 
-  const formatPrice = (amountChf: number, amountEur?: number) => {
-    if (currency === 'EUR' && typeof amountEur === 'number' && amountEur > 0) {
-      return `€ ${amountEur.toFixed(2)}`;
+  const getProductPricing = (product: any, variant?: any) => {
+    const isSwiss = countryCode === 'CH' || countryCode === 'LI';
+    const isShopAvailable = (product?.stockGeneva === undefined || product?.stockGeneva > 0) &&
+      product?.shippingOrigin !== 'portugal' &&
+      product?.locationType !== 'PORTUGAL_ONLY';
+
+    const baseChf = variant?.priceChf ?? product?.priceChf ?? 29.90;
+    const baseCompareChf = variant?.compareAtPriceChf ?? product?.compareAtPriceChf;
+
+    let currentPrice: number;
+    let currentCompareAt: number | undefined;
+    let activeCurrency: SupportedCurrency = (isSwiss && currency === 'CHF') ? 'CHF' : 'EUR';
+
+    if (isSwiss) {
+      if (isShopAvailable) {
+        // Swiss shop stock available -> Swiss prices
+        if (currency === 'EUR') {
+          currentPrice = variant?.priceEurSwiss ?? product?.priceEurSwiss ?? Math.round(baseChf * 1.05 * 100) / 100;
+          currentCompareAt = variant?.compareAtPriceEurSwiss ?? product?.compareAtPriceEurSwiss;
+          activeCurrency = 'EUR';
+        } else {
+          currentPrice = baseChf;
+          currentCompareAt = baseCompareChf;
+          activeCurrency = 'CHF';
+        }
+      } else {
+        // Not in Swiss shop -> Whole Europe price
+        currentPrice = variant?.priceEurEurope ?? product?.priceEurEurope ?? variant?.priceEur ?? product?.priceEur ?? Math.round(baseChf * 0.95 * 100) / 100;
+        currentCompareAt = variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope ?? variant?.compareAtPriceEur ?? product?.compareAtPriceEur;
+        activeCurrency = 'EUR';
+      }
+    } else {
+      // Outside Switzerland -> Whole Europe price
+      currentPrice = variant?.priceEurEurope ?? product?.priceEurEurope ?? variant?.priceEur ?? product?.priceEur ?? Math.round(baseChf * 0.95 * 100) / 100;
+      currentCompareAt = variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope ?? variant?.compareAtPriceEur ?? product?.compareAtPriceEur;
+      activeCurrency = 'EUR';
     }
-    return taxFormatPrice(amountChf, currency);
+
+    const formatted = activeCurrency === 'EUR' ? `€ ${currentPrice.toFixed(2)}` : `CHF ${currentPrice.toFixed(2)}`;
+    const formattedCompareAt = currentCompareAt ? (activeCurrency === 'EUR' ? `€ ${currentCompareAt.toFixed(2)}` : `CHF ${currentCompareAt.toFixed(2)}`) : undefined;
+
+    return {
+      price: currentPrice,
+      compareAt: currentCompareAt,
+      formatted,
+      formattedCompareAt,
+      currency: activeCurrency
+    };
   };
 
-  const convertPrice = (amountChf: number, amountEur?: number) => {
-    if (currency === 'EUR' && typeof amountEur === 'number' && amountEur > 0) {
-      return amountEur;
+  const formatPrice = (amountChfOrProduct: any, amountEur?: number) => {
+    if (amountChfOrProduct && typeof amountChfOrProduct === 'object') {
+      return getProductPricing(amountChfOrProduct).formatted;
     }
-    return taxConvertPrice(amountChf, currency);
+    const isSwiss = countryCode === 'CH' || countryCode === 'LI';
+    if (currency === 'EUR') {
+      if (typeof amountEur === 'number' && amountEur > 0) {
+        return `€ ${amountEur.toFixed(2)}`;
+      }
+      const eurVal = Math.round(Number(amountChfOrProduct || 0) * (isSwiss ? 1.05 : 0.95) * 100) / 100;
+      return `€ ${eurVal.toFixed(2)}`;
+    }
+    return taxFormatPrice(Number(amountChfOrProduct || 0), currency);
+  };
+
+  const convertPrice = (amountChfOrProduct: any, amountEur?: number) => {
+    if (amountChfOrProduct && typeof amountChfOrProduct === 'object') {
+      return getProductPricing(amountChfOrProduct).price;
+    }
+    const isSwiss = countryCode === 'CH' || countryCode === 'LI';
+    if (currency === 'EUR') {
+      if (typeof amountEur === 'number' && amountEur > 0) {
+        return amountEur;
+      }
+      return Math.round(Number(amountChfOrProduct || 0) * (isSwiss ? 1.05 : 0.95) * 100) / 100;
+    }
+    return taxConvertPrice(Number(amountChfOrProduct || 0), currency);
   };
 
   const showToast = (title: string, message: string) => {
@@ -298,7 +374,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const quantity = isEbook ? 1 : (options.quantity || 1);
     const flavor = options.flavor || product.flavor || 'Standard';
     const size = options.size || product.size || (isEbook ? 'Format PDF' : 'Format standard');
-    const price = Number(options.price !== undefined ? options.price : (product.priceChf || product.price || 49.9));
+    const resolvedPriceInfo = getProductPricing(product);
+    const price = Number(options.price !== undefined ? options.price : resolvedPriceInfo.price);
     
     // Resolve specific flavor image if variant has packshot
     let image = options.image || product.image;
@@ -362,6 +439,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             brand,
             image,
             price,
+            priceChf: product.priceChf,
+            priceEurSwiss: product.priceEurSwiss,
+            priceEurEurope: product.priceEurEurope,
+            priceEur: product.priceEurEurope || product.priceEur,
             flavor,
             size,
             quantity,
@@ -447,7 +528,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const isWishlisted = (slug: string) => wishlist.includes(slug);
 
   const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
-  const cartSubtotal = cart.reduce((sum, item) => sum + item.price * item.quantity, 0);
+  const cartSubtotal = cart.reduce((sum, item) => {
+    const itemPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
+      ? getProductPricing(item).price
+      : item.price;
+    return sum + itemPrice * (item.quantity || 1);
+  }, 0);
 
   const freeShippingProgress = {
     isFree: cartSubtotal >= FREE_SHIPPING_THRESHOLD_CHF,
@@ -472,6 +558,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         countryCode,
         setCountryCode,
         t,
+        getProductPricing,
         formatPrice,
         convertPrice,
         addToCart,

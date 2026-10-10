@@ -15,7 +15,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const { addToCart, openQuickView, formatPrice, locale, countryCode, t, isProductDeliverable } = useStore();
+  const { addToCart, openQuickView, getProductPricing, locale, countryCode, t, isProductDeliverable } = useStore();
 
   const isDeliverable = isProductDeliverable(product);
 
@@ -26,10 +26,11 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
   const isSwissDestination = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
 
-  const compareAtPrice = product.compareAtPriceChf || (product.priceChf > 40 ? Math.round((product.priceChf * 1.18) * 20) / 20 : undefined);
-  const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - product.priceChf) / compareAtPrice) * 100) : 0;
+  const pricing = getProductPricing(product);
+  const compareAtPrice = pricing.compareAt;
+  const discountPercent = compareAtPrice && compareAtPrice > pricing.price ? Math.round(((compareAtPrice - pricing.price) / compareAtPrice) * 100) : 0;
   const hasStock = product.variants?.some(v => v.inStock) ?? true;
-  const vat = calculateVat(product.priceChf, product.taxCategory);
+  const vat = calculateVat(pricing.price, product.taxCategory);
   const reviewStats = getProductReviewStats(product.id, product.categorySlug, slug);
 
   return (
@@ -134,11 +135,11 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           <div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-base sm:text-lg font-black text-white font-heading">
-                {formatPrice(product.priceChf, product.priceEur)}
+                {pricing.formatted}
               </span>
-              {compareAtPrice && (
+              {pricing.formattedCompareAt && (
                 <span className="text-xs text-white/40 line-through">
-                  {formatPrice(compareAtPrice)}
+                  {pricing.formattedCompareAt}
                 </span>
               )}
             </div>

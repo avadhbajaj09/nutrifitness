@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { ALL_BRANDS } from '@/lib/brands';
 import { useStore } from '@/context/StoreContext';
 import LanguageCurrencySwitcher from './LanguageCurrencySwitcher';
-import CountrySelector from './CountrySelector';
 import { X, ChevronDown, ChevronRight, Sparkles, User, ShieldCheck, BookOpen } from 'lucide-react';
 
 interface MobileNavigationProps {
@@ -167,9 +166,8 @@ export default function MobileNavigation({ isOpen, onClose }: MobileNavigationPr
           </Link>
         </nav>
 
-        {/* Destination Country, Language and Currency Switcher in mobile drawer */}
+        {/* Language Switcher in mobile drawer */}
         <div className="py-4 border-t border-white/10 space-y-4">
-          <CountrySelector variant="mobile" />
           <LanguageCurrencySwitcher variant="mobile" />
         </div>
 

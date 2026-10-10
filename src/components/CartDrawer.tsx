@@ -16,6 +16,7 @@ export default function CartDrawer() {
     updateQuantity, 
     removeFromCart, 
     addToCart,
+    getProductPricing,
     formatPrice,
     t,
     currency
@@ -177,7 +178,16 @@ export default function CartDrawer() {
                       >+</button>
                     </div>
                     <div className="text-right">
-                      <span className="text-xs font-black text-white font-heading">{formatPrice(item.price * item.quantity)}</span>
+                      {(() => {
+                        const itemUnitPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
+                          ? getProductPricing(item).price
+                          : item.price;
+                        return (
+                          <span className="text-xs font-black text-white font-heading">
+                            {formatPrice(itemUnitPrice * item.quantity)}
+                          </span>
+                        );
+                      })()}
                       <span className="text-[10px] text-white/40 block">{t.common.vatIncluded}</span>
                     </div>
                   </div>
