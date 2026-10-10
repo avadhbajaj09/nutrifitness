@@ -64,14 +64,14 @@ const slides: BannerSlide[] = [
   },
   {
     id: 5,
-    productName: 'Ignite Burn 210g Mangue Orange & Ashwaganda',
-    brand: 'Pronutrition / Marvelous',
-    tag: '🔥 Brûleur Sans Stimulant · Énergie & Gestion du Stress',
-    badge: 'Adaptogène & Définition',
+    productName: 'Pronutrition Ashwagandha Forte 60 Gélules',
+    brand: 'Pronutrition',
+    tag: '🌿 Équilibre · Énergie & Résilience · Gestion du Stress',
+    badge: 'Adaptogène Naturel',
     wideImage: '/images/banners/wide/nutriftiness-banner5.jpg',
     mobileImage: '/images/banners/mobile/imgi_9_nutrifitness-banner-a2-1.jpg',
-    link: '/produit/ignite-burn-210g-orange-mangue/',
-    ctaText: 'Voir le Brûleur Sans Stimulant'
+    link: '/produit/ashwagandha-60-caps/',
+    ctaText: "Découvrir l'Ashwagandha Forte"
   }
 ];
 

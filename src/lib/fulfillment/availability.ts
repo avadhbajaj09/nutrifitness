@@ -18,7 +18,7 @@ export async function getAvailability(
     (shippingOrigin === 'portugal' && !isCommon);
 
   const euCountries = new Set([
-    'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'
+    'EU', 'AT', 'BE', 'BG', 'HR', 'CY', 'CZ', 'DK', 'EE', 'FI', 'FR', 'DE', 'GR', 'HU', 'IE', 'IT', 'LV', 'LT', 'LU', 'MT', 'NL', 'PL', 'PT', 'RO', 'SK', 'SI', 'ES', 'SE'
   ]);
 
   const getResult = (
@@ -32,7 +32,7 @@ export async function getAvailability(
   ): AvailabilityResult => {
     let label = '❌ Non disponible dans votre pays';
     if (available && origin === 'GENEVA') {
-      label = `🇨🇭 Expédié depuis Genève – livraison en ${etaMin}–${etaMax} jours ouvrables`;
+      label = `🇨🇭 Expédié depuis la Suisse – livraison en ${etaMin}–${etaMax} jours ouvrables`;
     } else if (available && origin === 'PORTUGAL') {
       label = `🇵🇹 Expédié depuis le Portugal – livraison en ${etaMin}–${etaMax} jours ouvrables`;
     }
@@ -55,9 +55,9 @@ export async function getAvailability(
     };
   };
 
-  // COMMON PRODUCT (Stocked in both Geneva and Portugal)
+  // COMMON PRODUCT (Stocked in both Switzerland and Portugal)
   if (isCommon) {
-    // 1. Switzerland or Liechtenstein -> Nearest is GENEVA (1-3 days)
+    // 1. Switzerland or Liechtenstein -> Fulfilled from Swiss shop (1-3 days)
     if (['CH', 'LI'].includes(countryCode)) {
       if (stockGeneva === undefined || stockGeneva > 0) {
         return getResult(
@@ -66,64 +66,27 @@ export async function getAvailability(
           1,
           3,
           false,
-          '🇨🇭 Expédié depuis Genève – livraison en 1–3 jours ouvrables',
-          '🌍 Disponible aux 2 endroits (Genève & Portugal). Auto-sélection : expédié depuis Genève pour la Suisse.'
-        );
-      } else if (stockPortugal === undefined || stockPortugal > 0) {
-        // Geneva out of stock -> fallback to Portugal warehouse
-        return getResult(
-          true,
-          'PORTUGAL',
-          4,
-          8,
-          true,
-          '🇵🇹 Expédié depuis le Portugal – livraison en 4–8 jours ouvrables',
-          'Stock boutique Genève temporairement épuisé – expédié depuis l\'usine au Portugal.'
+          '🇨🇭 Expédié depuis la Suisse – livraison en 1–3 jours ouvrables',
+          '🌍 Disponible en Suisse & au Portugal. Auto-sélection : expédié depuis la Suisse.'
         );
       }
       return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
     }
 
-    // 2. European Union countries -> Nearest & cheapest is PORTUGAL (3-7 days, intra-EU no customs)
-    if (euCountries.has(countryCode)) {
+    // 2. European countries -> Fulfilled from Portugal warehouse (3-5 days, intra-EU no customs)
+    if (euCountries.has(countryCode) || ['UK', 'GB', 'NO', 'IS'].includes(countryCode)) {
       if (stockPortugal === undefined || stockPortugal > 0) {
         return getResult(
           true,
           'PORTUGAL',
           3,
-          7,
+          5,
           false,
-          '🇵🇹 Expédié depuis le Portugal – livraison en 3–7 jours ouvrables',
-          '🌍 Disponible aux 2 endroits (Genève & Portugal). Auto-sélection : expédié depuis le Portugal pour l\'Europe (sans frais de douane).'
+          '🇵🇹 Expédié depuis le Portugal – livraison en 3–5 jours ouvrables',
+          '🌍 Disponible en Suisse & au Portugal. Auto-sélection : expédié depuis le Portugal pour l\'Europe.'
         );
-      } else if (stockGeneva === undefined || stockGeneva > 0) {
-        // Portugal OOS -> fallback to Geneva if country is in Geneva nearby allow-list
-        if (['FR', 'DE', 'IT', 'AT'].includes(countryCode)) {
-          return getResult(
-            true,
-            'GENEVA',
-            1,
-            3,
-            false,
-            '🇨🇭 Expédié depuis Genève – livraison en 1–3 jours ouvrables',
-            'Stock usine Portugal épuisé – expédié exceptionnellement depuis la boutique de Genève.'
-          );
-        }
       }
       return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
-    }
-
-    // 3. Other supported non-EU European countries (UK, NO, IS)
-    if (['UK', 'GB', 'NO', 'IS'].includes(countryCode)) {
-      return getResult(
-        true,
-        'PORTUGAL',
-        5,
-        10,
-        true,
-        '🇵🇹 Expédié depuis le Portugal – livraison en 5–10 jours ouvrables',
-        '🌍 Disponible aux 2 endroits (Genève & Portugal).'
-      );
     }
 
     return getResult(false);
@@ -131,24 +94,24 @@ export async function getAvailability(
 
   // PORTUGAL_ONLY PRODUCT
   if (isPortugalOnly) {
-    if (euCountries.has(countryCode)) {
-      return getResult(true, 'PORTUGAL', 3, 7, false);
+    if (euCountries.has(countryCode) || ['UK', 'GB', 'NO', 'IS'].includes(countryCode)) {
+      if (stockPortugal === undefined || stockPortugal > 0) {
+        return getResult(true, 'PORTUGAL', 3, 5, false);
+      }
+      return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
     }
-    if (['CH', 'LI'].includes(countryCode)) {
-      return getResult(true, 'PORTUGAL', 4, 8, true);
-    }
-    if (['UK', 'GB', 'NO', 'IS'].includes(countryCode)) {
-      return getResult(true, 'PORTUGAL', 5, 10, true);
-    }
-    return getResult(false);
+    // Blocked for Switzerland (Swiss shop only delivers Swiss catalog)
+    return getResult(false, undefined, undefined, undefined, false, '❌ Non livrable en Suisse (stock usine Europe)');
   }
 
-  // GENEVA_ONLY PRODUCT
+  // SWITZERLAND_ONLY PRODUCT (GENEVA_ONLY)
   if (['CH', 'LI'].includes(countryCode)) {
-    return getResult(true, 'GENEVA', 1, 3, false);
+    if (stockGeneva === undefined || stockGeneva > 0) {
+      return getResult(true, 'GENEVA', 1, 3, false);
+    }
+    return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
   }
-  if (['FR', 'DE', 'IT', 'AT'].includes(countryCode)) {
-    return getResult(true, 'GENEVA', 1, 3, false);
-  }
-  return getResult(false);
+
+  // Blocked for Europe (Swiss shop ships exclusively to Switzerland)
+  return getResult(false, undefined, undefined, undefined, false, "❌ Non livrable dans l'UE (exclusivité boutique Suisse)");
 }

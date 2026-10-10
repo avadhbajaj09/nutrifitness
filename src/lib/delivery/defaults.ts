@@ -55,7 +55,8 @@ export const DEFAULT_DELIVERY_RULES: DeliveryRule[] = [
   { origin: 'PORTUGAL', country_code: 'LI', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 3, transit_max_days: 5, requires_customs: true, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
   { origin: 'PORTUGAL', country_code: 'UK', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 3, transit_max_days: 5, requires_customs: true, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
   { origin: 'PORTUGAL', country_code: 'NO', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 3, transit_max_days: 5, requires_customs: true, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
-  { origin: 'PORTUGAL', country_code: 'IS', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 3, transit_max_days: 5, requires_customs: true, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false }
+  { origin: 'PORTUGAL', country_code: 'IS', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 3, transit_max_days: 5, requires_customs: true, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
+  { origin: 'PORTUGAL', country_code: 'EU', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 3, transit_max_days: 5, requires_customs: false, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false }
 ];
 
 export const DEFAULT_HOLIDAYS: HolidayEntry[] = [
@@ -118,12 +119,13 @@ export const DEFAULT_DELIVERY_SETTINGS: DeliverySettings = {
 };
 
 export const SUPPORTED_DESTINATIONS = new Set([
-  'CH', 'LI', 'PT', 'ES', 'FR', 'DE', 'IT', 'AT', 'BE', 'LU', 'NL', 'IE', 'DK',
+  'CH', 'LI', 'EU', 'PT', 'ES', 'FR', 'DE', 'IT', 'AT', 'BE', 'LU', 'NL', 'IE', 'DK',
   'SE', 'FI', 'PL', 'CZ', 'SK', 'HU', 'SI', 'HR', 'RO', 'BG', 'EE', 'LV', 'LT',
   'GR', 'CY', 'MT', 'UK', 'GB', 'NO', 'IS'
 ]);
 
-export const GENEVA_ALLOW_LIST = new Set(['CH', 'LI', 'FR', 'DE', 'IT', 'AT']);
+export const GENEVA_ALLOW_LIST = new Set(['CH', 'LI']);
+export const SWITZERLAND_ALLOW_LIST = GENEVA_ALLOW_LIST;
 
 export function isCountrySupported(countryCode: string): boolean {
   const code = (countryCode || '').toUpperCase().trim();
@@ -145,17 +147,30 @@ export function isProductDeliverableToCountry(
   const code = (countryCode || 'CH').toUpperCase().trim();
   if (!isCountrySupported(code)) return false;
 
+  const isSwissDestination = code === 'CH' || code === 'LI';
+
+  // Check if item is stocked in both / common
   const isStockCommon = (typeof stockGeneva === 'number' && stockGeneva > 0 && typeof stockPortugal === 'number' && stockPortugal > 0);
   const isCommon = locationType === 'COMMON' || shippingOrigin === 'common' || isStockCommon;
-  const isPtOnly = (locationType === 'PORTUGAL_ONLY' || shippingOrigin === 'portugal') && !isCommon;
 
   if (isCommon) {
-    return true; // Deliverable to all supported countries via Geneva (CH/LI) or Portugal (EU/UK/NO/IS)
+    if (isSwissDestination) {
+      return stockGeneva === undefined || stockGeneva > 0;
+    }
+    return stockPortugal === undefined || stockPortugal > 0;
   }
-  if (isPtOnly) {
-    return true; // Portugal delivers to all supported destinations (all EU-27, CH, LI, UK, NO, IS)
+
+  const isPtOnly = (locationType === 'PORTUGAL_ONLY' || shippingOrigin === 'portugal') && !isCommon;
+  const isSwissOnly = (locationType === 'GENEVA_ONLY' || shippingOrigin === 'switzerland' || (!isPtOnly && !isCommon));
+
+  if (isSwissDestination) {
+    // Switzerland shop only serves Switzerland: Swiss shop products only, Portugal-only hidden
+    if (isPtOnly) return false;
+    return stockGeneva === undefined || stockGeneva > 0;
+  } else {
+    // Rest of Europe is handled by Omar from Portugal: Portugal products only, Swiss-only hidden
+    if (isSwissOnly) return false;
+    return stockPortugal === undefined || stockPortugal > 0;
   }
-  // Geneva only products ship exclusively to Geneva allow-list (CH, LI, FR, DE, IT, AT)
-  return isGenevaAllowed(code);
 }
 

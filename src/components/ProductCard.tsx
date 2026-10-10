@@ -134,7 +134,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           <div>
             <div className="flex items-baseline gap-1.5">
               <span className="text-base sm:text-lg font-black text-white font-heading">
-                {formatPrice(product.priceChf)}
+                {formatPrice(product.priceChf, product.priceEur)}
               </span>
               {compareAtPrice && (
                 <span className="text-xs text-white/40 line-through">

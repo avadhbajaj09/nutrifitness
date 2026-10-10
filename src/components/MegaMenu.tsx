@@ -17,7 +17,7 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
       className="absolute left-0 right-0 top-full mt-2 w-full bg-[#121212]/98 backdrop-blur-2xl border-y border-white/10 shadow-2xl p-8 z-50 text-white animate-in fade-in slide-in-from-top-2 duration-200"
       onMouseLeave={onClose}
     >
-      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-5 gap-8">
+      <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">
         
         {/* Col 1: Protéines & Gainers */}
         <div>
@@ -73,32 +73,6 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
             <li><Link href="/categorie/pendant-effort-hydratation/" onClick={onClose} className="hover:text-white hover:translate-x-1 inline-block transition-transform">Électrolytes & Hydratation</Link></li>
             <li><Link href="/categorie/perte-de-poids/" onClick={onClose} className="hover:text-white hover:translate-x-1 inline-block transition-transform">Perte de Poids & Définition</Link></li>
           </ul>
-        </div>
-
-        {/* Col 5: Featured Card */}
-        <div className="relative rounded-2xl overflow-hidden bg-gradient-to-b from-[#1C1C1C] to-black border border-white/10 p-5 flex flex-col justify-between group/card">
-          <span className="inline-block px-2.5 py-0.5 bg-[#F80404] text-black text-[10px] font-black uppercase tracking-wider rounded w-fit">
-            Exclusivité Suisse
-          </span>
-          <div className="my-3 text-center">
-            <div className="relative w-28 h-28 mx-auto">
-              <Image 
-                src="/images/fitrush/imgi_49_banner-h9-2.webp" 
-                alt="Pack Créatine Creapure" 
-                fill 
-                className="object-contain group-hover/card:scale-105 transition-transform"
-              />
-            </div>
-            <p className="text-xs font-bold text-white mt-3">Pack Force & Creapure®</p>
-            <p className="text-[10px] text-white/50">Expédition 24h par la Poste</p>
-          </div>
-          <Link 
-            href="/categorie/creatine/"
-            onClick={onClose}
-            className="w-full py-2 bg-white/10 hover:bg-[#F80404] hover:text-black text-white text-[11px] font-black uppercase tracking-wider rounded-xl transition-all text-center block"
-          >
-            Découvrir →
-          </Link>
         </div>
 
       </div>

@@ -165,16 +165,16 @@ export default function CartPage() {
                       ) : (item.locationType === 'COMMON' || item.shippingOrigin === 'common') ? (
                         <div className="mt-1 flex items-center gap-1.5 flex-wrap">
                           <span className="text-[11px] text-purple-300 font-bold">
-                            🇨🇭 🇵🇹 Dispo Genève & Portugal
+                            🇨🇭 🇵🇹 Dispo Suisse & Portugal
                           </span>
                           <span className="text-[10px] text-white/50">
-                            · {countryCode === 'CH' || countryCode === 'LI' ? 'Expédié depuis Genève (1–3j)' : 'Expédié du Portugal (3–7j)'}
+                            · {countryCode === 'CH' || countryCode === 'LI' ? 'Expédié depuis la Suisse (1–3j)' : 'Expédié du Portugal (3–7j)'}
                           </span>
                         </div>
                       ) : item.isPortugal || item.locationType === 'PORTUGAL_ONLY' || item.shippingOrigin === 'portugal' ? (
                         <p className="text-[11px] text-blue-400 font-bold mt-1">🇵🇹 Expédié du Portugal (3–5j)</p>
                       ) : (
-                        <p className="text-[11px] text-emerald-400 font-bold mt-1">🇨🇭 En stock à Genève (24h)</p>
+                        <p className="text-[11px] text-emerald-400 font-bold mt-1">🇨🇭 En stock en Suisse (24h)</p>
                       )}
                     </div>
                   </div>
@@ -321,7 +321,7 @@ export default function CartPage() {
           {/* Trust strip */}
           <div className="pt-4 border-t border-white/10 space-y-2 text-[11px] text-white/50">
             <p className="flex items-center gap-2">
-              <span>🇨🇭</span> <strong>Stock physique à Genève :</strong> aucun frais de douane.
+              <span>🇨🇭</span> <strong>Stock physique en Suisse :</strong> aucun frais de douane.
             </p>
             <p className="flex items-center gap-2">
               <span>⚡</span> <strong>PostPac Priority 24h :</strong> suivi en ligne Poste Suisse.

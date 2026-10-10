@@ -14,7 +14,7 @@ export interface ProductLocationBadgeProps {
   variant?: 'card' | 'pill' | 'compact';
 }
 
-const GENEVA_ALLOW_LIST = new Set(['CH', 'LI', 'FR', 'DE', 'IT', 'AT']);
+const GENEVA_ALLOW_LIST = new Set(['CH', 'LI']);
 
 export default function ProductLocationBadge({
   locationType,
@@ -63,7 +63,7 @@ export default function ProductLocationBadge({
     // COMMON: auto-select nearest origin based on customer country
     if (isSwissDestination) {
       activeOrigin = 'GENEVA';
-      locationLabel = 'Expédié de Genève (24h)';
+      locationLabel = 'Expédié de Suisse (24h)';
       flagIcon = '🇨🇭';
     } else {
       activeOrigin = 'PORTUGAL';
@@ -72,17 +72,23 @@ export default function ProductLocationBadge({
     }
   } else if (isPortugalOnly) {
     activeOrigin = 'PORTUGAL';
-    locationLabel = 'Expédié du Portugal (3–5j)';
-    flagIcon = '🇵🇹';
+    if (isSwissDestination) {
+      isBlocked = true;
+      locationLabel = 'Stock Portugal';
+      flagIcon = '🇵🇹';
+    } else {
+      locationLabel = 'Expédié du Portugal (3–5j)';
+      flagIcon = '🇵🇹';
+    }
   } else {
-    // GENEVA ONLY
+    // SWITZERLAND ONLY
     activeOrigin = 'GENEVA';
     if (!isGenevaAllowed) {
       isBlocked = true;
-      locationLabel = 'Stock Genève';
+      locationLabel = 'Stock Suisse';
       flagIcon = '🇨🇭';
     } else {
-      locationLabel = 'Expédié de Genève (24h)';
+      locationLabel = 'Expédié de Suisse (24h)';
       flagIcon = '🇨🇭';
     }
   }

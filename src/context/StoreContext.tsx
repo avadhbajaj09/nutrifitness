@@ -46,8 +46,8 @@ interface StoreContextType {
   countryCode: string;
   setCountryCode: (code: string) => void;
   t: TranslationDictionary;
-  formatPrice: (amountChf: number) => string;
-  convertPrice: (amountChf: number) => number;
+  formatPrice: (amountChf: number, amountEur?: number) => string;
+  convertPrice: (amountChf: number, amountEur?: number) => number;
   addToCart: (product: any, options?: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string }) => void;
   removeFromCart: (itemKey: string) => void;
   updateQuantity: (itemKey: string, delta: number) => void;
@@ -185,11 +185,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         setLocaleState('fr');
       }
 
-      const savedCurrency = localStorage.getItem(CURRENCY_KEY) as SupportedCurrency;
-      if (savedCurrency && ['CHF', 'EUR'].includes(savedCurrency)) {
-        setCurrencyState(savedCurrency);
-      }
-
       // Country initialization & auto-detection
       const savedCountry = localStorage.getItem(COUNTRY_KEY);
       const cookieMatch = typeof document !== 'undefined'
@@ -201,7 +196,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (initialCountry && /^[A-Z]{2}$/i.test(initialCountry)) {
         const upper = initialCountry.toUpperCase();
         setCountryCodeState(upper);
+        const autoCurrency: SupportedCurrency = (upper === 'CH' || upper === 'LI') ? 'CHF' : 'EUR';
+        setCurrencyState(autoCurrency);
         try {
+          localStorage.setItem(COUNTRY_KEY, upper);
+          localStorage.setItem(CURRENCY_KEY, autoCurrency);
           document.cookie = `nf_country=${upper}; path=/; max-age=2592000; SameSite=Lax`;
         } catch (_) {}
       } else {
@@ -212,8 +211,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             if (data?.country && typeof data.country === 'string' && /^[A-Z]{2}$/i.test(data.country)) {
               const detected = data.country.toUpperCase();
               setCountryCodeState(detected);
+              const autoCurrency: SupportedCurrency = (detected === 'CH' || detected === 'LI') ? 'CHF' : 'EUR';
+              setCurrencyState(autoCurrency);
               try {
                 localStorage.setItem(COUNTRY_KEY, detected);
+                localStorage.setItem(CURRENCY_KEY, autoCurrency);
                 document.cookie = `nf_country=${detected}; path=/; max-age=2592000; SameSite=Lax`;
               } catch (_) {}
             }
@@ -246,25 +248,42 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const setCurrency = (newCurrency: SupportedCurrency) => {
-    setCurrencyState(newCurrency);
+    // Automated rule: Switzerland = CHF, Rest of Europe = EUR
+    const isSwiss = countryCode === 'CH' || countryCode === 'LI';
+    const targetCurrency: SupportedCurrency = isSwiss ? 'CHF' : 'EUR';
+    setCurrencyState(targetCurrency);
     try {
-      localStorage.setItem(CURRENCY_KEY, newCurrency);
+      localStorage.setItem(CURRENCY_KEY, targetCurrency);
     } catch (e) {}
   };
 
   const setCountryCode = (newCode: string) => {
     const upper = (newCode || 'CH').toUpperCase().trim();
     setCountryCodeState(upper);
+    const targetCurrency: SupportedCurrency = (upper === 'CH' || upper === 'LI') ? 'CHF' : 'EUR';
+    setCurrencyState(targetCurrency);
     try {
       localStorage.setItem(COUNTRY_KEY, upper);
+      localStorage.setItem(CURRENCY_KEY, targetCurrency);
       document.cookie = `nf_country=${upper}; path=/; max-age=2592000; SameSite=Lax`;
     } catch (e) {}
   };
 
   const t = TRANSLATIONS[locale] || TRANSLATIONS.fr;
 
-  const formatPrice = (amountChf: number) => taxFormatPrice(amountChf, currency);
-  const convertPrice = (amountChf: number) => taxConvertPrice(amountChf, currency);
+  const formatPrice = (amountChf: number, amountEur?: number) => {
+    if (currency === 'EUR' && typeof amountEur === 'number' && amountEur > 0) {
+      return `€ ${amountEur.toFixed(2)}`;
+    }
+    return taxFormatPrice(amountChf, currency);
+  };
+
+  const convertPrice = (amountChf: number, amountEur?: number) => {
+    if (currency === 'EUR' && typeof amountEur === 'number' && amountEur > 0) {
+      return amountEur;
+    }
+    return taxConvertPrice(amountChf, currency);
+  };
 
   const showToast = (title: string, message: string) => {
     const id = Date.now();

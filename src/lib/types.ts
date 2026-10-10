@@ -23,6 +23,7 @@ export interface ProductVariant {
   flavorName: Record<SupportedLocale, string>;
   format: string; // e.g. "2 kg"
   priceChf: number;
+  priceEur?: number;
   inventoryQuantity: number;
   inStock: boolean;
   image?: string;
@@ -40,6 +41,7 @@ export interface ProductItem {
   categorySlugs?: string[]; // Multiple categories (e.g. ['proteines', 'avant-sport', 'meilleures-ventes', 'nouveautes'])
   taxCategory: TaxRateCategory;
   priceChf: number;
+  priceEur?: number;
   compareAtPriceChf?: number; // Lowest price in last 30 days if discounted
   images: {
     src: string;

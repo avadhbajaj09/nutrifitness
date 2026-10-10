@@ -112,7 +112,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     },
     topBar: {
       shipping24h: '⚡ LIVRAISON 24H EN SUISSE (POSTPAC PRIORITY)',
-      storeGeneva: '📍 BOUTIQUE PHYSIQUE À GENÈVE (34 RUE DES PÂQUIS)',
+      storeGeneva: '📍 BOUTIQUE EN SUISSE (34 RUE DES PÂQUIS)',
       stockSwiss: '🇨🇭 100% STOCK EN SUISSE – AUCUN FRAIS DE DOUANE',
       certified: '🛡️ COMPLÉMENTS ALIMENTAIRES CERTIFIÉS & TESTÉS',
       twint: '⚡ PAIEMENT INSTANTANÉ PAR TWINT & POSTFINANCE',
@@ -120,8 +120,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     common: {
       addToCart: 'Ajouter au Panier',
       viewAll: 'Tout Voir',
-      inStock: 'En stock à Genève (24h)',
-      inStockGeneva: 'En stock à Genève',
+      inStock: 'En stock en Suisse (24h)',
+      inStockGeneva: 'En stock en Suisse',
       inStockPortugal: 'Expédié du Portugal',
       shippedFromPortugal: 'Expédié du Portugal',
       outOfStock: 'Rupture temporaire',
@@ -184,7 +184,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     },
     topBar: {
       shipping24h: '⚡ 24H-LIEFERUNG IN DER SCHWEIZ (POSTPAC PRIORITY)',
-      storeGeneva: '📍 STORE IN GENF (RUE DES PÂQUIS 34)',
+      storeGeneva: '📍 STORE IN DER SCHWEIZ (RUE DES PÂQUIS 34)',
       stockSwiss: '🇨🇭 100% SCHWEIZER LAGER – KEINE ZOLLGEBÜHREN',
       certified: '🛡️ GEPRÜFTE & ZERTIFIZIERTE SPORTNAHRUNG',
       twint: '⚡ SOFORTZAHLUNG MIT TWINT & POSTFINANCE',
@@ -192,8 +192,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     common: {
       addToCart: 'In den Warenkorb',
       viewAll: 'Alle anzeigen',
-      inStock: 'Auf Lager in Genf (24h)',
-      inStockGeneva: 'Auf Lager in Genf',
+      inStock: 'Auf Lager in der Schweiz (24h)',
+      inStockGeneva: 'Auf Lager in der Schweiz',
       inStockPortugal: 'Versand aus Portugal',
       shippedFromPortugal: 'Versand aus Portugal',
       outOfStock: 'Vorübergehend vergriffen',
@@ -256,7 +256,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     },
     topBar: {
       shipping24h: '⚡ SPEDIZIONE 24H IN SVIZZERA (POSTPAC PRIORITY)',
-      storeGeneva: '📍 NEGOZIO A GINEVRA (RUE DES PÂQUIS 34)',
+      storeGeneva: '📍 NEGOZIO IN SVIZZERA (RUE DES PÂQUIS 34)',
       stockSwiss: '🇨🇭 100% STOCK IN SVIZZERA – NESSUN COSTO DOGANALE',
       certified: '🛡️ INTEGRATORI CERTIFICATI E TESTATI',
       twint: '⚡ PAGAMENTO ISTANTANEO CON TWINT & POSTFINANCE',
@@ -264,8 +264,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     common: {
       addToCart: 'Aggiungi al Carrello',
       viewAll: 'Vedi Tutto',
-      inStock: 'Disponibile a Ginevra (24h)',
-      inStockGeneva: 'Disponibile a Ginevra',
+      inStock: 'Disponibile in Svizzera (24h)',
+      inStockGeneva: 'Disponibile in Svizzera',
       inStockPortugal: 'Spedito dal Portogallo',
       shippedFromPortugal: 'Spedito dal Portogallo',
       outOfStock: 'Momentaneamente esaurito',
@@ -328,7 +328,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     },
     topBar: {
       shipping24h: '⚡ 24H DELIVERY IN SWITZERLAND (POSTPAC PRIORITY)',
-      storeGeneva: '📍 FLAGSHIP STORE IN GENEVA (34 RUE DES PÂQUIS)',
+      storeGeneva: '📍 FLAGSHIP STORE IN SWITZERLAND (34 RUE DES PÂQUIS)',
       stockSwiss: '🇨🇭 100% SWISS STOCK – NO HIDDEN CUSTOMS FEES',
       certified: '🛡️ TESTED & CERTIFIED SPORTS NUTRITION',
       twint: '⚡ INSTANT CHECKOUT WITH TWINT & POSTFINANCE',
@@ -336,8 +336,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     common: {
       addToCart: 'Add to Cart',
       viewAll: 'View All',
-      inStock: 'In stock in Geneva (24h)',
-      inStockGeneva: 'In stock in Geneva',
+      inStock: 'In stock in Switzerland (24h)',
+      inStockGeneva: 'In stock in Switzerland',
       inStockPortugal: 'Shipped from Portugal',
       shippedFromPortugal: 'Shipped from Portugal',
       outOfStock: 'Temporarily out of stock',

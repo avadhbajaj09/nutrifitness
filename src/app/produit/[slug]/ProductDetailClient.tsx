@@ -152,7 +152,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   <p className="text-[11px]">Matières certifiées</p>
                 </div>
                 <div className="p-2">
-                  <p className="font-bold text-white text-sm mb-0.5">📍 Boutique Genève</p>
+                  <p className="font-bold text-white text-sm mb-0.5">📍 Boutique Suisse</p>
                   <p className="text-[11px]">Retrait immédiat en 2h</p>
                 </div>
               </>
@@ -272,7 +272,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   <p className="text-[10px]">Testée certifiée</p>
                 </div>
                 <div className="p-2.5 bg-white/5 rounded-xl border border-white/10">
-                  <p className="font-bold text-white text-xs mb-0.5">📍 Genève</p>
+                  <p className="font-bold text-white text-xs mb-0.5">📍 Suisse</p>
                   <p className="text-[10px]">Click & Collect 2h</p>
                 </div>
               </>
@@ -282,7 +282,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {/* AEO Expert Direct Answer */}
           <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
             <h2 className="text-xs font-black uppercase tracking-wider text-[#F80404] mb-1 font-heading">
-              Avis Expert NutriFitness Genève (AEO) :
+              Avis Expert NutriFitness Suisse (AEO) :
             </h2>
             <p className="text-xs text-white/70 leading-relaxed">
               {getLocalized(product.directAnswerAeo, locale)}
@@ -367,7 +367,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 {product.usageInstructions.fr}
               </p>
               <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white/60">
-                💡 <strong>Conseil du Coach Genève :</strong> Pour optimiser l&apos;assimilation, hydratez-vous avec au moins 500 ml d&apos;eau par prise.
+                💡 <strong>Conseil du Coach NutriFitness Suisse :</strong> Pour optimiser l&apos;assimilation, hydratez-vous avec au moins 500 ml d&apos;eau par prise.
               </div>
             </div>
           )}
@@ -473,7 +473,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   Questions Fréquentes sur {name}
                 </h3>
                 <p className="text-xs text-white/50">
-                  Réponses directes et conseils pratiques basés sur l&apos;étiquette officielle et notre expertise à Genève.
+                  Réponses directes et conseils pratiques basés sur l&apos;étiquette officielle et notre expertise en Suisse.
                 </p>
               </div>
 
@@ -507,7 +507,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
           <div className="min-w-0 flex-1">
             <p className="text-xs font-bold text-white truncate">{name}</p>
-            <p className="text-sm font-black text-[#F80404] font-heading">{formatPrice(currentPrice)}</p>
+            <p className="text-sm font-black text-[#F80404] font-heading">{formatPrice(currentPrice, product.priceEur)}</p>
           </div>
 
           <button 

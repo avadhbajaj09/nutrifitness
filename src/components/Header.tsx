@@ -117,7 +117,7 @@ export default function Header() {
                 >
                   <div className="flex items-center justify-between pb-3 mb-3 border-b border-white/10">
                     <span className="text-xs font-black uppercase tracking-wider text-white font-heading">
-                      {t.nav.brands} ({ALL_BRANDS.length})
+                      {t.nav.brands}
                     </span>
                     <Link 
                       href="/boutique/"
@@ -134,9 +134,9 @@ export default function Header() {
                         key={brand.slug}
                         href={`/boutique/?brand=${encodeURIComponent(brand.name)}`}
                         onClick={() => setIsBrandsOpen(false)}
-                        className="flex items-center justify-between p-2 rounded-xl bg-white/5 hover:bg-[#F80404]/10 hover:border-[#F80404]/40 border border-transparent transition-all group gap-2"
+                        className="flex items-center p-2 rounded-xl bg-white/5 hover:bg-[#F80404]/10 hover:border-[#F80404]/40 border border-transparent transition-all group gap-2"
                       >
-                        <div className="flex items-center gap-2 min-w-0">
+                        <div className="flex items-center gap-2 min-w-0 flex-1">
                           <div className="relative w-8 h-5 shrink-0 bg-black/40 rounded p-0.5 border border-white/10 flex items-center justify-center">
                             <Image 
                               src={brand.logo} 
@@ -149,9 +149,6 @@ export default function Header() {
                             {brand.displayName}
                           </span>
                         </div>
-                        <span className="text-[10px] font-bold text-white/40 group-hover:text-[#F80404] shrink-0 px-1.5 py-0.5 rounded bg-black/40">
-                          {brand.count}
-                        </span>
                       </Link>
                     ))}
                   </div>
