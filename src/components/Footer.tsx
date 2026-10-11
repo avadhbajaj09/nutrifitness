@@ -1,6 +1,7 @@
 import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { COMPANY } from '@/lib/company';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
@@ -31,11 +32,11 @@ export default function Footer() {
                 <span className="w-2 h-2 rounded-full bg-[#F80404] inline-block" />
                 Boutique physique à Genève :
               </p>
-              <p>34 Rue des Pâquis, 1201 Genève</p>
-              <p className="text-white/80">Fondateur & Gérant : <span className="font-bold text-white">Marco Scarpantoni</span></p>
-              <p>Tél : <a href="tel:+41792503564" className="hover:text-[#F80404] transition-colors">+41 79 250 35 64</a></p>
-              <p>E-mail : <a href="mailto:hello@nutrifitness.ch" className="hover:text-[#F80404] transition-colors">hello@nutrifitness.ch</a></p>
-              <p className="text-[11px] text-white/40 pt-1">IDE / UID : [TODO: UID / CHE-XXX.XXX.XXX]</p>
+              <p>{COMPANY.address.street}, {COMPANY.address.postalCode} {COMPANY.address.city}</p>
+              <p className="text-white/80">Fondateur & Gérant : <span className="font-bold text-white">{COMPANY.founder}</span></p>
+              <p>Tél : <a href={`tel:${COMPANY.contact.phone.replace(/\s+/g, '')}`} className="hover:text-[#F80404] transition-colors">{COMPANY.contact.phoneFormatted}</a></p>
+              <p>E-mail : <a href={`mailto:${COMPANY.contact.email}`} className="hover:text-[#F80404] transition-colors">{COMPANY.contact.email}</a></p>
+              <p className="text-[11px] text-white/40 pt-1">IDE / UID : {COMPANY.uid}</p>
             </address>
           </div>
 

@@ -5,6 +5,10 @@ import AccountClient from './AccountClient';
 export const metadata: Metadata = {
   title: 'Espace Client & Commandes | NutriFitness.ch Genève',
   description: 'Gérez vos commandes, suivez vos colis PostPac Priority, vos points fidélité et vos adresses de livraison en Suisse.',
+  robots: {
+    index: false,
+    follow: false,
+  },
 };
 
 export default function AccountPage() {

@@ -14,7 +14,7 @@ export default function robots(): Robots {
       // AI search crawlers: decide with the client. Allowed by default for visibility.
       { userAgent: ['OAI-SearchBot', 'PerplexityBot', 'Google-Extended'], allow: '/' },
     ],
-    sitemap: [`${site}/sitemap-index.xml`],
+    sitemap: [`${site}/sitemap.xml`],
     host: site,
   };
 }

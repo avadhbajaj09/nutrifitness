@@ -59,12 +59,12 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         <span className="text-white/90 font-medium truncate">{name}</span>
       </nav>
 
-      {/* Mobile Product Header (Shown on mobile/tablet < lg before image) */}
-      <div className="lg:hidden mb-4 space-y-1.5">
+      {/* Product Header (Single responsive H1 for all screen sizes) */}
+      <div className="mb-4 lg:mb-6 space-y-1.5">
         <p className="text-xs font-black uppercase tracking-widest text-[#F80404] font-heading">
           {product.brand}
         </p>
-        <h1 className="text-2xl font-black text-white tracking-tight font-heading leading-tight">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight font-heading leading-tight">
           {name}
         </h1>
         <div className="flex items-center gap-2 text-xs pt-0.5">
@@ -162,23 +162,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
         {/* Product Purchase Details (5 cols on lg, 3rd on mobile) */}
         <div className="lg:col-span-5 flex flex-col space-y-5">
-          {/* Desktop Title Header (Hidden on mobile < lg) */}
-          <div className="hidden lg:block">
-            <p className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-2 font-heading">
-              {product.brand}
-            </p>
-
-            <h1 className="text-2xl sm:text-3xl font-black text-white tracking-tight mb-2 font-heading leading-tight">
-              {name}
-            </h1>
-
-            <div className="flex items-center gap-2 text-xs mb-3">
-              <div className="flex text-amber-400">{reviewStats.stars}</div>
-              <span className="font-bold text-white">{reviewStats.rating.toFixed(1)} / 5</span>
-              <span className="text-white/40">· {reviewStats.count} avis vérifiés en Suisse</span>
-            </div>
-          </div>
-
           {/* Short Description - Right below image on mobile */}
           <div className="bg-white/[0.03] lg:bg-transparent p-3.5 lg:p-0 rounded-2xl border border-white/10 lg:border-0">
             <p className="text-xs sm:text-sm text-white/80 leading-relaxed">

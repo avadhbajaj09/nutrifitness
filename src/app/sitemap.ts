@@ -1,7 +1,6 @@
 import { getAllBlogPosts } from '@/lib/blog';
 import { PRODUCTS } from '@/lib/catalog';
 import { CATEGORIES_DATA } from '@/lib/categories';
-
 import { getAdminSupabase } from '@/lib/supabase';
 
 interface Entry { 
@@ -12,6 +11,11 @@ interface Entry {
 }
 
 const SITE = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nutrifitness.ch';
+
+// Fixed ISO dates defined as constants (avoids new Date() per audit requirements)
+export const STATIC_PAGES_LASTMOD = '2026-10-10T00:00:00.000Z';
+export const CATEGORIES_LASTMOD = '2026-10-10T00:00:00.000Z';
+export const DEFAULT_PRODUCT_LASTMOD = '2026-10-10T00:00:00.000Z';
 
 type Source = { slug: string; updatedAt: string }[];
 
@@ -27,7 +31,7 @@ async function products(): Promise<Source> {
     if (data && data.length > 0) {
       return data.map(p => ({
         slug: p.slug,
-        updatedAt: p.updated_at || new Date().toISOString(),
+        updatedAt: p.updated_at ? new Date(p.updated_at).toISOString() : DEFAULT_PRODUCT_LASTMOD,
       }));
     }
   } catch (err) {
@@ -36,14 +40,14 @@ async function products(): Promise<Source> {
 
   return PRODUCTS.filter(p => p.status !== 'draft').map(p => ({
     slug: p.slug.fr,
-    updatedAt: new Date().toISOString(),
+    updatedAt: DEFAULT_PRODUCT_LASTMOD,
   }));
 }
 
 async function categories(): Promise<Source> {
   return CATEGORIES_DATA.map(c => ({
     slug: c.slug,
-    updatedAt: new Date().toISOString(),
+    updatedAt: CATEGORIES_LASTMOD,
   }));
 }
 
@@ -99,13 +103,11 @@ export default async function sitemap({ id }: { id: string }): Promise<Entry[]> 
         '/cgv/',
         '/protection-donnees/',
         '/retours/',
-        '/cookies/',
-        '/panier/', 
-        '/commande/'
+        '/cookies/'
       ].map(p => ({ 
         url: `${SITE}${p}/`.replace(/\/\/$/, '/'), 
-        lastModified: new Date().toISOString(),
-        changeFrequency: 'weekly' as const,
+        lastModified: STATIC_PAGES_LASTMOD, 
+        changeFrequency: 'weekly' as const, 
         priority: p === '' ? 1.0 : (p.startsWith('/cgv') || p.startsWith('/mentions') || p.startsWith('/protection') || p.startsWith('/retours') || p.startsWith('/cookies')) ? 0.5 : 0.8 
       }));
   }

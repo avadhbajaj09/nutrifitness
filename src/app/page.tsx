@@ -1,4 +1,5 @@
 import React from 'react';
+import type { Metadata } from 'next';
 import Link from 'next/link';
 import Image from 'next/image';
 import HeroSlider from '@/components/HeroSlider';
@@ -20,6 +21,14 @@ import {
   HomePerformanceSection 
 } from '@/components/HomeProductFeed';
 
+export const metadata: Metadata = {
+  title: 'Nutrition Sportive & Protéines à Genève et en Suisse | NutriFitness.ch',
+  description: 'Boutique de nutrition sportive à Genève et en ligne. Protéines whey, créatine Creapure®, pré-workout. 100% stock en Suisse, livraison 24h offerte dès 75 CHF ou retrait Rue des Pâquis.',
+  alternates: {
+    canonical: 'https://nutrifitness.ch/',
+  },
+};
+
 export default async function HomePage() {
   const hiddenSlugs = await getHiddenProductSlugs();
   const physicalProducts = PRODUCTS.filter(p => {
@@ -31,6 +40,13 @@ export default async function HomePage() {
 
   return (
     <>
+      {/* HERO SECTION / H1 */}
+      <div className="mb-4 sm:mb-6">
+        <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-white font-heading tracking-tight leading-tight">
+          Nutrition sportive et protéines à Genève et en Suisse
+        </h1>
+      </div>
+
       {/* 1. HERO SLIDER */}
       <HeroSlider />
 

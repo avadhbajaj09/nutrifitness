@@ -2,6 +2,7 @@ import React from 'react';
 import type { Metadata } from 'next';
 import Link from 'next/link';
 import { ShieldCheck, MapPin, Phone, Mail, Building, Globe, Server, Scale, ArrowLeft } from 'lucide-react';
+import { COMPANY } from '@/lib/company';
 
 export const metadata: Metadata = {
   title: 'Mentions Légales & Impressum | NutriFitness.ch Genève',
@@ -46,22 +47,30 @@ export default function MentionsLegalesPage() {
             <h2>1. Présentation de l&apos;Entreprise & Exploitant</h2>
           </div>
           <p>
-            Le site internet <strong>nutrifitness.ch</strong> est la propriété exclusive et est exploité par l&apos;entreprise individuelle <strong>NutriFit</strong> (commercialement désignée sous le nom <strong>NutriFitness</strong>).
+            Le site internet <strong>nutrifitness.ch</strong> est la propriété exclusive et est exploité par l&apos;entreprise individuelle <strong>{COMPANY.displayName}</strong>.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
-              <span className="text-[11px] font-bold text-white/50 uppercase block">Raison sociale / Enseigne :</span>
-              <p className="text-sm font-bold text-white">NutriFit (NutriFitness)</p>
+              <span className="text-[11px] font-bold text-white/50 uppercase block">Raison de commerce :</span>
+              <p className="text-sm font-bold text-white">{COMPANY.displayName}</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-[11px] font-bold text-white/50 uppercase block">Forme juridique :</span>
+              <p className="text-sm font-bold text-white">{COMPANY.legalForm}</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-[11px] font-bold text-white/50 uppercase block">Numéro d&apos;identification des entreprises (IDE / UID) :</span>
+              <p className="text-sm font-bold text-white">{COMPANY.uid}</p>
             </div>
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
               <span className="text-[11px] font-bold text-white/50 uppercase block">Fondateur & Gérant :</span>
-              <p className="text-sm font-bold text-white">Marco Scarpantoni</p>
+              <p className="text-sm font-bold text-white">{COMPANY.founder}</p>
             </div>
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1 sm:col-span-2">
               <span className="text-[11px] font-bold text-white/50 uppercase block">Boutique physique & Siège social :</span>
               <p className="text-sm font-bold text-white flex items-center gap-1.5">
                 <MapPin className="w-4 h-4 text-[#F80404] shrink-0" />
-                <span>Rue des Pâquis 34, 1201 Genève, Suisse</span>
+                <span>{COMPANY.address.full}</span>
               </p>
             </div>
           </div>

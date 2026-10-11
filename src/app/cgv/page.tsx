@@ -13,6 +13,7 @@ import {
   MapPin, 
   ArrowLeft 
 } from 'lucide-react';
+import { COMPANY } from '@/lib/company';
 
 export const metadata: Metadata = {
   title: 'Conditions Générales de Vente (CGV) | NutriFitness.ch Genève',
@@ -57,16 +58,18 @@ export default function CGVPage() {
             <h2>Article 1 — Champ d&apos;Application & Identification de l&apos;Entreprise</h2>
           </div>
           <p>
-            Les présentes Conditions Générales de Vente (ci-après « <strong>CGV</strong> ») régissent l&apos;ensemble des relations contractuelles entre la boutique en ligne <strong>nutrifitness.ch</strong>, exploitée par l&apos;entreprise individuelle <strong>NutriFit</strong> (ci-après « <strong>NutriFitness</strong> »), et toute personne physique ou morale (ci-après « <strong>le Client</strong> ») passant commande sur le site.
+            Les présentes Conditions Générales de Vente (ci-après « <strong>CGV</strong> ») régissent l&apos;ensemble des relations contractuelles entre la boutique en ligne <strong>nutrifitness.ch</strong>, exploitée par l&apos;entreprise individuelle <strong>{COMPANY.displayName}</strong>, et toute personne physique ou morale (ci-après « <strong>le Client</strong> ») passant commande sur le site.
           </p>
           <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1 text-xs">
-            <p className="text-white font-bold">NutriFit (NutriFitness)</p>
-            <p>Fondateur & Gérant : Marco Scarpantoni</p>
+            <p className="text-white font-bold">{COMPANY.displayName}</p>
+            <p className="text-white/70">Forme juridique : {COMPANY.legalForm}</p>
+            <p className="text-white/70">Numéro IDE / UID : <span className="text-white font-mono font-bold">{COMPANY.uid}</span></p>
+            <p>Fondateur & Gérant : {COMPANY.founder}</p>
             <p className="flex items-center gap-1.5 pt-0.5">
               <MapPin className="w-3.5 h-3.5 text-[#F80404] shrink-0" />
-              <span>Rue des Pâquis 34, 1201 Genève, Suisse</span>
+              <span>{COMPANY.address.full}</span>
             </p>
-            <p>Téléphone : +41 79 250 35 64 | E-mail : info@nutrifitness.ch</p>
+            <p>Téléphone : {COMPANY.contact.phoneFormatted} | E-mail : {COMPANY.contact.email}</p>
           </div>
           <p className="text-xs text-white/60">
             Toute validation de commande implique l&apos;acceptation sans réserve des présentes CGV par le Client.

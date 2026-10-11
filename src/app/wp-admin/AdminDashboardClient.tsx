@@ -4499,7 +4499,7 @@ export default function AdminDashboardClient() {
                 <h4 className="font-black text-sm text-slate-900">NUTRIFITNESS GENÈVE</h4>
                 <p className="text-[11px] text-slate-600">Rue des Pâquis 34, 1201 Genève</p>
                 <p className="text-[10px] text-slate-500">Tél: +41 22 731 12 34 · nutrifitness.ch</p>
-                <p className="text-[10px] text-slate-400">CHE-123.456.789 TVA suisse</p>
+                <p className="text-[10px] text-slate-400">IDE / UID : CHE-177.751.159</p>
               </div>
 
               {/* Meta */}

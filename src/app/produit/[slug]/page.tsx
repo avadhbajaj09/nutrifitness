@@ -30,6 +30,9 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   return {
     title: `${name} | NutriFitness Suisse - ${formatChf(product.priceChf)}`,
     description: metaDesc,
+    alternates: {
+      canonical: `https://nutrifitness.ch/produit/${params.slug}/`,
+    },
     openGraph: {
       title: `${name} | NutriFitness Suisse`,
       description: metaDesc,
