@@ -103,6 +103,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
       }
     ],
     internalLinks: [
+      { title: 'Protéines en Boutique à Genève (Retrait 2h)', href: '/proteines-geneve/' },
       { title: 'Créatine Monohydrate', href: '/categorie/creatine/' },
       { title: 'Gainers & Prise de Masse', href: '/categorie/gainers-prise-de-masse/' },
       { title: 'Acides Aminés & BCAA', href: '/categorie/acides-amines-recuperation/' },
@@ -236,6 +237,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
       }
     ],
     internalLinks: [
+      { title: 'Créatine Pure en Boutique à Genève (Creapure®)', href: '/creatine-geneve/' },
       { title: 'Protéines & Whey', href: '/categorie/proteines/' },
       { title: 'Acides Aminés & BCAA', href: '/categorie/acides-amines-recuperation/' },
       { title: 'Guide : Quand et comment prendre la créatine', href: '/blog/creatine-quand-comment-la-prendre/' },
@@ -440,6 +442,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
       }
     ],
     internalLinks: [
+      { title: 'Magasin Compléments Alimentaires à Genève', href: '/complements-alimentaires-geneve/' },
       { title: 'Bien-être, Sommeil & Digestion', href: '/categorie/bien-etre-sommeil-digestion/' },
       { title: 'Protéines & Whey', href: '/categorie/proteines/' },
       { title: 'Guide : Magnésium Bisglycinate', href: '/blog/magnesium-bisglycinate-comment-choisir/' },

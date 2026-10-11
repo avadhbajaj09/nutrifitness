@@ -16,6 +16,8 @@ import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 import { getCategoryBySlug } from '@/lib/categories';
 import { getProductGtin } from '@/lib/seo';
 import { trackViewItem } from '@/lib/analytics';
+import { getRelevantGuideForProduct } from '@/lib/blog';
+import { BookOpen, ArrowRight } from 'lucide-react';
 
 interface Props {
   product: ProductItem;
@@ -41,6 +43,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const category = getCategoryBySlug(product.categorySlug);
   const categoryName = category?.name || 'Boutique';
   const categoryHref = category ? `/categorie/${category.slug}/` : '/boutique/';
+  const relevantGuide = getRelevantGuideForProduct(product.categorySlug, name);
 
   const selectedVariant = product.variants?.find(
     v => (v.flavorName && (v.flavorName[locale] === selectedFlavor || v.flavorName.fr === selectedFlavor))
@@ -507,6 +510,41 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           )}
         </div>
       </section>
+
+      {/* Recommended Expert Guide Card (Internal Linking) */}
+      {relevantGuide && (
+        <section className="my-10 p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-[#141414] to-[#1a1111] border border-[#F80404]/30 shadow-xl">
+          <div className="flex flex-col md:flex-row md:items-center justify-between gap-6">
+            <div className="space-y-2 max-w-2xl">
+              <div className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest text-[#F80404] font-heading">
+                <BookOpen className="w-4 h-4" />
+                <span>Guide Scientifique & Conseils de Prise</span>
+              </div>
+              <h3 className="text-lg sm:text-xl font-black text-white uppercase font-heading leading-tight">
+                {relevantGuide.title}
+              </h3>
+              <p className="text-xs text-white/70 leading-relaxed line-clamp-2">
+                {relevantGuide.shortAnswer}
+              </p>
+              <div className="flex items-center gap-4 text-[11px] text-white/50 pt-1">
+                <span>Par {relevantGuide.author}</span>
+                <span>•</span>
+                <span>{relevantGuide.readingTime} de lecture</span>
+              </div>
+            </div>
+
+            <div className="shrink-0">
+              <Link
+                href={`/blog/${relevantGuide.slug}/`}
+                className="inline-flex items-center gap-2 px-5 py-3 rounded-full bg-white hover:bg-[#F80404] text-black font-black uppercase tracking-wider text-xs transition-colors shadow-md"
+              >
+                <span>Lire le Guide Complet</span>
+                <ArrowRight className="w-4 h-4" />
+              </Link>
+            </div>
+          </div>
+        </section>
+      )}
 
       {/* Related Products Carousel */}
       <ProductCarousel 

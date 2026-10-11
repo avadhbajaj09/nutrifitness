@@ -176,6 +176,16 @@ export default function DeliveryBadge({
               <span>{result.dutiesNote}</span>
             </p>
           )}
+
+          {isSwiss && result?.available && (result?.origin === 'GENEVA' || isCommon) && (
+            <p className="text-[11px] text-white/70 pt-1 border-t border-white/5 flex items-center gap-1.5">
+              <span>📍</span>
+              <span>Retrait boutique :</span>
+              <a href="/click-and-collect/" className="text-[#F80404] hover:underline font-bold">
+                Click & Collect gratuit en 2h à Genève
+              </a>
+            </p>
+          )}
         </div>
       )}
     </div>

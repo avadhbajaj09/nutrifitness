@@ -271,7 +271,18 @@ export default async function HomePage() {
       {/* 15. FAQ NUTRIFITNESS ACCUEIL */}
       <HomeFAQ />
 
-      {/* 16. VIP NEWSLETTER */}
+      {/* 16. ENTITY DESCRIPTION & STORE INFORMATION */}
+      <section className="my-14 p-6 sm:p-8 rounded-3xl bg-[#141414] border border-white/10 text-white/80">
+        <h2 className="text-base sm:text-lg font-black uppercase text-white font-heading tracking-wide mb-3 flex items-center gap-2">
+          <span className="w-2.5 h-2.5 rounded-full bg-[#F80404]" />
+          À propos de NutriFitness • Boutique de Nutrition Sportive à Genève
+        </h2>
+        <p className="text-xs sm:text-sm leading-relaxed text-white/80">
+          Fondée et dirigée par Marco Scarpantoni, NutriFitness (Scarpantoni Nutrifit, IDE : CHE-177.751.159) est une enseigne indépendante suisse spécialisée dans la nutrition sportive et les compléments alimentaires de haute performance. Notre boutique physique est située au Rue des Pâquis 34, 1201 Genève, Suisse (téléphone : +41 79 250 35 64). Nous proposons une sélection rigoureuse de protéines whey, créatines labellisées Creapure®, acides aminés BCAA/EAA, pré-workouts, vitamines et minéraux conformes aux normes suisses OSAV / DFI. Les commandes sont expédiées sous 24h ouvrées depuis notre stock physique de Genève pour la Suisse et le Liechtenstein, ou depuis notre entrepôt logistique partenaire au Portugal pour les commandes européennes. Notre plateforme en ligne est disponible en 4 langues (français, allemand, italien et anglais) et permet les règlements sécurisés en Francs suisses (CHF) et en Euros (EUR).
+        </p>
+      </section>
+
+      {/* 17. VIP NEWSLETTER */}
       <Newsletter />
     </>
   );

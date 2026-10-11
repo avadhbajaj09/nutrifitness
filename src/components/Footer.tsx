@@ -58,7 +58,8 @@ export default function Footer() {
           <div>
             <h4 className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-4 font-heading">Boutique & Livraison</h4>
             <ul className="space-y-2 text-xs text-white/70">
-              <li><Link href="/magasin-geneve/" className="hover:text-white transition-colors font-bold text-white">📍 Boutique Genève & Click & Collect</Link></li>
+              <li><Link href="/magasin-geneve/" className="hover:text-white transition-colors font-bold text-white">📍 Boutique Genève & Horaires</Link></li>
+              <li><Link href="/click-and-collect/" className="hover:text-[#F80404] transition-colors font-bold text-white">⚡ Click & Collect Gratuit (2h)</Link></li>
               <li><Link href="/livraison/" className="hover:text-white transition-colors">Livraison Express 24h & Tarifs</Link></li>
               <li><Link href="/paiement/" className="hover:text-white transition-colors">Paiement Sécurisé (TWINT, Cartes)</Link></li>
               <li><Link href="/retours/" className="hover:text-white transition-colors">Politique de Retours (14 Jours)</Link></li>

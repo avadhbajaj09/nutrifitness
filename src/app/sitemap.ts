@@ -1,6 +1,7 @@
 import { getAllBlogPosts } from '@/lib/blog';
 import { PRODUCTS } from '@/lib/catalog';
 import { CATEGORIES_DATA } from '@/lib/categories';
+import { getIndexableBrands } from '@/lib/brands';
 import { getAdminSupabase } from '@/lib/supabase';
 
 interface Entry { 
@@ -59,7 +60,7 @@ async function posts(): Promise<Source> {
 }
 
 export async function generateSitemaps(): Promise<{ id: string }[]> {
-  return [{ id: 'pages' }, { id: 'produits' }, { id: 'categories' }, { id: 'blog' }];
+  return [{ id: 'pages' }, { id: 'produits' }, { id: 'categories' }, { id: 'blog' }, { id: 'marques' }];
 }
 
 export default async function sitemap({ id }: { id: string }): Promise<Entry[]> {
@@ -78,6 +79,13 @@ export default async function sitemap({ id }: { id: string }): Promise<Entry[]> 
       return map(await categories(), '/categorie/', 0.9);
     case 'blog': 
       return map(await posts(), '/blog/', 0.75);
+    case 'marques':
+      return getIndexableBrands().map(b => ({
+        url: `${SITE}/marque/${b.slug}/`,
+        lastModified: STATIC_PAGES_LASTMOD,
+        changeFrequency: 'weekly' as const,
+        priority: 0.85,
+      }));
     default: 
       return [
         '', 
@@ -89,6 +97,10 @@ export default async function sitemap({ id }: { id: string }): Promise<Entry[]> 
         '/guide-des-complements-alimentaires/',
         '/boutique-geneve/', 
         '/magasin-geneve/',
+        '/click-and-collect/',
+        '/proteines-geneve/',
+        '/creatine-geneve/',
+        '/complements-alimentaires-geneve/',
         '/livraison/',
         '/paiement/',
         '/marques/',

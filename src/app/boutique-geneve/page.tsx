@@ -70,7 +70,8 @@ export default function BoutiqueGenevePage() {
     {
       icon: <Zap className="w-6 h-6 text-[#F80404]" />,
       title: 'Click & Collect 2h',
-      desc: 'Commandez en ligne sur NutriFitness.ch et retirez vos compléments gratuitement 2h après en boutique sans minimum d\'achat.'
+      desc: 'Commandez en ligne sur NutriFitness.ch et retirez vos compléments gratuitement 2h après en boutique sans minimum d\'achat.',
+      link: '/click-and-collect/'
     },
     {
       icon: <Award className="w-6 h-6 text-[#F80404]" />,
@@ -349,7 +350,15 @@ export default function BoutiqueGenevePage() {
               <div className="w-12 h-12 rounded-xl bg-[#F80404]/10 border border-[#F80404]/30 flex items-center justify-center mb-4">
                 {s.icon}
               </div>
-              <h3 className="text-base font-bold text-white mb-2 font-heading">{s.title}</h3>
+              <h3 className="text-base font-bold text-white mb-2 font-heading">
+                {s.link ? (
+                  <Link href={s.link} className="hover:text-[#F80404] transition-colors underline">
+                    {s.title}
+                  </Link>
+                ) : (
+                  s.title
+                )}
+              </h3>
               <p className="text-xs text-white/65 leading-relaxed">{s.desc}</p>
             </div>
           ))}

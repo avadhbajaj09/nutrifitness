@@ -17,9 +17,16 @@ export interface ExternalSource {
   authority: string;
 }
 
+export interface BlogTable {
+  caption: string;
+  headers: string[];
+  rows: string[][];
+}
+
 export interface BlogSection {
   title?: string;
   content: string[];
+  table?: BlogTable;
 }
 
 export interface BlogPost {
@@ -70,7 +77,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'La créatine monohydrate se prend tous les jours, à raison de 3 à 5 g, dans une boisson tempérée (eau, jus de raisin ou shaker de protéines). Le moment de la prise compte moins que la régularité quotidienne, y compris lors des jours de repos pour maintenir la saturation musculaire.',
     sections: [
       {
-        title: 'La dose quotidienne recommandée',
+        title: 'Quelle est la dose quotidienne recommandée de créatine ?',
         content: [
           'Selon les consensus de la Société Internationale de Nutrition Sportive (ISSN), une dose d\'entretien de 3 à 5 g par jour suffit pour maximiser les stocks intramusculaires de phosphocréatine.',
           'Pour un sportif moyen en Suisse, un pot standard de 250 g ou 300 g correspond ainsi à 50 à 60 jours d\'utilisation continue.'
@@ -137,7 +144,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Creapure® n\'est pas une molécule différente, mais la marque déposée de créatine monohydrate la plus pure au monde, synthétisée en Allemagne par Alzchem Trostberg GmbH avec une pureté garantie à 99.99% sans traces de métaux lourds ni dérivés toxiques.',
     sections: [
       {
-        title: 'Ce que dit la littérature scientifique',
+        title: 'Que dit la littérature scientifique sur la créatine ?',
         content: [
           'La créatine monohydrate est la forme la plus documentée scientifiquement au monde, avec des centaines d\'études cliniques validant ses gains de force et d\'hypertrophie.',
           'Les formes alternatives (créatine HCl, ester, nitrate) n\'ont jamais démontré de supériorité physiologique significative dans des essais indépendants en double aveugle.'
@@ -157,6 +164,21 @@ export const BLOG_POSTS: BlogPost[] = [
           'Une monohydrate micronisée 200 mesh offre la même efficacité métabolique à dose identique (3 à 5 g).',
           'Son prix par portion est généralement de 20 à 30% plus abordable pour les sportifs attentifs à leur budget.'
         ]
+      },
+      {
+        title: 'Comment comparer la créatine monohydrate aux autres formes ?',
+        content: [
+          'Retrouvez ci-dessous le comparatif synthétique des différentes formes disponibles sur le marché suisse. Pour tester nos poudres et obtenir un conseil personnalisé, visitez notre boutique dédiée de créatine à Genève (Rue des Pâquis).'
+        ],
+        table: {
+          caption: 'Comparatif scientifique des formes de créatine',
+          headers: ['Forme de Créatine', 'Pureté certifiée', 'Preuves cliniques', 'Solubilité dans l\'eau', 'Recommandation NutriFitness'],
+          rows: [
+            ['Créatine Monohydrate (200 Mesh)', '99.5 %', 'Très élevée (+500 études)', 'Dissolution fine sans grumeaux', 'Meilleur rapport efficacité / prix'],
+            ['Label Allemand Creapure®', '99.99 % (HPLC)', 'Très élevée (standard d\'or mondial)', 'Solubilité optimale sans résidu', 'Pureté & traçabilité maximale'],
+            ['Formes alternatives (HCl, Nitrate, Kre-Alkalyn)', 'Variable', 'Faible à modérée (pas de supériorité)', 'Variable selon sel', 'Non recommandée (surcoût injustifié)']
+          ]
+        }
       }
     ],
     suggestedProducts: [
@@ -197,7 +219,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Non, la phase de charge n\'est absolument pas obligatoire. Une dose régulière de 3 à 5 g par jour atteint le même niveau de saturation musculaire en 21 à 28 jours, tout en évitant les risques de crampes abdominales.',
     sections: [
       {
-        title: 'Comparatif des deux protocoles',
+        title: 'Comment comparer les deux protocoles de prise ?',
         content: [
           'Protocole avec charge : 20 g par jour répartis en 4 prises de 5 g pendant 5 à 7 jours, puis 3 à 5 g en entretien.',
           'Protocole continu (recommandé) : 3 à 5 g par jour dès le début. Les réserves se remplissent de façon fluide et constante sans inconfort digestif.'
@@ -248,7 +270,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'La Whey Isolate subit une microfiltration à flux croisé (CFM) lui conférant 88 à 93% de protéines pures avec moins de 1% de lactose et quasiment 0 g de lipides. La Whey Concentrée (75-80% de protéines) offre un rapport qualité/prix idéal si vous digérez bien les produits laitiers.',
     sections: [
       {
-        title: 'Whey Concentrée : le choix polyvalent',
+        title: 'Pourquoi choisir la whey concentrée ?',
         content: [
           'Texture onctueuse et saveurs gourmandes.',
           'Conserve des fractions laitières bénéfiques (lactoferrine, immunoglobulines).',
@@ -256,12 +278,27 @@ export const BLOG_POSTS: BlogPost[] = [
         ]
       },
       {
-        title: 'Whey Isolate : la pureté maximale',
+        title: 'Quand privilégier la whey isolate ?',
         content: [
           'Idéale en période de sèche stricte avec un apport calorique minimal.',
           'Indispensable si vous souffrez d\'intolérance ou de sensibilité au lactose.',
           'Absorption ultra-rapide idéale dès la fin de votre entraînement.'
         ]
+      },
+      {
+        title: 'Comment comparer les formes de whey (concentrée vs isolate vs hydrolysée) ?',
+        content: [
+          'Ce tableau récapitule les caractéristiques de chaque filtration de lactosérum. Retrouvez l\'ensemble de ces références en stock physique dans notre sélection de protéines à Genève.'
+        ],
+        table: {
+          caption: 'Comparatif des procédés de filtration de la protéine whey',
+          headers: ['Forme de Whey', 'Teneur en protéines', 'Lactose & Lipides', 'Vitesse d\'assimilation', 'Profil d\'utilisation'],
+          rows: [
+            ['Whey Concentrée (WPC)', '75 à 80 %', '1 à 3 g (présence naturelle)', 'Moyenne (1h à 1h30)', 'Polyvalent, quotidien, prise de masse'],
+            ['Whey Isolate (CFM)', '88 à 93 %', 'Quasi nul (< 1 %)', 'Rapide (45 min à 1h)', 'Sèche stricte, intolérance au lactose'],
+            ['Whey Hydrolysée (WPH)', '82 à 90 %', 'Résiduel', 'Ultra-rapide (< 30 min)', 'Post-effort immédiat, athlètes de pointe']
+          ]
+        }
       }
     ],
     suggestedProducts: [
@@ -301,14 +338,14 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'La whey possède une concentration exceptionnelle en leucine stimulant directement l\'anabolisme (voie mTOR). Les poudres végétales combinant légumineuses et céréales (pois + riz) rivalisent désormais en qualité tout en étant 100% sans lactose, véganes et hypoallergéniques.',
     sections: [
       {
-        title: 'L\'importance de l\'aminogramme',
+        title: 'Pourquoi l\'aminogramme est-il déterminant pour vos muscles ?',
         content: [
           'Une source végétale unique (par exemple uniquement du riz) peut manquer d\'un acide aminé essentiel comme la lysine.',
           'En combinant pois et riz brun, les profils se complètent parfaitement pour offrir un aminogramme complet et équilibré.'
         ]
       },
       {
-        title: 'Digestibilité et tolérance',
+        title: 'Quels sont les avantages de digestibilité des protéines végétales ?',
         content: [
           'Pour les sportifs sujets à des réactions inflammatoires avec les protéines de lait ou recherchant une approche éthique végane, le végétal est la solution idéale.'
         ]
@@ -351,14 +388,14 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Pour un sportif pratiquant la musculation ou un entraînement régulier, visez entre 1.6 et 2.2 g de protéines par kilogramme de poids corporel et par jour. Pour un athlète de 75 kg, cela correspond à environ 120 à 165 g de protéines totales réparties sur la journée.',
     sections: [
       {
-        title: 'Formule de calcul rapide',
+        title: 'Comment calculer rapidement vos besoins quotidiens ?',
         content: [
           'Multipliez votre poids en kg par 1.6 (maintien ou endurance) à 2.0 (prise de masse ou sèche musculaire).',
           'Exemple : 80 kg × 1.8 g = 144 g de protéines par jour.'
         ]
       },
       {
-        title: 'La répartition optimale des prises',
+        title: 'Quelle est la répartition optimale des prises sur 24h ?',
         content: [
           'Répartir vos apports en 3 à 5 prises contenant chacune 25 à 40 g de protéines optimise le déclenchement régulier de la synthèse protéique.',
           'Priorisez les aliments complets (œufs suisses, poisson, volaille, légumineuses) et complétez avec un shaker de whey pour la commodité.'
@@ -403,13 +440,13 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Ne jugez jamais une whey à son prix au kilo affiché : divisez le prix du pot par le nombre réel de portions de 25 g de protéines pures. Vérifiez ensuite le tableau nutritionnel pour 100 g et assurez-vous de l\'absence d\'aminospiking (acides aminés ajoutés artificiellement).',
     sections: [
       {
-        title: '1. Le pourcentage effectif de protéines',
+        title: 'Comment vérifier le pourcentage effectif de protéines ?',
         content: [
           'Vérifiez la ligne Protéines pour 100 g : une bonne whey concentrée doit dépasser 75%, et un isolat doit avoisiner les 88-92%.'
         ]
       },
       {
-        title: '2. Détecter l\'aminospiking',
+        title: 'Comment détecter l\'aminospiking sur l\'étiquette ?',
         content: [
           'Méfiez-vous si la liste des ingrédients mentionne de la glycine, de la taurine ou de la créatine parmi les premiers ingrédients sans justificatif : cela gonfle artificiellement le taux de protéines aux dépens de la vraie protéine de lactosérum.'
         ]
@@ -451,7 +488,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Un gainer combine protéines et glucides pour créer un surplus calorique facile à boire. Il est particulièrement recommandé aux personnes à métabolisme très rapide ou en manque d\'appétit qui peinent à prendre du poids avec leurs repas ordinaires.',
     sections: [
       {
-        title: 'Hard Gainer vs Lean Gainer',
+        title: 'Hard Gainer ou Lean Gainer : comment choisir ?',
         content: [
           'Hard Gainer (70% glucides / 20% protéines) : idéal pour les profils ectomorphes très minces.',
           'Lean Gainer (50% glucides / 40% protéines) : formulé pour bâtir du muscle propre en minimisant la rétention de graisse.'
@@ -494,7 +531,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Les BCAA n\'apportent que 3 acides aminés (Leucine, Isoleucine, Valine). Les EAA apportent les 9 acides aminés essentiels dont le muscle a besoin pour synthétiser de nouvelles fibres. En l\'absence des 6 autres EAA, la synthèse musculaire est rapidement limitée.',
     sections: [
       {
-        title: 'Le rôle de la leucine',
+        title: 'Quel est le rôle fondamental de la leucine ?',
         content: [
           'La leucine est l\'interrupteur de l\'anabolisme musculaire (voie mTOR). Cependant, une fois le signal activé, le corps a besoin de l\'ensemble des 9 acides aminés essentiels pour fabriquer du muscle.'
         ]
@@ -542,13 +579,13 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'La Citrulline booste l\'oxyde nitrique (NO) et la congestion musculaire. La Bêta-Alanine augmente les stocks de carnosine pour retarder la brûlure lactique lors des efforts intenses. La L-Glutamine soutient la récupération de la muqueuse intestinale et du système immunitaire.',
     sections: [
       {
-        title: 'L-Citrulline Malate',
+        title: 'Pourquoi utiliser la L-Citrulline Malate avant l\'entraînement ?',
         content: [
           'Dose efficace : 6 à 8 g avant l\'entraînement. Elle améliore le flux sanguin, l\'oxygénation musculaire et l\'élimination de l\'ammoniac.'
         ]
       },
       {
-        title: 'Bêta-Alanine',
+        title: 'Quels sont les effets de la Bêta-Alanine sur l\'endurance musculaire ?',
         content: [
           'Dose efficace : 3.2 à 6.4 g par jour. Elle tamponne l\'acidité musculaire lors des séries longues de 8 à 15 répétitions.'
         ]
@@ -633,7 +670,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Pour un adulte en bonne santé, l\'EFSA juge sûre une dose quotidienne allant jusqu\'à 400 mg de caféine toutes sources confondues, et 200 mg par prise unitaire (environ 3 mg par kg de poids pour un effet ergogène sur la séance).',
     sections: [
       {
-        title: 'Calculer ses apports cumulés',
+        title: 'Comment calculer ses apports cumulés en caféine ?',
         content: [
           'Un expresso suisse apporte 60 à 90 mg de caféine.',
           'Pensez à additionner le thé vert, les sodas et votre pré-workout pour ne pas saturer vos récepteurs.'
@@ -718,7 +755,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Le ZMA associe Zinc, Magnésium et Vitamine B6 sous des formes hautement biodisponibles. Il est conçu pour pallier les pertes minérales induites par la sudation abondante et soutenir les taux normaux de testostérone et la synthèse des protéines.',
     sections: [
       {
-        title: 'Précautions de prise',
+        title: 'Quelles précautions observer lors de la prise de ZMA ?',
         content: [
           'Évitez de consommer votre ZMA simultanément avec des produits laitiers car le calcium entre en compétition d\'absorption avec le zinc au niveau intestinal.'
         ]
@@ -760,7 +797,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Ne regardez pas la quantité d\'huile de poisson totale, mais la teneur spécifique en acides gras essentiels EPA et DHA. Visez au minimum 500 à 800 mg d\'EPA/DHA combinés par dose journalière sous forme naturelle de triglycérides.',
     sections: [
       {
-        title: 'Indice TOTOX : la garantie de fraîcheur',
+        title: 'Qu\'est-ce que l\'indice TOTOX et pourquoi garantit-il la fraîcheur ?',
         content: [
           'L\'indice TOTOX mesure le degré d\'oxydation des lipides. Un bon produit affiche un indice inférieur à 10, garantissant une absence d\'odeur de rance et un profil anti-inflammatoire préservé.'
         ]
@@ -802,7 +839,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Lors d\'entraînements dépassant 60 minutes ou par temps chaud, l\'eau pure bue en grande quantité peut diluer le sodium sanguin (hyponatrémie). L\'apport conjoint d\'électrolytes permet de retenir l\'eau dans les cellules et d\'éviter les crampes musculaires.',
     sections: [
       {
-        title: 'Le rôle clé du sodium',
+        title: 'Quel est le rôle clé du sodium dans l\'hydratation sportive ?',
         content: [
           'Le sodium est le principal minéral éliminé dans la sueur (environ 900 à 1200 mg par litre de sueur). Sa réplétion permet de stabiliser le volume plasmatique et de maintenir l\'endurance.'
         ]
@@ -844,7 +881,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Aucun complément alimentaire ne fait perdre du poids à lui seul sans déficit calorique modéré et régulier. Les protéines en poudre et la caféine sont les aides les plus efficaces pour préserver la masse musculaire et soutenir la satiété au cours d\'une sèche.',
     sections: [
       {
-        title: 'La hiérarchie de la perte de gras',
+        title: 'Quelle est la véritable hiérarchie de la perte de gras ?',
         content: [
           '1. Déficit calorique modéré (300 à 500 kcal/jour sous le maintien).',
           '2. Apport protéique élevé (2.0 à 2.4 g/kg) pour épargner le muscle.',
@@ -889,7 +926,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Pour démarrer la journée avec 30 g de protéines sans perdre de temps : 1) Overnight oats à la whey et graines de chia préparés la veille, 2) Pancakes protéinés express, 3) Crème de riz tiède et isolate chocolat, 4) Smoothie banane-beurre de cacahuète.',
     sections: [
       {
-        title: 'Recette : Overnight Oats Protéinés (35g protéines)',
+        title: 'Comment préparer un Overnight Oats riche en protéines (35g) ?',
         content: [
           '50 g de flocons d\'avoine complets, 1 dose (30 g) de Whey Chocolat Suisse NutriFitness, 150 ml de lait végétal, 1 cuillère à café de graines de chia. Mélangez dans un bocal et laissez gonfler une nuit au réfrigérateur.'
         ]
@@ -931,7 +968,7 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Une excellente barre protéinée doit apporter au minimum 18 à 22 g de protéines de qualité pour moins de 2 à 3 g de sucres rapides. Évitez les produits où les sirops de glucose ou de fructose figurent en tête de la liste des ingrédients.',
     sections: [
       {
-        title: 'Attention aux glucides cachés',
+        title: 'Comment repérer les glucides et polyols cachés dans les barres ?',
         content: [
           'De nombreuses barres du commerce traditionnel affichent 20 g de protéines mais contiennent également 25 g de sucres simples, les rapprochant d\'une confiserie ordinaire.'
         ]
@@ -973,13 +1010,13 @@ export const BLOG_POSTS: BlogPost[] = [
     shortAnswer: 'Ne commencez pas par acheter 10 compléments différents. La trilogie de base d\'une efficacité incontestable repose sur : 1) une bonne Whey pour sécuriser votre quota de protéines, 2) de la Créatine Monohydrate (Creapure®) pour la force, 3) des Oméga 3 et Magnésium pour la santé et le sommeil.',
     sections: [
       {
-        title: 'Étape 1 : Consolider les fondations',
+        title: 'Quelles sont les fondations indispensables avant tout complément ?',
         content: [
           'Entraînement régulier et progressif, alimentation équilibrée et sommeil de qualité (7 à 8 heures). Aucun complément ne compensera un manque d\'assiduité à la salle ou des nuits courtes.'
         ]
       },
       {
-        title: 'Étape 2 : L\'ordre de priorité rationnel',
+        title: 'Quel est l\'ordre de priorité rationnel des compléments sportifs ?',
         content: [
           '1. Whey Protein : la commodité pour atteindre 1.6 à 2.0 g/kg.',
           '2. Créatine Monohydrate : 3 à 5 g/jour pour la force explosive.',
@@ -1040,3 +1077,40 @@ export const BLOG_CATEGORIES = [
   { slug: 'snacks-food', name: 'Snacks & Nutrition', count: BLOG_POSTS.filter(p => p.categorySlug === 'snacks-food').length },
   { slug: 'guide-debutant', name: 'Guides Débutants', count: BLOG_POSTS.filter(p => p.categorySlug === 'guide-debutant').length },
 ];
+
+export function getRelevantGuideForProduct(categorySlug?: string, productName?: string): BlogPost {
+  const normCat = (categorySlug || '').toLowerCase();
+  const normName = (productName || '').toLowerCase();
+
+  if (normName.includes('creapure') || normCat.includes('creatine')) {
+    return getBlogPostBySlug('creatine-monohydrate-ou-creapure') || BLOG_POSTS[1];
+  }
+  if (normName.includes('isolate') || normCat === 'proteines') {
+    return getBlogPostBySlug('whey-isolate-ou-concentree') || BLOG_POSTS[3];
+  }
+  if (normCat.includes('gainer') || normCat.includes('prise-de-masse')) {
+    return getBlogPostBySlug('gainer-pour-qui-comment-choisir') || BLOG_POSTS[7];
+  }
+  if (normCat.includes('acides-amines') || normName.includes('bcaa') || normName.includes('eaa')) {
+    return getBlogPostBySlug('bcaa-ou-eaa-difference') || BLOG_POSTS[8];
+  }
+  if (normCat.includes('pre-workout') || normName.includes('booster') || normName.includes('caffeine') || normName.includes('caféine')) {
+    return getBlogPostBySlug('pre-workout-comment-choisir') || BLOG_POSTS[10];
+  }
+  if (normCat.includes('hydratation') || normCat.includes('effort') || normName.includes('electrolytes') || normName.includes('électrolytes')) {
+    return getBlogPostBySlug('electrolytes-hydratation-effort') || BLOG_POSTS[15];
+  }
+  if (normCat.includes('perte-de-poids') || normName.includes('burn') || normName.includes('carnitine')) {
+    return getBlogPostBySlug('perte-de-poids-complements-ce-que-disent-les-preuves') || BLOG_POSTS[16];
+  }
+  if (normCat.includes('snack') || normCat.includes('food') || normName.includes('barre') || normName.includes('bar')) {
+    return getBlogPostBySlug('barres-snacks-proteines-comment-choisir') || BLOG_POSTS[18];
+  }
+  if (normName.includes('omega') || normName.includes('oméga')) {
+    return getBlogPostBySlug('omega-3-comment-choisir') || BLOG_POSTS[14];
+  }
+  if (normName.includes('magnesium') || normName.includes('magnésium') || normName.includes('zma') || normCat.includes('vitamines')) {
+    return getBlogPostBySlug('magnesium-bisglycinate-comment-choisir') || BLOG_POSTS[12];
+  }
+  return getBlogPostBySlug('premiers-complements-guide-debutant-suisse') || BLOG_POSTS[19];
+}

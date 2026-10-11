@@ -20,5 +20,9 @@ export function getSitemapIndexXml(): string {
     <loc>${SITE}/sitemap/blog.xml</loc>
     <lastmod>${LASTMOD}</lastmod>
   </sitemap>
+  <sitemap>
+    <loc>${SITE}/sitemap/marques.xml</loc>
+    <lastmod>${LASTMOD}</lastmod>
+  </sitemap>
 </sitemapindex>`.trim();
 }

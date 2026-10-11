@@ -70,11 +70,34 @@ export default function MarquesPage() {
     }))
   };
 
+  const breadcrumbJsonLd = {
+    '@context': 'https://schema.org',
+    '@type': 'BreadcrumbList',
+    'itemListElement': [
+      {
+        '@type': 'ListItem',
+        'position': 1,
+        'name': 'Accueil',
+        'item': 'https://nutrifitness.ch/'
+      },
+      {
+        '@type': 'ListItem',
+        'position': 2,
+        'name': 'Toutes les Marques',
+        'item': 'https://nutrifitness.ch/marques/'
+      }
+    ]
+  };
+
   return (
     <div className="max-w-6xl mx-auto py-8 px-4 sm:px-6">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(faqJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbJsonLd) }}
       />
 
       {/* Breadcrumb */}
@@ -103,7 +126,7 @@ export default function MarquesPage() {
         {ALL_BRANDS.map((brand) => (
           <Link
             key={brand.slug}
-            href={`/boutique/?brand=${encodeURIComponent(brand.name)}`}
+            href={`/marque/${brand.slug}/`}
             className="p-5 rounded-3xl bg-[#141414] border border-white/10 hover:border-[#F80404]/50 transition-all duration-300 flex flex-col items-center text-center justify-between group hover:-translate-y-1 shadow-lg"
           >
             <div className="relative w-full h-20 mb-4 bg-black/40 rounded-2xl p-2 border border-white/5 flex items-center justify-center">

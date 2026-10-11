@@ -336,6 +336,9 @@ export default function CartPage() {
           {/* Trust strip */}
           <div className="pt-4 border-t border-white/10 space-y-2 text-[11px] text-white/50">
             <p className="flex items-center gap-2">
+              <span>📍</span> <Link href="/click-and-collect/" className="hover:text-white underline font-bold text-white/80">Click & Collect gratuit en 2h à Genève (Rue des Pâquis)</Link>
+            </p>
+            <p className="flex items-center gap-2">
               <span>🇨🇭</span> <strong>Stock physique en Suisse :</strong> aucun frais de douane.
             </p>
             <p className="flex items-center gap-2">

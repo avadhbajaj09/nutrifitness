@@ -111,6 +111,30 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     };
   });
 
+  // Contextual Geneva landing page link
+  let genevaLink = {
+    href: '/complements-alimentaires-geneve/',
+    anchor: 'compléments alimentaires à Genève',
+    text: 'Vous cherchez des compléments de qualité à Genève ? Retirez vos produits en 2h au 34 Rue des Pâquis ou faites-vous livrer en 24h partout en Suisse.',
+    title: 'Disponibilité physique à Genève & Click & Collect 2h'
+  };
+
+  if (post.categorySlug === 'proteines') {
+    genevaLink = {
+      href: '/proteines-geneve/',
+      anchor: 'protéines et whey à Genève',
+      text: 'Besoin de votre isolat ou whey sans attendre ? Retrouvez notre stock disponible immédiatement à Genève en Click & Collect 2h ou livraison 24h.',
+      title: 'Stock Protéines & Whey à Genève (Pâquis)'
+    };
+  } else if (post.categorySlug === 'creatine') {
+    genevaLink = {
+      href: '/creatine-geneve/',
+      anchor: 'créatine monohydrate et Creapure® à Genève',
+      text: 'Vous habitez Genève ou ses environs ? Retirez votre créatine Creapure® en 2h à notre boutique des Pâquis ou commandez en livraison 24h sans frais de douane.',
+      title: 'Créatine disponible à Genève en magasin physique'
+    };
+  }
+
   // Schema.org Article / BlogPosting
   const articleSchema = {
     '@context': 'https://schema.org',
@@ -299,6 +323,23 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
           </p>
         </div>
 
+        {/* Contextual Geneva Local Stock Callout */}
+        <div className="mb-10 p-4 sm:p-5 rounded-2xl bg-[#141414] border border-[#F80404]/30 flex items-start gap-3.5">
+          <div className="w-8 h-8 rounded-xl bg-[#F80404]/10 border border-[#F80404]/20 flex items-center justify-center shrink-0 text-[#F80404]">
+            <MapPin className="w-4 h-4" />
+          </div>
+          <div className="text-xs space-y-1">
+            <p className="font-black text-white uppercase tracking-wider font-heading">{genevaLink.title}</p>
+            <p className="text-white/70 leading-relaxed">
+              {genevaLink.text}{' '}
+              <Link href={genevaLink.href} className="text-[#F80404] font-bold hover:underline inline-flex items-center gap-1">
+                <span>Voir notre sélection de {genevaLink.anchor}</span>
+                <ArrowRight className="w-3 h-3" />
+              </Link>
+            </p>
+          </div>
+        </div>
+
         {/* Table of Contents */}
         <div className="mb-10 p-5 rounded-2xl bg-[#111111] border border-white/10">
           <div className="flex items-center gap-2 text-xs font-black uppercase tracking-wider text-white/80 font-heading mb-3">
@@ -343,6 +384,50 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                   {paragraph}
                 </p>
               ))}
+
+              {sec.table && (
+                <div className="my-6 overflow-x-auto rounded-2xl border border-white/10 bg-[#141414] shadow-xl">
+                  <table className="w-full text-left text-xs sm:text-sm border-collapse min-w-[500px]">
+                    <caption className="p-3 text-left text-xs font-bold text-[#F80404] uppercase tracking-wider bg-black/40 border-b border-white/10 font-heading">
+                      {sec.table.caption}
+                    </caption>
+                    <thead>
+                      <tr className="bg-black/60 border-b border-white/10">
+                        {sec.table.headers.map((h, hIdx) => (
+                          <th
+                            key={hIdx}
+                            scope="col"
+                            className="p-3.5 font-black uppercase text-white font-heading text-[11px] sm:text-xs"
+                          >
+                            {h}
+                          </th>
+                        ))}
+                      </tr>
+                    </thead>
+                    <tbody className="divide-y divide-white/5">
+                      {sec.table.rows.map((row, rIdx) => (
+                        <tr key={rIdx} className="hover:bg-white/5 transition-colors">
+                          {row.map((cell, cIdx) =>
+                            cIdx === 0 ? (
+                              <th
+                                key={cIdx}
+                                scope="row"
+                                className="p-3.5 font-bold text-white whitespace-nowrap"
+                              >
+                                {cell}
+                              </th>
+                            ) : (
+                              <td key={cIdx} className="p-3.5 text-white/80">
+                                {cell}
+                              </td>
+                            )
+                          )}
+                        </tr>
+                      ))}
+                    </tbody>
+                  </table>
+                </div>
+              )}
             </section>
           ))}
         </div>
