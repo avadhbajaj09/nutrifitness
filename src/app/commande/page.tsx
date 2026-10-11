@@ -21,6 +21,7 @@ import {
 import { FlagIcon } from '@/components/delivery/FlagIcon';
 import { useDeliveryEstimates } from '@/hooks/useDeliveryEstimate';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
+import { trackBeginCheckout, trackPurchase } from '@/lib/analytics';
 
 interface SupportedCountry {
   code: string;
@@ -97,6 +98,24 @@ export default function CheckoutPage() {
       setCustomerCountry(countryCode);
     }
   }, [countryCode]);
+
+  // Track GA4 begin_checkout
+  useEffect(() => {
+    if (cart && cart.length > 0) {
+      trackBeginCheckout(
+        cart.map(item => ({
+          item_id: (item as any).sku || item.itemKey || item.name,
+          item_name: item.name,
+          item_brand: (item as any).brand || 'NutriFitness',
+          item_category: (item as any).categorySlug || 'Nutrition Sportive',
+          price: item.price,
+          quantity: item.quantity,
+        })),
+        cartSubtotal,
+        currency || 'CHF'
+      );
+    }
+  }, []);
 
   // Keep StoreContext updated when user selects country in checkout
   const handleCountryChange = (newCountry: string) => {
@@ -524,6 +543,24 @@ export default function CheckoutPage() {
         body: JSON.stringify(newOrder)
       });
     } catch {}
+
+    // Track GA4 purchase event (fires once per order)
+    const purchaseItems = (cart || []).map(item => ({
+      item_id: (item as any).sku || item.itemKey || item.name,
+      item_name: item.name,
+      item_brand: (item as any).brand || 'NutriFitness',
+      item_category: (item as any).categorySlug || 'Nutrition Sportive',
+      price: item.price,
+      quantity: item.quantity,
+    }));
+    trackPurchase({
+      transaction_id: orderNumber,
+      value: grandTotal,
+      shipping: totalShippingCost,
+      tax: vatEst,
+      currency: currency || 'CHF',
+      items: purchaseItems,
+    });
 
     clearCart();
     setIsSuccess(true);

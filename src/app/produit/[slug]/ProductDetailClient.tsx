@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
@@ -13,13 +13,17 @@ import { getProductFaqs } from '@/lib/productFaq';
 import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
+import { getCategoryBySlug } from '@/lib/categories';
+import { getProductGtin } from '@/lib/seo';
+import { trackViewItem } from '@/lib/analytics';
+
 interface Props {
   product: ProductItem;
   relatedProducts: ProductItem[];
 }
 
 export default function ProductDetailClient({ product, relatedProducts }: Props) {
-  const { addToCart, formatPrice, locale, countryCode, t } = useStore();
+  const { addToCart, formatPrice, locale, countryCode, currency, t } = useStore();
   const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'reviews' | 'faq'>('desc');
   const [selectedFlavor, setSelectedFlavor] = useState<string>(
     getLocalized(product.variants?.[0]?.flavorName, locale) || 'Standard'
@@ -34,9 +38,14 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const reviewStats = getProductReviewStats(product.id, product.categorySlug, slug);
   const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
 
+  const category = getCategoryBySlug(product.categorySlug);
+  const categoryName = category?.name || 'Boutique';
+  const categoryHref = category ? `/categorie/${category.slug}/` : '/boutique/';
+
   const selectedVariant = product.variants?.find(
     v => (v.flavorName && (v.flavorName[locale] === selectedFlavor || v.flavorName.fr === selectedFlavor))
   );
+  const currentGtin = getProductGtin(product, selectedVariant);
   const activeImg = selectedImage || selectedVariant?.image || primaryImg;
   const currentPrice = selectedVariant?.priceChf || product.priceChf;
 
@@ -48,13 +57,27 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;
 
+  useEffect(() => {
+    trackViewItem(
+      {
+        item_id: selectedVariant?.sku || product.variants?.[0]?.sku || product.id,
+        item_name: name,
+        item_brand: product.brand,
+        item_category: product.categorySlug,
+        price: currentPrice,
+        quantity: 1,
+      },
+      currency || 'CHF'
+    );
+  }, [product.id, currency]);
+
   return (
     <div>
-      {/* Breadcrumbs */}
+      {/* Breadcrumbs (Accueil > Catégorie > Produit) */}
       <nav aria-label="Fil d'Ariane" className="py-2.5 text-[11px] sm:text-xs text-white/50 mb-3 flex items-center gap-1.5 overflow-hidden">
         <Link href="/" className="hover:text-white transition-colors shrink-0">Accueil</Link>
         <span className="text-white/30 shrink-0">/</span>
-        <Link href="/boutique/" className="hover:text-white transition-colors shrink-0">Boutique</Link>
+        <Link href={categoryHref} className="hover:text-white transition-colors shrink-0">{categoryName}</Link>
         <span className="text-white/30 shrink-0">/</span>
         <span className="text-white/90 font-medium truncate">{name}</span>
       </nav>
@@ -407,6 +430,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 <p className="text-xs text-white/70 leading-relaxed">{product.ingredients.fr}</p>
                 <p className="text-xs font-bold text-red-400 pt-2">Allergènes : {product.allergens.fr}</p>
               </div>
+
+              {currentGtin && (
+                <div className="bg-[#141414] rounded-2xl border border-white/10 p-4 flex items-center justify-between text-xs">
+                  <span className="font-bold text-white/60 uppercase font-heading">Code GTIN / EAN :</span>
+                  <span className="font-mono text-white tracking-wider font-semibold">{currentGtin}</span>
+                </div>
+              )}
             </div>
           )}
 

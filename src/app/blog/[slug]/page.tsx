@@ -23,6 +23,8 @@ import {
   BookOpen
 } from 'lucide-react';
 
+import { formatMetaTitle, formatMetaDescription } from '@/lib/seo';
+
 interface BlogPostPageProps {
   params: {
     slug: string;
@@ -43,16 +45,19 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     };
   }
 
+  const title = formatMetaTitle(post.metaTitle);
+  const description = formatMetaDescription(post.metaDescription);
+
   return {
-    title: post.metaTitle,
-    description: post.metaDescription,
+    title,
+    description,
     keywords: [post.targetKeyword, post.category, 'nutrition sportive suisse', 'nutrifitness geneve'],
     alternates: {
       canonical: `https://nutrifitness.ch/blog/${post.slug}/`,
     },
     openGraph: {
-      title: post.metaTitle,
-      description: post.metaDescription,
+      title,
+      description,
       url: `https://nutrifitness.ch/blog/${post.slug}/`,
       siteName: 'NutriFitness.ch',
       locale: 'fr_CH',
@@ -70,8 +75,8 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
     },
     twitter: {
       card: 'summary_large_image',
-      title: post.metaTitle,
-      description: post.metaDescription,
+      title,
+      description,
       images: [post.image],
     },
   };
@@ -114,7 +119,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     description: post.metaDescription,
     image: `https://nutrifitness.ch${post.image}`,
     datePublished: post.publishedAt,
-    dateModified: post.publishedAt,
+    ...(post.updatedAt ? { dateModified: post.updatedAt } : {}),
     author: {
       '@type': 'Person',
       name: post.author,
@@ -235,8 +240,14 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             </div>
             <div className="flex items-center gap-1 text-xs text-white/50">
               <Calendar className="w-3.5 h-3.5" />
-              <span>{new Date(post.publishedAt).toLocaleDateString('fr-CH', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+              <span>Publié le {new Date(post.publishedAt).toLocaleDateString('fr-CH', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
             </div>
+            {post.updatedAt && (
+              <div className="flex items-center gap-1 text-xs text-[#95d600]/80">
+                <Clock className="w-3.5 h-3.5 text-[#95d600]" />
+                <span>Mis à jour le {new Date(post.updatedAt).toLocaleDateString('fr-CH', { day: 'numeric', month: 'long', year: 'numeric' })}</span>
+              </div>
+            )}
           </div>
 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black uppercase text-white font-heading leading-tight tracking-tight mb-6">
@@ -335,6 +346,26 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
             </section>
           ))}
         </div>
+
+        {/* Points clés à retenir */}
+        {post.keyTakeaways && post.keyTakeaways.length > 0 && (
+          <div className="my-10 p-6 sm:p-8 rounded-3xl bg-[#141414] border border-[#F80404]/30 shadow-xl">
+            <div className="flex items-center gap-2.5 mb-4 pb-3 border-b border-white/10">
+              <CheckCircle2 className="w-5 h-5 text-[#F80404]" />
+              <h3 className="text-base sm:text-lg font-black uppercase text-white font-heading">
+                Points clés à retenir
+              </h3>
+            </div>
+            <ul className="space-y-3 text-xs sm:text-sm text-white/80">
+              {post.keyTakeaways.map((bullet, idx) => (
+                <li key={idx} className="flex items-start gap-3">
+                  <span className="w-2 h-2 rounded-full bg-[#F80404] mt-1.5 shrink-0" />
+                  <span className="leading-relaxed">{bullet}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
 
         {/* Suggested Products (Internal Product Links with Real Images & Cart) */}
         {suggestedProductsWithData && suggestedProductsWithData.length > 0 && (

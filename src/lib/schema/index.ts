@@ -1,10 +1,16 @@
 import { abs, CURRENCY, LOCALE, SITE_NAME, SITE_URL, type Crumb, type CategoryInput, type FaqItem, type JsonLd, type ProductInput } from './types';
 
 export function organization(): JsonLd {
+  const sameAs = [
+    process.env.NEXT_PUBLIC_INSTAGRAM_URL,
+    process.env.NEXT_PUBLIC_FACEBOOK_URL,
+    process.env.NEXT_PUBLIC_GOOGLE_BUSINESS_URL,
+  ].filter((url): url is string => Boolean(url && url.trim().length > 0));
+
   return {
     '@context': 'https://schema.org', '@type': 'Organization', '@id': `${SITE_URL}/#organization`,
     name: SITE_NAME, url: SITE_URL, logo: abs('/logo.png'),
-    sameAs: [] as string[], // add real profiles: Instagram, Facebook, Google Business Profile URL
+    sameAs,
   };
 }
 
@@ -12,7 +18,7 @@ export function website(): JsonLd {
   return {
     '@context': 'https://schema.org', '@type': 'WebSite', '@id': `${SITE_URL}/#website`, url: SITE_URL, name: SITE_NAME,
     inLanguage: LOCALE, publisher: { '@id': `${SITE_URL}/#organization` },
-    potentialAction: { '@type': 'SearchAction', target: `${SITE_URL}/recherche?q={search_term_string}`, 'query-input': 'required name=search_term_string' },
+    potentialAction: { '@type': 'SearchAction', target: `${SITE_URL}/boutique/?q={search_term_string}`, 'query-input': 'required name=search_term_string' },
   };
 }
 
@@ -51,7 +57,9 @@ export function product(p: ProductInput, shipping?: { cost: number; minDays: num
   return {
     '@context': 'https://schema.org', '@type': 'Product', '@id': `${url}#product`, url, name: p.name, description: p.description,
     image: p.images, brand: { '@type': 'Brand', name: p.brand },
-    ...(p.sku ? { sku: p.sku } : {}), ...(p.gtin ? { gtin: p.gtin } : {}), ...(p.mpn ? { mpn: p.mpn } : {}),
+    ...(p.sku ? { sku: p.sku } : {}),
+    ...(p.gtin ? (p.gtin.length === 13 ? { gtin13: p.gtin } : { gtin: p.gtin }) : {}),
+    ...(p.mpn ? { mpn: p.mpn } : {}),
     ...(p.category ? { category: p.category } : {}),
     offers: {
       '@type': 'Offer', url, priceCurrency: CURRENCY, price: p.price.toFixed(2),

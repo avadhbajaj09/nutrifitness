@@ -76,8 +76,20 @@ export default function Footer() {
               <li><Link href="/sante-securite/" className="hover:text-white transition-colors">Santé, Sécurité & Mises en Garde</Link></li>
               <li><Link href="/mentions-legales/" className="hover:text-white transition-colors">Mentions Légales & Impressum</Link></li>
               <li><Link href="/cgv/" className="hover:text-white transition-colors">Conditions Générales de Vente (CGV)</Link></li>
-              <li><Link href="/protection-donnees/" className="hover:text-white transition-colors">Protection des Données (nDSG Suisse)</Link></li>
-              <li><Link href="/cookies/" className="hover:text-white transition-colors">Gestion des Cookies</Link></li>
+              <li><Link href="/cookies/" className="hover:text-white transition-colors">Politique des Cookies</Link></li>
+              <li>
+                <button
+                  type="button"
+                  onClick={() => {
+                    if (typeof window !== 'undefined') {
+                      window.dispatchEvent(new CustomEvent('openCookieConsent'));
+                    }
+                  }}
+                  className="hover:text-[#F80404] transition-colors text-left cursor-pointer"
+                >
+                  Gérer les cookies
+                </button>
+              </li>
             </ul>
             <div className="space-y-2">
               <input 

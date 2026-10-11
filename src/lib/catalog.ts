@@ -1997,7 +1997,8 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "NutriFitness",
     "categorySlug": "guides-ebooks",
     "taxCategory": "standard",
-    "priceChf": 49.9,
+    "priceChf": 29.9,
+    "compareAtPriceChf": 49.9,
     "images": [
       {
         "src": "https://nutrifitness.ch/wp-content/uploads/2026/07/livre.webp",

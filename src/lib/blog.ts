@@ -33,6 +33,8 @@ export interface BlogPost {
   targetKeyword: string;
   readingTime: string;
   publishedAt: string;
+  updatedAt?: string;
+  keyTakeaways?: string[];
   author: string;
   authorRole: string;
   image: string;
@@ -56,6 +58,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'créatine comment la prendre',
     readingTime: '5 min',
     publishedAt: '2026-03-28',
+    keyTakeaways: [
+      'Prendre 3 à 5 g de créatine monohydrate chaque jour, sans interruption.',
+      "La régularité quotidienne prime sur l'heure exacte de la prise.",
+      "Prise idéale autour de l'entraînement ou avec un repas contenant glucides et protéines.",
+      'Maintenir une hydratation adéquate tout au long de la journée.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach Certifié & Préparateur Physique NutriFitness Genève',
     image: '/images/blog/nutriftiness-images14.png',
@@ -117,6 +125,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'creapure créatine différence',
     readingTime: '4 min',
     publishedAt: '2026-03-25',
+    keyTakeaways: [
+      'Creapure® est un label de créatine monohydrate pure à plus de 99,99 % fabriqué en Allemagne.',
+      "Contrôles stricts garantissant l'absence de résidus indésirables comme le dicyandiamide et la dihydrotriazine.",
+      "Même molécule et même efficacité musculaire finale qu'une créatine monohydrate standard bien purifiée.",
+      'Choix privilégié pour une traçabilité européenne et un contrôle qualité maximal.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach Certifié & Préparateur Physique NutriFitness Genève',
     image: '/images/blog/nutriftiness-images3.jpg',
@@ -171,6 +185,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'créatine phase de charge',
     readingTime: '4 min',
     publishedAt: '2026-03-22',
+    keyTakeaways: [
+      "La phase de charge (20 g/jour) n'est pas obligatoire.",
+      'Une dose constante de 3 à 5 g par jour sature les réserves musculaires en 3 à 4 semaines.',
+      "La prise linéaire évite les troubles digestifs fréquents lors d'une charge massive.",
+      "Pas besoin de faire de cure ou de pause cyclique chez l'adulte sain."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach Certifié NutriFitness Genève',
     image: '/images/blog/nutriftiness-images4.jpg',
@@ -216,6 +236,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'whey isolate vs concentrée',
     readingTime: '5 min',
     publishedAt: '2026-03-20',
+    keyTakeaways: [
+      'La whey isolate contient 88 à 93 % de protéines, avec quasi aucun lactose ni lipides.',
+      'La whey concentrée offre 75 à 80 % de protéines à un coût par portion plus économique.',
+      "L'isolate est recommandée pour les personnes intolérantes au lactose ou en période de sèche stricte.",
+      'Pour la majorité des sportifs sans problème digestif, la concentrée reste un excellent choix quotidien.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach Certifié & Nutritionniste Sportif',
     image: '/images/blog/nutriftiness-images52.png',
@@ -263,6 +289,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'whey vs protéine végétale',
     readingTime: '5 min',
     publishedAt: '2026-03-18',
+    keyTakeaways: [
+      'La whey offre une concentration élevée en leucine pour stimuler la synthèse des protéines.',
+      'Les poudres végétales (pois, riz, chanvre) conviennent parfaitement aux végétaliens et intolérants aux produits laitiers.',
+      "Associer plusieurs sources végétales permet d'obtenir un profil complet en acides aminés essentiels.",
+      'À apport équivalent en leucine et protéines totales, les gains musculaires sont comparables.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Préparateur Physique NutriFitness',
     image: '/images/blog/nutriftiness-images5.jpg',
@@ -307,6 +339,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'combien de protéines par jour musculation',
     readingTime: '6 min',
     publishedAt: '2026-03-15',
+    keyTakeaways: [
+      'Viser entre 1,6 et 2,2 g de protéines par kg de poids corporel par jour en musculation.',
+      'Répartir les apports sur 3 à 5 repas espacés de 3 à 4 heures (25 à 40 g par prise).',
+      "Les poudres de protéines complètent l'alimentation solide sans devoir la remplacer.",
+      "Inutile de dépasser 2,5 g/kg/jour chez l'athlète naturel en bonne santé."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach Certifié NutriFitness',
     image: '/images/blog/nutriftiness-images20.jpg',
@@ -353,6 +391,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'comment choisir sa whey',
     readingTime: '5 min',
     publishedAt: '2026-03-12',
+    keyTakeaways: [
+      'Comparer le prix par portion réelle de 25 g de protéines plutôt que le prix au kilo du pot.',
+      'Vérifier la teneur minimale en protéines pour 100 g (au moins 75-80 % de protéines pures).',
+      'Se méfier des mélanges avec glycine, taurine ou créatine gonflant artificiellement le taux azoté.',
+      "Préférer des arômes naturels et une liste d'ingrédients courte et transparente."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Conseiller Technique NutriFitness Genève',
     image: '/images/blog/nutriftiness-images13.png',
@@ -395,6 +439,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'gainer prise de masse',
     readingTime: '5 min',
     publishedAt: '2026-03-10',
+    keyTakeaways: [
+      'Le gainer aide les personnes à métabolisme rapide à atteindre un surplus calorique facilement.',
+      'Préférer les glucides complexes (avoine, orge, maltodextrine) plutôt que les sucres raffinés.',
+      'Surveiller le ratio protéines/glucides (au moins 30 à 40 % de protéines de qualité).',
+      'À utiliser en complément des repas solides, jamais en substitution totale.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach Prise de Masse NutriFitness',
     image: '/images/blog/nutriftiness-images16.png',
@@ -432,6 +482,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'bcaa ou eaa',
     readingTime: '4 min',
     publishedAt: '2026-03-08',
+    keyTakeaways: [
+      'Les BCAA ne fournissent que 3 acides aminés (leucine, isoleucine, valine).',
+      'Les EAA apportent les 9 acides aminés essentiels requis pour la synthèse protéique.',
+      "Si l'apport quotidien en protéines complètes est déjà suffisant, les BCAA sont généralement superflus.",
+      "Les EAA sont plus polyvalents lors d'entraînements à jeun ou lors de diètes très strictes."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Conseiller Technique NutriFitness Genève',
     image: '/images/blog/nutriftiness-images9.jpg',
@@ -474,6 +530,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'glutamine bêta-alanine citrulline',
     readingTime: '5 min',
     publishedAt: '2026-03-05',
+    keyTakeaways: [
+      "La L-citrulline (6 à 8 g) stimule la production d'oxyde nitrique pour la congestion et l'endurance.",
+      'La bêta-alanine (3,2 à 6,4 g/jour) augmente la carnosine musculaire pour retarder la sensation de brûlure.',
+      'Les picotements (paresthésie) de la bêta-alanine sont passagers et sans danger.',
+      "La L-glutamine soutient principalement l'intégrité de la barrière intestinale en période d'effort intense."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Préparateur Physique NutriFitness Genève',
     image: '/images/blog/nutriftiness-images19.png',
@@ -516,6 +578,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'pré-workout comment choisir',
     readingTime: '5 min',
     publishedAt: '2026-03-02',
+    keyTakeaways: [
+      'Vérifier la dose de caféine (150 à 300 mg par prise) selon sa tolérance personnelle.',
+      'Éviter les mélanges propriétaires qui masquent les dosages réels des actifs.',
+      'Choisir une version sans stimulants (pump/stim-free) pour les entraînements en soirée.',
+      'Ne pas consommer de pré-workout quotidiennement afin de préserver sa sensibilité à la caféine.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach & Conseiller NutriFitness',
     image: '/images/blog/nutriftiness-images61.jpg',
@@ -553,6 +621,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'caféine gélules dose',
     readingTime: '4 min',
     publishedAt: '2026-02-28',
+    keyTakeaways: [
+      "Dose efficace : 3 à 6 mg par kg de poids corporel, 45 à 60 minutes avant l'effort.",
+      "Limite sécuritaire générale : ne pas dépasser 400 mg par jour chez l'adulte sain (norme EFSA).",
+      'Éviter la prise dans les 6 heures précédant le coucher pour ne pas dégrader le sommeil profond.',
+      "Faire des pauses régulières pour limiter l'accoutumance aux effets stimulants."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach NutriFitness Genève',
     image: '/images/blog/nutriftiness-images22.png',
@@ -590,6 +664,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'magnésium bisglycinate',
     readingTime: '5 min',
     publishedAt: '2026-02-24',
+    keyTakeaways: [
+      "Le bisglycinate de magnésium offre une excellente biodisponibilité et ne provoque pas d'effet laxatif.",
+      'Les formes oxyde ou carbonate sont peu absorbées et peuvent perturber le transit intestinal.',
+      'Posologie courante : 300 à 400 mg de magnésium élémentaire par jour, de préférence le soir.',
+      'Essentiel pour la fonction musculaire normale, la réduction de la fatigue et la relaxation nerveuse.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Conseiller Technique NutriFitness Genève',
     image: '/images/blog/nutriftiness-images8.jpg',
@@ -626,6 +706,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'zma zinc magnésium',
     readingTime: '4 min',
     publishedAt: '2026-02-20',
+    keyTakeaways: [
+      'Le ZMA associe zinc (15-30 mg), magnésium (300-450 mg) et vitamine B6.',
+      "Utile pour compenser les pertes minérales accrues par la transpiration lors d'efforts intenses.",
+      "Prendre le soir, de préférence à distance des produits laitiers pour ne pas bloquer l'absorption du zinc.",
+      "Ne stimule la testostérone que si l'athlète présentait une carence initiale en zinc."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach NutriFitness Genève',
     image: '/images/blog/nutriftiness-images7.png',
@@ -662,6 +748,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'oméga 3 comment choisir',
     readingTime: '5 min',
     publishedAt: '2026-02-16',
+    keyTakeaways: [
+      "Se fier à la teneur cumulée en EPA et DHA par portion (viser 1 000 à 2 000 mg/jour), pas au volume d'huile total.",
+      "Choisir des formes triglycérides (TG) plutôt qu'esters éthyliques (EE) pour une meilleure absorption.",
+      "Vérifier l'indice d'oxydation TOTOX (inférieur à 10 ou 15) pour garantir la fraîcheur de l'huile.",
+      "Conserver de préférence le flacon au réfrigérateur à l'abri de la lumière et de la chaleur."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Conseiller Technique NutriFitness Genève',
     image: '/images/blog/nutriftiness-images59.jpg',
@@ -698,6 +790,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'électrolytes sport hydratation',
     readingTime: '5 min',
     publishedAt: '2026-02-12',
+    keyTakeaways: [
+      "Pour un effort de moins d'une heure en ambiance tempérée, de l'eau pure suffit généralement.",
+      'Au-delà de 60 minutes ou en cas de forte chaleur, un apport en sodium (400 à 800 mg/L) est nécessaire.',
+      "Le sodium favorise la rétention de l'eau et évite l'hyponatrémie lors d'efforts prolongés.",
+      "Associer potassium et magnésium aide à maintenir l'équilibre électrolytique normal des cellules."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach & Préparateur Physique NutriFitness Genève',
     image: '/images/blog/nutriftiness-images36.jpg',
@@ -734,6 +832,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'perte de poids compléments efficaces',
     readingTime: '6 min',
     publishedAt: '2026-02-08',
+    keyTakeaways: [
+      'Aucun complément ne fait perdre de graisse sans un déficit calorique alimentaire maîtrisé.',
+      'Les protéines en poudre aident à préserver la masse musculaire et augmentent la satiété.',
+      'La caféine et les extraits de thé vert apportent un léger coup de pouce métabolique et énergétique.',
+      'Se méfier des brûleurs de graisse promettant des résultats spectaculaires sans effort.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Nutritionniste & Fondateur NutriFitness',
     image: '/images/blog/nutriftiness-images18.png',
@@ -773,6 +877,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'petit déjeuner riche en protéines',
     readingTime: '4 min',
     publishedAt: '2026-02-04',
+    keyTakeaways: [
+      'Viser environ 30 g de protéines dès le premier repas pour relancer la synthèse protéique.',
+      "Idées simples : overnight oats avec whey, pancakes à base d'avoine et blancs d'œufs, ou fromage blanc.",
+      'Associer des sources de protéines complètes à des glucides complexes et des fibres rassasiantes.',
+      "Les collations protéinées évitent les fringales et facilitent l'atteinte du quota journalier."
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Coach NutriFitness Genève',
     image: '/images/blog/nutriftiness-images17.png',
@@ -809,6 +919,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'barre protéinée comment choisir',
     readingTime: '5 min',
     publishedAt: '2026-02-01',
+    keyTakeaways: [
+      'Choisir des barres apportant au minimum 15 à 20 g de protéines par portion.',
+      'Vérifier la teneur en sucres simples (viser moins de 3 à 5 g de sucres rapides par barre).',
+      'Contrôler la source protéique : privilégier whey isolate/concentrée plutôt que collagène ou gélatine.',
+      'Attention aux excès de polyols (édulcorants) qui peuvent causer des inconforts digestifs.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Conseiller Technique NutriFitness Genève',
     image: '/images/blog/nutriftiness-images24.png',
@@ -845,6 +961,12 @@ export const BLOG_POSTS: BlogPost[] = [
     targetKeyword: 'compléments alimentaires sport débutant',
     readingTime: '6 min',
     publishedAt: '2026-01-28',
+    keyTakeaways: [
+      'Commencer par la base essentielle : alimentation équilibrée, sommeil réparateur et régularité.',
+      'Trio de départ recommandé : whey protéine (si besoin), créatine monohydrate et oméga-3 ou vitamine D3.',
+      "Inutile d'acheter une dizaine de compléments dès ses premières semaines de pratique sportive.",
+      'Privilégier des labels contrôlés respectant les normes suisses (DFI / OSAV) sans additifs superflus.'
+    ],
     author: 'Marco Scarpantoni',
     authorRole: 'Fondateur NutriFitness Genève (20+ ans d\'expérience)',
     image: '/images/blog/nutriftiness-images33.jpg',

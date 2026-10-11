@@ -4,10 +4,13 @@ import ProductDetailClient from './ProductDetailClient';
 import { PRODUCTS, getProductBySlug } from '@/lib/catalog';
 import type { Metadata } from 'next';
 import { formatChf } from '@/lib/tax';
-import { product as generateProductSchema } from '@/lib/schema';
+import { product as generateProductSchema, breadcrumbs } from '@/lib/schema';
 import { getLocalized } from '@/lib/types';
 import { getProductFaqs } from '@/lib/productFaq';
 import { getAdminSupabase } from '@/lib/supabase';
+import { getCategoryBySlug } from '@/lib/categories';
+
+import { formatProductMetaTitle, formatMetaDescription, getProductGtin } from '@/lib/seo';
 
 interface Props {
   params: { slug: string };
@@ -25,19 +28,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 
   const name = getLocalized(product.name);
   const desc = getLocalized(product.shortDescription);
-  const metaDesc = desc.length > 158 ? `${desc.slice(0, 155)}...` : desc;
+  const title = formatProductMetaTitle(name);
+  const metaDesc = formatMetaDescription(desc);
+  const image = product.images?.[0]?.src || 'https://nutrifitness.ch/images/brand/logo.png';
 
   return {
-    title: `${name} | NutriFitness Suisse - ${formatChf(product.priceChf)}`,
+    title,
     description: metaDesc,
     alternates: {
       canonical: `https://nutrifitness.ch/produit/${params.slug}/`,
     },
     openGraph: {
-      title: `${name} | NutriFitness Suisse`,
+      title,
       description: metaDesc,
-      images: product.images?.[0]?.src ? [product.images[0].src] : []
-    }
+      images: [image],
+    },
+    twitter: {
+      card: 'summary_large_image',
+      title,
+      description: metaDesc,
+      images: [image],
+    },
   };
 }
 
@@ -78,6 +89,8 @@ export default async function ProductDetailPage({ params }: Props) {
     return p.id !== product.id;
   }).slice(0, 8);
 
+  const gtin = getProductGtin(product);
+
   const productSchema = generateProductSchema(
     {
       slug: params.slug,
@@ -88,6 +101,7 @@ export default async function ProductDetailPage({ params }: Props) {
       price: product.priceChf,
       inStock: product.variants?.some(v => v.inStock) ?? true,
       sku: product.variants?.[0]?.sku,
+      gtin,
       category: product.categorySlug,
     },
     {
@@ -96,6 +110,17 @@ export default async function ProductDetailPage({ params }: Props) {
       maxDays: 2,
     }
   );
+
+  const category = getCategoryBySlug(product.categorySlug);
+  const categoryName = category ? category.name : 'Boutique';
+  const categoryPath = category ? `/categorie/${category.slug}/` : '/boutique/';
+  const productName = getLocalized(product.name);
+
+  const breadcrumbSchema = breadcrumbs([
+    { name: 'Accueil', path: '/' },
+    { name: categoryName, path: categoryPath },
+    { name: productName, path: `/produit/${params.slug}/` },
+  ]);
 
   const productFaqs = getProductFaqs(product);
   const faqSchema = {
@@ -116,6 +141,10 @@ export default async function ProductDetailPage({ params }: Props) {
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
       />
       <script
         type="application/ld+json"

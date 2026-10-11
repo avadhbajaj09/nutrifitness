@@ -21,8 +21,8 @@ module.exports = {
         }
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', '-apple-system', 'sans-serif'],
-        heading: ['Unbounded', 'Roboto Condensed', 'system-ui', 'sans-serif'],
+        sans: ['var(--font-inter)', 'Inter', 'system-ui', '-apple-system', 'sans-serif'],
+        heading: ['var(--font-unbounded)', 'Unbounded', 'var(--font-roboto-condensed)', 'Roboto Condensed', 'system-ui', 'sans-serif'],
       },
       keyframes: {
         marquee: {

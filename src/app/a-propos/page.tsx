@@ -52,7 +52,7 @@ export default function AProposPage() {
     }
   ];
 
-  const jsonLd = {
+  const aboutSchema = {
     '@context': 'https://schema.org',
     '@type': 'AboutPage',
     'mainEntity': {
@@ -61,7 +61,7 @@ export default function AProposPage() {
       'founder': {
         '@type': 'Person',
         'name': 'Marco Scarpantoni',
-        'jobTitle': 'Fondateur & Expert Nutrition Sportive'
+        'jobTitle': 'Fondateur & Gérant'
       },
       'foundingDate': '2015-04-15',
       'address': {
@@ -74,11 +74,27 @@ export default function AProposPage() {
     }
   };
 
+  const personSchema = {
+    '@context': 'https://schema.org',
+    '@type': 'Person',
+    '@id': 'https://nutrifitness.ch/a-propos/#marco-scarpantoni',
+    name: 'Marco Scarpantoni',
+    jobTitle: 'Fondateur & Gérant',
+    url: 'https://nutrifitness.ch/a-propos/',
+    image: 'https://nutrifitness.ch/images/store/marco1.webp',
+    worksFor: {
+      '@type': 'Organization',
+      '@id': 'https://nutrifitness.ch/#organization',
+      name: 'NutriFitness',
+      url: 'https://nutrifitness.ch'
+    }
+  };
+
   return (
     <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([aboutSchema, personSchema]) }}
       />
 
       {/* Breadcrumb Navigation */}

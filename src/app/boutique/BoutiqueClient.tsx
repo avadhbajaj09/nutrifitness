@@ -13,6 +13,7 @@ function ShopContent() {
   const { countryCode, isProductVisible } = useStore();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
+  const [searchQuery, setSearchQuery] = useState<string>('');
   const [swissOnly, setSwissOnly] = useState<boolean>(false);
   const [deliverableOnly, setDeliverableOnly] = useState<boolean>(true);
   const [sortBy, setSortBy] = useState<string>('featured');
@@ -20,11 +21,15 @@ function ShopContent() {
   useEffect(() => {
     const brandParam = searchParams.get('brand');
     const catParam = searchParams.get('cat');
+    const qParam = searchParams.get('q');
     if (brandParam) {
       setSelectedBrand(brandParam);
     }
     if (catParam) {
       setSelectedCategory(catParam);
+    }
+    if (qParam !== null) {
+      setSearchQuery(qParam.trim());
     }
   }, [searchParams]);
 
@@ -46,6 +51,15 @@ function ShopContent() {
           return false;
         }
       }
+      if (searchQuery) {
+        const q = searchQuery.toLowerCase();
+        const pName = (p.name?.fr || '').toLowerCase();
+        const pBrand = (p.brand || '').toLowerCase();
+        const pDesc = (p.shortDescription?.fr || '').toLowerCase();
+        if (!pName.includes(q) && !pBrand.includes(q) && !pDesc.includes(q)) {
+          return false;
+        }
+      }
       if (swissOnly && !p.isSwissOrigin) return false;
 
       // Hide product if not deliverable to the selected country
@@ -60,11 +74,12 @@ function ShopContent() {
       if (sortBy === 'name-asc') return (a.name?.fr || '').localeCompare(b.name?.fr || '');
       return 0;
     });
-  }, [selectedCategory, selectedBrand, swissOnly, deliverableOnly, countryCode, sortBy, isProductVisible]);
+  }, [selectedCategory, selectedBrand, searchQuery, swissOnly, deliverableOnly, countryCode, sortBy, isProductVisible]);
 
   const clearFilters = () => {
     setSelectedCategory('all');
     setSelectedBrand('all');
+    setSearchQuery('');
     setSwissOnly(false);
     setDeliverableOnly(false);
     setSortBy('featured');
@@ -87,7 +102,20 @@ function ShopContent() {
         </div>
 
         <div className="flex items-center gap-3">
-          {(selectedBrand !== 'all' || selectedCategory !== 'all' || swissOnly) && (
+          {searchQuery && (
+            <div className="flex items-center gap-2 px-3 py-1.5 bg-white/10 rounded-lg text-xs text-white border border-white/20">
+              <span>Recherche : &ldquo;{searchQuery}&rdquo;</span>
+              <button
+                type="button"
+                onClick={() => setSearchQuery('')}
+                className="text-[#F80404] hover:text-white font-bold"
+                aria-label="Effacer la recherche"
+              >
+                ✕
+              </button>
+            </div>
+          )}
+          {(selectedBrand !== 'all' || selectedCategory !== 'all' || swissOnly || searchQuery) && (
             <button
               onClick={clearFilters}
               className="text-xs text-[#F80404] hover:underline font-bold px-3 py-1.5 rounded-lg bg-[#F80404]/10 border border-[#F80404]/30"

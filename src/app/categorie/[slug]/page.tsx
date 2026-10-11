@@ -9,6 +9,7 @@ import {
   getCanonicalCategorySlug,
   type CategoryData 
 } from '@/lib/categories';
+import { breadcrumbs } from '@/lib/schema';
 import { PRODUCTS } from '@/lib/catalog';
 import { getHiddenProductSlugs } from '@/lib/hiddenProducts';
 import CategoryProductsClient from './CategoryProductsClient';
@@ -25,6 +26,8 @@ import {
   Layers,
   CheckCircle2
 } from 'lucide-react';
+
+import { formatMetaTitle, formatMetaDescription } from '@/lib/seo';
 
 interface CategoryPageProps {
   params: {
@@ -46,16 +49,19 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     };
   }
 
+  const title = formatMetaTitle(category.metaTitle);
+  const description = formatMetaDescription(category.metaDescription);
+
   return {
-    title: category.metaTitle,
-    description: category.metaDescription,
+    title,
+    description,
     keywords: category.targetKeywords,
     alternates: {
       canonical: `https://nutrifitness.ch/categorie/${category.slug}/`,
     },
     openGraph: {
-      title: category.metaTitle,
-      description: category.metaDescription,
+      title,
+      description,
       url: `https://nutrifitness.ch/categorie/${category.slug}/`,
       siteName: 'NutriFitness.ch',
       locale: 'fr_CH',
@@ -63,8 +69,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
     },
     twitter: {
       card: 'summary_large_image',
-      title: category.metaTitle,
-      description: category.metaDescription,
+      title,
+      description,
     },
   };
 }
@@ -134,30 +140,10 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
   };
 
   // Schema.org BreadcrumbList
-  const breadcrumbSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'BreadcrumbList',
-    itemListElement: [
-      {
-        '@type': 'ListItem',
-        position: 1,
-        name: 'Accueil',
-        item: 'https://nutrifitness.ch/',
-      },
-      {
-        '@type': 'ListItem',
-        position: 2,
-        name: 'Boutique',
-        item: 'https://nutrifitness.ch/boutique/',
-      },
-      {
-        '@type': 'ListItem',
-        position: 3,
-        name: category.name,
-        item: `https://nutrifitness.ch/categorie/${category.slug}/`,
-      },
-    ],
-  };
+  const breadcrumbSchema = breadcrumbs([
+    { name: 'Accueil', path: '/' },
+    { name: category.name, path: `/categorie/${category.slug}/` },
+  ]);
 
   return (
     <div className="bg-[#0A0A0A] min-h-screen text-white pt-6 pb-24">
@@ -182,10 +168,6 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
           <Link href="/" className="hover:text-white flex items-center gap-1 transition-colors">
             <Home className="w-3.5 h-3.5" />
             <span>Accueil</span>
-          </Link>
-          <ChevronRight className="w-3 h-3 text-white/30" />
-          <Link href="/boutique/" className="hover:text-white transition-colors">
-            Boutique
           </Link>
           <ChevronRight className="w-3 h-3 text-white/30" />
           <span className="text-[#F80404] font-bold">{category.name}</span>

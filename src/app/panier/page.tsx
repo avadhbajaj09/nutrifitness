@@ -7,6 +7,7 @@ import { useStore } from '@/context/StoreContext';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 import CartShipmentGroups from '@/components/fulfillment/CartShipmentGroups';
+import { trackBeginCheckout } from '@/lib/analytics';
 
 export default function CartPage() {
   const { 
@@ -311,6 +312,20 @@ export default function CartPage() {
           ) : (
             <Link 
               href="/commande/"
+              onClick={() => {
+                trackBeginCheckout(
+                  cart.map(item => ({
+                    item_id: (item as any).sku || item.itemKey || item.name,
+                    item_name: item.name,
+                    item_brand: (item as any).brand || 'NutriFitness',
+                    item_category: (item as any).categorySlug || 'Nutrition Sportive',
+                    price: item.price,
+                    quantity: item.quantity,
+                  })),
+                  cartSubtotal,
+                  currency || 'CHF'
+                );
+              }}
               className="w-full min-h-[48px] px-6 py-3.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-lg hover:shadow-[#F80404]/25 flex items-center justify-center gap-2 active:scale-98"
             >
               <span>{t.common.checkout}</span>

@@ -7,6 +7,7 @@ import { TRANSLATIONS, TranslationDictionary, SupportedCurrency } from '@/lib/tr
 import { formatPrice as taxFormatPrice, convertPrice as taxConvertPrice } from '@/lib/tax';
 import { isEbookItem } from '@/lib/reviews';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
+import { trackAddToCart } from '@/lib/analytics';
 
 export interface CartItem {
   itemKey: string;
@@ -468,6 +469,22 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       setIsCartOpen(true);
       return;
     }
+
+    const matchedVariant = product.variants?.find((v: any) => 
+      (v.flavorName && (v.flavorName.fr === flavor || v.flavorName === flavor))
+    );
+    const sku = matchedVariant?.sku || product.variants?.[0]?.sku || product.id || slug;
+    trackAddToCart(
+      {
+        item_id: sku,
+        item_name: name,
+        item_brand: brand,
+        item_category: product.categorySlug || 'Nutrition Sportive',
+        price,
+      },
+      currency,
+      quantity
+    );
 
     showToast(
       locale === 'de' ? 'Warenkorb aktualisiert' : locale === 'it' ? 'Carrello aggiornato' : locale === 'en' ? 'Cart updated' : 'Panier mis à jour',
