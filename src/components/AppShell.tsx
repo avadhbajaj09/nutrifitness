@@ -15,6 +15,7 @@ import GoogleTranslate from '@/components/GoogleTranslate';
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
   const isAdmin = pathname?.startsWith('/wp-admin') || pathname?.startsWith('/admin') || pathname?.startsWith('/teamomar');
+  const isMaintenance = pathname?.startsWith('/maintenance');
 
   useEffect(() => {
     if (isAdmin) {
@@ -28,9 +29,9 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     }
   }, [isAdmin]);
 
-  if (isAdmin) {
+  if (isAdmin || isMaintenance) {
     return (
-      <div className="min-h-screen w-full bg-slate-50 text-slate-900 font-sans antialiased">
+      <div className="min-h-screen w-full">
         {children}
       </div>
     );

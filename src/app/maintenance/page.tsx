@@ -22,7 +22,7 @@ export default function MaintenancePage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#0A0A0A] text-white flex flex-col justify-between p-4 sm:p-8 font-sans relative overflow-hidden select-none">
+    <div className="fixed inset-0 z-[9999] bg-[#0A0A0A] text-white flex flex-col justify-between p-4 sm:p-8 font-sans overflow-y-auto select-none">
       
       {/* Background ambient red glow */}
       <div className="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#F80404]/10 rounded-full blur-[140px] pointer-events-none" />
