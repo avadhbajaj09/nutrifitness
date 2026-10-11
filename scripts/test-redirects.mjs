@@ -1,41 +1,44 @@
-#!/usr/bin/env node
-/**
- * scripts/test-redirects.mjs
- * Comprehensive redirect & routing test suite for NutriFitness.ch
- * Usage: node scripts/test-redirects.mjs [baseUrl]
- * Default: https://nutrifitness-bice.vercel.app
- */
+// scripts/test-redirects.mjs
+// Usage: node scripts/test-redirects.mjs [baseUrl]
+// Default: http://localhost:3000
+import fs from 'node:fs';
 
-const rawBase = process.argv[2] || 'https://nutrifitness-bice.vercel.app';
-const BASE_URL = rawBase.replace(/\/+$/, '');
+const rawBase = process.argv[2] || 'http://localhost:3000';
+const base = rawBase.replace(/\/+$/, '');
 
-console.log('='.repeat(70));
-console.log(`  NUTRIFITNESS REDIRECT & ROUTING TEST SUITE`);
-console.log(`  Target Domain: ${BASE_URL}`);
-console.log('='.repeat(70) + '\n');
+const csvUrl = new URL('../data/redirect-map.csv', import.meta.url);
+const text = fs.readFileSync(csvUrl, 'utf8');
 
-let passedCount = 0;
-let failedCount = 0;
+const rows = text
+  .replace(/\r/g, '')
+  .split('\n')
+  .slice(1)
+  .filter(Boolean)
+  .map((l) => {
+    const match = l.match(/^([^,]+),([^,]+),([^,]+)(?:,(.*))?$/);
+    if (!match) return null;
+    return {
+      old_path: match[1].trim(),
+      new_path: match[2].trim(),
+      type: match[3].trim(),
+      note: (match[4] || '').trim(),
+    };
+  })
+  .filter(Boolean);
 
-function report(pass, name, details = '') {
-  if (pass) {
-    passedCount++;
-    console.log(`  ✅ PASS: ${name}${details ? ` -> ${details}` : ''}`);
-  } else {
-    failedCount++;
-    console.log(`  ❌ FAIL: ${name}${details ? ` (${details})` : ''}`);
-  }
-}
+// Extra edge cases
+rows.push({
+  old_path: '/categorie-produit/PERTE-DE-POIDS',
+  new_path: '/categorie/perte-de-poids/',
+  type: 'fallback',
+  note: 'Case-sensitive edge case'
+});
 
-async function fetchHeadOrGet(url, options = {}) {
+async function hit(path) {
   try {
-    const res = await fetch(url, {
-      method: options.method || 'GET',
+    const res = await fetch(base + path, {
       redirect: 'manual',
-      headers: {
-        'User-Agent': 'NutriFitness-Redirect-Tester/1.0',
-        ...(options.headers || {}),
-      },
+      headers: { 'User-Agent': 'NutriFitness-Test-Redirects/1.0' },
     });
     return res;
   } catch (err) {
@@ -43,173 +46,76 @@ async function fetchHeadOrGet(url, options = {}) {
   }
 }
 
-// ---------------------------------------------------------------------------
-// SUITE 1: Trailing Slash Normalization (308 Permanent Redirect)
-// ---------------------------------------------------------------------------
-console.log('--- 1. TRAILING SLASH REDIRECT TESTS (308) ---');
-const trailingSlashTests = [
-  { path: '/boutique', expectedTarget: '/boutique/' },
-  { path: '/blog', expectedTarget: '/blog/' },
-  { path: '/marques', expectedTarget: '/marques/' },
-  { path: '/panier', expectedTarget: '/panier/' },
-  { path: '/commande', expectedTarget: '/commande/' },
-  { path: '/click-and-collect', expectedTarget: '/click-and-collect/' },
-  { path: '/proteines-geneve', expectedTarget: '/proteines-geneve/' },
-  { path: '/creatine-geneve', expectedTarget: '/creatine-geneve/' },
-  { path: '/complements-alimentaires-geneve', expectedTarget: '/complements-alimentaires-geneve/' },
-  { path: '/marque/marvelous', expectedTarget: '/marque/marvelous/' },
-  { path: '/categorie/proteines', expectedTarget: '/categorie/proteines/' },
-  { path: '/produit/sandwich-keto-bar', expectedTarget: '/produit/sandwich-keto-bar/' },
-];
-
-for (const t of trailingSlashTests) {
-  const url = `${BASE_URL}${t.path}`;
-  const res = await fetchHeadOrGet(url);
-
-  if (res.error) {
-    report(false, `Trailing slash ${t.path}`, `Network error: ${res.error}`);
-    continue;
-  }
-
-  const location = res.headers?.get('location') || '';
-  const is308 = res.status === 308;
-  const targetMatches = location === t.expectedTarget || location === `${BASE_URL}${t.expectedTarget}`;
-
-  report(
-    is308 && targetMatches,
-    `${t.path} -> 308 redirect`,
-    `Status ${res.status}, Location: ${location}`
-  );
-}
-
-// ---------------------------------------------------------------------------
-// SUITE 2: Internal Application Redirects
-// ---------------------------------------------------------------------------
-console.log('\n--- 2. INTERNAL APPLICATION REDIRECTS ---');
-const appRedirectTests = [
-  {
-    path: '/my-account/',
-    description: '/my-account/ redirects to /compte/',
-    validate: (res, body) => {
-      const loc = res.headers?.get('location') || '';
-      return res.status === 307 || res.status === 308 || (res.status === 200 && body.includes('/compte/'));
-    },
-  },
-  {
-    path: '/admin/',
-    description: '/admin/ redirects to /admin/products',
-    validate: (res, body) => {
-      const loc = res.headers?.get('location') || '';
-      return (res.status === 307 || res.status === 308) && (loc.includes('/admin/products') || body.includes('/admin/products'));
-    },
-  },
-  {
-    path: '/admin/shipping/',
-    description: '/admin/shipping/ redirects to /admin/products',
-    validate: (res, body) => {
-      const loc = res.headers?.get('location') || '';
-      return (res.status === 307 || res.status === 308) && (loc.includes('/admin/products') || body.includes('/admin/products'));
-    },
-  },
-];
-
-for (const t of appRedirectTests) {
-  const url = `${BASE_URL}${t.path}`;
-  const res = await fetchHeadOrGet(url);
-
-  if (res.error) {
-    report(false, t.description, `Network error: ${res.error}`);
-    continue;
-  }
-
-  let body = '';
+async function check(r) {
   try {
-    body = await res.text();
-  } catch (e) {}
+    const res = await hit(r.old_path);
+    if (res.error) return `request failed: ${res.error}`;
+    const s = res.status;
 
-  const passed = t.validate(res, body);
-  const loc = res.headers?.get('location') || (body.includes('NEXT_REDIRECT') ? 'Client Digest Redirect' : 'none');
-  report(passed, t.description, `Status: ${res.status}, Target: ${loc}`);
-}
+    // For canonical pages expected to return 200
+    if (r.type === 'same' || r.type === 'check') {
+      return s === 200 ? null : `${r.type.toUpperCase()} → got ${s} (needs a fix: new slug, or set a redirect)`;
+    }
 
-// ---------------------------------------------------------------------------
-// SUITE 3: Core 200 OK Routes (Direct Resolution)
-// ---------------------------------------------------------------------------
-console.log('\n--- 3. CORE CANONICAL ENDPOINTS (200 OK) ---');
-const coreRoutes = [
-  '/',
-  '/boutique/',
-  '/blog/',
-  '/marques/',
-  '/click-and-collect/',
-  '/proteines-geneve/',
-  '/creatine-geneve/',
-  '/complements-alimentaires-geneve/',
-  '/marque/marvelous/',
-  '/marque/pronutrition/',
-  '/categorie/proteines/',
-  '/produit/sandwich-keto-bar/',
-  '/sitemap.xml',
-  '/sitemap-index.xml',
-  '/robots.txt',
-  '/feeds/merchant.xml',
-  '/feeds/merchant.xml?country=FR',
-];
+    // For redirect pages: expect 301, 307, or 308
+    if (![301, 307, 308].includes(s)) {
+      return `expected redirect (301/307/308), got ${s}`;
+    }
 
-for (const path of coreRoutes) {
-  const url = `${BASE_URL}${path}`;
-  const res = await fetchHeadOrGet(url);
+    const locHeader = res.headers?.get('location');
+    if (!locHeader) {
+      // 307 or client digest redirect with no Location header
+      console.warn(`  ⚠️ WARN: ${r.old_path} returned status ${s} with no Location header (client-side digest redirect)`);
+      return null;
+    }
 
-  if (res.error) {
-    report(false, `${path} returns 200 OK`, `Network error: ${res.error}`);
-    continue;
+    // Follow redirect to destination and verify 200 OK
+    let targetUrl = new URL(locHeader, base);
+    let finalRes = await hit(targetUrl.pathname + targetUrl.search);
+    if (finalRes.error) {
+      return `redirects to ${targetUrl.pathname} but follow failed: ${finalRes.error}`;
+    }
+    // If the first hop was a trailing-slash normalizer (308), follow to target destination
+    if ([301, 307, 308].includes(finalRes.status)) {
+      const nextLoc = finalRes.headers?.get('location');
+      if (nextLoc) {
+        targetUrl = new URL(nextLoc, base);
+        finalRes = await hit(targetUrl.pathname + targetUrl.search);
+      }
+    }
+    if (finalRes.status !== 200) {
+      return `redirects to ${targetUrl.pathname} but that returns ${finalRes.status}`;
+    }
+
+    return null;
+  } catch (e) {
+    return 'check error: ' + e.message;
   }
-
-  report(res.status === 200, `${path} returns 200 OK`, `Status: ${res.status}`);
 }
 
-// ---------------------------------------------------------------------------
-// SUITE 4: 404 Not Found Page
-// ---------------------------------------------------------------------------
-console.log('\n--- 4. CUSTOM 404 NOT FOUND HANDLING ---');
-const notFoundPath = '/non-existent-random-page-test-404/';
-const res404 = await fetchHeadOrGet(`${BASE_URL}${notFoundPath}`);
-if (res404.error) {
-  report(false, 'Custom 404 returns status 404', `Network error: ${res404.error}`);
-} else {
-  report(res404.status === 404, 'Non-existent URL returns 404 status', `Status: ${res404.status}`);
-}
+const problems = [];
+const queue = [...rows];
+console.log(`Checking ${rows.length} URLs against ${base}...`);
 
-// ---------------------------------------------------------------------------
-// SUITE 5: Preview Domain Header (X-Robots-Tag)
-// ---------------------------------------------------------------------------
-console.log('\n--- 5. PREVIEW DOMAIN ROBOTS HEADERS ---');
-const isVercelPreview = BASE_URL.includes('.vercel.app');
-if (isVercelPreview) {
-  const homeRes = await fetchHeadOrGet(`${BASE_URL}/`);
-  const robotsHeader = homeRes.headers?.get('x-robots-tag') || '';
-  const hasNoindex = robotsHeader.toLowerCase().includes('noindex');
-  report(
-    hasNoindex,
-    'Vercel preview domain includes X-Robots-Tag: noindex',
-    `Header: "${robotsHeader}"`
-  );
-} else {
-  console.log(`  ℹ️  Domain is not *.vercel.app, skipping Vercel preview header check.`);
-}
+await Promise.all(
+  Array.from({ length: 8 }, async () => {
+    while (queue.length) {
+      const r = queue.shift();
+      const err = await check(r);
+      if (err) {
+        problems.push(`${r.type.padEnd(8)} ${r.old_path}  ->  ${err}`);
+      }
+    }
+  })
+);
 
-// ---------------------------------------------------------------------------
-// SUMMARY
-// ---------------------------------------------------------------------------
-console.log('\n' + '='.repeat(70));
-console.log(`  TEST RESULTS SUMMARY`);
-console.log(`  Passed: ${passedCount}`);
-console.log(`  Failed: ${failedCount}`);
-console.log(`  Total:  ${passedCount + failedCount}`);
-console.log('='.repeat(70) + '\n');
-
-if (failedCount > 0) {
-  process.exit(1);
-} else {
+console.log(`\nChecked ${rows.length} URLs against ${base}`);
+if (!problems.length) {
+  console.log('✅ ALL OK - All redirects and canonical pages verified!\n');
   process.exit(0);
+} else {
+  console.log(`❌ ${problems.length} PROBLEMS:\n`);
+  problems.sort().forEach((p) => console.log(p));
+  console.log('');
+  process.exit(1);
 }

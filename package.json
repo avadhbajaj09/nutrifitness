@@ -4,6 +4,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "start": "next start",
     "typecheck": "tsc --noEmit",
     "redirects": "tsx scripts/build-redirects.ts data/redirect-map.csv",
     "test:routing": "tsx src/lib/fulfillment/__tests__/routing.test.ts",

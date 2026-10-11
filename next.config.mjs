@@ -1,3 +1,5 @@
+import { getRedirects } from './redirects.mjs';
+
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   trailingSlash: true,
@@ -10,6 +12,9 @@ const nextConfig = {
       { protocol: 'https', hostname: 'dirtysquads.com' },
       { protocol: 'http', hostname: 'dirtysquads.com' }
     ]
+  },
+  async redirects() {
+    return getRedirects();
   },
 };
 

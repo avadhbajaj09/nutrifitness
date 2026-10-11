@@ -1,0 +1,259 @@
+old_path,new_path,type,note
+/refund_returns/,/retours/,exact,
+/privacy-policy/,/protection-donnees/,exact,
+/inscription-au-coaching/,/coaching-nutritionnel-personnalise/,exact,
+/faq-complements-alimentaires-geneve/,/faq/,exact,
+/boutique-complements-alimentaires-geneve/,/boutique/,exact,
+/a-propos-nutrifit-complements-alimentaires-geneve/,/a-propos/,exact,
+/contact-nutrifitness-geneve/,/contact/,exact,
+/boutique-de-nutrition-sportive-vevey/,/boutique-geneve/,exact,Odd old page: open it on old site to confirm content before launch
+/complements-alimentaires-thonex/,/boutique-geneve/,exact,Odd old page: open it on old site to confirm content before launch
+/alimentation-nutrition-sportive-bussigny/,/boutique-geneve/,exact,Odd old page: open it on old site to confirm content before launch
+/nos-services/,/coaching-nutritionnel-personnalise/,exact,Odd old page: open it on old site to confirm content before launch
+/proteines/,/categorie/proteines/,exact,VERIFY: confirm /categorie/proteines/ slug exists on new site
+/shop/,/boutique/,exact,
+/cart/,/panier/,exact,
+/checkout/,/commande/,exact,
+/my-account/,/compte/,exact,
+/sitemap_index.xml,/sitemap.xml,exact,old Yoast sitemap
+/,/,same,must return 200 on new site
+/blog/,/blog/,same,must return 200 on new site
+/coaching-nutritionnel-personnalise/,/coaching-nutritionnel-personnalise/,same,must return 200 on new site
+/guide-des-complements-alimentaires/,/guide-des-complements-alimentaires/,same,must return 200 on new site
+/mentions-legales/,/mentions-legales/,same,must return 200 on new site
+/produit/le-guide-ultime-des-complements/,/guide-des-complements-alimentaires/,exact,old ebook product page
+/produit/nutrifit-gourde-600ml-avec-paille/,/produit/nf-gourde-600ml/,exact,Updated slug from catalog
+/produit/caffeine-200mg-60-tabs/,/produit/caffeine-200mg-60-tabs/,same,if 404 on new site: find new slug and change to exact
+/produit/max-proteines-cookie/,/produit/max-proteines-cookie/,same,if 404 on new site: find new slug and change to exact
+/produit/pancake-800g/,/produit/pancake-proteines-800g/,exact,Updated slug from catalog
+/produit/calcium-os/,/produit/calcium-120-tabs/,exact,Updated slug from catalog
+/produit/gallon-nf-hydratation/,/produit/gallon-nf-22l/,exact,Updated slug from catalog
+/produit/mega-mass-4000-3kg/,/produit/mega-mass-4000-3kg/,same,if 404 on new site: find new slug and change to exact
+/produit/ozer-vegan-post-workout/,/produit/ozer-vegan-post-workout/,same,if 404 on new site: find new slug and change to exact
+/produit/stage-diuretique-45-caps/,/produit/stage-diuretique-45-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/nox-burn-90-caps/,/produit/nox-burn-90-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/enerdyn-electrolytes-premium/,/produit/20-sachets-enerdyn-orange/,exact,Updated slug from catalog
+/produit/puree-damande-650g/,/produit/puree-damande-650g/,same,if 404 on new site: find new slug and change to exact
+/produit/ultimate-whey-bigman-2kg-savoureuse/,/produit/ultimate-whey-bigman-2kg/,exact,Updated slug from catalog
+/produit/calibration-organe-support-120-caps/,/produit/calibration-organe-support-120-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/bromelaine-60-tabs-1000mg/,/produit/bromelaine-60-tabs-1000mg/,same,if 404 on new site: find new slug and change to exact
+/produit/zinc-bisglicinate-90-cap/,/produit/zinc-bisglicinate-90-cap/,same,if 404 on new site: find new slug and change to exact
+/produit/zma-recuperation/,/produit/zma-90-caps/,exact,Updated slug from catalog
+/produit/anabolic-mass-2-5kg/,/produit/anabolic-mass-25kg/,exact,Updated slug from catalog
+/produit/proteine-vegan-riz-brun-bio-500g/,/produit/proteine-vegan-riz-brun-bio-500g/,same,if 404 on new site: find new slug and change to exact
+/produit/testo-anabol-90-comprimes/,/produit/testo-anabol-90-comprimes/,same,if 404 on new site: find new slug and change to exact
+/produit/glycerol-300g-hydratation/,/produit/glicerol-300g/,exact,Updated slug from catalog
+/produit/hbvc-cholesterol-support-90-caps/,/produit/hbvc-cholesterol-support-90-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/hydra-electrolytes/,/produit/hydra-electrolytes-210g/,exact,Updated slug from catalog
+/produit/caffeine-90-caps-100mg/,/produit/caffeine-90-caps-100mg/,same,if 404 on new site: find new slug and change to exact
+/produit/creme-a-tartiner-premium/,/produit/creme-a-tartiner-350g/,exact,Updated slug from catalog
+/produit/iso-80x-grass-fed-2kg/,/produit/iso-80x-grass-fed-2kg/,same,if 404 on new site: find new slug and change to exact
+/produit/one-piece-whey-1kg-chocolat/,/produit/one-piece-whey-1kg-chocolat/,same,if 404 on new site: find new slug and change to exact
+/produit/glucoart-90-tabs/,/produit/glucoart-90-tabs/,same,if 404 on new site: find new slug and change to exact
+/produit/nutry-nuts-cups/,/produit/nutry-nuts-cups/,same,if 404 on new site: find new slug and change to exact
+/produit/muscles-whey-dubai-white-chocolate-2kg/,/produit/muscles-whey-2kg/,exact,Updated slug from catalog
+/produit/big-flapjack-100g/,/produit/big-flapjack-100g/,same,if 404 on new site: find new slug and change to exact
+/produit/berberine-60-tabs/,/produit/berberina-60-tabs/,exact,Updated slug from catalog
+/produit/glycine-300g/,/produit/glycine-300g/,same,if 404 on new site: find new slug and change to exact
+/produit/hype-amino-270g-bcaa-eaa-endurance/,/produit/hype-amino-270g/,exact,Updated slug from catalog
+/produit/creapure-premium-250g/,/produit/pw-creapure-premium-250g/,exact,Updated slug from catalog
+/produit/ghost-whey-918g-savoureuse/,/produit/ghost-whey-918g/,exact,Updated slug from catalog
+/produit/beebad-250ml/,/produit/beebad-250ml/,same,if 404 on new site: find new slug and change to exact
+/produit/shaker-nutrifit-double-compartiments/,/produit/nf-shaker-600ml/,exact,Updated slug from catalog
+/produit/ignite-burn-210g-orange-mangue/,/produit/ignite-burn-210g-orange-mangue/,same,if 404 on new site: find new slug and change to exact
+/produit/glutamine-kyowa-bigman-300g/,/produit/glutamine-bigman-kyowa-300g/,exact,Updated slug from catalog
+/produit/magnesium-bisglycinate-60-tabs/,/produit/magnesium-bisglycinate-60-tabs/,same,if 404 on new site: find new slug and change to exact
+/produit/marvelous-creme-de-riz-1-4kg/,/produit/marvelous-creme-de-riz-14kg/,exact,Updated slug from catalog
+/produit/piadina-keto-120g/,/produit/piadina-keto-120g/,same,if 404 on new site: find new slug and change to exact
+/produit/vitamine-c-1000mg-90-tabs-immunite/,/produit/vitamine-c-1000mg-90-caps/,exact,Updated slug from catalog
+/produit/nac-pharma-grade-60-caps/,/produit/nac-pharma-grade-60-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/super-digestive-60-caps/,/produit/super-digestive-60-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/on-whey-proteine-gold-standard/,/produit/on-whey-gold-proteine-768g/,exact,Updated slug from catalog
+/produit/recharge/,/produit/recharge-90-caps/,exact,Updated slug from catalog
+/produit/glucoart-poudre-200g/,/produit/glucoart-poudre-200g/,same,if 404 on new site: find new slug and change to exact
+/produit/peanut-butter-cremeux-500g/,/produit/peanut-butter-cremeux-500g/,same,if 404 on new site: find new slug and change to exact
+/produit/farine-de-riz-1-5kg/,/produit/farine-de-riz-15kg/,exact,Updated slug from catalog
+/produit/creatine-poudre-90g/,/produit/creatine-poudre-90g/,same,if 404 on new site: find new slug and change to exact
+/produit/vitamine-c-liposomale-60-caps/,/produit/vitamine-c-liposomale-60-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/fer-liposomale-90-tabs/,/produit/fer-liposomale-90-tabs/,same,if 404 on new site: find new slug and change to exact
+/produit/farine-de-patate-douce/,/produit/farine-de-patate-douce/,same,if 404 on new site: find new slug and change to exact
+/produit/iso-whey-zero-907g/,/produit/iso-whey-zero-907g/,same,if 404 on new site: find new slug and change to exact
+/produit/dirty-cluster-dex-1kg/,/produit/dirty-cluster-dex-1kg/,same,if 404 on new site: find new slug and change to exact
+/produit/amino-x9-300g/,/produit/dirty-amino-x9-300g/,exact,Updated slug from catalog
+/produit/marvelous-glutamine-kyowa-300g/,/produit/marvelous-glutamine-kyowa-300g/,same,if 404 on new site: find new slug and change to exact
+/produit/l-citrulline-100-pure-250g/,/produit/l-citrulline-100-pure-250g/,same,if 404 on new site: find new slug and change to exact
+/produit/ashwagandha-ksm-66-600mg/,/produit/ashwagandha-ksm-66-600mg/,same,if 404 on new site: find new slug and change to exact
+/produit/creapure-bigman-300g-pure/,/produit/creapure-bigman-300g/,exact,Updated slug from catalog
+/produit/poudre-de-collagene-marin-bovin-300g-gout-mangue/,/produit/poudre-de-collagene-mix-gout-mangue-300g/,exact,Updated slug from catalog
+/produit/savior-recuperation-950g/,/produit/savior-recuperation-950g/,same,if 404 on new site: find new slug and change to exact
+/produit/big-lean-mass-gainer/,/produit/big-lean-mass-gainer/,same,if 404 on new site: find new slug and change to exact
+/produit/blanc-doeuf-liquide-pasteurise/,/produit/blanc-doeuf-liquide-pasteurise-1l/,exact,Updated slug from catalog
+/produit/l-acetil-carnitine-60-caps-graisses-en-energie/,/produit/l-acetil-carnitine-60-caps/,exact,Updated slug from catalog
+/produit/carnitine-shot-20-fiolles/,/produit/carnitine-shot-lemon-20-fiolles/,exact,Updated slug from catalog
+/produit/mk7-vitamine-d3-k2-90-caps/,/produit/mk7-vitamine-d3-k2-90-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/zinc-bisglycinate-160-caps/,/produit/zinc-bisglycinate-160-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/frutilu-hydration-sachet/,/produit/frutilu-hydration-sachet/,same,if 404 on new site: find new slug and change to exact
+/produit/alive-systeme-immunitaire-120-caps/,/produit/alive-systeme-immunitaire-120-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/iso-90x-cfm-1kg/,/produit/iso-90x-cfm-1kg/,same,if 404 on new site: find new slug and change to exact
+/produit/more-spray-cooker-200ml/,/produit/more-spray-cooker-200ml/,same,if 404 on new site: find new slug and change to exact
+/produit/applied-creatine-monohydrate-250g/,/produit/applied-creatine-monohydrate-250g/,same,if 404 on new site: find new slug and change to exact
+/produit/fat-burn-60-caps/,/produit/fat-burn-60-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/farine-davoine-1kg/,/produit/farine-davoine-1kg/,same,if 404 on new site: find new slug and change to exact
+/produit/magnesium-bisglycinate-poudre/,/produit/magnesium-bisglycinate-180g-lemon/,exact,Updated slug from catalog
+/produit/cornetto-croissant-keto-50g/,/produit/cornetto-croissant-keto-50g/,same,if 404 on new site: find new slug and change to exact
+/produit/omega-3-120-softgels-premium/,/produit/omega-3-120-softgels/,exact,Updated slug from catalog
+/produit/chromium-picolinate-100-caps-glycemie/,/produit/picolinate-de-chrome-100-caps/,exact,Updated slug from catalog
+/produit/100-clear-beef-hydro-proteine-1-8kg/,/produit/el-toro-100-clear-beef-proteine-18kg/,exact,Updated slug from catalog
+/produit/peptan-collagen-marin-lemon-300g/,/produit/peptan-collagen-lemon-300g/,exact,Updated slug from catalog
+/produit/glutathion-liposomale-30-caps/,/produit/glutathion-liposomale-30-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/nac-vitamine-c-d-60-tabs/,/produit/nac-vitamine-c-d-60-tabs/,same,if 404 on new site: find new slug and change to exact
+/produit/abe-drink/,/produit/abe-drink/,same,if 404 on new site: find new slug and change to exact
+/produit/bm-eaa-electrolytes-300g/,/produit/bm-eaa-300g/,exact,Updated slug from catalog
+/produit/testoman-120-caps/,/produit/testoman-120-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/shilajit-pure-resine/,/produit/shilajit-pure-resine/,same,if 404 on new site: find new slug and change to exact
+/produit/ds-creapure-300g/,/produit/dirty-squads-creapure-creatine-pure/,exact,Updated slug from catalog
+/produit/creatine-300g-200-mesh/,/produit/creatine-en-poudre-300g/,exact,Updated slug from catalog
+/produit/iso-bulk-whey-bioloigique/,/produit/iso-bulk-whey-biologique/,exact,Updated slug from catalog
+/produit/beurre-de-cacahuetes-1kg-premium/,/produit/beurre-de-cacahuete-1kg/,exact,Updated slug from catalog
+/produit/furiux-lean-gainer/,/produit/furiux-gainer-3kg/,exact,Updated slug from catalog
+/produit/magnesium-bisglycinate-90-caps/,/produit/magnesium-bisglycinate-90-caps/,same,if 404 on new site: find new slug and change to exact
+/produit/sandwich-keto-bar/,/produit/sandwich-keto-bar/,same,if 404 on new site: find new slug and change to exact
+/produit/ashwagandha-60-caps/,/produit/ashwagandha-60-caps/,check,Not in old sitemap; if 404 on new site redirect to its category
+/produit/muffin-keto-sans-sucres-50g/,/categorie/snacks-healthy-food/,exact,Mapped to canonical category page
+/produit/proteine-de-riz-bio-500g/,/produit/proteine-vegan-riz-brun-bio-500g/,exact,Updated slug from catalog
+/whey-pour-secher/,/blog/perte-de-poids-complements-ce-que-disent-les-preuves/,exact,Mapped to real blog post
+/bien-doser-proteine-en-poudre-guide/,/blog/combien-de-proteines-par-jour-sportif/,exact,Mapped to real blog post
+/gagner-du-muscle-a-la-maison-meilleurs-exercices-nutrifitness/,/blog/premiers-complements-guide-debutant-suisse/,exact,Mapped to real blog post
+/meilleure-proteine-en-poudre-comment-choisir-nutrifitness/,/blog/comment-choisir-sa-whey-etiquette-prix/,exact,Mapped to real blog post
+/ashwagandha-contre-le-stress/,/produit/ashwagandha-ksm-66-600mg/,exact,Mapped to real blog post
+/creatine-monohydrate-guide-complet/,/blog/creatine-monohydrate-ou-creapure/,exact,Mapped to real blog post
+/omega-3-bienfaits-dosage/,/blog/omega-3-comment-choisir/,exact,Mapped to real blog post
+/quand-prendre-whey-avant-apres-entrainement/,/blog/whey-isolate-ou-concentree/,exact,Mapped to real blog post
+/comment-perdre-du-poids-rapidement-avec-des-complements-nutrifitness/,/blog/perte-de-poids-complements-ce-que-disent-les-preuves/,exact,Mapped to real blog post
+/booster-son-endurance/,/blog/electrolytes-hydratation-effort/,exact,Mapped to real blog post
+/19281-2/,/blog/,exact,Mapped to real blog post
+/complements-prise-de-masse/,/blog/gainer-pour-qui-comment-choisir/,exact,Mapped to real blog post
+/whey-isolate-vs-concentree/,/blog/whey-isolate-ou-concentree/,exact,Mapped to real blog post
+/categorie-produit/accessoires/,/categorie/accessoires/,exact,Mapped to canonical category page
+/categorie-produit/antioxydants/,/categorie/vitamines-mineraux/,exact,Mapped to canonical category page
+/categorie-produit/apres-sport/,/categorie/acides-amines-recuperation/,exact,Mapped to canonical category page
+/categorie-produit/complements-avant-sport/,/categorie/pre-workout-energie/,exact,Mapped to canonical category page
+/categorie-produit/nutrition-sportive-healthy-food/beurres-preparations-sportives/,/categorie/snacks-healthy-food/,exact,Mapped to canonical category page
+/categorie-produit/complements/,/boutique/,exact,Mapped to canonical category page
+/categorie-produit/decuple-votre-energie-et-recuperation/,/categorie/bien-etre-sommeil-digestion/,exact,Mapped to canonical category page
+/categorie-produit/glucides/,/categorie/pendant-effort-hydratation/,exact,Mapped to canonical category page
+/categorie-produit/guides-ebooks/,/guide-des-complements-alimentaires/,exact,Mapped to canonical category page
+/categorie-produit/nutrition-sportive-healthy-food/,/categorie/snacks-healthy-food/,exact,Mapped to canonical category page
+/categorie-produit/peau-et-articulations/,/categorie/vitamines-mineraux/,exact,Mapped to canonical category page
+/categorie-produit/complements-de-qualite-pendant-le-sport/,/categorie/pendant-effort-hydratation/,exact,Mapped to canonical category page
+/categorie-produit/complements/performance-pre-workout/,/categorie/pre-workout-energie/,exact,Mapped to canonical category page
+/categorie-produit/complements/perte-poids-metabolisme/,/categorie/perte-de-poids/,exact,Mapped to canonical category page
+/categorie-produit/prise-de-masse/,/categorie/gainers-prise-de-masse/,exact,Mapped to canonical category page
+/categorie-produit/complements/proteines-gainers/,/categorie/proteines/,exact,Mapped to canonical category page
+/categorie-produit/complements/recuperation-acides-amines/,/categorie/acides-amines-recuperation/,exact,Mapped to canonical category page
+/categorie-produit/complements/sante-bien-etre/,/categorie/bien-etre-sommeil-digestion/,exact,Mapped to canonical category page
+/categorie-produit/snacks/,/categorie/snacks-healthy-food/,exact,Mapped to canonical category page
+/categorie-produit/sommeil/,/categorie/bien-etre-sommeil-digestion/,exact,Mapped to canonical category page
+/categorie-produit/vitamines-mineraux/,/categorie/vitamines-mineraux/,exact,Mapped to canonical category page
+/categorie-produit/proteines/,/categorie/proteines/,exact,Mapped to canonical category page
+/categorie-produit/shakers/,/categorie/accessoires/,exact,Mapped to canonical category page
+/categorie-produit/nos-best-sellers/,/boutique/,exact,Mapped to canonical category page
+/categorie-produit/bcaa/,/categorie/acides-amines-recuperation/,exact,Mapped to canonical category page
+/categorie-produit/digestion-optimale/,/categorie/bien-etre-sommeil-digestion/,exact,Mapped to canonical category page
+/categorie-produit/PERTE-DE-POIDS/,/categorie/perte-de-poids/,exact,Mapped to canonical category page
+/categorie-produit/vitamines-mineraux/page/2/,/categorie/vitamines-mineraux/,exact,Mapped to canonical category page
+/categorie-produit/nos-best-sellers/page/2/,/boutique/,exact,Mapped to canonical category page
+/etiquette-produit/amelioration-de-la-performance/,/boutique/,fallback,product tag
+/etiquette-produit/app/,/boutique/,fallback,product tag
+/etiquette-produit/bcaa/,/boutique/,fallback,product tag
+/etiquette-produit/bien-etre/,/boutique/,fallback,product tag
+/etiquette-produit/booster-performance-geneve/,/boutique/,fallback,product tag
+/etiquette-produit/collation/,/boutique/,fallback,product tag
+/etiquette-produit/eaa/,/boutique/,fallback,product tag
+/etiquette-produit/energie-geneve/,/boutique/,fallback,product tag
+/etiquette-produit/guides-ebooks/,/boutique/,fallback,product tag
+/etiquette-produit/performance-sportive-et-energie/,/boutique/,fallback,product tag
+/etiquette-produit/perte-de-poids/,/boutique/,fallback,product tag
+/etiquette-produit/prise-de-muscle/,/boutique/,fallback,product tag
+/etiquette-produit/recuperation/,/boutique/,fallback,product tag
+/etiquette-produit/renforcement-musculaire/,/boutique/,fallback,product tag
+/etiquette-produit/sante-bien-etre/,/boutique/,fallback,product tag
+/etiquette-produit/glutamine/,/boutique/,fallback,product tag
+/etiquette-produit/beef/,/boutique/,fallback,product tag
+/etiquette-produit/croissance-musculaire/,/boutique/,fallback,product tag
+/etiquette-produit/necessitatibus/,/boutique/,fallback,product tag
+/etiquette-produit/de/,/boutique/,fallback,product tag
+/etiquette-produit/supplement-sportif/,/boutique/,fallback,product tag
+/etiquette-produit/l-citrulline/,/boutique/,fallback,product tag
+/etiquette-produit/conception-ergonomique/,/boutique/,fallback,product tag
+/etiquette-produit/praticite-au-quotidien/,/boutique/,fallback,product tag
+/etiquette-produit/oxygenation-musculaire/,/boutique/,fallback,product tag
+/etiquette-produit/citrulline-malate/,/boutique/,fallback,product tag
+/etiquette-produit/gainers/,/boutique/,fallback,product tag
+/etiquette-produit/praticite-sans-compromis/,/boutique/,fallback,product tag
+/etiquette-produit/supplement-dentrainement/,/boutique/,fallback,product tag
+/etiquette-produit/sans-bpa/,/boutique/,fallback,product tag
+/etiquette-produit/gourde-avec-paille/,/boutique/,fallback,product tag
+/etiquette-produit/variete-de-couleurs/,/boutique/,fallback,product tag
+/etiquette-produit/sante-des-muscles/,/boutique/,fallback,product tag
+/etiquette-produit/haute-qualite/,/boutique/,fallback,product tag
+/etiquette-produit/whey-isolate/,/boutique/,fallback,product tag
+/etiquette-produit/sucres/,/boutique/,fallback,product tag
+/etiquette-produit/hydro/,/boutique/,fallback,product tag
+/etiquette-produit/glucides/,/boutique/,fallback,product tag
+/etiquette-produit/influx-sanguin/,/boutique/,fallback,product tag
+/etiquette-produit/style-moderne/,/boutique/,fallback,product tag
+/etiquette-produit/glycogene/,/boutique/,fallback,product tag
+/category/uncategorized/,/blog/,fallback,WP blog tag/category
+/tag/musculation/,/blog/,fallback,WP blog tag/category
+/tag/utilisation-efficace/,/blog/,fallback,WP blog tag/category
+/category/proteines/,/blog/,fallback,WP blog tag/category
+/tag/proteine-de-whey/,/blog/,fallback,WP blog tag/category
+/category/nutrition-tips/,/blog/,fallback,WP blog tag/category
+/tag/fruits/,/blog/,fallback,WP blog tag/category
+/tag/types/,/blog/,fallback,WP blog tag/category
+/tag/vegetables/,/blog/,fallback,WP blog tag/category
+/category/nutrition-sportive/,/blog/,fallback,WP blog category
+/author/infonutrifitness-ch/,/a-propos/,fallback,author archive
+/marque/applied-nutrition/,/marque/applied-nutrition/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/beebad/,/marque/beebad/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/big/,/marque/bigs/,exact,Brand mapped per instructions
+/marque/bigman/,/marque/bigman/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/bigs-supplements/,/marque/bigs/,exact,Brand mapped per instructions
+/marque/bio-pour-tous/,/marque/bio-pour-tous/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/bioyos/,/marque/bioyos/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/bodyattack/,/marque/bodyattack/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/dirty-squads/,/marque/dirty-squads/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/dymatize/,/marque/dymatize/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/eurovo/,/marque/eurovo/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/ghost/,/marque/ghost/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/ingredients/,/marques/,fallback,Brand mapped per instructions
+/marque/marvelous/,/marque/marvelous/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/moose-muscle/,/marque/moose-muscle/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/more/,/marque/more/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/nutrifit/,/marque/nutrifitness/,exact,Brand mapped per instructions
+/marque/nutry/,/marques/,fallback,Brand mapped per instructions
+/marque/optimum-nutrition/,/marque/optimum-nutrition/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/ozer/,/marques/,fallback,Brand mapped per instructions
+/marque/per4m/,/marque/per4m/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/powerfood/,/marque/powerfood/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/pronutrition-it/,/marque/pronutrition/,exact,Brand mapped per instructions
+/marque/shilajit/,/marque/shilajit/,check,Do NOT redirect. Must be 200 on new site (Batch 4). If 404 set new_path=/marques/ and type=fallback
+/marque/weider/,/marques/,fallback,Brand mapped per instructions
+/brand/per4m/,/marque/per4m/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/bioyos/,/marque/bioyos/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/powerfood/,/marque/powerfood/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/shilajit/,/marque/shilajit/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/nutrifit/,/marque/nutrifitness/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/big/,/marque/bigs/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/moose-muscle/,/marque/moose-muscle/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/eurovo/,/marque/eurovo/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/bigman/,/marque/bigman/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/dirty-squads/,/marque/dirty-squads/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/swanson-2/,/marques/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/more/,/marque/more/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/ozer/,/marques/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/bodyattack/,/marque/bodyattack/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/brand/applied-nutrition/,/marque/applied-nutrition/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
+/marque/prozis/,/marques/,fallback,Brand mapped per instructions
+/categorie-produit/PERTE-DE-POIDS,/categorie/perte-de-poids/,exact,Case-insensitive variant without slash
