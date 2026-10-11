@@ -25,7 +25,7 @@ export default function GoogleCustomerReviewsOptIn({
   estimatedDeliveryDate,
   products = [],
 }: GoogleCustomerReviewsOptInProps) {
-  const merchantId = process.env.NEXT_PUBLIC_MERCHANT_CENTER_ID || '5859141493';
+  const merchantId = process.env.NEXT_PUBLIC_MERCHANT_CENTER_ID || '5859879017';
 
   // Format delivery date to YYYY-MM-DD
   const deliveryDate = useMemo(() => {
@@ -49,7 +49,7 @@ export default function GoogleCustomerReviewsOptIn({
         window.gapi.load('surveyoptin', function () {
           if (window.gapi?.surveyoptin?.render) {
             const config: Record<string, any> = {
-              merchant_id: Number(merchantId) || 5859141493,
+              merchant_id: Number(merchantId) || 5859879017,
               order_id: orderId,
               email: email,
               delivery_country: deliveryCountry || 'CH',
@@ -87,7 +87,7 @@ export default function GoogleCustomerReviewsOptIn({
                 window.gapi.load('surveyoptin', function() {
                   if (window.gapi && window.gapi.surveyoptin) {
                     window.gapi.surveyoptin.render({
-                      "merchant_id": ${Number(merchantId) || 5859141493},
+                      "merchant_id": ${Number(merchantId) || 5859879017},
                       "order_id": ${JSON.stringify(orderId)},
                       "email": ${JSON.stringify(email)},
                       "delivery_country": ${JSON.stringify(deliveryCountry || 'CH')},
