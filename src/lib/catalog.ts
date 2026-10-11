@@ -1646,7 +1646,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 4,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CARAMEL.png",
+        "src": "/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CARAMEL.png",
         "alt": {
           "fr": "Sandwich Keto Bar – Biscuit protéiné keto au beurre de cacahuètes, 16 g de protéines et 10,3 g de fibres.",
           "de": "Sandwich Keto Bar – Biscuit protéiné keto au beurre de cacahuètes, 16 g de protéines et 10,3 g de fibres.",
@@ -1657,7 +1657,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-VANILLE.png",
+        "src": "/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-VANILLE.png",
         "alt": {
           "fr": "Sandwich Keto Bar",
           "de": "Sandwich Keto Bar",
@@ -1668,7 +1668,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-.png",
+        "src": "/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-.png",
         "alt": {
           "fr": "Sandwich Keto Bar",
           "de": "Sandwich Keto Bar",
@@ -1679,7 +1679,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CHOCOLAT.png",
+        "src": "/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CHOCOLAT.png",
         "alt": {
           "fr": "Sandwich Keto Bar",
           "de": "Sandwich Keto Bar",
@@ -1777,7 +1777,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 29.9,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-.png",
+        "src": "/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-.png",
         "alt": {
           "fr": "Applied Creatine Monohydrate 250g",
           "de": "Applied Creatine Monohydrate 250g",
@@ -1788,7 +1788,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-NUTRI.webp",
+        "src": "/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-NUTRI.webp",
         "alt": {
           "fr": "Applied Creatine Monohydrate 250g",
           "de": "Applied Creatine Monohydrate 250g",
@@ -1897,7 +1897,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/09/GLUTAMINE-KYOWA-300G-NUTRITION.webp",
+        "src": "/wp-content/uploads/2026/09/GLUTAMINE-KYOWA-300G-NUTRITION.webp",
         "alt": {
           "fr": "Marvelous Glutamine Kyowa 300g",
           "de": "Marvelous Glutamine Kyowa 300g",
@@ -2001,7 +2001,7 @@ export const PRODUCTS: ProductItem[] = [
     "compareAtPriceChf": 49.9,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/07/livre.webp",
+        "src": "/wp-content/uploads/2026/07/livre.webp",
         "alt": {
           "fr": "Couverture du guide numérique « Le Guide ultime sur les compléments »",
           "de": "Couverture du guide numérique « Le Guide ultime sur les compléments »",
@@ -2099,7 +2099,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/08/4.png",
+        "src": "/wp-content/uploads/2026/08/4.png",
         "alt": {
           "fr": "FARINE D'AVOINE PRONUTRITION – Farine d'avoine instantanée avec goûts",
           "de": "FARINE D'AVOINE PRONUTRITION – Farine d'avoine instantanée avec goûts",
@@ -2110,7 +2110,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/08/CACAO-NOISETTES.png",
+        "src": "/wp-content/uploads/2026/08/CACAO-NOISETTES.png",
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2121,7 +2121,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/08/COOKIE.png",
+        "src": "/wp-content/uploads/2026/08/COOKIE.png",
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2132,7 +2132,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/08/CARAMEL.png",
+        "src": "/wp-content/uploads/2026/08/CARAMEL.png",
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2143,7 +2143,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/08/NOISETTES.png",
+        "src": "/wp-content/uploads/2026/08/NOISETTES.png",
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2241,7 +2241,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/07/GLYCINE-300G.png",
+        "src": "/wp-content/uploads/2026/07/GLYCINE-300G.png",
         "alt": {
           "fr": "GLYCINE 300G BIGMAN – L-Glycine pure en poudre haute qualité",
           "de": "GLYCINE 300G BIGMAN – L-Glycine pure en poudre haute qualité",
@@ -2252,7 +2252,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/07/GLYCINE-300G-NUTRITION.png",
+        "src": "/wp-content/uploads/2026/07/GLYCINE-300G-NUTRITION.png",
         "alt": {
           "fr": "Glycine 300g",
           "de": "Glycine 300g",
@@ -2350,7 +2350,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-1.png",
+        "src": "/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-1.png",
         "alt": {
           "fr": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
           "de": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
@@ -2361,7 +2361,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-NUTRI.png",
+        "src": "/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-NUTRI.png",
         "alt": {
           "fr": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
           "de": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
@@ -2459,7 +2459,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS.png",
+        "src": "/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS.png",
         "alt": {
           "fr": "ZINC BISGLYCINATE 160 CAPS Body Attack – Zinc bisglycinate hautement assimilable",
           "de": "ZINC BISGLYCINATE 160 CAPS Body Attack – Zinc bisglycinate hautement assimilable",
@@ -2470,7 +2470,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS-NUTRI.png",
+        "src": "/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS-NUTRI.png",
         "alt": {
           "fr": "Zinc Bisglycinate 160 CAPS",
           "de": "Zinc Bisglycinate 160 CAPS",
@@ -2579,7 +2579,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FAT-BURN-60-CAPS-NUTRI.webp",
+        "src": "/wp-content/uploads/2026/06/FAT-BURN-60-CAPS-NUTRI.webp",
         "alt": {
           "fr": "Fat Burn 60 CAPS",
           "de": "Fat Burn 60 CAPS",
@@ -2682,7 +2682,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-1.png",
+        "src": "/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-1.png",
         "alt": {
           "fr": "bromelaine 60 tabs 1000mg pronutrition digestion inflammation ananas",
           "de": "bromelaine 60 tabs 1000mg pronutrition digestion inflammation ananas",
@@ -2693,7 +2693,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-NUTRI.png",
+        "src": "/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-NUTRI.png",
         "alt": {
           "fr": "Bromélaïne 60 TABS 1000mg",
           "de": "Bromélaïne 60 TABS 1000mg",
@@ -2791,7 +2791,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/BERBERINA-60-TABS-1-1.png",
+        "src": "/wp-content/uploads/2026/06/BERBERINA-60-TABS-1-1.png",
         "alt": {
           "fr": "BERBERINE 60 TABS – Complément à base de berbérine et chardon-marie",
           "de": "BERBERINE 60 TABS – Complément à base de berbérine et chardon-marie",
@@ -2802,7 +2802,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/BERBERINA-60-TABS-NUTRI.png",
+        "src": "/wp-content/uploads/2026/06/BERBERINA-60-TABS-NUTRI.png",
         "alt": {
           "fr": "Berberina 60 TABS",
           "de": "Berberina 60 TABS",
@@ -2900,7 +2900,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 1,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
+        "src": "/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
         "alt": {
           "fr": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
           "de": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
@@ -2911,7 +2911,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-NUTRITION.png",
+        "src": "/wp-content/uploads/2026/06/FRUTILU-NUTRITION.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -2922,7 +2922,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-ICE-TEA-LEMON-.png",
+        "src": "/wp-content/uploads/2026/06/FRUTILU-ICE-TEA-LEMON-.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -2933,7 +2933,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-LEMON-LIME.png",
+        "src": "/wp-content/uploads/2026/06/FRUTILU-LEMON-LIME.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -2944,7 +2944,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-POMME.png",
+        "src": "/wp-content/uploads/2026/06/FRUTILU-POMME.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -2955,7 +2955,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-COLA.png",
+        "src": "/wp-content/uploads/2026/06/FRUTILU-COLA.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -2966,7 +2966,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
+        "src": "/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
         "alt": {
           "fr": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
           "de": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
@@ -2977,7 +2977,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-PASTEQUE.png",
+        "src": "/wp-content/uploads/2026/06/FRUTILU-PASTEQUE.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3075,7 +3075,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-.png",
+        "src": "/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-.png",
         "alt": {
           "fr": "\"purée amande complète bio 650g 100% naturelle\" \"beurre amande bio riche protéines fibres\" \"purée amande texture naturelle sans additifs\" \"amandes bio transformées en purée nutrition sportive\"",
           "de": "\"purée amande complète bio 650g 100% naturelle\" \"beurre amande bio riche protéines fibres\" \"purée amande texture naturelle sans additifs\" \"amandes bio transformées en purée nutrition sportive\"",
@@ -3086,7 +3086,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-NUTRI.png",
+        "src": "/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-NUTRI.png",
         "alt": {
           "fr": "Purée D’amande 650g",
           "de": "Purée D’amande 650g",
@@ -3184,7 +3184,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 4,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
+        "src": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
         "alt": {
           "fr": "Abe Drink",
           "de": "Abe Drink",
@@ -3195,7 +3195,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/05/ABE-DRINK-PRE-WORKOUT-NUTRITION.webp",
+        "src": "/wp-content/uploads/2026/05/ABE-DRINK-PRE-WORKOUT-NUTRITION.webp",
         "alt": {
           "fr": "Abe Drink",
           "de": "Abe Drink",
@@ -3293,7 +3293,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/05/ASHWAGANDHA-KSM-66-1.png",
+        "src": "/wp-content/uploads/2026/05/ASHWAGANDHA-KSM-66-1.png",
         "alt": {
           "fr": "Textes ALT (images produit) \"Ashwagandha KSM-66 90 capsules BIGMAN complément alimentaire\" \"gélules ashwagandha KSM-66 extrait racine 5% withanolides\" \"flacon ashwagandha premium BIGMAN nutrition sportive\" \"ashwagandha KSM-66 capsules végétales haute qualité\"",
           "de": "Textes ALT (images produit) \"Ashwagandha KSM-66 90 capsules BIGMAN complément alimentaire\" \"gélules ashwagandha KSM-66 extrait racine 5% withanolides\" \"flacon ashwagandha premium BIGMAN nutrition sportive\" \"ashwagandha KSM-66 capsules végétales haute qualité\"",
@@ -3391,7 +3391,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 52,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
+        "src": "/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "alt": {
           "fr": "Anabolic X – Mass Gainer Hybride pour Prise de Masse",
           "de": "Anabolic X – Mass Gainer Hybride pour Prise de Masse",
@@ -3402,7 +3402,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-NUTRITION.webp",
+        "src": "/wp-content/uploads/2026/02/ANABOLIC-MASS-NUTRITION.webp",
         "alt": {
           "fr": "Anabolic Mass 2.5kg",
           "de": "Anabolic Mass 2.5kg",
@@ -3612,7 +3612,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/Dirty-Cluster-Dextrin-1kg-nutrition.webp",
+        "src": "/wp-content/uploads/2025/11/Dirty-Cluster-Dextrin-1kg-nutrition.webp",
         "alt": {
           "fr": "Dirty Cluster Dex 1kg",
           "de": "Dirty Cluster Dex 1kg",
@@ -3715,7 +3715,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-LEMON-FIRST-300g.png",
+        "src": "/wp-content/uploads/2025/11/AMINIX-LEMON-FIRST-300g.png",
         "alt": {
           "fr": "Dirty Squads AMINO X9 – Intra-workout aux 9 EAA et eau de coco, sans sucre",
           "de": "Dirty Squads AMINO X9 – Intra-workout aux 9 EAA et eau de coco, sans sucre",
@@ -3726,7 +3726,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-TUTTI-FRUTTI-300g.webp",
+        "src": "/wp-content/uploads/2025/11/AMINIX-TUTTI-FRUTTI-300g.webp",
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -3737,7 +3737,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-PASTEQUE-300g.webp",
+        "src": "/wp-content/uploads/2025/11/AMINIX-PASTEQUE-300g.webp",
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -3748,7 +3748,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-LEMON-300g.webp",
+        "src": "/wp-content/uploads/2025/11/AMINIX-LEMON-300g.webp",
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -3759,7 +3759,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-NUTRITION.webp",
+        "src": "/wp-content/uploads/2025/11/AMINIX-NUTRITION.webp",
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -3930,7 +3930,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 65,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMELO.png",
+        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMELO.png",
         "alt": {
           "fr": "Pot ISO 90X CFM 1 kg Dirty Squads, saveur caramel, vue de face",
           "de": "Pot ISO 90X CFM 1 kg Dirty Squads, saveur caramel, vue de face",
@@ -3941,7 +3941,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-VANILLA.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-VANILLA.webp",
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -3952,7 +3952,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-STRAWBERRY.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-STRAWBERRY.webp",
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -3963,7 +3963,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-COOKIECREAM.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-COOKIECREAM.webp",
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -3974,7 +3974,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CHOCOLATE.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CHOCOLATE.webp",
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -3985,7 +3985,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-NUTRITION.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-NUTRITION.webp",
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -4212,7 +4212,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 80,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLAT-1.png",
+        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLAT-1.png",
         "alt": {
           "fr": "Dirty Squads ISO 80X – Protéine triple phase WPC WPI MPI 83% pure",
           "de": "Dirty Squads ISO 80X – Protéine triple phase WPC WPI MPI 83% pure",
@@ -4223,7 +4223,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4234,7 +4234,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4245,7 +4245,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-VANILLA.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-VANILLA.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4256,7 +4256,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4267,7 +4267,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-NUTRITION.webp",
+        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-NUTRITION.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4466,7 +4466,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 9.9,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/CREATINE-90G.png",
+        "src": "/wp-content/uploads/2025/10/CREATINE-90G.png",
         "alt": {
           "fr": "Créatine Poudre 90g – Créatine monohydrate pure pour force et performance",
           "de": "Créatine Poudre 90g – Créatine monohydrate pure pour force et performance",
@@ -4477,7 +4477,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/CREATINE-90G-NUTRI.png",
+        "src": "/wp-content/uploads/2025/10/CREATINE-90G-NUTRI.png",
         "alt": {
           "fr": "Creatine Poudre 90g",
           "de": "Creatine Poudre 90g",
@@ -4575,7 +4575,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 7,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/PIADINA-KETO.png",
+        "src": "/wp-content/uploads/2025/10/PIADINA-KETO.png",
         "alt": {
           "fr": "Piadina Keto Pronutrition – Piadina low carb et riche en protéines fabriquée en Italie",
           "de": "Piadina Keto Pronutrition – Piadina low carb et riche en protéines fabriquée en Italie",
@@ -4586,7 +4586,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/PIADINA-KETO-NUTRI.png",
+        "src": "/wp-content/uploads/2025/10/PIADINA-KETO-NUTRI.png",
         "alt": {
           "fr": "Piadina Keto 120g",
           "de": "Piadina Keto 120g",
@@ -4684,7 +4684,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 3.5,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/BIG-FLAPJACK-GOLDEN-SYRUP-100G.png",
+        "src": "/wp-content/uploads/2025/10/BIG-FLAPJACK-GOLDEN-SYRUP-100G.png",
         "alt": {
           "fr": "Présentoir de barres Big Flapjack Muscle Moose 100 g, goût Golden Syrup",
           "de": "Présentoir de barres Big Flapjack Muscle Moose 100 g, goût Golden Syrup",
@@ -4695,7 +4695,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/BIG-FLAPJACK-CHERRY-BAKEWELL-100G.png",
+        "src": "/wp-content/uploads/2025/10/BIG-FLAPJACK-CHERRY-BAKEWELL-100G.png",
         "alt": {
           "fr": "Big Flapjack 100g",
           "de": "Big Flapjack 100g",
@@ -4706,7 +4706,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/BIG-FLAPJACK-CHOCOLATE-100G.png",
+        "src": "/wp-content/uploads/2025/10/BIG-FLAPJACK-CHOCOLATE-100G.png",
         "alt": {
           "fr": "Big Flapjack 100g",
           "de": "Big Flapjack 100g",
@@ -4717,7 +4717,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/BIG-FLAPJACK-COOKIE-CREAM-100G.png",
+        "src": "/wp-content/uploads/2025/10/BIG-FLAPJACK-COOKIE-CREAM-100G.png",
         "alt": {
           "fr": "Big Flapjack 100g",
           "de": "Big Flapjack 100g",
@@ -4728,7 +4728,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/BIG-FLAPJACK-100G-NUTRI.webp",
+        "src": "/wp-content/uploads/2025/10/BIG-FLAPJACK-100G-NUTRI.webp",
         "alt": {
           "fr": "Big Flapjack 100g",
           "de": "Big Flapjack 100g",
@@ -4837,7 +4837,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/SUPER-DIGESTIVE-60-CAPS-NUTRI.png",
+        "src": "/wp-content/uploads/2025/10/SUPER-DIGESTIVE-60-CAPS-NUTRI.png",
         "alt": {
           "fr": "Super Digestive 60 CAPS",
           "de": "Super Digestive 60 CAPS",
@@ -4951,7 +4951,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/HBVC-CHOLESTEROL-SUPPORT-90-CAPS-NUTRI.png",
+        "src": "/wp-content/uploads/2025/10/HBVC-CHOLESTEROL-SUPPORT-90-CAPS-NUTRI.png",
         "alt": {
           "fr": "Hbvc Cholesterol Support 90 CAPS",
           "de": "Hbvc Cholesterol Support 90 CAPS",
@@ -5065,7 +5065,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-1.png",
+        "src": "/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-1.png",
         "alt": {
           "fr": "Testoman 120 CAPS",
           "de": "Testoman 120 CAPS",
@@ -5076,7 +5076,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-2.png",
+        "src": "/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-2.png",
         "alt": {
           "fr": "Testoman 120 CAPS",
           "de": "Testoman 120 CAPS",
@@ -5190,7 +5190,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/NAC-PHARMA-GRADE-NUTRI.png",
+        "src": "/wp-content/uploads/2025/09/NAC-PHARMA-GRADE-NUTRI.png",
         "alt": {
           "fr": "NAC Pharma Grade 60 CAPS",
           "de": "NAC Pharma Grade 60 CAPS",
@@ -5293,7 +5293,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G.png",
+        "src": "/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G.png",
         "alt": {
           "fr": "Peanut Butter Crémeux 500g – Beurre de cacahuètes naturel riche en protéines et sans sucre ajouté",
           "de": "Peanut Butter Crémeux 500g – Beurre de cacahuètes naturel riche en protéines et sans sucre ajouté",
@@ -5304,7 +5304,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G-NUTRI-1.png",
+        "src": "/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G-NUTRI-1.png",
         "alt": {
           "fr": "Peanut Butter Cremeux 500g",
           "de": "Peanut Butter Cremeux 500g",
@@ -5402,7 +5402,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/CAFEINE-200MG-.png",
+        "src": "/wp-content/uploads/2025/09/CAFEINE-200MG-.png",
         "alt": {
           "fr": "Cafeine 200mg Pronutrition – Complément en caféine pure pour énergie et concentration",
           "de": "Cafeine 200mg Pronutrition – Complément en caféine pure pour énergie et concentration",
@@ -5413,7 +5413,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/CAFFEINE-200MG-NUTRI.png",
+        "src": "/wp-content/uploads/2025/09/CAFFEINE-200MG-NUTRI.png",
         "alt": {
           "fr": "Caffeine 200mg 60 TABS",
           "de": "Caffeine 200mg 60 TABS",
@@ -5511,7 +5511,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 4,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
+        "src": "/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5522,7 +5522,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-PEANUT-BUTTER.png",
+        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-PEANUT-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5533,7 +5533,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE.png",
+        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5544,7 +5544,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALE-PEANUT-BUTTER-1.png",
+        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALE-PEANUT-BUTTER-1.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5555,7 +5555,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALEE-PEANUT-BUTTER.png",
+        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALEE-PEANUT-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5566,7 +5566,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-BEURRE-DE-CACAHOUETE.png",
+        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-BEURRE-DE-CACAHOUETE.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5577,7 +5577,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-NOISETTES-BEURRES.png",
+        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-NOISETTES-BEURRES.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5588,7 +5588,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
+        "src": "/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5599,7 +5599,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER-NUTRI.png",
+        "src": "/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER-NUTRI.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5610,7 +5610,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/10/NUTRY-NUTS-WHITE-CHOC-PEANUT-BUTTER-NUTRI.png",
+        "src": "/wp-content/uploads/2025/10/NUTRY-NUTS-WHITE-CHOC-PEANUT-BUTTER-NUTRI.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5621,7 +5621,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-BLACK-PEANUT-BUTTER.png",
+        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-BLACK-PEANUT-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5719,7 +5719,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 5,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-CHOCO-BLANC.png",
+        "src": "/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-CHOCO-BLANC.png",
         "alt": {
           "fr": "MAX PROTÉINES COOKIE 36 g – Cookie protéiné riche en fibres et sans sucre ajouté",
           "de": "MAX PROTÉINES COOKIE 36 g – Cookie protéiné riche en fibres et sans sucre ajouté",
@@ -5730,7 +5730,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/MAX-COOKIES-36G-PROTEINES-NUTRI.png",
+        "src": "/wp-content/uploads/2025/09/MAX-COOKIES-36G-PROTEINES-NUTRI.png",
         "alt": {
           "fr": "Max Protéines Cookie",
           "de": "Max Protéines Cookie",
@@ -5741,7 +5741,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-BLANC-ROSE.png",
+        "src": "/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-BLANC-ROSE.png",
         "alt": {
           "fr": "MAX PROTÉINES COOKIE 36 g – Cookie protéiné riche en fibres et sans sucre ajouté",
           "de": "MAX PROTÉINES COOKIE 36 g – Cookie protéiné riche en fibres et sans sucre ajouté",
@@ -5752,7 +5752,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-CHOCO-BLANC.png",
+        "src": "/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-CHOCO-BLANC.png",
         "alt": {
           "fr": "MAX PROTÉINES COOKIE 36 g – Cookie protéiné riche en fibres et sans sucre ajouté",
           "de": "MAX PROTÉINES COOKIE 36 g – Cookie protéiné riche en fibres et sans sucre ajouté",
@@ -5763,7 +5763,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-CHOCO-CHOC.png",
+        "src": "/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-CHOCO-CHOC.png",
         "alt": {
           "fr": "MAX PROTÉINES COOKIE 36 g – Cookie protéiné riche en fibres et sans sucre ajouté",
           "de": "MAX PROTÉINES COOKIE 36 g – Cookie protéiné riche en fibres et sans sucre ajouté",
@@ -5774,7 +5774,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-BLACK-CHOCO.png",
+        "src": "/wp-content/uploads/2025/09/MAX-PROTEINES-COOKIE-BLACK-CHOCO.png",
         "alt": {
           "fr": "Max Protéines Cookie",
           "de": "Max Protéines Cookie",
@@ -5872,7 +5872,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/SPRAY-COOKER.png",
+        "src": "/wp-content/uploads/2025/09/SPRAY-COOKER.png",
         "alt": {
           "fr": "More Nutrition 2 Calories Huile en Spray 200ml – cuisson légère et antiadhésive",
           "de": "More Nutrition 2 Calories Huile en Spray 200ml – cuisson légère et antiadhésive",
@@ -5883,7 +5883,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/spray-cooker-nutrition.jpeg",
+        "src": "/wp-content/uploads/2025/09/spray-cooker-nutrition.jpeg",
         "alt": {
           "fr": "More Spray Cooker 200ml",
           "de": "More Spray Cooker 200ml",
@@ -5992,7 +5992,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/08/L-CITRULLINE-PURE-NUTRITION-2.png",
+        "src": "/wp-content/uploads/2025/08/L-CITRULLINE-PURE-NUTRITION-2.png",
         "alt": {
           "fr": "L-citrulline 100% Pure 250g",
           "de": "L-citrulline 100% Pure 250g",
@@ -6003,7 +6003,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/08/L-CITRULLINE-NUTRITION-2.png",
+        "src": "/wp-content/uploads/2025/08/L-CITRULLINE-NUTRITION-2.png",
         "alt": {
           "fr": "L-citrulline 100% Pure 250g",
           "de": "L-citrulline 100% Pure 250g",
@@ -6106,7 +6106,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 79.9,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-CHOCO-3KG.png",
+        "src": "/wp-content/uploads/2025/08/MEGA-MASS-CHOCO-3KG.png",
         "alt": {
           "fr": "Dymatize Mega Mass 4000 – Gainer prise de masse",
           "de": "Dymatize Mega Mass 4000 – Gainer prise de masse",
@@ -6117,7 +6117,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-FRAISES-3KG.png",
+        "src": "/wp-content/uploads/2025/08/MEGA-MASS-FRAISES-3KG.png",
         "alt": {
           "fr": "Mega Mass 4000 3kg",
           "de": "Mega Mass 4000 3kg",
@@ -6128,7 +6128,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-VANILLE-3KG.png",
+        "src": "/wp-content/uploads/2025/08/MEGA-MASS-VANILLE-3KG.png",
         "alt": {
           "fr": "Mega Mass 4000 3kg",
           "de": "Mega Mass 4000 3kg",
@@ -6226,7 +6226,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 79,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
+        "src": "/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
         "alt": {
           "fr": "Muscles Whey 2kg – Protéine WPC80 pure dubai white chocolate",
           "de": "Muscles Whey 2kg – Protéine WPC80 pure dubai white chocolate",
@@ -6551,7 +6551,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 79,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "https://nutrifitness.ch/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
+        "image": "/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
         "stockGeneva": 25,
         "stockPortugal": 25
       }
@@ -6582,7 +6582,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 22,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
+        "src": "/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "alt": {
           "fr": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
           "de": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
@@ -6593,7 +6593,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION.png",
         "alt": {
           "fr": "Marvelous Crème De Riz 1.4kg",
           "de": "Marvelous Crème De Riz 1.4kg",
@@ -6604,7 +6604,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION-2.png",
+        "src": "/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION-2.png",
         "alt": {
           "fr": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
           "de": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
@@ -6842,7 +6842,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/06/CALIBRATION-120-CAPS-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/06/CALIBRATION-120-CAPS-NUTRITION.png",
         "alt": {
           "fr": "Calibration Organe Support 120 CAPS",
           "de": "Calibration Organe Support 120 CAPS",
@@ -6945,7 +6945,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/06/PANCAKE-800G-CHOCOLAT.png",
+        "src": "/wp-content/uploads/2025/06/PANCAKE-800G-CHOCOLAT.png",
         "alt": {
           "fr": "Tableau des valeurs nutritionnelles pour pancake protéinés (par portion de 50 g et 100 g)",
           "de": "Tableau des valeurs nutritionnelles pour pancake protéinés (par portion de 50 g et 100 g)",
@@ -7157,7 +7157,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/06/STAGE-45-CAPS-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/06/STAGE-45-CAPS-NUTRITION.png",
         "alt": {
           "fr": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
           "de": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
@@ -7271,7 +7271,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/06/MK7-VIT-D3-K2-90-CAPS-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/06/MK7-VIT-D3-K2-90-CAPS-NUTRITION.png",
         "alt": {
           "fr": "MK7 VIT D3 K2 – 90 CAPS",
           "de": "MK7 VIT D3 K2 – 90 CAPS",
@@ -7374,7 +7374,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-.png",
+        "src": "/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-.png",
         "alt": {
           "fr": "Complément fer liposomale + B9 + B12 – haute absorption",
           "de": "Complément fer liposomale + B9 + B12 – haute absorption",
@@ -7385,7 +7385,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-NUTRITION.png",
         "alt": {
           "fr": "Complément fer liposomal + B9 + B12 – haute absorption",
           "de": "Complément fer liposomal + B9 + B12 – haute absorption",
@@ -7483,7 +7483,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/05/PURE-SHILAJIT.png",
+        "src": "/wp-content/uploads/2025/05/PURE-SHILAJIT.png",
         "alt": {
           "fr": "Résine pure de Shilajit naturel - Énergie et vitalité",
           "de": "Résine pure de Shilajit naturel - Énergie et vitalité",
@@ -7494,7 +7494,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/05/PURE-SHILAJIT-RESINE.png",
+        "src": "/wp-content/uploads/2025/05/PURE-SHILAJIT-RESINE.png",
         "alt": {
           "fr": "Résine pure de Shilajit naturel - Énergie et vitalité",
           "de": "Résine pure de Shilajit naturel - Énergie et vitalité",
@@ -7505,7 +7505,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/05/5-1.png",
+        "src": "/wp-content/uploads/2025/05/5-1.png",
         "alt": {
           "fr": "Résine pure de Shilajit naturel - Énergie et vitalité",
           "de": "Résine pure de Shilajit naturel - Énergie et vitalité",
@@ -7603,7 +7603,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G.png",
+        "src": "/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G.png",
         "alt": {
           "fr": "Complément articulaire en poudre GLUCOART – Glucosamine, collagène, MSM, chondroïtine, acide hyaluronique",
           "de": "Complément articulaire en poudre GLUCOART – Glucosamine, collagène, MSM, chondroïtine, acide hyaluronique",
@@ -7614,7 +7614,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G-NUTRITION.png",
         "alt": {
           "fr": "Glucoart Poudre 200g",
           "de": "Glucoart Poudre 200g",
@@ -7712,7 +7712,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/05/GLUCOART-90-TABS.png",
+        "src": "/wp-content/uploads/2025/05/GLUCOART-90-TABS.png",
         "alt": {
           "fr": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
           "de": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
@@ -7723,7 +7723,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/05/GLUCOART-90-TABS-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/05/GLUCOART-90-TABS-NUTRITION.png",
         "alt": {
           "fr": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
           "de": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
@@ -7821,7 +7821,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 70,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
+        "src": "/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
         "alt": {
           "fr": "OZER Post Workout Protéine Végétale Cookie - Complément vegan riche en protéines, BCAA, spiruline et vitamine C\"",
           "de": "OZER Post Workout Protéine Végétale Cookie - Complément vegan riche en protéines, BCAA, spiruline et vitamine C\"",
@@ -7919,7 +7919,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 50,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/04/ONLY-WHEY-ONE-PIECE-1KG.png",
+        "src": "/wp-content/uploads/2025/04/ONLY-WHEY-ONE-PIECE-1KG.png",
         "alt": {
           "fr": "Protéine en poudre Whey Zero One Piece Chocolat – BIG Nutrition",
           "de": "Protéine en poudre Whey Zero One Piece Chocolat – BIG Nutrition",
@@ -8017,7 +8017,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/04/12.png",
+        "src": "/wp-content/uploads/2025/04/12.png",
         "alt": {
           "fr": "NAC 600 mg + Vitamine D & C – Immunité et Détox",
           "de": "NAC 600 mg + Vitamine D & C – Immunité et Détox",
@@ -8115,7 +8115,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/04/11.png",
+        "src": "/wp-content/uploads/2025/04/11.png",
         "alt": {
           "fr": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
           "de": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
@@ -8126,7 +8126,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/04/CARNITINE-20-VIALS-LEMON-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/04/CARNITINE-20-VIALS-LEMON-NUTRITION.png",
         "alt": {
           "fr": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
           "de": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
@@ -8224,7 +8224,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-1.png",
+        "src": "/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-1.png",
         "alt": {
           "fr": "Testo anabol Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
           "de": "Testo anabol Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
@@ -8235,7 +8235,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-nutrition.png",
+        "src": "/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-nutrition.png",
         "alt": {
           "fr": "Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
           "de": "Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
@@ -8333,7 +8333,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS.png",
+        "src": "/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS.png",
         "alt": {
           "fr": "Nox Burn : brûleur de graisses thermogénique pour énergie et performance",
           "de": "Nox Burn : brûleur de graisses thermogénique pour énergie et performance",
@@ -8344,7 +8344,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS-NUTRITION.png",
         "alt": {
           "fr": "NOX Burn 90 CAPS",
           "de": "NOX Burn 90 CAPS",
@@ -8453,7 +8453,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/02/Magnesium-Bisglycinate-nutrition.png",
+        "src": "/wp-content/uploads/2025/02/Magnesium-Bisglycinate-nutrition.png",
         "alt": {
           "fr": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
           "de": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
@@ -8665,7 +8665,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/01/ALIVE-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/01/ALIVE-NUTRITION.png",
         "alt": {
           "fr": "Alive Systeme Immunitaire 120 CAPS",
           "de": "Alive Systeme Immunitaire 120 CAPS",
@@ -8768,7 +8768,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 3.5,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-POIRE-50G.png",
+        "src": "/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-POIRE-50G.png",
         "alt": {
           "fr": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
           "de": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
@@ -8779,7 +8779,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-50G-NUTRITION.png",
+        "src": "/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-50G-NUTRITION.png",
         "alt": {
           "fr": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
           "de": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
@@ -8877,7 +8877,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 3.5,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML.png",
+        "src": "/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML.png",
         "alt": {
           "fr": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
           "de": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
@@ -8888,7 +8888,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML-NUTRITION-2.png",
+        "src": "/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML-NUTRITION-2.png",
         "alt": {
           "fr": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
           "de": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
@@ -8986,7 +8986,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 95,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
+        "src": "/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
         "alt": {
           "fr": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
           "de": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
@@ -8997,7 +8997,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-Nutrition.png",
+        "src": "/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-Nutrition.png",
         "alt": {
           "fr": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
           "de": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
@@ -9168,7 +9168,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 37,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/12/PEPTAN-COLLAGEN-MARIN-300G.png",
+        "src": "/wp-content/uploads/2024/12/PEPTAN-COLLAGEN-MARIN-300G.png",
         "alt": {
           "fr": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
           "de": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
@@ -9179,7 +9179,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.57.png",
+        "src": "/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.57.png",
         "alt": {
           "fr": "PEPTAN DE COLLAGEN LEMON NUTRITION",
           "de": "PEPTAN DE COLLAGEN LEMON NUTRITION",
@@ -9190,7 +9190,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.29.png",
+        "src": "/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.29.png",
         "alt": {
           "fr": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
           "de": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
@@ -9288,7 +9288,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 59.9,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
+        "src": "/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
         "alt": {
           "fr": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
           "de": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
@@ -9299,7 +9299,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/12/WHEY-ON-900G-NUTRITION.png",
+        "src": "/wp-content/uploads/2024/12/WHEY-ON-900G-NUTRITION.png",
         "alt": {
           "fr": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
           "de": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
@@ -9397,7 +9397,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 55,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png",
+        "src": "/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png",
         "alt": {
           "fr": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
           "de": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
@@ -9408,7 +9408,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-WHEY-900G-NUTRI.png",
+        "src": "/wp-content/uploads/2024/12/GHOST-WHEY-900G-NUTRI.png",
         "alt": {
           "fr": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
           "de": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
@@ -9506,7 +9506,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/BEURRE-DE-CACAHOUETE-1KG-PREMIUM.png",
+        "src": "/wp-content/uploads/2024/11/BEURRE-DE-CACAHOUETE-1KG-PREMIUM.png",
         "alt": {
           "fr": "Beurre de cacahuètes body attack naturel, riche en protéines et en fibres, texture croquante.",
           "de": "Beurre de cacahuètes body attack naturel, riche en protéines et en fibres, texture croquante.",
@@ -9517,7 +9517,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CRUNCHY-NUTRI.jpg",
+        "src": "/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CRUNCHY-NUTRI.jpg",
         "alt": {
           "fr": "PEANUT BUTTER 1KG CRUNCHY NUTRI",
           "de": "PEANUT BUTTER 1KG CRUNCHY NUTRI",
@@ -9528,7 +9528,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CREAMY-NUTRI.jpeg",
+        "src": "/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CREAMY-NUTRI.jpeg",
         "alt": {
           "fr": "PEANUT BUTTER 1KG CREAMY NUTRI",
           "de": "PEANUT BUTTER 1KG CREAMY NUTRI",
@@ -9626,7 +9626,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 120,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/ISO-BULK-CHOCO-1.8KG.png",
+        "src": "/wp-content/uploads/2024/11/ISO-BULK-CHOCO-1.8KG.png",
         "alt": {
           "fr": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
           "de": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
@@ -9637,7 +9637,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/ISO-BULK-NUTRI-1.png",
+        "src": "/wp-content/uploads/2024/11/ISO-BULK-NUTRI-1.png",
         "alt": {
           "fr": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
           "de": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
@@ -9648,7 +9648,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/ISO-BULK-NUTRI-2.png",
+        "src": "/wp-content/uploads/2024/11/ISO-BULK-NUTRI-2.png",
         "alt": {
           "fr": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
           "de": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
@@ -9847,7 +9847,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 69,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/ultimate-whey-2kg-1.png",
+        "src": "/wp-content/uploads/2024/11/ultimate-whey-2kg-1.png",
         "alt": {
           "fr": "Ultimate Whey Bigman – Protéine riche en BCAA et faible en graisses, idéale pour la récupération musculaire",
           "de": "Ultimate Whey Bigman – Protéine riche en BCAA et faible en graisses, idéale pour la récupération musculaire",
@@ -9945,7 +9945,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/BM-EAA-300G-1.png",
+        "src": "/wp-content/uploads/2024/11/BM-EAA-300G-1.png",
         "alt": {
           "fr": "EAA BigMan avec électrolytes - récupération et performance",
           "de": "EAA BigMan avec électrolytes - récupération et performance",
@@ -9956,7 +9956,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/EAA-VALEUR-NUTRI.webp",
+        "src": "/wp-content/uploads/2024/11/EAA-VALEUR-NUTRI.webp",
         "alt": {
           "fr": "EAA BM 300G",
           "de": "EAA BM 300G",
@@ -10054,7 +10054,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 60,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/FURIUX-MASS-3K-CHOCO.png",
+        "src": "/wp-content/uploads/2024/11/FURIUX-MASS-3K-CHOCO.png",
         "alt": {
           "fr": "Furiux Gainer Bigman - Complément pour prise de masse",
           "de": "Furiux Gainer Bigman - Complément pour prise de masse",
@@ -10065,7 +10065,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/Capture-decran-2024-11-13-a-18.12.49.png",
+        "src": "/wp-content/uploads/2024/11/Capture-decran-2024-11-13-a-18.12.49.png",
         "alt": {
           "fr": "FURIUX GAINER NUTRITION",
           "de": "FURIUX GAINER NUTRITION",
@@ -10076,7 +10076,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/6.jpg",
+        "src": "/wp-content/uploads/2024/11/6.jpg",
         "alt": {
           "fr": "Furiux Gainer 3kg",
           "de": "Furiux Gainer 3kg",
@@ -10174,7 +10174,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/ENERDYN-ELECTROLYTES.png",
+        "src": "/wp-content/uploads/2024/11/ENERDYN-ELECTROLYTES.png",
         "alt": {
           "fr": "Booster de performance physique et énergie quotidienne.",
           "de": "Booster de performance physique et énergie quotidienne.",
@@ -10185,7 +10185,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/ENERDYN-NUTRITION.png",
+        "src": "/wp-content/uploads/2024/11/ENERDYN-NUTRITION.png",
         "alt": {
           "fr": "FURIUX NUTRITION 2",
           "de": "FURIUX NUTRITION 2",
@@ -10283,7 +10283,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/BM-CREAPURE-300G.png",
+        "src": "/wp-content/uploads/2024/11/BM-CREAPURE-300G.png",
         "alt": {
           "fr": "Creapure BigMan 300g - Créatine Monohydrate pure pour endurance et récupération optimale",
           "de": "Creapure BigMan 300g - Créatine Monohydrate pure pour endurance et récupération optimale",
@@ -10294,7 +10294,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/Capture-decran-2024-11-09-a-16.18.36.png",
+        "src": "/wp-content/uploads/2024/11/Capture-decran-2024-11-09-a-16.18.36.png",
         "alt": {
           "fr": "CREAPURE POUDRE 300G NUTRITION",
           "de": "CREAPURE POUDRE 300G NUTRITION",
@@ -10392,7 +10392,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/BM-GLUTAMINE-KYOWA-300G.png",
+        "src": "/wp-content/uploads/2024/11/BM-GLUTAMINE-KYOWA-300G.png",
         "alt": {
           "fr": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
           "de": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
@@ -10403,7 +10403,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/11/glutamine-nutrition.png",
+        "src": "/wp-content/uploads/2024/11/glutamine-nutrition.png",
         "alt": {
           "fr": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
           "de": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
@@ -10501,7 +10501,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/10/CALCIUM-120-TABS-1.png",
+        "src": "/wp-content/uploads/2024/10/CALCIUM-120-TABS-1.png",
         "alt": {
           "fr": "Calcium puissant soutien des os et des dents – essentiel pour la santé osseuse, musculaire et cardiovasculaire.",
           "de": "Calcium puissant soutien des os et des dents – essentiel pour la santé osseuse, musculaire et cardiovasculaire.",
@@ -10512,7 +10512,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png",
+        "src": "/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png",
         "alt": {
           "fr": "CALCIUM 1000MG 120 TABS NUTRITION",
           "de": "CALCIUM 1000MG 120 TABS NUTRITION",
@@ -10610,7 +10610,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/MAGNESIUM-BISGLYCINATE-1.png",
+        "src": "/wp-content/uploads/2024/09/MAGNESIUM-BISGLYCINATE-1.png",
         "alt": {
           "fr": "Magnésium bisglycinate pour relaxation, sommeil et récupération musculaire.",
           "de": "Magnésium bisglycinate pour relaxation, sommeil et récupération musculaire.",
@@ -10621,7 +10621,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/MAGNESIO-BISGLICINATE-NUTRITION.png",
+        "src": "/wp-content/uploads/2024/09/MAGNESIO-BISGLICINATE-NUTRITION.png",
         "alt": {
           "fr": "MAGNESIO BISGLICINATE NUTRITION",
           "de": "MAGNESIO BISGLICINATE NUTRITION",
@@ -10719,7 +10719,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/HYDRA-COCO-1.png",
+        "src": "/wp-content/uploads/2024/09/HYDRA-COCO-1.png",
         "alt": {
           "fr": "Per4m Hydra Electrolytes – Solution électrolytique pour une hydratation optimale et une meilleure performance musculaire et cardiovasculaire.",
           "de": "Per4m Hydra Electrolytes – Solution électrolytique pour une hydratation optimale et une meilleure performance musculaire et cardiovasculaire.",
@@ -10730,7 +10730,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/HYDRA-NUTRITION-.png",
+        "src": "/wp-content/uploads/2024/09/HYDRA-NUTRITION-.png",
         "alt": {
           "fr": "HYDRA NUTRITION",
           "de": "HYDRA NUTRITION",
@@ -10839,7 +10839,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/ZMA-MARVELOUS-NUTRITION.png",
+        "src": "/wp-content/uploads/2024/09/ZMA-MARVELOUS-NUTRITION.png",
         "alt": {
           "fr": "capsules de zma pour performance, récupération et équilibre hormonal",
           "de": "capsules de zma pour performance, récupération et équilibre hormonal",
@@ -10942,7 +10942,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png",
+        "src": "/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png",
         "alt": {
           "fr": "Farine de patate douce blanche, sans gluten, riche en fibres, idéale pour shakes et recettes saines.",
           "de": "Farine de patate douce blanche, sans gluten, riche en fibres, idéale pour shakes et recettes saines.",
@@ -10953,7 +10953,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE-NUTRITION.png",
+        "src": "/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE-NUTRITION.png",
         "alt": {
           "fr": "FARINE DE PATATE DOUCE NUTRITION",
           "de": "FARINE DE PATATE DOUCE NUTRITION",
@@ -11051,7 +11051,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/GLUTATHION-LIPOSOMALE-30-CAPS.png",
+        "src": "/wp-content/uploads/2024/09/GLUTATHION-LIPOSOMALE-30-CAPS.png",
         "alt": {
           "fr": "Glutathion liposomal avec Q10 et vitamine E – protection antioxydante et bien-être.",
           "de": "Glutathion liposomal avec Q10 et vitamine E – protection antioxydante et bien-être.",
@@ -11062,7 +11062,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-2.png",
+        "src": "/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-2.png",
         "alt": {
           "fr": "GLUTATHIONE LIPO 30 CAPS",
           "de": "GLUTATHIONE LIPO 30 CAPS",
@@ -11073,7 +11073,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-1.png",
+        "src": "/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-1.png",
         "alt": {
           "fr": "GLUTATHIONE LIPO 30 CAPS LIPO 30 CAPS NUTRITION 1",
           "de": "GLUTATHIONE LIPO 30 CAPS LIPO 30 CAPS NUTRITION 1",
@@ -11171,7 +11171,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/CREME-A-TARTINER-350G.png",
+        "src": "/wp-content/uploads/2024/09/CREME-A-TARTINER-350G.png",
         "alt": {
           "fr": "Crème à tartiner zéro sucre avec protéines – délicieuse et saine.",
           "de": "Crème à tartiner zéro sucre avec protéines – délicieuse et saine.",
@@ -11182,7 +11182,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/NUT-ZERO-350G-NUTRITION.png",
+        "src": "/wp-content/uploads/2024/09/NUT-ZERO-350G-NUTRITION.png",
         "alt": {
           "fr": "NUT ZERO 350G NUTRITION",
           "de": "NUT ZERO 350G NUTRITION",
@@ -11280,7 +11280,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
+        "src": "/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
         "alt": {
           "fr": "Farine de riz BigMan – Sans gluten, source d'énergie naturelle.",
           "de": "Farine de riz BigMan – Sans gluten, source d'énergie naturelle.",
@@ -11291,7 +11291,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/FARINE-DE-RIZ-1.5KG-NUTRITION.png",
+        "src": "/wp-content/uploads/2024/09/FARINE-DE-RIZ-1.5KG-NUTRITION.png",
         "alt": {
           "fr": "FARINE DE RIZ 1.5KG NUTRITION",
           "de": "FARINE DE RIZ 1.5KG NUTRITION",
@@ -11389,7 +11389,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/L-CARNITINE-ACETYL-60-CAPS-1.png",
+        "src": "/wp-content/uploads/2024/09/L-CARNITINE-ACETYL-60-CAPS-1.png",
         "alt": {
           "fr": "L-ACETIL-Carnitine 60 gélules – Performance physique et cognitive.",
           "de": "L-ACETIL-Carnitine 60 gélules – Performance physique et cognitive.",
@@ -11400,7 +11400,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/L-ACETYL-CARNITINE-60-CAPS-NUTRITION-1.png",
+        "src": "/wp-content/uploads/2024/09/L-ACETYL-CARNITINE-60-CAPS-NUTRITION-1.png",
         "alt": {
           "fr": "L-acetil Carnitine 60 CAPS",
           "de": "L-acetil Carnitine 60 CAPS",
@@ -11498,7 +11498,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 55,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
+        "src": "/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
         "alt": {
           "fr": "ISO WHEY ZERO – Complément protéiné pour croissance musculaire et récupération.",
           "de": "ISO WHEY ZERO – Complément protéiné pour croissance musculaire et récupération.",
@@ -11509,7 +11509,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/07/BM-ISO-WHEY-907G-NUTRITION.jpg",
+        "src": "/wp-content/uploads/2024/07/BM-ISO-WHEY-907G-NUTRITION.jpg",
         "alt": {
           "fr": "BM ISO WHEY 907G NUTRITION",
           "de": "BM ISO WHEY 907G NUTRITION",
@@ -11618,7 +11618,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/06/OMEGA-3-NUTRITION.png",
+        "src": "/wp-content/uploads/2024/06/OMEGA-3-NUTRITION.png",
         "alt": {
           "fr": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
           "de": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
@@ -11938,7 +11938,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/04/COLLAGENE-MIX-NUTRITION.png",
+        "src": "/wp-content/uploads/2024/04/COLLAGENE-MIX-NUTRITION.png",
         "alt": {
           "fr": "COLLAGENE MIX NUTRITION",
           "de": "COLLAGENE MIX NUTRITION",
@@ -12041,7 +12041,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/04/HYPE-EAA-300G.webp",
+        "src": "/wp-content/uploads/2024/04/HYPE-EAA-300G.webp",
         "alt": {
           "fr": "HYPE AMINO 270G - Poudre d'acides aminés pour performance musculaire et endurance, avec BCAA et acides aminés complexes.",
           "de": "HYPE AMINO 270G - Poudre d'acides aminés pour performance musculaire et endurance, avec BCAA et acides aminés complexes.",
@@ -12212,7 +12212,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 59,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/04/BIG-LEAN-GAINER-3KG.webp",
+        "src": "/wp-content/uploads/2024/04/BIG-LEAN-GAINER-3KG.webp",
         "alt": {
           "fr": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines",
           "de": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines",
@@ -12383,7 +12383,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 39.9,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/04/PROTEINE-VEGAN-RIZ-BRUN-BIO-500G.webp",
+        "src": "/wp-content/uploads/2024/04/PROTEINE-VEGAN-RIZ-BRUN-BIO-500G.webp",
         "alt": {
           "fr": "Protéine de Riz Brun Bio 82% pour la croissance musculaire et la récupération",
           "de": "Protéine de Riz Brun Bio 82% pour la croissance musculaire et la récupération",
@@ -12481,7 +12481,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/11/GOURDE-NF-AVEC-PAILLE.-600ML.webp",
+        "src": "/wp-content/uploads/2023/11/GOURDE-NF-AVEC-PAILLE.-600ML.webp",
         "alt": {
           "fr": "NutriFit gourde 600ml avec paille - pour une hydratation pratique et saine",
           "de": "NutriFit gourde 600ml avec paille - pour une hydratation pratique et saine",
@@ -12579,7 +12579,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS.png",
+        "src": "/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS.png",
         "alt": {
           "fr": "Flacon de zinc bisglycinate Applied Nutrition, 90 gélules, vue de face",
           "de": "Flacon de zinc bisglycinate Applied Nutrition, 90 gélules, vue de face",
@@ -12590,7 +12590,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS-NUTRI.webp",
+        "src": "/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS-NUTRI.webp",
         "alt": {
           "fr": "Zinc Bisglicinate 90 Cap",
           "de": "Zinc Bisglicinate 90 Cap",
@@ -12688,7 +12688,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp",
+        "src": "/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp",
         "alt": {
           "fr": "Shaker NutriFit avec double compartiment et fermeture étanche, idéal pour les boissons protéinées",
           "de": "Shaker NutriFit avec double compartiment et fermeture étanche, idéal pour les boissons protéinées",
@@ -12889,7 +12889,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 42,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/03/SAVIOR-CREATINE-950G.webp",
+        "src": "/wp-content/uploads/2023/03/SAVIOR-CREATINE-950G.webp",
         "alt": {
           "fr": "récupération optimale et croissance musculaire avec savior 950g",
           "de": "récupération optimale et croissance musculaire avec savior 950g",
@@ -13032,7 +13032,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/03/LIQUIDE-DE-BLANC-DOEUF-1L.webp",
+        "src": "/wp-content/uploads/2023/03/LIQUIDE-DE-BLANC-DOEUF-1L.webp",
         "alt": {
           "fr": "Blanc d'œuf liquide pasteurisé 1L, une source pratique de protéines de haute qualité, idéale pour cuisiner et ajouter à votre routine quotidienne.",
           "de": "Blanc d'œuf liquide pasteurisé 1L, une source pratique de protéines de haute qualité, idéale pour cuisiner et ajouter à votre routine quotidienne.",
@@ -13130,7 +13130,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/10/ASHWAGANDHA-60-CAPS.png",
+        "src": "/wp-content/uploads/2024/10/ASHWAGANDHA-60-CAPS.png",
         "alt": {
           "fr": "Ashwagandha 60 Caps : Clarté mentale, stress réduit, récupération musculaire, bien-être optimal.",
           "de": "Ashwagandha 60 Caps : Clarté mentale, stress réduit, récupération musculaire, bien-être optimal.",
@@ -13141,7 +13141,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/02/ASHWAGANDA-60-CAPS-NUTRITION.png",
+        "src": "/wp-content/uploads/2023/02/ASHWAGANDA-60-CAPS-NUTRITION.png",
         "alt": {
           "fr": "ASHWAGANDA 60 CAPS NUTRITION",
           "de": "ASHWAGANDA 60 CAPS NUTRITION",
@@ -13239,7 +13239,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/02/CAFFEINE-200MG-90-CAPS.png",
+        "src": "/wp-content/uploads/2023/02/CAFFEINE-200MG-90-CAPS.png",
         "alt": {
           "fr": "Supplément de Caféine 90 caps comprimés pour énergie et performance",
           "de": "Supplément de Caféine 90 caps comprimés pour énergie et performance",
@@ -13250,7 +13250,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/02/CAFFEINE-200MG-NUTRITION-90-CAPS.png",
+        "src": "/wp-content/uploads/2023/02/CAFFEINE-200MG-NUTRITION-90-CAPS.png",
         "alt": {
           "fr": "Caffeine 90 CAPS 100mg",
           "de": "Caffeine 90 CAPS 100mg",
@@ -13348,7 +13348,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/01/PICOLINAT-DE-CHROME-100-CAPS.png",
+        "src": "/wp-content/uploads/2023/01/PICOLINAT-DE-CHROME-100-CAPS.png",
         "alt": {
           "fr": "Chromium Picolinate Vegan, régulation glycémique, contrôle métabolique",
           "de": "Chromium Picolinate Vegan, régulation glycémique, contrôle métabolique",
@@ -13359,7 +13359,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png",
+        "src": "/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png",
         "alt": {
           "fr": "CALCIUM 1000MG 120 TABS NUTRITION",
           "de": "CALCIUM 1000MG 120 TABS NUTRITION",
@@ -13457,7 +13457,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/10/VITAMINE-C-LIPOSOMALE-60-CAPS.png",
+        "src": "/wp-content/uploads/2024/10/VITAMINE-C-LIPOSOMALE-60-CAPS.png",
         "alt": {
           "fr": "vitamine C liposomale 60 capsules, renforcement du système immunitaire, antioxydant",
           "de": "vitamine C liposomale 60 capsules, renforcement du système immunitaire, antioxydant",
@@ -13468,7 +13468,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/01/VITAMINE-C-LIPOSOMAL-60-CAPS-NUTRITION.png",
+        "src": "/wp-content/uploads/2023/01/VITAMINE-C-LIPOSOMAL-60-CAPS-NUTRITION.png",
         "alt": {
           "fr": "VITAMINE C LIPOSOMAL 60 CAPS NUTRITION",
           "de": "VITAMINE C LIPOSOMAL 60 CAPS NUTRITION",
@@ -13566,7 +13566,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/01/NF-GALLON-2.2L.webp",
+        "src": "/wp-content/uploads/2023/01/NF-GALLON-2.2L.webp",
         "alt": {
           "fr": "Gallon 2,2L avec rangement intégré – Hydratation pratique et organisée",
           "de": "Gallon 2,2L avec rangement intégré – Hydratation pratique et organisée",
@@ -13664,7 +13664,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/84.webp",
+        "src": "/wp-content/uploads/2024/09/84.webp",
         "alt": {
           "fr": "CREAPURE PREMIUM 250G",
           "de": "CREAPURE PREMIUM 250G",
@@ -13675,7 +13675,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2023/01/CREAPURE-500G-NUTRITION.png",
+        "src": "/wp-content/uploads/2023/01/CREAPURE-500G-NUTRITION.png",
         "alt": {
           "fr": "CREAPURE NUTRITION",
           "de": "CREAPURE NUTRITION",
