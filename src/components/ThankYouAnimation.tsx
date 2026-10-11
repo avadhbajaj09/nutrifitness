@@ -4,6 +4,7 @@ import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useStore } from '@/context/StoreContext';
 import { Check, Package, Truck, Home, Sparkles, Printer, ArrowRight, ShieldCheck, Clock } from 'lucide-react';
+import GoogleCustomerReviewsOptIn from '@/components/GoogleCustomerReviewsOptIn';
 
 interface ThankYouAnimationProps {
   orderNumber: string;
@@ -11,6 +12,9 @@ interface ThankYouAnimationProps {
   paymentMethod: string;
   shippingMethod: string;
   customerEmail: string;
+  deliveryCountry?: string;
+  estimatedDeliveryDate?: string;
+  products?: Array<{ gtin?: string }>;
 }
 
 export default function ThankYouAnimation({
@@ -19,6 +23,9 @@ export default function ThankYouAnimation({
   paymentMethod,
   shippingMethod,
   customerEmail,
+  deliveryCountry,
+  estimatedDeliveryDate,
+  products,
 }: ThankYouAnimationProps) {
   const { t, locale, currency } = useStore();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -352,6 +359,17 @@ export default function ThankYouAnimation({
             🎉
           </button>
         </div>
+
+        {/* Google Customer Reviews Survey Opt-In */}
+        {orderNumber && customerEmail && (
+          <GoogleCustomerReviewsOptIn
+            orderId={orderNumber}
+            email={customerEmail}
+            deliveryCountry={deliveryCountry || 'CH'}
+            estimatedDeliveryDate={estimatedDeliveryDate}
+            products={products}
+          />
+        )}
       </div>
     </div>
   );

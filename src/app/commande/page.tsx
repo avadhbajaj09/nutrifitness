@@ -89,6 +89,9 @@ export default function CheckoutPage() {
   const [isSuccess, setIsSuccess] = useState(false);
   const [orderNumber, setOrderNumber] = useState('');
   const [finalTotalFormatted, setFinalTotalFormatted] = useState('');
+  const [confirmedCountry, setConfirmedCountry] = useState('CH');
+  const [confirmedDeliveryDate, setConfirmedDeliveryDate] = useState('');
+  const [confirmedProducts, setConfirmedProducts] = useState<Array<{ gtin?: string }>>([]);
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [countryAutoSwitchedNotice, setCountryAutoSwitchedNotice] = useState<string | null>(null);
 
@@ -562,6 +565,18 @@ export default function CheckoutPage() {
       items: purchaseItems,
     });
 
+    const promisedDate = isMixedCart
+      ? (ptPromiseDate > genevaPromiseDate ? ptPromiseDate : genevaPromiseDate)
+      : (portugalItems.length > 0 ? ptPromiseDate : genevaPromiseDate);
+
+    const validGtins = (cart || [])
+      .map(item => ({ gtin: (item as any).gtin || (item as any).barcode }))
+      .filter((it): it is { gtin: string } => Boolean(it.gtin));
+
+    setConfirmedCountry(customerCountry || 'CH');
+    setConfirmedDeliveryDate(promisedDate || '');
+    setConfirmedProducts(validGtins);
+
     clearCart();
     setIsSuccess(true);
     window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -575,6 +590,9 @@ export default function CheckoutPage() {
         paymentMethod={paymentMethod}
         shippingMethod={genevaShippingMethod}
         customerEmail={customerEmail}
+        deliveryCountry={confirmedCountry}
+        estimatedDeliveryDate={confirmedDeliveryDate}
+        products={confirmedProducts}
       />
     );
   }
