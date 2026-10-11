@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
+import { sendOrderNotificationToAdmin, sendOrderConfirmationToCustomer } from '@/lib/email/resend';
 import fs from 'fs';
 import path from 'path';
 
@@ -209,6 +210,16 @@ export async function POST(req: Request) {
     if (!exists) {
       currentOrders.unshift(finalRecord);
       saveLocalOrders(currentOrders);
+    }
+
+    // Trigger transactional email notifications (Admin alert to Marco & Customer confirmation)
+    try {
+      await Promise.allSettled([
+        sendOrderNotificationToAdmin(finalRecord),
+        sendOrderConfirmationToCustomer(finalRecord),
+      ]);
+    } catch (emailErr) {
+      console.error('[Orders API] Failed to dispatch email notifications:', emailErr);
     }
 
     return NextResponse.json({
