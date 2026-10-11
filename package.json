@@ -10,6 +10,7 @@
     "test:delivery": "tsx src/lib/delivery/__tests__/estimate.test.ts",
     "test:gating": "tsx src/lib/delivery/__tests__/gating.test.ts",
     "test:stock": "tsx src/lib/delivery/__tests__/stock.test.ts",
+    "test:middleware": "tsx src/middleware.test.ts",
     "import:woo": "tsx scripts/import-woocommerce.ts",
     "test:acceptance": "tsx scripts/verify-acceptance.ts"
   },
