@@ -13,7 +13,8 @@
     "test:stock": "tsx src/lib/delivery/__tests__/stock.test.ts",
     "test:middleware": "tsx src/middleware.test.ts",
     "import:woo": "tsx scripts/import-woocommerce.ts",
-    "test:acceptance": "tsx scripts/verify-acceptance.ts"
+    "test:acceptance": "tsx scripts/verify-acceptance.ts",
+    "check:sitemap": "tsx scripts/check-sitemap.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",

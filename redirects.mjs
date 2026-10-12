@@ -1,7 +1,8 @@
 // redirects.mjs — builds Next.js redirects from data/redirect-map.csv
 import fs from 'node:fs';
+import path from 'node:path';
 
-const csvPath = new URL('./data/redirect-map.csv', import.meta.url);
+const csvPath = path.resolve(process.cwd(), 'data/redirect-map.csv');
 
 function parseCsv(text) {
   return text

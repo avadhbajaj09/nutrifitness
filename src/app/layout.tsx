@@ -56,6 +56,9 @@ export const metadata: Metadata = {
     description: 'Protéines whey, créatine Creapure®, pré-workouts et vitamines certifiées. Stock 100% en Suisse et livraison 24h.',
     images: ['https://nutrifitness.ch/images/brand/logo.png'],
   },
+  robots: process.env.VERCEL_ENV === 'preview'
+    ? { index: false, follow: false }
+    : { index: true, follow: true },
   ...(verification ? { verification } : {}),
 };
 
