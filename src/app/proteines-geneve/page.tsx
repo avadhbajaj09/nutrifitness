@@ -195,7 +195,7 @@ export default async function ProteinesGenevePage() {
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2">
               <h4 className="text-xs font-bold text-white flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#F80404]" />
-                Conseils Personnalisés par Marco Scarpantoni
+                Conseils Personnalisés par Notre Équipe
               </h4>
               <p className="text-xs text-white/70">
                 Passez au magasin pour échanger sur vos objectifs réels (prise de masse, tonification, sèche), calculer précisément vos besoins protidiques et déguster nos différents arômes (chocolat belge, vanille bourbon, mangue rafraîchissante).

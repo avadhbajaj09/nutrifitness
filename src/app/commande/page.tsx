@@ -700,10 +700,10 @@ export default function CheckoutPage() {
     const clientFullName = `${firstName} ${lastName}`.trim() || 'Client NutriFitness';
 
     const shippingLabel = isMixedCart
-      ? `Expédition Multi-Origine (Colis 1: ${genevaShippingMethod === 'clickcollect' ? 'Click & Collect Genève' : 'Poste Suisse 24h'} + Colis 2: Usine Portugal)`
+      ? `Expédition Multi-Origine (Colis 1: ${genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'Swiss Fulfillment'} + Colis 2: Portugal Fulfillment)`
       : genevaItems.length > 0
-      ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique Genève)' : 'PostPac Priority (La Poste Suisse 24h)')
-      : 'Transporteur Express (Usine Portugal 3-5j)';
+      ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique)' : 'Swiss Fulfillment (La Poste Suisse 24h)')
+      : 'Portugal Fulfillment (3-5j)';
 
     const newOrder = {
       id: `order-web-${Date.now()}`,
@@ -754,7 +754,7 @@ export default function CheckoutPage() {
         genevaCost: genevaShippingCost,
         portugalCost: portugalShippingCost,
         promised_date: isMixedCart ? (ptPromiseDate > genevaPromiseDate ? ptPromiseDate : genevaPromiseDate) : (portugalItems.length > 0 ? ptPromiseDate : genevaPromiseDate),
-        promised_date_formatted: isMixedCart ? `${genevaPromiseFormatted} (Genève) / ${ptPromiseFormatted} (Portugal)` : (portugalItems.length > 0 ? ptPromiseFormatted : genevaPromiseFormatted),
+        promised_date_formatted: isMixedCart ? `${genevaPromiseFormatted} (Swiss Fulfillment) / ${ptPromiseFormatted} (Portugal Fulfillment)` : (portugalItems.length > 0 ? ptPromiseFormatted : genevaPromiseFormatted),
         fulfilment_location: isMixedCart ? 'MIXED' : (portugalItems.length > 0 ? 'PORTUGAL' : 'GENEVA'),
         shipments: [
           ...(genevaItems.length > 0 ? [{
@@ -763,7 +763,7 @@ export default function CheckoutPage() {
             promised_date: genevaPromiseDate,
             promised_date_formatted: genevaPromiseFormatted,
             cost: genevaShippingCost,
-            carrier: genevaShippingMethod === 'clickcollect' ? 'Click & Collect Genève' : 'La Poste Suisse PostPac Priority',
+            carrier: genevaShippingMethod === 'clickcollect' ? 'Click & Collect Boutique' : 'Swiss Fulfillment (La Poste Suisse)',
             items: genevaItems.map(it => ({ id: it.id, name: it.name, quantity: it.quantity }))
           }] : []),
           ...(portugalItems.length > 0 ? [{
@@ -772,7 +772,7 @@ export default function CheckoutPage() {
             promised_date: ptPromiseDate,
             promised_date_formatted: ptPromiseFormatted,
             cost: portugalShippingCost,
-            carrier: 'Transporteur Express Direct Fabricant',
+            carrier: 'Portugal Fulfillment Express',
             requires_customs: ['CH', 'LI', 'GB', 'NO', 'IS'].includes(customerCountry),
             items: portugalItems.map(it => ({ id: it.id, name: it.name, quantity: it.quantity }))
           }] : [])
@@ -995,6 +995,29 @@ export default function CheckoutPage() {
     </div>
   );
 
+  if (cart.length === 0) {
+    return (
+      <div className="max-w-2xl mx-auto py-16 px-4 text-center space-y-5">
+        <div className="w-20 h-20 mx-auto rounded-full bg-white/5 border border-white/10 flex items-center justify-center text-white/30 text-3xl">
+          🛒
+        </div>
+        <h1 className="text-2xl font-black uppercase text-white font-heading">
+          Votre panier est vide
+        </h1>
+        <p className="text-sm text-white/60">
+          Vous n&apos;avez aucun article dans votre panier. Ajoutez des produits avant de passer commande.
+        </p>
+        <Link
+          href="/boutique/"
+          className="inline-flex items-center gap-2 px-8 py-3.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-sm rounded-full transition-all shadow-lg shadow-[#F80404]/20"
+        >
+          <span>Découvrir la boutique</span>
+          <span>→</span>
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="max-w-6xl mx-auto py-6 px-4">
       {/* Header */}
@@ -1014,27 +1037,9 @@ export default function CheckoutPage() {
           <span className="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
             <span>🇨🇭</span> Expédition Suisse &amp; Europe
           </span>
-          <div className="flex items-center gap-1.5 bg-white/5 border border-white/10 p-1 rounded-full">
-            <span className="text-[11px] text-white/50 pl-2">Devise :</span>
-            <button
-              type="button"
-              onClick={() => setCurrency('CHF')}
-              className={`px-2.5 py-0.5 rounded-full text-xs font-black transition-all ${
-                currency === 'CHF' ? 'bg-[#F80404] text-black shadow-xs' : 'text-white/70 hover:text-white'
-              }`}
-            >
-              🇨🇭 CHF
-            </button>
-            <button
-              type="button"
-              onClick={() => setCurrency('EUR')}
-              className={`px-2.5 py-0.5 rounded-full text-xs font-black transition-all ${
-                currency === 'EUR' ? 'bg-[#F80404] text-black shadow-xs' : 'text-white/70 hover:text-white'
-              }`}
-            >
-              🇪🇺 EUR (€)
-            </button>
-          </div>
+          <span className="flex items-center gap-1.5 bg-white/5 border border-white/10 px-3 py-1.5 rounded-full">
+            <span>{currency === 'CHF' ? '🇨🇭' : '🇪🇺'}</span> Facturation en {currency}
+          </span>
         </div>
       </div>
 
@@ -1070,7 +1075,7 @@ export default function CheckoutPage() {
               </Link>
             </div>
             <p className="text-white/80">
-              Les articles suivants sont stockés uniquement à Genève et ne peuvent pas être expédiés vers {customerCountry} :
+              Les articles suivants sont disponibles en Swiss Fulfillment uniquement et ne peuvent pas être expédiés vers {customerCountry} :
             </p>
             <ul className="list-disc list-inside space-y-1 text-red-200/90 pl-1">
               {nonDeliverableItems.map(item => (
@@ -1157,7 +1162,7 @@ export default function CheckoutPage() {
                   required 
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
-                  placeholder="Marco" 
+                  placeholder="Prénom" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
               </div>
@@ -1168,7 +1173,7 @@ export default function CheckoutPage() {
                   required 
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
-                  placeholder="Scarpantoni" 
+                  placeholder="Nom" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
               </div>
@@ -1210,7 +1215,7 @@ export default function CheckoutPage() {
                   required 
                   value={customerCity}
                   onChange={(e) => setCustomerCity(e.target.value)}
-                  placeholder={customerCountry === 'CH' ? 'Genève' : 'Ville'} 
+                  placeholder="Ville" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
               </div>
@@ -1254,7 +1259,7 @@ export default function CheckoutPage() {
                 </span>
                 {isGenevaAddress && (
                   <span className="text-[10px] bg-emerald-500/20 text-emerald-300 px-2 py-0.5 rounded-full font-bold">
-                    Zone Genève locale (Click &amp; Collect éligible)
+                    Boutique locale (Click &amp; Collect éligible)
                   </span>
                 )}
               </div>
@@ -1294,7 +1299,7 @@ export default function CheckoutPage() {
                       <div className="flex items-center justify-between border-b border-emerald-500/20 pb-2">
                         <div className="flex items-center gap-2">
                           <span className="text-base">🇨🇭</span>
-                          <span className="font-bold text-white text-xs">Colis 1 — Expédié depuis Genève (Marco)</span>
+                          <span className="font-bold text-white text-xs">Colis 1 — Swiss Fulfillment</span>
                           <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">
                             {genevaItems.length} article{genevaItems.length > 1 ? 's' : ''}
                           </span>
@@ -1355,7 +1360,7 @@ export default function CheckoutPage() {
                             <div className="flex-1 text-xs">
                               <div className="flex justify-between font-bold text-white">
                                 <span className="flex items-center gap-1.5">
-                                  <span>📍 Click &amp; Collect Boutique Genève</span>
+                                  <span>📍 Click &amp; Collect Boutique</span>
                                   <span className="text-[10px] text-[#F80404] font-bold">Prêt en 2h</span>
                                 </span>
                                 <span className="text-emerald-400 font-bold">{t.common.free}</span>
@@ -1372,7 +1377,7 @@ export default function CheckoutPage() {
                       <div className="flex items-center justify-between border-b border-blue-500/20 pb-2">
                         <div className="flex items-center gap-2">
                           <FlagIcon countryCode="PT" className="w-4 h-4 shrink-0" />
-                          <span className="font-bold text-white text-xs">Colis 2 — Expédié depuis le Portugal (Omar)</span>
+                          <span className="font-bold text-white text-xs">Colis 2 — Portugal Fulfillment</span>
                           <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">
                             {portugalItems.length} article{portugalItems.length > 1 ? 's' : ''}
                           </span>
@@ -1390,7 +1395,7 @@ export default function CheckoutPage() {
                         <div className="flex justify-between font-bold text-white">
                           <span className="flex items-center gap-1.5">
                             <Truck className="w-3.5 h-3.5 text-blue-400" />
-                            <span>Transporteur Express Usine Portugal</span>
+                            <span>Portugal Fulfillment Express</span>
                             <span className="text-[10px] text-blue-400 font-bold flex items-center gap-1">
                               <FlagIcon countryCode="PT" className="w-3 h-3" />
                               <span>{ptPromiseFormatted}</span>
@@ -1399,7 +1404,7 @@ export default function CheckoutPage() {
                           <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
                         </div>
                         <p className="text-[11px] text-white/50 mt-0.5">
-                          Expédition directe depuis l&apos;usine fabricant. Suivi complet par e-mail.
+                          Expédition directe via Portugal Fulfillment. Suivi complet par e-mail.
                         </p>
                       </div>
                     </div>
@@ -1455,7 +1460,7 @@ export default function CheckoutPage() {
                             <div className="flex-1 text-xs">
                               <div className="flex justify-between font-bold text-white mb-0.5">
                                 <span className="flex items-center gap-2">
-                                  <span>📍 Click &amp; Collect Boutique Genève</span>
+                                  <span>📍 Click &amp; Collect Boutique</span>
                                   <span className="text-[10px] bg-[#F80404]/20 text-[#F80404] px-2 py-0.5 rounded font-bold">Disponible en 2h</span>
                                 </span>
                                 <span className="text-emerald-400 font-bold">{t.common.free}</span>
@@ -1473,7 +1478,7 @@ export default function CheckoutPage() {
                         <div className="flex justify-between font-bold text-white">
                           <span className="flex items-center gap-2">
                             <Truck className="w-4 h-4 text-blue-400" />
-                            <span>Transporteur Express Usine Portugal</span>
+                            <span>Portugal Fulfillment Express</span>
                             <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold flex items-center gap-1">
                               <FlagIcon countryCode="PT" className="w-3 h-3" />
                               <span>{ptPromiseFormatted}</span>
@@ -1482,7 +1487,7 @@ export default function CheckoutPage() {
                           <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
                         </div>
                         <p className="text-white/50">
-                          Colis expédié directement depuis l&apos;usine du fabricant au Portugal avec suivi en ligne.
+                          Colis expédié via Portugal Fulfillment avec suivi en ligne.
                         </p>
                       </div>
                     )}
@@ -1605,49 +1610,15 @@ export default function CheckoutPage() {
             </span>
           </h2>
 
-          {/* Devise Switcher */}
-          <div className="bg-black/50 border border-white/10 rounded-xl p-3 flex items-center justify-between gap-3">
-            <div>
-              <div className="text-[11px] font-black uppercase tracking-wider text-white flex items-center gap-1.5">
-                <span>Devise de facturation</span>
-              </div>
-              <div className="text-[10px] text-white/50">
-                Commandez en CHF ou en EUR (€)
-              </div>
-            </div>
-            <div className="inline-flex rounded-lg bg-black border border-white/15 p-1 gap-1 shrink-0">
-              <button
-                type="button"
-                onClick={() => setCurrency('CHF')}
-                className={`px-3 py-1 rounded-md text-xs font-black transition-all ${
-                  currency === 'CHF'
-                    ? 'bg-[#F80404] text-black shadow-md'
-                    : 'text-white/60 hover:text-white hover:bg-white/10'
-                }`}
-                title="Payer en CHF (Franc Suisse)"
-              >
-                CHF 🇨🇭
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrency('EUR')}
-                className={`px-3 py-1 rounded-md text-xs font-black transition-all ${
-                  currency === 'EUR'
-                    ? 'bg-[#F80404] text-black shadow-md'
-                    : 'text-white/60 hover:text-white hover:bg-white/10'
-                }`}
-                title="Payer en EUR (Euro)"
-              >
-                EUR (€) 🇪🇺
-              </button>
-            </div>
-          </div>
-
           {/* Cart items list with Origin Badges */}
           <div className="space-y-3 max-h-64 overflow-y-auto pr-1 divide-y divide-white/5">
             {cart.map(item => {
               const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
               const isPt = (item.shippingOrigin === 'portugal' && !isCommon) || (!customerCountry.includes('CH') && isCommon);
+              const flavorObj = item.flavor as unknown as Record<string, string> | null | undefined;
+              const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
+                ? (flavorObj?.[locale] || flavorObj?.fr || 'Standard')
+                : String(item.flavor || 'Standard');
 
               return (
                 <div key={item.itemKey} className="flex items-center gap-3 pt-2">
@@ -1657,11 +1628,11 @@ export default function CheckoutPage() {
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5">
                       <span className="text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider bg-white/10 text-white/80">
-                        {isPt ? '🇵🇹 Portugal' : '🇨🇭 Genève'}
+                        {isPt ? '🇵🇹 Portugal Fulfillment' : '🇨🇭 Swiss Fulfillment'}
                       </span>
                     </div>
                     <h4 className="text-xs font-bold text-white truncate mt-0.5">{item.name}</h4>
-                    <p className="text-[10px] text-white/50">{item.flavor} · Qte: {item.quantity}</p>
+                    <p className="text-[10px] text-white/50">{flavorStr} · Qte: {item.quantity}</p>
                   </div>
                   <span className="text-xs font-black text-white font-heading">
                     {formatPrice(item.price * item.quantity)}
@@ -1693,7 +1664,7 @@ export default function CheckoutPage() {
               <div className="space-y-1.5 bg-black/40 p-2.5 rounded-xl border border-white/5">
                 <div className="flex justify-between text-[11px]">
                   <span className="text-white/80 flex items-center gap-1">
-                    <span>🇨🇭</span> Frais Colis 1 (Genève) :
+                    <span>🇨🇭</span> Frais Colis 1 (Swiss Fulfillment) :
                   </span>
                   <span className="font-bold text-white">
                     {genevaShippingCost === 0 ? t.common.free : formatPrice(genevaShippingCost)}
@@ -1701,7 +1672,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-[11px]">
                   <span className="text-white/80 flex items-center gap-1">
-                    <span>🇵🇹</span> Frais Colis 2 (Portugal) :
+                    <span>🇵🇹</span> Frais Colis 2 (Portugal Fulfillment) :
                   </span>
                   <span className="font-bold text-white">
                     {portugalShippingCost === 0 ? t.common.free : formatPrice(portugalShippingCost)}
@@ -1717,8 +1688,8 @@ export default function CheckoutPage() {
                 <span>
                   {t.common.shipping} (
                   {genevaItems.length > 0
-                    ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect Genève' : 'PostPac Priority')
-                    : 'Transporteur Portugal'}
+                    ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'Swiss Fulfillment')
+                    : 'Portugal Fulfillment'}
                   ) :
                 </span>
                 <span className="font-bold text-white">

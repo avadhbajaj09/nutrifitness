@@ -54,7 +54,7 @@ const slides: BannerSlide[] = [
   {
     id: 4,
     productName: 'Le Guide Ultime des Compléments Alimentaires (PDF)',
-    brand: 'NutriFitness Genève',
+    brand: 'NutriFitness Suisse',
     tag: '📖 11 Ans d\'Expérience · Conseils Honnêtes Sans Marketing',
     badge: 'Ebook Téléchargeable Immédiat',
     wideImage: '/images/banners/wide/nutriftiness-banner2.jpg',

@@ -82,14 +82,9 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
             </div>
             <p className="text-white/70">
               {origin === 'geneva'
-                ? 'Tous vos articles sont expédiés directement depuis notre boutique à Genève, Suisse.'
-                : 'Tous vos articles sont expédiés en direct d\'usine depuis notre entrepôt au Portugal.'}
+                ? 'Tous vos articles sont expédiés via notre Swiss Fulfillment (Suisse).'
+                : 'Tous vos articles sont expédiés via notre Portugal Fulfillment.'}
             </p>
-            {hasCommon && (
-              <p className="text-purple-300 text-[11px] pt-1">
-                ✓ Produit commun stocké à Genève et au Portugal : automatiquement expédié depuis le centre optimal ({isCH ? 'Genève pour la Suisse' : 'Portugal pour l’Europe sans droits de douane'}).
-              </p>
-            )}
           </div>
         </div>
       </div>
@@ -109,18 +104,18 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
           <span>📦</span>
           <span>Votre commande sera expédiée en 2 envois distincts</span>
         </p>
-        <span className="text-[10px] font-bold text-purple-300 bg-purple-950/80 border border-purple-500/40 px-2.5 py-0.5 rounded-full">
-          Routage multi-origine automatique
+        <span className="text-[10px] font-bold text-emerald-300 bg-emerald-950/80 border border-emerald-500/40 px-2.5 py-0.5 rounded-full">
+          Expédition optimisée
         </span>
       </div>
 
-      {/* Geneva shipment */}
+      {/* Swiss shipment */}
       <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/20 p-4 space-y-2.5">
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-2.5">
             <FlagIcon countryCode="CH" className="w-4 h-4 shrink-0" />
             <div>
-              <p className="text-white font-bold text-sm">Colis 1 — Expédié depuis Genève, Suisse</p>
+              <p className="text-white font-bold text-sm">Colis 1 — Swiss Fulfillment</p>
               <p className="text-emerald-400 font-semibold text-xs">
                 Livraison estimée : {genevaDateText}
               </p>
@@ -132,17 +127,18 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
         </div>
 
         <ul className="space-y-1 pt-1 border-t border-emerald-500/20">
-          {genevaItems.map((it) => (
-            <li key={it.itemKey} className="text-white/80 text-xs flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                <span>{it.name} {it.flavor ? `– ${it.flavor}` : ''} × {it.quantity}</span>
-              </span>
-              {(it.locationType === 'COMMON' || it.shippingOrigin === 'common') && (
-                <span className="text-[10px] text-purple-300 font-medium">🇨🇭 🇵🇹 (Stocké aux 2 sites)</span>
-              )}
-            </li>
-          ))}
+          {genevaItems.map((it) => {
+            const flavorObj = it.flavor as unknown as Record<string, string> | null | undefined;
+            const flavorStr = typeof it.flavor === 'object' && it.flavor !== null ? (flavorObj?.[locale] || flavorObj?.fr || '') : String(it.flavor || '');
+            return (
+              <li key={it.itemKey} className="text-white/80 text-xs flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
+                  <span>{it.name} {flavorStr ? `– ${flavorStr}` : ''} × {it.quantity}</span>
+                </span>
+              </li>
+            );
+          })}
         </ul>
       </div>
 
@@ -152,7 +148,7 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
           <div className="flex items-center gap-2.5">
             <FlagIcon countryCode="PT" className="w-4 h-4 shrink-0" />
             <div>
-              <p className="text-white font-bold text-sm">Envoi 2 — Expédié depuis le Portugal</p>
+              <p className="text-white font-bold text-sm">Envoi 2 — Portugal Fulfillment</p>
               <p className="text-blue-400 font-semibold text-xs">
                 Livraison estimée : {ptDateText}
               </p>
@@ -164,17 +160,18 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
         </div>
 
         <ul className="space-y-1 pt-1 border-t border-blue-500/20">
-          {ptItems.map((it) => (
-            <li key={it.itemKey} className="text-white/80 text-xs flex items-center justify-between">
-              <span className="flex items-center gap-2">
-                <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
-                <span>{it.name} {it.flavor ? `– ${it.flavor}` : ''} × {it.quantity}</span>
-              </span>
-              {(it.locationType === 'COMMON' || it.shippingOrigin === 'common') && (
-                <span className="text-[10px] text-purple-300 font-medium">🇨🇭 🇵🇹 (Stocké aux 2 sites)</span>
-              )}
-            </li>
-          ))}
+          {ptItems.map((it) => {
+            const flavorObj = it.flavor as unknown as Record<string, string> | null | undefined;
+            const flavorStr = typeof it.flavor === 'object' && it.flavor !== null ? (flavorObj?.[locale] || flavorObj?.fr || '') : String(it.flavor || '');
+            return (
+              <li key={it.itemKey} className="text-white/80 text-xs flex items-center justify-between">
+                <span className="flex items-center gap-2">
+                  <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
+                  <span>{it.name} {flavorStr ? `– ${flavorStr}` : ''} × {it.quantity}</span>
+                </span>
+              </li>
+            );
+          })}
         </ul>
 
         {(destCountry === 'CH' || destCountry === 'LI' || destCountry === 'GB' || destCountry === 'NO' || destCountry === 'IS') && (

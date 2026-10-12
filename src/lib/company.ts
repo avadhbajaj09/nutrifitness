@@ -7,7 +7,7 @@ export const COMPANY = {
   legalForm: 'Entreprise individuelle',
   tradingName: 'NutriFitness',
   displayName: 'Scarpantoni Nutrifit (NutriFitness)',
-  founder: 'Marco Scarpantoni',
+  founder: 'Équipe NutriFitness Suisse',
   uid: 'CHE-177.751.159',
   address: {
     street: 'Rue des Pâquis 34',

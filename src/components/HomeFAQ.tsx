@@ -9,8 +9,8 @@ export default function HomeFAQ() {
 
   const homeFaqs = [
     {
-      q: 'Où acheter des compléments alimentaires de sport à Genève ?',
-      a: 'Nutrifitness est une boutique de nutrition sportive située au 34 Rue des Pâquis, 1201 Genève, à 5 minutes de la Gare Cornavin. Vous y trouvez un stock complet de protéines whey, créatines pures, acides aminés BCAA, vitamines, minéraux et accessoires, avec des conseils personnalisés sur place par Marco Scarpantoni et notre équipe. Nous disposons également d\'une boutique en ligne avec livraison dans toute la Suisse.'
+      q: 'Où acheter des compléments alimentaires de sport en Suisse ?',
+      a: 'Nutrifitness est une boutique de nutrition sportive située au 34 Rue des Pâquis, 1201 Suisse, à 5 minutes de la Gare Cornavin. Vous y trouvez un stock complet de protéines whey, créatines pures, acides aminés BCAA, vitamines, minéraux et accessoires, avec des conseils personnalisés sur place par notre équipe d\'experts. Nous disposons également d\'une boutique en ligne avec livraison dans toute la Suisse.'
     },
     {
       q: 'Nutrifitness livre-t-il dans toute la Suisse ?',
@@ -29,8 +29,8 @@ export default function HomeFAQ() {
       a: 'Nous distribuons officiellement les marques de renommée internationale et européenne les plus fiables : Optimum Nutrition, Applied Nutrition, Dymatize, Marvelous, Ghost Lifestyle, Bigman Nutrition et Pronutrition, ainsi que notre marque propre d\'accessoires NutriFit.'
     },
     {
-      q: 'Puis-je retirer ma commande gratuitement en boutique à Genève (Click & Collect) ?',
-      a: 'Oui, absolument. Lors de votre commande en ligne, choisissez simplement l\'option « Retrait Boutique Genève ». Votre commande est préparée sous 2 heures ouvrées et vous êtes prévenu dès qu\'elle est prête. Vous n\'avez qu\'à vous présenter au 34 Rue des Pâquis avec votre numéro de commande.'
+      q: 'Puis-je retirer ma commande gratuitement en boutique en Suisse (Click & Collect) ?',
+      a: 'Oui, absolument. Lors de votre commande en ligne, choisissez simplement l\'option « Retrait en Boutique ». Votre commande est préparée sous 2 heures ouvrées et vous êtes prévenu dès qu\'elle est prête. Vous n\'avez qu\'à vous présenter au 34 Rue des Pâquis avec votre numéro de commande.'
     },
     {
       q: 'Les compléments alimentaires remplacent-ils une alimentation équilibrée ?',
@@ -38,7 +38,7 @@ export default function HomeFAQ() {
     },
     {
       q: 'Comment contacter l\'équipe Nutrifitness ?',
-      a: 'Vous pouvez nous joindre par téléphone au +41 79 250 35 64, par e-mail à info@nutrifitness.ch ou directement en boutique à Genève (34 Rue des Pâquis). Nous vous accueillons du Lundi au Vendredi de 12h30 à 19h00 et le Samedi de 12h00 à 17h00.'
+      a: 'Vous pouvez nous joindre par téléphone au +41 79 250 35 64, par e-mail à info@nutrifitness.ch ou directement en boutique en Suisse (34 Rue des Pâquis). Nous vous accueillons du Lundi au Vendredi de 12h30 à 19h00 et le Samedi de 12h00 à 17h00.'
     }
   ];
 

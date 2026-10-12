@@ -82,7 +82,7 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
           <span>Voir les 12 catégories certifiées</span>
           <span>→</span>
         </Link>
-        <span>📍 Retrait gratuit 2h à notre boutique au 34 Rue des Pâquis, Genève</span>
+        <span>📍 Retrait gratuit 2h à notre boutique au 34 Rue des Pâquis, Suisse</span>
       </div>
     </div>
   );

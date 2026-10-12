@@ -293,14 +293,14 @@ export default function EbookClient() {
               <div className="relative w-full h-full rounded-full overflow-hidden">
                 <Image
                   src="/images/store/marco1.webp"
-                  alt="Marco Scarpantoni - Fondateur NutriFitness Genève"
+                  alt="Équipe NutriFitness Suisse"
                   fill
                   className="object-cover object-top scale-105"
                 />
               </div>
             </div>
-            <p className="text-sm font-black uppercase text-white font-heading mt-4 tracking-wide">Marco Scarpantoni</p>
-            <p className="text-xs text-white/60 font-medium">Fondateur NutriFitness Genève</p>
+            <p className="text-sm font-black uppercase text-white font-heading mt-4 tracking-wide">Équipe NutriFitness</p>
+            <p className="text-xs text-white/60 font-medium">Experts Nutrition Sportive Suisse</p>
           </div>
 
           <div className="lg:col-span-8 space-y-4">

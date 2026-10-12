@@ -313,7 +313,7 @@ export default function ThankYouAnimation({
           <div className="flex justify-between items-center">
             <span className="text-white/60">Mode d'expédition :</span>
             <span className="font-bold text-white">
-              {shippingMethod === 'clickcollect' ? '📍 Retrait Boutique Genève (Pâquis)' : '⚡ PostPac Priority 24h (La Poste Suisse)'}
+              {shippingMethod === 'clickcollect' ? '📍 Retrait Boutique Suisse (Pâquis)' : '⚡ PostPac Priority 24h (La Poste Suisse)'}
             </span>
           </div>
 

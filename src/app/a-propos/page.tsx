@@ -17,8 +17,8 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'À Propos de NutriFitness Genève & Marco Scarpantoni | NutriFitness.ch',
-  description: 'Découvrez l\'histoire de NutriFitness Genève, boutique fondée le 15 avril 2015 par Marco Scarpantoni. Plus de 20 ans d\'expertise en nutrition sportive, éthique et rigueur.',
+  title: 'À Propos de NutriFitness Suisse | NutriFitness.ch',
+  description: 'Découvrez l\'histoire de NutriFitness Suisse, boutique fondée le 15 avril 2015. Plus de 20 ans d\'expertise en nutrition sportive, éthique et rigueur.',
   alternates: {
     canonical: 'https://nutrifitness.ch/a-propos/',
   }
@@ -28,11 +28,11 @@ export default function AProposPage() {
   const faqs = [
     {
       q: 'Qui est Nutrifitness ?',
-      a: 'Nutrifitness est une enseigne indépendante de nutrition sportive fondée à Genève le 15 avril 2015 par Marco Scarpantoni. Nous opérons un magasin physique de référence au 34 Rue des Pâquis à Genève et une boutique en ligne livrant dans toute la Suisse en 24h ouvrées. Notre mission : fournir des compléments rigoureusement sélectionnés, purs et efficaces, accompagnés d\'un conseil transparent et personnalisé.'
+      a: 'Nutrifitness est une enseigne indépendante de nutrition sportive fondée en Suisse le 15 avril 2015. Nous opérons un magasin physique de référence au 34 Rue des Pâquis en Suisse et une boutique en ligne livrant dans toute la Suisse en 24h ouvrées. Notre mission : fournir des compléments rigoureusement sélectionnés, purs et efficaces, accompagnés d\'un conseil transparent et personnalisé.'
     },
     {
       q: 'Qui conseille les clients en boutique et en ligne ?',
-      a: 'Les clients sont directement conseillés par Marco Scarpantoni, fort de plus de 20 ans de pratique en musculation et de 11 ans de gestion spécialisée en nutrition sportive, ainsi que par notre équipe formée aux sciences de la nutrition. Nos recommandations portent sur l\'alimentation de base, le choix des nutriments et les dosages adaptés, dans le respect absolu de la législation suisse.'
+      a: 'Les clients sont directement conseillés par notre équipe d\'experts, forte de plus de 20 ans de pratique en musculation et de 11 ans de gestion spécialisée en nutrition sportive, formée aux sciences de la nutrition. Nos recommandations portent sur l\'alimentation de base, le choix des nutriments et les dosages adaptés, dans le respect absolu de la législation suisse.'
     },
     {
       q: 'Quelle est votre approche de la supplémentation sportive ?',
@@ -57,36 +57,15 @@ export default function AProposPage() {
     '@type': 'AboutPage',
     'mainEntity': {
       '@type': 'Organization',
-      'name': 'NutriFitness Genève',
-      'founder': {
-        '@type': 'Person',
-        'name': 'Marco Scarpantoni',
-        'jobTitle': 'Fondateur & Gérant'
-      },
+      'name': 'NutriFitness Suisse',
       'foundingDate': '2015-04-15',
       'address': {
         '@type': 'PostalAddress',
         'streetAddress': 'Rue des Pâquis 34',
-        'addressLocality': 'Genève',
+        'addressLocality': 'Suisse',
         'postalCode': '1201',
         'addressCountry': 'CH'
       }
-    }
-  };
-
-  const personSchema = {
-    '@context': 'https://schema.org',
-    '@type': 'Person',
-    '@id': 'https://nutrifitness.ch/a-propos/#marco-scarpantoni',
-    name: 'Marco Scarpantoni',
-    jobTitle: 'Fondateur & Gérant',
-    url: 'https://nutrifitness.ch/a-propos/',
-    image: 'https://nutrifitness.ch/images/store/marco1.webp',
-    worksFor: {
-      '@type': 'Organization',
-      '@id': 'https://nutrifitness.ch/#organization',
-      name: 'NutriFitness',
-      url: 'https://nutrifitness.ch'
     }
   };
 
@@ -94,7 +73,7 @@ export default function AProposPage() {
     <div className="max-w-4xl mx-auto py-8 px-4 sm:px-6">
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify([aboutSchema, personSchema]) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify([aboutSchema]) }}
       />
 
       {/* Breadcrumb Navigation */}
@@ -126,14 +105,14 @@ export default function AProposPage() {
               <div className="relative w-full h-full rounded-full overflow-hidden">
                 <Image
                   src="/images/store/marco1.webp"
-                  alt="Marco Scarpantoni - Fondateur NutriFitness Genève"
+                  alt="Équipe NutriFitness Suisse"
                   fill
                   className="object-cover object-top scale-105"
                 />
               </div>
             </div>
-            <p className="text-sm font-black uppercase text-white font-heading mt-4 tracking-wide">Marco Scarpantoni</p>
-            <p className="text-xs text-[#F80404] font-bold">Fondateur & Gérant</p>
+            <p className="text-sm font-black uppercase text-white font-heading mt-4 tracking-wide">Équipe NutriFitness</p>
+            <p className="text-xs text-[#F80404] font-bold">Experts Nutrition Sportive</p>
           </div>
 
           <div className="md:col-span-7 space-y-4 text-xs sm:text-sm text-white/80 leading-relaxed">
@@ -141,13 +120,13 @@ export default function AProposPage() {
               De 54 kg à 88 kg : Une Expérience Vécue de l&apos;Intérieur
             </h2>
             <p>
-              À 21 ans, je mesurais 1m97 pour à peine 54 kg. Je me sentais faible et j&apos;ai cherché à transformer mon physique. Au départ, comme beaucoup, j&apos;ai cru au marketing agressif, acheté des poudres inutiles et fait toutes les erreurs classiques.
+              À 21 ans, notre fondateur mesurait 1m97 pour à peine 54 kg. Il se sentait faible et a cherché à transformer son physique. Au départ, comme beaucoup, il a cru au marketing agressif, acheté des poudres inutiles et fait toutes les erreurs classiques.
             </p>
             <p>
-              C&apos;est en me plongeant dans la biochimie des nutriments, la rigueur de l&apos;entraînement de force et la régularité que j&apos;ai réussi à bâtir plus de <strong>34 kg de muscle sec</strong> naturellement.
+              C&apos;est en se plongeant dans la biochimie des nutriments, la rigueur de l&apos;entraînement de force et la régularité que notre équipe a réussi à bâtir plus de <strong>34 kg de muscle sec</strong> naturellement.
             </p>
             <p className="text-white/90 font-medium">
-              Le <strong>15 avril 2015</strong>, j&apos;ai ouvert les portes de NutriFitness au 34 Rue des Pâquis à Genève avec un objectif clair : <em>offrir aux sportifs suisses un lieu de confiance où l&apos;on ne vend que ce qui fonctionne réellement</em>.
+              Le <strong>15 avril 2015</strong>, nous avons ouvert les portes de NutriFitness au 34 Rue des Pâquis en Suisse avec un objectif clair : <em>offrir aux sportifs suisses un lieu de confiance où l&apos;on ne vend que ce qui fonctionne réellement</em>.
             </p>
           </div>
         </div>
@@ -157,7 +136,7 @@ export default function AProposPage() {
       <section className="mb-14 space-y-6">
         <div className="text-center max-w-xl mx-auto">
           <h2 className="text-xl sm:text-2xl font-black uppercase text-white font-heading">
-            Notre Boutique & Équipe à Genève
+            Notre Boutique & Équipe en Suisse
           </h2>
           <p className="text-xs text-white/60 mt-1">
             Venez découvrir notre boutique physique au cœur du quartier des Pâquis.
@@ -168,7 +147,7 @@ export default function AProposPage() {
           <div className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 shadow-lg">
             <Image
               src="/images/store/shop-front.jpeg"
-              alt="Façade du magasin NutriFitness 34 Rue des Pâquis à Genève"
+              alt="Façade du magasin NutriFitness 34 Rue des Pâquis en Suisse"
               fill
               className="object-cover"
             />
@@ -180,7 +159,7 @@ export default function AProposPage() {
           <div className="relative aspect-[16/10] rounded-3xl overflow-hidden border border-white/10 shadow-lg">
             <Image
               src="/images/store/shop-inside.webp"
-              alt="Intérieur et rayons de compléments alimentaires NutriFitness Genève"
+              alt="Intérieur et rayons de compléments alimentaires NutriFitness Suisse"
               fill
               className="object-cover"
             />
@@ -222,10 +201,10 @@ export default function AProposPage() {
       <section className="mb-14 p-6 sm:p-8 rounded-3xl bg-[#141414] border border-white/10 text-white/80">
         <h2 className="text-base sm:text-lg font-black uppercase text-white font-heading tracking-wide mb-3 flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#F80404]" />
-          Identité Officielle de l&apos;Établissement • NutriFitness Genève
+          Identité Officielle de l&apos;Établissement • NutriFitness Suisse
         </h2>
         <p className="text-xs sm:text-sm leading-relaxed text-white/80">
-          Fondée et dirigée par Marco Scarpantoni, NutriFitness (Scarpantoni Nutrifit, IDE : CHE-177.751.159) est une enseigne indépendante suisse spécialisée dans la nutrition sportive et les compléments alimentaires de haute performance. Notre boutique physique est située au Rue des Pâquis 34, 1201 Genève, Suisse (téléphone : +41 79 250 35 64). Nous proposons une sélection rigoureuse de protéines whey, créatines labellisées Creapure®, acides aminés BCAA/EAA, pré-workouts, vitamines et minéraux conformes aux normes suisses OSAV / DFI. Les commandes sont expédiées sous 24h ouvrées depuis notre stock physique de Genève pour la Suisse et le Liechtenstein, ou depuis notre entrepôt logistique partenaire au Portugal pour les commandes européennes. Notre plateforme en ligne est disponible en 4 langues (français, allemand, italien et anglais) et permet les règlements sécurisés en Francs suisses (CHF) et en Euros (EUR).
+          NutriFitness (Scarpantoni Nutrifit, IDE : CHE-177.751.159) est une enseigne indépendante suisse spécialisée dans la nutrition sportive et les compléments alimentaires de haute performance. Notre boutique physique est située au Rue des Pâquis 34, 1201 Suisse (téléphone : +41 79 250 35 64). Nous proposons une sélection rigoureuse de protéines whey, créatines labellisées Creapure®, acides aminés BCAA/EAA, pré-workouts, vitamines et minéraux conformes aux normes suisses OSAV / DFI. Les commandes sont expédiées sous 24h ouvrées depuis notre stock physique en Suisse pour la Suisse et le Liechtenstein, ou depuis notre entrepôt logistique partenaire pour les commandes européennes. Notre plateforme en ligne est disponible en 4 langues (français, allemand, italien et anglais) et permet les règlements sécurisés en Francs suisses (CHF) et en Euros (EUR).
         </p>
       </section>
 
@@ -236,7 +215,7 @@ export default function AProposPage() {
           <span>Retour à l&apos;accueil</span>
         </Link>
         <Link href="/contact/" className="text-[#F80404] hover:underline">
-          Contacter notre équipe à Genève →
+          Contacter notre équipe en Suisse →
         </Link>
       </div>
 

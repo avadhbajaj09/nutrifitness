@@ -67,17 +67,17 @@ export default function ProductLocationBadge({
       flagIcon = '';
     } else {
       activeOrigin = 'PORTUGAL';
-      locationLabel = 'Expédié du Portugal (3–5j)';
+      locationLabel = 'Portugal Fulfillment (3–5j)';
       flagIcon = '🇵🇹';
     }
   } else if (isPortugalOnly) {
     activeOrigin = 'PORTUGAL';
     if (isSwissDestination) {
       isBlocked = false;
-      locationLabel = 'Expédié du Portugal (3–5j)';
+      locationLabel = 'Portugal Fulfillment (3–5j)';
       flagIcon = '🇵🇹';
     } else {
-      locationLabel = 'Expédié du Portugal (3–5j)';
+      locationLabel = 'Portugal Fulfillment (3–5j)';
       flagIcon = '🇵🇹';
     }
   } else {

@@ -14,7 +14,7 @@ export default function TrustStrip() {
               Stock 100% en Suisse
             </h3>
             <p className="text-xs text-white/60 leading-relaxed">
-              Entrepôt physique à Genève. Aucun frais de douane ni taxe imprévue à la réception.
+              Entrepôt physique en Suisse. Aucun frais de douane ni taxe imprévue à la réception.
             </p>
           </div>
         </div>
@@ -41,7 +41,7 @@ export default function TrustStrip() {
           </div>
           <div>
             <h3 className="text-sm font-black text-white uppercase font-heading group-hover:text-[#F80404] transition-colors mb-1">
-              Boutique à Genève
+              Boutique en Suisse
             </h3>
             <p className="text-xs text-white/60 leading-relaxed">
               34 Rue des Pâquis. Retrait Click & Collect immédiat et conseils personnalisés de coachs.

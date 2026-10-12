@@ -23,8 +23,8 @@ export default function EbookPage() {
     '@id': 'https://nutrifitness.ch/guide-des-complements-alimentaires/#ebook',
     name: 'Le Guide Ultime des Compléments Alimentaires',
     author: {
-      '@type': 'Person',
-      name: 'Marco Scarpantoni',
+      '@type': 'Organization',
+      name: 'Équipe NutriFitness Suisse',
     },
     numberOfPages: 66,
     bookFormat: 'https://schema.org/EBook',

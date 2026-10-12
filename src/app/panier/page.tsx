@@ -21,7 +21,8 @@ export default function CartPage() {
     formatPrice, 
     t, 
     currency, 
-    countryCode 
+    countryCode,
+    locale 
   } = useStore();
 
   const currentCc = (countryCode || 'CH').toUpperCase();
@@ -247,22 +248,21 @@ export default function CartPage() {
                     <div>
                       <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider font-heading">{item.brand}</p>
                       <h3 className="text-sm font-bold text-white line-clamp-1">{item.name}</h3>
-                      <p className="text-xs text-white/50">{item.flavor} · {item.size}</p>
+                      <p className="text-xs text-white/50">
+                        {typeof item.flavor === 'object' && item.flavor !== null ? ((item.flavor as Record<string, string>)[locale] || (item.flavor as Record<string, string>).fr || 'Standard') : String(item.flavor || 'Standard')} · {typeof item.size === 'object' && item.size !== null ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard') : String(item.size || 'Format standard')}
+                      </p>
                       {item.isEbook ? (
                         <p className="text-[11px] text-[#95d600] font-bold mt-1">✓ Exemplaire unique (téléchargement immédiat)</p>
                       ) : (item.locationType === 'COMMON' || item.shippingOrigin === 'common') ? (
-                        <div className="mt-1 flex items-center gap-1.5 flex-wrap">
-                          <span className="text-[11px] text-purple-300 font-bold">
-                            🇨🇭 🇵🇹 Dispo Suisse & Portugal
-                          </span>
-                          <span className="text-[10px] text-white/50">
-                            · {countryCode === 'CH' || countryCode === 'LI' ? 'Expédié depuis la Suisse (1–3j)' : 'Expédié du Portugal (3–7j)'}
-                          </span>
-                        </div>
+                        (countryCode === 'CH' || countryCode === 'LI') ? (
+                          <p className="text-[11px] text-emerald-400 font-bold mt-1">🇨🇭 Expédié de Suisse (24h)</p>
+                        ) : (
+                          <p className="text-[11px] text-blue-400 font-bold mt-1">🇵🇹 Expédié du Portugal (3–5j)</p>
+                        )
                       ) : item.isPortugal || item.locationType === 'PORTUGAL_ONLY' || item.shippingOrigin === 'portugal' ? (
                         <p className="text-[11px] text-blue-400 font-bold mt-1">🇵🇹 Expédié du Portugal (3–5j)</p>
                       ) : (
-                        <p className="text-[11px] text-emerald-400 font-bold mt-1">🇨🇭 En stock en Suisse (24h)</p>
+                        <p className="text-[11px] text-emerald-400 font-bold mt-1">🇨🇭 Expédié de Suisse (24h)</p>
                       )}
                     </div>
                   </div>

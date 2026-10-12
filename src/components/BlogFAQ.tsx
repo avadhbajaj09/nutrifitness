@@ -14,7 +14,7 @@ export default function BlogFAQ() {
     },
     {
       q: 'Qui écrit les articles et dossiers ?',
-      a: 'Les articles et guides sont rédigés et supervisés par Marco Scarpantoni (fondateur de NutriFitness et coach en nutrition sportive fort de plus de 20 ans d\'expérience) ainsi que nos spécialistes en préparation physique à Genève. Chaque dossier mentionne son auteur, sa date de mise à jour et s\'appuie sur la science ISSN. Ces informations ne remplacent pas un avis médical.'
+      a: 'Les articles et guides sont rédigés et supervisés par nos coachs et spécialistes en nutrition sportive et préparation physique en Suisse. Chaque dossier mentionne sa date de mise à jour et s\'appuie sur la science ISSN. Ces informations ne remplacent pas un avis médical.'
     },
     {
       q: 'Les informations des articles sont-elles sourcées scientifiquement ?',
@@ -30,7 +30,7 @@ export default function BlogFAQ() {
     },
     {
       q: 'Puis-je poser une question qui n\'est pas encore traitée sur le blog ?',
-      a: 'Absolument ! Écrivez-nous via notre formulaire de Contact ou passez directement dans notre boutique à Genève (34 Rue des Pâquis). Vos questions récurrentes servent de base à la création de nos prochains dossiers thématiques.'
+      a: 'Absolument ! Écrivez-nous via notre formulaire de Contact ou passez directement dans notre boutique en Suisse (34 Rue des Pâquis). Vos questions récurrentes servent de base à la création de nos prochains dossiers thématiques.'
     }
   ];
 

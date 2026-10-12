@@ -19,7 +19,9 @@ export default function CartDrawer() {
     getProductPricing,
     formatPrice,
     t,
-    currency
+    currency,
+    countryCode,
+    locale
   } = useStore();
 
   if (!isCartOpen) return null;
@@ -126,24 +128,34 @@ export default function CartDrawer() {
                       <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider">{item.brand}</p>
                       <h4 className="text-xs font-bold text-white line-clamp-1">{item.name}</h4>
                       <p className="text-[11px] text-white/50">
-                        {item.flavor} · {item.size}
+                        {typeof item.flavor === 'object' && item.flavor !== null ? ((item.flavor as Record<string, string>)[locale] || (item.flavor as Record<string, string>).fr || 'Standard') : String(item.flavor || 'Standard')} · {typeof item.size === 'object' && item.size !== null ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard') : String(item.size || 'Format standard')}
                       </p>
                       {item.isEbook && (
                         <p className="text-[10px] text-[#95d600] font-bold pt-0.5">
                           ✓ Exemplaire unique (téléchargement PDF)
                         </p>
                       )}
-                      {item.isPortugal ? (
-                        <p className="text-[10px] text-blue-400 font-bold pt-0.5 flex items-center gap-1">
-                          <span>🇵🇹</span>
-                          <span>Expédié du Portugal · 3–5j</span>
-                        </p>
-                      ) : !item.isEbook && (
-                        <p className="text-[10px] text-emerald-400 font-bold pt-0.5 flex items-center gap-1">
-                          <span>🇨🇭</span>
-                          <span>En stock en Suisse</span>
-                        </p>
-                      )}
+                      {!item.isEbook && (() => {
+                        const isSwiss = countryCode === 'CH' || countryCode === 'LI';
+                        const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
+                        const isSwissOrigin = !item.isPortugal && (item.locationType === 'GENEVA_ONLY' || (isCommon && isSwiss) || (!item.locationType && isSwiss));
+
+                        if (isSwissOrigin) {
+                          return (
+                            <p className="text-[10px] text-emerald-400 font-bold pt-0.5 flex items-center gap-1">
+                              <span>🇨🇭</span>
+                              <span>Expédié de Suisse (24h)</span>
+                            </p>
+                          );
+                        } else {
+                          return (
+                            <p className="text-[10px] text-blue-400 font-bold pt-0.5 flex items-center gap-1">
+                              <span>🇵🇹</span>
+                              <span>Expédié du Portugal · 3–5j</span>
+                            </p>
+                          );
+                        }
+                      })()}
                     </div>
                     <button 
                       type="button" 

@@ -16,8 +16,8 @@ import {
 import { COMPANY } from '@/lib/company';
 
 export const metadata: Metadata = {
-  title: 'Conditions Générales de Vente (CGV) | NutriFitness.ch Genève',
-  description: 'Conditions générales de vente de NutriFitness (NutriFit Genève). Règles de commande, livraison 24h en Suisse, paiement TWINT, droit de rétractation 14 jours.',
+  title: 'Conditions Générales de Vente (CGV) | NutriFitness.ch',
+  description: 'Conditions générales de vente de NutriFitness. Règles de commande, livraison 24h en Suisse, paiement TWINT, droit de rétractation 14 jours.',
   alternates: {
     canonical: 'https://nutrifitness.ch/cgv/',
   }
@@ -112,7 +112,7 @@ export default function CGVPage() {
             <li><strong>Taux normal de TVA suisse à 8.1 %</strong> applicable aux accessoires, shakers et équipements.</li>
           </ul>
           <p className="text-xs text-white/70">
-            Aucun frais de douane ou taxe d&apos;importation imprévue n&apos;est facturé au Client résident en Suisse ou au Liechtenstein, nos stocks étant physiquement situés à Genève.
+            Aucun frais de douane ou taxe d&apos;importation imprévue n&apos;est facturé au Client résident en Suisse ou au Liechtenstein, nos stocks étant physiquement situés en Suisse.
           </p>
         </section>
 
@@ -127,7 +127,7 @@ export default function CGVPage() {
           </p>
           <ol className="list-decimal pl-5 space-y-1 text-xs text-white/70">
             <li>Sélection des articles et ajout au panier en ligne.</li>
-            <li>Vérification du panier et choix du mode de livraison (PostPac Priority ou Click & Collect Genève).</li>
+            <li>Vérification du panier et choix du mode de livraison (PostPac Priority ou Click & Collect Suisse).</li>
             <li>Saisie des coordonnées de facturation et de livraison en Suisse.</li>
             <li>Choix du moyen de paiement sécurisé.</li>
             <li>Confirmation définitive et paiement de la commande.</li>
@@ -173,7 +173,7 @@ export default function CGVPage() {
             <h2>Article 6 — Livraison & Délais d&apos;Expédition</h2>
           </div>
           <p>
-            Les colis sont préparés et expédiés depuis notre entrepôt et magasin de Genève :
+            Les colis sont préparés et expédiés depuis notre entrepôt et magasin en Suisse :
           </p>
           <ul className="list-disc pl-5 space-y-2 text-xs text-white/70">
             <li>
@@ -183,7 +183,7 @@ export default function CGVPage() {
               <strong>Frais de port offerts :</strong> La livraison est <strong>GRATUITE en Suisse et Liechtenstein dès CHF 75.– d&apos;achats</strong>. Pour les commandes inférieures, une participation forfaitaire de CHF 7.90 est appliquée.
             </li>
             <li>
-              <strong>Click & Collect 2h :</strong> Retrait gratuit à la boutique NutriFitness (34 Rue des Pâquis, 1201 Genève) sous 2 heures pendant les horaires d&apos;ouverture.
+              <strong>Click & Collect 2h :</strong> Retrait gratuit à la boutique NutriFitness (34 Rue des Pâquis, 1201 Suisse) sous 2 heures pendant les horaires d&apos;ouverture.
             </li>
           </ul>
         </section>
@@ -263,7 +263,7 @@ export default function CGVPage() {
             Toutes les relations contractuelles entre NutriFitness et le Client sont exclusivement régies par le <strong>droit matériel suisse</strong>, à l&apos;exclusion de la Convention des Nations Unies sur les contrats de vente internationale de marchandises (CVIM / Convention de Vienne).
           </p>
           <p className="text-xs text-white/60">
-            En cas de litige qui ne pourrait être résolu à l&apos;amiable, le for juridique exclusif est situé au siège de l&apos;entreprise, auprès des <strong>tribunaux compétents du Canton de Genève, Suisse</strong>.
+            En cas de litige qui ne pourrait être résolu à l&apos;amiable, le for juridique exclusif est situé au siège de l&apos;entreprise, auprès des <strong>tribunaux compétents en Suisse</strong>.
           </p>
         </section>
 

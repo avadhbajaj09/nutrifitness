@@ -5,8 +5,8 @@ import { ShieldCheck, MapPin, Phone, Mail, Building, Globe, Server, Scale, Arrow
 import { COMPANY } from '@/lib/company';
 
 export const metadata: Metadata = {
-  title: 'Mentions Légales & Impressum | NutriFitness.ch Genève',
-  description: 'Mentions légales, identification de l\'éditeur, hébergement et coordonnées officielles de NutriFitness (NutriFit Genève).',
+  title: 'Mentions Légales & Impressum | NutriFitness.ch Suisse',
+  description: 'Mentions légales, identification de l\'éditeur, hébergement et coordonnées officielles de NutriFitness en Suisse.',
   alternates: {
     canonical: 'https://nutrifitness.ch/mentions-legales/',
   }

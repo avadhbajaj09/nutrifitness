@@ -96,6 +96,42 @@ const CURRENCY_KEY = 'nutrifitness_currency_v1';
 const COUNTRY_KEY = 'nutrifitness_country_v1';
 const FREE_SHIPPING_THRESHOLD_CHF = 75.0; // CHF
 
+function sanitizeCartItem(raw: any, loc: string = 'fr'): CartItem | null {
+  if (!raw || typeof raw !== 'object') return null;
+  const name = typeof raw.name === 'object' && raw.name !== null
+    ? (raw.name[loc] || raw.name.fr || 'Produit')
+    : String(raw.name || 'Produit');
+  const flavor = typeof raw.flavor === 'object' && raw.flavor !== null
+    ? (raw.flavor[loc] || raw.flavor.fr || 'Standard')
+    : String(raw.flavor || 'Standard');
+  const size = typeof raw.size === 'object' && raw.size !== null
+    ? (raw.size[loc] || raw.size.fr || 'Format standard')
+    : String(raw.size || 'Format standard');
+  const brand = typeof raw.brand === 'object' && raw.brand !== null
+    ? (raw.brand[loc] || raw.brand.fr || 'NutriFitness')
+    : String(raw.brand || 'NutriFitness');
+  const price = Number.isFinite(Number(raw.price)) && Number(raw.price) > 0 ? Number(raw.price) : 29.90;
+  const quantity = Number.isFinite(Number(raw.quantity)) && Number(raw.quantity) > 0 ? Math.floor(Number(raw.quantity)) : 1;
+  const id = String(raw.id || raw.slug || 'item');
+  const slug = String(raw.slug || raw.id || 'produit');
+  const itemKey = String(raw.itemKey || `${id}-${flavor}-${size}`);
+
+  return {
+    ...raw,
+    itemKey,
+    id,
+    slug,
+    name,
+    flavor,
+    size,
+    brand,
+    image: typeof raw.image === 'string' && raw.image ? raw.image : '/images/placeholder.webp',
+    price,
+    quantity,
+    vatRate: Number.isFinite(Number(raw.vatRate)) ? Number(raw.vatRate) : 2.6
+  };
+}
+
 export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [cart, setCart] = useState<CartItem[]>([]);
   const [wishlist, setWishlist] = useState<string[]>(['creapure-bigman-300g']);
@@ -174,13 +210,23 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   // Load from localStorage & detect country on client mount
   useEffect(() => {
     try {
+      const savedLocale = localStorage.getItem(LOCALE_KEY) as SupportedLocale;
+      const initialLoc = savedLocale && ['fr', 'de', 'it', 'en'].includes(savedLocale) ? savedLocale : 'fr';
+
       const savedCart = localStorage.getItem(CART_KEY);
-      if (savedCart) setCart(JSON.parse(savedCart));
+      if (savedCart) {
+        try {
+          const parsed = JSON.parse(savedCart);
+          if (Array.isArray(parsed)) {
+            const cleaned = parsed.map(it => sanitizeCartItem(it, initialLoc)).filter(Boolean) as CartItem[];
+            setCart(cleaned);
+          }
+        } catch {}
+      }
 
       const savedWishlist = localStorage.getItem(WISHLIST_KEY);
       if (savedWishlist) setWishlist(JSON.parse(savedWishlist));
 
-      const savedLocale = localStorage.getItem(LOCALE_KEY) as SupportedLocale;
       const hasTransCookie = typeof document !== 'undefined' && document.cookie.includes('googtrans=/fr/');
       if (savedLocale && ['fr', 'de', 'it', 'en'].includes(savedLocale)) {
         if (savedLocale !== 'fr' && !hasTransCookie) {
@@ -281,41 +327,20 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const getProductPricing = (product: any, variant?: any) => {
     const isSwiss = countryCode === 'CH' || countryCode === 'LI';
-    const isShopAvailable = (product?.stockGeneva === undefined || product?.stockGeneva > 0) &&
-      product?.shippingOrigin !== 'portugal' &&
-      product?.locationType !== 'PORTUGAL_ONLY';
-
     const baseChf = variant?.priceChf ?? product?.priceChf ?? 29.90;
     const baseCompareChf = variant?.compareAtPriceChf ?? product?.compareAtPriceChf;
 
     let currentPrice: number;
     let currentCompareAt: number | undefined;
-    let activeCurrency: SupportedCurrency = (isSwiss && currency === 'CHF') ? 'CHF' : 'EUR';
+    let activeCurrency: SupportedCurrency;
 
     if (isSwiss) {
-      // Check if product is a COMMON item out of stock in the Swiss shop
-      const isCommonOutOfShop = (product?.locationType === 'COMMON' || product?.shippingOrigin === 'common') &&
-        typeof product?.stockGeneva === 'number' && product.stockGeneva <= 0;
-
-      if (isCommonOutOfShop) {
-        // Common product not in Swiss shop -> Whole Europe price
-        currentPrice = variant?.priceEurEurope ?? product?.priceEurEurope ?? variant?.priceEur ?? product?.priceEur ?? Math.round(baseChf * 0.95 * 100) / 100;
-        currentCompareAt = variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope ?? variant?.compareAtPriceEur ?? product?.compareAtPriceEur;
-        activeCurrency = 'EUR';
-      } else {
-        // Show prices selected for Switzerland (Box 1 CHF or Box 2 EUR)
-        if (currency === 'EUR') {
-          currentPrice = variant?.priceEurSwiss ?? product?.priceEurSwiss ?? variant?.priceEurEurope ?? product?.priceEurEurope ?? Math.round(baseChf * 1.05 * 100) / 100;
-          currentCompareAt = variant?.compareAtPriceEurSwiss ?? product?.compareAtPriceEurSwiss ?? variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope;
-          activeCurrency = 'EUR';
-        } else {
-          currentPrice = baseChf;
-          currentCompareAt = baseCompareChf;
-          activeCurrency = 'CHF';
-        }
-      }
+      // For Swiss visitors: ALWAYS CHF whether the product is from Portugal or Switzerland
+      currentPrice = baseChf;
+      currentCompareAt = baseCompareChf;
+      activeCurrency = 'CHF';
     } else {
-      // Outside Switzerland -> Whole Europe price (Box 3)
+      // Outside Switzerland -> Whole Europe price in EUR
       currentPrice = variant?.priceEurEurope ?? product?.priceEurEurope ?? variant?.priceEur ?? product?.priceEur ?? Math.round(baseChf * 0.95 * 100) / 100;
       currentCompareAt = variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope ?? variant?.compareAtPriceEur ?? product?.compareAtPriceEur;
       activeCurrency = 'EUR';
@@ -338,14 +363,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       return getProductPricing(amountChfOrProduct).formatted;
     }
     const isSwiss = countryCode === 'CH' || countryCode === 'LI';
-    if (currency === 'EUR') {
+    if (isSwiss) {
+      const val = Number(amountChfOrProduct || 0);
+      return `CHF ${val.toFixed(2)}`;
+    } else {
       if (typeof amountEur === 'number' && amountEur > 0) {
         return `€ ${amountEur.toFixed(2)}`;
       }
-      const eurVal = Math.round(Number(amountChfOrProduct || 0) * (isSwiss ? 1.05 : 0.95) * 100) / 100;
+      const eurVal = Math.round(Number(amountChfOrProduct || 0) * 0.95 * 100) / 100;
       return `€ ${eurVal.toFixed(2)}`;
     }
-    return taxFormatPrice(Number(amountChfOrProduct || 0), currency);
   };
 
   const convertPrice = (amountChfOrProduct: any, amountEur?: number) => {
@@ -353,13 +380,14 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       return getProductPricing(amountChfOrProduct).price;
     }
     const isSwiss = countryCode === 'CH' || countryCode === 'LI';
-    if (currency === 'EUR') {
+    if (isSwiss) {
+      return Number(amountChfOrProduct || 0);
+    } else {
       if (typeof amountEur === 'number' && amountEur > 0) {
         return amountEur;
       }
-      return Math.round(Number(amountChfOrProduct || 0) * (isSwiss ? 1.05 : 0.95) * 100) / 100;
+      return Math.round(Number(amountChfOrProduct || 0) * 0.95 * 100) / 100;
     }
-    return taxConvertPrice(Number(amountChfOrProduct || 0), currency);
   };
 
   const showToast = (title: string, message: string) => {
@@ -373,17 +401,28 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const addToCart = (product: any, options: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string } = {}) => {
     const isEbook = isEbookItem(product);
     const quantity = isEbook ? 1 : (options.quantity || 1);
-    const flavor = options.flavor || product.flavor || 'Standard';
-    const size = options.size || product.size || (isEbook ? 'Format PDF' : 'Format standard');
+    const rawFlavor = options.flavor || product.flavor || 'Standard';
+    const flavor = typeof rawFlavor === 'object' && rawFlavor !== null
+      ? (rawFlavor[locale] || rawFlavor.fr || rawFlavor.en || 'Standard')
+      : String(rawFlavor || 'Standard');
+
+    const rawSize = options.size || product.size || (isEbook ? 'Format PDF' : 'Format standard');
+    const size = typeof rawSize === 'object' && rawSize !== null
+      ? (rawSize[locale] || rawSize.fr || rawSize.en || 'Format standard')
+      : String(rawSize || 'Format standard');
+
     const resolvedPriceInfo = getProductPricing(product);
     const price = Number(options.price !== undefined ? options.price : resolvedPriceInfo.price);
     
     // Resolve specific flavor image if variant has packshot
     let image = options.image || product.image;
     if (!image && product.variants && flavor) {
-      const matchedVariant = product.variants.find((v: any) => 
-        (v.flavorName && (v.flavorName.fr === flavor || v.flavorName === flavor))
-      );
+      const matchedVariant = product.variants.find((v: any) => {
+        const vFlav = typeof v.flavorName === 'object' && v.flavorName !== null
+          ? (v.flavorName[locale] || v.flavorName.fr || v.flavorName.en)
+          : v.flavorName;
+        return vFlav === flavor;
+      });
       if (matchedVariant?.image) {
         image = matchedVariant.image;
       }
@@ -391,9 +430,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     if (!image) {
       image = (product.images && product.images[0] ? product.images[0].src : '/images/placeholder.webp');
     }
-    const slug = getLocalized(product.slug, locale) || product.id || 'produit';
-    const name = getLocalized(product.name, locale) || 'Produit';
-    const brand = product.brand || 'NutriFitness';
+    const rawSlug = getLocalized(product.slug, locale) || product.id || 'produit';
+    const slug = typeof rawSlug === 'object' && rawSlug !== null ? (rawSlug[locale] || rawSlug.fr || 'produit') : String(rawSlug || 'produit');
+
+    const rawName = getLocalized(product.name, locale) || product.name || 'Produit';
+    const name = typeof rawName === 'object' && rawName !== null ? (rawName[locale] || rawName.fr || 'Produit') : String(rawName || 'Produit');
+
+    const rawBrand = product.brand || 'NutriFitness';
+    const brand = typeof rawBrand === 'object' && rawBrand !== null ? (rawBrand[locale] || rawBrand.fr || 'NutriFitness') : String(rawBrand || 'NutriFitness');
+
     const itemKey = `${product.id || slug}-${flavor}-${size}`;
     const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
     const isPortugal = Boolean(product.shippingOrigin === 'portugal' || (options as any).isPortugal || (product.locationType === 'PORTUGAL_ONLY' && !isCommon));

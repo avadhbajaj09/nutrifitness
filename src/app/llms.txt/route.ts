@@ -59,7 +59,7 @@ export async function GET() {
     `- [Toute la boutique](https://nutrifitness.ch/boutique/) : Catalogue complet avec filtres et recherche instantanée`,
     ``,
     `## Guides Scientifiques & Ebook`,
-    `- [Le Guide Ultime des Compléments Alimentaires (66 pages PDF)](https://nutrifitness.ch/guide-des-complements-alimentaires/) : Guide de référence par Marco Scarpantoni (29.90 CHF)`,
+    `- [Le Guide Ultime des Compléments Alimentaires (66 pages PDF)](https://nutrifitness.ch/guide-des-complements-alimentaires/) : Guide de référence par l'équipe NutriFitness (29.90 CHF)`,
     `- [Coaching Nutritionnel Personnalisé](https://nutrifitness.ch/coaching-nutritionnel-personnalise/) : Bilan et plan nutritionnel sur mesure à Genève`,
     `- [Blog & Guides d'Experts](https://nutrifitness.ch/blog/) : 20 dossiers scientifiques complets`,
     ...BLOG_POSTS.map(b => `  - [${b.title}](https://nutrifitness.ch/blog/${b.slug}/) (${b.category})`),

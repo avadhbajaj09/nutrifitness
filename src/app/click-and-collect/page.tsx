@@ -250,7 +250,7 @@ export default function ClickAndCollectPage() {
             </div>
             <div>
               <h3 className="text-sm font-bold text-white font-heading">Conseils d&apos;experts</h3>
-              <p className="text-xs text-white/60 mt-1">Échangez directement avec Marco Scarpantoni au comptoir lors de votre retrait.</p>
+              <p className="text-xs text-white/60 mt-1">Échangez directement avec notre équipe d&apos;experts au comptoir lors de votre retrait.</p>
             </div>
           </div>
         </div>

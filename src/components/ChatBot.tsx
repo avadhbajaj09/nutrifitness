@@ -62,7 +62,7 @@ export default function ChatBot() {
     {
       id: 'msg-welcome',
       sender: 'bot',
-      text: 'Bonjour ! 👋 Je suis l\'assistant virtuel NutriFitness Genève. Comment puis-je vous aider aujourd\'hui ?',
+      text: 'Bonjour ! 👋 Je suis l\'assistant virtuel NutriFitness Suisse. Comment puis-je vous aider aujourd\'hui ?',
       timestamp: 'À l\'instant',
       options: [
         { label: '⏱️ Avant / Après l\'entraînement', action: 'timing_workout' },
@@ -318,7 +318,7 @@ export default function ChatBot() {
         const botMsg: ChatMessage = {
           id: `bot-${Date.now() + 1}`,
           sender: 'bot',
-          text: '🇨🇭 **Livraison & Expédition en Suisse :**\n\n• **Délais :** 24h ouvrées par PostPac Priority (La Poste Suisse).\n• **Frais de port :** Offerts dès 75 CHF d\'achat (sinon 8.90 CHF).\n• **Click & Collect :** Retrait gratuit en 2h à notre boutique de Genève (34 Rue des Pâquis).\n• **Douane & TVA :** Stock 100% physique en Suisse, TVA 2.6% incluse, **aucun frais de douane** !',
+          text: '🇨🇭 **Livraison & Expédition en Suisse :**\n\n• **Délais :** 24h ouvrées par PostPac Priority (La Poste Suisse).\n• **Frais de port :** Offerts dès 75 CHF d\'achat (sinon 8.90 CHF).\n• **Click & Collect :** Retrait gratuit en 2h à notre boutique en Suisse (34 Rue des Pâquis).\n• **Douane & TVA :** Stock 100% physique en Suisse, TVA 2.6% incluse, **aucun frais de douane** !',
           timestamp: 'À l\'instant',
           options: [
             { label: '🛍️ Découvrir les compléments', action: 'timing_workout' },
@@ -412,7 +412,7 @@ export default function ChatBot() {
           {
             id: `bot-${Date.now()}`,
             sender: 'bot',
-            text: 'Pour le moment, je n\'ai pas cette information précise concernant votre situation. Je vais enregistrer votre demande immédiatement avec un identifiant unique afin que notre équipe à Genève prenne contact avec vous au plus vite.',
+            text: 'Pour le moment, je n\'ai pas cette information précise concernant votre situation. Je vais enregistrer votre demande immédiatement avec un identifiant unique afin que notre équipe en Suisse prenne contact avec vous au plus vite.',
             timestamp: 'À l\'instant',
             showForm: true
           }
@@ -445,7 +445,7 @@ export default function ChatBot() {
           {
             id: `bot-${Date.now()}`,
             sender: 'bot',
-            text: '📍 **Notre Boutique à Genève :**\nNous vous accueillons au 34 Rue des Pâquis, 1201 Genève. Vous pouvez également commander en ligne et récupérer gratuitement vos produits 2 heures plus tard grâce au Click & Collect !',
+            text: '📍 **Notre Boutique en Suisse :**\nNous vous accueillons au 34 Rue des Pâquis, 1201 Suisse. Vous pouvez également commander en ligne et récupérer gratuitement vos produits 2 heures plus tard grâce au Click & Collect !',
             timestamp: 'À l\'instant',
             options: [
               { label: '⏱️ Conseils Produits', action: 'timing_workout' },
@@ -544,7 +544,7 @@ export default function ChatBot() {
           {
             id: `bot-${Date.now()}`,
             sender: 'bot',
-            text: 'Pour le moment, je n\'ai pas cette information précise dans ma base. Je vais enregistrer votre demande avec un identifiant unique pour que Marco ou un conseiller de notre équipe vous recontacte rapidement :',
+            text: 'Pour le moment, je n\'ai pas cette information précise dans ma base. Je vais enregistrer votre demande avec un identifiant unique pour qu\'un conseiller de notre équipe vous recontacte rapidement :',
             timestamp: 'À l\'instant',
             showForm: true
           }
@@ -588,7 +588,7 @@ export default function ChatBot() {
       const botConfirmation: ChatMessage = {
         id: `bot-ticket-${Date.now()}`,
         sender: 'bot',
-        text: `✅ **Votre demande a bien été enregistrée !**\n\nVotre numéro de ticket unique est : **${generatedTicketId}**.\n\nUn membre de notre équipe de Genève a été notifié et vous répondra par e-mail très prochainement. Merci pour votre patience et votre confiance ! 🇨🇭`,
+        text: `✅ **Votre demande a bien été enregistrée !**\n\nVotre numéro de ticket unique est : **${generatedTicketId}**.\n\nUn membre de notre équipe en Suisse a été notifié et vous répondra par e-mail très prochainement. Merci pour votre patience et votre confiance ! 🇨🇭`,
         timestamp: 'À l\'instant',
         ticketId: generatedTicketId,
         options: [

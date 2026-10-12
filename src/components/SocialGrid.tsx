@@ -3,7 +3,7 @@ import Image from 'next/image';
 
 const posts = [
   { img: '/images/blog/nutriftiness-images26.jpg', tag: '#NutriFitnessCH' },
-  { img: '/images/blog/nutriftiness-images29.jpg', tag: '#GenevaFitness' },
+  { img: '/images/blog/nutriftiness-images29.jpg', tag: '#SwissFitness' },
   { img: '/images/blog/nutriftiness-images45.jpg', tag: '#SwissAthletes' },
   { img: '/images/blog/nutriftiness-images27.jpg', tag: '#CreapureSuisse' },
   { img: '/images/blog/nutriftiness-images32.jpg', tag: '#PostPacPriority' }

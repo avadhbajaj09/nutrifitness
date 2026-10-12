@@ -14,7 +14,7 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Livraison 24h & Expédition Suisse | NutriFitness.ch Genève',
+  title: 'Livraison 24h & Expédition Suisse | NutriFitness.ch',
   description: 'Conditions de livraison en Suisse et Liechtenstein par La Poste Suisse (PostPac Priority). Livraison gratuite dès 75 CHF d\'achats, envoi sous 24h ouvrées.',
   alternates: {
     canonical: 'https://nutrifitness.ch/livraison/',
@@ -25,7 +25,7 @@ export default function LivraisonPage() {
   const faqs = [
     {
       q: 'Dans quels pays livrez-vous ?',
-      a: 'Nous livrons dans toute la Suisse et au Liechtenstein. Tous nos colis partent directement de notre entrepôt et magasin physique situé à Genève. La livraison hors de Suisse et du Liechtenstein n\'est pas proposée pour le moment afin de garantir des délais ultra-rapides sans frais de douane.'
+      a: 'Nous livrons dans toute la Suisse et au Liechtenstein. Tous nos colis suisses partent directement de notre stock physique en Suisse. La livraison européenne est également assurée depuis notre centre logistique partenaire.'
     },
     {
       q: 'Combien de temps faut-il pour recevoir ma commande ?',
@@ -57,11 +57,11 @@ export default function LivraisonPage() {
     },
     {
       q: 'Livrez-vous les produits frais (comme le blanc d\'œuf liquide) ?',
-      a: 'Les produits frais périssables nécessitant une chaîne du froid continue sont réservés au retrait Click & Collect direct dans notre boutique de Genève (34 Rue des Pâquis) afin d\'en préserver la fraîcheur optimale.'
+      a: 'Les produits frais périssables nécessitant une chaîne du froid continue sont réservés au retrait Click & Collect direct dans notre boutique en Suisse (34 Rue des Pâquis) afin d\'en préserver la fraîcheur optimale.'
     },
     {
-      q: 'Puis-je retirer ma commande gratuitement en boutique à Genève (Click & Collect) ?',
-      a: 'Oui, tout à fait. Choisissez l\'option « Retrait Boutique Genève » lors de votre commande. Votre commande est préparée sous 2 heures ouvrées et vous êtes prévenu par e-mail ou SMS. Vous pouvez ensuite venir la récupérer au 34 Rue des Pâquis, 1201 Genève.'
+      q: 'Puis-je retirer ma commande gratuitement en boutique en Suisse (Click & Collect) ?',
+      a: 'Oui, tout à fait. Choisissez l\'option « Retrait en Boutique » lors de votre commande. Votre commande est préparée sous 2 heures ouvrées et vous êtes prévenu par e-mail ou SMS. Vous pouvez ensuite venir la récupérer au 34 Rue des Pâquis, 1201 Suisse.'
     }
   ];
 
@@ -103,7 +103,7 @@ export default function LivraisonPage() {
           Livraison & <span className="text-[#F80404]">Expédition en Suisse</span>
         </h1>
         <p className="text-xs sm:text-sm text-white/60 mt-2">
-          Tous nos compléments alimentaires sont expédiés depuis notre boutique de Genève avec suivi en temps réel et zéro frais de douane.
+          Tous nos compléments alimentaires sont expédiés depuis notre stock en Suisse avec suivi en temps réel et zéro frais de douane.
         </p>
       </header>
 
@@ -133,7 +133,7 @@ export default function LivraisonPage() {
           </div>
           <span className="text-[11px] font-bold text-white/50 uppercase">Click & Collect</span>
           <h3 className="text-base font-black text-white font-heading mt-0.5">Retrait Gratuit 2h</h3>
-          <p className="text-xs text-white/60 mt-1">À notre boutique des Pâquis à Genève (34 Rue des Pâquis).</p>
+          <p className="text-xs text-white/60 mt-1">À notre boutique des Pâquis (34 Rue des Pâquis).</p>
         </div>
       </div>
 
@@ -161,7 +161,7 @@ export default function LivraisonPage() {
                 <td className="p-3 font-bold text-[#95d600]">GRATUIT (0.00 CHF)</td>
               </tr>
               <tr>
-                <td className="p-3 font-bold text-white">Click & Collect Genève (Pâquis)</td>
+                <td className="p-3 font-bold text-white">Click & Collect Boutique (Pâquis)</td>
                 <td className="p-3">Prêt en 2 heures</td>
                 <td className="p-3 font-bold text-[#95d600]">GRATUIT</td>
                 <td className="p-3 font-bold text-[#95d600]">GRATUIT</td>

@@ -17,7 +17,7 @@ import {
 
 export const metadata: Metadata = {
   title: 'Politique de Retour & Remboursement (14 Jours) | NutriFitness.ch',
-  description: 'Modalités de retours, droit de rétractation de 14 jours, réexpéditions et remboursements pour la boutique NutriFitness à Genève (Suisse).',
+  description: 'Modalités de retours, droit de rétractation de 14 jours, réexpéditions et remboursements pour la boutique NutriFitness en Suisse.',
   alternates: {
     canonical: 'https://nutrifitness.ch/retours/',
   }
@@ -44,7 +44,7 @@ export default function RetoursPage() {
           Politique de Retour & <span className="text-[#F80404]">Remboursement</span>
         </h1>
         <p className="text-xs sm:text-sm text-white/60 mt-2">
-          Conditions applicables aux achats réalisés sur notre boutique en ligne située en Suisse à Genève.
+          Conditions applicables aux achats réalisés sur notre boutique en ligne située en Suisse.
         </p>
       </header>
 
@@ -164,7 +164,7 @@ export default function RetoursPage() {
             <address className="not-italic text-xs text-white/80 space-y-0.5">
               <p className="text-white font-bold">NutriFitness — Service Retours</p>
               <p>Rue des Pâquis 34</p>
-              <p>1201 Genève</p>
+              <p>1201 Suisse</p>
               <p>Suisse 🇨🇭</p>
             </address>
             <p className="text-[11px] text-white/50 pt-1">
@@ -207,7 +207,7 @@ export default function RetoursPage() {
               <div>
                 <span className="text-[10px] text-white/50 font-bold uppercase block">Téléphone direct</span>
                 <span className="text-sm font-black text-white group-hover:text-[#95d600] transition-colors">+41 79 250 35 64</span>
-                <span className="text-[10px] text-white/40 block">Genève (du lundi au samedi)</span>
+                <span className="text-[10px] text-white/40 block">Suisse (du lundi au samedi)</span>
               </div>
             </a>
           </div>

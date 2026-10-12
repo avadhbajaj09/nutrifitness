@@ -5,7 +5,7 @@ import Link from 'next/link';
 import { MapPin, Navigation, Phone, Clock, Train, Car } from 'lucide-react';
 
 export default function StoreMap() {
-  const address = "34 Rue des Pâquis, 1201 Genève, Suisse";
+  const address = "34 Rue des Pâquis, 1201 Suisse";
   const googleMapsDirectionsUrl = "https://www.google.com/maps/dir/?api=1&destination=34+Rue+des+P%C3%A2quis+1201+Gen%C3%A8ve+Switzerland";
   const googleMapsViewUrl = "https://maps.google.com/?q=34+Rue+des+P%C3%A2quis+1201+Gen%C3%A8ve+Switzerland";
 
@@ -19,7 +19,7 @@ export default function StoreMap() {
           </span>
           <h3 className="text-lg sm:text-xl font-black text-white uppercase font-heading flex items-center gap-2">
             <MapPin className="w-5 h-5 text-[#F80404]" />
-            Plan d&apos;Accès Showroom NutriFitness Genève
+            Plan d&apos;Accès Showroom NutriFitness Suisse
           </h3>
         </div>
 
@@ -48,7 +48,7 @@ export default function StoreMap() {
         {/* Interactive Google Map iframe */}
         <div className="w-full h-[320px] sm:h-[400px] md:h-[440px] relative">
           <iframe
-            title="Carte NutriFitness Genève - 34 Rue des Pâquis"
+            title="Carte NutriFitness Suisse - 34 Rue des Pâquis"
             src="https://maps.google.com/maps?q=34+Rue+des+P%C3%A2quis,+1201+Gen%C3%A8ve,+Switzerland&t=&z=16&ie=UTF8&iwloc=&output=embed"
             className="w-full h-full border-0 filter contrast-[1.05] brightness-95"
             loading="lazy"

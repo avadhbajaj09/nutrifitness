@@ -30,10 +30,10 @@ export default function Footer() {
             <address className="not-italic text-xs text-white/70 space-y-1.5">
               <p className="font-bold text-white flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#F80404] inline-block" />
-                Boutique physique à Genève :
+                Boutique physique en Suisse :
               </p>
-              <p>{COMPANY.address.street}, {COMPANY.address.postalCode} {COMPANY.address.city}</p>
-              <p className="text-white/80">Fondateur & Gérant : <span className="font-bold text-white">{COMPANY.founder}</span></p>
+              <p>{COMPANY.address.street}, {COMPANY.address.postalCode} Suisse</p>
+              <p className="text-white/80">Service Client : <span className="font-bold text-white">Équipe NutriFitness Suisse</span></p>
               <p>Tél : <a href={`tel:${COMPANY.contact.phone.replace(/\s+/g, '')}`} className="hover:text-[#F80404] transition-colors">{COMPANY.contact.phoneFormatted}</a></p>
               <p>E-mail : <a href={`mailto:${COMPANY.contact.email}`} className="hover:text-[#F80404] transition-colors">{COMPANY.contact.email}</a></p>
               <p className="text-[11px] text-white/40 pt-1">IDE / UID : {COMPANY.uid}</p>
@@ -58,7 +58,7 @@ export default function Footer() {
           <div>
             <h4 className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-4 font-heading">Boutique & Livraison</h4>
             <ul className="space-y-2 text-xs text-white/70">
-              <li><Link href="/magasin-geneve/" className="hover:text-white transition-colors font-bold text-white">📍 Boutique Genève & Horaires</Link></li>
+              <li><Link href="/magasin-geneve/" className="hover:text-white transition-colors font-bold text-white">📍 Boutique en Suisse & Horaires</Link></li>
               <li><Link href="/click-and-collect/" className="hover:text-[#F80404] transition-colors font-bold text-white">⚡ Click & Collect Gratuit (2h)</Link></li>
               <li><Link href="/livraison/" className="hover:text-white transition-colors">Livraison Express 24h & Tarifs</Link></li>
               <li><Link href="/paiement/" className="hover:text-white transition-colors">Paiement Sécurisé (TWINT, Cartes)</Link></li>

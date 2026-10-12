@@ -65,21 +65,25 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               CH
             </span>
           )}
-          {/* Server-rendered origin badge (identical for all visitors) */}
-          <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ${
-            originType === 'GENEVA_ONLY'
-              ? 'bg-black/80 border-white/20 text-white'
-              : originType === 'PORTUGAL_ONLY'
-              ? 'bg-blue-950/85 border-blue-500/40 text-blue-300'
-              : 'bg-emerald-950/85 border-emerald-500/40 text-emerald-300'
-          }`}>
-            <span>{originType === 'GENEVA_ONLY' ? '🇨🇭' : originType === 'PORTUGAL_ONLY' ? '🇵🇹' : '🇨🇭/🇵🇹'}</span>
-            <span>
-              {originType === 'GENEVA_ONLY' && (t.common.originGeneva || 'Expédié de Genève')}
-              {originType === 'PORTUGAL_ONLY' && (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
-              {originType === 'COMMON' && (t.common.originCommon || 'Expédié de Genève ou du Portugal')}
-            </span>
-          </span>
+          {/* Origin badge based on visitor location without dual badges */}
+          {(() => {
+            const isSwiss = effectiveCountry === 'CH' || effectiveCountry === 'LI';
+            const isSwissOrigin = originType === 'GENEVA_ONLY' || (originType === 'COMMON' && isSwiss);
+            return (
+              <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ${
+                isSwissOrigin
+                  ? 'bg-black/80 border-white/20 text-white'
+                  : 'bg-blue-950/85 border-blue-500/40 text-blue-300'
+              }`}>
+                <span>{isSwissOrigin ? '🇨🇭' : '🇵🇹'}</span>
+                <span>
+                  {isSwissOrigin
+                    ? (t.common.originSwitzerland || 'Expédié de Suisse')
+                    : (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
+                </span>
+              </span>
+            );
+          })()}
         </div>
 
         {/* Floating Action Buttons (Top Right) */}

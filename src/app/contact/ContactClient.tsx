@@ -35,14 +35,14 @@ export default function ContactClient() {
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      showToast('Message Envoyé', 'Votre message a bien été transmis à l\'équipe NutriFitness Genève. Nous vous répondrons sous 24h ouvrées.');
+      showToast('Message Envoyé', 'Votre message a bien été transmis à l\'équipe NutriFitness Suisse. Nous vous répondrons sous 24h ouvrées.');
     }, 700);
   };
 
   const faqs = [
     {
       q: 'Comment contacter Nutrifitness ?',
-      a: 'Vous pouvez nous joindre par téléphone au +41 79 250 35 64, par e-mail à info@nutrifitness.ch (ou support@nutrifitness.ch) ou en vous rendant directement à notre boutique de Genève (34 Rue des Pâquis). Pour toute demande relative à une commande, veillez à indiquer votre numéro de commande.'
+      a: 'Vous pouvez nous joindre par téléphone au +41 79 250 35 64, par e-mail à info@nutrifitness.ch (ou support@nutrifitness.ch) ou en vous rendant directement à notre boutique en Suisse (34 Rue des Pâquis). Pour toute demande relative à une commande, veillez à indiquer votre numéro de commande.'
     },
     {
       q: 'Quels sont vos horaires de réponse téléphonique et e-mail ?',
@@ -76,10 +76,10 @@ export default function ContactClient() {
       <header className="mb-10 pb-6 border-b border-white/10">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F80404]/15 border border-[#F80404]/30 text-[#F80404] text-xs font-black uppercase tracking-wider mb-3 font-heading">
           <MessageSquare className="w-3.5 h-3.5" />
-          Service Client Genève
+          Service Client Suisse
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white font-heading tracking-tight leading-tight">
-          Contactez <span className="text-[#F80404]">NutriFitness Genève</span>
+          Contactez <span className="text-[#F80404]">NutriFitness Suisse</span>
         </h1>
         <p className="text-xs sm:text-sm text-white/60 mt-2">
           Une question sur un produit, une commande en cours ou besoin d&apos;un conseil expert ? Nous sommes à votre écoute.
@@ -127,8 +127,8 @@ export default function ContactClient() {
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-bold text-white block uppercase text-[10px] text-white/50">Boutique physique à Genève</span>
-                <span className="text-sm font-bold text-white">34 Rue des Pâquis, 1201 Genève</span>
+                <span className="font-bold text-white block uppercase text-[10px] text-white/50">Boutique physique en Suisse</span>
+                <span className="text-sm font-bold text-white">34 Rue des Pâquis, 1201 Suisse</span>
                 <p className="text-[11px] text-white/50 mt-0.5">À 400m de la Gare Cornavin · Tram 15 (Môle)</p>
               </div>
             </div>
@@ -224,7 +224,7 @@ export default function ContactClient() {
                     <option value="conseil">Conseil produit ou nutrition</option>
                     <option value="commande">Question sur une commande en cours</option>
                     <option value="retour">Demande de retour ou échange (14 jours)</option>
-                    <option value="boutique">Renseignement boutique Genève / Click & Collect</option>
+                    <option value="boutique">Renseignement boutique / Click & Collect</option>
                     <option value="partenariat">Partenariat ou salle de sport</option>
                   </select>
                 </div>

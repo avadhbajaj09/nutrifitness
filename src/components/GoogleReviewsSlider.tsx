@@ -23,7 +23,7 @@ export interface GoogleReview {
   avatarColor?: string;
 }
 
-// Authentic Google Reviews from NutriFitness Geneva (Google My Business / Trustindex)
+// Authentic Google Reviews from NutriFitness Switzerland (Google My Business / Trustindex)
 // Filtered: ONLY 3, 4, and 5 stars (strictly excludes 1 and 2 stars)
 const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
   {
@@ -31,8 +31,8 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
     author: 'Faheem Obaidullah',
     rating: 5,
     date: 'Il y a 2 semaines',
-    location: 'Genève',
-    text: 'Excellent supplement store with a great range of high quality products. Marco was incredibly knowledgeable, took the time to understand my goals, and gave honest, practical advice without any sales pressure. Very impressed with both the level of expertise and the product selection. Highly recommended if you’re looking for supplements and guidance you can trust. Thanks again!',
+    location: 'Suisse',
+    text: 'Excellent supplement store with a great range of high quality products. The team was incredibly knowledgeable, took the time to understand my goals, and gave honest, practical advice without any sales pressure. Very impressed with both the level of expertise and the product selection. Highly recommended if you’re looking for supplements and guidance you can trust. Thanks again!',
     verified: true,
     avatarColor: 'bg-emerald-600'
   },
@@ -41,8 +41,8 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
     author: 'Art. Framing Art (Alain Defoer)',
     rating: 5,
     date: 'Il y a 1 mois',
-    location: 'Genève / Vaud',
-    text: 'Marco est extrêmement aimable et prend le temps de donner des explications claires et détaillées sur ses produits. On sent tout de suite son expertise. Les produits sont d’une qualité premium remarquable — je recommande vivement.',
+    location: 'Vaud',
+    text: 'L\'équipe est extrêmement aimable et prend le temps de donner des explications claires et détaillées sur ses produits. On sent tout de suite son expertise. Les produits sont d’une qualité premium remarquable — je recommande vivement.',
     verified: true,
     avatarColor: 'bg-blue-600'
   },
@@ -51,8 +51,8 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
     author: 'Ahmed Hammad',
     rating: 5,
     date: 'Il y a 1 mois',
-    location: 'Genève',
-    text: 'Le meilleur magasin de compléments alimentaires sur Genève ✅🙏 Conseil honnête, stock toujours disponible et prix très compétitifs pour la Suisse.',
+    location: 'Suisse',
+    text: 'Le meilleur magasin de compléments alimentaires en Suisse ✅🙏 Conseil honnête, stock toujours disponible et prix très compétitifs pour la Suisse.',
     verified: true,
     avatarColor: 'bg-amber-600'
   },
@@ -61,7 +61,7 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
     author: 'LAXAP (LAXAP)',
     rating: 5,
     date: 'Il y a 2 mois',
-    location: 'Genève',
+    location: 'Suisse',
     text: 'Très bien conseillé par le gérant. Très professionnel ! Les conseils sur la créatine Creapure et les protéines CFM m\'ont permis de passer un cap.',
     verified: true,
     avatarColor: 'bg-purple-600'
@@ -71,7 +71,7 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
     author: 'Kemal Parla',
     rating: 5,
     date: 'Il y a 2 mois',
-    location: 'Genève',
+    location: 'Suisse',
     text: 'Super knowledgeable and friendly staff, with a variety of products to choose from! Quick shipping in 24 hours via Swiss Post.',
     verified: true,
     avatarColor: 'bg-indigo-600'
@@ -82,7 +82,7 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
     rating: 5,
     date: 'Il y a 3 mois',
     location: 'Suisse',
-    text: 'Top même 10 étoiles ⭐️ Boutique de référence pour tous les passionnés de musculation à Genève.',
+    text: 'Top même 10 étoiles ⭐️ Boutique de référence pour tous les passionnés de musculation en Suisse.',
     verified: true,
     avatarColor: 'bg-red-600'
   },
@@ -91,7 +91,7 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
     author: 'James',
     rating: 5,
     date: 'Il y a 3 mois',
-    location: 'Genève',
+    location: 'Suisse',
     text: 'Merci pour les conseils de nutrition je reviendrai. Livraison rapide et produits super digestes.',
     verified: true,
     avatarColor: 'bg-teal-600'
@@ -112,7 +112,7 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
     rating: 5,
     date: 'Il y a 4 mois',
     location: 'Nyon',
-    text: 'Click & Collect testé à la boutique des Pâquis. Retrait en 2h chrono et accueil très chaleureux de Marco. Une vraie expertise nutritionnelle.',
+    text: 'Click & Collect testé à la boutique des Pâquis. Retrait en 2h chrono et accueil très chaleureux de l\'équipe. Une vraie expertise nutritionnelle.',
     verified: true,
     avatarColor: 'bg-rose-600'
   },
@@ -121,7 +121,7 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
     author: 'Julien M.',
     rating: 4,
     date: 'Il y a 5 mois',
-    location: 'Genève (Eaux-Vives)',
+    location: 'Suisse',
     text: 'Très bon magasin, beaucoup de choix de marques introuvables ailleurs en Suisse. Produits de qualité supérieure et conseils précis.',
     verified: true,
     avatarColor: 'bg-yellow-600'
@@ -176,14 +176,14 @@ export default function GoogleReviewsSlider() {
             </svg>
             <span className="text-[11px] font-bold text-white/80">Avis Google Vérifiés</span>
             <span className="text-white/30">·</span>
-            <span className="text-[11px] font-bold text-[#95d600]">Genève 🇨🇭</span>
+            <span className="text-[11px] font-bold text-[#95d600]">Suisse 🇨🇭</span>
           </div>
 
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white uppercase font-heading tracking-tight">
             Ce que Disent nos Athlètes & Clients
           </h2>
           <p className="text-xs text-white/60 mt-1 max-w-xl">
-            Avis vérifiés déposés par nos clients de Genève et de toute la Suisse sur notre fiche Google Maps officielle.
+            Avis vérifiés déposés par nos clients de toute la Suisse sur notre fiche Google Maps officielle.
           </p>
         </div>
 
@@ -269,7 +269,7 @@ export default function GoogleReviewsSlider() {
                       {rev.author}
                     </h4>
                     <p className="text-[10px] text-white/40 flex items-center gap-1">
-                      <span>{rev.location || 'Genève'}</span>
+                      <span>{rev.location || 'Suisse'}</span>
                       <span>·</span>
                       <span>{rev.date}</span>
                     </p>

@@ -107,8 +107,8 @@ export function DeliveryEstimate({
   );
   const shipsFrom = estimate?.shipsFromText?.[currentLocale] || (
     resolvedOrigin === 'GENEVA' 
-      ? (currentLocale === 'en' ? 'Shipped from Switzerland' : 'Expédié de Suisse')
-      : (currentLocale === 'en' ? 'Shipped from Portugal' : 'Expédié du Portugal')
+      ? 'Swiss Fulfillment'
+      : 'Portugal Fulfillment'
   );
 
   // Stock Pill (Strictly no quantities shown on customer storefront)
@@ -256,7 +256,7 @@ export function DeliveryEstimate({
             <div className="flex justify-between text-[11px]">
               <span className="text-white/50">{currentLocale === 'en' ? 'Fulfilment center:' : 'Centre logistique :'}</span>
               <span className="font-bold text-white">
-                {resolvedOrigin === 'GENEVA' ? '🇨🇭 Suisse' : '🇵🇹 Oliveira de Azeméis, Portugal'}
+                {resolvedOrigin === 'GENEVA' ? '🇨🇭 Swiss Fulfillment' : '🇵🇹 Portugal Fulfillment'}
               </span>
             </div>
 

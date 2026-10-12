@@ -53,24 +53,20 @@ export default function DeliveryBadge({
       const isCH = cc === 'CH' || cc === 'LI';
       const lbl = isCom
         ? isCH
-          ? '🇨🇭 Expédié depuis la Suisse – livraison en 1–3 jours ouvrables'
-          : '🇵🇹 Expédié depuis le Portugal – livraison en 3–5 jours ouvrables'
+          ? '🇨🇭 Swiss Fulfillment – livraison en 1–3 jours ouvrables'
+          : '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'
         : shippingOrigin === 'portugal'
         ? isCH
           ? '❌ Non livrable en Suisse'
-          : '🇵🇹 Expédié depuis le Portugal – livraison en 3–5 jours ouvrables'
+          : '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'
         : isCH
-        ? '🇨🇭 Expédié depuis la Suisse – livraison en 1–3 jours ouvrables'
+        ? '🇨🇭 Swiss Fulfillment – livraison en 1–3 jours ouvrables'
         : "❌ Non livrable dans l'UE";
       setResult({
         available: isCom ? true : shippingOrigin === 'portugal' ? !isCH : isCH,
         origin: isCom ? (isCH ? 'GENEVA' : 'PORTUGAL') : shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA',
         isCommon: isCom,
-        commonNote: isCom
-          ? isCH
-            ? '🌍 Stock disponible en Suisse & au Portugal · Auto-sélection expédition suisse rapide'
-            : "🌍 Stock disponible en Suisse & au Portugal · Auto-sélection expédition usine Portugal"
-          : undefined,
+        commonNote: undefined,
         label: lbl,
         labelFr: lbl,
         labelEn: lbl
@@ -90,9 +86,7 @@ export default function DeliveryBadge({
     ? 'border-white/10 bg-white/5'
     : !result.available
     ? 'border-red-500/30 bg-red-500/10'
-    : isCommon
-    ? 'border-purple-500/30 bg-purple-950/20'
-    : result.origin === 'GENEVA'
+    : (result.origin === 'GENEVA' || (isCommon && isSwiss))
     ? 'border-emerald-500/30 bg-emerald-500/10'
     : 'border-blue-500/30 bg-blue-500/10';
 
@@ -160,15 +154,10 @@ export default function DeliveryBadge({
       ) : (
         <div className="space-y-1.5">
           <p className={`font-bold flex items-center gap-1.5 ${result?.available === false ? 'text-red-400' : 'text-white'}`}>
-            <span>{result?.available === false ? '❌' : result?.origin === 'PORTUGAL' ? '🇵🇹' : '🇨🇭'}</span>
+            <span>{result?.available === false ? '❌' : (result?.origin === 'GENEVA' || (isCommon && isSwiss)) ? '🇨🇭' : '🇵🇹'}</span>
             <span>{result?.label ?? ''}</span>
           </p>
 
-          {result?.commonNote && (
-            <p className="text-[11px] text-purple-200/90 font-medium leading-relaxed bg-purple-500/10 px-2.5 py-1.5 rounded-lg border border-purple-500/20">
-              {result.commonNote}
-            </p>
-          )}
 
           {result?.dutiesNote && (
             <p className="text-yellow-400/90 text-[11px] flex items-center gap-1 bg-yellow-500/10 px-2 py-1 rounded-md border border-yellow-500/20">
@@ -182,7 +171,7 @@ export default function DeliveryBadge({
               <span>📍</span>
               <span>Retrait boutique :</span>
               <a href="/click-and-collect/" className="text-[#F80404] hover:underline font-bold">
-                Click & Collect gratuit en 2h à Genève
+                Click & Collect gratuit en 2h en boutique
               </a>
             </p>
           )}

@@ -55,7 +55,7 @@ export function useDeliveryEstimates(
     // 2. Fetch missing items in a single batch request
     setLoading(true);
 
-    fetch('/api/delivery/estimates', {
+    fetch('/api/delivery/estimates/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
@@ -63,11 +63,19 @@ export function useDeliveryEstimates(
         items: missingItems
       })
     })
-      .then(res => res.json())
+      .then(async res => {
+        if (!res.ok) return null;
+        try {
+          return await res.json();
+        } catch {
+          return null;
+        }
+      })
       .then(data => {
         if (isCancelled) return;
-        if (data.success && Array.isArray(data.items)) {
+        if (data && data.success && Array.isArray(data.items)) {
           for (const itemResult of data.items) {
+            if (!itemResult || !itemResult.productId) continue;
             const cacheKey = `${country}:${itemResult.productId}:${itemResult.variantSku || ''}`;
             estimatesCache.set(cacheKey, { data: itemResult, timestamp: Date.now() });
             resultMap.set(itemResult.productId, itemResult);

@@ -44,7 +44,7 @@ export default function ProtectionDonneesPage() {
           Politique de Confidentialité & <span className="text-[#F80404]">Protection des Données</span>
         </h1>
         <p className="text-xs sm:text-sm text-white/60 mt-2">
-          Déclaration relative au traitement des données personnelles pour la boutique en ligne nutrifitness.ch basée à Genève, Suisse.
+          Déclaration relative au traitement des données personnelles pour la boutique en ligne nutrifitness.ch basée en Suisse.
         </p>
       </header>
 
@@ -95,8 +95,8 @@ export default function ProtectionDonneesPage() {
           </p>
           <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1 text-xs">
             <p className="text-white font-bold">NutriFit (NutriFitness)</p>
-            <p>Représenté par : <strong>Marco Scarpantoni</strong></p>
-            <p>Adresse physique : Rue des Pâquis 34, 1201 Genève, Suisse</p>
+            <p>Représenté par : <strong>La Direction NutriFitness</strong></p>
+            <p>Adresse physique : Rue des Pâquis 34, 1201 Suisse</p>
             <p>Téléphone : +41 79 250 35 64</p>
             <p>Courrier électronique dédié : <a href="mailto:info@nutrifitness.ch" className="text-[#F80404] hover:underline">info@nutrifitness.ch</a></p>
           </div>
@@ -226,7 +226,7 @@ export default function ProtectionDonneesPage() {
             </div>
           </div>
           <p className="pt-2">
-            Pour exercer l&apos;un de ces droits, il vous suffit de nous adresser un message par e-mail avec un justificatif d&apos;identité à : <a href="mailto:info@nutrifitness.ch" className="text-[#F80404] font-bold hover:underline">info@nutrifitness.ch</a> ou par courrier postal à notre boutique de Genève.
+            Pour exercer l&apos;un de ces droits, il vous suffit de nous adresser un message par e-mail avec un justificatif d&apos;identité à : <a href="mailto:info@nutrifitness.ch" className="text-[#F80404] font-bold hover:underline">info@nutrifitness.ch</a> ou par courrier postal à notre boutique en Suisse.
           </p>
         </section>
 

@@ -22,7 +22,7 @@ export default function BoutiqueFAQ() {
     },
     {
       q: 'Comment savoir si un produit est en stock ?',
-      a: 'Tous les produits visibles avec le bouton « Ajouter au panier » sont physiquement disponibles dans notre entrepôt et boutique de Genève. Si un produit est temporairement épuisé, la mention « En rupture » est clairement affichée. Pour réserver un produit en boutique, vous pouvez aussi nous téléphoner au +41 79 250 35 64.'
+      a: 'Tous les produits visibles avec le bouton « Ajouter au panier » sont physiquement disponibles dans notre entrepôt et boutique en Suisse. Si un produit est temporairement épuisé, la mention « En rupture » est clairement affichée. Pour réserver un produit en boutique, vous pouvez aussi nous téléphoner au +41 79 250 35 64.'
     },
     {
       q: 'Peut-on filtrer les produits par marque, catégorie ou origine suisse ?',
@@ -34,7 +34,7 @@ export default function BoutiqueFAQ() {
     },
     {
       q: 'Puis-je obtenir un conseil d\'expert avant d\'acheter ?',
-      a: 'Oui, avec grand plaisir ! Vous pouvez nous rendre visite directement à notre boutique de Genève (34 Rue des Pâquis) pour échanger avec Marco Scarpantoni, ou nous envoyer un message par e-mail ou téléphone. Nous vous orienterons en toute franchise vers le produit le plus adapté à votre budget et à vos objectifs.'
+      a: 'Oui, avec grand plaisir ! Vous pouvez nous rendre visite directement à notre boutique en Suisse (34 Rue des Pâquis) pour échanger avec nos conseillers experts, ou nous envoyer un message par e-mail ou téléphone. Nous vous orienterons en toute franchise vers le produit le plus adapté à votre budget et à vos objectifs.'
     }
   ];
 

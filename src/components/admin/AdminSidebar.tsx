@@ -119,7 +119,7 @@ export default function AdminSidebar({
             <div className="flex items-center gap-1.5 mt-0.5">
               <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
               <span className="text-[11px] text-slate-400 font-medium truncate">
-                Geneva Store Online
+                Swiss Store Online
               </span>
             </div>
           </div>
@@ -183,7 +183,7 @@ export default function AdminSidebar({
         <div className="flex items-center justify-between px-2 text-xs">
           <div className="min-w-0">
             <p className="text-white font-bold truncate">Admin Manager</p>
-            <p className="text-[11px] text-slate-500 truncate">Marco &amp; Omar Team</p>
+            <p className="text-[11px] text-slate-500 truncate">NutriFitness Team</p>
           </div>
           <button
             type="button"

@@ -27,7 +27,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title: 'Compléments Alimentaires à Genève : Magasin & Conseils | NutriFitness',
-    description: 'Boutique spécialisée de compléments alimentaires et nutrition sportive à Genève. Stock physique 34 Rue des Pâquis, conseils de Marco Scarpantoni.',
+    description: 'Boutique spécialisée de compléments alimentaires et nutrition sportive à Genève. Stock physique 34 Rue des Pâquis, conseils de notre équipe d\'experts.',
     url: 'https://nutrifitness.ch/complements-alimentaires-geneve/',
     siteName: 'NutriFitness.ch',
     locale: 'fr_CH',
@@ -60,7 +60,7 @@ export default async function ComplementsAlimentairesGenevePage() {
     },
     {
       q: 'Bénéficie-t-on de conseils personnalisés en magasin à Genève ?',
-      a: 'Oui. Marco Scarpantoni (plus de 20 ans de pratique et 11 ans de gestion en nutrition sportive) et son équipe vous orientent en fonction de votre alimentation réelle, de votre pratique physique et de vos objectifs personnels, sans incitation commerciale superflue.'
+      a: 'Oui. Notre équipe (plus de 20 ans de pratique et 11 ans d\'expertise en nutrition sportive) vous oriente en fonction de votre alimentation réelle, de votre pratique physique et de vos objectifs personnels, sans incitation commerciale superflue.'
     },
     {
       q: 'Puis-je commander en ligne et retirer mes compléments gratuitement ?',
@@ -163,7 +163,7 @@ export default async function ComplementsAlimentairesGenevePage() {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm text-white/80 leading-relaxed">
           <div className="space-y-4">
             <p>
-              Fondée le 15 avril 2015 par Marco Scarpantoni, notre enseigne s&apos;est construite sur une éthique intransigeante : refuser le sensationnalisme commercial et les promesses « miracles » pour se concentrer sur les molécules qui possèdent un solide niveau de preuves scientifiques. Une alimentation équilibrée, une hydratation adéquate et un sommeil réparateur constituent toujours les piliers de base ; les compléments alimentaires viennent catalyser vos efforts et combler les déficits nutritionnels ciblés.
+              Fondée le 15 avril 2015, notre enseigne s&apos;est construite sur une éthique intransigeante : refuser le sensationnalisme commercial et les promesses « miracles » pour se concentrer sur les molécules qui possèdent un solide niveau de preuves scientifiques. Une alimentation équilibrée, une hydratation adéquate et un sommeil réparateur constituent toujours les piliers de base ; les compléments alimentaires viennent catalyser vos efforts et combler les déficits nutritionnels ciblés.
             </p>
             <p>
               Dans notre showroom de la Rue des Pâquis à Genève, vous retrouvez un éventail exhaustif de solutions adaptées à chaque pratique :
@@ -197,10 +197,10 @@ export default async function ComplementsAlimentairesGenevePage() {
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2">
               <h4 className="text-xs font-bold text-white flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#F80404]" />
-                L&apos;Accompagnement Terrain par Marco Scarpantoni
+                L&apos;Accompagnement Terrain par Nos Experts
               </h4>
               <p className="text-xs text-white/70">
-                Fort de plus de 20 ans d&apos;expérience pratique en musculation et de 11 ans d&apos;expertise dans la gestion de boutiques spécialisées, Marco Scarpantoni vous guide au comptoir pour construire une routine de supplémentation sur mesure en fonction de votre morphologie et de votre budget.
+                Forts de plus de 20 ans d&apos;expérience pratique en musculation et de 11 ans d&apos;expertise dans la gestion de boutiques spécialisées, nos conseillers vous guident au comptoir pour construire une routine de supplémentation sur mesure en fonction de votre morphologie et de votre budget.
               </p>
             </div>
           </div>

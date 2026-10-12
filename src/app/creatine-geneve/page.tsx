@@ -194,7 +194,7 @@ export default async function CreatineGenevePage() {
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-2">
               <h4 className="text-xs font-bold text-white flex items-center gap-2">
                 <Sparkles className="w-4 h-4 text-[#F80404]" />
-                Protocole de Prise Conseillé par Marco Scarpantoni
+                Protocole de Prise Conseillé par Nos Experts
               </h4>
               <p className="text-xs text-white/70">
                 Prenez une dose constante de 3 à 5 grammes par jour avec votre petit-déjeuner ou votre collation post-effort. Associez-la à une source de glucides ou de protéines pour stimuler le transport médié par l&apos;insuline. La prise doit être quotidienne, y compris les jours de repos.

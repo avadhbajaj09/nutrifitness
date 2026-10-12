@@ -102,19 +102,19 @@ export default async function HomePage() {
       {/* 8. PERFORMANCE COLLECTION (Curated Grid filtered by country) */}
       <HomePerformanceSection products={physicalProducts} />
 
-      {/* 9. GENEVA BOUTIQUE SHOWCASE */}
+      {/* 9. SWISS BOUTIQUE SHOWCASE */}
       <section className="bg-[#121212] rounded-3xl border border-white/10 p-8 sm:p-12 mb-16 shadow-xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-5">
             <span className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/15 text-white text-xs font-bold rounded-full">
               <span className="w-2 h-2 rounded-full bg-[#D52B1E] inline-block" />
-              Boutique Physique à Genève
+              Boutique Physique en Suisse
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-white uppercase font-heading">
               RENCONTREZ NOS COACHS AU 34 RUE DES PÂQUIS
             </h2>
             <p className="text-sm text-white/70 leading-relaxed">
-              Besoin d&apos;un conseil personnalisé pour votre prise de masse ou votre sèche ? Notre boutique genevoise vous accueille pour des bilans personnalisés et pour retirer vos commandes en Click & Collect dès 2 heures après votre achat.
+              Besoin d&apos;un conseil personnalisé pour votre prise de masse ou votre sèche ? Notre boutique en Suisse vous accueille pour des bilans personnalisés et pour retirer vos commandes en Click & Collect dès 2 heures après votre achat.
             </p>
 
             <div className="grid grid-cols-2 gap-4 pt-2 text-xs">
@@ -147,13 +147,13 @@ export default async function HomePage() {
           <div className="relative rounded-2xl overflow-hidden border border-white/15 aspect-[4/3] shadow-2xl">
             <Image 
               src="/images/fitrush/imgi_248_slider-h9-2.webp" 
-              alt="Boutique NutriFitness Genève" 
+              alt="Boutique NutriFitness Suisse" 
               fill
               className="object-cover"
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4 text-xs font-bold text-white">
-              📍 34 Rue des Pâquis, 1201 Genève (5 min de la Gare Cornavin)
+              📍 34 Rue des Pâquis, 1201 Suisse (5 min de la Gare Cornavin)
             </div>
           </div>
         </div>
@@ -275,10 +275,10 @@ export default async function HomePage() {
       <section className="my-14 p-6 sm:p-8 rounded-3xl bg-[#141414] border border-white/10 text-white/80">
         <h2 className="text-base sm:text-lg font-black uppercase text-white font-heading tracking-wide mb-3 flex items-center gap-2">
           <span className="w-2.5 h-2.5 rounded-full bg-[#F80404]" />
-          À propos de NutriFitness • Boutique de Nutrition Sportive à Genève
+          À propos de NutriFitness • Boutique de Nutrition Sportive en Suisse
         </h2>
         <p className="text-xs sm:text-sm leading-relaxed text-white/80">
-          Fondée et dirigée par Marco Scarpantoni, NutriFitness (Scarpantoni Nutrifit, IDE : CHE-177.751.159) est une enseigne indépendante suisse spécialisée dans la nutrition sportive et les compléments alimentaires de haute performance. Notre boutique physique est située au Rue des Pâquis 34, 1201 Genève, Suisse (téléphone : +41 79 250 35 64). Nous proposons une sélection rigoureuse de protéines whey, créatines labellisées Creapure®, acides aminés BCAA/EAA, pré-workouts, vitamines et minéraux conformes aux normes suisses OSAV / DFI. Les commandes sont expédiées sous 24h ouvrées depuis notre stock physique de Genève pour la Suisse et le Liechtenstein, ou depuis notre entrepôt logistique partenaire au Portugal pour les commandes européennes. Notre plateforme en ligne est disponible en 4 langues (français, allemand, italien et anglais) et permet les règlements sécurisés en Francs suisses (CHF) et en Euros (EUR).
+          NutriFitness (Scarpantoni Nutrifit, IDE : CHE-177.751.159) est une enseigne indépendante suisse spécialisée dans la nutrition sportive et les compléments alimentaires de haute performance. Notre boutique physique est située au Rue des Pâquis 34, 1201 Suisse (téléphone : +41 79 250 35 64). Nous proposons une sélection rigoureuse de protéines whey, créatines labellisées Creapure®, acides aminés BCAA/EAA, pré-workouts, vitamines et minéraux conformes aux normes suisses OSAV / DFI. Les commandes sont expédiées sous 24h ouvrées depuis notre stock physique en Suisse pour la Suisse et le Liechtenstein, ou depuis notre entrepôt logistique partenaire pour les commandes européennes. Notre plateforme en ligne est disponible en 4 langues (français, allemand, italien et anglais) et permet les règlements sécurisés en Francs suisses (CHF) et en Euros (EUR).
         </p>
       </section>
 

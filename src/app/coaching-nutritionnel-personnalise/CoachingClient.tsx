@@ -48,7 +48,7 @@ export default function CoachingClient() {
     setTimeout(() => {
       setIsSubmitting(false);
       setIsSubmitted(true);
-      showToast('Bilan Réservé', 'Votre demande de bilan gratuit a été enregistrée avec succès ! Marco Scarpantoni vous contacte sous 24h.');
+      showToast('Bilan Réservé', 'Votre demande de bilan gratuit a été enregistrée avec succès ! Notre équipe vous contacte sous 24h.');
     }, 800);
   };
 
@@ -94,11 +94,11 @@ export default function CoachingClient() {
   const coachingFaqs = [
     {
       q: 'Comment se déroule le bilan nutritionnel gratuit ?',
-      a: 'Le bilan gratuit dure environ 20 minutes (par téléphone, en visio ou directement à notre boutique de Genève). Nous faisons le point sur votre historique d\'entraînement, vos habitudes alimentaires actuelles, vos éventuelles blessures et votre objectif prioritaire pour définir la meilleure feuille de route.'
+      a: 'Le bilan gratuit dure environ 20 minutes (par téléphone, en visio ou directement à notre boutique en Suisse). Nous faisons le point sur votre historique d\'entraînement, vos habitudes alimentaires actuelles, vos éventuelles blessures et votre objectif prioritaire pour définir la meilleure feuille de route.'
     },
     {
-      q: 'Le coaching est-il disponible en ligne ou uniquement à Genève ?',
-      a: 'Le suivi est disponible à la fois en ligne dans toute la Suisse (via WhatsApp, e-mail et rendez-vous visio réguliers) et en présentiel à notre boutique de Genève (34 Rue des Pâquis). Vous choisissez la formule qui s\'adapte le mieux à votre quotidien.'
+      q: 'Le coaching est-il disponible en ligne ou également en boutique ?',
+      a: 'Le suivi est disponible à la fois en ligne dans toute la Suisse (via WhatsApp, e-mail et rendez-vous visio réguliers) et en présentiel à notre boutique en Suisse (34 Rue des Pâquis). Vous choisissez la formule qui s\'adapte le mieux à votre quotidien.'
     },
     {
       q: 'Imposez-vous des régimes restrictifs ou drastiques ?',
@@ -143,7 +143,7 @@ export default function CoachingClient() {
             </p>
 
             <p className="text-sm sm:text-base text-white/80 leading-relaxed mb-6">
-              Chez <strong>NutriFitness Genève</strong>, nous accompagnons chaque personne avec une approche personnalisée basée sur la science nutritionnelle, l&apos;expérience terrain et un suivi humain de qualité. 
+              Chez <strong>NutriFitness Suisse</strong>, nous accompagnons chaque personne avec une approche personnalisée basée sur la science nutritionnelle, l&apos;expérience terrain et un suivi humain de qualité. 
               Que votre objectif soit de perdre du poids, de prendre de la masse musculaire, d&apos;améliorer vos performances sportives ou d&apos;atteindre un meilleur équilibre de vie, nous créons un plan sur-mesure adapté à vos besoins spécifiques.
             </p>
 
@@ -189,7 +189,7 @@ export default function CoachingClient() {
               </a>
               <div className="flex items-center gap-3 px-5 py-3 rounded-xl bg-white/5 border border-white/10">
                 <span className="text-2xl font-black text-white font-heading">20+</span>
-                <span className="text-xs text-white/60 leading-tight">Années d&apos;expérience<br />Genève & En Ligne</span>
+                <span className="text-xs text-white/60 leading-tight">Années d&apos;expérience<br />En Suisse & En Ligne</span>
               </div>
             </div>
           </div>
@@ -199,16 +199,16 @@ export default function CoachingClient() {
             <div className="relative w-60 sm:w-68 aspect-[3/4] rounded-3xl overflow-hidden border-2 border-[#F80404]/40 shadow-2xl bg-black">
               <Image
                 src="/images/store/marco2.webp"
-                alt="Marco Scarpantoni - Coach Nutritionnel NutriFitness Genève"
+                alt="Équipe NutriFitness - Coach Nutritionnel Suisse"
                 fill
                 priority
                 className="object-cover object-top"
               />
               <div className="absolute inset-0 bg-gradient-to-t from-black via-transparent to-transparent opacity-80" />
               <div className="absolute bottom-4 left-4 right-4 text-center">
-                <p className="text-sm font-black uppercase text-white font-heading">Marco Scarpantoni</p>
+                <p className="text-sm font-black uppercase text-white font-heading">Équipe NutriFitness</p>
                 <p className="text-[11px] text-[#F80404] font-bold">Coach Expert Nutrition Sportive</p>
-                <p className="text-[10px] text-white/60 mt-0.5">20+ ans d&apos;expérience · Genève</p>
+                <p className="text-[10px] text-white/60 mt-0.5">20+ ans d&apos;expérience · Suisse</p>
               </div>
             </div>
           </div>
@@ -318,7 +318,7 @@ export default function CoachingClient() {
             <span>·</span>
             <span>✓ Résultats durables</span>
             <span>·</span>
-            <span>✓ En ligne & à Genève</span>
+            <span>✓ En ligne & en Suisse</span>
           </div>
         </div>
 
@@ -329,7 +329,7 @@ export default function CoachingClient() {
             </div>
             <h3 className="text-xl font-black uppercase text-white font-heading">Demande de Bilan Reçue !</h3>
             <p className="text-xs sm:text-sm text-white/70 max-w-md mx-auto leading-relaxed">
-              Merci <strong>{formData.fullName}</strong>. Marco Scarpantoni a bien reçu votre demande et vous contactera par téléphone ou e-mail dans les 24 heures ouvrées pour planifier votre séance.
+              Merci <strong>{formData.fullName}</strong>. Notre équipe a bien reçu votre demande et vous contactera par téléphone ou e-mail dans les 24 heures ouvrées pour planifier votre séance.
             </p>
             <button
               type="button"

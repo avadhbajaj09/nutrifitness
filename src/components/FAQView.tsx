@@ -63,22 +63,22 @@ export const FAQ_DATA: FAQItem[] = [
     answer: 'Oui, tout à fait. NutriFitness.ch propose une sélection ciblée pour soutenir la perte de masse grasse tout en protégeant le muscle acquis : des brûleurs de graisses thermogéniques de pointe stimulant le métabolisme de base, de la L-carnitine pour favoriser l\'oxydation des acides gras pendant l\'effort aérobie, des isolats de whey ultra-purs sans glucides ni lipides, des acides aminés BCAA/EAA pour empêcher la fonte musculaire en déficit calorique, ainsi que des coupe-faims naturels et snacks keto pauvres en sucres. Un service de coaching nutritionnel personnalisé avec bilan complet est également disponible en ligne et dans notre boutique de Genève.',
     keywords: ['seche', 'perte de poids', 'bruleur', 'graisse', 'carnitine', 'regime']
   },
-  // 2. Shipping & Geneva Store
+  // 2. Shipping & Swiss Store
   {
     id: 'faq-5',
     category: 'store',
-    categoryLabel: 'Livraison & Boutique Genève',
+    categoryLabel: 'Livraison & Boutique en Suisse',
     question: 'Quels sont les délais et frais de livraison pour la Suisse et le Liechtenstein ?',
-    answer: 'Toutes les commandes validées du lundi au vendredi avant 14h00 sont préparées et confiées à La Poste Suisse le jour même. La livraison s\'effectue par PostPac Priority en 24h ouvrées directement à votre domicile ou en point relais PickPost. La livraison est GRATUITE dès CHF 75.– d\'achats. Pour les commandes inférieures à 75 CHF, une participation forfaitaire de CHF 7.90 est appliquée. Nos stocks étant basés à Genève, aucun frais de douane ni taxe imprévue ne s\'applique.',
+    answer: 'Toutes les commandes validées du lundi au vendredi avant 14h00 sont préparées et confiées à La Poste Suisse le jour même. La livraison s\'effectue par PostPac Priority en 24h ouvrées directement à votre domicile ou en point relais PickPost. La livraison est GRATUITE dès CHF 75.– d\'achats. Pour les commandes inférieures à 75 CHF, une participation forfaitaire de CHF 7.90 est appliquée. Nos stocks étant basés en Suisse, aucun frais de douane ni taxe imprévue ne s\'applique.',
     keywords: ['livraison', 'poste suisse', 'delai', 'frais', 'postpac', 'priority', '24h', 'gratuit']
   },
   {
     id: 'faq-6',
     category: 'store',
-    categoryLabel: 'Livraison & Boutique Genève',
+    categoryLabel: 'Livraison & Boutique en Suisse',
     question: 'Où se situe la boutique physique et proposez-vous le Click & Collect ?',
-    answer: 'Notre magasin de nutrition sportive est situé au 34 Rue des Pâquis, 1201 Genève, à 5 minutes de la gare Cornavin. Nous proposons un service Click & Collect 100 % gratuit : vous passez votre commande sur nutrifitness.ch et vous venez la retirer 2 heures plus tard en boutique. Horaires : Lundi au Vendredi de 12h30 à 19h00, et le Samedi de 12h00 à 17h00. Marco Scarpantoni est sur place pour vous conseiller personnellement.',
-    keywords: ['boutique', 'magasin', 'geneve', 'click and collect', 'paquis', 'horaires', 'adresse']
+    answer: 'Notre magasin de nutrition sportive est situé au 34 Rue des Pâquis, 1201 Suisse, à 5 minutes de la gare Cornavin. Nous proposons un service Click & Collect 100 % gratuit : vous passez votre commande sur nutrifitness.ch et vous venez la retirer 2 heures plus tard en boutique. Horaires : Lundi au Vendredi de 12h30 à 19h00, et le Samedi de 12h00 à 17h00. Notre équipe d\'experts est sur place pour vous conseiller personnellement.',
+    keywords: ['boutique', 'magasin', 'suisse', 'click and collect', 'paquis', 'horaires', 'adresse']
   },
   // 3. Orders, Payments & Legal
   {
@@ -94,7 +94,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'orders',
     categoryLabel: 'Commandes & Paiements',
     question: 'Comment fonctionne la politique de retour de 14 jours ?',
-    answer: 'Vous bénéficiez de 14 jours calendaires à compter de la date de réception de votre colis pour demander un retour. Pour des impératifs sanitaires et d\'hygiène, les compléments alimentaires doivent être impérativement neufs, non ouverts, non utilisés, avec leur opercule de scellé intact. Une fois le colis retourné réceptionné et validé à notre adresse de Genève, le remboursement est émis sous 7 jours ouvrés sur votre méthode de paiement d\'origine.',
+    answer: 'Vous bénéficiez de 14 jours calendaires à compter de la date de réception de votre colis pour demander un retour. Pour des impératifs sanitaires et d\'hygiène, les compléments alimentaires doivent être impérativement neufs, non ouverts, non utilisés, avec leur opercule de scellé intact. Une fois le colis retourné réceptionné et validé à notre adresse en Suisse, le remboursement est émis sous 7 jours ouvrés sur votre méthode de paiement d\'origine.',
     keywords: ['retour', 'remboursement', 'delai', 'retractation', '14 jours', 'renvoi']
   },
   // 4. Health, Vitamins & Lifestyle
@@ -184,7 +184,7 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
 
   const categories = [
     { key: 'all', label: 'Toutes les Questions' },
-    { key: 'store', label: '🇨🇭 Livraison & Magasin Genève' },
+    { key: 'store', label: '🇨🇭 Livraison & Magasin en Suisse' },
     { key: 'proteins', label: 'Protéines & Whey' },
     { key: 'creatine', label: 'Créatine & Performance' },
     { key: 'weightloss', label: 'Perte de Poids & Sèche' },
@@ -247,7 +247,7 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
           Questions Fréquentes <span className="text-[#F80404]">& FAQ</span>
         </h1>
         <p className="text-xs sm:text-sm text-white/60 mt-2 max-w-2xl">
-          Compléments alimentaires, protéines whey, créatine Creapure, livraison en 24h par La Poste Suisse et retrait Click & Collect à notre boutique de Genève.
+          Compléments alimentaires, protéines whey, créatine Creapure, livraison en 24h par La Poste Suisse et retrait Click & Collect à notre boutique en Suisse.
         </p>
       </header>
 
@@ -367,7 +367,7 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
             <p className="text-[11px] text-white/60 mt-1">Délai 14 jours, scellés de sécurité et procédure.</p>
           </Link>
           <Link href="/magasin-geneve/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
-            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">📍 Boutique Genève</p>
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">📍 Boutique en Suisse</p>
             <p className="text-[11px] text-white/60 mt-1">34 Rue des Pâquis, horaires, tram et Click & Collect.</p>
           </Link>
           <Link href="/quel-complement-choisir/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
@@ -395,13 +395,13 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
           <div className="space-y-2 max-w-xl">
             <span className="inline-flex items-center gap-1.5 text-[11px] font-black text-[#95d600] uppercase tracking-wider font-heading">
               <Sparkles className="w-3.5 h-3.5" />
-              Conseil Personnalisé par Marco Scarpantoni
+              Conseil Personnalisé par Nos Experts
             </span>
             <h3 className="text-xl sm:text-2xl font-black text-white uppercase font-heading">
               Une Question Spécifique sur Vos Objectifs ?
             </h3>
             <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
-              Passez nous rendre visite à la boutique des Pâquis à Genève ou contactez-nous directement pour un plan de supplémentation sur-mesure.
+              Passez nous rendre visite à notre boutique des Pâquis ou contactez-nous directement pour un plan de supplémentation sur-mesure.
             </p>
           </div>
 

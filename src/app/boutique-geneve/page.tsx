@@ -20,7 +20,7 @@ import {
 
 export const metadata: Metadata = {
   title: 'Boutique Nutrition Sportive Genève Pâquis | NutriFitness.ch',
-  description: 'Visitez notre magasin de compléments alimentaires au 34 Rue des Pâquis, 1201 Genève. Protéines whey, créatine, conseils nutritionnels par Marco Scarpantoni et Click & Collect gratuit en 2h.',
+  description: 'Visitez notre magasin de compléments alimentaires au 34 Rue des Pâquis, 1201 Genève. Protéines whey, créatine, conseils nutritionnels par notre équipe d\'experts et Click & Collect gratuit en 2h.',
   alternates: {
     canonical: 'https://nutrifitness.ch/boutique-geneve/',
   }
@@ -46,8 +46,8 @@ export default function BoutiqueGenevePage() {
     },
     'telephone': '+41 79 250 35 64',
     'founder': {
-      '@type': 'Person',
-      'name': 'Marco Scarpantoni'
+      '@type': 'Organization',
+      'name': 'Équipe NutriFitness'
     },
     'priceRange': 'CHF',
     'openingHoursSpecification': [
@@ -76,7 +76,7 @@ export default function BoutiqueGenevePage() {
     {
       icon: <Award className="w-6 h-6 text-[#F80404]" />,
       title: 'Conseils Experts Personnalisés',
-      desc: 'Marco Scarpantoni et son équipe vous orientent vers les ratios caloriques et formules adaptés à votre morphologie et vos objectifs réels.'
+      desc: 'Notre équipe d\'experts vous oriente vers les ratios caloriques et formules adaptés à votre morphologie et vos objectifs réels.'
     },
     {
       icon: <Sparkles className="w-6 h-6 text-[#F80404]" />,
@@ -114,7 +114,7 @@ export default function BoutiqueGenevePage() {
     },
     {
       q: 'L\'équipe conseille-t-elle sur le choix des compléments ?',
-      a: 'Oui, Marco Scarpantoni est sur place pour analyser vos objectifs (prise de muscle, sèche, force ou récupération) et vous orienter vers les compléments utiles avec les dosages adaptés. En cas de traitement médical ou de maladie, nous vous orientons toujours vers votre médecin traitant.'
+      a: 'Oui, notre équipe est sur place pour analyser vos objectifs (prise de muscle, sèche, force ou récupération) et vous orienter vers les compléments utiles avec les dosages adaptés. En cas de traitement médical ou de maladie, nous vous orientons toujours vers votre médecin traitant.'
     },
     {
       q: 'Les prix en boutique sont-ils les mêmes qu\'en ligne ?',
@@ -180,7 +180,7 @@ export default function BoutiqueGenevePage() {
           </h1>
           <p className="text-sm sm:text-base text-white/80 leading-relaxed mb-6">
             Située au cœur de Genève à 5 minutes de la Gare Cornavin, notre boutique vous accueille du lundi au samedi. 
-            Fondée et dirigée par <strong>Marco Scarpantoni</strong> depuis 2015, découvrez un catalogue complet de protéines, créatines micronisées, BCAA et vitamines avec les conseils avisés d&apos;un vrai spécialiste de terrain.
+            Fondée en 2015, découvrez un catalogue complet de protéines, créatines micronisées, BCAA et vitamines avec les conseils avisés de notre équipe d&apos;experts de terrain.
           </p>
 
           <div className="flex flex-wrap items-center gap-4">

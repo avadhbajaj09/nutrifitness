@@ -32,9 +32,9 @@ export async function getAvailability(
   ): AvailabilityResult => {
     let label = '❌ Non disponible dans votre pays';
     if (available && origin === 'GENEVA') {
-      label = `🇨🇭 Expédié depuis la Suisse – livraison en ${etaMin}–${etaMax} jours ouvrables`;
+      label = `🇨🇭 Swiss Fulfillment – livraison en ${etaMin}–${etaMax} jours ouvrables`;
     } else if (available && origin === 'PORTUGAL') {
-      label = `🇵🇹 Expédié depuis le Portugal – livraison en ${etaMin}–${etaMax} jours ouvrables`;
+      label = `🇵🇹 Portugal Fulfillment – livraison en ${etaMin}–${etaMax} jours ouvrables`;
     }
     
     if (labelOverride) {
@@ -66,8 +66,7 @@ export async function getAvailability(
           1,
           3,
           false,
-          '🇨🇭 Expédié depuis la Suisse – livraison en 1–3 jours ouvrables',
-          '🌍 Disponible en Suisse & au Portugal. Auto-sélection : expédié depuis la Suisse.'
+          '🇨🇭 Swiss Fulfillment – livraison en 1–3 jours ouvrables'
         );
       }
       return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
@@ -82,8 +81,7 @@ export async function getAvailability(
           3,
           5,
           false,
-          '🇵🇹 Expédié depuis le Portugal – livraison en 3–5 jours ouvrables',
-          '🌍 Disponible en Suisse & au Portugal. Auto-sélection : expédié depuis le Portugal pour l\'Europe.'
+          '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'
         );
       }
       return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
@@ -102,7 +100,7 @@ export async function getAvailability(
           3,
           5,
           false,
-          '🇵🇹 Expédié depuis le Portugal – livraison en 3–5 jours ouvrables'
+          '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'
         );
       }
       return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');

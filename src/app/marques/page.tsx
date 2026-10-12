@@ -41,11 +41,11 @@ export default function MarquesPage() {
     },
     {
       q: 'Nutrifitness possède-t-il une marque propre ?',
-      a: 'Oui, nous développons des shakers, gourdes isothermes, accessoires d\'entraînement et guides nutritionnels exclusifs sous notre marque officielle NutriFit (NF), testés et approuvés au quotidien par nos athlètes genevois.'
+      a: 'Oui, nous développons des shakers, gourdes isothermes, accessoires d\'entraînement et guides nutritionnels exclusifs sous notre marque officielle NutriFit (NF), testés et approuvés au quotidien par nos athlètes suisses.'
     },
     {
-      q: 'Les marques sont-elles disponibles en boutique à Genève comme en ligne ?',
-      a: 'Oui, l\'ensemble des marques présentées sur le site est physiquement disponible dans notre magasin de Genève (34 Rue des Pâquis). Vous pouvez venir les examiner, demander conseil à Marco Scarpantoni ou commander en Click & Collect pour un retrait en 2 heures.'
+      q: 'Les marques sont-elles disponibles en boutique en Suisse comme en ligne ?',
+      a: 'Oui, l\'ensemble des marques présentées sur le site est physiquement disponible dans notre magasin en Suisse (34 Rue des Pâquis). Vous pouvez venir les examiner, demander conseil à notre équipe ou commander en Click & Collect pour un retrait en 2 heures.'
     },
     {
       q: 'Pourquoi une marque ou une référence est-elle temporairement indisponible ?',

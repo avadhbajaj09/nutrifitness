@@ -9,7 +9,7 @@ import { getProductOriginType } from '@/lib/translations';
 import DynamicPricingBox from './DynamicPricingBox';
 
 export default function QuickViewModal() {
-  const { quickViewProduct, closeQuickView, locale, t } = useStore();
+  const { quickViewProduct, closeQuickView, locale, countryCode, t } = useStore();
   const [selectedFlavor, setSelectedFlavor] = useState<string>('');
 
   useEffect(() => {
@@ -67,20 +67,24 @@ export default function QuickViewModal() {
             
             {/* Image */}
             <div className="relative bg-[#1C1C1C] rounded-2xl p-8 flex items-center justify-center border border-white/10 aspect-square sticky top-0">
-              <span className={`absolute top-4 left-4 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-sm border ${
-                originType === 'GENEVA_ONLY'
-                  ? 'bg-black/80 border-white/20 text-white'
-                  : originType === 'PORTUGAL_ONLY'
-                  ? 'bg-blue-950/90 border-blue-500/40 text-blue-300'
-                  : 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300'
-              }`}>
-                <span>{originType === 'GENEVA_ONLY' ? '🇨🇭' : originType === 'PORTUGAL_ONLY' ? '🇵🇹' : '🇨🇭/🇵🇹'}</span>
-                <span>
-                  {originType === 'GENEVA_ONLY' && (t.common.originGeneva || 'Expédié de Genève')}
-                  {originType === 'PORTUGAL_ONLY' && (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
-                  {originType === 'COMMON' && (t.common.originCommon || 'Expédié de Genève ou du Portugal')}
-                </span>
-              </span>
+              {(() => {
+                const isSwiss = countryCode === 'CH' || countryCode === 'LI';
+                const isSwissOrigin = originType === 'GENEVA_ONLY' || (originType === 'COMMON' && isSwiss);
+                return (
+                  <span className={`absolute top-4 left-4 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-sm border ${
+                    isSwissOrigin
+                      ? 'bg-black/80 border-white/20 text-white'
+                      : 'bg-blue-950/90 border-blue-500/40 text-blue-300'
+                  }`}>
+                    <span>{isSwissOrigin ? '🇨🇭' : '🇵🇹'}</span>
+                    <span>
+                      {isSwissOrigin
+                        ? (t.common.originSwitzerland || 'Expédié de Suisse')
+                        : (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
+                    </span>
+                  </span>
+                );
+              })()}
               <div className="relative w-full h-full max-h-[280px]">
                 <Image src={image} alt={name} fill className="object-contain filter drop-shadow-2xl" />
               </div>
