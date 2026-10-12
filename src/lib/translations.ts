@@ -67,6 +67,10 @@ export interface TranslationDictionary {
     vatIncluded: string;
     currency: string;
     language: string;
+    originGeneva: string;
+    originPortugal: string;
+    originCommon: string;
+    notAvailableCountry: string;
   };
   checkout: {
     title: string;
@@ -141,6 +145,10 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       vatIncluded: 'TVA suisse incluse',
       currency: 'Devise',
       language: 'Langue',
+      originGeneva: 'Expédié de Genève',
+      originPortugal: 'Expédié du Portugal (3-5 jours)',
+      originCommon: 'Expédié de Genève ou du Portugal',
+      notAvailableCountry: 'Non disponible dans votre pays',
     },
     checkout: {
       title: 'Validation de votre Commande',
@@ -213,6 +221,10 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       vatIncluded: 'Inkl. Schweizer MwSt.',
       currency: 'Währung',
       language: 'Sprache',
+      originGeneva: 'Versand aus Genf',
+      originPortugal: 'Versand aus Portugal (3-5 Tage)',
+      originCommon: 'Versand aus Genf oder Portugal',
+      notAvailableCountry: 'In Ihrem Land nicht verfügbar',
     },
     checkout: {
       title: 'Bestellung abschliessen',
@@ -285,6 +297,10 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       vatIncluded: 'IVA svizzera inclusa',
       currency: 'Valuta',
       language: 'Lingua',
+      originGeneva: 'Spedito da Ginevra',
+      originPortugal: 'Spedito dal Portogallo (3-5 giorni)',
+      originCommon: 'Spedito da Ginevra o dal Portogallo',
+      notAvailableCountry: 'Non disponibile nel tuo paese',
     },
     checkout: {
       title: 'Completa il tuo Ordine',
@@ -357,6 +373,10 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       vatIncluded: 'Swiss VAT included',
       currency: 'Currency',
       language: 'Language',
+      originGeneva: 'Shipped from Geneva',
+      originPortugal: 'Shipped from Portugal (3-5 days)',
+      originCommon: 'Shipped from Geneva or Portugal',
+      notAvailableCountry: 'Not available in your country',
     },
     checkout: {
       title: 'Secure Checkout',
@@ -384,3 +404,9 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     },
   },
 };
+
+export function getProductOriginType(product: { locationType?: string; shippingOrigin?: string }): 'GENEVA_ONLY' | 'PORTUGAL_ONLY' | 'COMMON' {
+  if (product.locationType === 'COMMON' || product.shippingOrigin === 'common') return 'COMMON';
+  if (product.locationType === 'PORTUGAL_ONLY' || product.shippingOrigin === 'portugal') return 'PORTUGAL_ONLY';
+  return 'GENEVA_ONLY';
+}

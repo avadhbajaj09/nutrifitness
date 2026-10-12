@@ -12,12 +12,12 @@ interface BrandProductsClientProps {
 }
 
 export default function BrandProductsClient({ products, brandName }: BrandProductsClientProps) {
-  const { isProductVisible, isProductDeliverable, countryCode } = useStore();
+  const { isProductVisible } = useStore();
   const [sortBy, setSortBy] = useState<string>('featured');
 
   const deliverableProducts = useMemo(() => {
-    return products.filter(p => isProductVisible(p) && isProductDeliverable(p));
-  }, [products, isProductVisible, isProductDeliverable, countryCode]);
+    return products.filter(p => isProductVisible(p));
+  }, [products, isProductVisible]);
 
   const sortedProducts = useMemo(() => {
     const list = [...deliverableProducts];

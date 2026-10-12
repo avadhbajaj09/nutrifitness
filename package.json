@@ -14,7 +14,8 @@
     "test:middleware": "tsx src/middleware.test.ts",
     "import:woo": "tsx scripts/import-woocommerce.ts",
     "test:acceptance": "tsx scripts/verify-acceptance.ts",
-    "check:sitemap": "tsx scripts/check-sitemap.ts"
+    "check:sitemap": "tsx scripts/check-sitemap.ts",
+    "check:geo": "tsx scripts/check-geo-invariance.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",

@@ -12,10 +12,10 @@ interface ProductMarqueeProps {
 }
 
 export default function ProductMarquee({ products }: ProductMarqueeProps) {
-  const { isProductVisible, isProductDeliverable, countryCode } = useStore();
+  const { isProductVisible } = useStore();
   const visibleProducts = useMemo(() => {
-    return products.filter(p => isProductVisible(p) && isProductDeliverable(p));
-  }, [products, isProductVisible, isProductDeliverable, countryCode]);
+    return products.filter(p => isProductVisible(p));
+  }, [products, isProductVisible]);
 
   // Select up to 12 diverse iconic products
   const marqueeItems = visibleProducts.slice(0, 12);

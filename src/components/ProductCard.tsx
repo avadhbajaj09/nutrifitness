@@ -8,6 +8,8 @@ import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
 import { getProductReviewStats } from '@/lib/reviews';
 import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
+import { getProductOriginType } from '@/lib/translations';
+import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 interface ProductCardProps {
   product: ProductItem;
@@ -15,16 +17,28 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const { addToCart, openQuickView, getProductPricing, locale, countryCode, t, isProductDeliverable } = useStore();
+  const { addToCart, openQuickView, getProductPricing, locale, countryCode, t } = useStore();
 
-  const isDeliverable = isProductDeliverable(product);
+  const [mounted, setMounted] = React.useState(false);
+  React.useEffect(() => {
+    setMounted(true);
+  }, []);
+
+  // First client render matches server HTML (CH) to prevent hydration mismatch
+  const effectiveCountry = mounted ? (countryCode || 'CH') : 'CH';
+  const isDeliverable = isProductDeliverableToCountry(
+    effectiveCountry,
+    product.locationType,
+    product.shippingOrigin,
+    product.stockGeneva,
+    product.stockPortugal
+  );
+
+  const originType = getProductOriginType(product);
 
   const slug = getLocalized(product.slug, locale);
   const name = getLocalized(product.name, locale);
   const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
-
-  const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
-  const isSwissDestination = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
 
   const pricing = getProductPricing(product);
   const compareAtPrice = pricing.compareAt;
@@ -51,19 +65,21 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               CH
             </span>
           )}
-          {isCommon ? (
-            !isSwissDestination ? (
-              <span className="inline-flex items-center gap-1 bg-blue-950/85 backdrop-blur-md border border-blue-500/40 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
-                <span>🇵🇹</span>
-                <span>Expédié du Portugal (3–5j)</span>
-              </span>
-            ) : null
-          ) : product.shippingOrigin === 'portugal' ? (
-            <span className="inline-flex items-center gap-1 bg-blue-950/85 backdrop-blur-md border border-blue-500/40 text-blue-300 text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
-              <span>🇵🇹</span>
-              <span>{t.common.shippedFromPortugal || 'Expédié du Portugal'}</span>
+          {/* Server-rendered origin badge (identical for all visitors) */}
+          <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ${
+            originType === 'GENEVA_ONLY'
+              ? 'bg-black/80 border-white/20 text-white'
+              : originType === 'PORTUGAL_ONLY'
+              ? 'bg-blue-950/85 border-blue-500/40 text-blue-300'
+              : 'bg-emerald-950/85 border-emerald-500/40 text-emerald-300'
+          }`}>
+            <span>{originType === 'GENEVA_ONLY' ? '🇨🇭' : originType === 'PORTUGAL_ONLY' ? '🇵🇹' : '🇨🇭/🇵🇹'}</span>
+            <span>
+              {originType === 'GENEVA_ONLY' && (t.common.originGeneva || 'Expédié de Genève')}
+              {originType === 'PORTUGAL_ONLY' && (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
+              {originType === 'COMMON' && (t.common.originCommon || 'Expédié de Genève ou du Portugal')}
             </span>
-          ) : null}
+          </span>
         </div>
 
         {/* Floating Action Buttons (Top Right) */}

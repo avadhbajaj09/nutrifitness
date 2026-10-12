@@ -33,10 +33,7 @@ export default function SearchOverlay() {
   if (!isSearchOpen) return null;
 
   const q = query.trim().toLowerCase();
-  const visibleProducts = PRODUCTS.filter(p => 
-    isProductVisible(p) && 
-    isProductDeliverableToCountry(countryCode || 'CH', p.locationType, p.shippingOrigin, p.stockGeneva, p.stockPortugal)
-  );
+  const visibleProducts = PRODUCTS.filter(p => isProductVisible(p));
   const results = q 
     ? visibleProducts.filter(p => 
         (p.name?.fr && p.name.fr.toLowerCase().includes(q)) ||

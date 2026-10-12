@@ -164,10 +164,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       slug = (itemOrSlug.slug?.fr || itemOrSlug.slug || '').toLowerCase().trim();
       id = itemOrSlug.id || '';
       sku = (itemOrSlug.variants?.[0]?.sku || itemOrSlug.sku || '').toLowerCase().trim();
-      // Enforce strict deliverability by country
-      if (!isProductDeliverable(itemOrSlug)) {
-        return false;
-      }
     }
     if (slug && hiddenSlugs.has(slug)) return false;
     if (id && hiddenSlugs.has(id)) return false;

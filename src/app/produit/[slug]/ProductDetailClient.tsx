@@ -12,6 +12,7 @@ import { getProductReviewStats } from '@/lib/reviews';
 import { getProductFaqs } from '@/lib/productFaq';
 import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
+import { getProductOriginType } from '@/lib/translations';
 
 import { getCategoryBySlug } from '@/lib/categories';
 import { getProductGtin } from '@/lib/seo';
@@ -26,6 +27,11 @@ interface Props {
 
 export default function ProductDetailClient({ product, relatedProducts }: Props) {
   const { addToCart, formatPrice, locale, countryCode, currency, t } = useStore();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'reviews' | 'faq'>('desc');
   const [selectedFlavor, setSelectedFlavor] = useState<string>(
     getLocalized(product.variants?.[0]?.flavorName, locale) || 'Standard'
@@ -52,10 +58,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const activeImg = selectedImage || selectedVariant?.image || primaryImg;
   const currentPrice = selectedVariant?.priceChf || product.priceChf;
 
+  const originType = getProductOriginType(product);
+  // First client render matches server HTML (CH) to guarantee zero hydration mismatch
+  const effectiveCountry = mounted ? (countryCode || 'CH') : 'CH';
   const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
-  const isSwissDestination = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
+  const isSwissDestination = effectiveCountry === 'CH' || effectiveCountry === 'LI';
   const isPortugal = isCommon ? !isSwissDestination : product.shippingOrigin === 'portugal';
-  const isDeliverable = isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal);
+  const isDeliverable = isProductDeliverableToCountry(effectiveCountry, product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal);
 
   const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;
@@ -93,10 +102,24 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight font-heading leading-tight">
           {name}
         </h1>
-        <div className="flex items-center gap-2 text-xs pt-0.5">
+        <div className="flex items-center gap-2 text-xs pt-0.5 flex-wrap">
           <div className="flex text-amber-400">{reviewStats.stars}</div>
           <span className="font-bold text-white">{reviewStats.rating.toFixed(1)} / 5</span>
           <span className="text-white/40">· {reviewStats.count} avis vérifiés en Suisse</span>
+          <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ml-1 ${
+            originType === 'GENEVA_ONLY'
+              ? 'bg-black/80 border-white/20 text-white'
+              : originType === 'PORTUGAL_ONLY'
+              ? 'bg-blue-950/85 border-blue-500/40 text-blue-300'
+              : 'bg-emerald-950/85 border-emerald-500/40 text-emerald-300'
+          }`}>
+            <span>{originType === 'GENEVA_ONLY' ? '🇨🇭' : originType === 'PORTUGAL_ONLY' ? '🇵🇹' : '🇨🇭/🇵🇹'}</span>
+            <span>
+              {originType === 'GENEVA_ONLY' && (t.common.originGeneva || 'Expédié de Genève')}
+              {originType === 'PORTUGAL_ONLY' && (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
+              {originType === 'COMMON' && (t.common.originCommon || 'Expédié de Genève ou du Portugal')}
+            </span>
+          </span>
         </div>
       </div>
 
@@ -106,14 +129,28 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         {/* Gallery Column (7 cols on lg, 2nd on mobile) */}
         <div className="lg:col-span-7 bg-[#141414] rounded-2xl sm:rounded-3xl border border-white/10 p-4 sm:p-10 flex flex-col items-center justify-center relative shadow-xl">
           <div className="relative aspect-square w-full max-w-[340px] sm:max-w-[480px] flex items-center justify-center">
-            {/* Badges (Stock Suisse removed, only discount shown) */}
-            {discountPercent > 0 && (
-              <div className="absolute top-0 left-0 z-10">
+            {/* Badges (Discount and Server-rendered Origin Badge) */}
+            <div className="absolute top-0 left-0 z-10 flex flex-col gap-1.5 items-start">
+              {discountPercent > 0 && (
                 <span className="inline-flex items-center bg-[#F80404] text-black text-xs font-black px-2.5 py-1 rounded-full shadow-md">
                   -{discountPercent}% Remise
                 </span>
-              </div>
-            )}
+              )}
+              <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ${
+                originType === 'GENEVA_ONLY'
+                  ? 'bg-black/80 border-white/20 text-white'
+                  : originType === 'PORTUGAL_ONLY'
+                  ? 'bg-blue-950/85 border-blue-500/40 text-blue-300'
+                  : 'bg-emerald-950/85 border-emerald-500/40 text-emerald-300'
+              }`}>
+                <span>{originType === 'GENEVA_ONLY' ? '🇨🇭' : originType === 'PORTUGAL_ONLY' ? '🇵🇹' : '🇨🇭/🇵🇹'}</span>
+                <span>
+                  {originType === 'GENEVA_ONLY' && (t.common.originGeneva || 'Expédié de Genève')}
+                  {originType === 'PORTUGAL_ONLY' && (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
+                  {originType === 'COMMON' && (t.common.originCommon || 'Expédié de Genève ou du Portugal')}
+                </span>
+              </span>
+            </div>
 
             <Image 
               src={activeImg} 
@@ -561,16 +598,24 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             <p className="text-sm font-black text-[#F80404] font-heading">{formatPrice(currentPrice, product.priceEur)}</p>
           </div>
 
-          <button 
-            type="button"
-            onClick={() => addToCart(product, { quantity, flavor: selectedFlavor, price: currentPrice, image: activeImg })}
-            className="shrink-0 min-h-[44px] px-5 py-2.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-colors flex items-center gap-2 active:scale-95"
-          >
-            <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-            </svg>
-            <span>{t.common.addToCart.split(' ')[0]}</span>
-          </button>
+          {!isDeliverable ? (
+            <span 
+              className="shrink-0 min-h-[44px] px-3 py-2 bg-red-950/40 text-red-300 font-bold uppercase tracking-wider text-[10px] rounded-xl border border-red-800/40 cursor-not-allowed flex items-center justify-center text-center"
+            >
+              {t.common.notAvailableCountry || (locale === 'en' ? 'Not available in your country' : 'Non disponible dans votre pays')}
+            </span>
+          ) : (
+            <button 
+              type="button"
+              onClick={() => addToCart(product, { quantity, flavor: selectedFlavor, price: currentPrice, image: activeImg })}
+              className="shrink-0 min-h-[44px] px-5 py-2.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-colors flex items-center gap-2 active:scale-95"
+            >
+              <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+              </svg>
+              <span>{t.common.addToCart.split(' ')[0]}</span>
+            </button>
+          )}
         </div>
       </div>
     </div>

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useStore } from '@/context/StoreContext';
 import { ProductItem, getLocalized } from '@/lib/types';
 import { Check, Sparkles, ShoppingBag, AlertCircle } from 'lucide-react';
@@ -18,8 +18,23 @@ export default function DynamicPricingBox({
   onAddToCartSuccess,
 }: DynamicPricingBoxProps) {
   const { getProductPricing, addToCart, locale, countryCode, t } = useStore();
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedTier, setSelectedTier] = useState<1 | 2 | 3>(1);
+
+  // First client render matches server HTML (CH) to guarantee zero hydration mismatch
+  const effectiveCountry = mounted ? (countryCode || 'CH') : 'CH';
+  const isDeliverable = isProductDeliverableToCountry(
+    effectiveCountry,
+    product.locationType,
+    product.shippingOrigin,
+    product.stockGeneva,
+    product.stockPortugal
+  );
 
   const selectedVariant = product.variants?.find(
     v => (v.flavorName && (v.flavorName[locale] === selectedFlavor || v.flavorName.fr === selectedFlavor))
@@ -293,7 +308,7 @@ export default function DynamicPricingBox({
         </div>
 
         {/* Add to Cart Button (or disabled if non-deliverable) */}
-        {!isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal) ? (
+        {!isDeliverable ? (
           <button
             type="button"
             disabled
@@ -301,13 +316,13 @@ export default function DynamicPricingBox({
           >
             <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
             <span>
-              {locale === 'en'
+              {t.common.notAvailableCountry || (locale === 'en'
                 ? 'Not available in your country'
                 : locale === 'de'
                 ? 'In Ihrem Land nicht verfügbar'
                 : locale === 'it'
-                ? 'Non disponible nel tuo paese'
-                : 'Non disponible dans votre pays'}
+                ? 'Non disponibile nel tuo paese'
+                : 'Non disponible dans votre pays')}
             </span>
           </button>
         ) : (

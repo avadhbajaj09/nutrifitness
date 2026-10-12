@@ -5,6 +5,7 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import { getLocalized } from '@/lib/types';
+import { getProductOriginType } from '@/lib/translations';
 import DynamicPricingBox from './DynamicPricingBox';
 
 export default function QuickViewModal() {
@@ -29,6 +30,7 @@ export default function QuickViewModal() {
   if (!quickViewProduct) return null;
 
   const p = quickViewProduct;
+  const originType = getProductOriginType(p);
   const slug = getLocalized(p.slug, locale);
   const name = getLocalized(p.name, locale);
   const image = p.images?.[0]?.src || '/images/placeholder.webp';
@@ -65,16 +67,20 @@ export default function QuickViewModal() {
             
             {/* Image */}
             <div className="relative bg-[#1C1C1C] rounded-2xl p-8 flex items-center justify-center border border-white/10 aspect-square sticky top-0">
-              {p.shippingOrigin === 'portugal' ? (
-                <span className="absolute top-4 left-4 bg-emerald-950/90 text-emerald-400 border border-emerald-500/40 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-sm">
-                  <span>🇵🇹</span>
-                  <span>Portugal (3–5j)</span>
+              <span className={`absolute top-4 left-4 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-sm border ${
+                originType === 'GENEVA_ONLY'
+                  ? 'bg-black/80 border-white/20 text-white'
+                  : originType === 'PORTUGAL_ONLY'
+                  ? 'bg-blue-950/90 border-blue-500/40 text-blue-300'
+                  : 'bg-emerald-950/90 border-emerald-500/40 text-emerald-300'
+              }`}>
+                <span>{originType === 'GENEVA_ONLY' ? '🇨🇭' : originType === 'PORTUGAL_ONLY' ? '🇵🇹' : '🇨🇭/🇵🇹'}</span>
+                <span>
+                  {originType === 'GENEVA_ONLY' && (t.common.originGeneva || 'Expédié de Genève')}
+                  {originType === 'PORTUGAL_ONLY' && (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
+                  {originType === 'COMMON' && (t.common.originCommon || 'Expédié de Genève ou du Portugal')}
                 </span>
-              ) : (
-                <span className="absolute top-4 left-4 bg-[#F80404] text-white text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full z-10">
-                  🇨🇭 24h Express
-                </span>
-              )}
+              </span>
               <div className="relative w-full h-full max-h-[280px]">
                 <Image src={image} alt={name} fill className="object-contain filter drop-shadow-2xl" />
               </div>

@@ -11,6 +11,7 @@ import { getAdminSupabase } from '@/lib/supabase';
 import { getCategoryBySlug } from '@/lib/categories';
 
 import { formatProductMetaTitle, formatMetaDescription, getProductGtin } from '@/lib/seo';
+import { getProductOriginType } from '@/lib/translations';
 
 interface Props {
   params: { slug: string };
@@ -91,6 +92,19 @@ export default async function ProductDetailPage({ params }: Props) {
 
   const gtin = getProductGtin(product);
 
+  const originType = getProductOriginType(product);
+  const destinations = originType === 'GENEVA_ONLY'
+    ? ['CH', 'LI']
+    : [
+        'CH', 'LI', 'PT', 'ES', 'FR', 'DE', 'IT', 'AT', 'BE', 'LU', 'NL', 'IE', 'DK',
+        'SE', 'FI', 'PL', 'CZ', 'SK', 'HU', 'SI', 'HR', 'RO', 'BG', 'EE', 'LV', 'LT',
+        'GR', 'CY', 'MT', 'UK', 'NO', 'IS'
+      ];
+
+  const hasStock = (typeof product.stockGeneva === 'number' || typeof product.stockPortugal === 'number')
+    ? ((product.stockGeneva ?? 0) + (product.stockPortugal ?? 0)) > 0
+    : (product.variants?.some(v => v.inStock) ?? true);
+
   const productSchema = generateProductSchema(
     {
       slug: params.slug,
@@ -99,15 +113,16 @@ export default async function ProductDetailPage({ params }: Props) {
       brand: product.brand,
       images: product.images?.map(img => img.src) || [],
       price: product.priceChf,
-      inStock: product.variants?.some(v => v.inStock) ?? true,
+      inStock: hasStock,
       sku: product.variants?.[0]?.sku,
       gtin,
       category: product.categorySlug,
     },
     {
       cost: product.priceChf >= 75 ? 0 : 7.90,
-      minDays: 1,
-      maxDays: 2,
+      minDays: originType === 'PORTUGAL_ONLY' ? 3 : 1,
+      maxDays: originType === 'PORTUGAL_ONLY' ? 5 : 2,
+      destinations,
     }
   );
 

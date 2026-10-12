@@ -13,14 +13,14 @@ interface CategoryProductsClientProps {
 }
 
 export default function CategoryProductsClient({ products, categoryName }: CategoryProductsClientProps) {
-  const { isProductVisible, isProductDeliverable, countryCode } = useStore();
+  const { isProductVisible } = useStore();
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [swissOnly, setSwissOnly] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<string>('featured');
 
   const deliverableProducts = useMemo(() => {
-    return products.filter(p => isProductVisible(p) && isProductDeliverable(p));
-  }, [products, isProductVisible, isProductDeliverable, countryCode]);
+    return products.filter(p => isProductVisible(p));
+  }, [products, isProductVisible]);
 
   const availableBrands = useMemo(() => {
     return Array.from(new Set(deliverableProducts.map(p => p.brand))).filter(Boolean).sort();

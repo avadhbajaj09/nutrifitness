@@ -12,31 +12,29 @@ interface Props {
   products: ProductItem[];
 }
 
-function useDeliverableProducts(products: ProductItem[]) {
-  const { isProductVisible, isProductDeliverable, countryCode } = useStore();
+function useVisibleProducts(products: ProductItem[]) {
+  const { isProductVisible } = useStore();
 
   return useMemo(() => {
-    return products.filter(p => isProductVisible(p) && isProductDeliverable(p));
-  }, [products, isProductVisible, isProductDeliverable, countryCode]);
+    return products.filter(p => isProductVisible(p));
+  }, [products, isProductVisible]);
 }
 
 export function HomeMarqueeSection({ products }: Props) {
-  const deliverable = useDeliverableProducts(products);
-  if (deliverable.length === 0) return null;
-  return <ProductMarquee products={deliverable} />;
+  const visible = useVisibleProducts(products);
+  if (visible.length === 0) return null;
+  return <ProductMarquee products={visible} />;
 }
 
 export function HomeBestsellersSection({ products }: Props) {
-  const deliverable = useDeliverableProducts(products);
-  const bestSellers = deliverable.slice(0, 10);
-  const { countryCode } = useStore();
-  const isCH = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
+  const visible = useVisibleProducts(products);
+  const bestSellers = visible.slice(0, 10);
 
   if (bestSellers.length === 0) return null;
 
   return (
     <ProductCarousel 
-      title={isCH ? "Bestsellers & Tendances en Suisse" : "Bestsellers & Tendances"}
+      title="Bestsellers & Tendances en Suisse"
       subtitle="Les Plus Plébiscités"
       products={bestSellers}
     />
@@ -44,9 +42,9 @@ export function HomeBestsellersSection({ products }: Props) {
 }
 
 export function HomeNewArrivalsSection({ products }: Props) {
-  const deliverable = useDeliverableProducts(products);
+  const visible = useVisibleProducts(products);
   // Shift window so we don't repeat the exact same products as bestsellers
-  const newArrivals = deliverable.length > 10 ? deliverable.slice(10, 20) : deliverable.slice(0, 8);
+  const newArrivals = visible.length > 10 ? visible.slice(10, 20) : visible.slice(0, 8);
 
   if (newArrivals.length === 0) return null;
 
@@ -60,12 +58,10 @@ export function HomeNewArrivalsSection({ products }: Props) {
 }
 
 export function HomePerformanceSection({ products }: Props) {
-  const deliverable = useDeliverableProducts(products);
-  const performanceCollection = deliverable.length > 20 
-    ? deliverable.slice(20, 28) 
-    : deliverable.slice(0, Math.min(8, deliverable.length));
-  const { countryCode } = useStore();
-  const isCH = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
+  const visible = useVisibleProducts(products);
+  const performanceCollection = visible.length > 20 
+    ? visible.slice(20, 28) 
+    : visible.slice(0, Math.min(8, visible.length));
 
   if (performanceCollection.length === 0) return null;
 
@@ -77,7 +73,7 @@ export function HomePerformanceSection({ products }: Props) {
             Gamme Force & Endurance
           </p>
           <h2 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">
-            {isCH ? "Collection Performance Suisse" : "Collection Performance"}
+            Collection Performance Suisse
           </h2>
         </div>
         <Link href="/boutique/?cat=pre-workout" className="text-xs font-bold text-white/70 hover:text-white uppercase tracking-wider">

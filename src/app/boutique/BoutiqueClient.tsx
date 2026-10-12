@@ -62,11 +62,6 @@ function ShopContent() {
       }
       if (swissOnly && !p.isSwissOrigin) return false;
 
-      // Hide product if not deliverable to the selected country
-      if (!isProductDeliverableToCountry(countryCode || 'CH', p.locationType, p.shippingOrigin, p.stockGeneva, p.stockPortugal)) {
-        return false;
-      }
-
       return true;
     }).sort((a, b) => {
       if (sortBy === 'price-asc') return a.priceChf - b.priceChf;
@@ -74,7 +69,7 @@ function ShopContent() {
       if (sortBy === 'name-asc') return (a.name?.fr || '').localeCompare(b.name?.fr || '');
       return 0;
     });
-  }, [selectedCategory, selectedBrand, searchQuery, swissOnly, deliverableOnly, countryCode, sortBy, isProductVisible]);
+  }, [selectedCategory, selectedBrand, searchQuery, swissOnly, deliverableOnly, sortBy, isProductVisible]);
 
   const clearFilters = () => {
     setSelectedCategory('all');

@@ -14,11 +14,11 @@ interface ProductCarouselProps {
 
 export default function ProductCarousel({ title, subtitle, products }: ProductCarouselProps) {
   const trackRef = useRef<HTMLDivElement>(null);
-  const { isProductVisible, isProductDeliverable, countryCode } = useStore();
+  const { isProductVisible } = useStore();
 
   const visibleProducts = useMemo(() => {
-    return products.filter(p => isProductVisible(p) && isProductDeliverable(p));
-  }, [products, isProductVisible, isProductDeliverable, countryCode]);
+    return products.filter(p => isProductVisible(p));
+  }, [products, isProductVisible]);
 
   const scroll = (direction: 'left' | 'right') => {
     if (trackRef.current) {

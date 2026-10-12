@@ -52,7 +52,7 @@ export function faqPage(items: FaqItem[]): JsonLd | null {
   };
 }
 
-export function product(p: ProductInput, shipping?: { cost: number; minDays: number; maxDays: number }, returnDays = 14): JsonLd {
+export function product(p: ProductInput, shipping?: { cost: number; minDays: number; maxDays: number; destinations?: string[] }, returnDays = 14): JsonLd {
   const url = abs(`/produit/${p.slug}/`);
   return {
     '@context': 'https://schema.org', '@type': 'Product', '@id': `${url}#product`, url, name: p.name, description: p.description,
@@ -70,7 +70,9 @@ export function product(p: ProductInput, shipping?: { cost: number; minDays: num
       ...(shipping ? { shippingDetails: {
         '@type': 'OfferShippingDetails',
         shippingRate: { '@type': 'MonetaryAmount', value: shipping.cost.toFixed(2), currency: CURRENCY },
-        shippingDestination: { '@type': 'DefinedRegion', addressCountry: 'CH' },
+        shippingDestination: shipping.destinations && shipping.destinations.length > 0
+          ? shipping.destinations.map(code => ({ '@type': 'DefinedRegion', addressCountry: code }))
+          : { '@type': 'DefinedRegion', addressCountry: 'CH' },
         deliveryTime: { '@type': 'ShippingDeliveryTime',
           handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 1, unitCode: 'DAY' },
           transitTime: { '@type': 'QuantitativeValue', minValue: shipping.minDays, maxValue: shipping.maxDays, unitCode: 'DAY' } },
