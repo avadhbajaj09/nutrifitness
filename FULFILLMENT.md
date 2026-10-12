@@ -27,5 +27,11 @@ To run routing logic tests:
 `npm run test:routing`
 
 ## Real API Integration
-- **Sendcloud**: Replace the `stub_` keys with real Sendcloud API keys to start making real API calls and generating actual shipping labels.
+- **Packlink PRO**: Configured with live API key (`PACKLINK_API_KEY`). Connects directly to `https://api.packlink.com/v1` for real-time European courier rates (UPS, DPD, SEUR, Correos) from Portugal, shipment tracking, and shipping label generation.
+- **Sendcloud**: Used for Swiss Post and backup carrier fulfillment. Replace stub keys with live keys when ready.
 - **Resend**: Replace the `stub_` key with a real Resend key to send order and shipment emails.
+
+## Packlink PRO Endpoints
+- `GET /api/packlink/` : Returns connected account status, account email, and registered shipments count.
+- `POST /api/packlink/` : Quotes live carrier rates (`action: "rates"`) or generates draft shipments (`action: "create_draft"`).
+- `POST /api/fulfillment/rates/` : Dynamically queries Packlink PRO for European shipments originating from Portugal.

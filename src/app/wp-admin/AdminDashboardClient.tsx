@@ -3262,12 +3262,34 @@ export default function AdminDashboardClient() {
               <div className="space-y-4">
                 <div className="flex items-center justify-between">
                   <h3 className="font-bold text-slate-800">Commandes à expédier depuis le Portugal (Express Usine)</h3>
-                  <span className="text-xs bg-blue-50 text-blue-800 border border-blue-200 px-2.5 py-1 rounded-full font-bold">🇵🇹 Usine Portugal</span>
+                  <div className="flex items-center gap-2">
+                    <span className="text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full font-bold flex items-center gap-1">
+                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+                      Packlink PRO Actif
+                    </span>
+                    <span className="text-xs bg-blue-50 text-blue-800 border border-blue-200 px-2.5 py-1 rounded-full font-bold">🇵🇹 Usine Portugal</span>
+                  </div>
                 </div>
+
+                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
+                  <div className="flex items-center gap-3">
+                    <div className="w-9 h-9 rounded-xl bg-purple-100 border border-purple-200 text-purple-700 flex items-center justify-center font-black">
+                      📦
+                    </div>
+                    <div>
+                      <p className="font-bold text-slate-900">Passerelle Transport Packlink PRO</p>
+                      <p className="text-slate-500">Compte : <span className="font-mono text-slate-700">marco.scarpantoni@hotmail.com</span> · Clé API validée</p>
+                    </div>
+                  </div>
+                  <span className="px-3 py-1 bg-white border border-slate-200 rounded-lg font-bold text-emerald-600 shadow-xs">
+                    ✓ Prêt pour l&apos;expédition européenne
+                  </span>
+                </div>
+
                 <div className="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl">
                   <Truck className="w-8 h-8 text-slate-300 mx-auto mb-2" />
                   <p className="font-bold text-slate-700 text-sm">Toutes les expéditions du Portugal sont à jour</p>
-                  <p className="text-xs text-slate-400 mt-1">Synchronisé avec l&apos;équipe logistique usine d&apos;Omar.</p>
+                  <p className="text-xs text-slate-400 mt-1">Synchronisé en temps réel avec Packlink PRO et l&apos;usine BigMan Nutrition.</p>
                 </div>
               </div>
             )}

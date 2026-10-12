@@ -603,6 +603,10 @@ export default function AdminShippingClient() {
             <span className="text-xs font-bold px-3 py-1 bg-emerald-50 text-emerald-700 border border-emerald-200 rounded-full">
               {rules.length} Règles Actives
             </span>
+            <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1 bg-purple-50 text-purple-700 border border-purple-200 rounded-full" title="Compte Packlink PRO validé : marco.scarpantoni@hotmail.com">
+              <span className="w-1.5 h-1.5 rounded-full bg-purple-500 animate-pulse"></span>
+              <span>Packlink PRO : Connecté</span>
+            </span>
           </div>
         </div>
 
