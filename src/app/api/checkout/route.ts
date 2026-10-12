@@ -106,8 +106,8 @@ export async function POST(req: Request) {
         client_ip: clientIp,
         client_user_agent: userAgent,
       },
-      success_url: `${baseUrl}/commande?session_id={CHECKOUT_SESSION_ID}&order_id=${orderNumber || ''}`,
-      cancel_url: `${baseUrl}/commande?canceled=true`,
+      success_url: `${baseUrl}/commande/?session_id={CHECKOUT_SESSION_ID}&order_id=${orderNumber || ''}`,
+      cancel_url: `${baseUrl}/commande/?canceled=true`,
     };
 
     // Apply pre-selected coupon or allow typing promo code in Stripe Checkout

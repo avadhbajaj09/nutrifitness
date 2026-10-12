@@ -93,7 +93,7 @@ export default function CheckoutPage() {
   const [genevaShippingMethod, setGenevaShippingMethod] = useState<'postpac' | 'clickcollect'>('postpac');
 
   // Step 4: Payment
-  const [paymentMethod, setPaymentMethod] = useState<'twint' | 'postfinance' | 'card' | 'invoice'>('twint');
+  const [paymentMethod, setPaymentMethod] = useState<'card' | 'twint' | 'postfinance'>('card');
 
   // Submission & Success state
   const [isSuccess, setIsSuccess] = useState(false);
@@ -226,9 +226,9 @@ export default function CheckoutPage() {
 
     if (sessionId) {
       setIsProcessingStripe(true);
-      fetch(`/api/checkout/session?session_id=${encodeURIComponent(sessionId)}`)
+      fetch(`/api/checkout/session/?session_id=${encodeURIComponent(sessionId)}`)
         .then((res) => res.json())
-        .then((data) => {
+        .then(async (data) => {
           setIsProcessingStripe(false);
           if (data.payment_status === 'paid' || data.status === 'complete') {
             const finalOrderNum = data.order_id || orderIdParam || `CMD-${Math.floor(100000 + Math.random() * 900000)}`;
@@ -237,12 +237,80 @@ export default function CheckoutPage() {
             setConfirmedCountry(data.metadata?.shipping_country || countryCode || 'CH');
             setConfirmedDeliveryDate('1–3 jours ouvrables');
 
+            // Retrieve pending order if stored in session
+            let pendingOrder: any = null;
+            try {
+              const raw = sessionStorage.getItem('nf_pending_order');
+              if (raw) pendingOrder = JSON.parse(raw);
+              sessionStorage.removeItem('nf_pending_order');
+            } catch {}
+
+            const paidOrderPayload = {
+              ticketNumber: finalOrderNum,
+              id: finalOrderNum,
+              timestamp: new Date().toISOString(),
+              items: pendingOrder?.items || (cart || []).map(it => ({
+                id: it.id,
+                name: it.name,
+                price: it.price,
+                quantity: it.quantity,
+                image: it.image,
+                flavor: it.flavor,
+                size: it.size,
+                shippingOrigin: it.shippingOrigin,
+                locationType: it.locationType
+              })),
+              subtotal: data.amount_total || cartSubtotal,
+              total: data.amount_total || cartSubtotal,
+              discountPercent: 0,
+              discountAmount: 0,
+              vatAmount: (data.amount_total || cartSubtotal) * 0.026,
+              paymentMethod: (data.metadata?.payment_selected || 'CARD').toUpperCase(),
+              paymentDetails: {
+                reference: sessionId,
+                notes: `Paiement en ligne Stripe validé (${data.currency || 'CHF'})`
+              },
+              clientName: data.customer_name || data.metadata?.customer_name || 'Client',
+              client: {
+                name: data.customer_name || data.metadata?.customer_name || 'Client',
+                email: data.customer_email || data.metadata?.customer_email || '',
+                phone: data.metadata?.customer_phone || '',
+                address: data.metadata?.shipping_street || '',
+                city: data.metadata?.shipping_city || '',
+                postalCode: data.metadata?.shipping_postal_code || ''
+              },
+              shipping: pendingOrder?.shipping || {
+                method: 'post_priority',
+                label: 'PostPac Priority (La Poste Suisse 24h)',
+                cost: 0
+              },
+              status: 'in_processing'
+            };
+
+            // Post confirmed paid order to database
+            try {
+              await fetch('/api/orders/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify(paidOrderPayload)
+              });
+            } catch {}
+
+            // Save to POS sales local cache
+            try {
+              const stored = localStorage.getItem('nutrifitness_pos_sales');
+              const currentList = stored ? JSON.parse(stored) : [];
+              const updatedList = [paidOrderPayload, ...currentList.filter((o: any) => o.ticketNumber !== finalOrderNum)];
+              localStorage.setItem('nutrifitness_pos_sales', JSON.stringify(updatedList));
+              window.dispatchEvent(new Event('storage'));
+            } catch {}
+
             // Fire Purchase tracking events
-            const purchaseItems = (cart || []).map((item) => ({
-              item_id: (item as any).sku || item.itemKey || item.name,
+            const purchaseItems = (paidOrderPayload.items || []).map((item: any) => ({
+              item_id: item.sku || item.itemKey || item.id || item.name,
               item_name: item.name,
-              item_brand: (item as any).brand || 'NutriFitness',
-              item_category: (item as any).categorySlug || 'Nutrition Sportive',
+              item_brand: item.brand || 'NutriFitness',
+              item_category: item.categorySlug || 'Nutrition Sportive',
               price: item.price,
               quantity: item.quantity,
             }));
@@ -268,11 +336,12 @@ export default function CheckoutPage() {
             setIsSuccess(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
-            setStripeError('Le statut du paiement n\'a pas pu être validé. Veuillez contacter le support.');
+            setStripeError('Le statut du paiement n\'a pas pu être validé. Veuillez réessayer.');
           }
         })
         .catch(() => {
           setIsProcessingStripe(false);
+          setStripeError('Erreur de validation de la transaction Stripe.');
         });
     }
   }, []);
@@ -713,25 +782,12 @@ export default function CheckoutPage() {
       clientName: clientFullName
     };
 
-    // 1. Immediately save to localStorage for POS sync
+    // 1. Save draft order to session so it can be committed to database upon Stripe return
     try {
-      const stored = localStorage.getItem('nutrifitness_pos_sales');
-      const currentList = stored ? JSON.parse(stored) : [];
-      const updatedList = [newOrder, ...currentList];
-      localStorage.setItem('nutrifitness_pos_sales', JSON.stringify(updatedList));
-      window.dispatchEvent(new Event('storage'));
+      sessionStorage.setItem('nf_pending_order', JSON.stringify(newOrder));
     } catch {}
 
-    // 2. Post to /api/orders
-    try {
-      await fetch('/api/orders/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(newOrder)
-      });
-    } catch {}
-
-    // Track GA4 and Meta events (fires once per order)
+    // 2. Track GA4 add_payment_info
     const activeCurr = currency || 'CHF';
     const purchaseItems = (cart || []).map(item => ({
       item_id: (item as any).sku || item.itemKey || item.name,
@@ -742,7 +798,6 @@ export default function CheckoutPage() {
       quantity: item.quantity,
     }));
 
-    // 1. GA4 add_payment_info
     trackAddPaymentInfo({
       items: purchaseItems,
       totalValue: grandTotal,
@@ -750,100 +805,45 @@ export default function CheckoutPage() {
       paymentType: paymentMethod,
     });
 
-    // If Stripe online payment (Card or PostFinance), create checkout session and redirect
-    if (paymentMethod === 'card' || paymentMethod === 'postfinance') {
-      setIsRedirectingToStripe(true);
-      setStripeError(null);
-      try {
-        const res = await fetch('/api/checkout/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            orderNumber,
-            items: cart,
-            currency: activeCurr,
-            customerEmail,
-            customerName: clientFullName,
-            customerPhone,
-            shippingCost: totalShippingCost,
-            paymentMethod,
-            couponCode: appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined),
-            shippingAddress: {
-              street: customerAddress,
-              city: customerCity,
-              postalCode: customerPostalCode,
-              country: customerCountry,
-            },
-          }),
-        });
-
-        const data = await res.json();
-        if (!res.ok || !data.url) {
-          throw new Error(data.error || 'Erreur lors de l\'initialisation de Stripe Checkout.');
-        }
-
-        // Redirect user to Stripe secure hosted checkout
-        window.location.href = data.url;
-        return;
-      } catch (err: any) {
-        setIsRedirectingToStripe(false);
-        setStripeError(err?.message || 'Erreur de connexion avec le terminal de paiement Stripe.');
-        return;
-      }
-    }
-
-    // 2. For Swiss QR Invoice (offline payment): GA4 purchase
-    trackPurchase({
-      transaction_id: orderNumber,
-      value: grandTotal,
-      shipping: totalShippingCost,
-      tax: vatEst,
-      currency: activeCurr,
-      items: purchaseItems,
-    });
-
-    // 3. Meta Purchase with shared event_id (for CAPI deduplication)
-    trackMetaPurchase({
-      transaction_id: orderNumber,
-      eventId: orderNumber,
-      value: grandTotal,
-      currency: activeCurr,
-      items: purchaseItems,
-    });
-
-    // 4. Server-side Meta Conversions API trigger
+    // 3. ALL online payments (Card, TWINT, PostFinance) redirect to live Stripe Hosted Checkout
+    setIsRedirectingToStripe(true);
+    setStripeError(null);
     try {
-      fetch('/api/meta/capi/', {
+      const res = await fetch('/api/checkout/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          event_name: 'Purchase',
-          event_id: orderNumber,
-          value: grandTotal,
+          orderNumber,
+          items: cart,
           currency: activeCurr,
-          email: customerEmail,
-          phone: customerPhone,
-          items: purchaseItems.map(p => ({ id: p.item_id, quantity: p.quantity, item_price: p.price })),
-          event_source_url: typeof window !== 'undefined' ? window.location.href : 'https://nutrifitness.ch/commande',
+          customerEmail,
+          customerName: clientFullName,
+          customerPhone,
+          shippingCost: totalShippingCost,
+          paymentMethod,
+          couponCode: appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined),
+          shippingAddress: {
+            street: customerAddress,
+            city: customerCity,
+            postalCode: customerPostalCode,
+            country: customerCountry,
+          },
         }),
-      }).catch(() => {});
-    } catch {}
+      });
 
-    const promisedDate = isMixedCart
-      ? (ptPromiseDate > genevaPromiseDate ? ptPromiseDate : genevaPromiseDate)
-      : (portugalItems.length > 0 ? ptPromiseDate : genevaPromiseDate);
+      const data = await res.json();
+      if (!res.ok || !data.url) {
+        throw new Error(data.error || 'Erreur lors de l\'initialisation du terminal de paiement.');
+      }
 
-    const validGtins = (cart || [])
-      .map(item => ({ gtin: (item as any).gtin || (item as any).barcode }))
-      .filter((it): it is { gtin: string } => Boolean(it.gtin));
-
-    setConfirmedCountry(customerCountry || 'CH');
-    setConfirmedDeliveryDate(promisedDate || '');
-    setConfirmedProducts(validGtins);
-
-    clearCart();
-    setIsSuccess(true);
-    window.scrollTo({ top: 0, behavior: 'smooth' });
+      // Redirect user to Stripe secure hosted checkout
+      window.location.href = data.url;
+      return;
+    } catch (err: any) {
+      setIsRedirectingToStripe(false);
+      setStripeError(err?.message || 'Erreur de connexion avec le terminal de paiement sécurisé Stripe.');
+      return;
+    }
   };
 
   if (isProcessingStripe) {
@@ -1518,6 +1518,31 @@ export default function CheckoutPage() {
               {t.checkout.paymentMode} ({currency})
             </h2>
             <div className="space-y-3">
+              {/* Credit Card / Apple Pay / Google Pay */}
+              <label 
+                className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
+                  paymentMethod === 'card' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
+                }`}
+              >
+                <input 
+                  type="radio" 
+                  name="payment" 
+                  checked={paymentMethod === 'card'} 
+                  onChange={() => setPaymentMethod('card')}
+                  className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
+                />
+                <div className="flex-1 text-xs">
+                  <div className="flex justify-between font-bold text-white mb-0.5">
+                    <span className="flex items-center gap-2">
+                      <CreditCard className="w-4 h-4 text-[#F80404]" />
+                      <span>Carte Bancaire (Visa, Mastercard, Amex, Apple Pay, Google Pay)</span>
+                    </span>
+                    <span className="text-emerald-400 font-bold bg-emerald-500/10 px-2 py-0.5 rounded text-[10px]">Stripe 3D-Secure</span>
+                  </div>
+                  <p className="text-white/60">Paiement en ligne sécurisé avec validation par votre banque (conforme nDSG suisse).</p>
+                </div>
+              </label>
+
               {/* TWINT */}
               <label 
                 className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
@@ -1535,38 +1560,11 @@ export default function CheckoutPage() {
                   <div className="flex justify-between font-bold text-white mb-0.5">
                     <span className="flex items-center gap-2">
                       <span className="px-1.5 py-0.5 rounded bg-white text-black font-black text-[10px]">TWINT</span>
-                      <span>TWINT Suisse (Recommandé)</span>
+                      <span>TWINT Suisse</span>
                     </span>
                     <span className="text-[#F80404] font-bold">Instantané</span>
                   </div>
-                  <p className="text-white/50">Payez en 1 clic avec l&apos;application TWINT de votre banque suisse.</p>
-
-                  {paymentMethod === 'twint' && (
-                    <div className="mt-3 p-3.5 bg-black/60 rounded-xl border border-white/10 space-y-3">
-                      <div className="flex flex-col sm:flex-row items-center gap-4">
-                        <div className="p-2 bg-white rounded-xl shrink-0 shadow-sm">
-                          <img
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(`https://pay.twint.ch/?storeUUID=e63424a8-576d-c293-a4de-891c3737aa8b&amount=${grandTotal.toFixed(2)}&currency=CHF`)}`}
-                            alt="QR Code TWINT"
-                            className="w-28 h-28 object-contain"
-                          />
-                        </div>
-                        <div className="space-y-1.5 text-xs text-white/70">
-                          <p className="font-bold text-white text-[11px] flex items-center gap-1.5">
-                            <span className="w-2 h-2 rounded-full bg-emerald-400" />
-                            <span>Paiement TWINT Immédiat</span>
-                          </p>
-                          <p className="text-[11px] text-white/50 leading-relaxed">
-                            • <strong>Sur ordinateur</strong> : Scannez ce QR Code avec votre app TWINT suisse.<br/>
-                            • <strong>Sur smartphone</strong> : Cliquez sur &laquo; Payer avec TWINT &raquo; ci-dessous.
-                          </p>
-                          <p className="text-[9px] text-white/40 font-mono">
-                            Terminal ID : e63424a8-576d-c293-a4de-891c3737aa8b
-                          </p>
-                        </div>
-                      </div>
-                    </div>
-                  )}
+                  <p className="text-white/60">Payez en 1 clic avec l&apos;application TWINT de votre banque suisse via notre passerelle bancaire.</p>
                 </div>
               </label>
 
@@ -1591,56 +1589,7 @@ export default function CheckoutPage() {
                     </span>
                     <span className="text-white/70">Sécurisé</span>
                   </div>
-                  <p className="text-white/50">Débit direct sur votre compte postal ou carte PostFinance.</p>
-                </div>
-              </label>
-
-              {/* Credit Card */}
-              <label 
-                className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
-                  paymentMethod === 'card' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
-                }`}
-              >
-                <input 
-                  type="radio" 
-                  name="payment" 
-                  checked={paymentMethod === 'card'} 
-                  onChange={() => setPaymentMethod('card')}
-                  className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
-                />
-                <div className="flex-1 text-xs">
-                  <div className="flex justify-between font-bold text-white mb-0.5">
-                    <span className="flex items-center gap-2">
-                      <CreditCard className="w-4 h-4 text-white" />
-                      <span>Carte Bancaire (Visa, Mastercard, Amex)</span>
-                    </span>
-                    <span className="text-white/70">3D Secure</span>
-                  </div>
-                  <p className="text-white/50">Protocole de sécurité SSL 256 bits conforme nDSG.</p>
-                </div>
-              </label>
-
-              {/* Invoice QR */}
-              <label 
-                className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
-                  paymentMethod === 'invoice' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
-                }`}
-              >
-                <input 
-                  type="radio" 
-                  name="payment" 
-                  checked={paymentMethod === 'invoice'} 
-                  onChange={() => setPaymentMethod('invoice')}
-                  className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
-                />
-                <div className="flex-1 text-xs">
-                  <div className="flex justify-between font-bold text-white mb-0.5">
-                    <span className="flex items-center gap-2">
-                      <span>📄 Facture QR Suisse</span>
-                    </span>
-                    <span className="text-white/70">30 jours</span>
-                  </div>
-                  <p className="text-white/50">Bulletin de versement QR joint au colis (réservé aux résidents suisses).</p>
+                  <p className="text-white/60">Débit direct sur votre compte postal ou carte PostFinance.</p>
                 </div>
               </label>
             </div>
@@ -1826,11 +1775,11 @@ export default function CheckoutPage() {
             ) : (
               <>
                 <span>
-                  {paymentMethod === 'invoice' 
-                    ? t.checkout.confirmAndPay 
-                    : paymentMethod === 'twint'
-                    ? 'Confirmer le paiement TWINT'
-                    : 'Payer par Carte Bancaire (Stripe)'} ({formatPrice(grandTotal)})
+                  {paymentMethod === 'twint'
+                    ? 'Payer avec TWINT'
+                    : paymentMethod === 'postfinance'
+                    ? 'Payer avec PostFinance'
+                    : 'Payer par Carte Bancaire'} ({formatPrice(grandTotal)})
                 </span>
                 <span>→</span>
               </>
