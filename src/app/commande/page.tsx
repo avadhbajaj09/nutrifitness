@@ -805,80 +805,13 @@ export default function CheckoutPage() {
       paymentType: paymentMethod,
     });
 
-    // 3. Process payment based on selected mode
-    if (paymentMethod === 'twint') {
-      setIsRedirectingToStripe(true);
-      setStripeError(null);
-      try {
-        const twintOrderPayload = {
-          ...newOrder,
-          paymentMethod: 'twint',
-          paymentDetails: {
-            reference: `TWINT-${generatedOrderNum}`,
-            twintStoreUuid: 'e63424a8-576d-c293-a4de-891c3737aa8b',
-            notes: `Commande validée par TWINT Suisse (${formatPrice(grandTotal)})`
-          },
-          status: 'in_processing'
-        };
+    // 3. TWINT + Card/PostFinance → all go through Stripe Hosted Checkout.
+    //    For TWINT: /api/checkout will set payment_method_types=['twint'] on the Stripe session,
+    //    showing a real TWINT QR code. Payment is only confirmed after the customer scans and pays.
+    //    success_url is only reached after Stripe confirms the payment — no fake thank-you pages.
 
-        // Post order to database
-        await fetch('/api/orders/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(twintOrderPayload)
-        });
-
-        // Save to POS sales local buffer
-        try {
-          const stored = localStorage.getItem('nutrifitness_pos_sales');
-          const currentList = stored ? JSON.parse(stored) : [];
-          localStorage.setItem('nutrifitness_pos_sales', JSON.stringify([twintOrderPayload, ...currentList]));
-          window.dispatchEvent(new Event('storage'));
-        } catch {}
-
-        // Track purchase
-        trackPurchase({
-          transaction_id: generatedOrderNum,
-          value: grandTotal,
-          shipping: totalShippingCost,
-          tax: vatEst,
-          currency: activeCurr,
-          items: purchaseItems,
-        });
-
-        trackMetaPurchase({
-          transaction_id: generatedOrderNum,
-          eventId: generatedOrderNum,
-          value: grandTotal,
-          currency: activeCurr,
-          items: purchaseItems,
-        });
-
-        const promisedDate = isMixedCart
-          ? (ptPromiseDate > genevaPromiseDate ? ptPromiseDate : genevaPromiseDate)
-          : (portugalItems.length > 0 ? ptPromiseDate : genevaPromiseDate);
-
-        const validGtins = (cart || [])
-          .map(item => ({ gtin: (item as any).gtin || (item as any).barcode }))
-          .filter((it): it is { gtin: string } => Boolean(it.gtin));
-
-        setConfirmedCountry(customerCountry || 'CH');
-        setConfirmedDeliveryDate(promisedDate || '1–3 jours ouvrables');
-        setConfirmedProducts(validGtins);
-
-        clearCart();
-        setIsRedirectingToStripe(false);
-        setIsSuccess(true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      } catch (err: any) {
-        setIsRedirectingToStripe(false);
-        setStripeError('Erreur lors de l\'enregistrement de votre commande TWINT. Veuillez réessayer.');
-        return;
-      }
-    }
-
-    // 4. For Card / PostFinance: Redirect to live Stripe Hosted Checkout
+    // 4. All payment methods (TWINT, Card, PostFinance) → Stripe Hosted Checkout
+    //    TWINT: Stripe session with payment_method_types=['twint'] shows the TWINT QR natively
     setIsRedirectingToStripe(true);
     setStripeError(null);
     try {
@@ -1642,35 +1575,14 @@ export default function CheckoutPage() {
                     </span>
                     <span className="text-[#F80404] font-bold">Instantané</span>
                   </div>
-                  <p className="text-white/60">Payez en 1 clic avec l&apos;application TWINT de votre banque suisse (BCGE, UBS, PostFinance, Raiffeisen, etc.).</p>
+                  <p className="text-white/60">Payez avec l&apos;app TWINT de votre banque suisse (UBS, PostFinance, Raiffeisen, BCGE, etc.). Vous serez redirigé vers une page de paiement sécurisée Stripe.</p>
 
                   {paymentMethod === 'twint' && (
-                    <div className="mt-3 p-4 bg-black/70 rounded-xl border border-white/10 space-y-3">
-                      <div className="flex flex-col sm:flex-row items-center gap-4">
-                        <div className="p-2.5 bg-white rounded-xl shrink-0 shadow-md">
-                          <img
-                            src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://pay.twint.ch/?storeUUID=e63424a8-576d-c293-a4de-891c3737aa8b&amount=${grandTotal.toFixed(2)}&currency=CHF`)}`}
-                            alt="Code QR TWINT"
-                            className="w-32 h-32 object-contain"
-                          />
-                        </div>
-                        <div className="space-y-2 text-xs text-white/80">
-                          <p className="font-bold text-white text-sm flex items-center gap-2">
-                            <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                            <span>Paiement TWINT Immédiat</span>
-                          </p>
-                          <p className="text-[11px] text-white/70 leading-relaxed">
-                            1. Ouvrez votre app TWINT sur smartphone<br/>
-                            2. Scannez ce code QR ou cliquez ci-dessous<br/>
-                            3. Confirmez le montant de <strong className="text-white">CHF {grandTotal.toFixed(2)}</strong>
-                          </p>
-                          <a
-                            href={`twint://app/pay?storeUUID=e63424a8-576d-c293-a4de-891c3737aa8b&amount=${grandTotal.toFixed(2)}&currency=CHF`}
-                            className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#95d600] hover:bg-[#85c000] text-black font-black text-[11px] uppercase tracking-wider rounded-lg transition-colors mt-1"
-                          >
-                            <span>📱 Ouvrir l&apos;App TWINT sur mobile</span>
-                          </a>
-                        </div>
+                    <div className="mt-3 p-3 bg-black/50 rounded-xl border border-white/10 flex items-center gap-3">
+                      <span className="text-2xl">📱</span>
+                      <div className="text-[11px] text-white/75 leading-relaxed">
+                        En cliquant <strong className="text-white">« Payer avec TWINT »</strong>, vous serez redirigé vers Stripe qui générera un QR code TWINT sécurisé.<br/>
+                        Scannez-le avec votre app TWINT pour confirmer le paiement de <strong className="text-white">CHF {grandTotal.toFixed(2)}</strong>.
                       </div>
                     </div>
                   )}
