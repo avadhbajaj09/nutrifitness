@@ -10,7 +10,10 @@ export const supabase: SupabaseClient = createClient(supabaseUrl, supabaseAnonKe
 let adminClient: SupabaseClient | null = null;
 export function getAdminSupabase(): SupabaseClient {
   if (!adminClient) {
-    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY || 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB1bmhtd2xwYWdobWpuZHB5dXNmIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTc5MTA4Mzc3NywiZXhwIjoyMTA2NjU5Nzc3fQ.zansLPHjqNj1IupmtuodY5GOgNO2QNjtFXEoym_J8Uk';
+    const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
+    if (!serviceKey) {
+      throw new Error('Missing SUPABASE_SERVICE_ROLE_KEY environment variable');
+    }
     adminClient = createClient(supabaseUrl, serviceKey, {
       auth: { persistSession: false },
     });

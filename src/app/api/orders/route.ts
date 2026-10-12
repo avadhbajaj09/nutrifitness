@@ -70,12 +70,12 @@ function supabaseRowToSaleRecord(row: any): any {
     },
     seller: addr.seller || (isPos ? 'Boutique Genève (Caisse POS)' : 'Site Web Public (nutrifitness.ch)'),
     client: {
-      name: row.customer_name || 'Avadh Bajaj',
-      phone: row.customer_phone || '+91 88789 33778',
-      email: row.customer_email || 'avadhbajaj09@gmail.com',
-      address: addr.address || 'Rue des Pâquis 34',
-      city: addr.city || 'Genève',
-      postalCode: addr.postalCode || '1201'
+      name: row.customer_name || 'Client',
+      phone: row.customer_phone || '',
+      email: row.customer_email || '',
+      address: addr.address || '',
+      city: addr.city || '',
+      postalCode: addr.postalCode || ''
     },
     shipping: {
       method: addr.shippingMethod || (isPos ? 'store_pickup' : 'post_priority'),
@@ -91,16 +91,16 @@ function supabaseRowToSaleRecord(row: any): any {
     status: (['pending', 'in_processing', 'packed', 'shipped', 'delivered', 'cancelled'].includes(row.status))
       ? row.status
       : 'in_processing',
-    clientName: row.customer_name || 'Avadh Bajaj'
+    clientName: row.customer_name || 'Client'
   };
 }
 
 // Convert PosSaleRecord or checkout payload to Supabase row format
 function saleRecordToSupabaseRow(payload: any): any {
   const clientObj = payload.client || {};
-  const clientName = clientObj.name || payload.clientName || 'Avadh Bajaj';
-  const clientPhone = clientObj.phone || payload.customerPhone || '+91 88789 33778';
-  const clientEmail = clientObj.email || payload.customerEmail || 'avadhbajaj09@gmail.com';
+  const clientName = clientObj.name || payload.clientName || 'Client';
+  const clientPhone = clientObj.phone || payload.customerPhone || '';
+  const clientEmail = clientObj.email || payload.customerEmail || '';
 
   const shippingObj = payload.shipping || {};
   const paymentDetails = payload.paymentDetails || {};
