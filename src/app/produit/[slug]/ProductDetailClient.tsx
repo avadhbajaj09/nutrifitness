@@ -16,7 +16,7 @@ import { getProductOriginType } from '@/lib/translations';
 
 import { getCategoryBySlug } from '@/lib/categories';
 import { getProductGtin } from '@/lib/seo';
-import { trackViewItem } from '@/lib/analytics';
+import { trackViewItem, trackMetaViewContent } from '@/lib/analytics';
 import { getRelevantGuideForProduct } from '@/lib/blog';
 import { BookOpen, ArrowRight } from 'lucide-react';
 
@@ -70,18 +70,18 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;
 
   useEffect(() => {
-    trackViewItem(
-      {
-        item_id: selectedVariant?.sku || product.variants?.[0]?.sku || product.id,
-        item_name: name,
-        item_brand: product.brand,
-        item_category: product.categorySlug,
-        price: currentPrice,
-        quantity: 1,
-      },
-      currency || 'CHF'
-    );
-  }, [product.id, currency]);
+    const itemData = {
+      item_id: selectedVariant?.sku || product.variants?.[0]?.sku || product.id,
+      item_name: name,
+      item_brand: product.brand,
+      item_category: product.categorySlug,
+      price: currentPrice,
+      quantity: 1,
+    };
+    const activeCurr = currency || 'CHF';
+    trackViewItem(itemData, activeCurr);
+    trackMetaViewContent({ item: itemData, currency: activeCurr });
+  }, [product.id, currency, selectedVariant?.sku, currentPrice, name, product.brand, product.categorySlug]);
 
   return (
     <div>

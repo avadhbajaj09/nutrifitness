@@ -16,12 +16,22 @@ import {
   Package, 
   AlertCircle,
   HelpCircle,
-  Clock
+  Clock,
+  Tag,
+  X,
+  Percent,
+  Loader2
 } from 'lucide-react';
 import { FlagIcon } from '@/components/delivery/FlagIcon';
 import { useDeliveryEstimates } from '@/hooks/useDeliveryEstimate';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
-import { trackBeginCheckout, trackPurchase } from '@/lib/analytics';
+import { 
+  trackBeginCheckout, 
+  trackPurchase, 
+  trackAddPaymentInfo, 
+  trackMetaInitiateCheckout, 
+  trackMetaPurchase 
+} from '@/lib/analytics';
 
 interface SupportedCountry {
   code: string;
@@ -94,6 +104,105 @@ export default function CheckoutPage() {
   const [confirmedProducts, setConfirmedProducts] = useState<Array<{ gtin?: string }>>([]);
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [countryAutoSwitchedNotice, setCountryAutoSwitchedNotice] = useState<string | null>(null);
+  const [isRedirectingToStripe, setIsRedirectingToStripe] = useState(false);
+  const [isProcessingStripe, setIsProcessingStripe] = useState(false);
+  const [stripeError, setStripeError] = useState<string | null>(null);
+
+  // Coupon / Promo Code state
+  const [couponCode, setCouponCode] = useState('');
+  const [discountRate, setDiscountRate] = useState(0);
+  const [appliedCoupon, setAppliedCoupon] = useState<{
+    code: string;
+    rate: number;
+    percentOff?: number;
+    amountOff?: number;
+    discountType?: 'percent' | 'amount';
+    description?: string;
+  } | null>(null);
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
+  const [couponMessage, setCouponMessage] = useState<{ text: string; isError: boolean } | null>(null);
+
+  // Restore coupon from localStorage if applied in cart
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('nf_applied_coupon');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.code && (parsed.rate !== undefined || parsed.amountOff !== undefined)) {
+          setCouponCode(parsed.code);
+          setDiscountRate(parsed.rate || 0);
+          setAppliedCoupon(parsed);
+          setCouponMessage({
+            text: `✓ Code "${parsed.code}" actif (${parsed.description || `-${Math.round((parsed.rate || 0) * 100)}%`})`,
+            isError: false,
+          });
+        }
+      }
+    } catch {}
+  }, []);
+
+  const handleApplyCoupon = async (e?: React.FormEvent) => {
+    if (e) e.preventDefault();
+    const clean = couponCode.trim().toUpperCase();
+    if (!clean) {
+      setCouponMessage({ text: 'Veuillez saisir un code promotionnel.', isError: true });
+      return;
+    }
+
+    setIsApplyingCoupon(true);
+    setCouponMessage(null);
+
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: clean }),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.valid) {
+        const couponData = {
+          code: data.code,
+          rate: data.rate || 0,
+          amountOff: data.amountOff,
+          discountType: (data.discountType || 'percent') as 'percent' | 'amount',
+          description: data.description,
+        };
+        setAppliedCoupon(couponData);
+        setDiscountRate(couponData.rate);
+        setCouponCode(data.code);
+        setCouponMessage({
+          text: `✓ Code "${data.code}" appliqué avec succès (${data.description}) !`,
+          isError: false,
+        });
+        try {
+          localStorage.setItem('nf_applied_coupon', JSON.stringify(couponData));
+        } catch {}
+      } else {
+        setCouponMessage({
+          text: data.error || `Le code promo "${clean}" est invalide ou expiré.`,
+          isError: true,
+        });
+      }
+    } catch {
+      setCouponMessage({
+        text: 'Erreur de connexion lors de la vérification du code. Réessayez.',
+        isError: true,
+      });
+    } finally {
+      setIsApplyingCoupon(false);
+    }
+  };
+
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setDiscountRate(0);
+    setCouponCode('');
+    setCouponMessage(null);
+    try {
+      localStorage.removeItem('nf_applied_coupon');
+    } catch {}
+  };
 
   // Sync countryCode from store context on mount
   useEffect(() => {
@@ -102,21 +211,86 @@ export default function CheckoutPage() {
     }
   }, [countryCode]);
 
-  // Track GA4 begin_checkout
+  // Check for return from Stripe Checkout
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const sessionId = urlParams.get('session_id');
+    const orderIdParam = urlParams.get('order_id');
+    const canceled = urlParams.get('canceled');
+
+    if (canceled) {
+      setStripeError('Le paiement a été interrompu. Votre panier est conservé, vous pouvez réessayer ci-dessous.');
+      return;
+    }
+
+    if (sessionId) {
+      setIsProcessingStripe(true);
+      fetch(`/api/checkout/session?session_id=${encodeURIComponent(sessionId)}`)
+        .then((res) => res.json())
+        .then((data) => {
+          setIsProcessingStripe(false);
+          if (data.payment_status === 'paid' || data.status === 'complete') {
+            const finalOrderNum = data.order_id || orderIdParam || `CMD-${Math.floor(100000 + Math.random() * 900000)}`;
+            setOrderNumber(finalOrderNum);
+            setFinalTotalFormatted(formatPrice(data.amount_total || cartSubtotal));
+            setConfirmedCountry(data.metadata?.shipping_country || countryCode || 'CH');
+            setConfirmedDeliveryDate('1–3 jours ouvrables');
+
+            // Fire Purchase tracking events
+            const purchaseItems = (cart || []).map((item) => ({
+              item_id: (item as any).sku || item.itemKey || item.name,
+              item_name: item.name,
+              item_brand: (item as any).brand || 'NutriFitness',
+              item_category: (item as any).categorySlug || 'Nutrition Sportive',
+              price: item.price,
+              quantity: item.quantity,
+            }));
+
+            trackPurchase({
+              transaction_id: finalOrderNum,
+              value: data.amount_total || cartSubtotal,
+              shipping: 0,
+              tax: (data.amount_total || cartSubtotal) * 0.026,
+              currency: data.currency || currency || 'CHF',
+              items: purchaseItems,
+            });
+
+            trackMetaPurchase({
+              transaction_id: finalOrderNum,
+              eventId: finalOrderNum,
+              value: data.amount_total || cartSubtotal,
+              currency: data.currency || currency || 'CHF',
+              items: purchaseItems,
+            });
+
+            clearCart();
+            setIsSuccess(true);
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+          } else {
+            setStripeError('Le statut du paiement n\'a pas pu être validé. Veuillez contacter le support.');
+          }
+        })
+        .catch(() => {
+          setIsProcessingStripe(false);
+        });
+    }
+  }, []);
+
+  // Track GA4 begin_checkout and Meta InitiateCheckout
   useEffect(() => {
     if (cart && cart.length > 0) {
-      trackBeginCheckout(
-        cart.map(item => ({
-          item_id: (item as any).sku || item.itemKey || item.name,
-          item_name: item.name,
-          item_brand: (item as any).brand || 'NutriFitness',
-          item_category: (item as any).categorySlug || 'Nutrition Sportive',
-          price: item.price,
-          quantity: item.quantity,
-        })),
-        cartSubtotal,
-        currency || 'CHF'
-      );
+      const items = cart.map(item => ({
+        item_id: (item as any).sku || item.itemKey || item.name,
+        item_name: item.name,
+        item_brand: (item as any).brand || 'NutriFitness',
+        item_category: (item as any).categorySlug || 'Nutrition Sportive',
+        price: item.price,
+        quantity: item.quantity,
+      }));
+      const activeCurr = currency || 'CHF';
+      trackBeginCheckout(items, cartSubtotal, activeCurr);
+      trackMetaInitiateCheckout({ items, totalValue: cartSubtotal, currency: activeCurr });
     }
   }, []);
 
@@ -422,8 +596,18 @@ export default function CheckoutPage() {
     return 0;
   }, [isMixedCart, genevaShippingCost, portugalShippingCost, genevaItems.length, portugalItems.length]);
 
-  const vatEst = (cartSubtotal * 0.026) / 1.026;
-  const grandTotal = cartSubtotal + totalShippingCost;
+  const discountAmount = useMemo(() => {
+    if (!appliedCoupon && discountRate === 0) return 0;
+    if (appliedCoupon && appliedCoupon.discountType === 'amount' && appliedCoupon.amountOff) {
+      return Math.min(cartSubtotal, appliedCoupon.amountOff);
+    }
+    const effRate = appliedCoupon?.rate ?? discountRate;
+    return cartSubtotal * effRate;
+  }, [cartSubtotal, appliedCoupon, discountRate]);
+
+  const discountedSubtotal = Math.max(0, cartSubtotal - discountAmount);
+  const vatEst = (discountedSubtotal * 0.026) / 1.026;
+  const grandTotal = discountedSubtotal + totalShippingCost;
 
   // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
@@ -472,8 +656,8 @@ export default function CheckoutPage() {
         shippingOrigin: item.shippingOrigin || 'switzerland'
       })) : [],
       subtotal: cartSubtotal,
-      discountPercent: 0,
-      discountAmount: 0,
+      discountPercent: appliedCoupon?.percentOff ?? Math.round(discountRate * 100),
+      discountAmount: discountAmount,
       vatAmount: vatEst,
       total: grandTotal,
       amountReceived: grandTotal,
@@ -547,7 +731,8 @@ export default function CheckoutPage() {
       });
     } catch {}
 
-    // Track GA4 purchase event (fires once per order)
+    // Track GA4 and Meta events (fires once per order)
+    const activeCurr = currency || 'CHF';
     const purchaseItems = (cart || []).map(item => ({
       item_id: (item as any).sku || item.itemKey || item.name,
       item_name: item.name,
@@ -556,14 +741,93 @@ export default function CheckoutPage() {
       price: item.price,
       quantity: item.quantity,
     }));
+
+    // 1. GA4 add_payment_info
+    trackAddPaymentInfo({
+      items: purchaseItems,
+      totalValue: grandTotal,
+      currency: activeCurr,
+      paymentType: paymentMethod,
+    });
+
+    // If Stripe online payment (Card or PostFinance), create checkout session and redirect
+    if (paymentMethod === 'card' || paymentMethod === 'postfinance') {
+      setIsRedirectingToStripe(true);
+      setStripeError(null);
+      try {
+        const res = await fetch('/api/checkout/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            orderNumber,
+            items: cart,
+            currency: activeCurr,
+            customerEmail,
+            customerName: clientFullName,
+            customerPhone,
+            shippingCost: totalShippingCost,
+            paymentMethod,
+            couponCode: appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined),
+            shippingAddress: {
+              street: customerAddress,
+              city: customerCity,
+              postalCode: customerPostalCode,
+              country: customerCountry,
+            },
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.url) {
+          throw new Error(data.error || 'Erreur lors de l\'initialisation de Stripe Checkout.');
+        }
+
+        // Redirect user to Stripe secure hosted checkout
+        window.location.href = data.url;
+        return;
+      } catch (err: any) {
+        setIsRedirectingToStripe(false);
+        setStripeError(err?.message || 'Erreur de connexion avec le terminal de paiement Stripe.');
+        return;
+      }
+    }
+
+    // 2. For Swiss QR Invoice (offline payment): GA4 purchase
     trackPurchase({
       transaction_id: orderNumber,
       value: grandTotal,
       shipping: totalShippingCost,
       tax: vatEst,
-      currency: currency || 'CHF',
+      currency: activeCurr,
       items: purchaseItems,
     });
+
+    // 3. Meta Purchase with shared event_id (for CAPI deduplication)
+    trackMetaPurchase({
+      transaction_id: orderNumber,
+      eventId: orderNumber,
+      value: grandTotal,
+      currency: activeCurr,
+      items: purchaseItems,
+    });
+
+    // 4. Server-side Meta Conversions API trigger
+    try {
+      fetch('/api/meta/capi/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_name: 'Purchase',
+          event_id: orderNumber,
+          value: grandTotal,
+          currency: activeCurr,
+          email: customerEmail,
+          phone: customerPhone,
+          items: purchaseItems.map(p => ({ id: p.item_id, quantity: p.quantity, item_price: p.price })),
+          event_source_url: typeof window !== 'undefined' ? window.location.href : 'https://nutrifitness.ch/commande',
+        }),
+      }).catch(() => {});
+    } catch {}
 
     const promisedDate = isMixedCart
       ? (ptPromiseDate > genevaPromiseDate ? ptPromiseDate : genevaPromiseDate)
@@ -582,6 +846,16 @@ export default function CheckoutPage() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
   };
 
+  if (isProcessingStripe) {
+    return (
+      <div className="max-w-md mx-auto min-h-[60vh] flex flex-col items-center justify-center py-16 px-4 text-center">
+        <div className="w-12 h-12 border-4 border-[#F80404] border-t-transparent rounded-full animate-spin mb-4" />
+        <h2 className="text-xl font-black uppercase text-white font-heading">Validation du paiement Stripe...</h2>
+        <p className="text-xs text-white/60 mt-2">Veuillez patienter un instant pendant la confirmation de votre transaction sécurisée.</p>
+      </div>
+    );
+  }
+
   if (isSuccess) {
     return (
       <ThankYouAnimation
@@ -596,6 +870,130 @@ export default function CheckoutPage() {
       />
     );
   }
+
+  const renderCouponSection = () => (
+    <div className="bg-black/60 border border-white/15 rounded-2xl p-4 space-y-3 shadow-md">
+      <div className="flex items-center justify-between">
+        <div className="flex items-center gap-2">
+          <Tag className="w-4 h-4 text-[#F80404]" />
+          <span className="text-xs font-black uppercase tracking-wider text-white">
+            Code Promo / Réduction
+          </span>
+        </div>
+        {appliedCoupon && (
+          <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+            ✓ Actif
+          </span>
+        )}
+      </div>
+
+      {appliedCoupon ? (
+        <div className="bg-emerald-950/40 border border-emerald-500/40 rounded-xl p-3 flex items-center justify-between gap-3">
+          <div className="space-y-0.5 min-w-0">
+            <div className="flex items-center gap-1.5">
+              <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              <span className="text-xs font-black text-emerald-300 uppercase tracking-wide truncate">
+                {appliedCoupon.code}
+              </span>
+            </div>
+            <p className="text-[11px] text-emerald-200/80">
+              {appliedCoupon.description || `-${Math.round((appliedCoupon.rate || 0) * 100)}%`}
+              {' '}(économie : <span className="font-bold text-white">-{formatPrice(discountAmount)}</span>)
+            </p>
+          </div>
+          <button
+            type="button"
+            onClick={handleRemoveCoupon}
+            className="px-2.5 py-1.5 bg-white/10 hover:bg-red-500/20 hover:text-red-300 text-white/70 text-xs font-bold rounded-lg transition-colors border border-white/10 flex items-center gap-1 shrink-0"
+            title="Supprimer ce code promo"
+          >
+            <X className="w-3.5 h-3.5" />
+            <span>Retirer</span>
+          </button>
+        </div>
+      ) : (
+        <div className="space-y-2">
+          <div className="flex gap-2">
+            <input
+              type="text"
+              value={couponCode}
+              onChange={(e) => {
+                setCouponCode(e.target.value.toUpperCase());
+                if (couponMessage) setCouponMessage(null);
+              }}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter') {
+                  e.preventDefault();
+                  handleApplyCoupon();
+                }
+              }}
+              placeholder="Code promo (ex: TEST95)"
+              className="flex-1 min-h-[42px] px-3.5 text-xs bg-black/80 border border-white/20 rounded-xl text-white uppercase placeholder-white/30 focus:outline-none focus:border-[#F80404] font-mono tracking-wider transition-all"
+            />
+            <button
+              type="button"
+              onClick={() => handleApplyCoupon()}
+              disabled={isApplyingCoupon || !couponCode.trim()}
+              className={`px-4 py-2 text-xs font-black uppercase tracking-wider rounded-xl transition-all border shrink-0 flex items-center gap-1.5 ${
+                couponCode.trim() && !isApplyingCoupon
+                  ? 'bg-[#F80404] hover:bg-[#FF3D00] text-black border-[#F80404] cursor-pointer shadow-md'
+                  : 'bg-white/10 text-white/40 border-white/10 cursor-not-allowed'
+              }`}
+            >
+              {isApplyingCoupon ? (
+                <>
+                  <Loader2 className="w-3.5 h-3.5 animate-spin" />
+                  <span>Vérification...</span>
+                </>
+              ) : (
+                <span>Appliquer</span>
+              )}
+            </button>
+          </div>
+
+          {couponMessage && (
+            <div
+              className={`p-2.5 rounded-xl text-xs flex items-center gap-2 animate-in fade-in duration-150 ${
+                couponMessage.isError
+                  ? 'bg-red-950/60 border border-red-500/40 text-red-300'
+                  : 'bg-emerald-950/60 border border-emerald-500/40 text-emerald-300'
+              }`}
+            >
+              {couponMessage.isError ? (
+                <AlertCircle className="w-3.5 h-3.5 text-red-400 shrink-0" />
+              ) : (
+                <CheckCircle2 className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
+              )}
+              <span className="font-semibold text-[11px]">{couponMessage.text}</span>
+            </div>
+          )}
+
+          <div className="flex items-center gap-2 text-[10px] text-white/40 pt-0.5">
+            <span>💡 Code d&apos;essai disponible :</span>
+            <button
+              type="button"
+              onClick={() => {
+                setCouponCode('TEST95');
+              }}
+              className="text-[#F80404] hover:underline font-mono font-bold"
+            >
+              TEST95 (-95%)
+            </button>
+            <span>ou</span>
+            <button
+              type="button"
+              onClick={() => {
+                setCouponCode('SWISS10');
+              }}
+              className="text-[#F80404] hover:underline font-mono font-bold"
+            >
+              SWISS10 (-10%)
+            </button>
+          </div>
+        </div>
+      )}
+    </div>
+  );
 
   return (
     <div className="max-w-6xl mx-auto py-6 px-4">
@@ -638,6 +1036,20 @@ export default function CheckoutPage() {
             </button>
           </div>
         </div>
+      </div>
+
+      {/* Mobile Summary & Promo Code Box (Mobile Only) */}
+      <div className="lg:hidden mb-6 bg-[#141414] border border-white/10 rounded-2xl p-4 shadow-md space-y-3">
+        <div className="flex items-center justify-between pb-3 border-b border-white/10">
+          <div className="flex items-center gap-2 text-xs font-bold text-white">
+            <Tag className="w-4 h-4 text-[#F80404]" />
+            <span>Code Promo &amp; Réduction</span>
+          </div>
+          <span className="text-sm font-black text-white font-heading">
+            Total : {formatPrice(grandTotal)}
+          </span>
+        </div>
+        {renderCouponSection()}
       </div>
 
       <form onSubmit={handleSubmit} className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
@@ -1080,6 +1492,25 @@ export default function CheckoutPage() {
             )}
           </div>
 
+          {/* Code Promo / Bon de Réduction */}
+          <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4">
+            <div className="flex items-center justify-between">
+              <h2 className="text-sm font-black uppercase tracking-wider text-white font-heading flex items-center gap-2.5">
+                <Tag className="w-5 h-5 text-[#F80404]" />
+                <span>Code Promo / Bon d&apos;Achat</span>
+              </h2>
+              {appliedCoupon && (
+                <span className="text-[10px] font-black uppercase px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30">
+                  ✓ {appliedCoupon.code} Actif
+                </span>
+              )}
+            </div>
+            <p className="text-xs text-white/60">
+              Saisissez un code promotionnel pour appliquer instantanément une remise sur votre panier.
+            </p>
+            {renderCouponSection()}
+          </div>
+
           {/* STEP 4: Mode de Paiement */}
           <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4">
             <h2 className="text-sm font-black uppercase tracking-wider text-white font-heading flex items-center gap-2.5">
@@ -1109,6 +1540,33 @@ export default function CheckoutPage() {
                     <span className="text-[#F80404] font-bold">Instantané</span>
                   </div>
                   <p className="text-white/50">Payez en 1 clic avec l&apos;application TWINT de votre banque suisse.</p>
+
+                  {paymentMethod === 'twint' && (
+                    <div className="mt-3 p-3.5 bg-black/60 rounded-xl border border-white/10 space-y-3">
+                      <div className="flex flex-col sm:flex-row items-center gap-4">
+                        <div className="p-2 bg-white rounded-xl shrink-0 shadow-sm">
+                          <img
+                            src={`https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=${encodeURIComponent(`https://pay.twint.ch/?storeUUID=e63424a8-576d-c293-a4de-891c3737aa8b&amount=${grandTotal.toFixed(2)}&currency=CHF`)}`}
+                            alt="QR Code TWINT"
+                            className="w-28 h-28 object-contain"
+                          />
+                        </div>
+                        <div className="space-y-1.5 text-xs text-white/70">
+                          <p className="font-bold text-white text-[11px] flex items-center gap-1.5">
+                            <span className="w-2 h-2 rounded-full bg-emerald-400" />
+                            <span>Paiement TWINT Immédiat</span>
+                          </p>
+                          <p className="text-[11px] text-white/50 leading-relaxed">
+                            • <strong>Sur ordinateur</strong> : Scannez ce QR Code avec votre app TWINT suisse.<br/>
+                            • <strong>Sur smartphone</strong> : Cliquez sur &laquo; Payer avec TWINT &raquo; ci-dessous.
+                          </p>
+                          <p className="text-[9px] text-white/40 font-mono">
+                            Terminal ID : e63424a8-576d-c293-a4de-891c3737aa8b
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  )}
                 </div>
               </label>
 
@@ -1264,12 +1722,22 @@ export default function CheckoutPage() {
             })}
           </div>
 
+          {/* Coupon / Promo Code Section */}
+          {renderCouponSection()}
+
           {/* Price Breakdown */}
           <div className="space-y-2.5 text-xs text-white/70 pt-4 border-t border-white/10">
             <div className="flex justify-between">
               <span>{t.common.subtotal} ({currency}) :</span>
               <span className="font-bold text-white">{formatPrice(cartSubtotal)}</span>
             </div>
+
+            {discountAmount > 0 && (
+              <div className="flex justify-between text-emerald-400 text-xs font-bold">
+                <span>Remise ({couponCode}) :</span>
+                <span>-{formatPrice(discountAmount)}</span>
+              </div>
+            )}
 
             {/* Split Shipping charges breakdown */}
             {isMixedCart ? (
@@ -1334,17 +1802,39 @@ export default function CheckoutPage() {
             </div>
           ) : null}
 
+          {stripeError && (
+            <div className="p-3.5 rounded-xl bg-red-950/70 border border-red-500/50 text-red-200 text-xs flex items-center gap-2.5">
+              <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+              <span>{stripeError}</span>
+            </div>
+          )}
+
           <button 
             type="submit"
-            disabled={!isAddressCompleted || !postalValidation.isValid || hasBlockedItems}
+            disabled={!isAddressCompleted || !postalValidation.isValid || hasBlockedItems || isRedirectingToStripe}
             className={`w-full min-h-[52px] px-6 py-4 font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl flex items-center justify-center gap-2 ${
-              isAddressCompleted && postalValidation.isValid && !hasBlockedItems
+              isAddressCompleted && postalValidation.isValid && !hasBlockedItems && !isRedirectingToStripe
                 ? 'bg-[#F80404] hover:bg-[#FF3D00] text-black hover:shadow-[#F80404]/30 cursor-pointer active:scale-98'
                 : 'bg-white/10 text-white/40 cursor-not-allowed border border-white/10'
             }`}
           >
-            <span>{t.checkout.confirmAndPay} ({formatPrice(grandTotal)})</span>
-            <span>→</span>
+            {isRedirectingToStripe ? (
+              <>
+                <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
+                <span>Connexion sécurisée à Stripe...</span>
+              </>
+            ) : (
+              <>
+                <span>
+                  {paymentMethod === 'invoice' 
+                    ? t.checkout.confirmAndPay 
+                    : paymentMethod === 'twint'
+                    ? 'Confirmer le paiement TWINT'
+                    : 'Payer par Carte Bancaire (Stripe)'} ({formatPrice(grandTotal)})
+                </span>
+                <span>→</span>
+              </>
+            )}
           </button>
 
           <p className="text-[10px] text-white/40 text-center leading-relaxed">

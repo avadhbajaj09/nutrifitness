@@ -7,7 +7,7 @@ import { TRANSLATIONS, TranslationDictionary, SupportedCurrency } from '@/lib/tr
 import { formatPrice as taxFormatPrice, convertPrice as taxConvertPrice } from '@/lib/tax';
 import { isEbookItem } from '@/lib/reviews';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
-import { trackAddToCart } from '@/lib/analytics';
+import { trackAddToCart, trackRemoveFromCart, trackMetaAddToCart } from '@/lib/analytics';
 
 export interface CartItem {
   itemKey: string;
@@ -470,17 +470,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       (v.flavorName && (v.flavorName.fr === flavor || v.flavorName === flavor))
     );
     const sku = matchedVariant?.sku || product.variants?.[0]?.sku || product.id || slug;
-    trackAddToCart(
-      {
-        item_id: sku,
-        item_name: name,
-        item_brand: brand,
-        item_category: product.categorySlug || 'Nutrition Sportive',
-        price,
-      },
-      currency,
-      quantity
-    );
+    const activeCurr = currency || 'CHF';
+    const itemData = {
+      item_id: sku,
+      item_name: name,
+      item_brand: brand,
+      item_category: product.categorySlug || 'Nutrition Sportive',
+      price,
+    };
+    trackAddToCart(itemData, activeCurr, quantity);
+    trackMetaAddToCart({ item: itemData, currency: activeCurr, quantity });
 
     showToast(
       locale === 'de' ? 'Warenkorb aktualisiert' : locale === 'it' ? 'Carrello aggiornato' : locale === 'en' ? 'Cart updated' : 'Panier mis à jour',
@@ -490,6 +489,20 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const removeFromCart = (itemKey: string) => {
+    const target = cart.find(item => item.itemKey === itemKey || item.id === itemKey);
+    if (target) {
+      trackRemoveFromCart(
+        {
+          item_id: (target as any).sku || target.id || target.itemKey || target.slug,
+          item_name: target.name,
+          item_brand: (target as any).brand || 'NutriFitness',
+          price: target.price,
+          quantity: target.quantity || 1,
+        },
+        currency || 'CHF',
+        target.quantity || 1
+      );
+    }
     setCart(prev => prev.filter(item => item.itemKey !== itemKey && item.id !== itemKey));
     showToast(
       locale === 'de' ? 'Warenkorb aktualisiert' : locale === 'it' ? 'Carrello aggiornato' : locale === 'en' ? 'Cart updated' : 'Panier mis à jour',

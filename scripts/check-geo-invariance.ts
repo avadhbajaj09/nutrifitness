@@ -76,9 +76,10 @@ function fetchHtml(options: FetchOptions): Promise<{ status: number; body: strin
         headers: mergedHeaders,
       },
       (res) => {
-        let body = '';
-        res.on('data', (chunk) => (body += chunk));
+        const chunks: Buffer[] = [];
+        res.on('data', (chunk) => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
         res.on('end', () => {
+          const body = Buffer.concat(chunks).toString('utf8');
           resolve({
             status: res.statusCode || 0,
             body,

@@ -7,10 +7,12 @@ import BoutiqueFAQ from '@/components/BoutiqueFAQ';
 import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
 import { useStore } from '@/context/StoreContext';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
+import { trackViewItemList } from '@/lib/analytics';
+import { getLocalized } from '@/lib/types';
 
 function ShopContent() {
   const searchParams = useSearchParams();
-  const { countryCode, isProductVisible } = useStore();
+  const { countryCode, isProductVisible, currency, getProductPricing } = useStore();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -79,6 +81,27 @@ function ShopContent() {
     setDeliverableOnly(false);
     setSortBy('featured');
   };
+
+  useEffect(() => {
+    if (filteredProducts.length === 0) return;
+    const items = filteredProducts.slice(0, 30).map(p => {
+      const pricing = getProductPricing(p);
+      return {
+        item_id: p.id,
+        item_name: (typeof p.name === 'object' ? p.name?.fr : p.name) || p.id,
+        item_brand: p.brand || 'NutriFitness',
+        item_category: p.categorySlug || 'Boutique',
+        price: pricing.price,
+        quantity: 1,
+      };
+    });
+    trackViewItemList({
+      item_list_id: selectedCategory !== 'all' ? selectedCategory : 'boutique_all',
+      item_list_name: selectedCategory !== 'all' ? `Catégorie: ${selectedCategory}` : 'Boutique Complète',
+      items,
+      currency,
+    });
+  }, [selectedCategory, selectedBrand, currency]);
 
   return (
     <div className="py-4">

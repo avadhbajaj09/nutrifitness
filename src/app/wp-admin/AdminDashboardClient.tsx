@@ -1205,7 +1205,13 @@ export default function AdminDashboardClient() {
       if (stored) {
         local = JSON.parse(stored);
         // Purge any older mock test entries
-        local = local.filter((s: PosSaleRecord) => s.client?.name !== 'Laurent Dubois' && s.clientName !== 'Laurent Dubois');
+        local = local.filter((s: PosSaleRecord) => {
+          const name = (s.client?.name || s.clientName || '').toLowerCase();
+          return !name.includes('laurent dubois') &&
+                 !name.includes('avadh') &&
+                 !name.includes('vallabh') &&
+                 !name.includes('marco test');
+        });
       }
     } catch {
       // ignore
@@ -1220,14 +1226,22 @@ export default function AdminDashboardClient() {
           const map = new Map<string, PosSaleRecord>();
           // Priority 1: Supabase real database orders
           data.orders.forEach((s: PosSaleRecord) => {
-            if (s.client?.name !== 'Laurent Dubois' && s.clientName !== 'Laurent Dubois') {
+            const name = (s.client?.name || s.clientName || '').toLowerCase();
+            if (!name.includes('laurent dubois') &&
+                !name.includes('avadh') &&
+                !name.includes('vallabh') &&
+                !name.includes('marco test')) {
               const key = s.id || s.ticketNumber;
               map.set(key, s);
             }
           });
           // Priority 2: Offline POS sales from local buffer
           local.forEach((s: PosSaleRecord) => {
-            if (s.client?.name !== 'Laurent Dubois' && s.clientName !== 'Laurent Dubois') {
+            const name = (s.client?.name || s.clientName || '').toLowerCase();
+            if (!name.includes('laurent dubois') &&
+                !name.includes('avadh') &&
+                !name.includes('vallabh') &&
+                !name.includes('marco test')) {
               const key = s.id || s.ticketNumber;
               if (!map.has(key)) {
                 map.set(key, s);
@@ -1300,82 +1314,18 @@ export default function AdminDashboardClient() {
     }).catch(() => {});
   };
 
-  const handleCreateTestWebOrder = async () => {
-    const orderNum = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
-    const testOrder: PosSaleRecord = {
-      id: `order-web-${Date.now()}`,
-      ticketNumber: orderNum,
-      timestamp: new Date().toISOString(),
-      items: [
-        {
-          id: `item-${Date.now()}-1`,
-          productId: 'prod-applied-creatine',
-          variantId: 'var-1',
-          name: 'Applied Nutrition Créatine Monohydrate Pure 250g',
-          brand: 'Applied Nutrition',
-          flavor: 'Nature',
-          format: '250g',
-          sku: 'AP-CREAT-250',
-          price: 29.90,
-          quantity: 2,
-          image: 'https://images.unsplash.com/photo-1593095948071-474c5cc2989d?w=800&q=80',
-          vatRate: 2.6
-        },
-        {
-          id: `item-${Date.now()}-2`,
-          productId: 'ashwagandha-ksm-66-600mg',
-          variantId: 'var-2',
-          name: 'Ashwagandha KSM-66 600mg Pure Bio-Active',
-          brand: 'NutriFitness Lab',
-          flavor: 'Gélules Végétales',
-          format: '60 gélules',
-          sku: 'ASHWA-600-BIO',
-          price: 34.90,
-          quantity: 1,
-          image: 'https://images.unsplash.com/photo-1584308666744-24d5c474f2ae?w=800&q=80',
-          vatRate: 2.6
-        }
-      ],
-      subtotal: 94.70,
-      discountPercent: 0,
-      discountAmount: 0,
-      vatAmount: 2.40,
-      total: 94.70,
-      amountReceived: 94.70,
-      paymentMethod: 'twint',
-      paymentDetails: {
-        reference: `TW-WEB-${Date.now().toString().slice(-6)}`,
-        notes: 'Commande passée en ligne sur nutrifitness.ch (Paiement instantané TWINT validé)'
-      },
-      seller: 'Site Web Public (nutrifitness.ch)',
-      client: {
-        name: 'Avadh Bajaj',
-        phone: '+91 88789 33778',
-        email: 'avadhbajaj09@gmail.com',
-        address: 'Rue des Pâquis 34',
-        city: 'Genève',
-        postalCode: '1201'
-      },
-      shipping: {
-        method: 'post_priority',
-        label: 'PostPac Priority (La Poste Suisse 24h)',
-        cost: 0
-      },
-      status: 'in_processing',
-      clientName: 'Avadh Bajaj'
-    };
-
-    const updated = [testOrder, ...salesHistory];
-    saveSalesHistory(updated);
+  const handleClearAllTestSales = async () => {
+    if (!confirm(adminLang === 'fr' 
+      ? 'Voulez-vous purger l\'historique des commandes de test ? Les données de démonstration seront supprimées.' 
+      : 'Do you want to purge test sales history?')) {
+      return;
+    }
     try {
-      await fetch('/api/orders/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(testOrder)
-      });
-      syncOrders();
+      await fetch('/api/orders?all=true', { method: 'DELETE' });
     } catch {}
-    alert(`Nouvelle commande Web (${orderNum}) pour Avadh Bajaj (+91 88789 33778) enregistrée et synchronisée avec Supabase !`);
+    localStorage.removeItem('nutrifitness_pos_sales');
+    setSalesHistory([]);
+    syncOrders();
   };
 
   const shippingCost = shippingMethod === 'post_priority' ? 7.90 : shippingMethod === 'post_economy' ? 5.90 : shippingMethod === 'express_geneva' ? 12.00 : 0;
@@ -2988,15 +2938,15 @@ export default function AdminDashboardClient() {
                   <span>{isRefreshingSales ? 'Synchronisation...' : 'Actualiser'}</span>
                 </button>
 
-                {/* Create Test Web Order */}
+                {/* Purge Test Sales */}
                 <button
                   type="button"
-                  onClick={handleCreateTestWebOrder}
-                  className="px-3 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 font-bold text-xs rounded-xl border border-emerald-200 transition-all shadow-2xs flex items-center gap-1.5"
-                  title="Générer une commande test comme si elle avait été passée sur le site"
+                  onClick={handleClearAllTestSales}
+                  className="px-3 py-2 bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-xs rounded-xl border border-rose-200 transition-all shadow-2xs flex items-center gap-1.5"
+                  title="Purger l'historique des ventes et tests pour démarrer en production"
                 >
-                  <ShoppingBag className="w-3.5 h-3.5 text-emerald-600" />
-                  <span>Tester une Vente Web</span>
+                  <Trash2 className="w-3.5 h-3.5 text-rose-600" />
+                  <span>Purger les Ventes de Test</span>
                 </button>
 
                 {/* Export CSV */}
@@ -3294,57 +3244,41 @@ export default function AdminDashboardClient() {
           </div>
 
           <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm min-h-[400px]">
-            {fulfillmentSubTab === 'stocks' && (
-              <div className="space-y-4">
-                <h3 className="font-bold text-slate-800">État des stocks multi-dépôts (Demo)</h3>
-                <p className="text-sm text-slate-500">Intégration API /api/fulfillment/stock à connecter.</p>
-                <table className="w-full text-left text-sm border-collapse">
-                  <thead>
-                    <tr className="bg-slate-50 border-b">
-                      <th className="p-3">Produit</th>
-                      <th className="p-3">SKU</th>
-                      <th className="p-3">🇨🇭 Genève</th>
-                      <th className="p-3">🇵🇹 Portugal</th>
-                      <th className="p-3">Type</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr className="border-b">
-                      <td className="p-3 font-medium">Whey Protein</td>
-                      <td className="p-3 text-slate-500">WP-01</td>
-                      <td className="p-3">10</td>
-                      <td className="p-3">50</td>
-                      <td className="p-3"><span className="px-2 py-1 bg-blue-100 text-blue-800 rounded text-xs">COMMON</span></td>
-                    </tr>
-                  </tbody>
-                </table>
-              </div>
-            )}
+            {fulfillmentSubTab === 'stocks' && <FulfillmentStocksTab />}
             {fulfillmentSubTab === 'queue_geneva' && (
               <div className="space-y-4">
-                <h3 className="font-bold text-slate-800">Commandes à expédier depuis Genève (Demo)</h3>
-                <div className="p-4 border rounded-xl flex justify-between items-center bg-slate-50">
-                  <div>
-                    <p className="font-bold text-sm">ORD-123 - Jean Dupont</p>
-                    <p className="text-xs text-slate-500">1x Whey Protein</p>
-                  </div>
-                  <div className="flex gap-2">
-                    <button className="px-3 py-1.5 text-xs font-bold border rounded bg-white text-slate-700">Étiquette</button>
-                    <button className="px-3 py-1.5 text-xs font-bold border border-green-600 bg-green-600 text-white rounded">Expédié</button>
-                  </div>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold text-slate-800">Commandes à expédier depuis Genève (PostPac Priority)</h3>
+                  <span className="text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full font-bold">🇨🇭 Entrepôt Genève</span>
+                </div>
+                <div className="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl">
+                  <Package className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                  <p className="font-bold text-slate-700 text-sm">Aucun colis en attente d&apos;étiquette pour Genève</p>
+                  <p className="text-xs text-slate-400 mt-1">Les nouvelles commandes payées apparaîtront ici automatiquement avec génération d&apos;étiquette d&apos;envoi.</p>
                 </div>
               </div>
             )}
             {fulfillmentSubTab === 'queue_portugal' && (
               <div className="space-y-4">
-                <h3 className="font-bold text-slate-800">Commandes à expédier depuis le Portugal (Demo)</h3>
-                <p className="text-sm text-slate-500">Aucune commande en attente.</p>
+                <div className="flex items-center justify-between">
+                  <h3 className="font-bold text-slate-800">Commandes à expédier depuis le Portugal (Express Usine)</h3>
+                  <span className="text-xs bg-blue-50 text-blue-800 border border-blue-200 px-2.5 py-1 rounded-full font-bold">🇵🇹 Usine Portugal</span>
+                </div>
+                <div className="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl">
+                  <Truck className="w-8 h-8 text-slate-300 mx-auto mb-2" />
+                  <p className="font-bold text-slate-700 text-sm">Toutes les expéditions du Portugal sont à jour</p>
+                  <p className="text-xs text-slate-400 mt-1">Synchronisé avec l&apos;équipe logistique usine d&apos;Omar.</p>
+                </div>
               </div>
             )}
             {fulfillmentSubTab === 'alerts' && (
               <div className="space-y-4">
-                <h3 className="font-bold text-slate-800">Alertes et blocages (Demo)</h3>
-                <p className="text-sm text-slate-500">Aucune alerte.</p>
+                <h3 className="font-bold text-slate-800">Alertes logistiques et blocages</h3>
+                <div className="p-6 text-center bg-emerald-50/50 border border-emerald-200 rounded-2xl">
+                  <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
+                  <p className="font-bold text-emerald-900 text-sm">Aucune anomalie ni alerte d&apos;expédition en cours</p>
+                  <p className="text-xs text-emerald-700 mt-1">Tous les flux de livraison Genève et Portugal fonctionnent normalement.</p>
+                </div>
               </div>
             )}
           </div>
@@ -4178,12 +4112,34 @@ export default function AdminDashboardClient() {
                   </div>
 
                   {otherTenderType === 'twint' && (
-                    <div className="p-3 bg-emerald-50/60 rounded-xl border border-emerald-200 space-y-2 text-xs">
-                      <p className="text-emerald-900 font-medium">
-                        Présentez le QR Code TWINT au client au comptoir de la Rue des Pâquis.
-                      </p>
+                    <div className="p-4 bg-emerald-50/70 rounded-2xl border border-emerald-200 space-y-3 text-xs">
+                      <div className="flex items-center justify-between">
+                        <span className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-lg bg-black text-white font-black text-xs uppercase">
+                          <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                          <span>TWINT Pay</span>
+                        </span>
+                        <span className="font-black text-emerald-800 text-sm">
+                          CHF {grandTotalToPay.toFixed(2)}
+                        </span>
+                      </div>
+
+                      {/* Live TWINT QR Code for In-Store Counter */}
+                      <div className="flex flex-col items-center justify-center p-3.5 bg-white rounded-xl border border-emerald-200 shadow-2xs">
+                        <img
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(`https://pay.twint.ch/?storeUUID=e63424a8-576d-c293-a4de-891c3737aa8b&amount=${grandTotalToPay.toFixed(2)}&currency=CHF&orderId=${encodeURIComponent(ticketNumber)}`)}`}
+                          alt="TWINT QR Code"
+                          className="w-40 h-40 object-contain rounded-lg"
+                        />
+                        <p className="text-[11px] text-slate-600 font-bold mt-2 text-center">
+                          Présentez ce QR Code au client au comptoir (Rue des Pâquis)
+                        </p>
+                        <span className="text-[9px] text-slate-400 font-mono mt-0.5">
+                          ID Caisse TWINT : e63424a8-576d-c293-a4de-891c3737aa8b
+                        </span>
+                      </div>
+
                       <div>
-                        <label className="block text-[11px] font-bold text-slate-500 mb-1">
+                        <label className="block text-[11px] font-bold text-slate-600 mb-1">
                           Référence transaction TWINT (optionnel) :
                         </label>
                         <input

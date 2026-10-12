@@ -1,13 +1,13 @@
 'use client';
 
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 import CartShipmentGroups from '@/components/fulfillment/CartShipmentGroups';
-import { trackBeginCheckout } from '@/lib/analytics';
+import { trackBeginCheckout, trackMetaInitiateCheckout } from '@/lib/analytics';
 
 export default function CartPage() {
   const { 
@@ -33,22 +33,109 @@ export default function CartPage() {
 
   const [couponCode, setCouponCode] = useState('');
   const [discountRate, setDiscountRate] = useState(0);
+  const [appliedCoupon, setAppliedCoupon] = useState<{
+    code: string;
+    rate: number;
+    amountOff?: number;
+    discountType?: 'percent' | 'amount';
+    description?: string;
+  } | null>(null);
+  const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
   const [couponMessage, setCouponMessage] = useState<{ text: string; isError: boolean } | null>(null);
 
-  const handleApplyCoupon = (e: React.FormEvent) => {
+  useEffect(() => {
+    try {
+      const stored = localStorage.getItem('nf_applied_coupon');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.code && (parsed.rate !== undefined || parsed.amountOff !== undefined)) {
+          setCouponCode(parsed.code);
+          setDiscountRate(parsed.rate || 0);
+          setAppliedCoupon(parsed);
+          setCouponMessage({
+            text: `✓ Code "${parsed.code}" actif (${parsed.description || `-${Math.round((parsed.rate || 0) * 100)}%`})`,
+            isError: false,
+          });
+        }
+      }
+    } catch {}
+  }, []);
+
+  const handleApplyCoupon = async (e: React.FormEvent) => {
     e.preventDefault();
-    const code = couponCode.trim().toUpperCase();
-    if (code === 'SWISS10') {
-      setDiscountRate(0.10);
-      setCouponMessage({ text: '✓ Code SWISS10 appliqué (-10% sur votre commande)', isError: false });
-      showToast('Code Promo', 'Remise de 10% appliquée !');
-    } else {
-      setCouponMessage({ text: 'Code promo invalide. Essayez "SWISS10"', isError: true });
+    const clean = couponCode.trim().toUpperCase();
+    if (!clean) {
+      setCouponMessage({ text: 'Veuillez saisir un code promo.', isError: true });
+      return;
+    }
+
+    setIsApplyingCoupon(true);
+    setCouponMessage(null);
+
+    try {
+      const res = await fetch('/api/coupons/validate', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ code: clean }),
+      });
+      const data = await res.json();
+
+      if (res.ok && data.valid) {
+        const couponData = {
+          code: data.code,
+          rate: data.rate || 0,
+          amountOff: data.amountOff,
+          discountType: (data.discountType || 'percent') as 'percent' | 'amount',
+          description: data.description,
+        };
+        setAppliedCoupon(couponData);
+        setDiscountRate(couponData.rate);
+        setCouponCode(data.code);
+        setCouponMessage({
+          text: `✓ Code "${data.code}" appliqué (${data.description}) !`,
+          isError: false,
+        });
+        showToast('Code Promo Appliqué', data.description);
+        try {
+          localStorage.setItem('nf_applied_coupon', JSON.stringify(couponData));
+        } catch {}
+      } else {
+        setCouponMessage({
+          text: data.error || `Le code promo "${clean}" est invalide ou expiré.`,
+          isError: true,
+        });
+      }
+    } catch {
+      setCouponMessage({
+        text: 'Erreur lors de la vérification du code. Réessayez.',
+        isError: true,
+      });
+    } finally {
+      setIsApplyingCoupon(false);
     }
   };
 
-  const discountAmount = cartSubtotal * discountRate;
-  const discountedSubtotal = cartSubtotal - discountAmount;
+  const handleRemoveCoupon = () => {
+    setAppliedCoupon(null);
+    setDiscountRate(0);
+    setCouponCode('');
+    setCouponMessage(null);
+    try {
+      localStorage.removeItem('nf_applied_coupon');
+    } catch {}
+    showToast('Code Retiré', 'Le code promotionnel a été supprimé.');
+  };
+
+  const discountAmount = useMemo(() => {
+    if (!appliedCoupon && discountRate === 0) return 0;
+    if (appliedCoupon && appliedCoupon.discountType === 'amount' && appliedCoupon.amountOff) {
+      return Math.min(cartSubtotal, appliedCoupon.amountOff);
+    }
+    const effRate = appliedCoupon?.rate ?? discountRate;
+    return cartSubtotal * effRate;
+  }, [cartSubtotal, appliedCoupon, discountRate]);
+
+  const discountedSubtotal = Math.max(0, cartSubtotal - discountAmount);
   const shippingCost = freeShippingProgress.isFree ? 0 : 7.90;
   const estimatedVat = (discountedSubtotal * 0.026) / 1.026;
   const totalCost = discountedSubtotal + shippingCost;
@@ -245,31 +332,52 @@ export default function CartPage() {
           </h2>
 
           {/* Coupon Input */}
-          <form onSubmit={handleApplyCoupon} className="space-y-2">
-            <label className="block text-xs font-bold uppercase tracking-wider text-white/70">
-              Code Promo ou Bon d&apos;Achat :
-            </label>
-            <div className="flex gap-2">
-              <input 
-                type="text" 
-                value={couponCode}
-                onChange={(e) => setCouponCode(e.target.value)}
-                placeholder="Ex: SWISS10" 
-                className="flex-1 min-h-[42px] px-3 text-xs bg-black/60 border border-white/15 rounded-xl text-white uppercase focus:border-[#F80404] focus:outline-none"
-              />
-              <button 
-                type="submit"
-                className="px-4 py-2 bg-white/10 hover:bg-[#F80404] hover:text-black text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all shrink-0"
+          {appliedCoupon ? (
+            <div className="bg-emerald-950/40 border border-emerald-500/40 rounded-xl p-3 flex items-center justify-between gap-3">
+              <div className="space-y-0.5 min-w-0">
+                <span className="text-xs font-black text-emerald-300 uppercase tracking-wide">
+                  ✓ {appliedCoupon.code}
+                </span>
+                <p className="text-[11px] text-emerald-200/80">
+                  {appliedCoupon.description || `-${Math.round((appliedCoupon.rate || 0) * 100)}%`}
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={handleRemoveCoupon}
+                className="px-2.5 py-1.5 bg-white/10 hover:bg-red-500/20 hover:text-red-300 text-white/70 text-xs font-bold rounded-lg transition-colors border border-white/10"
               >
-                Appliquer
+                Retirer
               </button>
             </div>
-            {couponMessage && (
-              <p className={`text-[11px] font-bold ${couponMessage.isError ? 'text-red-400' : 'text-emerald-400'}`}>
-                {couponMessage.text}
-              </p>
-            )}
-          </form>
+          ) : (
+            <form onSubmit={handleApplyCoupon} className="space-y-2">
+              <label className="block text-xs font-bold uppercase tracking-wider text-white/70">
+                Code Promo ou Bon d&apos;Achat :
+              </label>
+              <div className="flex gap-2">
+                <input 
+                  type="text" 
+                  value={couponCode}
+                  onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
+                  placeholder="Ex: TEST95" 
+                  className="flex-1 min-h-[42px] px-3 text-xs bg-black/60 border border-white/15 rounded-xl text-white uppercase focus:border-[#F80404] focus:outline-none"
+                />
+                <button 
+                  type="submit"
+                  disabled={isApplyingCoupon || !couponCode.trim()}
+                  className="px-4 py-2 bg-white/10 hover:bg-[#F80404] hover:text-black text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all shrink-0 disabled:opacity-50"
+                >
+                  {isApplyingCoupon ? '...' : 'Appliquer'}
+                </button>
+              </div>
+              {couponMessage && (
+                <p className={`text-[11px] font-bold ${couponMessage.isError ? 'text-red-400' : 'text-emerald-400'}`}>
+                  {couponMessage.text}
+                </p>
+              )}
+            </form>
+          )}
 
           {/* Financial Breakdown */}
           <div className="space-y-2.5 text-xs text-white/70 pt-2 border-t border-white/10">
@@ -278,9 +386,9 @@ export default function CartPage() {
               <span className="font-bold text-white">{formatPrice(cartSubtotal)}</span>
             </div>
 
-            {discountRate > 0 && (
+            {discountAmount > 0 && (
               <div className="flex justify-between text-emerald-400 font-bold">
-                <span>Remise Club (-10%) :</span>
+                <span>Remise ({appliedCoupon?.code || couponCode}) :</span>
                 <span>-{formatPrice(discountAmount)}</span>
               </div>
             )}
@@ -313,18 +421,17 @@ export default function CartPage() {
             <Link 
               href="/commande/"
               onClick={() => {
-                trackBeginCheckout(
-                  cart.map(item => ({
-                    item_id: (item as any).sku || item.itemKey || item.name,
-                    item_name: item.name,
-                    item_brand: (item as any).brand || 'NutriFitness',
-                    item_category: (item as any).categorySlug || 'Nutrition Sportive',
-                    price: item.price,
-                    quantity: item.quantity,
-                  })),
-                  cartSubtotal,
-                  currency || 'CHF'
-                );
+                const items = cart.map(item => ({
+                  item_id: (item as any).sku || item.itemKey || item.name,
+                  item_name: item.name,
+                  item_brand: (item as any).brand || 'NutriFitness',
+                  item_category: (item as any).categorySlug || 'Nutrition Sportive',
+                  price: item.price,
+                  quantity: item.quantity,
+                }));
+                const activeCurr = currency || 'CHF';
+                trackBeginCheckout(items, cartSubtotal, activeCurr);
+                trackMetaInitiateCheckout({ items, totalValue: cartSubtotal, currency: activeCurr });
               }}
               className="w-full min-h-[48px] px-6 py-3.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-lg hover:shadow-[#F80404]/25 flex items-center justify-center gap-2 active:scale-98"
             >

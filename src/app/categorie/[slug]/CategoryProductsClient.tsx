@@ -1,11 +1,12 @@
 'use client';
 
-import React, { useState, useMemo } from 'react';
+import React, { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import ProductCard from '@/components/ProductCard';
 import type { ProductItem } from '@/lib/types';
 import { Filter, ArrowUpDown, ShieldCheck, Sparkles } from 'lucide-react';
 import { useStore } from '@/context/StoreContext';
+import { trackViewItemList } from '@/lib/analytics';
 
 interface CategoryProductsClientProps {
   products: ProductItem[];
@@ -13,7 +14,7 @@ interface CategoryProductsClientProps {
 }
 
 export default function CategoryProductsClient({ products, categoryName }: CategoryProductsClientProps) {
-  const { isProductVisible } = useStore();
+  const { isProductVisible, currency, getProductPricing } = useStore();
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [swissOnly, setSwissOnly] = useState<boolean>(false);
   const [sortBy, setSortBy] = useState<string>('featured');
@@ -40,6 +41,27 @@ export default function CategoryProductsClient({ products, categoryName }: Categ
         return 0;
       });
   }, [deliverableProducts, selectedBrand, swissOnly, sortBy]);
+
+  useEffect(() => {
+    if (filteredProducts.length === 0) return;
+    const items = filteredProducts.slice(0, 30).map(p => {
+      const pricing = getProductPricing(p);
+      return {
+        item_id: p.id,
+        item_name: (typeof p.name === 'object' ? p.name?.fr : p.name) || p.id,
+        item_brand: p.brand || 'NutriFitness',
+        item_category: categoryName,
+        price: pricing.price,
+        quantity: 1,
+      };
+    });
+    trackViewItemList({
+      item_list_id: `category_${categoryName.toLowerCase().replace(/\s+/g, '_')}`,
+      item_list_name: categoryName,
+      items,
+      currency,
+    });
+  }, [categoryName, selectedBrand, currency]);
 
   return (
     <div className="space-y-6">

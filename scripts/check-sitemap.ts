@@ -26,9 +26,10 @@ function fetchText(requestUrl: string): Promise<{ status: number; headers: http.
         'User-Agent': 'SitemapGuard/1.0',
       },
     }, (res) => {
-      let body = '';
-      res.on('data', chunk => body += chunk);
+      const chunks: Buffer[] = [];
+      res.on('data', chunk => chunks.push(Buffer.isBuffer(chunk) ? chunk : Buffer.from(chunk)));
       res.on('end', () => {
+        const body = Buffer.concat(chunks).toString('utf8');
         resolve({
           status: res.statusCode || 0,
           headers: res.headers,

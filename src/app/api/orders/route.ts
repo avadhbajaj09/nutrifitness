@@ -303,3 +303,46 @@ export async function PATCH(req: Request) {
     return NextResponse.json({ error: err.message || 'Erreur serveur' }, { status: 500 });
   }
 }
+
+export async function DELETE(req: Request) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get('id');
+    const all = searchParams.get('all');
+
+    const supabase = getAdminSupabase();
+
+    if (all === 'true') {
+      try {
+        await supabase.from('orders').delete().neq('id', '00000000-0000-0000-0000-000000000000');
+      } catch (err) {
+        console.error('Supabase bulk delete error:', err);
+      }
+      saveLocalOrders([]);
+      return NextResponse.json({ success: true, message: 'All orders cleared.' });
+    }
+
+    if (!id) {
+      return NextResponse.json({ error: 'Missing order id parameter' }, { status: 400 });
+    }
+
+    try {
+      if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(id)) {
+        await supabase.from('orders').delete().eq('id', id);
+      } else {
+        await supabase.from('orders').delete().eq('order_number', id);
+      }
+    } catch (err) {
+      console.error('Supabase delete error:', err);
+    }
+
+    const current = loadLocalOrders();
+    const filtered = current.filter((o: any) => o.id !== id && o.ticketNumber !== id);
+    saveLocalOrders(filtered);
+
+    return NextResponse.json({ success: true, message: `Order ${id} deleted.` });
+  } catch (err: any) {
+    return NextResponse.json({ error: err.message || 'Erreur serveur' }, { status: 500 });
+  }
+}
+
