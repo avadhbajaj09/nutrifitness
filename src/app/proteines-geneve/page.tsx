@@ -21,14 +21,14 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: formatMetaTitle('Protéines Whey à Genève : Boutique & Retrait 2h | NutriFitness'),
-  description: formatMetaDescription('Achetez vos protéines whey, isolate CFM et végétales à Genève. Stock physique Rue des Pâquis, retrait Click & Collect en 2h ou livraison 24h en Suisse.'),
+  title: formatMetaTitle('Protéines Whey en Suisse : Boutique & Retrait 2h | NutriFitness'),
+  description: formatMetaDescription('Achetez vos protéines whey, isolate CFM et végétales en Suisse. Stock physique en Suisse, retrait Click & Collect en 2h ou livraison 24h.'),
   alternates: {
     canonical: 'https://nutrifitness.ch/proteines-geneve/',
   },
   openGraph: {
-    title: 'Protéines Whey à Genève : Boutique & Retrait 2h | NutriFitness',
-    description: 'Protéines whey concentrées, isolates CFM et végétales en stock au 34 Rue des Pâquis à Genève. Conseil d\'experts et livraison 24h suisse.',
+    title: 'Protéines Whey en Suisse : Boutique & Retrait 2h | NutriFitness',
+    description: 'Protéines whey concentrées, isolates CFM et végétales en stock en Suisse. Conseil d\'experts et livraison 24h suisse.',
     url: 'https://nutrifitness.ch/proteines-geneve/',
     siteName: 'NutriFitness.ch',
     locale: 'fr_CH',
@@ -36,8 +36,8 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: 'summary_large_image',
-    title: 'Protéines Whey à Genève : Boutique & Retrait 2h | NutriFitness',
-    description: 'Whey isolate, concentré et végétales en stock à Genève. Retrait gratuit en 2h aux Pâquis ou livraison suisse 24h.',
+    title: 'Protéines Whey en Suisse : Boutique & Retrait 2h | NutriFitness',
+    description: 'Whey isolate, concentré et végétales en stock en Suisse. Retrait gratuit en 2h ou livraison suisse 24h.',
   },
 };
 
@@ -52,16 +52,16 @@ export default async function ProteinesGenevePage() {
 
   const faqs = [
     {
-      q: 'Où acheter de la protéine whey en magasin à Genève ?',
-      a: 'Notre boutique physique NutriFitness est située au 34 Rue des Pâquis, 1201 Genève (à 5 minutes à pied de la gare Cornavin). Vous y trouverez plus de 40 références de whey concentrée, isolate CFM et protéines végétales prêtes à l\'achat immédiat.'
+      q: 'Où acheter de la protéine whey en magasin en Suisse ?',
+      a: 'Notre boutique physique NutriFitness est située en Suisse. Vous y trouverez plus de 40 références de whey concentrée, isolate CFM et protéines végétales prêtes à l\'achat immédiat.'
     },
     {
-      q: 'Quelle est la différence entre whey concentrée et whey isolate pour un sportif genevois ?',
+      q: 'Quelle est la différence entre whey concentrée et whey isolate pour un sportif suisse ?',
       a: 'La whey concentrée offre 70 à 80% de protéines avec un goût crémeux très économique. La whey isolate CFM est microfiltrée à froid pour atteindre 85 à 90%+ de protéines pures avec une teneur quasi-nulle en lactose et lipides, idéale pour la sèche et les personnes à la digestion sensible.'
     },
     {
-      q: 'Comment fonctionne le Click & Collect pour les protéines à Genève ?',
-      a: 'Commandez votre pot de whey sur nutrifitness.ch en sélectionnant « Retrait Boutique Genève ». Votre commande est préparée sous 2 heures ouvrées et vous la retirez sans aucuns frais de livraison au magasin des Pâquis.'
+      q: 'Comment fonctionne le Click & Collect pour les protéines en Suisse ?',
+      a: 'Commandez votre pot de whey sur nutrifitness.ch en sélectionnant « Retrait Boutique ». Votre commande est préparée sous 2 heures ouvrées et vous la retirez sans aucuns frais de livraison à notre boutique officielle.'
     },
     {
       q: 'Les poudres de protéines vendues sont-elles conformes aux ordonnances suisses ?',
@@ -145,7 +145,7 @@ export default async function ProteinesGenevePage() {
           </h1>
 
           <p className="text-xs sm:text-sm text-white/80 leading-relaxed pt-2">
-            Que vous recherchiez une whey isolate microfiltrée CFM pour optimiser votre sèche, un concentré onctueux pour votre récupération quotidienne ou une protéine végétale biologique sans lactose, notre magasin situé au 34 Rue des Pâquis à Genève stocke les meilleures marques certifiées. Retrait express au comptoir en 2 heures ou livraison suisse 24h par La Poste.
+            Que vous recherchiez une whey isolate microfiltrée CFM pour optimiser votre sèche, un concentré onctueux pour votre récupération quotidienne ou une protéine végétale biologique sans lactose, notre magasin situé en Suisse stocke les meilleures marques certifiées. Retrait express au comptoir en 2 heures ou livraison suisse 24h par La Poste.
           </p>
         </div>
       </header>
@@ -157,17 +157,17 @@ export default async function ProteinesGenevePage() {
             Guide d&apos;Achat Local
           </span>
           <h2 className="text-xl sm:text-2xl font-black uppercase text-white font-heading">
-            Comment Choisir Sa Protéine en Poudre à Genève ?
+            Comment Choisir Sa Protéine en Poudre en Suisse ?
           </h2>
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-6 text-xs sm:text-sm text-white/80 leading-relaxed">
           <div className="space-y-4">
             <p>
-              Pour un pratiquant de musculation, de crossfit ou de course à pied dans le bassin genevois, l&apos;apport en protéines est le garant du maintien de la masse musculaire maigre et de la reconstruction tissulaire. Selon les recommandations de la Société Suisse de Nutrition (SSN) et de l&apos;ISSN, un athlète régulier a besoin de 1.4 à 2.0 grammes de protéines par kilo de poids corporel chaque jour.
+              Pour un pratiquant de musculation, de crossfit ou de course à pied en Suisse, l&apos;apport en protéines est le garant du maintien de la masse musculaire maigre et de la reconstruction tissulaire. Selon les recommandations de la Société Suisse de Nutrition (SSN) et de l&apos;ISSN, un athlète régulier a besoin de 1.4 à 2.0 grammes de protéines par kilo de poids corporel chaque jour.
             </p>
             <p>
-              Si l&apos;alimentation solide (œufs, volailles, poissons, légumineuses) constitue le socle indispensable, la protéine en poudre intervient comme une solution pratique et économique pour compléter vos apports sans surcharger votre système digestif. À Genève, nous vous aidons à comparer les différentes familles :
+              Si l&apos;alimentation solide (œufs, volailles, poissons, légumineuses) constitue le socle indispensable, la protéine en poudre intervient comme une solution pratique et économique pour compléter vos apports sans surcharger votre système digestif. En Suisse, nous vous aidons à comparer les différentes familles :
             </p>
             <ul className="space-y-2 pl-4 list-disc text-white/70">
               <li>
@@ -184,10 +184,10 @@ export default async function ProteinesGenevePage() {
 
           <div className="space-y-4">
             <h3 className="text-sm font-black uppercase text-[#F80404] font-heading tracking-wider">
-              Ce Que Nous Stockons au 34 Rue des Pâquis
+              Ce Que Nous Stockons en Suisse
             </h3>
             <p>
-              Contrairement aux sites expédiant depuis l&apos;étranger avec des frais de douane imprévus et des délais incertains, NutriFitness dispose d&apos;un entrepôt physique et d&apos;un magasin à Genève. Nous stockons en direct les références de réputation mondiale : Marvelous Nutrition, Dirty Squads, BigMan Nutrition, Optimum Nutrition (Gold Standard 100% Whey), Dymatize (ISO 100) et Applied Nutrition.
+              Contrairement aux sites expédiant depuis l&apos;étranger avec des frais de douane imprévus et des délais incertains, NutriFitness dispose d&apos;un entrepôt physique et d&apos;un magasin officiel en Suisse. Nous stockons en direct les références de réputation mondiale : Marvelous Nutrition, Dirty Squads, BigMan Nutrition, Optimum Nutrition (Gold Standard 100% Whey), Dymatize (ISO 100) et Applied Nutrition.
             </p>
             <p>
               Toutes les protéines vendues sont déclarées auprès des autorités fédérales suisses (DFI / OSAV), étiquetées en français avec leur aminogramme détaillé et vérifiées sans aminospiking.
@@ -209,10 +209,10 @@ export default async function ProteinesGenevePage() {
           <div className="p-5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
             <h4 className="text-xs font-bold text-white flex items-center gap-2">
               <Zap className="w-4 h-4 text-[#F80404]" />
-              Option 1 : Click & Collect 2h à Genève
+              Option 1 : Click & Collect 2h en Suisse
             </h4>
             <p className="text-xs text-white/70 leading-relaxed">
-              Commandez sur le site et venez retirer votre pot de whey 2 heures plus tard au 34 Rue des Pâquis. 100% gratuit, sans montant minimum.
+              Commandez sur le site et venez retirer votre pot de whey 2 heures plus tard en boutique officielle en Suisse. 100% gratuit, sans montant minimum.
             </p>
             <Link href="/click-and-collect/" className="text-xs text-[#F80404] hover:underline font-bold inline-block pt-1">
               Détails du Click & Collect →

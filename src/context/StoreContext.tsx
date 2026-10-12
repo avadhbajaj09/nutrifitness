@@ -327,8 +327,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const getProductPricing = (product: any, variant?: any) => {
     const isSwiss = countryCode === 'CH' || countryCode === 'LI';
-    const baseChf = variant?.priceChf ?? product?.priceChf ?? 29.90;
-    const baseCompareChf = variant?.compareAtPriceChf ?? product?.compareAtPriceChf;
+    const rawChf = variant?.priceChf ?? product?.priceChf ?? 29.90;
+    const baseChf = Number.isFinite(Number(rawChf)) ? Number(rawChf) : 29.90;
+
+    const rawCompareChf = variant?.compareAtPriceChf ?? product?.compareAtPriceChf;
+    const baseCompareChf = rawCompareChf !== undefined && Number.isFinite(Number(rawCompareChf)) ? Number(rawCompareChf) : undefined;
 
     let currentPrice: number;
     let currentCompareAt: number | undefined;
@@ -341,16 +344,22 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       activeCurrency = 'CHF';
     } else {
       // Outside Switzerland -> Whole Europe price in EUR
-      currentPrice = variant?.priceEurEurope ?? product?.priceEurEurope ?? variant?.priceEur ?? product?.priceEur ?? Math.round(baseChf * 0.95 * 100) / 100;
-      currentCompareAt = variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope ?? variant?.compareAtPriceEur ?? product?.compareAtPriceEur;
+      const rawEur = variant?.priceEurEurope ?? product?.priceEurEurope ?? variant?.priceEur ?? product?.priceEur;
+      currentPrice = (rawEur !== undefined && Number.isFinite(Number(rawEur))) ? Number(rawEur) : Math.round(baseChf * 0.95 * 100) / 100;
+
+      const rawCompareEur = variant?.compareAtPriceEurEurope ?? product?.compareAtPriceEurEurope ?? variant?.compareAtPriceEur ?? product?.compareAtPriceEur;
+      currentCompareAt = (rawCompareEur !== undefined && Number.isFinite(Number(rawCompareEur))) ? Number(rawCompareEur) : undefined;
       activeCurrency = 'EUR';
     }
 
-    const formatted = activeCurrency === 'EUR' ? `€ ${currentPrice.toFixed(2)}` : `CHF ${currentPrice.toFixed(2)}`;
-    const formattedCompareAt = currentCompareAt ? (activeCurrency === 'EUR' ? `€ ${currentCompareAt.toFixed(2)}` : `CHF ${currentCompareAt.toFixed(2)}`) : undefined;
+    const safePrice = Number.isFinite(currentPrice) && currentPrice >= 0 ? currentPrice : 29.90;
+    const formatted = activeCurrency === 'EUR' ? `€ ${safePrice.toFixed(2)}` : `CHF ${safePrice.toFixed(2)}`;
+    const formattedCompareAt = currentCompareAt !== undefined && Number.isFinite(currentCompareAt)
+      ? (activeCurrency === 'EUR' ? `€ ${currentCompareAt.toFixed(2)}` : `CHF ${currentCompareAt.toFixed(2)}`)
+      : undefined;
 
     return {
-      price: currentPrice,
+      price: safePrice,
       compareAt: currentCompareAt,
       formatted,
       formattedCompareAt,
@@ -363,14 +372,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       return getProductPricing(amountChfOrProduct).formatted;
     }
     const isSwiss = countryCode === 'CH' || countryCode === 'LI';
+    const rawVal = Number(amountChfOrProduct);
+    const num = Number.isFinite(rawVal) ? Math.max(0, rawVal) : 0;
     if (isSwiss) {
-      const val = Number(amountChfOrProduct || 0);
-      return `CHF ${val.toFixed(2)}`;
+      return `CHF ${num.toFixed(2)}`;
     } else {
-      if (typeof amountEur === 'number' && amountEur > 0) {
+      if (typeof amountEur === 'number' && Number.isFinite(amountEur) && amountEur > 0) {
         return `€ ${amountEur.toFixed(2)}`;
       }
-      const eurVal = Math.round(Number(amountChfOrProduct || 0) * 0.95 * 100) / 100;
+      const eurVal = Math.round(num * 0.95 * 100) / 100;
       return `€ ${eurVal.toFixed(2)}`;
     }
   };
@@ -380,13 +390,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       return getProductPricing(amountChfOrProduct).price;
     }
     const isSwiss = countryCode === 'CH' || countryCode === 'LI';
+    const rawVal = Number(amountChfOrProduct);
+    const num = Number.isFinite(rawVal) ? Math.max(0, rawVal) : 0;
     if (isSwiss) {
-      return Number(amountChfOrProduct || 0);
+      return num;
     } else {
-      if (typeof amountEur === 'number' && amountEur > 0) {
+      if (typeof amountEur === 'number' && Number.isFinite(amountEur) && amountEur > 0) {
         return amountEur;
       }
-      return Math.round(Number(amountChfOrProduct || 0) * 0.95 * 100) / 100;
+      return Math.round(num * 0.95 * 100) / 100;
     }
   };
 
@@ -556,27 +568,35 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const updateQuantity = (itemKey: string, delta: number) => {
+    if (!itemKey) return;
+    const numDelta = Number(delta) || 0;
+    if (numDelta === 0) return;
+
     setCart(prev => {
-      const target = prev.find(item => item.itemKey === itemKey || item.id === itemKey);
+      const target = prev.find(item => item && (item.itemKey === itemKey || item.id === itemKey));
       if (target && (target.isEbook || isEbookItem(target))) {
-        if (delta > 0) {
+        if (numDelta > 0) {
           showToast('Exemplaire unique', 'Le guide numérique est limité à 1 exemplaire par commande.');
           return prev;
         }
-        if (delta < 0) {
-          return prev.filter(item => item.itemKey !== itemKey && item.id !== itemKey);
+        if (numDelta < 0) {
+          return prev.filter(item => item && item.itemKey !== itemKey && item.id !== itemKey);
         }
       }
 
       return prev
         .map(item => {
+          if (!item) return null;
           if (item.itemKey === itemKey || item.id === itemKey) {
-            const nextQty = item.quantity + delta;
+            const currentQty = Number.isFinite(Number(item.quantity)) && Number(item.quantity) > 0
+              ? Math.floor(Number(item.quantity))
+              : 1;
+            const nextQty = currentQty + numDelta;
             return nextQty > 0 ? { ...item, quantity: nextQty } : null;
           }
           return item;
         })
-        .filter(Boolean) as CartItem[];
+        .filter((it): it is CartItem => it !== null && it !== undefined);
     });
   };
 
@@ -602,12 +622,19 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const isWishlisted = (slug: string) => wishlist.includes(slug);
 
-  const cartCount = cart.reduce((sum, item) => sum + (item.quantity || 1), 0);
+  const cartCount = cart.reduce((sum, item) => {
+    const qty = Number.isFinite(Number(item?.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1;
+    return sum + qty;
+  }, 0);
+
   const cartSubtotal = cart.reduce((sum, item) => {
-    const itemPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
+    if (!item) return sum;
+    const rawPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
       ? getProductPricing(item).price
       : item.price;
-    return sum + itemPrice * (item.quantity || 1);
+    const numPrice = Number.isFinite(Number(rawPrice)) ? Number(rawPrice) : 29.90;
+    const qty = Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1;
+    return sum + (numPrice * qty);
   }, 0);
 
   const freeShippingProgress = {

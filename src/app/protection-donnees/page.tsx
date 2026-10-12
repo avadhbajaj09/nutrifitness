@@ -96,7 +96,7 @@ export default function ProtectionDonneesPage() {
           <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1 text-xs">
             <p className="text-white font-bold">NutriFit (NutriFitness)</p>
             <p>Représenté par : <strong>La Direction NutriFitness</strong></p>
-            <p>Adresse physique : Rue des Pâquis 34, 1201 Suisse</p>
+            <p>Adresse physique : Swiss Fulfillment, Suisse</p>
             <p>Téléphone : +41 79 250 35 64</p>
             <p>Courrier électronique dédié : <a href="mailto:info@nutrifitness.ch" className="text-[#F80404] hover:underline">info@nutrifitness.ch</a></p>
           </div>

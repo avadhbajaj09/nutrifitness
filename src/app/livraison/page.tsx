@@ -57,11 +57,11 @@ export default function LivraisonPage() {
     },
     {
       q: 'Livrez-vous les produits frais (comme le blanc d\'œuf liquide) ?',
-      a: 'Les produits frais périssables nécessitant une chaîne du froid continue sont réservés au retrait Click & Collect direct dans notre boutique en Suisse (34 Rue des Pâquis) afin d\'en préserver la fraîcheur optimale.'
+      a: 'Les produits frais périssables nécessitant une chaîne du froid continue sont réservés au retrait Click & Collect direct dans notre boutique officielle en Suisse afin d\'en préserver la fraîcheur optimale.'
     },
     {
       q: 'Puis-je retirer ma commande gratuitement en boutique en Suisse (Click & Collect) ?',
-      a: 'Oui, tout à fait. Choisissez l\'option « Retrait en Boutique » lors de votre commande. Votre commande est préparée sous 2 heures ouvrées et vous êtes prévenu par e-mail ou SMS. Vous pouvez ensuite venir la récupérer au 34 Rue des Pâquis, 1201 Suisse.'
+      a: 'Oui, tout à fait. Choisissez l\'option « Retrait en Boutique » lors de votre commande. Votre commande est préparée sous 2 heures ouvrées et vous êtes prévenu par e-mail ou SMS. Vous pouvez ensuite venir la récupérer directement en boutique en Suisse.'
     }
   ];
 
@@ -133,7 +133,7 @@ export default function LivraisonPage() {
           </div>
           <span className="text-[11px] font-bold text-white/50 uppercase">Click & Collect</span>
           <h3 className="text-base font-black text-white font-heading mt-0.5">Retrait Gratuit 2h</h3>
-          <p className="text-xs text-white/60 mt-1">À notre boutique des Pâquis (34 Rue des Pâquis).</p>
+          <p className="text-xs text-white/60 mt-1">À notre boutique officielle en Suisse.</p>
         </div>
       </div>
 

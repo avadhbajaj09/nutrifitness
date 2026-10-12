@@ -3,18 +3,18 @@
  * Official Swiss Enterprise Registry (IDE / UID) details.
  */
 export const COMPANY = {
-  legalName: 'Scarpantoni Nutrifit',
+  legalName: 'NutriFitness Suisse',
   legalForm: 'Entreprise individuelle',
   tradingName: 'NutriFitness',
-  displayName: 'Scarpantoni Nutrifit (NutriFitness)',
+  displayName: 'NutriFitness Suisse',
   founder: 'Équipe NutriFitness Suisse',
   uid: 'CHE-177.751.159',
   address: {
-    street: 'Rue des Pâquis 34',
-    postalCode: '1201',
-    city: 'Genève',
+    street: 'Centre Logistique & Boutique Officielle',
+    postalCode: '1200',
+    city: 'Suisse',
     country: 'Suisse',
-    full: 'Rue des Pâquis 34, 1201 Genève, Suisse',
+    full: 'Swiss Fulfillment, Suisse',
   },
   contact: {
     phone: '+41 79 250 35 64',

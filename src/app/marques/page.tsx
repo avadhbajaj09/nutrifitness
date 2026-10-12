@@ -45,7 +45,7 @@ export default function MarquesPage() {
     },
     {
       q: 'Les marques sont-elles disponibles en boutique en Suisse comme en ligne ?',
-      a: 'Oui, l\'ensemble des marques présentées sur le site est physiquement disponible dans notre magasin en Suisse (34 Rue des Pâquis). Vous pouvez venir les examiner, demander conseil à notre équipe ou commander en Click & Collect pour un retrait en 2 heures.'
+      a: 'Oui, l\'ensemble des marques présentées sur le site est physiquement disponible dans notre magasin officiel en Suisse. Vous pouvez venir les examiner, demander conseil à notre équipe ou commander en Click & Collect pour un retrait en 2 heures.'
     },
     {
       q: 'Pourquoi une marque ou une référence est-elle temporairement indisponible ?',

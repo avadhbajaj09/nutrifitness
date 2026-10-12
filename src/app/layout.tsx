@@ -39,8 +39,8 @@ const verification = (googleVerification || bingVerification)
   : undefined;
 
 export const metadata: Metadata = {
-  title: 'Nutrition Sportive & Protéines à Genève et en Suisse | NutriFitness.ch',
-  description: 'Boutique de nutrition sportive à Genève et en ligne. Protéines whey, créatine Creapure®, pré-workout. 100% stock en Suisse, livraison 24h offerte dès 75 CHF ou retrait Rue des Pâquis.',
+  title: 'Nutrition Sportive & Protéines en Suisse | NutriFitness.ch',
+  description: 'Boutique de nutrition sportive en Suisse et en ligne. Protéines whey, créatine Creapure®, pré-workout. 100% stock en Suisse, livraison 24h offerte dès 75 CHF ou retrait Click & Collect.',
   metadataBase: new URL('https://nutrifitness.ch'),
   openGraph: {
     title: 'NutriFitness.ch — Nutrition Sportive Suisse',

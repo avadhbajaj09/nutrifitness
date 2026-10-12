@@ -20,14 +20,14 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: formatMetaTitle('Créatine à Genève : Creapure® & Monohydrate | NutriFitness'),
-  description: formatMetaDescription('Créatine monohydrate pure et label Creapure® à Genève. Stock physique Rue des Pâquis, conseils d\'experts, retrait 2h et livraison 24h en Suisse.'),
+  title: formatMetaTitle('Créatine en Suisse : Creapure® & Monohydrate | NutriFitness'),
+  description: formatMetaDescription('Créatine monohydrate pure et label Creapure® en Suisse. Stock physique en Suisse, conseils d\'experts, retrait 2h et livraison 24h.'),
   alternates: {
     canonical: 'https://nutrifitness.ch/creatine-geneve/',
   },
   openGraph: {
-    title: 'Créatine à Genève : Creapure® & Monohydrate | NutriFitness',
-    description: 'Créatines monohydrates micronisées 200 mesh et Creapure® allemande en stock à Genève au 34 Rue des Pâquis. Retrait 2h ou livraison 24h en Suisse.',
+    title: 'Créatine en Suisse : Creapure® & Monohydrate | NutriFitness',
+    description: 'Créatines monohydrates micronisées 200 mesh et Creapure® allemande en stock en Suisse. Retrait 2h ou livraison 24h en Suisse.',
     url: 'https://nutrifitness.ch/creatine-geneve/',
     siteName: 'NutriFitness.ch',
     locale: 'fr_CH',
@@ -51,8 +51,8 @@ export default async function CreatineGenevePage() {
 
   const faqs = [
     {
-      q: 'Où acheter de la créatine pure à Genève ?',
-      a: 'Dans notre boutique physique NutriFitness au 34 Rue des Pâquis, 1201 Genève. Nous stockons des créatines monohydrates micronisées 200 mesh et des créatines sous le label allemand Creapure® disponibles immédiatement au comptoir.'
+      q: 'Où acheter de la créatine pure en Suisse ?',
+      a: 'Dans notre boutique physique NutriFitness en Suisse. Nous stockons des créatines monohydrates micronisées 200 mesh et des créatines sous le label allemand Creapure® disponibles immédiatement au comptoir.'
     },
     {
       q: 'Quelle est la différence entre créatine monohydrate classique et Creapure® ?',
@@ -144,7 +144,7 @@ export default async function CreatineGenevePage() {
           </h1>
 
           <p className="text-xs sm:text-sm text-white/80 leading-relaxed pt-2">
-            Décuplez votre force explosive, vos séries de répétitions et votre volumisation cellulaire grâce à notre sélection de créatines monohydrates de haute pureté. Situé au 34 Rue des Pâquis à Genève, notre magasin dispose de stocks physiques permanents avec retrait gratuit en 2h ou expédition suisse 24h.
+            Décuplez votre force explosive, vos séries de répétitions et votre volumisation cellulaire grâce à notre sélection de créatines monohydrates de haute pureté. Situé en Suisse, notre magasin officiel dispose de stocks physiques permanents avec retrait gratuit en 2h ou expédition suisse 24h.
           </p>
         </div>
       </header>
@@ -156,7 +156,7 @@ export default async function CreatineGenevePage() {
             Expertise Scientifique & Choix du Produit
           </span>
           <h2 className="text-xl sm:text-2xl font-black uppercase text-white font-heading">
-            Comment Bien Choisir Sa Créatine à Genève ?
+            Comment Bien Choisir Sa Créatine en Suisse ?
           </h2>
         </div>
 
@@ -166,7 +166,7 @@ export default async function CreatineGenevePage() {
               Parmi les centaines de suppléments disponibles sur le marché, la créatine monohydrate est de loin la molécule ergogène la plus rigoureusement documentée au monde, avec plus de 500 études cliniques validant son efficacité et son innocuité. En augmentant les stocks intramusculaires de phosphocréatine, elle permet de régénérer plus vite l&apos;adénosine triphosphate (ATP) lors des efforts anaérobies de courte durée et haute intensité (séries lourdes de développé couché, squats, sprints, crossfit).
             </p>
             <p>
-              Pour obtenir des résultats durables sans compromettre votre confort digestif, le choix de la forme de créatine est capital. Chez NutriFitness Genève, nous trions les fabricants pour ne conserver que les standards les plus stricts :
+              Pour obtenir des résultats durables sans compromettre votre confort digestif, le choix de la forme de créatine est capital. Chez NutriFitness Suisse, nous trions les fabricants pour ne conserver que les standards les plus stricts :
             </p>
             <ul className="space-y-2 pl-4 list-disc text-white/70">
               <li>
@@ -176,17 +176,17 @@ export default async function CreatineGenevePage() {
                 <strong className="text-white">Label Breveté Creapure® :</strong> fabriquée en Allemagne (Alzchem Trostberg) selon des normes pharmaceutiques strictes, elle garantit une pureté de 99.99% certifiée exempte de dérivés toxiques de synthèse.
               </li>
               <li>
-                <strong className="text-white">Formules en gélules :</strong> idéales pour les sportifs genevois souvent en déplacement professionnel souhaitant une posologie précise sans manipulation de poudre.
+                <strong className="text-white">Formules en gélules :</strong> idéales pour les sportifs souvent en déplacement professionnel souhaitant une posologie précise sans manipulation de poudre.
               </li>
             </ul>
           </div>
 
           <div className="space-y-4">
             <h3 className="text-sm font-black uppercase text-[#F80404] font-heading tracking-wider">
-              Ce Que Nous Stockons au 34 Rue des Pâquis
+              Ce Que Nous Stockons en Suisse
             </h3>
             <p>
-              Dans notre magasin physique des Pâquis à Genève, nous stockons exclusivement des marques réputées garantissant une traçabilité totale : BigMan Nutrition (Creapure® 300g), Marvelous Nutrition (Créatine 200 Mesh aromatisée et nature), Applied Nutrition (Créatine pure 250g) et Dirty Squads (DS Creapure).
+              Dans notre magasin officiel en Suisse, nous stockons exclusivement des marques réputées garantissant une traçabilité totale : BigMan Nutrition (Creapure® 300g), Marvelous Nutrition (Créatine 200 Mesh aromatisée et nature), Applied Nutrition (Créatine pure 250g) et Dirty Squads (DS Creapure).
             </p>
             <p>
               Tous les lots sont enregistrés et conformes aux ordonnances de l&apos;OSAV et du DFI en Suisse. Nous veillons à ce que chaque emballage soit scellé d&apos;origine, sans reconditionnement obscur.
@@ -208,10 +208,10 @@ export default async function CreatineGenevePage() {
           <div className="p-5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
             <h4 className="text-xs font-bold text-white flex items-center gap-2">
               <Zap className="w-4 h-4 text-[#F80404]" />
-              Click & Collect Gratuit 2h à Genève
+              Click & Collect Gratuit 2h en Suisse
             </h4>
             <p className="text-xs text-white/70 leading-relaxed">
-              Réservez votre créatine en ligne et venez la retirer sans frais 2h après au 34 Rue des Pâquis.
+              Réservez votre créatine en ligne et venez la retirer sans frais 2h après en boutique officielle en Suisse.
             </p>
             <Link href="/click-and-collect/" className="text-xs text-[#F80404] hover:underline font-bold inline-block pt-1">
               Comment fonctionne le Click & Collect →

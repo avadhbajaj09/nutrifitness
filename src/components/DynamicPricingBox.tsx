@@ -43,7 +43,11 @@ export default function DynamicPricingBox({
   const basePrice = pricingInfo.price;
   const name = getLocalized(product.name, locale);
 
-  const fmtCurrency = (val: number) => pricingInfo.currency === 'EUR' ? `€ ${val.toFixed(2)}` : `CHF ${val.toFixed(2)}`;
+  const fmtCurrency = (val: any) => {
+    const num = typeof val === 'number' ? val : Number(val);
+    const safe = Number.isFinite(num) ? Math.max(0, num) : 0;
+    return pricingInfo.currency === 'EUR' ? `€ ${safe.toFixed(2)}` : `CHF ${safe.toFixed(2)}`;
+  };
 
   // Generate deterministic Item SKU
   const itemSku = product.variants?.[0]?.sku || 
@@ -51,9 +55,10 @@ export default function DynamicPricingBox({
     '634240078392';
 
   // Calculate Tier Prices (Tier 1: 0%, Tier 2: 5%, Tier 3: 10%)
-  const tier1UnitPrice = basePrice;
-  const tier2UnitPrice = Math.round(basePrice * 0.95 * 100) / 100;
-  const tier3UnitPrice = Math.round(basePrice * 0.90 * 100) / 100;
+  const numBasePrice = Number.isFinite(Number(basePrice)) ? Number(basePrice) : 29.90;
+  const tier1UnitPrice = numBasePrice;
+  const tier2UnitPrice = Math.round(numBasePrice * 0.95 * 100) / 100;
+  const tier3UnitPrice = Math.round(numBasePrice * 0.90 * 100) / 100;
 
   // Active unit price based on selected tier
   const activeUnitPrice = selectedTier === 1 
@@ -63,7 +68,7 @@ export default function DynamicPricingBox({
     : tier3UnitPrice;
 
   const currentTotal = activeUnitPrice * quantity;
-  const regularTotal = basePrice * quantity;
+  const regularTotal = numBasePrice * quantity;
   const currentSavings = Math.max(0, regularTotal - currentTotal);
 
   // Handle clicking tier buttons
@@ -80,7 +85,8 @@ export default function DynamicPricingBox({
 
   // Handle Stepper
   const handleQuantityChange = (newQty: number) => {
-    const qty = Math.max(1, newQty);
+    const parsed = Number(newQty);
+    const qty = Number.isFinite(parsed) ? Math.max(1, Math.floor(parsed)) : 1;
     setQuantity(qty);
     if (qty === 1) {
       setSelectedTier(1);
@@ -93,7 +99,7 @@ export default function DynamicPricingBox({
 
   const handleAddToCart = () => {
     addToCart(product, {
-      quantity,
+      quantity: Math.max(1, quantity || 1),
       flavor: selectedFlavor,
       price: activeUnitPrice,
       image: selectedVariant?.image,

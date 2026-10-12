@@ -25,6 +25,11 @@ export default function CartPage() {
     locale 
   } = useStore();
 
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => {
+    setMounted(true);
+  }, []);
+
   const currentCc = (countryCode || 'CH').toUpperCase();
   const blockedItems = cart.filter(item => {
     if (item.isEbook) return false;
@@ -243,11 +248,18 @@ export default function CartPage() {
                 <div key={item.itemKey} className="flex flex-col sm:flex-row items-center justify-between gap-4 p-4 bg-[#181818] rounded-2xl border border-white/10">
                   <div className="flex items-center gap-4 w-full sm:w-auto">
                     <div className="relative w-20 h-20 bg-black/40 rounded-xl p-2 shrink-0 border border-white/10 flex items-center justify-center">
-                      <Image src={item.image} alt={item.name} fill className="object-contain filter drop-shadow-sm p-1" />
+                      <Image 
+                        src={typeof item.image === 'string' && item.image ? item.image : '/images/placeholder.webp'} 
+                        alt={typeof item.name === 'object' && item.name !== null ? ((item.name as any)[locale] || (item.name as any).fr || 'Produit') : String(item.name || 'Produit')} 
+                        fill 
+                        className="object-contain filter drop-shadow-sm p-1" 
+                      />
                     </div>
                     <div>
                       <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider font-heading">{item.brand}</p>
-                      <h3 className="text-sm font-bold text-white line-clamp-1">{item.name}</h3>
+                      <h3 className="text-sm font-bold text-white line-clamp-1">
+                        {typeof item.name === 'object' && item.name !== null ? ((item.name as any)[locale] || (item.name as any).fr || 'Produit') : String(item.name || 'Produit')}
+                      </h3>
                       <p className="text-xs text-white/50">
                         {typeof item.flavor === 'object' && item.flavor !== null ? ((item.flavor as Record<string, string>)[locale] || (item.flavor as Record<string, string>).fr || 'Standard') : String(item.flavor || 'Standard')} · {typeof item.size === 'object' && item.size !== null ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard') : String(item.size || 'Format standard')}
                       </p>
@@ -275,7 +287,9 @@ export default function CartPage() {
                         className="w-9 h-9 flex items-center justify-center text-white/70 hover:text-white font-bold"
                         title="Diminuer ou retirer"
                       >-</button>
-                      <span className="w-9 text-center text-xs font-bold text-white">{item.quantity}</span>
+                      <span className="w-9 text-center text-xs font-bold text-white">
+                        {Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1}
+                      </span>
                       <button 
                         type="button" 
                         disabled={item.isEbook}
@@ -290,7 +304,9 @@ export default function CartPage() {
                     </div>
 
                     <div className="text-right min-w-[90px]">
-                      <span className="text-base font-black text-white font-heading">{formatPrice(item.price * item.quantity)}</span>
+                      <span className="text-base font-black text-white font-heading">
+                        {formatPrice((Number(item.price) || 0) * (Number(item.quantity) || 1))}
+                      </span>
                       <p className="text-[10px] text-white/40">{t.common.vatIncluded}</p>
                     </div>
 
@@ -443,7 +459,7 @@ export default function CartPage() {
           {/* Trust strip */}
           <div className="pt-4 border-t border-white/10 space-y-2 text-[11px] text-white/50">
             <p className="flex items-center gap-2">
-              <span>📍</span> <Link href="/click-and-collect/" className="hover:text-white underline font-bold text-white/80">Click & Collect gratuit en 2h à Genève (Rue des Pâquis)</Link>
+              <span>📍</span> <Link href="/click-and-collect/" className="hover:text-white underline font-bold text-white/80">Click & Collect gratuit en 2h en Suisse</Link>
             </p>
             <p className="flex items-center gap-2">
               <span>🇨🇭</span> <strong>Stock physique en Suisse :</strong> aucun frais de douane.

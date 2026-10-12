@@ -22,8 +22,8 @@ import {
 } from '@/components/HomeProductFeed';
 
 export const metadata: Metadata = {
-  title: 'Nutrition Sportive & Protéines à Genève et en Suisse | NutriFitness.ch',
-  description: 'Boutique de nutrition sportive à Genève et en ligne. Protéines whey, créatine Creapure®, pré-workout. 100% stock en Suisse, livraison 24h offerte dès 75 CHF ou retrait Rue des Pâquis.',
+  title: 'Nutrition Sportive & Protéines en Suisse | NutriFitness.ch',
+  description: 'Boutique de nutrition sportive en Suisse et en ligne. Protéines whey, créatine Creapure®, pré-workout. 100% stock en Suisse, livraison 24h offerte dès 75 CHF ou retrait Click & Collect.',
   alternates: {
     canonical: 'https://nutrifitness.ch/',
   },
@@ -111,7 +111,7 @@ export default async function HomePage() {
               Boutique Physique en Suisse
             </span>
             <h2 className="text-2xl sm:text-4xl font-black text-white uppercase font-heading">
-              RENCONTREZ NOS COACHS AU 34 RUE DES PÂQUIS
+              RENCONTREZ NOS COACHS EXPERTS EN SUISSE
             </h2>
             <p className="text-sm text-white/70 leading-relaxed">
               Besoin d&apos;un conseil personnalisé pour votre prise de masse ou votre sèche ? Notre boutique en Suisse vous accueille pour des bilans personnalisés et pour retirer vos commandes en Click & Collect dès 2 heures après votre achat.
@@ -153,7 +153,7 @@ export default async function HomePage() {
             />
             <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent" />
             <div className="absolute bottom-4 left-4 text-xs font-bold text-white">
-              📍 34 Rue des Pâquis, 1201 Suisse (5 min de la Gare Cornavin)
+              📍 Boutique Officielle NutriFitness Suisse
             </div>
           </div>
         </div>
@@ -278,7 +278,7 @@ export default async function HomePage() {
           À propos de NutriFitness • Boutique de Nutrition Sportive en Suisse
         </h2>
         <p className="text-xs sm:text-sm leading-relaxed text-white/80">
-          NutriFitness (Scarpantoni Nutrifit, IDE : CHE-177.751.159) est une enseigne indépendante suisse spécialisée dans la nutrition sportive et les compléments alimentaires de haute performance. Notre boutique physique est située au Rue des Pâquis 34, 1201 Suisse (téléphone : +41 79 250 35 64). Nous proposons une sélection rigoureuse de protéines whey, créatines labellisées Creapure®, acides aminés BCAA/EAA, pré-workouts, vitamines et minéraux conformes aux normes suisses OSAV / DFI. Les commandes sont expédiées sous 24h ouvrées depuis notre stock physique en Suisse pour la Suisse et le Liechtenstein, ou depuis notre entrepôt logistique partenaire pour les commandes européennes. Notre plateforme en ligne est disponible en 4 langues (français, allemand, italien et anglais) et permet les règlements sécurisés en Francs suisses (CHF) et en Euros (EUR).
+          NutriFitness (NutriFitness Suisse, IDE : CHE-177.751.159) est une enseigne indépendante suisse spécialisée dans la nutrition sportive et les compléments alimentaires de haute performance. Notre boutique physique et notre centre logistique sont situés en Suisse (téléphone : +41 79 250 35 64). Nous proposons une sélection rigoureuse de protéines whey, créatines labellisées Creapure®, acides aminés BCAA/EAA, pré-workouts, vitamines et minéraux conformes aux normes suisses OSAV / DFI. Les commandes sont expédiées sous 24h ouvrées depuis notre stock physique en Suisse pour la Suisse et le Liechtenstein, ou depuis notre entrepôt logistique partenaire pour les commandes européennes. Notre plateforme en ligne est disponible en 4 langues (français, allemand, italien et anglais) et permet les règlements sécurisés en Francs suisses (CHF) et en Euros (EUR).
         </p>
       </section>
 

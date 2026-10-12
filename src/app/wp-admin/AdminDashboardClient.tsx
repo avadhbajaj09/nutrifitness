@@ -1197,6 +1197,27 @@ export default function AdminDashboardClient() {
   const [salesFilterOrigin, setSalesFilterOrigin] = useState<'all' | 'pos' | 'web'>('all');
   const [isSupabaseConnected, setIsSupabaseConnected] = useState<boolean>(true);
 
+  const isDummySaleRecord = (s: PosSaleRecord) => {
+    const name = (s.client?.name || s.clientName || '').toLowerCase().trim();
+    const ticket = (s.ticketNumber || s.id || '').toLowerCase().trim();
+    const email = (s.client?.email || '').toLowerCase().trim();
+    return (
+      name.includes('laurent dubois') ||
+      name.includes('avadh') ||
+      name.includes('vallabh') ||
+      name.includes('marco test') ||
+      name.includes('test') ||
+      name.includes('dummy') ||
+      name.includes('mock') ||
+      name.includes('sample') ||
+      ticket.includes('mock') ||
+      ticket.includes('test') ||
+      ticket.includes('dummy') ||
+      email.includes('test@') ||
+      email.includes('example.com')
+    );
+  };
+
   const syncOrders = async () => {
     setIsRefreshingSales(true);
     let local: PosSaleRecord[] = [];
@@ -1204,14 +1225,7 @@ export default function AdminDashboardClient() {
       const stored = localStorage.getItem('nutrifitness_pos_sales');
       if (stored) {
         local = JSON.parse(stored);
-        // Purge any older mock test entries
-        local = local.filter((s: PosSaleRecord) => {
-          const name = (s.client?.name || s.clientName || '').toLowerCase();
-          return !name.includes('laurent dubois') &&
-                 !name.includes('avadh') &&
-                 !name.includes('vallabh') &&
-                 !name.includes('marco test');
-        });
+        local = local.filter((s: PosSaleRecord) => !isDummySaleRecord(s));
       }
     } catch {
       // ignore
@@ -1226,22 +1240,14 @@ export default function AdminDashboardClient() {
           const map = new Map<string, PosSaleRecord>();
           // Priority 1: Supabase real database orders
           data.orders.forEach((s: PosSaleRecord) => {
-            const name = (s.client?.name || s.clientName || '').toLowerCase();
-            if (!name.includes('laurent dubois') &&
-                !name.includes('avadh') &&
-                !name.includes('vallabh') &&
-                !name.includes('marco test')) {
+            if (!isDummySaleRecord(s)) {
               const key = s.id || s.ticketNumber;
               map.set(key, s);
             }
           });
           // Priority 2: Offline POS sales from local buffer
           local.forEach((s: PosSaleRecord) => {
-            const name = (s.client?.name || s.clientName || '').toLowerCase();
-            if (!name.includes('laurent dubois') &&
-                !name.includes('avadh') &&
-                !name.includes('vallabh') &&
-                !name.includes('marco test')) {
+            if (!isDummySaleRecord(s)) {
               const key = s.id || s.ticketNumber;
               if (!map.has(key)) {
                 map.set(key, s);
@@ -1321,7 +1327,7 @@ export default function AdminDashboardClient() {
       return;
     }
     try {
-      await fetch('/api/orders?all=true', { method: 'DELETE' });
+      await fetch('/api/orders/?all=true', { method: 'DELETE' });
     } catch {}
     localStorage.removeItem('nutrifitness_pos_sales');
     setSalesHistory([]);

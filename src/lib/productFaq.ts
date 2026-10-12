@@ -116,7 +116,7 @@ export function getProductFaqs(product: ProductItem): FaqItem[] {
     // Accessories / General
     faqs.push({
       question: `Quelles sont les caractéristiques de ${name} (${brand}) ?`,
-      answer: `${getLocalized(product.shortDescription, 'fr')}. Produit officiel certifié ${brand} disponible en stock chez NutriFitness Genève.`
+      answer: `${getLocalized(product.shortDescription, 'fr')}. Produit officiel certifié ${brand} disponible en stock chez NutriFitness Suisse.`
     });
     faqs.push({
       question: `Quels sont les conseils d'entretien et d'utilisation ?`,
@@ -124,15 +124,15 @@ export function getProductFaqs(product: ProductItem): FaqItem[] {
     });
   }
 
-  // 2 universal product-specific questions (Authenticity & Geneva pick-up / delivery)
+  // 2 universal product-specific questions (Authenticity & Swiss pick-up / delivery)
   faqs.push({
     question: `Est-ce que ${name} est garanti 100 % authentique ?`,
     answer: `Oui, NutriFitness est revendeur agréé direct de la marque ${brand}. Tous nos lots sont conformes aux ordonnances suisses (OSAV/DFI) et bénéficient d'une traçabilité totale.`
   });
 
   faqs.push({
-    question: `Puis-je retirer ${name} directement en magasin à Genève ?`,
-    answer: `Oui, le retrait Click & Collect est disponible gratuitement sous 2h à notre boutique officielle au 34 Rue des Pâquis, 1201 Genève. Vous pouvez aussi choisir la livraison La Poste Priority 24h partout en Suisse (offerte dès 75 CHF).`
+    question: `Puis-je retirer ${name} directement en boutique en Suisse ?`,
+    answer: `Oui, le retrait Click & Collect est disponible gratuitement sous 2h à notre boutique officielle en Suisse. Vous pouvez aussi choisir la livraison La Poste Priority 24h partout en Suisse (offerte dès 75 CHF).`
   });
 
   return faqs;

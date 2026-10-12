@@ -42,7 +42,7 @@ export default function ContactClient() {
   const faqs = [
     {
       q: 'Comment contacter Nutrifitness ?',
-      a: 'Vous pouvez nous joindre par téléphone au +41 79 250 35 64, par e-mail à info@nutrifitness.ch (ou support@nutrifitness.ch) ou en vous rendant directement à notre boutique en Suisse (34 Rue des Pâquis). Pour toute demande relative à une commande, veillez à indiquer votre numéro de commande.'
+      a: 'Vous pouvez nous joindre par téléphone au +41 79 250 35 64, par e-mail à info@nutrifitness.ch (ou support@nutrifitness.ch) ou en vous rendant directement à notre boutique officielle en Suisse. Pour toute demande relative à une commande, veillez à indiquer votre numéro de commande.'
     },
     {
       q: 'Quels sont vos horaires de réponse téléphonique et e-mail ?',
@@ -128,8 +128,8 @@ export default function ContactClient() {
               </div>
               <div>
                 <span className="font-bold text-white block uppercase text-[10px] text-white/50">Boutique physique en Suisse</span>
-                <span className="text-sm font-bold text-white">34 Rue des Pâquis, 1201 Suisse</span>
-                <p className="text-[11px] text-white/50 mt-0.5">À 400m de la Gare Cornavin · Tram 15 (Môle)</p>
+                <span className="text-sm font-bold text-white">Boutique Officielle NutriFitness Suisse</span>
+                <p className="text-[11px] text-white/50 mt-0.5">Retrait Click & Collect 2h et conseils experts en nutrition</p>
               </div>
             </div>
           </div>

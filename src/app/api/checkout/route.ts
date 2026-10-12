@@ -37,20 +37,32 @@ export async function POST(req: Request) {
 
     // Map cart items to Stripe line items
     const line_items: Stripe.Checkout.SessionCreateParams.LineItem[] = items.map((item: any) => {
-      const unitAmount = Math.round(Number(item.price || 0) * 100);
-      let imgUrl = item.image;
-      if (imgUrl && !imgUrl.startsWith('http')) {
+      const unitAmount = Math.max(50, Math.round(Number(item.price || 0) * 100));
+      const nameStr = typeof item.name === 'object' && item.name !== null 
+        ? ((item.name as any).fr || Object.values(item.name)[0] || 'Produit NutriFitness') 
+        : String(item.name || 'Produit NutriFitness');
+      
+      const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
+        ? ((item.flavor as any).fr || '')
+        : (item.flavor ? String(item.flavor) : '');
+      const sizeStr = typeof item.size === 'object' && item.size !== null
+        ? ((item.size as any).fr || '')
+        : (item.size ? String(item.size) : '');
+
+      let imgUrl = typeof item.image === 'string' ? item.image : '';
+      if (imgUrl && !imgUrl.startsWith('http') && !imgUrl.startsWith('//')) {
         imgUrl = `${baseUrl}${imgUrl.startsWith('/') ? '' : '/'}${imgUrl}`;
       }
+      const isValidHttpsImage = imgUrl.startsWith('https://') && !imgUrl.includes('placeholder.webp');
 
       return {
         price_data: {
           currency: normalizedCurrency,
           unit_amount: unitAmount,
           product_data: {
-            name: item.name || 'Produit NutriFitness',
-            description: [item.flavor, item.size].filter(Boolean).join(' · ') || undefined,
-            images: imgUrl && imgUrl.startsWith('https://') ? [imgUrl] : undefined,
+            name: nameStr,
+            description: [flavorStr, sizeStr].filter(Boolean).join(' · ') || undefined,
+            images: isValidHttpsImage ? [imgUrl] : undefined,
             metadata: {
               sku: item.sku || item.itemKey || '',
               product_id: item.id || '',
@@ -123,11 +135,16 @@ export async function POST(req: Request) {
         if (promoRes.data.length > 0) {
           sessionParams.discounts = [{ promotion_code: promoRes.data[0].id }];
         } else {
-          // Attempt to attach directly as a coupon ID (e.g. TEST95)
-          sessionParams.discounts = [{ coupon: cleanCoupon }];
+          // Verify coupon exists before attaching
+          const couponObj = await stripe.coupons.retrieve(cleanCoupon);
+          if (couponObj && couponObj.valid) {
+            sessionParams.discounts = [{ coupon: cleanCoupon }];
+          } else {
+            sessionParams.allow_promotion_codes = true;
+          }
         }
       } catch (couponErr) {
-        console.warn('Could not attach coupon to Stripe session directly, falling back to allow_promotion_codes:', couponErr);
+        console.warn('Coupon not found in Stripe, allowing customer to enter code in checkout:', couponErr);
         sessionParams.allow_promotion_codes = true;
       }
     } else {

@@ -117,7 +117,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     },
     topBar: {
       shipping24h: '⚡ LIVRAISON 24H EN SUISSE (POSTPAC PRIORITY)',
-      storeGeneva: '📍 BOUTIQUE EN SUISSE (34 RUE DES PÂQUIS)',
+      storeGeneva: '📍 BOUTIQUE OFFICIELLE EN SUISSE',
       stockSwiss: '🇨🇭 100% STOCK EN SUISSE – AUCUN FRAIS DE DOUANE',
       certified: '🛡️ COMPLÉMENTS ALIMENTAIRES CERTIFIÉS & TESTÉS',
       twint: '⚡ PAIEMENT INSTANTANÉ PAR TWINT & POSTFINANCE',
@@ -174,7 +174,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       celebrationBadge: '⚡ VALIDATION IMMÉDIATE',
       paymentSuccess: 'Paiement confirmé avec succès',
       expressDelivery: 'Expédition prioritaire 24h',
-      dispatchedFrom: 'Expédié directement depuis 34 Rue des Pâquis, 1201 Genève',
+      dispatchedFrom: 'Expédié directement depuis notre centre logistique en Suisse',
     },
   },
   de: {
@@ -194,7 +194,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     },
     topBar: {
       shipping24h: '⚡ 24H-LIEFERUNG IN DER SCHWEIZ (POSTPAC PRIORITY)',
-      storeGeneva: '📍 STORE IN DER SCHWEIZ (RUE DES PÂQUIS 34)',
+      storeGeneva: '📍 OFFIZIELLER STORE IN DER SCHWEIZ',
       stockSwiss: '🇨🇭 100% SCHWEIZER LAGER – KEINE ZOLLGEBÜHREN',
       certified: '🛡️ GEPRÜFTE & ZERTIFIZIERTE SPORTNAHRUNG',
       twint: '⚡ SOFORTZAHLUNG MIT TWINT & POSTFINANCE',
@@ -251,7 +251,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       celebrationBadge: '⚡ SOFORTIGE BESTÄTIGUNG',
       paymentSuccess: 'Zahlung erfolgreich bestätigt',
       expressDelivery: 'Prioritärer 24h-Versand',
-      dispatchedFrom: 'Versand direkt ab Rue des Pâquis 34, 1201 Genf',
+      dispatchedFrom: 'Versand direkt ab unserem Schweizer Logistikzentrum',
     },
   },
   it: {
@@ -271,7 +271,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     },
     topBar: {
       shipping24h: '⚡ SPEDIZIONE 24H IN SVIZZERA (POSTPAC PRIORITY)',
-      storeGeneva: '📍 NEGOZIO IN SVIZZERA (RUE DES PÂQUIS 34)',
+      storeGeneva: '📍 NEGOZIO UFFICIALE IN SVIZZERA',
       stockSwiss: '🇨🇭 100% STOCK IN SVIZZERA – NESSUN COSTO DOGANALE',
       certified: '🛡️ INTEGRATORI CERTIFICATI E TESTATI',
       twint: '⚡ PAGAMENTO ISTANTANEO CON TWINT & POSTFINANCE',
@@ -328,7 +328,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       celebrationBadge: '⚡ CONFERMA IMMEDIATA',
       paymentSuccess: 'Pagamento confermato con successo',
       expressDelivery: 'Spedizione prioritaria 24h',
-      dispatchedFrom: 'Spedito direttamente da Rue des Pâquis 34, 1201 Svizzera',
+      dispatchedFrom: 'Spedito direttamente dal nostro centro logistico in Svizzera',
     },
   },
   en: {
@@ -348,7 +348,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
     },
     topBar: {
       shipping24h: '⚡ 24H DELIVERY IN SWITZERLAND (POSTPAC PRIORITY)',
-      storeGeneva: '📍 FLAGSHIP STORE IN SWITZERLAND (34 RUE DES PÂQUIS)',
+      storeGeneva: '📍 FLAGSHIP STORE IN SWITZERLAND',
       stockSwiss: '🇨🇭 100% SWISS STOCK – NO HIDDEN CUSTOMS FEES',
       certified: '🛡️ TESTED & CERTIFIED SPORTS NUTRITION',
       twint: '⚡ INSTANT CHECKOUT WITH TWINT & POSTFINANCE',
@@ -405,7 +405,7 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       celebrationBadge: '⚡ INSTANT CONFIRMATION',
       paymentSuccess: 'Payment securely confirmed',
       expressDelivery: '24h Priority Shipping',
-      dispatchedFrom: 'Dispatched directly from 34 Rue des Pâquis, 1201 Geneva',
+      dispatchedFrom: 'Dispatched directly from our Swiss fulfillment center',
     },
   },
 };

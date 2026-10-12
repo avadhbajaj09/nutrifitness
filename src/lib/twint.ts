@@ -6,8 +6,8 @@
 export const TWINT_CONFIG = {
   storeUuid: process.env.NEXT_PUBLIC_TWINT_STORE_UUID || process.env.TWINT_STORE_UUID || 'e63424a8-576d-c293-a4de-891c3737aa8b',
   rawKey: 'e63424a8576dc293a4de891c3737aa8b',
-  merchantName: 'NutriFitness Genève',
-  location: 'Rue des Pâquis 34, 1201 Genève',
+  merchantName: 'NutriFitness Suisse',
+  location: 'Swiss Fulfillment, Suisse',
 };
 
 /**

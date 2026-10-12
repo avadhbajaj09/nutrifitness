@@ -126,7 +126,9 @@ export default function CartDrawer() {
                   <div className="flex justify-between items-start gap-2">
                     <div>
                       <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider">{item.brand}</p>
-                      <h4 className="text-xs font-bold text-white line-clamp-1">{item.name}</h4>
+                      <h4 className="text-xs font-bold text-white line-clamp-1">
+                        {typeof item.name === 'object' && item.name !== null ? ((item.name as any)[locale] || (item.name as any).fr || 'Produit') : String(item.name || 'Produit')}
+                      </h4>
                       <p className="text-[11px] text-white/50">
                         {typeof item.flavor === 'object' && item.flavor !== null ? ((item.flavor as Record<string, string>)[locale] || (item.flavor as Record<string, string>).fr || 'Standard') : String(item.flavor || 'Standard')} · {typeof item.size === 'object' && item.size !== null ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard') : String(item.size || 'Format standard')}
                       </p>
@@ -176,7 +178,9 @@ export default function CartDrawer() {
                         className="w-7 h-7 flex items-center justify-center text-white/70 hover:text-white font-bold"
                         title="Diminuer ou retirer"
                       >-</button>
-                      <span className="w-7 text-center text-xs font-bold text-white">{item.quantity}</span>
+                      <span className="w-7 text-center text-xs font-bold text-white">
+                        {Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1}
+                      </span>
                       <button 
                         type="button" 
                         disabled={item.isEbook}
@@ -191,12 +195,14 @@ export default function CartDrawer() {
                     </div>
                     <div className="text-right">
                       {(() => {
-                        const itemUnitPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
+                        const rawPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
                           ? getProductPricing(item).price
                           : item.price;
+                        const itemUnitPrice = Number.isFinite(Number(rawPrice)) ? Number(rawPrice) : 29.90;
+                        const itemQty = Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1;
                         return (
                           <span className="text-xs font-black text-white font-heading">
-                            {formatPrice(itemUnitPrice * item.quantity)}
+                            {formatPrice(itemUnitPrice * itemQty)}
                           </span>
                         );
                       })()}

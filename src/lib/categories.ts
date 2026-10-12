@@ -45,8 +45,8 @@ export const CATEGORIES_DATA: CategoryData[] = [
     targetKeywords: ['whey protéine Suisse', 'whey isolate Genève', 'protéine végétale', 'protéine en poudre Genève', 'meilleure whey'],
     subcategories: ['Whey concentrée', 'Whey isolate', 'Protéines végétales', 'Protéines clear', 'Autres sources (œuf, bœuf)'],
     intro: [
-      "Les protéines en poudre sont des compléments alimentaires qui permettent d'augmenter facilement l'apport en protéines de la journée. Elles s'ajoutent à l'alimentation : elles ne la remplacent pas. Chez NutriFitness Genève, vous trouvez des whey concentrées et isolates, des protéines végétales et d'autres sources comme les protéines clear, à comparer selon votre objectif, votre budget et votre confort digestif.",
-      "Pour bien choisir, analysez trois critères majeurs : la teneur en protéines pour 100 g, la taille de la portion et le prix par portion réelle. Une whey isolate contient généralement plus de 85-90% de protéines pures et quasiment aucun lactose ; une protéine végétale convient parfaitement aux régimes végans ou intolérants au lait. Notre équipe vous accueille et vous oriente également au magasin du 34 Rue des Pâquis à Genève."
+      "Les protéines en poudre sont des compléments alimentaires qui permettent d'augmenter facilement l'apport en protéines de la journée. Elles s'ajoutent à l'alimentation : elles ne la remplacent pas. Chez NutriFitness Suisse, vous trouvez des whey concentrées et isolates, des protéines végétales et d'autres sources comme les protéines clear, à comparer selon votre objectif, votre budget et votre confort digestif.",
+      "Pour bien choisir, analysez trois critères majeurs : la teneur en protéines pour 100 g, la taille de la portion et le prix par portion réelle. Une whey isolate contient généralement plus de 85-90% de protéines pures et quasiment aucun lactose ; une protéine végétale convient parfaitement aux régimes végans ou intolérants au lait. Notre équipe vous accueille et vous oriente également à notre boutique officielle en Suisse."
     ],
     buyingGuide: [
       {

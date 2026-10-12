@@ -106,20 +106,23 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           <div className="flex text-amber-400">{reviewStats.stars}</div>
           <span className="font-bold text-white">{reviewStats.rating.toFixed(1)} / 5</span>
           <span className="text-white/40">· {reviewStats.count} avis vérifiés en Suisse</span>
-          <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ml-1 ${
-            originType === 'GENEVA_ONLY'
-              ? 'bg-black/80 border-white/20 text-white'
-              : originType === 'PORTUGAL_ONLY'
-              ? 'bg-blue-950/85 border-blue-500/40 text-blue-300'
-              : 'bg-emerald-950/85 border-emerald-500/40 text-emerald-300'
-          }`}>
-            <span>{originType === 'GENEVA_ONLY' ? '🇨🇭' : originType === 'PORTUGAL_ONLY' ? '🇵🇹' : '🇨🇭/🇵🇹'}</span>
-            <span>
-              {originType === 'GENEVA_ONLY' && (t.common.originGeneva || 'Swiss Fulfillment')}
-              {originType === 'PORTUGAL_ONLY' && (t.common.originPortugal || 'Portugal Fulfillment (3-5 jours)')}
-              {originType === 'COMMON' && (t.common.originCommon || 'Swiss Fulfillment ou Portugal Fulfillment')}
-            </span>
-          </span>
+          {(() => {
+            const isSwissOrigin = originType === 'GENEVA_ONLY' || (originType === 'COMMON' && isSwissDestination);
+            return (
+              <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ml-1 ${
+                isSwissOrigin
+                  ? 'bg-black/80 border-white/20 text-white'
+                  : 'bg-blue-950/85 border-blue-500/40 text-blue-300'
+              }`}>
+                <span>{isSwissOrigin ? '🇨🇭' : '🇵🇹'}</span>
+                <span>
+                  {isSwissOrigin
+                    ? (t.common.originSwitzerland || 'Expédié de Suisse')
+                    : (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
+                </span>
+              </span>
+            );
+          })()}
         </div>
       </div>
 

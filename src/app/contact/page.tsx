@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import ContactClient from './ContactClient';
 
 export const metadata: Metadata = {
-  title: 'Contactez NutriFitness Genève | Service Client & Boutique',
-  description: 'Contactez l\'équipe NutriFitness à Genève par téléphone au +41 79 250 35 64 ou par e-mail. Conseils experts, suivi de commandes et adresse au 34 Rue des Pâquis.',
+  title: 'Contactez NutriFitness Suisse | Service Client & Boutique Officielle',
+  description: 'Contactez l\'équipe NutriFitness en Suisse par téléphone au +41 79 250 35 64 ou par e-mail. Conseils experts et suivi de commandes.',
   alternates: {
     canonical: 'https://nutrifitness.ch/contact/',
   }

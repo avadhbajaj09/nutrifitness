@@ -19,8 +19,8 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Boutique Nutrition Sportive Genève Pâquis | NutriFitness.ch',
-  description: 'Visitez notre magasin de compléments alimentaires au 34 Rue des Pâquis, 1201 Genève. Protéines whey, créatine, conseils nutritionnels par notre équipe d\'experts et Click & Collect gratuit en 2h.',
+  title: 'Boutique Nutrition Sportive en Suisse | NutriFitness.ch',
+  description: 'Visitez notre magasin officiel de compléments alimentaires en Suisse. Protéines whey, créatine, conseils nutritionnels par notre équipe d\'experts et Click & Collect gratuit en 2h.',
   alternates: {
     canonical: 'https://nutrifitness.ch/boutique-geneve/',
   }

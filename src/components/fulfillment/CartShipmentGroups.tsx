@@ -92,10 +92,20 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
   }
 
   // 2. Mixed Cart (2 Separate Shipments)
-  const genevaSubtotal = genevaItems.reduce((acc, it) => acc + (it.price * it.quantity), 0);
-  const ptSubtotal = ptItems.reduce((acc, it) => acc + (it.price * it.quantity), 0);
+  const genevaSubtotal = genevaItems.reduce((acc, it) => {
+    const p = Number.isFinite(Number(it.price)) ? Number(it.price) : 0;
+    const q = Number.isFinite(Number(it.quantity)) ? Number(it.quantity) : 1;
+    return acc + (p * q);
+  }, 0);
+  const ptSubtotal = ptItems.reduce((acc, it) => {
+    const p = Number.isFinite(Number(it.price)) ? Number(it.price) : 0;
+    const q = Number.isFinite(Number(it.quantity)) ? Number(it.quantity) : 1;
+    return acc + (p * q);
+  }, 0);
 
-  const latestCombinedPromise = overallLatestFormatted?.[currentLocale] || overallLatestDate;
+  const latestCombinedPromise = typeof overallLatestFormatted?.[currentLocale] === 'string'
+    ? overallLatestFormatted[currentLocale]
+    : (typeof overallLatestDate === 'string' ? overallLatestDate : null);
 
   return (
     <div className="mb-5 space-y-3">
@@ -130,11 +140,13 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
           {genevaItems.map((it) => {
             const flavorObj = it.flavor as unknown as Record<string, string> | null | undefined;
             const flavorStr = typeof it.flavor === 'object' && it.flavor !== null ? (flavorObj?.[locale] || flavorObj?.fr || '') : String(it.flavor || '');
+            const nameStr = typeof it.name === 'object' && it.name !== null ? ((it.name as any)[locale] || (it.name as any).fr || 'Produit') : String(it.name || 'Produit');
+            const qty = Number.isFinite(Number(it.quantity)) ? Math.max(1, Math.floor(Number(it.quantity))) : 1;
             return (
               <li key={it.itemKey} className="text-white/80 text-xs flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 shrink-0" />
-                  <span>{it.name} {flavorStr ? `– ${flavorStr}` : ''} × {it.quantity}</span>
+                  <span>{nameStr} {flavorStr ? `– ${flavorStr}` : ''} × {qty}</span>
                 </span>
               </li>
             );
@@ -163,11 +175,13 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
           {ptItems.map((it) => {
             const flavorObj = it.flavor as unknown as Record<string, string> | null | undefined;
             const flavorStr = typeof it.flavor === 'object' && it.flavor !== null ? (flavorObj?.[locale] || flavorObj?.fr || '') : String(it.flavor || '');
+            const nameStr = typeof it.name === 'object' && it.name !== null ? ((it.name as any)[locale] || (it.name as any).fr || 'Produit') : String(it.name || 'Produit');
+            const qty = Number.isFinite(Number(it.quantity)) ? Math.max(1, Math.floor(Number(it.quantity))) : 1;
             return (
               <li key={it.itemKey} className="text-white/80 text-xs flex items-center justify-between">
                 <span className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-blue-500 shrink-0" />
-                  <span>{it.name} {flavorStr ? `– ${flavorStr}` : ''} × {it.quantity}</span>
+                  <span>{nameStr} {flavorStr ? `– ${flavorStr}` : ''} × {qty}</span>
                 </span>
               </li>
             );

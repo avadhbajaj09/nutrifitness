@@ -62,8 +62,8 @@ const REVIEWS_BY_CATEGORY: Record<string, CustomerReview[]> = {
       rating: 5,
       date: 'Il y a 2 semaines',
       verified: true,
-      title: 'L\'expérience de Marco se ressent à chaque page',
-      comment: 'Lecture rapide et passionnante. On sent les 11 ans d\'expérience terrain en boutique à Genève. J\'ai réajusté mes prises de compléments dès le lendemain avec de super sensations.'
+      title: 'L\'expertise NutriFitness se ressent à chaque page',
+      comment: 'Lecture rapide et passionnante. On sent les 11 ans d\'expérience terrain de l\'équipe en Suisse. J\'ai réajusté mes prises de compléments dès le lendemain avec de super sensations.'
     },
     {
       id: 'rev-eb-4',
@@ -105,7 +105,7 @@ const REVIEWS_BY_CATEGORY: Record<string, CustomerReview[]> = {
       date: 'Il y a 2 semaines',
       verified: true,
       title: 'Design sobre et pratique',
-      comment: 'Design noir mat sobre et graduations bien lisibles en ml. Acheté avec le Click & Collect en 2h aux Pâquis, accueil au top.'
+      comment: 'Design noir mat sobre et graduations bien lisibles en ml. Acheté avec le Click & Collect en 2h en boutique, accueil au top.'
     }
   ],
   'proteines': [
@@ -346,7 +346,7 @@ const GENERAL_REVIEWS: CustomerReview[] = [
     date: 'Il y a 2 semaines',
     verified: true,
     title: 'Très satisfait de cet achat',
-    comment: 'Conseillé directement à la boutique des Pâquis par l\'équipe NutriFitness. Répond exactement à mes attentes sportives.'
+    comment: 'Conseillé directement en boutique officielle par l\'équipe NutriFitness. Répond exactement à mes attentes sportives.'
   }
 ];
 

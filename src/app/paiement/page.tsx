@@ -35,8 +35,8 @@ export default function PaiementPage() {
       a: 'Tous les prix sont affichés en Francs Suisses (CHF) toutes taxes comprises (TTC). Ils incluent le taux de TVA suisse applicable (2.6 % sur les compléments et denrées alimentaires, 8.1 % sur les accessoires et shakers). Aucun frais caché ni taxe d\'importation n\'est appliqué.'
     },
     {
-      q: 'Puis-je payer directement lors du retrait en boutique à Genève ?',
-      a: 'Oui. Si vous optez pour le service Click & Collect à notre boutique des Pâquis (34 Rue des Pâquis, 1201 Genève), vous pouvez soit régler en ligne lors de la commande, soit choisir de régler sur place par TWINT, carte bancaire, PostFinance ou espèces en Francs Suisses.'
+      q: 'Puis-je payer directement lors du retrait en boutique en Suisse ?',
+      a: 'Oui. Si vous optez pour le service Click & Collect à notre boutique officielle en Suisse, vous pouvez soit régler en ligne lors de la commande, soit choisir de régler sur place par TWINT, carte bancaire, PostFinance ou espèces en Francs Suisses.'
     },
     {
       q: 'Comment utiliser un code promo ou un bon de réduction ?',

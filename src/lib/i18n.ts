@@ -5,7 +5,7 @@ export const DEFAULT_LOCALE: SupportedLocale = 'fr';
 
 export const UI_STRINGS = {
   fr: {
-    topBarMsg: '🇨🇭 Boutique en Suisse: 34 Rue des Pâquis | Livraison offerte dès 75 CHF | Expédition sous 24h',
+    topBarMsg: '🇨🇭 Boutique en Suisse | Livraison offerte dès 75 CHF | Expédition sous 24h',
     searchPlaceholder: 'Rechercher un complément, une marque...',
     cart: 'Panier',
     productsMenu: 'Produits',
@@ -32,7 +32,7 @@ export const UI_STRINGS = {
     imprintLink: 'Mentions Légales (Impressum)',
   },
   de: {
-    topBarMsg: '🇨🇭 Store in der Schweiz: 34 Rue des Pâquis | Gratis Versand ab 75 CHF | Versand innert 24h',
+    topBarMsg: '🇨🇭 Store in der Schweiz | Gratis Versand ab 75 CHF | Versand innert 24h',
     searchPlaceholder: 'Produkt, Marke suchen...',
     cart: 'Warenkorb',
     productsMenu: 'Produkte',
@@ -59,7 +59,7 @@ export const UI_STRINGS = {
     imprintLink: 'Impressum',
   },
   it: {
-    topBarMsg: '🇨🇭 Negozio in Svizzera: 34 Rue des Pâquis | Spedizione gratuita da 75 CHF | Consegna 24h',
+    topBarMsg: '🇨🇭 Negozio in Svizzera | Spedizione gratuita da 75 CHF | Consegna 24h',
     searchPlaceholder: 'Cerca integratore, marchio...',
     cart: 'Carrello',
     productsMenu: 'Prodotti',
@@ -86,7 +86,7 @@ export const UI_STRINGS = {
     imprintLink: 'Note Legali',
   },
   en: {
-    topBarMsg: '🇨🇭 Swiss Store: 34 Rue des Pâquis | Free shipping from 75 CHF | 24h Swiss Post delivery',
+    topBarMsg: '🇨🇭 Swiss Store | Free shipping from 75 CHF | 24h Swiss Post delivery',
     searchPlaceholder: 'Search supplements, brands...',
     cart: 'Cart',
     productsMenu: 'Products',
