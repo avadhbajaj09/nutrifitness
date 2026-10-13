@@ -148,7 +148,30 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const [countryCode, setCountryCodeState] = useState<string>('CH');
 
   // Track hidden/draft/deleted products to exclude them across the website
-  const [hiddenSlugs, setHiddenSlugs] = useState<Set<string>>(new Set());
+  const [hiddenSlugs, setHiddenSlugs] = useState<Set<string>>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const localDel = localStorage.getItem('nutrifitness_deleted_product_ids');
+        if (localDel) {
+          const arr = JSON.parse(localDel);
+          if (Array.isArray(arr)) {
+            const initialSet = new Set<string>();
+            for (const item of arr) {
+              if (item) {
+                const s = String(item).toLowerCase().trim();
+                initialSet.add(s);
+                const c = s.replace(/^prod-/, '');
+                initialSet.add(c);
+                initialSet.add(`prod-${c}`);
+              }
+            }
+            return initialSet;
+          }
+        }
+      } catch {}
+    }
+    return new Set<string>();
+  });
 
   const refreshHiddenProducts = async () => {
     try {
@@ -156,15 +179,45 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       if (res.ok) {
         const data = await res.json();
         if (Array.isArray(data.hiddenSlugs)) {
-          const set = new Set<string>(data.hiddenSlugs.map((s: string) => s.toLowerCase().trim()));
+          const set = new Set<string>();
+          for (const s of data.hiddenSlugs) {
+            if (s) {
+              const lower = String(s).toLowerCase().trim();
+              set.add(lower);
+              const clean = lower.replace(/^prod-/, '');
+              set.add(clean);
+              set.add(`prod-${clean}`);
+            }
+          }
+
+          // Also merge from localStorage
+          try {
+            const localDel = localStorage.getItem('nutrifitness_deleted_product_ids');
+            if (localDel) {
+              const arr = JSON.parse(localDel);
+              if (Array.isArray(arr)) {
+                for (const item of arr) {
+                  if (item) {
+                    const lower = String(item).toLowerCase().trim();
+                    set.add(lower);
+                    const clean = lower.replace(/^prod-/, '');
+                    set.add(clean);
+                    set.add(`prod-${clean}`);
+                  }
+                }
+              }
+            }
+          } catch {}
+
           setHiddenSlugs(set);
           // Purge any deleted product from cart and wishlist immediately
           setCart(prev => prev.filter(item => {
             const slug = (item.slug || '').toLowerCase().trim();
-            const id = (item.id || '').trim();
-            return !set.has(slug) && !set.has(id);
+            const id = (item.id || '').toLowerCase().trim();
+            const cleanId = id.replace(/^prod-/, '');
+            return !set.has(slug) && !set.has(id) && !set.has(cleanId) && !set.has(`prod-${cleanId}`);
           }));
-          setWishlist(prev => prev.filter(slug => !set.has(slug.toLowerCase().trim())));
+          setWishlist(prev => prev.filter(slug => !set.has(String(slug).toLowerCase().trim())));
         }
       }
     } catch {}
@@ -196,13 +249,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     let sku = '';
     if (typeof itemOrSlug === 'string') {
       slug = itemOrSlug.toLowerCase().trim();
+      id = slug;
     } else {
       slug = (itemOrSlug.slug?.fr || itemOrSlug.slug || '').toLowerCase().trim();
-      id = itemOrSlug.id || '';
+      id = (itemOrSlug.id || '').toLowerCase().trim();
       sku = (itemOrSlug.variants?.[0]?.sku || itemOrSlug.sku || '').toLowerCase().trim();
     }
+    const cleanId = id.replace(/^prod-/, '');
     if (slug && hiddenSlugs.has(slug)) return false;
-    if (id && hiddenSlugs.has(id)) return false;
+    if (id && (hiddenSlugs.has(id) || hiddenSlugs.has(cleanId) || hiddenSlugs.has(`prod-${cleanId}`))) return false;
     if (sku && hiddenSlugs.has(sku)) return false;
     return true;
   };

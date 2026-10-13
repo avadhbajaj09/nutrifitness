@@ -548,31 +548,110 @@ export default function AdminDashboardClient() {
   // -------------------------------------------------------------
   // 3. CATALOG & PRODUCT STATE WITH LOCALSTORAGE PERSISTENCE
   // -------------------------------------------------------------
-  const [allProducts, setAllProducts] = useState<ProductItem[]>(PRODUCTS);
+  const [allProducts, setAllProducts] = useState<ProductItem[]>(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const localDel = localStorage.getItem('nutrifitness_deleted_product_ids');
+        if (localDel) {
+          const deleted = new Set(JSON.parse(localDel).map((x: string) => String(x).toLowerCase().trim()));
+          return PRODUCTS.filter(p => {
+            const id = (p.id || '').toLowerCase().trim();
+            const cleanId = id.replace(/^prod-/, '');
+            const slug = (p.slug?.fr || '').toLowerCase().trim();
+            return !deleted.has(id) && !deleted.has(cleanId) && !deleted.has(`prod-${cleanId}`) && !deleted.has(slug);
+          });
+        }
+      } catch {}
+    }
+    return PRODUCTS;
+  });
   const [isEditorOpen, setIsEditorOpen] = useState<boolean>(false);
   const [editingProduct, setEditingProduct] = useState<ProductItem | null>(null);
 
-  // Load custom creations and edits on client mount
+  // Load custom creations, edits, and filter out deleted products on client mount
   useEffect(() => {
-    try {
-      const saved = localStorage.getItem('nutrifitness_custom_products');
-      if (saved) {
-        const customItems: ProductItem[] = JSON.parse(saved);
-        if (Array.isArray(customItems) && customItems.length > 0) {
-          const customMap = new Map(customItems.map(p => [p.id, p]));
-          const merged = PRODUCTS.map(p => customMap.get(p.id) || p);
-          const baseIds = new Set(PRODUCTS.map(p => p.id));
-          for (const item of customItems) {
-            if (!baseIds.has(item.id)) {
-              merged.unshift(item);
+    const loadProducts = async () => {
+      try {
+        // 1. Get hidden/deleted IDs from API
+        const apiHidden = new Set<string>();
+        try {
+          const res = await fetch('/api/catalog/hidden/', { cache: 'no-store' });
+          if (res.ok) {
+            const data = await res.json();
+            if (Array.isArray(data.hiddenSlugs)) {
+              for (const s of data.hiddenSlugs) {
+                if (s) {
+                  const lower = String(s).toLowerCase().trim();
+                  apiHidden.add(lower);
+                  const clean = lower.replace(/^prod-/, '');
+                  apiHidden.add(clean);
+                  apiHidden.add(`prod-${clean}`);
+                }
+              }
             }
           }
-          setAllProducts(merged);
+        } catch {}
+
+        // 2. Get deleted IDs from localStorage
+        const localDel = localStorage.getItem('nutrifitness_deleted_product_ids');
+        if (localDel) {
+          try {
+            const arr = JSON.parse(localDel);
+            if (Array.isArray(arr)) {
+              for (const s of arr) {
+                if (s) {
+                  const lower = String(s).toLowerCase().trim();
+                  apiHidden.add(lower);
+                  const clean = lower.replace(/^prod-/, '');
+                  apiHidden.add(clean);
+                  apiHidden.add(`prod-${clean}`);
+                }
+              }
+            }
+          } catch {}
         }
+
+        // 3. Merge custom products
+        const saved = localStorage.getItem('nutrifitness_custom_products');
+        let customItems: ProductItem[] = [];
+        if (saved) {
+          try {
+            const parsed = JSON.parse(saved);
+            if (Array.isArray(parsed)) customItems = parsed;
+          } catch {}
+        }
+
+        const customMap = new Map(customItems.map(p => [p.id, p]));
+        const merged = PRODUCTS.map(p => customMap.get(p.id) || p);
+        const baseIds = new Set(PRODUCTS.map(p => p.id));
+        for (const item of customItems) {
+          if (!baseIds.has(item.id)) {
+            merged.unshift(item);
+          }
+        }
+
+        // 4. Filter out any product present in apiHidden
+        const filtered = merged.filter(p => {
+          const id = (p.id || '').toLowerCase().trim();
+          const cleanId = id.replace(/^prod-/, '');
+          const slug = (p.slug?.fr || '').toLowerCase().trim();
+          const sku = (p.variants?.[0]?.sku || '').toLowerCase().trim();
+          return (
+            !apiHidden.has(id) &&
+            !apiHidden.has(cleanId) &&
+            !apiHidden.has(`prod-${cleanId}`) &&
+            !apiHidden.has(slug) &&
+            (!sku || !apiHidden.has(sku))
+          );
+        });
+
+        setAllProducts(filtered);
+      } catch (err) {
+        console.error('Failed to load products in admin dashboard', err);
       }
-    } catch (err) {
-      console.error('Failed to load custom products from localStorage', err);
-    }
+    };
+
+    loadProducts();
   }, []);
 
   const handleSaveProduct = (savedProduct: ProductItem) => {
@@ -610,30 +689,84 @@ export default function AdminDashboardClient() {
     setEditingProduct(null);
   };
 
-  const handleDeleteProduct = (productId: string) => {
-    if (typeof window !== 'undefined' && !window.confirm('Êtes-vous certain de vouloir supprimer ce produit du catalogue ?')) {
+  const handleDeleteProduct = (productId: string, skipConfirm: boolean = false) => {
+    if (!skipConfirm && typeof window !== 'undefined' && !window.confirm('Êtes-vous certain de vouloir supprimer définitivement ce produit du catalogue et de tout le site ?')) {
       return;
     }
-    setAllProducts(prev => {
-      const nextList = prev.filter(p => p.id !== productId);
-      try {
-        const saved = localStorage.getItem('nutrifitness_custom_products');
-        if (saved) {
-          let customItems: ProductItem[] = JSON.parse(saved);
-          customItems = customItems.filter(p => p.id !== productId);
-          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
-        }
-      } catch (e) {
-        console.error('Could not delete from localStorage', e);
+
+    const targetProduct = allProducts.find(p => p.id === productId);
+    const targetSlug = targetProduct?.slug?.fr || '';
+    const cleanId = productId.replace(/^prod-/, '');
+
+    // 1. Optimistic UI update: remove immediately from state
+    setAllProducts(prev => prev.filter(p => p.id !== productId && (!targetSlug || p.slug?.fr !== targetSlug)));
+
+    // 2. Persist to localStorage['nutrifitness_deleted_product_ids']
+    try {
+      const savedDeleted = localStorage.getItem('nutrifitness_deleted_product_ids');
+      const currentDeleted: string[] = savedDeleted ? JSON.parse(savedDeleted) : [];
+      const newDeleted = Array.from(new Set([
+        ...currentDeleted,
+        productId,
+        cleanId,
+        `prod-${cleanId}`,
+        ...(targetSlug ? [targetSlug] : [])
+      ].map(s => String(s).toLowerCase().trim())));
+      localStorage.setItem('nutrifitness_deleted_product_ids', JSON.stringify(newDeleted));
+    } catch (e) {
+      console.error('Could not save deleted ID to localStorage', e);
+    }
+
+    // 3. Remove from custom products if present
+    try {
+      const savedCustom = localStorage.getItem('nutrifitness_custom_products');
+      if (savedCustom) {
+        let customItems: ProductItem[] = JSON.parse(savedCustom);
+        customItems = customItems.filter(p => p.id !== productId && (!targetSlug || p.slug?.fr !== targetSlug));
+        localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
       }
-      return nextList;
-    });
+    } catch (e) {
+      console.error('Could not update custom products in localStorage', e);
+    }
+
+    // 4. Remove from POS cart and Store cart
+    try {
+      const posCart = localStorage.getItem('nutrifitness_pos_cart');
+      if (posCart) {
+        let items = JSON.parse(posCart);
+        if (Array.isArray(items)) {
+          items = items.filter((item: any) => item.id !== productId && item.slug !== targetSlug);
+          localStorage.setItem('nutrifitness_pos_cart', JSON.stringify(items));
+        }
+      }
+    } catch {}
 
     if (inspectingProduct && inspectingProduct.id === productId) {
       setInspectingProduct(null);
     }
     setIsEditorOpen(false);
     setEditingProduct(null);
+
+    // 5. Asynchronously persist to backend (Supabase + cache clear + Next.js revalidation)
+    void (async () => {
+      try {
+        await fetch(`/api/admin/products/${encodeURIComponent(productId)}/`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'delete_to_draft',
+            productData: targetProduct
+          })
+        });
+        await fetch('/api/catalog/hidden/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ id: productId, slug: targetSlug })
+        });
+      } catch (err) {
+        console.warn('Backend delete sync notification:', err);
+      }
+    })();
   };
 
   const [catalogSearch, setCatalogSearch] = useState<string>('');
@@ -2848,6 +2981,16 @@ export default function AdminDashboardClient() {
                               <span>Fiche</span>
                             </button>
 
+                            <button
+                              type="button"
+                              onClick={() => handleDeleteProduct(product.id, false)}
+                              className="px-2.5 py-1.5 bg-rose-50 hover:bg-rose-100 text-rose-600 font-bold rounded-lg text-xs transition-colors flex items-center gap-1"
+                              title="Supprimer définitivement ce produit du catalogue et du site"
+                            >
+                              <Trash2 className="w-3.5 h-3.5" />
+                              <span className="hidden xl:inline">Supprimer</span>
+                            </button>
+
                             <Link
                               href={`/produit/${product.slug.fr}/`}
                               target="_blank"
@@ -4957,6 +5100,15 @@ export default function AdminDashboardClient() {
                   <Edit3 className="w-4 h-4" />
                   <span className="hidden sm:inline">Modifier</span>
                 </button>
+                <button
+                  type="button"
+                  onClick={() => handleDeleteProduct(inspectingProduct.id, false)}
+                  className="px-3 py-2 text-rose-700 bg-rose-50 hover:bg-rose-100 rounded-xl transition-colors flex items-center gap-1.5 text-xs font-bold"
+                  title="Supprimer définitivement ce produit du catalogue"
+                >
+                  <Trash2 className="w-4 h-4" />
+                  <span className="hidden sm:inline">Supprimer</span>
+                </button>
                 <Link
                   href={`/produit/${inspectingProduct.slug.fr}/`}
                   target="_blank"
@@ -5274,7 +5426,7 @@ export default function AdminDashboardClient() {
         }}
         product={editingProduct}
         onSave={handleSaveProduct}
-        onDelete={handleDeleteProduct}
+        onDelete={(id) => handleDeleteProduct(id, true)}
         existingBrands={brandsList}
       />
 

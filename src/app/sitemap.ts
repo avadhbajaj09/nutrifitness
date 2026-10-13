@@ -3,6 +3,7 @@ import { PRODUCTS } from '@/lib/catalog';
 import { CATEGORIES_DATA } from '@/lib/categories';
 import { getIndexableBrands } from '@/lib/brands';
 import { getAdminSupabase } from '@/lib/supabase';
+import { getHiddenProductSlugs } from '@/lib/hiddenProducts';
 // @ts-ignore - redirects.mjs is an ES module
 import { getRedirects } from '../../redirects.mjs';
 
@@ -45,9 +46,19 @@ function getRedirectSources(): Set<string> {
 
 async function products(): Promise<Source> {
   const redirectSources = getRedirectSources();
+  const hiddenSlugs = await getHiddenProductSlugs();
 
-  // Valid non-draft products from local catalog that actually resolve to rendered pages
-  const validProducts = PRODUCTS.filter(p => p.status !== 'draft');
+  // Valid non-draft, non-hidden products from local catalog that actually resolve to rendered pages
+  const validProducts = PRODUCTS.filter(p => {
+    if (p.status === 'draft') return false;
+    const slug = (p.slug?.fr || '').toLowerCase().trim();
+    const id = (p.id || '').toLowerCase().trim();
+    const cleanId = id.replace(/^prod-/, '');
+    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id) || hiddenSlugs.has(cleanId) || hiddenSlugs.has(`prod-${cleanId}`)) {
+      return false;
+    }
+    return true;
+  });
   const validCatalogMap = new Map<string, typeof PRODUCTS[0]>();
   for (const p of validProducts) {
     if (p.slug && p.slug.fr) {

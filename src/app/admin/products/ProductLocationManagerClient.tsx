@@ -313,6 +313,13 @@ export default function ProductLocationManagerClient() {
     setProducts(prev => prev.filter(p => p.id !== product.id));
 
     try {
+      const localDel = localStorage.getItem('nutrifitness_deleted_product_ids');
+      const arr = localDel ? JSON.parse(localDel) : [];
+      const nextDel = Array.from(new Set([...arr, product.id, product.slug, product.woo_id, product.sku].filter(Boolean)));
+      localStorage.setItem('nutrifitness_deleted_product_ids', JSON.stringify(nextDel));
+    } catch {}
+
+    try {
       await fetch(`/api/admin/products/${product.id}/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -339,6 +346,15 @@ export default function ProductLocationManagerClient() {
   const handleRestore = async (product: ProductRow) => {
     setProducts(prev => prev.filter(p => p.id !== product.id));
     try {
+      const localDel = localStorage.getItem('nutrifitness_deleted_product_ids');
+      if (localDel) {
+        const arr = JSON.parse(localDel);
+        const filtered = arr.filter((x: string) => x !== product.id && x !== product.slug && x !== product.woo_id);
+        localStorage.setItem('nutrifitness_deleted_product_ids', JSON.stringify(filtered));
+      }
+    } catch {}
+
+    try {
       await fetch(`/api/admin/products/${product.id}/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -352,6 +368,14 @@ export default function ProductLocationManagerClient() {
 
   // Permanent Delete
   const handlePermanentDelete = async (id: string) => {
+    const targetProduct = products.find(p => p.id === id);
+    try {
+      const localDel = localStorage.getItem('nutrifitness_deleted_product_ids');
+      const arr = localDel ? JSON.parse(localDel) : [];
+      const nextDel = Array.from(new Set([...arr, id, targetProduct?.slug, targetProduct?.woo_id].filter(Boolean)));
+      localStorage.setItem('nutrifitness_deleted_product_ids', JSON.stringify(nextDel));
+    } catch {}
+
     try {
       await fetch(`/api/admin/products/${id}/`, { method: 'DELETE' });
       setProducts(prev => prev.filter(p => p.id !== id));

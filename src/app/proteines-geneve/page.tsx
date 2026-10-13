@@ -45,8 +45,9 @@ export default async function ProteinesGenevePage() {
   const hiddenSlugs = await getHiddenProductSlugs();
   const proteinProducts = PRODUCTS.filter((p) => {
     const slug = (p.slug?.fr || '').toLowerCase().trim();
-    const id = p.id || '';
-    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id)) return false;
+    const id = (p.id || '').toLowerCase().trim();
+    const cleanId = id.replace(/^prod-/, '');
+    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id) || hiddenSlugs.has(cleanId) || hiddenSlugs.has(`prod-${cleanId}`)) return false;
     return p.categorySlug === 'proteines';
   }).slice(0, 8);
 

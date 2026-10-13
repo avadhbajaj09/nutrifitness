@@ -83,8 +83,9 @@ export default async function BrandPage({ params }: BrandPageProps) {
   const hiddenSlugs = await getHiddenProductSlugs();
   const brandProducts = PRODUCTS.filter((p) => {
     const slug = (p.slug?.fr || '').toLowerCase().trim();
-    const id = p.id || '';
-    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id)) return false;
+    const id = (p.id || '').toLowerCase().trim();
+    const cleanId = id.replace(/^prod-/, '');
+    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id) || hiddenSlugs.has(cleanId) || hiddenSlugs.has(`prod-${cleanId}`)) return false;
     if (brand.slug === 'nutrifitness') return p.brand === 'NutriFitness' || p.brand === 'Nutrifit';
     return p.brand === brand.name || p.brand.toLowerCase() === brand.name.toLowerCase();
   });

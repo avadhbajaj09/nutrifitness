@@ -87,8 +87,9 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
   // Filter products belonging to this category
   const categoryProducts = PRODUCTS.filter((p) => {
     const slug = (p.slug?.fr || '').toLowerCase().trim();
-    const id = p.id || '';
-    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id)) {
+    const id = (p.id || '').toLowerCase().trim();
+    const cleanId = id.replace(/^prod-/, '');
+    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id) || hiddenSlugs.has(cleanId) || hiddenSlugs.has(`prod-${cleanId}`)) {
       return false;
     }
     // Ebook has its own dedicated flow, only include in guides-ebooks

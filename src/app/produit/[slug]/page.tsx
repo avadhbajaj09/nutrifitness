@@ -24,8 +24,26 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
+  const { getHiddenProductSlugs } = await import('@/lib/hiddenProducts');
+  const hiddenSlugs = await getHiddenProductSlugs();
+  const slugLower = params.slug.toLowerCase().trim();
+
+  if (hiddenSlugs.has(slugLower)) {
+    return {
+      robots: { index: false, follow: false }
+    };
+  }
+
   const product = getProductBySlug(params.slug, 'fr');
   if (!product) return {};
+
+  const prodId = (product.id || '').toLowerCase().trim();
+  const cleanId = prodId.replace(/^prod-/, '');
+  if (hiddenSlugs.has(prodId) || hiddenSlugs.has(cleanId) || hiddenSlugs.has(`prod-${cleanId}`)) {
+    return {
+      robots: { index: false, follow: false }
+    };
+  }
 
   const name = getLocalized(product.name);
   const desc = getLocalized(product.shortDescription);
@@ -54,20 +72,12 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
 }
 
 export default async function ProductDetailPage({ params }: Props) {
-  // Check if draft or deleted in DB
-  try {
-    const supabase = getAdminSupabase();
-    const { data: dbProduct } = await supabase
-      .from('products')
-      .select('id, status, deleted_at')
-      .eq('slug', params.slug)
-      .single();
+  const { getHiddenProductSlugs } = await import('@/lib/hiddenProducts');
+  const hiddenSlugs = await getHiddenProductSlugs();
 
-    if (dbProduct && (dbProduct.status === 'draft' || dbProduct.deleted_at !== null)) {
-      notFound();
-    }
-  } catch (err) {
-    // Non-blocking fallback
+  const slugLower = params.slug.toLowerCase().trim();
+  if (hiddenSlugs.has(slugLower)) {
+    notFound();
   }
 
   const product = getProductBySlug(params.slug, 'fr');
@@ -76,17 +86,29 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound();
   }
 
-  const { getHiddenProductSlugs } = await import('@/lib/hiddenProducts');
-  const hiddenSlugs = await getHiddenProductSlugs();
+  const prodId = (product.id || '').toLowerCase().trim();
+  const cleanId = prodId.replace(/^prod-/, '');
+  if (
+    hiddenSlugs.has(prodId) ||
+    hiddenSlugs.has(cleanId) ||
+    hiddenSlugs.has(`prod-${cleanId}`)
+  ) {
+    notFound();
+  }
+
+  const isHidden = (p: typeof PRODUCTS[0]) => {
+    const s = (p.slug?.fr || '').toLowerCase().trim();
+    const pid = (p.id || '').toLowerCase().trim();
+    const cid = pid.replace(/^prod-/, '');
+    return hiddenSlugs.has(s) || hiddenSlugs.has(pid) || hiddenSlugs.has(cid) || hiddenSlugs.has(`prod-${cid}`);
+  };
 
   const relatedProducts = PRODUCTS.filter(p => {
-    const slug = (p.slug?.fr || '').toLowerCase().trim();
-    if (hiddenSlugs.has(slug) || hiddenSlugs.has(p.id)) return false;
+    if (isHidden(p)) return false;
     return p.id !== product.id && p.categorySlug === product.categorySlug;
   }).slice(0, 8);
   const fallbackRelated = relatedProducts.length > 0 ? relatedProducts : PRODUCTS.filter(p => {
-    const slug = (p.slug?.fr || '').toLowerCase().trim();
-    if (hiddenSlugs.has(slug) || hiddenSlugs.has(p.id)) return false;
+    if (isHidden(p)) return false;
     return p.id !== product.id;
   }).slice(0, 8);
 

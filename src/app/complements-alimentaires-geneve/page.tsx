@@ -44,8 +44,9 @@ export default async function ComplementsAlimentairesGenevePage() {
   const hiddenSlugs = await getHiddenProductSlugs();
   const featuredProducts = PRODUCTS.filter((p) => {
     const slug = (p.slug?.fr || '').toLowerCase().trim();
-    const id = p.id || '';
-    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id)) return false;
+    const id = (p.id || '').toLowerCase().trim();
+    const cleanId = id.replace(/^prod-/, '');
+    if (hiddenSlugs.has(slug) || hiddenSlugs.has(id) || hiddenSlugs.has(cleanId) || hiddenSlugs.has(`prod-${cleanId}`)) return false;
     return p.categorySlug !== 'guides-ebooks' && p.id !== 'prod-25430';
   }).slice(0, 8);
 

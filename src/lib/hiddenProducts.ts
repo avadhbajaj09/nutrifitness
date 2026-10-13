@@ -16,7 +16,7 @@ export async function getHiddenProductSlugs(): Promise<Set<string>> {
     const supabase = getAdminSupabase();
     const { data, error } = await supabase
       .from('products')
-      .select('slug, id, sku')
+      .select('slug, id, sku, woo_id')
       .or('status.eq.draft,deleted_at.not.is.null');
 
     if (error || !data) {
@@ -25,9 +25,22 @@ export async function getHiddenProductSlugs(): Promise<Set<string>> {
 
     const hidden = new Set<string>();
     for (const p of data) {
-      if (p.slug) hidden.add(p.slug.toLowerCase().trim());
-      if (p.id) hidden.add(p.id);
-      if (p.sku) hidden.add(p.sku.toLowerCase().trim());
+      if (p.slug) {
+        hidden.add(p.slug.toLowerCase().trim());
+      }
+      if (p.id) {
+        hidden.add(p.id.toLowerCase().trim());
+      }
+      if (p.sku) {
+        hidden.add(p.sku.toLowerCase().trim());
+      }
+      if (p.woo_id) {
+        const wid = p.woo_id.toLowerCase().trim();
+        hidden.add(wid);
+        const cleanWid = wid.replace(/^prod-/, '');
+        hidden.add(cleanWid);
+        hidden.add(`prod-${cleanWid}`);
+      }
     }
 
     cachedHiddenSlugs = hidden;
@@ -50,8 +63,13 @@ export async function getVisibleProducts(): Promise<ProductItem[]> {
 
   return PRODUCTS.filter(p => {
     const slugFr = p.slug?.fr ? p.slug.fr.toLowerCase().trim() : '';
-    const id = p.id || '';
+    const id = (p.id || '').toLowerCase().trim();
+    const cleanId = id.replace(/^prod-/, '');
     const sku = p.variants?.[0]?.sku ? p.variants[0].sku.toLowerCase().trim() : '';
-    return !hidden.has(slugFr) && !hidden.has(id) && (!sku || !hidden.has(sku));
+
+    if (slugFr && hidden.has(slugFr)) return false;
+    if (id && (hidden.has(id) || hidden.has(cleanId) || hidden.has(`prod-${cleanId}`))) return false;
+    if (sku && hidden.has(sku)) return false;
+    return true;
   });
 }
