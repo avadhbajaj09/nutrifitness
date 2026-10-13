@@ -645,7 +645,65 @@ export default function AdminDashboardClient() {
           );
         });
 
-        setAllProducts(filtered);
+        // 5. Fetch real stock levels from Database (/api/admin/stock)
+        let dbStockMap: Record<string, any> = {};
+        try {
+          const sRes = await fetch('/api/admin/stock/', { cache: 'no-store' });
+          if (sRes.ok) {
+            const sData = await sRes.json();
+            if (sData.stocks) dbStockMap = sData.stocks;
+          }
+        } catch {}
+
+        // Also merge local stock overrides if any
+        try {
+          const localStock = localStorage.getItem('nutrifitness_stock_overrides');
+          if (localStock) {
+            const parsedLocal = JSON.parse(localStock);
+            dbStockMap = { ...dbStockMap, ...parsedLocal };
+          }
+        } catch {}
+
+        // Apply real stock to all products
+        const withStocks = filtered.map(p => {
+          const id = (p.id || '').toLowerCase().trim();
+          const cleanId = id.replace(/^prod-/, '');
+          const slug = (p.slug?.fr || '').toLowerCase().trim();
+          const stockEntry = dbStockMap[id] || dbStockMap[cleanId] || dbStockMap[`prod-${cleanId}`] || dbStockMap[slug];
+
+          if (!stockEntry) return p;
+
+          const updatedVariants = (p.variants || []).map(v => {
+            const vKey = (v.id || v.sku || '').toLowerCase().trim();
+            const vAttr = (v.flavorName?.fr || '').toLowerCase().trim();
+            const vStock = stockEntry.variants?.[vKey] || stockEntry.variants?.[vAttr];
+            if (vStock) {
+              return {
+                ...v,
+                inventoryQuantity: vStock.total,
+                stockGeneva: vStock.geneva,
+                stockPortugal: vStock.portugal,
+                inStock: vStock.total > 0
+              };
+            }
+            return {
+              ...v,
+              inventoryQuantity: stockEntry.total,
+              stockGeneva: stockEntry.geneva,
+              stockPortugal: stockEntry.portugal,
+              inStock: stockEntry.total > 0
+            };
+          });
+
+          return {
+            ...p,
+            stockGeneva: stockEntry.geneva,
+            stockPortugal: stockEntry.portugal,
+            variants: updatedVariants.length > 0 ? updatedVariants : p.variants
+          };
+        });
+
+        setAllProducts(withStocks);
       } catch (err) {
         console.error('Failed to load products in admin dashboard', err);
       }
@@ -677,6 +735,79 @@ export default function AdminDashboardClient() {
       } catch (e) {
         console.error('Could not save to localStorage', e);
       }
+
+      // Persist stock to localStorage['nutrifitness_stock_overrides']
+      try {
+        const prodId = savedProduct.id;
+        const cleanId = prodId.replace(/^prod-/, '');
+        const totalStock = (savedProduct.variants && savedProduct.variants.length > 0)
+          ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0)), 0)
+          : ((savedProduct.stockGeneva || 0) + (savedProduct.stockPortugal || 0));
+
+        const savedStock = localStorage.getItem('nutrifitness_stock_overrides');
+        const stockMap = savedStock ? JSON.parse(savedStock) : {};
+        const entry = {
+          geneva: totalStock,
+          portugal: savedProduct.stockPortugal || 0,
+          total: totalStock + (savedProduct.stockPortugal || 0),
+          inStock: totalStock > 0,
+          variants: Object.fromEntries(
+            (savedProduct.variants || []).map(v => [
+              (v.id || v.sku || '').toLowerCase().trim(),
+              {
+                geneva: typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : 15,
+                portugal: 0,
+                total: typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : 15,
+                inStock: (v.inventoryQuantity ?? 15) > 0
+              }
+            ])
+          )
+        };
+        stockMap[prodId] = entry;
+        stockMap[cleanId] = entry;
+        stockMap[`prod-${cleanId}`] = entry;
+        if (savedProduct.slug?.fr) {
+          stockMap[savedProduct.slug.fr.toLowerCase().trim()] = entry;
+        }
+        localStorage.setItem('nutrifitness_stock_overrides', JSON.stringify(stockMap));
+      } catch (err) {
+        console.error('Error saving stock override', err);
+      }
+
+      // Sync to Supabase Database
+      try {
+        const totalStock = (savedProduct.variants && savedProduct.variants.length > 0)
+          ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0)), 0)
+          : ((savedProduct.stockGeneva || 0) + (savedProduct.stockPortugal || 0));
+
+        fetch('/api/admin/stock/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: savedProduct.id,
+            quantity: totalStock,
+            origin: 'GENEVA'
+          })
+        }).catch(() => {});
+
+        if (savedProduct.variants && savedProduct.variants.length > 0) {
+          for (const v of savedProduct.variants) {
+            if (typeof v.inventoryQuantity === 'number') {
+              fetch('/api/admin/stock/', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                  productId: savedProduct.id,
+                  variantId: v.id,
+                  variantSku: v.sku,
+                  quantity: v.inventoryQuantity,
+                  origin: 'GENEVA'
+                })
+              }).catch(() => {});
+            }
+          }
+        }
+      } catch {}
 
       return nextList;
     });
@@ -873,11 +1004,14 @@ export default function AdminDashboardClient() {
   const getProductTotalStock = (p: ProductItem): number => {
     if (p.variants && p.variants.length > 0) {
       return p.variants.reduce(
-        (sum, v) => sum + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0)),
+        (sum, v) => sum + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (typeof v.stockGeneva === 'number' ? (v.stockGeneva || 0) : (v.inStock !== false ? 15 : 0))),
         0
       );
     }
-    return 20;
+    if (typeof p.stockGeneva === 'number' || typeof p.stockPortugal === 'number') {
+      return (p.stockGeneva || 0) + (p.stockPortugal || 0);
+    }
+    return 0;
   };
 
   // Generate valid Swiss EAN-13 code (starts with 764)
@@ -903,10 +1037,12 @@ export default function AdminDashboardClient() {
     if (product.variants && product.variants.length > 0) {
       product.variants.forEach(v => {
         const key = v.id || v.sku;
-        initial[key] = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0);
+        initial[key] = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (typeof v.stockGeneva === 'number' ? v.stockGeneva : (v.inStock !== false ? 15 : 0));
       });
     } else {
-      initial['def'] = 20;
+      initial['def'] = (typeof product.stockGeneva === 'number' || typeof product.stockPortugal === 'number')
+        ? (product.stockGeneva || 0) + (product.stockPortugal || 0)
+        : 0;
     }
     setQuickStockValues(initial);
   };
@@ -915,13 +1051,20 @@ export default function AdminDashboardClient() {
   const handleSaveQuickStock = () => {
     if (!quickStockProduct) return;
     const prodId = quickStockProduct.id;
+    const cleanId = prodId.replace(/^prod-/, '');
+
+    let computedTotalStock = 0;
+    const variantStockList: { variantId?: string; variantSku?: string; quantity: number }[] = [];
+
     setAllProducts(prev => {
       const next = prev.map(p => {
         if (p.id !== prodId) return p;
         if (!p.variants || p.variants.length === 0) {
-          const newQty = Math.max(0, quickStockValues['def'] ?? 20);
+          const newQty = Math.max(0, quickStockValues['def'] ?? 0);
+          computedTotalStock = newQty;
           return {
             ...p,
+            stockGeneva: newQty,
             variants: [{
               id: 'def',
               sku: p.id,
@@ -936,15 +1079,60 @@ export default function AdminDashboardClient() {
         const updatedVars = p.variants.map(v => {
           const key = v.id || v.sku;
           const newQty = Math.max(0, quickStockValues[key] ?? (v.inventoryQuantity || 0));
+          computedTotalStock += newQty;
+          variantStockList.push({
+            variantId: v.id,
+            variantSku: v.sku,
+            quantity: newQty
+          });
           return {
             ...v,
             inventoryQuantity: newQty,
+            stockGeneva: newQty,
             inStock: newQty > 0
           };
         });
-        return { ...p, variants: updatedVars };
+        return {
+          ...p,
+          stockGeneva: computedTotalStock,
+          variants: updatedVars
+        };
       });
 
+      // 1. Persist to localStorage['nutrifitness_stock_overrides']
+      try {
+        const savedStock = localStorage.getItem('nutrifitness_stock_overrides');
+        const stockMap = savedStock ? JSON.parse(savedStock) : {};
+        const changedProd = next.find(p => p.id === prodId);
+        const entry = {
+          geneva: computedTotalStock,
+          portugal: changedProd?.stockPortugal || 0,
+          total: computedTotalStock + (changedProd?.stockPortugal || 0),
+          inStock: computedTotalStock > 0,
+          variants: Object.fromEntries(
+            (changedProd?.variants || []).map(v => [
+              (v.id || v.sku || '').toLowerCase().trim(),
+              {
+                geneva: v.inventoryQuantity || 0,
+                portugal: 0,
+                total: v.inventoryQuantity || 0,
+                inStock: (v.inventoryQuantity || 0) > 0
+              }
+            ])
+          )
+        };
+        stockMap[prodId] = entry;
+        stockMap[cleanId] = entry;
+        stockMap[`prod-${cleanId}`] = entry;
+        if (quickStockProduct.slug?.fr) {
+          stockMap[quickStockProduct.slug.fr.toLowerCase().trim()] = entry;
+        }
+        localStorage.setItem('nutrifitness_stock_overrides', JSON.stringify(stockMap));
+      } catch (e) {
+        console.error('Error saving stock override', e);
+      }
+
+      // 2. Persist to localStorage['nutrifitness_custom_products']
       try {
         const saved = localStorage.getItem('nutrifitness_custom_products');
         let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
@@ -961,12 +1149,160 @@ export default function AdminDashboardClient() {
       return next;
     });
 
+    // 3. Asynchronously persist to Supabase Database (/api/admin/stock)
+    try {
+      if (variantStockList.length > 0) {
+        for (const vItem of variantStockList) {
+          fetch('/api/admin/stock/', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({
+              productId: prodId,
+              variantId: vItem.variantId,
+              variantSku: vItem.variantSku,
+              quantity: vItem.quantity,
+              origin: 'GENEVA'
+            })
+          }).catch(console.error);
+        }
+      } else {
+        fetch('/api/admin/stock/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: prodId,
+            quantity: computedTotalStock,
+            origin: 'GENEVA'
+          })
+        }).catch(console.error);
+      }
+    } catch (err) {
+      console.error('Database stock sync failed:', err);
+    }
+
     setScanFeedback({
-      message: `Stock mis à jour pour "${quickStockProduct.name.fr}" !`,
+      message: `Stock mis à jour (${computedTotalStock} unités) pour "${quickStockProduct.name.fr}" !`,
       type: 'success'
     });
     setTimeout(() => setScanFeedback(null), 3000);
     setQuickStockProduct(null);
+  };
+
+  // Quick Inline Stock Adjustment (+1 / -1) from Catalog Table
+  const handleQuickAdjustStock = (product: ProductItem, delta: number, e?: React.MouseEvent) => {
+    if (e) {
+      e.preventDefault();
+      e.stopPropagation();
+    }
+    const currentTotal = getProductTotalStock(product);
+    const newTotal = Math.max(0, currentTotal + delta);
+    const prodId = product.id;
+    const cleanId = prodId.replace(/^prod-/, '');
+
+    // 1. Update state
+    setAllProducts(prev => {
+      const next = prev.map(p => {
+        if (p.id !== prodId) return p;
+        if (!p.variants || p.variants.length === 0) {
+          return {
+            ...p,
+            stockGeneva: newTotal,
+            variants: [{
+              id: 'def',
+              sku: p.id,
+              flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
+              format: '1 unité',
+              priceChf: p.priceChf,
+              inventoryQuantity: newTotal,
+              inStock: newTotal > 0
+            }]
+          };
+        }
+        // Adjust the first variant or distribute
+        const updatedVariants = p.variants.map((v, idx) => {
+          if (idx === 0) {
+            const vCurrent = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0);
+            const vNew = Math.max(0, vCurrent + delta);
+            return { ...v, inventoryQuantity: vNew, inStock: vNew > 0 };
+          }
+          return v;
+        });
+        const sumVariants = updatedVariants.reduce((sum, v) => sum + (v.inventoryQuantity || 0), 0);
+        return {
+          ...p,
+          stockGeneva: sumVariants,
+          variants: updatedVariants
+        };
+      });
+
+      // 2. Persist to localStorage['nutrifitness_stock_overrides']
+      try {
+        const savedStock = localStorage.getItem('nutrifitness_stock_overrides');
+        const stockMap = savedStock ? JSON.parse(savedStock) : {};
+        const changedProd = next.find(p => p.id === prodId);
+        const finalTot = changedProd ? getProductTotalStock(changedProd) : newTotal;
+        const entry = {
+          geneva: finalTot,
+          portugal: changedProd?.stockPortugal || 0,
+          total: finalTot + (changedProd?.stockPortugal || 0),
+          inStock: finalTot > 0,
+          variants: Object.fromEntries(
+            (changedProd?.variants || []).map(v => [
+              (v.id || v.sku || '').toLowerCase().trim(),
+              {
+                geneva: v.inventoryQuantity || 0,
+                portugal: 0,
+                total: v.inventoryQuantity || 0,
+                inStock: (v.inventoryQuantity || 0) > 0
+              }
+            ])
+          )
+        };
+        stockMap[prodId] = entry;
+        stockMap[cleanId] = entry;
+        stockMap[`prod-${cleanId}`] = entry;
+        if (product.slug?.fr) {
+          stockMap[product.slug.fr.toLowerCase().trim()] = entry;
+        }
+        localStorage.setItem('nutrifitness_stock_overrides', JSON.stringify(stockMap));
+      } catch (err) {
+        console.error('Error saving stock override', err);
+      }
+
+      // 3. Persist to localStorage['nutrifitness_custom_products']
+      try {
+        const saved = localStorage.getItem('nutrifitness_custom_products');
+        let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
+        const changedProd = next.find(p => p.id === prodId);
+        if (changedProd) {
+          const idx = customItems.findIndex(p => p.id === prodId);
+          if (idx >= 0) customItems[idx] = changedProd;
+          else customItems = [changedProd, ...customItems];
+          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
+        }
+      } catch {}
+
+      return next;
+    });
+
+    // 4. Sync to Supabase Database
+    try {
+      fetch('/api/admin/stock/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: prodId,
+          delta: delta,
+          origin: 'GENEVA'
+        })
+      }).catch(console.error);
+    } catch {}
+
+    setScanFeedback({
+      message: `Stock: ${newTotal} unités pour "${product.name.fr}"`,
+      type: 'success'
+    });
+    setTimeout(() => setScanFeedback(null), 2000);
   };
 
   // Open Barcode / GTIN modal
@@ -1564,18 +1900,59 @@ export default function AdminDashboardClient() {
         const updatedVariants = (p.variants || []).map(v => {
           const matching = soldInTicket.find(it => it.variantId === v.id || it.variantId === v.sku || it.sku === v.sku);
           if (matching) {
-            const currentStock = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : 15;
+            const currentStock = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (typeof v.stockGeneva === 'number' ? v.stockGeneva : 15);
             const newQty = Math.max(0, currentStock - matching.quantity);
             return {
               ...v,
               inventoryQuantity: newQty,
+              stockGeneva: newQty,
               inStock: newQty > 0
             };
           }
           return v;
         });
-        return { ...p, variants: updatedVariants };
+        const totalStock = updatedVariants.reduce((sum, v) => sum + (v.inventoryQuantity || 0), 0);
+        return { ...p, stockGeneva: totalStock, variants: updatedVariants };
       });
+
+      // 1. Persist to localStorage['nutrifitness_stock_overrides']
+      try {
+        const savedStock = localStorage.getItem('nutrifitness_stock_overrides');
+        const stockMap = savedStock ? JSON.parse(savedStock) : {};
+        ticketItems.forEach(it => {
+          const changed = next.find(p => p.id === it.productId);
+          if (changed) {
+            const tot = getProductTotalStock(changed);
+            const cleanId = changed.id.replace(/^prod-/, '');
+            const entry = {
+              geneva: tot,
+              portugal: changed.stockPortugal || 0,
+              total: tot + (changed.stockPortugal || 0),
+              inStock: tot > 0,
+              variants: Object.fromEntries(
+                (changed.variants || []).map(v => [
+                  (v.id || v.sku || '').toLowerCase().trim(),
+                  {
+                    geneva: v.inventoryQuantity || 0,
+                    portugal: 0,
+                    total: v.inventoryQuantity || 0,
+                    inStock: (v.inventoryQuantity || 0) > 0
+                  }
+                ])
+              )
+            };
+            stockMap[changed.id] = entry;
+            stockMap[cleanId] = entry;
+            stockMap[`prod-${cleanId}`] = entry;
+            if (changed.slug?.fr) stockMap[changed.slug.fr.toLowerCase().trim()] = entry;
+          }
+        });
+        localStorage.setItem('nutrifitness_stock_overrides', JSON.stringify(stockMap));
+      } catch (err) {
+        console.error('Error saving stock override during POS checkout', err);
+      }
+
+      // 2. Persist to localStorage['nutrifitness_custom_products']
       try {
         const saved = localStorage.getItem('nutrifitness_custom_products');
         let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
@@ -1589,6 +1966,22 @@ export default function AdminDashboardClient() {
         });
         localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
       } catch {}
+
+      // 3. Sync to Supabase Database
+      ticketItems.forEach(it => {
+        fetch('/api/admin/stock/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: it.productId,
+            variantId: it.variantId,
+            variantSku: it.sku,
+            delta: -it.quantity,
+            origin: 'GENEVA'
+          })
+        }).catch(console.error);
+      });
+
       return next;
     });
 
@@ -2286,8 +2679,9 @@ export default function AdminDashboardClient() {
                 const img = product.images[0]?.src || '/images/placeholder.webp';
                 const hasMultipleVariants = (product.variants?.length || 0) > 1;
                 const stock = getProductTotalStock(product);
-                const isCritical = stock < 5;
-                const isMedium = stock <= 10 && !isCritical;
+                const isRupture = stock === 0;
+                const isCritical = stock > 0 && stock < 5;
+                const isMedium = stock >= 5 && stock <= 10;
                 const isOptimal = stock > 10;
 
                 return (
@@ -2297,19 +2691,24 @@ export default function AdminDashboardClient() {
                       if (hasMultipleVariants) {
                         setVariantPickerProduct(product);
                       } else {
+                        if (isRupture && typeof window !== 'undefined' && !window.confirm(`"${product.name.fr}" est actuellement en RUPTURE DE STOCK (0 unité). Voulez-vous tout de même l'ajouter au ticket ?`)) {
+                          return;
+                        }
                         const defaultVariant = product.variants?.[0] || {
                           id: 'def',
                           sku: product.id,
                           flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
                           format: '1 unité',
                           priceChf: product.priceChf,
-                          inventoryQuantity: 20,
-                          inStock: true
+                          inventoryQuantity: stock,
+                          inStock: stock > 0
                         };
                         addToPosTicket(product, defaultVariant);
                       }
                     }}
-                    className="bg-white rounded-2xl border border-slate-200 p-3 hover:border-emerald-500 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group active:scale-97 select-none"
+                    className={`bg-white rounded-2xl border p-3 hover:shadow-md transition-all cursor-pointer flex flex-col justify-between group active:scale-97 select-none ${
+                      isRupture ? 'border-red-200 hover:border-red-400 opacity-90' : 'border-slate-200 hover:border-emerald-500'
+                    }`}
                   >
                     <div>
                       {/* Image Frame */}
@@ -2324,11 +2723,15 @@ export default function AdminDashboardClient() {
                         <span className="absolute top-2 left-2 px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-800 text-[9px] font-black">
                           🇨🇭 Rayon
                         </span>
-                        {hasMultipleVariants && (
+                        {isRupture ? (
+                          <span className="absolute top-2 right-2 px-1.5 py-0.5 rounded-md bg-red-600 text-white text-[9px] font-black shadow-2xs">
+                            RUPTURE
+                          </span>
+                        ) : hasMultipleVariants ? (
                           <span className="absolute top-2 right-2 px-1.5 py-0.5 rounded-md bg-amber-100 text-amber-900 border border-amber-300 text-[9px] font-black shadow-2xs">
                             {product.variants?.length} Saveurs
                           </span>
-                        )}
+                        ) : null}
                       </div>
 
                       {/* Brand & Name */}
@@ -2347,7 +2750,9 @@ export default function AdminDashboardClient() {
                           onClick={() => openQuickStockModal(product)}
                           title={adminLang === 'fr' ? 'Modifier le stock en direct (sans quitter la caisse)' : 'Quick edit stock on the fly'}
                           className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold border transition-all hover:scale-102 active:scale-95 shadow-2xs ${
-                            isCritical
+                            isRupture
+                              ? 'bg-red-100 text-red-800 border-red-400 ring-1 ring-red-500/30'
+                              : isCritical
                               ? 'bg-red-50 text-red-700 border-red-300 hover:bg-red-100 ring-1 ring-red-400/20'
                               : isMedium
                               ? 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100 ring-1 ring-amber-400/20'
@@ -2355,9 +2760,9 @@ export default function AdminDashboardClient() {
                           }`}
                         >
                           <span className={`w-1.5 h-1.5 rounded-full ${
-                            isCritical ? 'bg-red-500 animate-pulse' : isMedium ? 'bg-amber-500' : 'bg-emerald-500'
+                            isRupture ? 'bg-red-600' : isCritical ? 'bg-red-500 animate-pulse' : isMedium ? 'bg-amber-500' : 'bg-emerald-500'
                           }`} />
-                          <span className="notranslate">{stock} en stock</span>
+                          <span className="notranslate">{isRupture ? 'Rupture (0)' : `${stock} en stock`}</span>
                           <Edit3 className="w-2.5 h-2.5 opacity-60 ml-0.5" />
                         </button>
 
@@ -2882,47 +3287,80 @@ export default function AdminDashboardClient() {
                           )}
                         </td>
 
-                        {/* Stock Column (Replaces Variations & Flavors) */}
+                        {/* Stock Column (Interactive controls: [-], [quantity badge], [+]) */}
                         <td className="py-3 px-4" onClick={(e) => e.stopPropagation()}>
                           {(() => {
-                            const totalStock = product.variants && product.variants.length > 0
-                              ? product.variants.reduce(
-                                  (sum, v) => sum + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0)), 
-                                  0
-                                )
-                              : 20;
-
-                            const isCritical = totalStock < 5;
-                            const isMedium = totalStock <= 10 && !isCritical;
+                            const totalStock = getProductTotalStock(product);
+                            const isRupture = totalStock === 0;
+                            const isCritical = totalStock > 0 && totalStock < 5;
+                            const isMedium = totalStock >= 5 && totalStock <= 10;
                             const isOptimal = totalStock > 10;
 
                             return (
                               <div className="flex flex-col gap-1 items-start">
-                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-black border shadow-2xs ${
-                                  isCritical
-                                    ? 'bg-red-50 text-red-700 border-red-300 ring-1 ring-red-400/20'
-                                    : isMedium
-                                    ? 'bg-amber-50 text-amber-800 border-amber-300 ring-1 ring-amber-400/20'
-                                    : 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-400/20'
-                                }`}>
-                                  <span className={`w-2 h-2 rounded-full ${
-                                    isCritical
-                                      ? 'bg-red-500 animate-pulse'
-                                      : isMedium
-                                      ? 'bg-amber-500'
-                                      : 'bg-emerald-500'
-                                  }`} />
-                                  <span>{totalStock} {totalStock <= 1 ? 'unité' : 'unités'}</span>
-                                </span>
+                                <div className="flex items-center gap-1.5">
+                                  {/* Quick minus button */}
+                                  <button
+                                    type="button"
+                                    onClick={(e) => handleQuickAdjustStock(product, -1, e)}
+                                    title="Diminuer stock (-1)"
+                                    className="w-6 h-6 rounded-md bg-slate-100 hover:bg-red-100 hover:text-red-700 text-slate-700 font-bold flex items-center justify-center text-xs transition-colors border border-slate-200 active:scale-95 cursor-pointer"
+                                  >
+                                    -
+                                  </button>
+
+                                  {/* Stock Badge button - click to open modal */}
+                                  <button
+                                    type="button"
+                                    onClick={() => openQuickStockModal(product)}
+                                    title="Cliquer pour ajuster le stock détaillé par saveur"
+                                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-black border shadow-2xs hover:scale-102 active:scale-98 transition-transform cursor-pointer ${
+                                      isRupture
+                                        ? 'bg-red-100 text-red-800 border-red-400 ring-1 ring-red-500/30'
+                                        : isCritical
+                                        ? 'bg-red-50 text-red-700 border-red-300 ring-1 ring-red-400/20'
+                                        : isMedium
+                                        ? 'bg-amber-50 text-amber-800 border-amber-300 ring-1 ring-amber-400/20'
+                                        : 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-400/20'
+                                    }`}
+                                  >
+                                    <span className={`w-2 h-2 rounded-full ${
+                                      isRupture
+                                        ? 'bg-red-600'
+                                        : isCritical
+                                        ? 'bg-red-500 animate-pulse'
+                                        : isMedium
+                                        ? 'bg-amber-500'
+                                        : 'bg-emerald-500'
+                                    }`} />
+                                    <span>{totalStock} {totalStock <= 1 ? 'unité' : 'unités'}</span>
+                                    <Edit3 className="w-2.5 h-2.5 opacity-60 ml-0.5" />
+                                  </button>
+
+                                  {/* Quick plus button */}
+                                  <button
+                                    type="button"
+                                    onClick={(e) => handleQuickAdjustStock(product, 1, e)}
+                                    title="Augmenter stock (+1)"
+                                    className="w-6 h-6 rounded-md bg-slate-100 hover:bg-emerald-100 hover:text-emerald-700 text-slate-700 font-bold flex items-center justify-center text-xs transition-colors border border-slate-200 active:scale-95 cursor-pointer"
+                                  >
+                                    +
+                                  </button>
+                                </div>
+
                                 <span className={`text-[10px] font-bold ${
-                                  isCritical
+                                  isRupture
+                                    ? 'text-red-700'
+                                    : isCritical
                                     ? 'text-red-600'
                                     : isMedium
                                     ? 'text-amber-700'
                                     : 'text-emerald-700'
                                 }`}>
-                                  {isCritical
-                                    ? '🔴 Critique (< 5)'
+                                  {isRupture
+                                    ? '🔴 Rupture de stock (0)'
+                                    : isCritical
+                                    ? '⚠️ Critique (< 5)'
                                     : isMedium
                                     ? '🟡 Moyen (≤ 10)'
                                     : '🟢 En stock (> 10)'}

@@ -85,6 +85,9 @@ interface StoreContextType {
   isProductVisible: (itemOrSlug: any) => boolean;
   isProductDeliverable: (itemOrSlug: any, targetCountry?: string) => boolean;
   refreshHiddenProducts: () => Promise<void>;
+  stockMap: Record<string, any>;
+  getProductStock: (itemOrSlug: any, variantKey?: string) => { inStock: boolean; total: number; geneva: number; portugal: number } | null;
+  refreshStock: () => Promise<void>;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -223,20 +226,71 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     } catch {}
   };
 
+  const [stockMap, setStockMap] = useState<Record<string, any>>({});
+
+  const refreshStock = async () => {
+    try {
+      let mergedStocks: Record<string, any> = {};
+      const res = await fetch('/api/admin/stock/', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.stocks) mergedStocks = data.stocks;
+      }
+      try {
+        const localStock = localStorage.getItem('nutrifitness_stock_overrides');
+        if (localStock) {
+          const parsed = JSON.parse(localStock);
+          mergedStocks = { ...mergedStocks, ...parsed };
+        }
+      } catch {}
+      setStockMap(mergedStocks);
+    } catch {}
+  };
+
+  const getProductStock = (itemOrSlug: any, variantKey?: string): { inStock: boolean; total: number; geneva: number; portugal: number } | null => {
+    if (!itemOrSlug) return null;
+    let slug = '';
+    let id = '';
+    let sku = '';
+    if (typeof itemOrSlug === 'string') {
+      slug = itemOrSlug.toLowerCase().trim();
+      id = slug;
+    } else {
+      slug = (itemOrSlug.slug?.fr || itemOrSlug.slug || '').toLowerCase().trim();
+      id = (itemOrSlug.id || '').toLowerCase().trim();
+      sku = (itemOrSlug.sku || itemOrSlug.variants?.[0]?.sku || '').toLowerCase().trim();
+    }
+    const cleanId = id.replace(/^prod-/, '');
+    const entry = stockMap[id] || stockMap[cleanId] || stockMap[`prod-${cleanId}`] || (slug ? stockMap[slug] : null) || (sku ? stockMap[sku] : null);
+    if (!entry) return null;
+
+    if (variantKey && entry.variants) {
+      const vK = variantKey.toLowerCase().trim();
+      const vStock = entry.variants[vK];
+      if (vStock) return vStock;
+    }
+
+    return entry;
+  };
+
   useEffect(() => {
     refreshHiddenProducts();
+    refreshStock();
   }, []);
 
   const isProductDeliverable = (itemOrSlug: any, targetCountry: string = countryCode): boolean => {
     if (!itemOrSlug) return false;
     if (typeof itemOrSlug === 'object') {
       if (itemOrSlug.isEbook || itemOrSlug.categorySlug === 'guides-ebooks') return true;
+      const stockCheck = getProductStock(itemOrSlug);
+      const effectiveGen = stockCheck ? stockCheck.geneva : itemOrSlug.stockGeneva;
+      const effectivePt = stockCheck ? stockCheck.portugal : itemOrSlug.stockPortugal;
       return isProductDeliverableToCountry(
         targetCountry || 'CH',
         itemOrSlug.locationType,
         itemOrSlug.shippingOrigin,
-        itemOrSlug.stockGeneva,
-        itemOrSlug.stockPortugal
+        effectiveGen,
+        effectivePt
       );
     }
     return true;
@@ -512,8 +566,21 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const shippingOrigin = product.shippingOrigin || (isCommon ? 'common' : isPortugal ? 'portugal' : 'switzerland');
     const locationType = product.locationType || (isCommon ? 'COMMON' : isPortugal ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY');
 
+    const stockCheck = !isEbook ? getProductStock(product, flavor) : null;
+    const effectiveStockGeneva = stockCheck ? stockCheck.geneva : product.stockGeneva;
+    const effectiveStockPortugal = stockCheck ? stockCheck.portugal : product.stockPortugal;
+
+    // Hard stock check: block out of stock items
+    if (!isEbook && stockCheck && stockCheck.total <= 0) {
+      showToast(
+        'Rupture de stock',
+        `Cet article (${name}${flavor && flavor !== 'Standard' ? ` - ${flavor}` : ''}) est actuellement en rupture de stock.`
+      );
+      return;
+    }
+
     // Hard deliverability check: block non-deliverable items for selected country
-    if (!isEbook && !isProductDeliverableToCountry(countryCode || 'CH', locationType, shippingOrigin, product.stockGeneva, product.stockPortugal)) {
+    if (!isEbook && !isProductDeliverableToCountry(countryCode || 'CH', locationType, shippingOrigin, effectiveStockGeneva, effectiveStockPortugal)) {
       showToast(
         'Non livrable dans votre pays',
         `Cet article (${name}) n'est pas disponible pour la livraison en ${countryCode}.`
@@ -737,7 +804,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         hiddenSlugs,
         isProductVisible,
         isProductDeliverable,
-        refreshHiddenProducts
+        refreshHiddenProducts,
+        stockMap,
+        getProductStock,
+        refreshStock
       }}
     >
       {children}
