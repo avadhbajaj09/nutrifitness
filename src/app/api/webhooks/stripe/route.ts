@@ -90,6 +90,66 @@ export async function POST(req: Request) {
           clientIp: session.metadata?.client_ip,
           clientUserAgent: session.metadata?.client_user_agent,
         });
+
+        // Ensure order is recorded in database if not already created
+        try {
+          const supabase = getAdminSupabase();
+          const orderNum = String(eventId);
+          const { data: existing } = await supabase
+            .from('orders')
+            .select('id, status')
+            .eq('order_number', orderNum)
+            .maybeSingle();
+
+          if (existing) {
+            // Update status to in_processing if pending
+            if (existing.status === 'pending' || existing.status === 'unpaid') {
+              await supabase
+                .from('orders')
+                .update({ status: 'in_processing' })
+                .eq('order_number', orderNum);
+            }
+          } else {
+            // Insert verified paid order from session metadata
+            await supabase.from('orders').insert({
+              order_number: orderNum,
+              total_amount: value || 0,
+              currency: currency || 'CHF',
+              payment_method: (session.metadata?.payment_selected || 'ONLINE').toUpperCase(),
+              status: 'in_processing',
+              shipping_address: {
+                name: session.metadata?.customer_name || session.customer_details?.name || 'Client',
+                email: email || '',
+                phone: phone || session.metadata?.customer_phone || '',
+                street: session.metadata?.shipping_street || '',
+                city: session.metadata?.shipping_city || '',
+                postalCode: session.metadata?.shipping_postal_code || '',
+                country: session.metadata?.shipping_country || 'CH',
+                stripeSessionId: session.id,
+                confirmedByWebhook: true,
+              },
+              items: [],
+            });
+          }
+        } catch (dbErr) {
+          console.error('[Stripe Webhook] Error updating database order:', dbErr);
+        }
+      }
+    } else if (event.type === 'checkout.session.async_payment_failed' || event.type === 'payment_intent.payment_failed') {
+      const failedObj = event.data?.object;
+      const orderNum =
+        failedObj?.metadata?.order_number ||
+        failedObj?.client_reference_id;
+      if (orderNum) {
+        try {
+          const supabase = getAdminSupabase();
+          await supabase
+            .from('orders')
+            .update({ status: 'payment_failed' })
+            .eq('order_number', orderNum);
+        } catch (failErr) {
+          console.error('[Stripe Webhook] Error recording payment failure:', failErr);
+        }
       }
     } else if (event.type === 'payment_intent.succeeded') {
       const pi = event.data?.object;

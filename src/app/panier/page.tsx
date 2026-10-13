@@ -456,6 +456,17 @@ export default function CartPage() {
             </Link>
           )}
 
+          <p className="text-[10px] text-white/40 text-center pt-2">
+            En commandant, vous acceptez nos{' '}
+            <Link href="/cgv/" className="text-white/60 hover:text-white underline underline-offset-2">
+              CGV
+            </Link>{' '}
+            et nos{' '}
+            <Link href="/mentions-legales/" className="text-white/60 hover:text-white underline underline-offset-2">
+              Mentions Légales
+            </Link>.
+          </p>
+
           {/* Trust strip */}
           <div className="pt-4 border-t border-white/10 space-y-2 text-[11px] text-white/50">
             <p className="flex items-center gap-2">

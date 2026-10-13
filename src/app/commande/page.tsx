@@ -141,6 +141,8 @@ export default function CheckoutPage() {
     } catch {}
   }, []);
 
+
+
   const handleApplyCoupon = async (e?: React.FormEvent) => {
     if (e) e.preventDefault();
     const clean = couponCode.trim().toUpperCase();
@@ -677,6 +679,13 @@ export default function CheckoutPage() {
   const discountedSubtotal = Math.max(0, cartSubtotal - discountAmount);
   const vatEst = (discountedSubtotal * 0.026) / 1.026;
   const grandTotal = discountedSubtotal + totalShippingCost;
+
+  // Ensure paymentMethod falls back to 'card' if TWINT is ineligible
+  useEffect(() => {
+    if (paymentMethod === 'twint' && (currency !== 'CHF' || grandTotal > 5000)) {
+      setPaymentMethod('card');
+    }
+  }, [currency, grandTotal, paymentMethod]);
 
   // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
@@ -1554,40 +1563,54 @@ export default function CheckoutPage() {
                 </div>
               </label>
 
-              {/* TWINT */}
-              <label 
-                className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
-                  paymentMethod === 'twint' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
-                }`}
-              >
-                <input 
-                  type="radio" 
-                  name="payment" 
-                  checked={paymentMethod === 'twint'} 
-                  onChange={() => setPaymentMethod('twint')}
-                  className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
-                />
-                <div className="flex-1 text-xs space-y-2">
-                  <div className="flex justify-between font-bold text-white mb-0.5">
-                    <span className="flex items-center gap-2">
-                      <span className="px-1.5 py-0.5 rounded bg-white text-black font-black text-[10px]">TWINT</span>
-                      <span>TWINT Suisse</span>
-                    </span>
-                    <span className="text-[#F80404] font-bold">Instantané</span>
-                  </div>
-                  <p className="text-white/60">Payez avec l&apos;app TWINT de votre banque suisse (UBS, PostFinance, Raiffeisen, BCGE, etc.). Vous serez redirigé vers une page de paiement sécurisée Stripe.</p>
-
-                  {paymentMethod === 'twint' && (
-                    <div className="mt-3 p-3 bg-black/50 rounded-xl border border-white/10 flex items-center gap-3">
-                      <span className="text-2xl">📱</span>
-                      <div className="text-[11px] text-white/75 leading-relaxed">
-                        En cliquant <strong className="text-white">« Payer avec TWINT »</strong>, vous serez redirigé vers Stripe qui générera un QR code TWINT sécurisé.<br/>
-                        Scannez-le avec votre app TWINT pour confirmer le paiement de <strong className="text-white">CHF {grandTotal.toFixed(2)}</strong>.
-                      </div>
+              {/* TWINT (CHF only & max CHF 5'000) */}
+              {currency === 'CHF' && (
+                grandTotal > 5000 ? (
+                  <div className="flex items-start gap-3.5 p-4 rounded-xl border border-white/10 bg-white/5 opacity-60">
+                    <span className="px-1.5 py-0.5 rounded bg-white text-black font-black text-[10px] mt-1 shrink-0">TWINT</span>
+                    <div className="flex-1 text-xs space-y-1">
+                      <div className="font-bold text-white/80">TWINT Suisse (Indisponible au-delà de CHF 5&apos;000)</div>
+                      <p className="text-[11px] text-white/50">
+                        TWINT est plafonné à CHF 5&apos;000 par transaction. Veuillez régler votre commande par carte bancaire.
+                      </p>
                     </div>
-                  )}
-                </div>
-              </label>
+                  </div>
+                ) : (
+                  <label 
+                    className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
+                      paymentMethod === 'twint' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
+                    }`}
+                  >
+                    <input 
+                      type="radio" 
+                      name="payment" 
+                      checked={paymentMethod === 'twint'} 
+                      onChange={() => setPaymentMethod('twint')}
+                      className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
+                    />
+                    <div className="flex-1 text-xs space-y-2">
+                      <div className="flex justify-between font-bold text-white mb-0.5">
+                        <span className="flex items-center gap-2">
+                          <span className="px-1.5 py-0.5 rounded bg-white text-black font-black text-[10px]">TWINT</span>
+                          <span>TWINT Suisse</span>
+                        </span>
+                        <span className="text-[#F80404] font-bold">Instantané</span>
+                      </div>
+                      <p className="text-white/60">Payez avec l&apos;app TWINT de votre banque suisse (UBS, PostFinance, Raiffeisen, BCGE, etc.). Vous serez redirigé vers une page de paiement sécurisée Stripe.</p>
+
+                      {paymentMethod === 'twint' && (
+                        <div className="mt-3 p-3 bg-black/50 rounded-xl border border-white/10 flex items-center gap-3">
+                          <span className="text-2xl">📱</span>
+                          <div className="text-[11px] text-white/75 leading-relaxed">
+                            En cliquant <strong className="text-white">« Payer avec TWINT »</strong>, vous serez redirigé vers Stripe qui générera un QR code TWINT sécurisé.<br/>
+                            Scannez-le avec votre app TWINT pour confirmer le paiement de <strong className="text-white">CHF {grandTotal.toFixed(2)}</strong>.
+                          </div>
+                        </div>
+                      )}
+                    </div>
+                  </label>
+                )
+              )}
 
               {/* PostFinance */}
               <label 
@@ -1774,7 +1797,19 @@ export default function CheckoutPage() {
           </button>
 
           <p className="text-[10px] text-white/40 text-center leading-relaxed">
-            En validant votre commande, vous acceptez nos CGV et notre politique de confidentialité conforme à la nDSG suisse.
+            En validant votre commande, vous acceptez nos{' '}
+            <Link href="/cgv/" target="_blank" className="text-white/60 hover:text-white underline underline-offset-2">
+              CGV
+            </Link>
+            , nos{' '}
+            <Link href="/mentions-legales/" target="_blank" className="text-white/60 hover:text-white underline underline-offset-2">
+              Mentions Légales
+            </Link>{' '}
+            et notre{' '}
+            <Link href="/protection-donnees/" target="_blank" className="text-white/60 hover:text-white underline underline-offset-2">
+              politique de confidentialité
+            </Link>{' '}
+            conforme à la nDSG suisse.
           </p>
         </div>
       </form>
