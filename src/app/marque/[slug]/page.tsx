@@ -86,7 +86,6 @@ export default async function BrandPage({ params }: BrandPageProps) {
     const id = p.id || '';
     if (hiddenSlugs.has(slug) || hiddenSlugs.has(id)) return false;
     if (brand.slug === 'nutrifitness') return p.brand === 'NutriFitness' || p.brand === 'Nutrifit';
-    if (brand.slug === 'bigs') return p.brand === 'Bigs Supplements' || p.brand === 'Big';
     return p.brand === brand.name || p.brand.toLowerCase() === brand.name.toLowerCase();
   });
 

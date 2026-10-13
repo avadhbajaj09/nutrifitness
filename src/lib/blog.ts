@@ -846,7 +846,6 @@ export const BLOG_POSTS: BlogPost[] = [
       }
     ],
     suggestedProducts: [
-      { name: 'Per4m Hydra Advanced Electrolytes 210g', href: '/produit/hydra-electrolytes-210g/', brand: 'Per4m', badge: 'Anti-Crampes' },
       { name: 'Pronutrition Enerdyn Isotonique 20 Sachets', href: '/produit/20-sachets-enerdyn-orange/', brand: 'Pronutrition.it', badge: 'Recharge Rapide' },
       { name: 'NutriFitness Shaker Anti-Grumeaux 600ml', href: '/produit/nf-shaker-600ml/', brand: 'NutriFitness', badge: '100% Étanche' }
     ],

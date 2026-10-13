@@ -101,10 +101,7 @@ export async function POST(req: Request) {
     const userAgent = req.headers.get('user-agent') || '';
 
     // Create session parameters
-    // For TWINT: must be CHF + explicit payment_method_types=['twint']
-    // For Card: use automatic_payment_methods to include Apple Pay, Google Pay, etc.
-    const isTwint = paymentMethod === 'twint' && normalizedCurrency === 'chf';
-
+    // TWINT is shown automatically by Stripe when currency=CHF and TWINT is enabled in Dashboard
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
       mode: 'payment',
       customer_email: customerEmail || undefined,
@@ -124,11 +121,7 @@ export async function POST(req: Request) {
       },
       success_url: `${baseUrl}/commande/?session_id={CHECKOUT_SESSION_ID}&order_id=${orderNumber || ''}`,
       cancel_url: `${baseUrl}/commande/?canceled=true`,
-      // TWINT requires explicit payment_method_types (not automatic_payment_methods)
-      // eslint-disable-next-line @typescript-eslint/no-explicit-any
-      ...(isTwint
-        ? ({ payment_method_types: ['twint'] } as any)
-        : { automatic_payment_methods: { enabled: true } }),
+      // Stripe automatically presents enabled payment methods (incl. Card, Apple Pay, TWINT in CHF) based on Dashboard configuration
     };
 
     // Apply pre-selected coupon or allow typing promo code in Stripe Checkout
@@ -173,7 +166,8 @@ export async function POST(req: Request) {
 
     // In modern Stripe Checkout, let Stripe automatically present the best payment methods
     // (Card, Apple Pay, Google Pay, TWINT if CHF in CH, etc.)
-    const session = await stripe.checkout.sessions.create(sessionParams);
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    const session = await stripe.checkout.sessions.create(sessionParams as any);
 
     return NextResponse.json({
       sessionId: session.id,

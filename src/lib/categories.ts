@@ -398,7 +398,6 @@ export const CATEGORIES_DATA: CategoryData[] = [
       { title: 'Guide : Électrolytes et boissons isotoniques', href: '/blog/electrolytes-boisson-isotonique/' }
     ],
     featuredProductNames: [
-      'Hydra Électrolytes 210g Per4m',
       'Dirty Cluster Dex 1kg Dirty Squads',
       'Frutilu Hydratation Sachets Pronutrition'
     ],
@@ -598,7 +597,6 @@ export const CATEGORIES_DATA: CategoryData[] = [
     ],
     featuredProductNames: [
       'Sandwich Keto Bar Pronutrition',
-      'Max Protein Cookie Bigs',
       'Farine d\'avoine 1kg Pronutrition',
       'Crème de riz 1.4kg Marvelous',
       'Beurre de cacahuète 1kg Bodyattack'

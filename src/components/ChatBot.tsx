@@ -149,7 +149,6 @@ export default function ChatBot() {
       case 'intra_workout_prods': {
         const prods = getProductsBySlugs([
           'hype-amino-270g',
-          'hydra-electrolytes-210g',
           'nf-shaker-600ml'
         ]);
         const userMsg: ChatMessage = {
