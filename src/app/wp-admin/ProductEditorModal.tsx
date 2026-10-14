@@ -272,14 +272,26 @@ export default function ProductEditorModal({
   const handleGlobalStockChange = (newQty: number) => {
     const qty = Math.max(0, newQty);
     if (variants.length <= 1) {
-      setVariants(prev => prev.map(v => ({ ...v, inventoryQuantity: qty, inStock: qty > 0 })));
+      setVariants(prev => prev.map(v => ({
+        ...v,
+        inventoryQuantity: qty,
+        stockGeneva: shippingOrigin === 'portugal' ? 0 : qty,
+        stockPortugal: shippingOrigin === 'switzerland' ? 0 : qty,
+        inStock: qty > 0
+      })));
     } else {
       setVariants(prev => {
         const perVar = Math.floor(qty / prev.length);
         const remainder = qty % prev.length;
         return prev.map((v, i) => {
           const vQty = perVar + (i === 0 ? remainder : 0);
-          return { ...v, inventoryQuantity: vQty, inStock: vQty > 0 };
+          return {
+            ...v,
+            inventoryQuantity: vQty,
+            stockGeneva: shippingOrigin === 'portugal' ? 0 : vQty,
+            stockPortugal: shippingOrigin === 'switzerland' ? 0 : vQty,
+            inStock: vQty > 0
+          };
         });
       });
     }
@@ -390,8 +402,14 @@ export default function ProductEditorModal({
       shippingOrigin,
       locationType: shippingOrigin === 'common' ? 'COMMON' : shippingOrigin === 'portugal' ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY',
       mainLocation: shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA',
-      stockGeneva: variants.reduce((acc, v) => acc + (typeof v.stockGeneva === 'number' ? v.stockGeneva : shippingOrigin === 'portugal' ? 0 : Number(v.inventoryQuantity) || 0), 0),
-      stockPortugal: variants.reduce((acc, v) => acc + (typeof v.stockPortugal === 'number' ? v.stockPortugal : shippingOrigin === 'switzerland' ? 0 : Number(v.inventoryQuantity) || 0), 0),
+      stockGeneva: variants.reduce((acc, v) => {
+        const qty = Number(v.inventoryQuantity) || 0;
+        return acc + (shippingOrigin === 'portugal' ? 0 : (typeof v.stockGeneva === 'number' ? v.stockGeneva : qty));
+      }, 0),
+      stockPortugal: variants.reduce((acc, v) => {
+        const qty = Number(v.inventoryQuantity) || 0;
+        return acc + (shippingOrigin === 'switzerland' ? 0 : (typeof v.stockPortugal === 'number' ? v.stockPortugal : qty));
+      }, 0),
       images: images.map(img => ({
         src: img.src,
         alt: {
@@ -453,8 +471,10 @@ export default function ProductEditorModal({
         bcaaG: finalBcaa
       },
       variants: variants.map(v => {
-        const genQty = typeof v.stockGeneva === 'number' ? v.stockGeneva : shippingOrigin === 'portugal' ? 0 : Number(v.inventoryQuantity) || 0;
-        const ptQty = typeof v.stockPortugal === 'number' ? v.stockPortugal : shippingOrigin === 'switzerland' ? 0 : Number(v.inventoryQuantity) || 0;
+        const qty = Number(v.inventoryQuantity) || 0;
+        const genQty = shippingOrigin === 'portugal' ? 0 : (typeof v.stockGeneva === 'number' ? v.stockGeneva : qty);
+        const ptQty = shippingOrigin === 'switzerland' ? 0 : (typeof v.stockPortugal === 'number' ? v.stockPortugal : qty);
+        const totalQty = genQty + ptQty;
         return {
           ...v,
           priceChf: v.priceChf ? Number(v.priceChf) : finalPriceChf,
@@ -465,9 +485,10 @@ export default function ProductEditorModal({
           compareAtPriceEurEurope: v.compareAtPriceEurEurope ?? finalCompareAtEurEurope,
           priceEur: v.priceEurEurope ?? v.priceEur ?? finalPriceEurEurope,
           compareAtPriceEur: v.compareAtPriceEurEurope ?? v.compareAtPriceEur ?? finalCompareAtEurEurope,
-          inventoryQuantity: shippingOrigin === 'common' ? (genQty + ptQty) : (Number(v.inventoryQuantity) || 0),
+          inventoryQuantity: shippingOrigin === 'common' ? totalQty : qty,
           stockGeneva: genQty,
-          stockPortugal: ptQty
+          stockPortugal: ptQty,
+          inStock: (shippingOrigin === 'common' ? totalQty : qty) > 0
         };
       })
     };

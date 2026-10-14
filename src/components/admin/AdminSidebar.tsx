@@ -53,14 +53,6 @@ export default function AdminSidebar({
       isRoute: false,
     },
     {
-      id: 'locations',
-      label: 'Inventory & Locations',
-      icon: MapPin,
-      badge: undefined,
-      href: '/admin/products',
-      isRoute: true,
-    },
-    {
       id: 'sales',
       label: 'Orders & Sales',
       icon: Receipt,

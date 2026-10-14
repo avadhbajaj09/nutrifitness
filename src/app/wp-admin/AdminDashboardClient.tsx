@@ -740,27 +740,31 @@ export default function AdminDashboardClient() {
       try {
         const prodId = savedProduct.id;
         const cleanId = prodId.replace(/^prod-/, '');
+        const targetOrigin = savedProduct.shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA';
         const totalStock = (savedProduct.variants && savedProduct.variants.length > 0)
-          ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0)), 0)
+          ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0)), 0)
           : ((savedProduct.stockGeneva || 0) + (savedProduct.stockPortugal || 0));
 
         const savedStock = localStorage.getItem('nutrifitness_stock_overrides');
         const stockMap = savedStock ? JSON.parse(savedStock) : {};
         const entry = {
-          geneva: totalStock,
-          portugal: savedProduct.stockPortugal || 0,
-          total: totalStock + (savedProduct.stockPortugal || 0),
+          geneva: targetOrigin === 'PORTUGAL' ? 0 : totalStock,
+          portugal: targetOrigin === 'PORTUGAL' ? totalStock : (savedProduct.stockPortugal || 0),
+          total: totalStock,
           inStock: totalStock > 0,
           variants: Object.fromEntries(
-            (savedProduct.variants || []).map(v => [
-              (v.id || v.sku || '').toLowerCase().trim(),
-              {
-                geneva: typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : 15,
-                portugal: 0,
-                total: typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : 15,
-                inStock: (v.inventoryQuantity ?? 15) > 0
-              }
-            ])
+            (savedProduct.variants || []).map(v => {
+              const vQty = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0);
+              return [
+                (v.id || v.sku || '').toLowerCase().trim(),
+                {
+                  geneva: targetOrigin === 'PORTUGAL' ? 0 : vQty,
+                  portugal: targetOrigin === 'PORTUGAL' ? vQty : 0,
+                  total: vQty,
+                  inStock: vQty > 0
+                }
+              ];
+            })
           )
         };
         stockMap[prodId] = entry;
@@ -776,8 +780,9 @@ export default function AdminDashboardClient() {
 
       // Sync to Supabase Database
       try {
+        const targetOrigin = savedProduct.shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA';
         const totalStock = (savedProduct.variants && savedProduct.variants.length > 0)
-          ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0)), 0)
+          ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0)), 0)
           : ((savedProduct.stockGeneva || 0) + (savedProduct.stockPortugal || 0));
 
         fetch('/api/admin/stock/', {
@@ -786,31 +791,36 @@ export default function AdminDashboardClient() {
           body: JSON.stringify({
             productId: savedProduct.id,
             quantity: totalStock,
-            origin: 'GENEVA'
+            origin: targetOrigin
           })
         }).catch(() => {});
 
         if (savedProduct.variants && savedProduct.variants.length > 0) {
           for (const v of savedProduct.variants) {
-            if (typeof v.inventoryQuantity === 'number') {
-              fetch('/api/admin/stock/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                  productId: savedProduct.id,
-                  variantId: v.id,
-                  variantSku: v.sku,
-                  quantity: v.inventoryQuantity,
-                  origin: 'GENEVA'
-                })
-              }).catch(() => {});
-            }
+            const vQty = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0);
+            fetch('/api/admin/stock/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                productId: savedProduct.id,
+                variantId: v.id,
+                variantSku: v.sku,
+                quantity: vQty,
+                origin: targetOrigin
+              })
+            }).catch(() => {});
           }
         }
       } catch {}
 
       return nextList;
     });
+
+    setScanFeedback({
+      message: `Fiche et stock mis à jour pour "${savedProduct.name.fr}" !`,
+      type: 'success'
+    });
+    setTimeout(() => setScanFeedback(null), 3000);
 
     if (inspectingProduct && inspectingProduct.id === savedProduct.id) {
       setInspectingProduct(savedProduct);
@@ -992,10 +1002,6 @@ export default function AdminDashboardClient() {
   const [variantPickerProduct, setVariantPickerProduct] = useState<ProductItem | null>(null);
   const [variantFilterQuery, setVariantFilterQuery] = useState<string>('');
 
-  // Quick Stock Editing modal state (Feature 1)
-  const [quickStockProduct, setQuickStockProduct] = useState<ProductItem | null>(null);
-  const [quickStockValues, setQuickStockValues] = useState<Record<string, number>>({});
-
   // Quick Barcode / GTIN modal state (Feature 2)
   const [barcodeModalProduct, setBarcodeModalProduct] = useState<ProductItem | null>(null);
   const [barcodeModalValues, setBarcodeModalValues] = useState<Record<string, string>>({});
@@ -1028,281 +1034,6 @@ export default function AdminDashboardClient() {
     }
     const checksum = (10 - (sum % 10)) % 10;
     return body + checksum.toString();
-  };
-
-  // Open Quick Stock modal
-  const openQuickStockModal = (product: ProductItem) => {
-    setQuickStockProduct(product);
-    const initial: Record<string, number> = {};
-    if (product.variants && product.variants.length > 0) {
-      product.variants.forEach(v => {
-        const key = v.id || v.sku;
-        initial[key] = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (typeof v.stockGeneva === 'number' ? v.stockGeneva : (v.inStock !== false ? 15 : 0));
-      });
-    } else {
-      initial['def'] = (typeof product.stockGeneva === 'number' || typeof product.stockPortugal === 'number')
-        ? (product.stockGeneva || 0) + (product.stockPortugal || 0)
-        : 0;
-    }
-    setQuickStockValues(initial);
-  };
-
-  // Save Quick Stock changes directly on the fly
-  const handleSaveQuickStock = () => {
-    if (!quickStockProduct) return;
-    const prodId = quickStockProduct.id;
-    const cleanId = prodId.replace(/^prod-/, '');
-
-    let computedTotalStock = 0;
-    const variantStockList: { variantId?: string; variantSku?: string; quantity: number }[] = [];
-
-    setAllProducts(prev => {
-      const next = prev.map(p => {
-        if (p.id !== prodId) return p;
-        if (!p.variants || p.variants.length === 0) {
-          const newQty = Math.max(0, quickStockValues['def'] ?? 0);
-          computedTotalStock = newQty;
-          return {
-            ...p,
-            stockGeneva: newQty,
-            variants: [{
-              id: 'def',
-              sku: p.id,
-              flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
-              format: '1 unité',
-              priceChf: p.priceChf,
-              inventoryQuantity: newQty,
-              inStock: newQty > 0
-            }]
-          };
-        }
-        const updatedVars = p.variants.map(v => {
-          const key = v.id || v.sku;
-          const newQty = Math.max(0, quickStockValues[key] ?? (v.inventoryQuantity || 0));
-          computedTotalStock += newQty;
-          variantStockList.push({
-            variantId: v.id,
-            variantSku: v.sku,
-            quantity: newQty
-          });
-          return {
-            ...v,
-            inventoryQuantity: newQty,
-            stockGeneva: newQty,
-            inStock: newQty > 0
-          };
-        });
-        return {
-          ...p,
-          stockGeneva: computedTotalStock,
-          variants: updatedVars
-        };
-      });
-
-      // 1. Persist to localStorage['nutrifitness_stock_overrides']
-      try {
-        const savedStock = localStorage.getItem('nutrifitness_stock_overrides');
-        const stockMap = savedStock ? JSON.parse(savedStock) : {};
-        const changedProd = next.find(p => p.id === prodId);
-        const entry = {
-          geneva: computedTotalStock,
-          portugal: changedProd?.stockPortugal || 0,
-          total: computedTotalStock + (changedProd?.stockPortugal || 0),
-          inStock: computedTotalStock > 0,
-          variants: Object.fromEntries(
-            (changedProd?.variants || []).map(v => [
-              (v.id || v.sku || '').toLowerCase().trim(),
-              {
-                geneva: v.inventoryQuantity || 0,
-                portugal: 0,
-                total: v.inventoryQuantity || 0,
-                inStock: (v.inventoryQuantity || 0) > 0
-              }
-            ])
-          )
-        };
-        stockMap[prodId] = entry;
-        stockMap[cleanId] = entry;
-        stockMap[`prod-${cleanId}`] = entry;
-        if (quickStockProduct.slug?.fr) {
-          stockMap[quickStockProduct.slug.fr.toLowerCase().trim()] = entry;
-        }
-        localStorage.setItem('nutrifitness_stock_overrides', JSON.stringify(stockMap));
-      } catch (e) {
-        console.error('Error saving stock override', e);
-      }
-
-      // 2. Persist to localStorage['nutrifitness_custom_products']
-      try {
-        const saved = localStorage.getItem('nutrifitness_custom_products');
-        let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
-        const changedProd = next.find(p => p.id === prodId);
-        if (changedProd) {
-          const idx = customItems.findIndex(p => p.id === prodId);
-          if (idx >= 0) customItems[idx] = changedProd;
-          else customItems = [changedProd, ...customItems];
-          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
-        }
-      } catch (e) {
-        console.error(e);
-      }
-      return next;
-    });
-
-    // 3. Asynchronously persist to Supabase Database (/api/admin/stock)
-    try {
-      if (variantStockList.length > 0) {
-        for (const vItem of variantStockList) {
-          fetch('/api/admin/stock/', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({
-              productId: prodId,
-              variantId: vItem.variantId,
-              variantSku: vItem.variantSku,
-              quantity: vItem.quantity,
-              origin: 'GENEVA'
-            })
-          }).catch(console.error);
-        }
-      } else {
-        fetch('/api/admin/stock/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            productId: prodId,
-            quantity: computedTotalStock,
-            origin: 'GENEVA'
-          })
-        }).catch(console.error);
-      }
-    } catch (err) {
-      console.error('Database stock sync failed:', err);
-    }
-
-    setScanFeedback({
-      message: `Stock mis à jour (${computedTotalStock} unités) pour "${quickStockProduct.name.fr}" !`,
-      type: 'success'
-    });
-    setTimeout(() => setScanFeedback(null), 3000);
-    setQuickStockProduct(null);
-  };
-
-  // Quick Inline Stock Adjustment (+1 / -1) from Catalog Table
-  const handleQuickAdjustStock = (product: ProductItem, delta: number, e?: React.MouseEvent) => {
-    if (e) {
-      e.preventDefault();
-      e.stopPropagation();
-    }
-    const currentTotal = getProductTotalStock(product);
-    const newTotal = Math.max(0, currentTotal + delta);
-    const prodId = product.id;
-    const cleanId = prodId.replace(/^prod-/, '');
-
-    // 1. Update state
-    setAllProducts(prev => {
-      const next = prev.map(p => {
-        if (p.id !== prodId) return p;
-        if (!p.variants || p.variants.length === 0) {
-          return {
-            ...p,
-            stockGeneva: newTotal,
-            variants: [{
-              id: 'def',
-              sku: p.id,
-              flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
-              format: '1 unité',
-              priceChf: p.priceChf,
-              inventoryQuantity: newTotal,
-              inStock: newTotal > 0
-            }]
-          };
-        }
-        // Adjust the first variant or distribute
-        const updatedVariants = p.variants.map((v, idx) => {
-          if (idx === 0) {
-            const vCurrent = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0);
-            const vNew = Math.max(0, vCurrent + delta);
-            return { ...v, inventoryQuantity: vNew, inStock: vNew > 0 };
-          }
-          return v;
-        });
-        const sumVariants = updatedVariants.reduce((sum, v) => sum + (v.inventoryQuantity || 0), 0);
-        return {
-          ...p,
-          stockGeneva: sumVariants,
-          variants: updatedVariants
-        };
-      });
-
-      // 2. Persist to localStorage['nutrifitness_stock_overrides']
-      try {
-        const savedStock = localStorage.getItem('nutrifitness_stock_overrides');
-        const stockMap = savedStock ? JSON.parse(savedStock) : {};
-        const changedProd = next.find(p => p.id === prodId);
-        const finalTot = changedProd ? getProductTotalStock(changedProd) : newTotal;
-        const entry = {
-          geneva: finalTot,
-          portugal: changedProd?.stockPortugal || 0,
-          total: finalTot + (changedProd?.stockPortugal || 0),
-          inStock: finalTot > 0,
-          variants: Object.fromEntries(
-            (changedProd?.variants || []).map(v => [
-              (v.id || v.sku || '').toLowerCase().trim(),
-              {
-                geneva: v.inventoryQuantity || 0,
-                portugal: 0,
-                total: v.inventoryQuantity || 0,
-                inStock: (v.inventoryQuantity || 0) > 0
-              }
-            ])
-          )
-        };
-        stockMap[prodId] = entry;
-        stockMap[cleanId] = entry;
-        stockMap[`prod-${cleanId}`] = entry;
-        if (product.slug?.fr) {
-          stockMap[product.slug.fr.toLowerCase().trim()] = entry;
-        }
-        localStorage.setItem('nutrifitness_stock_overrides', JSON.stringify(stockMap));
-      } catch (err) {
-        console.error('Error saving stock override', err);
-      }
-
-      // 3. Persist to localStorage['nutrifitness_custom_products']
-      try {
-        const saved = localStorage.getItem('nutrifitness_custom_products');
-        let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
-        const changedProd = next.find(p => p.id === prodId);
-        if (changedProd) {
-          const idx = customItems.findIndex(p => p.id === prodId);
-          if (idx >= 0) customItems[idx] = changedProd;
-          else customItems = [changedProd, ...customItems];
-          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
-        }
-      } catch {}
-
-      return next;
-    });
-
-    // 4. Sync to Supabase Database
-    try {
-      fetch('/api/admin/stock/', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          productId: prodId,
-          delta: delta,
-          origin: 'GENEVA'
-        })
-      }).catch(console.error);
-    } catch {}
-
-    setScanFeedback({
-      message: `Stock: ${newTotal} unités pour "${product.name.fr}"`,
-      type: 'success'
-    });
-    setTimeout(() => setScanFeedback(null), 2000);
   };
 
   // Open Barcode / GTIN modal
@@ -2744,27 +2475,23 @@ export default function AdminDashboardClient() {
 
                       {/* Quick Stock & Barcode on-the-fly action chips */}
                       <div className="mt-2 flex items-center gap-1.5 flex-wrap" onClick={(e) => e.stopPropagation()}>
-                        {/* Live Stock Badge (Click to quick-edit stock) */}
-                        <button
-                          type="button"
-                          onClick={() => openQuickStockModal(product)}
-                          title={adminLang === 'fr' ? 'Modifier le stock en direct (sans quitter la caisse)' : 'Quick edit stock on the fly'}
-                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold border transition-all hover:scale-102 active:scale-95 shadow-2xs ${
+                        {/* Live Stock Badge (Read-only status) */}
+                        <div
+                          className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-lg text-[10px] font-bold border shadow-2xs select-none ${
                             isRupture
                               ? 'bg-red-100 text-red-800 border-red-400 ring-1 ring-red-500/30'
                               : isCritical
-                              ? 'bg-red-50 text-red-700 border-red-300 hover:bg-red-100 ring-1 ring-red-400/20'
+                              ? 'bg-red-50 text-red-700 border-red-300 ring-1 ring-red-400/20'
                               : isMedium
-                              ? 'bg-amber-50 text-amber-800 border-amber-300 hover:bg-amber-100 ring-1 ring-amber-400/20'
-                              : 'bg-emerald-50 text-emerald-800 border-emerald-300 hover:bg-emerald-100 ring-1 ring-emerald-400/20'
+                              ? 'bg-amber-50 text-amber-800 border-amber-300 ring-1 ring-amber-400/20'
+                              : 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-400/20'
                           }`}
                         >
                           <span className={`w-1.5 h-1.5 rounded-full ${
                             isRupture ? 'bg-red-600' : isCritical ? 'bg-red-500 animate-pulse' : isMedium ? 'bg-amber-500' : 'bg-emerald-500'
                           }`} />
                           <span className="notranslate">{isRupture ? 'Rupture (0)' : `${stock} en stock`}</span>
-                          <Edit3 className="w-2.5 h-2.5 opacity-60 ml-0.5" />
-                        </button>
+                        </div>
 
                         {/* Barcode / GTIN popup trigger button */}
                         <button
@@ -3287,8 +3014,8 @@ export default function AdminDashboardClient() {
                           )}
                         </td>
 
-                        {/* Stock Column (Interactive controls: [-], [quantity badge], [+]) */}
-                        <td className="py-3 px-4" onClick={(e) => e.stopPropagation()}>
+                        {/* Stock Column (Read-only status: managed exclusively via [Modifier]) */}
+                        <td className="py-3 px-4">
                           {(() => {
                             const totalStock = getProductTotalStock(product);
                             const isRupture = totalStock === 0;
@@ -3298,59 +3025,30 @@ export default function AdminDashboardClient() {
 
                             return (
                               <div className="flex flex-col gap-1 items-start">
-                                <div className="flex items-center gap-1.5">
-                                  {/* Quick minus button */}
-                                  <button
-                                    type="button"
-                                    onClick={(e) => handleQuickAdjustStock(product, -1, e)}
-                                    title="Diminuer stock (-1)"
-                                    className="w-6 h-6 rounded-md bg-slate-100 hover:bg-red-100 hover:text-red-700 text-slate-700 font-bold flex items-center justify-center text-xs transition-colors border border-slate-200 active:scale-95 cursor-pointer"
-                                  >
-                                    -
-                                  </button>
-
-                                  {/* Stock Badge button - click to open modal */}
-                                  <button
-                                    type="button"
-                                    onClick={() => openQuickStockModal(product)}
-                                    title="Cliquer pour ajuster le stock détaillé par saveur"
-                                    className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-black border shadow-2xs hover:scale-102 active:scale-98 transition-transform cursor-pointer ${
-                                      isRupture
-                                        ? 'bg-red-100 text-red-800 border-red-400 ring-1 ring-red-500/30'
-                                        : isCritical
-                                        ? 'bg-red-50 text-red-700 border-red-300 ring-1 ring-red-400/20'
-                                        : isMedium
-                                        ? 'bg-amber-50 text-amber-800 border-amber-300 ring-1 ring-amber-400/20'
-                                        : 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-400/20'
-                                    }`}
-                                  >
-                                    <span className={`w-2 h-2 rounded-full ${
-                                      isRupture
-                                        ? 'bg-red-600'
-                                        : isCritical
-                                        ? 'bg-red-500 animate-pulse'
-                                        : isMedium
-                                        ? 'bg-amber-500'
-                                        : 'bg-emerald-500'
-                                    }`} />
-                                    <span>{totalStock} {totalStock <= 1 ? 'unité' : 'unités'}</span>
-                                    <Edit3 className="w-2.5 h-2.5 opacity-60 ml-0.5" />
-                                  </button>
-
-                                  {/* Quick plus button */}
-                                  <button
-                                    type="button"
-                                    onClick={(e) => handleQuickAdjustStock(product, 1, e)}
-                                    title="Augmenter stock (+1)"
-                                    className="w-6 h-6 rounded-md bg-slate-100 hover:bg-emerald-100 hover:text-emerald-700 text-slate-700 font-bold flex items-center justify-center text-xs transition-colors border border-slate-200 active:scale-95 cursor-pointer"
-                                  >
-                                    +
-                                  </button>
-                                </div>
+                                <span className={`inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full text-xs font-black border shadow-2xs select-none ${
+                                  isRupture
+                                    ? 'bg-red-100 text-red-800 border-red-400 ring-1 ring-red-500/30'
+                                    : isCritical
+                                    ? 'bg-red-50 text-red-700 border-red-300 ring-1 ring-red-400/20'
+                                    : isMedium
+                                    ? 'bg-amber-50 text-amber-800 border-amber-300 ring-1 ring-amber-400/20'
+                                    : 'bg-emerald-50 text-emerald-800 border-emerald-300 ring-1 ring-emerald-400/20'
+                                }`}>
+                                  <span className={`w-2 h-2 rounded-full ${
+                                    isRupture
+                                      ? 'bg-red-600'
+                                      : isCritical
+                                      ? 'bg-red-500 animate-pulse'
+                                      : isMedium
+                                      ? 'bg-amber-500'
+                                      : 'bg-emerald-500'
+                                  }`} />
+                                  <span>{totalStock} {totalStock <= 1 ? 'unité' : 'unités'}</span>
+                                </span>
 
                                 <span className={`text-[10px] font-bold ${
                                   isRupture
-                                    ? 'text-red-700'
+                                    ? 'text-red-700 font-black'
                                     : isCritical
                                     ? 'text-red-600'
                                     : isMedium
@@ -3358,7 +3056,7 @@ export default function AdminDashboardClient() {
                                     : 'text-emerald-700'
                                 }`}>
                                   {isRupture
-                                    ? '🔴 Rupture de stock (0)'
+                                    ? '🔴 Rupture (0)'
                                     : isCritical
                                     ? '⚠️ Critique (< 5)'
                                     : isMedium
@@ -3897,246 +3595,7 @@ export default function AdminDashboardClient() {
         </div>
       </div>
 
-      {/* =========================================================
-          MODAL 1: QUICK STOCK EDITING (ON-THE-FLY FROM POS GRID)
-          ========================================================= */}
-      {quickStockProduct && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="bg-white rounded-3xl p-6 sm:p-7 max-w-lg w-full border border-slate-200 shadow-2xl text-slate-900 animate-in zoom-in-95 duration-150 max-h-[90vh] flex flex-col">
-            
-            {/* Header */}
-            <div className="flex items-start justify-between pb-4 border-b border-slate-100 shrink-0">
-              <div className="pr-4">
-                <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-emerald-50 border border-emerald-200 text-emerald-800 text-[10px] font-black uppercase tracking-wider">
-                  <Zap className="w-3 h-3 text-emerald-600" />
-                  <span>Modification Rapide du Stock Caisse</span>
-                </span>
-                <h3 className="text-base sm:text-lg font-black text-slate-900 font-heading mt-1">
-                  {quickStockProduct.name.fr}
-                </h3>
-                <p className="text-xs text-slate-400 font-medium">
-                  {quickStockProduct.brand} · Rayon physique Genève
-                </p>
-              </div>
-              <button
-                type="button"
-                onClick={() => setQuickStockProduct(null)}
-                className="p-1.5 text-slate-400 hover:text-slate-700 rounded-xl hover:bg-slate-100 transition-colors shrink-0"
-              >
-                <X className="w-5 h-5" />
-              </button>
-            </div>
 
-            {/* Body */}
-            <div className="py-4 space-y-4 overflow-y-auto flex-1 pr-1">
-              {quickStockProduct.variants && quickStockProduct.variants.length > 0 ? (
-                <div className="space-y-3">
-                  <div className="flex items-center justify-between text-xs text-slate-500 font-medium px-1">
-                    <span>Variante / Parfum</span>
-                    <span>Quantité en rayon Genève</span>
-                  </div>
-
-                  {quickStockProduct.variants.map((v) => {
-                    const key = v.id || v.sku;
-                    const curVal = quickStockValues[key] ?? (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0));
-                    const isCrit = curVal < 5;
-                    const isMed = curVal >= 5 && curVal <= 10;
-                    const variantImg = v.image || quickStockProduct.images[0]?.src || '/images/placeholder.webp';
-
-                    return (
-                      <div
-                        key={key}
-                        className="p-3 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col sm:flex-row sm:items-center justify-between gap-3"
-                      >
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div className="relative w-11 h-11 bg-white rounded-xl border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center">
-                            <Image
-                              src={variantImg}
-                              alt={v.flavorName.fr}
-                              fill
-                              sizes="44px"
-                              className="object-contain p-1"
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <p className="font-bold text-xs text-slate-900 truncate">
-                              {v.flavorName.fr}
-                            </p>
-                            <p className="text-[11px] text-slate-500">{v.format}</p>
-                            <span className={`inline-flex items-center gap-1 mt-0.5 px-2 py-0.5 rounded-md text-[10px] font-black border ${
-                              isCrit
-                                ? 'bg-red-50 text-red-700 border-red-300'
-                                : isMed
-                                ? 'bg-amber-50 text-amber-800 border-amber-300'
-                                : 'bg-emerald-50 text-emerald-800 border-emerald-300'
-                            }`}>
-                              <span className={`w-1.5 h-1.5 rounded-full ${
-                                isCrit ? 'bg-red-500 animate-pulse' : isMed ? 'bg-amber-500' : 'bg-emerald-500'
-                              }`} />
-                              <span>{curVal} en rayon</span>
-                            </span>
-                          </div>
-                        </div>
-
-                        {/* Stepper buttons */}
-                        <div className="flex items-center gap-1.5 self-end sm:self-center shrink-0">
-                          <button
-                            type="button"
-                            onClick={() => setQuickStockValues(prev => ({ ...prev, [key]: Math.max(0, curVal - 5) }))}
-                            className="px-2 py-1 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-bold transition-colors"
-                            title="-5 unités"
-                          >
-                            -5
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setQuickStockValues(prev => ({ ...prev, [key]: Math.max(0, curVal - 1) }))}
-                            className="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center font-bold transition-colors"
-                            title="-1 unité"
-                          >
-                            <Minus className="w-3.5 h-3.5" />
-                          </button>
-                          <input
-                            type="number"
-                            min="0"
-                            value={curVal}
-                            onChange={(e) => {
-                              const val = parseInt(e.target.value, 10);
-                              setQuickStockValues(prev => ({ ...prev, [key]: isNaN(val) ? 0 : Math.max(0, val) }));
-                            }}
-                            className="w-14 px-2 py-1.5 bg-white border border-slate-300 rounded-lg text-center font-black text-sm text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setQuickStockValues(prev => ({ ...prev, [key]: curVal + 1 }))}
-                            className="w-8 h-8 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center font-bold transition-colors"
-                            title="+1 unité"
-                          >
-                            <Plus className="w-3.5 h-3.5" />
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setQuickStockValues(prev => ({ ...prev, [key]: curVal + 5 }))}
-                            className="px-2 py-1 rounded-lg bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 text-xs font-bold transition-colors"
-                            title="+5 unités"
-                          >
-                            +5
-                          </button>
-                        </div>
-                      </div>
-                    );
-                  })}
-                </div>
-              ) : (
-                <div className="space-y-4">
-                  {(() => {
-                    const curVal = quickStockValues['def'] ?? 20;
-                    const isCrit = curVal < 5;
-                    const isMed = curVal >= 5 && curVal <= 10;
-                    return (
-                      <div className="p-5 rounded-2xl bg-slate-50 border border-slate-200 text-center space-y-4">
-                        <span className={`inline-flex items-center gap-1.5 px-3 py-1 rounded-full text-xs font-black border ${
-                          isCrit
-                            ? 'bg-red-50 text-red-700 border-red-300'
-                            : isMed
-                            ? 'bg-amber-50 text-amber-800 border-amber-300'
-                            : 'bg-emerald-50 text-emerald-800 border-emerald-300'
-                        }`}>
-                          <span className={`w-2 h-2 rounded-full ${
-                            isCrit ? 'bg-red-500 animate-pulse' : isMed ? 'bg-amber-500' : 'bg-emerald-500'
-                          }`} />
-                          <span>Stock actuel : {curVal} unités ({isCrit ? 'Critique < 5' : isMed ? 'Stock limité 5-10' : 'Optimal > 10'})</span>
-                        </span>
-
-                        <div className="flex items-center justify-center gap-2">
-                          <button
-                            type="button"
-                            onClick={() => setQuickStockValues(prev => ({ ...prev, def: Math.max(0, curVal - 10) }))}
-                            className="px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-xs"
-                          >
-                            -10
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setQuickStockValues(prev => ({ ...prev, def: Math.max(0, curVal - 1) }))}
-                            className="w-10 h-10 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center font-bold"
-                          >
-                            <Minus className="w-4 h-4" />
-                          </button>
-                          <input
-                            type="number"
-                            min="0"
-                            value={curVal}
-                            onChange={(e) => {
-                              const val = parseInt(e.target.value, 10);
-                              setQuickStockValues(prev => ({ ...prev, def: isNaN(val) ? 0 : Math.max(0, val) }));
-                            }}
-                            className="w-24 px-3 py-2 bg-white border border-slate-300 rounded-xl text-center font-black text-2xl text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
-                          />
-                          <button
-                            type="button"
-                            onClick={() => setQuickStockValues(prev => ({ ...prev, def: curVal + 1 }))}
-                            className="w-10 h-10 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 flex items-center justify-center font-bold"
-                          >
-                            <Plus className="w-4 h-4" />
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setQuickStockValues(prev => ({ ...prev, def: curVal + 10 }))}
-                            className="px-3 py-2 rounded-xl bg-white border border-slate-200 hover:bg-slate-100 text-slate-700 font-bold text-xs"
-                          >
-                            +10
-                          </button>
-                        </div>
-
-                        {/* Presets */}
-                        <div className="flex flex-wrap items-center justify-center gap-2 pt-1">
-                          {[
-                            { label: '0 (Rupture)', val: 0 },
-                            { label: '4 (Critique)', val: 4 },
-                            { label: '10 (Moyen)', val: 10 },
-                            { label: '20 (Normal)', val: 20 },
-                            { label: '50 (Plein)', val: 50 },
-                          ].map(preset => (
-                            <button
-                              key={preset.label}
-                              type="button"
-                              onClick={() => setQuickStockValues(prev => ({ ...prev, def: preset.val }))}
-                              className="px-2.5 py-1 bg-white hover:bg-slate-100 border border-slate-200 rounded-lg text-xs font-semibold text-slate-700 transition-colors"
-                            >
-                              {preset.label}
-                            </button>
-                          ))}
-                        </div>
-                      </div>
-                    );
-                  })()}
-                </div>
-              )}
-            </div>
-
-            {/* Footer */}
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 shrink-0">
-              <button
-                type="button"
-                onClick={() => setQuickStockProduct(null)}
-                className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs uppercase tracking-wider"
-              >
-                Annuler
-              </button>
-              <button
-                type="button"
-                onClick={handleSaveQuickStock}
-                className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider shadow-sm flex items-center gap-2 transition-all active:scale-95"
-              >
-                <Check className="w-4 h-4" />
-                <span>Enregistrer le Stock en Direct</span>
-              </button>
-            </div>
-
-          </div>
-        </div>
-      )}
 
       {/* =========================================================
           MODAL 2: GTIN / BARCODE MANAGEMENT (POPUP TOOL)
