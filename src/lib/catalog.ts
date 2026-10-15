@@ -1740,22 +1740,78 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-25678",
-        "sku": "NF-25678",
+        "id": "e5b88c43-4143-4004-92e8-60404296d2eb",
+        "sku": "NF-25685",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "BEURRE DE CACAHUÈTE",
+          "de": "BEURRE DE CACAHUÈTE",
+          "it": "BEURRE DE CACAHUÈTE",
+          "en": "BEURRE DE CACAHUÈTE"
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 7,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-.png",
+        "stockGeneva": 7,
+        "stockPortugal": 0
+      },
+      {
+        "id": "a19cec0d-c4a5-4eae-aa80-e4a6423a0005",
+        "sku": "NF-25686",
+        "flavorName": {
+          "fr": "BEURRE DE CACAHUÈTE & CHOCOLAT",
+          "de": "BEURRE DE CACAHUÈTE & CHOCOLAT",
+          "it": "BEURRE DE CACAHUÈTE & CHOCOLAT",
+          "en": "BEURRE DE CACAHUÈTE & CHOCOLAT"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 9,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CHOCOLAT.png",
+        "stockGeneva": 9,
+        "stockPortugal": 0
+      },
+      {
+        "id": "df808d1f-0676-41f6-b31e-74f840210efa",
+        "sku": "NF-25687",
+        "flavorName": {
+          "fr": "BEURRE DE CACAHUÈTE & VANILLE",
+          "de": "BEURRE DE CACAHUÈTE & VANILLE",
+          "it": "BEURRE DE CACAHUÈTE & VANILLE",
+          "en": "BEURRE DE CACAHUÈTE & VANILLE"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 7,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-VANILLE.png",
+        "stockGeneva": 7,
+        "stockPortugal": 0
+      },
+      {
+        "id": "e3bb3914-e201-4d84-b88a-6a1cb0e93de9",
+        "sku": "NF-25688",
+        "flavorName": {
+          "fr": "BEURRE DE CACAHUÈTE & CARAMEL",
+          "de": "BEURRE DE CACAHUÈTE & CARAMEL",
+          "it": "BEURRE DE CACAHUÈTE & CARAMEL",
+          "en": "BEURRE DE CACAHUÈTE & CARAMEL"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 7,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CARAMEL.png",
+        "stockGeneva": 7,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": true,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 30,
+    "stockPortugal": 0
   },
   {
     "id": "prod-25611",
@@ -2062,22 +2118,44 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-25430",
-        "sku": "NF-25430",
+        "id": "6fc58613-ee6a-4f52-9b4f-e60d89fbd57b",
+        "sku": "NF-25431",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "Français",
+          "de": "Français",
+          "it": "Français",
+          "en": "Français"
         },
         "format": "1 unité",
-        "priceChf": 49.9,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "priceChf": 100,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "/wp-content/uploads/2026/07/livre.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "16bc9666-ca00-49c0-9dd8-e0cd0ef8c30b",
+        "sku": "NF-25432",
+        "flavorName": {
+          "fr": "English",
+          "de": "English",
+          "it": "English",
+          "en": "English"
+        },
+        "format": "1 unité",
+        "priceChf": 100,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "/wp-content/uploads/2026/07/livre.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-25175",
@@ -2204,22 +2282,95 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-25175",
-        "sku": "NF-25175",
+        "id": "29d4c5e1-628b-4b01-b1b9-50188497e506",
+        "sku": "NF-25176",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "NOISETTES & CHOCO",
+          "de": "NOISETTES & CHOCO",
+          "it": "NOISETTES & CHOCO",
+          "en": "NOISETTES & CHOCO"
         },
         "format": "1 unité",
         "priceChf": 15,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 5,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/1.png",
+        "stockGeneva": 5,
+        "stockPortugal": 0
+      },
+      {
+        "id": "8f84e225-ad41-4961-9f57-b02e2aa9e9c9",
+        "sku": "NF-25179",
+        "flavorName": {
+          "fr": "BISCUITS CACAO",
+          "de": "BISCUITS CACAO",
+          "it": "BISCUITS CACAO",
+          "en": "BISCUITS CACAO"
+        },
+        "format": "1 unité",
+        "priceChf": 15,
+        "inventoryQuantity": 5,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BISCUITS-CACAO.png",
+        "stockGeneva": 5,
+        "stockPortugal": 0
+      },
+      {
+        "id": "2482e044-026d-422c-9dd3-2bf02b412a06",
+        "sku": "NF-25180",
+        "flavorName": {
+          "fr": "CARAMEL SALÉ",
+          "de": "CARAMEL SALÉ",
+          "it": "CARAMEL SALÉ",
+          "en": "CARAMEL SALÉ"
+        },
+        "format": "1 unité",
+        "priceChf": 15,
+        "inventoryQuantity": 5,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/2.png",
+        "stockGeneva": 5,
+        "stockPortugal": 0
+      },
+      {
+        "id": "93aa460b-8196-4d36-8d45-7e218076e4b6",
+        "sku": "NF-25717",
+        "flavorName": {
+          "fr": "CHOCO BLANC & COCO",
+          "de": "CHOCO BLANC & COCO",
+          "it": "CHOCO BLANC & COCO",
+          "en": "CHOCO BLANC & COCO"
+        },
+        "format": "1 unité",
+        "priceChf": 15,
+        "inventoryQuantity": 5,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/CHOCO-BLANC.png",
+        "stockGeneva": 5,
+        "stockPortugal": 0
+      },
+      {
+        "id": "947c506b-4c65-44af-80bd-ef5c34046130",
+        "sku": "NF-25177",
+        "flavorName": {
+          "fr": "CACAO",
+          "de": "CACAO",
+          "it": "CACAO",
+          "en": "CACAO"
+        },
+        "format": "1 unité",
+        "priceChf": 15,
+        "inventoryQuantity": 5,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/CACAO.png",
+        "stockGeneva": 5,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 25,
+    "stockPortugal": 0
   },
   {
     "id": "prod-25041",
@@ -3038,22 +3189,112 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-23499",
-        "sku": "NF-23499",
+        "id": "f53d1bed-09d4-41c4-aaa8-b7dd8e8144e2",
+        "sku": "NF-23512",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "ABRICOTS",
+          "de": "ABRICOTS",
+          "it": "ABRICOTS",
+          "en": "ABRICOTS"
         },
         "format": "1 unité",
         "priceChf": 1,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "6e5162be-62dc-4358-86a0-bccb8314de9b",
+        "sku": "NF-23513",
+        "flavorName": {
+          "fr": "COCA COLA",
+          "de": "COCA COLA",
+          "it": "COCA COLA",
+          "en": "COCA COLA"
+        },
+        "format": "1 unité",
+        "priceChf": 1,
+        "inventoryQuantity": 47,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-COLA.png",
+        "stockGeneva": 47,
+        "stockPortugal": 0
+      },
+      {
+        "id": "4a177cbc-2cbb-455e-a800-3969526d0acc",
+        "sku": "NF-23514",
+        "flavorName": {
+          "fr": "ICE TEA PÊCHE",
+          "de": "ICE TEA PÊCHE",
+          "it": "ICE TEA PÊCHE",
+          "en": "ICE TEA PÊCHE"
+        },
+        "format": "1 unité",
+        "priceChf": 1,
+        "inventoryQuantity": 23,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-ICE-TEA-LEMON-.png",
+        "stockGeneva": 23,
+        "stockPortugal": 0
+      },
+      {
+        "id": "5fcf30d0-041d-42ea-af78-244bbaf1a3a2",
+        "sku": "NF-23515",
+        "flavorName": {
+          "fr": "LEMON LIME",
+          "de": "LEMON LIME",
+          "it": "LEMON LIME",
+          "en": "LEMON LIME"
+        },
+        "format": "1 unité",
+        "priceChf": 1,
+        "inventoryQuantity": 19,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-LEMON-LIME.png",
+        "stockGeneva": 19,
+        "stockPortugal": 0
+      },
+      {
+        "id": "72ba8430-82f1-4231-9a2c-97aad5c47b2b",
+        "sku": "NF-23516",
+        "flavorName": {
+          "fr": "PASTÈQUE",
+          "de": "PASTÈQUE",
+          "it": "PASTÈQUE",
+          "en": "PASTÈQUE"
+        },
+        "format": "1 unité",
+        "priceChf": 1,
+        "inventoryQuantity": 19,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-PASTEQUE.png",
+        "stockGeneva": 19,
+        "stockPortugal": 0
+      },
+      {
+        "id": "f5bd4ff7-fd3c-4f0e-8bdd-0cb2918204c5",
+        "sku": "NF-23517",
+        "flavorName": {
+          "fr": "POMME VERTE",
+          "de": "POMME VERTE",
+          "it": "POMME VERTE",
+          "en": "POMME VERTE"
+        },
+        "format": "1 unité",
+        "priceChf": 1,
+        "inventoryQuantity": 26,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-POMME.png",
+        "stockGeneva": 26,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": true,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 134,
+    "stockPortugal": 0
   },
   {
     "id": "prod-22738",
@@ -3256,22 +3497,61 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-22614",
-        "sku": "NF-22614",
+        "id": "e05d94fc-98ae-4c10-9ea0-07d5784f5a30",
+        "sku": "NF-22615",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "BLUE LAGOON",
+          "de": "BLUE LAGOON",
+          "it": "BLUE LAGOON",
+          "en": "BLUE LAGOON"
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 6,
+        "inStock": true,
+        "image": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
+        "stockGeneva": 6,
+        "stockPortugal": 0
+      },
+      {
+        "id": "c8f3bd88-c96d-40f8-a15f-eff82ebe1abc",
+        "sku": "NF-22616",
+        "flavorName": {
+          "fr": "CHERRY SLUSHIE",
+          "de": "CHERRY SLUSHIE",
+          "it": "CHERRY SLUSHIE",
+          "en": "CHERRY SLUSHIE"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 10,
+        "inStock": true,
+        "image": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
+        "stockGeneva": 10,
+        "stockPortugal": 0
+      },
+      {
+        "id": "fcbf844c-f34b-495b-b3b7-b059f32fd7c6",
+        "sku": "NF-22617",
+        "flavorName": {
+          "fr": "RED & BLUE MIX",
+          "de": "RED & BLUE MIX",
+          "it": "RED & BLUE MIX",
+          "en": "RED & BLUE MIX"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 17,
+        "inStock": true,
+        "image": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
+        "stockGeneva": 17,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 33,
+    "stockPortugal": 0
   },
   {
     "id": "prod-22608",
@@ -3507,79 +3787,79 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-290",
-        "sku": "SKU-DS-290",
+        "id": "9e3af667-8d93-4922-8ee2-393c644d3b2c",
+        "sku": "682683504732",
         "flavorName": {
-          "fr": "Chocolate",
-          "de": "Chocolate",
-          "it": "Chocolate",
-          "en": "Chocolate"
+          "fr": "CHOCOLAT",
+          "de": "CHOCOLAT",
+          "it": "CHOCOLAT",
+          "en": "CHOCOLAT"
         },
         "format": "1 unité",
-        "priceChf": 52,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/dirtysquads/anabolic-chocolate-.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 60,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-291",
-        "sku": "SKU-DS-291",
+        "id": "feb819e6-a2d1-4906-aef1-7f210b89c4f9",
+        "sku": "682683504763",
         "flavorName": {
-          "fr": "Cookies and Cream",
-          "de": "Cookies and Cream",
-          "it": "Cookies and Cream",
-          "en": "Cookies and Cream"
+          "fr": "VANILLE",
+          "de": "VANILLE",
+          "it": "VANILLE",
+          "en": "VANILLE"
         },
         "format": "1 unité",
-        "priceChf": 52,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/dirtysquads/anabolic-cookies-and-cream.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 60,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-292",
-        "sku": "SKU-DS-292",
+        "id": "8cadc4f2-3e73-4888-9e52-61b366edeac9",
+        "sku": "682683504749",
         "flavorName": {
-          "fr": "Starwberry",
-          "de": "Starwberry",
-          "it": "Starwberry",
-          "en": "Starwberry"
+          "fr": "COOKIE & CREAM",
+          "de": "COOKIE & CREAM",
+          "it": "COOKIE & CREAM",
+          "en": "COOKIE & CREAM"
         },
         "format": "1 unité",
-        "priceChf": 52,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/dirtysquads/anabolic-stawberry.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 60,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-293",
-        "sku": "SKU-DS-293",
+        "id": "fc04a8df-43f4-4f68-ba78-7c8f99cf49be",
+        "sku": "682683504756",
         "flavorName": {
-          "fr": "Vanilla",
-          "de": "Vanilla",
-          "it": "Vanilla",
-          "en": "Vanilla"
+          "fr": "FRAISES",
+          "de": "FRAISES",
+          "it": "FRAISES",
+          "en": "FRAISES"
         },
         "format": "1 unité",
-        "priceChf": 52,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/dirtysquads/anabolic-vanila.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 60,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-22011",
@@ -3853,62 +4133,62 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-278",
-        "sku": "SKU-DS-278",
+        "id": "0d924d52-5292-445a-b12d-4059d9c565f5",
+        "sku": "682683504688",
         "flavorName": {
-          "fr": "Watermelon",
-          "de": "Watermelon",
-          "it": "Watermelon",
-          "en": "Watermelon"
+          "fr": "LEMON",
+          "de": "LEMON",
+          "it": "LEMON",
+          "en": "LEMON"
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 10,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-watermelon.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-LEMON-300g.webp",
+        "stockGeneva": 10,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-279",
-        "sku": "SKU-DS-279",
+        "id": "5c315d63-b838-4d0b-afd6-ed5358cbb7b6",
+        "sku": "682683504701",
         "flavorName": {
-          "fr": "Lemon",
-          "de": "Lemon",
-          "it": "Lemon",
-          "en": "Lemon"
+          "fr": "PASTÈQUE",
+          "de": "PASTÈQUE",
+          "it": "PASTÈQUE",
+          "en": "PASTÈQUE"
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-flavors16.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-PASTEQUE-300g.webp",
+        "stockGeneva": 7,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-280",
-        "sku": "SKU-DS-280",
+        "id": "4959f7cc-835b-4cca-8c64-c0ce5723795c",
+        "sku": "682683504695",
         "flavorName": {
-          "fr": "Tutti Frutti",
-          "de": "Tutti Frutti",
-          "it": "Tutti Frutti",
-          "en": "Tutti Frutti"
+          "fr": "TUTTI-FRUTTI",
+          "de": "TUTTI-FRUTTI",
+          "it": "TUTTI-FRUTTI",
+          "en": "TUTTI-FRUTTI"
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 4,
         "inStock": true,
-        "image": "/images/products/dirtysquads/amini-tutti-fruity.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-TUTTI-FRUTTI-300g.webp",
+        "stockGeneva": 4,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 21,
+    "stockPortugal": 0
   },
   {
     "id": "prod-21965",
@@ -4101,96 +4381,79 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-306",
-        "sku": "SKU-DS-306",
+        "id": "e27ff1d9-a327-4b12-889b-3b3e88a33199",
+        "sku": "682683504855",
         "flavorName": {
-          "fr": "Caramel",
-          "de": "Caramel",
-          "it": "Caramel",
-          "en": "Caramel"
+          "fr": "CHOCOLAT BLANC & CARAMEL",
+          "de": "CHOCOLAT BLANC & CARAMEL",
+          "it": "CHOCOLAT BLANC & CARAMEL",
+          "en": "CHOCOLAT BLANC & CARAMEL"
         },
         "format": "1 unité",
         "priceChf": 65,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 13,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-90X2.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMEL.webp",
+        "stockGeneva": 13,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-307",
-        "sku": "SKU-DS-307",
+        "id": "6311cecf-fabb-44e6-a8c6-c844ec809f6c",
+        "sku": "682683504848",
         "flavorName": {
-          "fr": "Chocolate",
-          "de": "Chocolate",
-          "it": "Chocolate",
-          "en": "Chocolate"
+          "fr": "VANILLE",
+          "de": "VANILLE",
+          "it": "VANILLE",
+          "en": "VANILLE"
         },
         "format": "1 unité",
         "priceChf": 65,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 12,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-choco-1.jpeg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-VANILLA.webp",
+        "stockGeneva": 12,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-308",
-        "sku": "SKU-DS-308",
+        "id": "029ca307-cca3-4675-9f44-d68981162531",
+        "sku": "682683504817",
         "flavorName": {
-          "fr": "Cookies and Cream",
-          "de": "Cookies and Cream",
-          "it": "Cookies and Cream",
-          "en": "Cookies and Cream"
+          "fr": "CHOCOLAT",
+          "de": "CHOCOLAT",
+          "it": "CHOCOLAT",
+          "en": "CHOCOLAT"
         },
         "format": "1 unité",
         "priceChf": 65,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 11,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-90X3.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CHOCOLATE.webp",
+        "stockGeneva": 11,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-309",
-        "sku": "SKU-DS-309",
+        "id": "74b9a1a3-3d01-4f97-878a-40e54a63ac55",
+        "sku": "682683504824",
         "flavorName": {
-          "fr": "Starwberry",
-          "de": "Starwberry",
-          "it": "Starwberry",
-          "en": "Starwberry"
+          "fr": "COOKIE&CREAM",
+          "de": "COOKIE&CREAM",
+          "it": "COOKIE&CREAM",
+          "en": "COOKIE&CREAM"
         },
         "format": "1 unité",
         "priceChf": 65,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 12,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso-90-strawberry.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-ds-310",
-        "sku": "SKU-DS-310",
-        "flavorName": {
-          "fr": "Vanilla",
-          "de": "Vanilla",
-          "it": "Vanilla",
-          "en": "Vanilla"
-        },
-        "format": "1 unité",
-        "priceChf": 65,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/dirtysquads/iso-90X1.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-COOKIECREAM.webp",
+        "stockGeneva": 12,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 48,
+    "stockPortugal": 0
   },
   {
     "id": "prod-21951",
@@ -4372,79 +4635,79 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-298",
-        "sku": "SKU-DS-298",
+        "id": "57f4e933-2308-4d63-bb81-d85994d49355",
+        "sku": "682683504800",
         "flavorName": {
-          "fr": "Chocolate",
-          "de": "Chocolate",
-          "it": "Chocolate",
-          "en": "Chocolate"
+          "fr": "VANILLE",
+          "de": "VANILLE",
+          "it": "VANILLE",
+          "en": "VANILLE"
         },
         "format": "1 unité",
-        "priceChf": 80,
-        "inventoryQuantity": 50,
+        "priceChf": 89,
+        "inventoryQuantity": 1,
         "inStock": true,
-        "image": "/images/products/dirtysquads/iso80x-chocolate-0.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-VANILLA.webp",
+        "stockGeneva": 1,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-299",
-        "sku": "SKU-DS-299",
+        "id": "1cb7b45c-a626-47dd-aa86-41f568217ef5",
+        "sku": "682683504794",
         "flavorName": {
-          "fr": "Cookies and Cream",
-          "de": "Cookies and Cream",
-          "it": "Cookies and Cream",
-          "en": "Cookies and Cream"
+          "fr": "FRAISES",
+          "de": "FRAISES",
+          "it": "FRAISES",
+          "en": "FRAISES"
         },
         "format": "1 unité",
-        "priceChf": 80,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/dirtysquads/iso80x-cokies-and-creams.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 89,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-300",
-        "sku": "SKU-DS-300",
+        "id": "8f077f15-7b4e-4233-af22-6c72e2bc45c4",
+        "sku": "682683504787",
         "flavorName": {
-          "fr": "Starwberry",
-          "de": "Starwberry",
-          "it": "Starwberry",
-          "en": "Starwberry"
+          "fr": "COOKIE&CREAM",
+          "de": "COOKIE&CREAM",
+          "it": "COOKIE&CREAM",
+          "en": "COOKIE&CREAM"
         },
         "format": "1 unité",
-        "priceChf": 80,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/dirtysquads/iso80xstawberry.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 89,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-ds-301",
-        "sku": "SKU-DS-301",
+        "id": "de2017e2-ed7a-4ee4-baf0-aea2beb47019",
+        "sku": "NF-21960",
         "flavorName": {
-          "fr": "Vanilla",
-          "de": "Vanilla",
-          "it": "Vanilla",
-          "en": "Vanilla"
+          "fr": "CHOCOLAT",
+          "de": "CHOCOLAT",
+          "it": "CHOCOLAT",
+          "en": "CHOCOLAT"
         },
         "format": "1 unité",
-        "priceChf": 80,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/dirtysquads/iso-80x-vanilla.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 89,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 1,
+    "stockPortugal": 0
   },
   {
     "id": "prod-21877",
@@ -5540,22 +5803,112 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-21282",
-        "sku": "NF-21282",
+        "id": "fb8f1f93-9593-4e82-8064-1f565775abd8",
+        "sku": "5060708600365",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "CARAMEL SALÉ & PEANUT BUTTER",
+          "de": "CARAMEL SALÉ & PEANUT BUTTER",
+          "it": "CARAMEL SALÉ & PEANUT BUTTER",
+          "en": "CARAMEL SALÉ & PEANUT BUTTER"
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALE-PEANUT-BUTTER-1.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "662f679e-91fb-4a82-bf78-10c1ceb0dfa7",
+        "sku": "5060708600280",
+        "flavorName": {
+          "fr": "CHOCO NOIR & PEANUT BUTTER",
+          "de": "CHOCO NOIR & PEANUT BUTTER",
+          "it": "CHOCO NOIR & PEANUT BUTTER",
+          "en": "CHOCO NOIR & PEANUT BUTTER"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 2,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-BLACK-PEANUT-BUTTER.png",
+        "stockGeneva": 2,
+        "stockPortugal": 0
+      },
+      {
+        "id": "d0297f02-a1fa-47f1-b1da-7f79cfb7b4b3",
+        "sku": "NF-21711",
+        "flavorName": {
+          "fr": "PISTACHIO BUTTER",
+          "de": "PISTACHIO BUTTER",
+          "it": "PISTACHIO BUTTER",
+          "en": "PISTACHIO BUTTER"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "f4d20ffb-215a-4634-be95-20a9013ef436",
+        "sku": "NF-21712",
+        "flavorName": {
+          "fr": "WHITE CHOC PEANUT BUTTER",
+          "de": "WHITE CHOC PEANUT BUTTER",
+          "it": "WHITE CHOC PEANUT BUTTER",
+          "en": "WHITE CHOC PEANUT BUTTER"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/10/NUTRY-NUTS-WHITE-CHOC-PEANUT-BUTTER.jpg.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "596f105b-632a-43e0-86b7-5804b346136a",
+        "sku": "NF-21295",
+        "flavorName": {
+          "fr": "DOUBLE CHOCO & BEURRE NOISETTES",
+          "de": "DOUBLE CHOCO & BEURRE NOISETTES",
+          "it": "DOUBLE CHOCO & BEURRE NOISETTES",
+          "en": "DOUBLE CHOCO & BEURRE NOISETTES"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "c2779882-ae7d-4957-904f-cdf077d6fa7d",
+        "sku": "5060708600266",
+        "flavorName": {
+          "fr": "CHOCO AU LAIT & PEANUT BUTTER",
+          "de": "CHOCO AU LAIT & PEANUT BUTTER",
+          "it": "CHOCO AU LAIT & PEANUT BUTTER",
+          "en": "CHOCO AU LAIT & PEANUT BUTTER"
+        },
+        "format": "1 unité",
+        "priceChf": 4,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-PEANUT-BUTTER.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 2,
+    "stockPortugal": 0
   },
   {
     "id": "prod-21181",
@@ -5894,22 +6247,61 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-20929",
-        "sku": "NF-20929",
+        "id": "95955198-6035-4cdb-bae9-9cf40c520c6b",
+        "sku": "4044782325452",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "CHOCOLAT",
+          "de": "CHOCOLAT",
+          "it": "CHOCOLAT",
+          "en": "CHOCOLAT"
         },
         "format": "1 unité",
         "priceChf": 79.9,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-CHOCO-3KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "777b9b9a-0ed4-443a-82f2-6cf3509649df",
+        "sku": "4044782325353",
+        "flavorName": {
+          "fr": "VANILLE",
+          "de": "VANILLE",
+          "it": "VANILLE",
+          "en": "VANILLE"
+        },
+        "format": "1 unité",
+        "priceChf": 79.9,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-VANILLE-3KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "509321cb-77a6-4e82-9207-46463aaf6a2d",
+        "sku": "4044782325858",
+        "flavorName": {
+          "fr": "FRAISES",
+          "de": "FRAISES",
+          "it": "FRAISES",
+          "en": "FRAISES"
+        },
+        "format": "1 unité",
+        "priceChf": 79.9,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-FRAISES-3KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-20727",
@@ -6091,181 +6483,28 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5764",
-        "sku": "SKU-5764",
+        "id": "1af30747-7afd-4d8b-a6d3-faa59a8d2211",
+        "sku": "634240173028",
         "flavorName": {
-          "fr": "Cinaboom",
-          "de": "Cinaboom",
-          "it": "Cinaboom",
-          "en": "Cinaboom"
+          "fr": "CHOCOLAT",
+          "de": "CHOCOLAT",
+          "it": "CHOCOLAT",
+          "en": "CHOCOLAT"
         },
         "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/muscles-cinaboom.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5765",
-        "sku": "SKU-5765",
-        "flavorName": {
-          "fr": "White Chocolate peanut Butter Cups",
-          "de": "White Chocolate peanut Butter Cups",
-          "it": "White Chocolate peanut Butter Cups",
-          "en": "White Chocolate peanut Butter Cups"
-        },
-        "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/MUSCLE-white-cholate-penut-buttewr-NEW-final-mockup.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5766",
-        "sku": "SKU-5766",
-        "flavorName": {
-          "fr": "Vanilla Mexicana",
-          "de": "Vanilla Mexicana",
-          "it": "Vanilla Mexicana",
-          "en": "Vanilla Mexicana"
-        },
-        "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/MUSCLE-vanilla-mockup.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5767",
-        "sku": "SKU-5767",
-        "flavorName": {
-          "fr": "Starwberry Milkshake",
-          "de": "Starwberry Milkshake",
-          "it": "Starwberry Milkshake",
-          "en": "Starwberry Milkshake"
-        },
-        "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/muscles-strawberry.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5769",
-        "sku": "SKU-5769",
-        "flavorName": {
-          "fr": "Cookies & Cream",
-          "de": "Cookies & Cream",
-          "it": "Cookies & Cream",
-          "en": "Cookies & Cream"
-        },
-        "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/muscles-cookies-2.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5770",
-        "sku": "SKU-5770",
-        "flavorName": {
-          "fr": "Chocolate Peanut Butter Cups",
-          "de": "Chocolate Peanut Butter Cups",
-          "it": "Chocolate Peanut Butter Cups",
-          "en": "Chocolate Peanut Butter Cups"
-        },
-        "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/muscles-choco-penut-butter-cups.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5771",
-        "sku": "SKU-5771",
-        "flavorName": {
-          "fr": "Chocolate Milkshake",
-          "de": "Chocolate Milkshake",
-          "it": "Chocolate Milkshake",
-          "en": "Chocolate Milkshake"
-        },
-        "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/muscles-choco.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5792",
-        "sku": "SKU-5792",
-        "flavorName": {
-          "fr": "Banana",
-          "de": "Banana",
-          "it": "Banana",
-          "en": "Banana"
-        },
-        "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/muscles-banana.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5808",
-        "sku": "SKU-5808",
-        "flavorName": {
-          "fr": "Salted caramel",
-          "de": "Salted caramel",
-          "it": "Salted caramel",
-          "en": "Salted caramel"
-        },
-        "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/muscles-salted-carmel.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5809",
-        "sku": "SKU-5809",
-        "flavorName": {
-          "fr": "Dubai white chocolate",
-          "de": "Dubai white chocolate",
-          "it": "Dubai white chocolate",
-          "en": "Dubai white chocolate"
-        },
-        "format": "1 unité",
-        "priceChf": 79,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 80,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-20531",
@@ -6425,42 +6664,25 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5798",
-        "sku": "SKU-5798",
+        "id": "bec7338a-86e5-433f-8b13-73355430fe1b",
+        "sku": "634240364815",
         "flavorName": {
-          "fr": "BROWNIES",
-          "de": "BROWNIES",
-          "it": "BROWNIES",
-          "en": "BROWNIES"
+          "fr": "BROWNIE",
+          "de": "BROWNIE",
+          "it": "BROWNIE",
+          "en": "BROWNIE"
         },
         "format": "1 unité",
-        "priceChf": 22,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/59.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 30,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5799",
-        "sku": "SKU-5799",
-        "flavorName": {
-          "fr": "Creme Brulee",
-          "de": "Creme Brulee",
-          "it": "Creme Brulee",
-          "en": "Creme Brulee"
-        },
-        "format": "1 unité",
-        "priceChf": 22,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/56.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5800",
-        "sku": "SKU-5800",
+        "id": "861e38b8-b98b-465a-8d0c-3dfd1cc39cda",
+        "sku": "634240364839",
         "flavorName": {
           "fr": "CARAMEL",
           "de": "CARAMEL",
@@ -6468,53 +6690,87 @@ export const PRODUCTS: ProductItem[] = [
           "en": "CARAMEL"
         },
         "format": "1 unité",
-        "priceChf": 22,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/60.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 30,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5802",
-        "sku": "SKU-5802",
+        "id": "8b816397-9c68-484b-9077-8fe539066893",
+        "sku": "634240364853",
         "flavorName": {
-          "fr": "VANILLA CUSTARD",
-          "de": "VANILLA CUSTARD",
-          "it": "VANILLA CUSTARD",
-          "en": "VANILLA CUSTARD"
+          "fr": "COOKIE & CREAM",
+          "de": "COOKIE & CREAM",
+          "it": "COOKIE & CREAM",
+          "en": "COOKIE & CREAM"
         },
         "format": "1 unité",
-        "priceChf": 22,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/55.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 30,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5803",
-        "sku": "SKU-5803",
+        "id": "3eb1f82b-00ec-40b9-beea-776306872407",
+        "sku": "NF-20539",
         "flavorName": {
-          "fr": "Cookies & Cream",
-          "de": "Cookies & Cream",
-          "it": "Cookies & Cream",
-          "en": "Cookies & Cream"
+          "fr": "CRÈME BRÛLÉE",
+          "de": "CRÈME BRÛLÉE",
+          "it": "CRÈME BRÛLÉE",
+          "en": "CRÈME BRÛLÉE"
         },
         "format": "1 unité",
-        "priceChf": 22,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/58.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 30,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "2be16d9c-fce6-4af2-970f-a12dca5370ff",
+        "sku": "634240364822",
+        "flavorName": {
+          "fr": "VANILLE CUSTARD",
+          "de": "VANILLE CUSTARD",
+          "it": "VANILLE CUSTARD",
+          "en": "VANILLE CUSTARD"
+        },
+        "format": "1 unité",
+        "priceChf": 30,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "6a63a31d-edb0-41f9-89a1-4ace21b6e8ef",
+        "sku": "634240364808",
+        "flavorName": {
+          "fr": "SPECULOOS",
+          "de": "SPECULOOS",
+          "it": "SPECULOOS",
+          "en": "SPECULOOS"
+        },
+        "format": "1 unité",
+        "priceChf": 30,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-20464",
@@ -6711,22 +6967,61 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-20440",
-        "sku": "NF-20440",
+        "id": "abd0ccef-414e-4e39-abce-2a0f80055c56",
+        "sku": "8050507510375",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "CHOCOLAT",
+          "de": "CHOCOLAT",
+          "it": "CHOCOLAT",
+          "en": "CHOCOLAT"
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/PANCAKE-800G-CHOCOLAT.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "12fa4648-4795-48b7-a1d9-fbdc231196ae",
+        "sku": "NF-20445",
+        "flavorName": {
+          "fr": "COOKIE",
+          "de": "COOKIE",
+          "it": "COOKIE",
+          "en": "COOKIE"
+        },
+        "format": "1 unité",
+        "priceChf": 35,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/PANCAKE-800G-COOKIE.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "ea671ebd-fdab-4c14-97c2-8b48d8a845bf",
+        "sku": "8050507511556",
+        "flavorName": {
+          "fr": "CARAMEL BEURRE SALÉ",
+          "de": "CARAMEL BEURRE SALÉ",
+          "it": "CARAMEL BEURRE SALÉ",
+          "en": "CARAMEL BEURRE SALÉ"
+        },
+        "format": "1 unité",
+        "priceChf": 35,
+        "inventoryQuantity": 1,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/PANCAKE-CARAMEL-BEURRE-SALE-800G.png",
+        "stockGeneva": 1,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 1,
+    "stockPortugal": 0
   },
   {
     "id": "prod-20370",
@@ -7587,22 +7882,61 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-19220",
-        "sku": "NF-19220",
+        "id": "6ae29cc6-fbb1-4280-ba16-27bef6b6433a",
+        "sku": "3770022245075",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "1.4KG (FRUITS ROUGES)",
+          "de": "1.4KG (FRUITS ROUGES)",
+          "it": "1.4KG (FRUITS ROUGES)",
+          "en": "1.4KG (FRUITS ROUGES)"
         },
-        "format": "1 unité",
+        "format": "1.4KG (FRUITS ROUGES)",
         "priceChf": 70,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "757b6cb9-7bf3-4e1b-aef1-cbcfadc607a5",
+        "sku": "3770022245099",
+        "flavorName": {
+          "fr": "1.4KG (COOKIES)",
+          "de": "1.4KG (COOKIES)",
+          "it": "1.4KG (COOKIES)",
+          "en": "1.4KG (COOKIES)"
+        },
+        "format": "1.4KG (COOKIES)",
+        "priceChf": 70,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "bc0c1e6e-5b7d-4046-a415-b7d551faf1ee",
+        "sku": "3770022245051",
+        "flavorName": {
+          "fr": "1.4KG (ORIGINAL)",
+          "de": "1.4KG (ORIGINAL)",
+          "it": "1.4KG (ORIGINAL)",
+          "en": "1.4KG (ORIGINAL)"
+        },
+        "format": "1.4KG (ORIGINAL)",
+        "priceChf": 70,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-19174",
@@ -8447,22 +8781,78 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-15512",
-        "sku": "NF-15512",
+        "id": "1b8c7a4b-5372-4914-b10f-20cd2321ad0e",
+        "sku": "NF-16182",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "FRUITS DES BOIS",
+          "de": "FRUITS DES BOIS",
+          "it": "FRUITS DES BOIS",
+          "en": "FRUITS DES BOIS"
         },
         "format": "1 unité",
         "priceChf": 3.5,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 27,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/02/CORNETTO-CROISSANT-KETO-FRUITS-DES-BOIS-50G.png",
+        "stockGeneva": 27,
+        "stockPortugal": 0
+      },
+      {
+        "id": "93764e60-bc2b-4075-bba1-676b1a7b2da6",
+        "sku": "NF-18734",
+        "flavorName": {
+          "fr": "CREME PATISSIÈRE",
+          "de": "CREME PATISSIÈRE",
+          "it": "CREME PATISSIÈRE",
+          "en": "CREME PATISSIÈRE"
+        },
+        "format": "1 unité",
+        "priceChf": 3.5,
+        "inventoryQuantity": 27,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/02/CORNETTO-CROISSANT-KETO-CREME-50G.png",
+        "stockGeneva": 27,
+        "stockPortugal": 0
+      },
+      {
+        "id": "53eed3d1-f7dc-40f5-981f-27d306016d2a",
+        "sku": "NF-18954",
+        "flavorName": {
+          "fr": "PISTACHE",
+          "de": "PISTACHE",
+          "it": "PISTACHE",
+          "en": "PISTACHE"
+        },
+        "format": "1 unité",
+        "priceChf": 3.5,
+        "inventoryQuantity": 27,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/02/CORNETTO-PISTACHE.png",
+        "stockGeneva": 27,
+        "stockPortugal": 0
+      },
+      {
+        "id": "21129d6f-3e7c-4a4e-8e1a-6a2e5bd9fbe3",
+        "sku": "8050507513062",
+        "flavorName": {
+          "fr": "CHOCOLAT",
+          "de": "CHOCOLAT",
+          "it": "CHOCOLAT",
+          "en": "CHOCOLAT"
+        },
+        "format": "1 unité",
+        "priceChf": 3.5,
+        "inventoryQuantity": 27,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-50G.png",
+        "stockGeneva": 27,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 108,
+    "stockPortugal": 0
   },
   {
     "id": "prod-15357",
@@ -8698,62 +9088,79 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5787",
-        "sku": "SKU-5787",
+        "id": "0c3d3e6c-ce4c-4f36-af2e-806e0e99550c",
+        "sku": "634240173035",
         "flavorName": {
-          "fr": "Watermelon",
-          "de": "Watermelon",
-          "it": "Watermelon",
-          "en": "Watermelon"
+          "fr": "PASTÈQUES",
+          "de": "PASTÈQUES",
+          "it": "PASTÈQUES",
+          "en": "PASTÈQUES"
         },
         "format": "1 unité",
         "priceChf": 95,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 11,
         "inStock": true,
-        "image": "/images/products/marvelous/Electro-flvours-3.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
+        "stockGeneva": 0,
+        "stockPortugal": 11
       },
       {
-        "id": "var-5788",
-        "sku": "SKU-5788",
+        "id": "72070f6d-f302-410b-91c7-6f2b82ed164a",
+        "sku": "8789965565985",
         "flavorName": {
-          "fr": "Ice tea peach",
-          "de": "Ice tea peach",
-          "it": "Ice tea peach",
-          "en": "Ice tea peach"
+          "fr": "PINA COLADA",
+          "de": "PINA COLADA",
+          "it": "PINA COLADA",
+          "en": "PINA COLADA"
         },
         "format": "1 unité",
         "priceChf": 95,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 22,
         "inStock": true,
-        "image": "/images/products/marvelous/Electro-flvours-2.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
+        "stockGeneva": 12,
+        "stockPortugal": 10
       },
       {
-        "id": "var-5789",
-        "sku": "SKU-5789",
+        "id": "ed711e0d-e1df-479a-bb04-c79ff8ccc4c7",
+        "sku": "NF-15220",
         "flavorName": {
-          "fr": "Orange mango",
-          "de": "Orange mango",
-          "it": "Orange mango",
-          "en": "Orange mango"
+          "fr": "ORANGE MANGUE",
+          "de": "ORANGE MANGUE",
+          "it": "ORANGE MANGUE",
+          "en": "ORANGE MANGUE"
         },
         "format": "1 unité",
         "priceChf": 95,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 21,
         "inStock": true,
-        "image": "/images/products/marvelous/Electro-flvours-1.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
+        "stockGeneva": 12,
+        "stockPortugal": 9
+      },
+      {
+        "id": "0c5be10d-09b4-4518-a2f8-a7ef605959c9",
+        "sku": "634240129537",
+        "flavorName": {
+          "fr": "ICE TEA PÊCHE",
+          "de": "ICE TEA PÊCHE",
+          "it": "ICE TEA PÊCHE",
+          "en": "ICE TEA PÊCHE"
+        },
+        "format": "1 unité",
+        "priceChf": 95,
+        "inventoryQuantity": 20,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
+        "stockGeneva": 10,
+        "stockPortugal": 10
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 34,
+    "stockPortugal": 40
   },
   {
     "id": "prod-14597",
@@ -8967,22 +9374,78 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-14500",
-        "sku": "NF-14500",
+        "id": "52fa947c-5b3b-43d4-9e02-22404c046b17",
+        "sku": "5060469988603",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "VANILLA ICE CREAM",
+          "de": "VANILLA ICE CREAM",
+          "it": "VANILLA ICE CREAM",
+          "en": "VANILLA ICE CREAM"
         },
         "format": "1 unité",
         "priceChf": 59.9,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 1,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
+        "stockGeneva": 1,
+        "stockPortugal": 0
+      },
+      {
+        "id": "8a4bae44-51c7-422e-bb1f-0067fa7419fc",
+        "sku": "5060469988467",
+        "flavorName": {
+          "fr": "DOUBLE RICH CHOCOLATE",
+          "de": "DOUBLE RICH CHOCOLATE",
+          "it": "DOUBLE RICH CHOCOLATE",
+          "en": "DOUBLE RICH CHOCOLATE"
+        },
+        "format": "1 unité",
+        "priceChf": 59.9,
+        "inventoryQuantity": 1,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
+        "stockGeneva": 1,
+        "stockPortugal": 0
+      },
+      {
+        "id": "21d16649-45d9-4a47-8185-ae0c9da5a7c0",
+        "sku": "5060469989198",
+        "flavorName": {
+          "fr": "COOKIE & CREAM",
+          "de": "COOKIE & CREAM",
+          "it": "COOKIE & CREAM",
+          "en": "COOKIE & CREAM"
+        },
+        "format": "1 unité",
+        "priceChf": 59.9,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "05ce8253-36cc-4169-9356-71e506dc1e2d",
+        "sku": "NF-25621",
+        "flavorName": {
+          "fr": "FRAISES",
+          "de": "FRAISES",
+          "it": "FRAISES",
+          "en": "FRAISES"
+        },
+        "format": "1 unité",
+        "priceChf": 59.9,
+        "inventoryQuantity": 1,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/09/GOLD-STANDARD-ON-FRAISES.png",
+        "stockGeneva": 1,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 3,
+    "stockPortugal": 0
   },
   {
     "id": "prod-14486",
@@ -9076,22 +9539,27 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-14486",
-        "sku": "NF-14486",
+        "id": "2169be4d-aef6-4495-880c-e73577d9d479",
+        "sku": "857640006417",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "FRUITS CEREAL MILK",
+          "de": "FRUITS CEREAL MILK",
+          "it": "FRUITS CEREAL MILK",
+          "en": "FRUITS CEREAL MILK"
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-WHEY-900G-FRUITY-CEREAL-MILK.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-14371",
@@ -9196,22 +9664,44 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-14371",
-        "sku": "NF-14371",
+        "id": "153cb795-cfc4-43ed-a6cd-2f9be9520a7e",
+        "sku": "4250350538111",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "CREAMY",
+          "de": "CREAMY",
+          "it": "CREAMY",
+          "en": "CREAMY"
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 1,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CREAMY.png",
+        "stockGeneva": 1,
+        "stockPortugal": 0
+      },
+      {
+        "id": "08445a10-08f7-458a-afa1-d74674fdc201",
+        "sku": "4250350538128",
+        "flavorName": {
+          "fr": "CRUNCHY",
+          "de": "CRUNCHY",
+          "it": "CRUNCHY",
+          "en": "CRUNCHY"
+        },
+        "format": "1 unité",
+        "priceChf": 20,
+        "inventoryQuantity": 1,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CRUNCHY.png",
+        "stockGeneva": 1,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 2,
+    "stockPortugal": 0
   },
   {
     "id": "prod-14341",
@@ -9360,79 +9850,96 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5721",
-        "sku": "SKU-5721",
+        "id": "b66033f0-8e72-4597-b002-332b4c647c0a",
+        "sku": "NF-24123",
         "flavorName": {
-          "fr": "Chocolate Fudge",
-          "de": "Chocolate Fudge",
-          "it": "Chocolate Fudge",
-          "en": "Chocolate Fudge"
+          "fr": "VANILLE (2KG)",
+          "de": "VANILLE (2KG)",
+          "it": "VANILLE (2KG)",
+          "en": "VANILLE (2KG)"
         },
-        "format": "1.8kg",
+        "format": "1 unité",
+        "priceChf": 120,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-2KG.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "31a1b1ee-c8b9-44ef-8c7d-7a97753a57c3",
+        "sku": "NF-24124",
+        "flavorName": {
+          "fr": "COOKIES (2KG)",
+          "de": "COOKIES (2KG)",
+          "it": "COOKIES (2KG)",
+          "en": "COOKIES (2KG)"
+        },
+        "format": "1 unité",
+        "priceChf": 120,
+        "inventoryQuantity": 18,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-COOKIE-2KG.webp",
+        "stockGeneva": 18,
+        "stockPortugal": 0
+      },
+      {
+        "id": "3dbfa1f4-6ef8-40e4-ac44-3d3bb237f2be",
+        "sku": "NF-24125",
+        "flavorName": {
+          "fr": "CHOCOLAT (1.8KG)",
+          "de": "CHOCOLAT (1.8KG)",
+          "it": "CHOCOLAT (1.8KG)",
+          "en": "CHOCOLAT (1.8KG)"
+        },
+        "format": "1 unité",
         "priceChf": 115,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 9,
         "inStock": true,
-        "image": "/images/products/marvelous/bulk-choco-fudge.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/iso-bulk-choco.webp",
+        "stockGeneva": 9,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5722",
-        "sku": "SKU-5722",
+        "id": "364f8a69-331f-4c93-935b-42df84c910e4",
+        "sku": "NF-25648",
         "flavorName": {
-          "fr": "Cookies and Cream",
-          "de": "Cookies and Cream",
-          "it": "Cookies and Cream",
-          "en": "Cookies and Cream"
+          "fr": "TOFFEE COOKIES (1.8KG)",
+          "de": "TOFFEE COOKIES (1.8KG)",
+          "it": "TOFFEE COOKIES (1.8KG)",
+          "en": "TOFFEE COOKIES (1.8KG)"
         },
-        "format": "2kg",
-        "priceChf": 120,
-        "inventoryQuantity": 50,
+        "format": "1 unité",
+        "priceChf": 115,
+        "inventoryQuantity": 8,
         "inStock": true,
-        "image": "/images/products/marvelous/bulk-cookies.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/iso-bulk-choco.webp",
+        "stockGeneva": 8,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5723",
-        "sku": "SKU-5723",
+        "id": "1132daf1-3cc3-4cb5-9b25-df674038c12a",
+        "sku": "NF-24126",
         "flavorName": {
-          "fr": "Strawberry",
-          "de": "Strawberry",
-          "it": "Strawberry",
-          "en": "Strawberry"
+          "fr": "FRAISES (2KG)",
+          "de": "FRAISES (2KG)",
+          "it": "FRAISES (2KG)",
+          "en": "FRAISES (2KG)"
         },
-        "format": "2kg",
+        "format": "1 unité",
         "priceChf": 120,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 8,
         "inStock": true,
-        "image": "/images/products/marvelous/bulk-strawberry.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
-      },
-      {
-        "id": "var-5724",
-        "sku": "SKU-5724",
-        "flavorName": {
-          "fr": "Vanilla",
-          "de": "Vanilla",
-          "it": "Vanilla",
-          "en": "Vanilla"
-        },
-        "format": "2kg",
-        "priceChf": 120,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/bulk-vanilla.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-2KG-FRAISES.webp",
+        "stockGeneva": 8,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 43,
+    "stockPortugal": 0
   },
   {
     "id": "prod-14309",
@@ -9515,22 +10022,44 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-14309",
-        "sku": "NF-14309",
+        "id": "37b6b6a4-ebb7-46b0-bce5-095069b93a00",
+        "sku": "8436609600297",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "FRAISES",
+          "de": "FRAISES",
+          "it": "FRAISES",
+          "en": "FRAISES"
         },
         "format": "1 unité",
         "priceChf": 69,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/ultimate-whey-1kg-fraises.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "d7b46394-9114-4157-ac54-e20dba316db9",
+        "sku": "8436609600327",
+        "flavorName": {
+          "fr": "PASTEQUE",
+          "de": "PASTEQUE",
+          "it": "PASTEQUE",
+          "en": "PASTEQUE"
+        },
+        "format": "1 unité",
+        "priceChf": 69,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/ultimate-whey-1kg-pasteque.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-14215",
@@ -9624,22 +10153,78 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-14215",
-        "sku": "NF-14215",
+        "id": "00be38f4-fc7f-4987-a2ef-4e416e76121c",
+        "sku": "8436609600815",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "MELON",
+          "de": "MELON",
+          "it": "MELON",
+          "en": "MELON"
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 10,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/EAA-MELON.webp",
+        "stockGeneva": 10,
+        "stockPortugal": 0
+      },
+      {
+        "id": "abf1242e-201e-4667-b240-7f2b5925e409",
+        "sku": "8436609600822",
+        "flavorName": {
+          "fr": "ORANGE",
+          "de": "ORANGE",
+          "it": "ORANGE",
+          "en": "ORANGE"
+        },
+        "format": "1 unité",
+        "priceChf": 35,
+        "inventoryQuantity": 14,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/EAA-ORANGE.webp",
+        "stockGeneva": 14,
+        "stockPortugal": 0
+      },
+      {
+        "id": "ea94a60a-e215-48e3-ba40-6ea57e1e79fb",
+        "sku": "8436609600808",
+        "flavorName": {
+          "fr": "CITRON",
+          "de": "CITRON",
+          "it": "CITRON",
+          "en": "CITRON"
+        },
+        "format": "1 unité",
+        "priceChf": 35,
+        "inventoryQuantity": 9,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/EAA-LEMON.webp",
+        "stockGeneva": 9,
+        "stockPortugal": 0
+      },
+      {
+        "id": "e7f2019e-2659-40ce-95c3-4f4f246251b0",
+        "sku": "8436609600792",
+        "flavorName": {
+          "fr": "COCA COLA",
+          "de": "COCA COLA",
+          "it": "COCA COLA",
+          "en": "COCA COLA"
+        },
+        "format": "1 unité",
+        "priceChf": 35,
+        "inventoryQuantity": 4,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/BM-EAA-300G-1.png",
+        "stockGeneva": 4,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 37,
+    "stockPortugal": 0
   },
   {
     "id": "prod-13985",
@@ -9744,22 +10329,44 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-13985",
-        "sku": "NF-13985",
+        "id": "a1585d2f-b7b4-437b-a808-ee67cea04cc4",
+        "sku": "NF-14050",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "CHOCOLAT",
+          "de": "CHOCOLAT",
+          "it": "CHOCOLAT",
+          "en": "CHOCOLAT"
         },
         "format": "1 unité",
         "priceChf": 60,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 15,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/FURIUX-MASS-3K-CHOCO.png",
+        "stockGeneva": 15,
+        "stockPortugal": 0
+      },
+      {
+        "id": "953e2e1e-f0b9-4110-ba27-04c9decb5471",
+        "sku": "8436609600587",
+        "flavorName": {
+          "fr": "VANILLE",
+          "de": "VANILLE",
+          "it": "VANILLE",
+          "en": "VANILLE"
+        },
+        "format": "1 unité",
+        "priceChf": 60,
+        "inventoryQuantity": 5,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/FURIUX-MASS-3KG-VANILLE.png",
+        "stockGeneva": 5,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 20,
+    "stockPortugal": 0
   },
   {
     "id": "prod-13972",
@@ -10512,22 +11119,44 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-12913",
-        "sku": "NF-12913",
+        "id": "abf5707a-05e2-48b8-9328-a04114f2e70d",
+        "sku": "3770031854046",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "2.3kg",
+          "de": "2.3kg",
+          "it": "2.3kg",
+          "en": "2.3kg"
         },
-        "format": "1 unité",
+        "format": "2.3kg",
+        "priceChf": 42,
+        "inventoryQuantity": 1,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/20.webp",
+        "stockGeneva": 1,
+        "stockPortugal": 0
+      },
+      {
+        "id": "c23fc714-67ec-458b-8dba-9ef86b2cfb81",
+        "sku": "3770031854015",
+        "flavorName": {
+          "fr": "1kg",
+          "de": "1kg",
+          "it": "1kg",
+          "en": "1kg"
+        },
+        "format": "1kg",
         "priceChf": 25,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 17,
+        "inStock": true,
+        "image": "/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png",
+        "stockGeneva": 17,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 18,
+    "stockPortugal": 0
   },
   {
     "id": "prod-12902",
@@ -10741,22 +11370,44 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-12882",
-        "sku": "NF-12882",
+        "id": "2af3d859-46e6-46e7-a7c4-21dbf94aef63",
+        "sku": "8050507510337",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "Fondent Zero Noir",
+          "de": "Fondent Zero Noir",
+          "it": "Fondent Zero Noir",
+          "en": "Fondent Zero Noir"
         },
         "format": "1 unité",
         "priceChf": 12,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 3,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/05/CREMA-FONDENTE-ZERO-.jpeg",
+        "stockGeneva": 3,
+        "stockPortugal": 0
+      },
+      {
+        "id": "80cb94a7-cee8-400a-938e-cea4571d7cba",
+        "sku": "8050507511938",
+        "flavorName": {
+          "fr": "Bontà Di Stella",
+          "de": "Bontà Di Stella",
+          "it": "Bontà Di Stella",
+          "en": "Bontà Di Stella"
+        },
+        "format": "1 unité",
+        "priceChf": 12,
+        "inventoryQuantity": 3,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/05/CREMA-BONTA-DI-STELLE-.png",
+        "stockGeneva": 3,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 6,
+    "stockPortugal": 0
   },
   {
     "id": "prod-12867",
@@ -10850,22 +11501,95 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-12867",
-        "sku": "NF-12867",
+        "id": "bf870246-b281-4599-bd02-98c608c0d682",
+        "sku": "8436609601034",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "CHOCOLAT NOISETTES",
+          "de": "CHOCOLAT NOISETTES",
+          "it": "CHOCOLAT NOISETTES",
+          "en": "CHOCOLAT NOISETTES"
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 10,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
+        "stockGeneva": 10,
+        "stockPortugal": 0
+      },
+      {
+        "id": "c7e9d2e8-ee6b-49df-813d-1e1bfdb923c5",
+        "sku": "8436609601058",
+        "flavorName": {
+          "fr": "FRAISES BANANES",
+          "de": "FRAISES BANANES",
+          "it": "FRAISES BANANES",
+          "en": "FRAISES BANANES"
+        },
+        "format": "1 unité",
+        "priceChf": 20,
+        "inventoryQuantity": 1,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
+        "stockGeneva": 1,
+        "stockPortugal": 0
+      },
+      {
+        "id": "5d1d4c9a-840c-4369-9fc4-354846c75e3e",
+        "sku": "8436609601027",
+        "flavorName": {
+          "fr": "CHOCOLAT BLANC",
+          "de": "CHOCOLAT BLANC",
+          "it": "CHOCOLAT BLANC",
+          "en": "CHOCOLAT BLANC"
+        },
+        "format": "1 unité",
+        "priceChf": 20,
+        "inventoryQuantity": 23,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
+        "stockGeneva": 23,
+        "stockPortugal": 0
+      },
+      {
+        "id": "50ed2d8f-a17d-4bb1-90ce-441b1e9ebd23",
+        "sku": "8436609601010",
+        "flavorName": {
+          "fr": "CHOCOLAT",
+          "de": "CHOCOLAT",
+          "it": "CHOCOLAT",
+          "en": "CHOCOLAT"
+        },
+        "format": "1 unité",
+        "priceChf": 20,
+        "inventoryQuantity": 27,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
+        "stockGeneva": 27,
+        "stockPortugal": 0
+      },
+      {
+        "id": "737524bf-4fb2-40bd-a18d-7c13dd2c8d71",
+        "sku": "8436609600990",
+        "flavorName": {
+          "fr": "COOKIES",
+          "de": "COOKIES",
+          "it": "COOKIES",
+          "en": "COOKIES"
+        },
+        "format": "1 unité",
+        "priceChf": 20,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 61,
+    "stockPortugal": 0
   },
   {
     "id": "prod-12855",
@@ -11068,22 +11792,95 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-12650",
-        "sku": "NF-12650",
+        "id": "7cece741-d8fa-495d-a768-1f040a4d4b7b",
+        "sku": "8436609600358",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "Chocolat",
+          "de": "Chocolat",
+          "it": "Chocolat",
+          "en": "Chocolat"
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "efe387a3-4e59-4625-b37b-5d2308d30ad5",
+        "sku": "8436609600372",
+        "flavorName": {
+          "fr": "Fraises",
+          "de": "Fraises",
+          "it": "Fraises",
+          "en": "Fraises"
+        },
+        "format": "1 unité",
+        "priceChf": 55,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "99bf34d0-ae6d-4baf-a099-ab0f7257b043",
+        "sku": "8436609600365",
+        "flavorName": {
+          "fr": "Vanille Cannelle",
+          "de": "Vanille Cannelle",
+          "it": "Vanille Cannelle",
+          "en": "Vanille Cannelle"
+        },
+        "format": "1 unité",
+        "priceChf": 55,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "f8b98495-ddc3-4283-b0b7-8919875688f9",
+        "sku": "8436609600389",
+        "flavorName": {
+          "fr": "Cookies",
+          "de": "Cookies",
+          "it": "Cookies",
+          "en": "Cookies"
+        },
+        "format": "1 unité",
+        "priceChf": 55,
+        "inventoryQuantity": 1,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
+        "stockGeneva": 1,
+        "stockPortugal": 0
+      },
+      {
+        "id": "cfeb5e8f-d840-4a00-8aa1-21ce37621dd5",
+        "sku": "8436609600396",
+        "flavorName": {
+          "fr": "Chocolat Blanc",
+          "de": "Chocolat Blanc",
+          "it": "Chocolat Blanc",
+          "en": "Chocolat Blanc"
+        },
+        "format": "1 unité",
+        "priceChf": 55,
+        "inventoryQuantity": 3,
+        "inStock": true,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2025/05/ISO-WHEY-ZERO.png",
+        "stockGeneva": 3,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 4,
+    "stockPortugal": 0
   },
   {
     "id": "prod-11806",
@@ -11633,62 +12430,62 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5745",
-        "sku": "SKU-5745",
+        "id": "78b43222-368f-42d0-a512-1bcebb349d54",
+        "sku": "634240231223",
         "flavorName": {
-          "fr": "Peach mango",
-          "de": "Peach mango",
-          "it": "Peach mango",
-          "en": "Peach mango"
+          "fr": "Mangue Pêche",
+          "de": "Mangue Pêche",
+          "it": "Mangue Pêche",
+          "en": "Mangue Pêche"
         },
         "format": "1 unité",
-        "priceChf": 25,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/Hype-flvours-1.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 35,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/63.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5746",
-        "sku": "SKU-5746",
+        "id": "ea7990d9-a410-46d8-b8f2-a107f46aeaa2",
+        "sku": "634240231292",
         "flavorName": {
-          "fr": "Pineapple",
-          "de": "Pineapple",
-          "it": "Pineapple",
-          "en": "Pineapple"
+          "fr": "Ananas",
+          "de": "Ananas",
+          "it": "Ananas",
+          "en": "Ananas"
         },
         "format": "1 unité",
-        "priceChf": 25,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/Hype-flvours-3.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 35,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/63.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5747",
-        "sku": "SKU-5747",
+        "id": "3c8fd234-3948-4968-8cd9-e3bad698cece",
+        "sku": "634240231308",
         "flavorName": {
-          "fr": "Strawberry lemonade",
-          "de": "Strawberry lemonade",
-          "it": "Strawberry lemonade",
-          "en": "Strawberry lemonade"
+          "fr": "Fraises Lemon",
+          "de": "Fraises Lemon",
+          "it": "Fraises Lemon",
+          "en": "Fraises Lemon"
         },
         "format": "1 unité",
-        "priceChf": 25,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/Hype-flvours-2.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 35,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/63.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-11269",
@@ -11804,62 +12601,62 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5920",
-        "sku": "SKU-5920",
+        "id": "8eb5f2be-56c3-4728-a72a-5025b96e02e4",
+        "sku": "634240129513",
         "flavorName": {
-          "fr": "Chocolate",
-          "de": "Chocolate",
-          "it": "Chocolate",
-          "en": "Chocolate"
+          "fr": "VANILLE (3KG)",
+          "de": "VANILLE (3KG)",
+          "it": "VANILLE (3KG)",
+          "en": "VANILLE (3KG)"
         },
         "format": "1 unité",
-        "priceChf": 59,
-        "inventoryQuantity": 50,
+        "priceChf": 60,
+        "inventoryQuantity": 17,
         "inStock": true,
-        "image": "/images/products/marvelous/big-choco.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/64.webp",
+        "stockGeneva": 17,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5921",
-        "sku": "SKU-5921",
+        "id": "1e4a5172-9bdd-41f5-8e4f-fcc7e9948df6",
+        "sku": "NF-25155",
         "flavorName": {
-          "fr": "Cookies and Cream",
-          "de": "Cookies and Cream",
-          "it": "Cookies and Cream",
-          "en": "Cookies and Cream"
+          "fr": "CHOCOLAT (4KG)",
+          "de": "CHOCOLAT (4KG)",
+          "it": "CHOCOLAT (4KG)",
+          "en": "CHOCOLAT (4KG)"
         },
         "format": "1 unité",
-        "priceChf": 59,
-        "inventoryQuantity": 50,
+        "priceChf": 70,
+        "inventoryQuantity": 7,
         "inStock": true,
-        "image": "/images/products/marvelous/big-cookies.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BIG-CHOCO.webp",
+        "stockGeneva": 7,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5922",
-        "sku": "SKU-5922",
+        "id": "86894338-e85c-4afb-b768-a8459eaef164",
+        "sku": "NF-25159",
         "flavorName": {
-          "fr": "Vanilla",
-          "de": "Vanilla",
-          "it": "Vanilla",
-          "en": "Vanilla"
+          "fr": "COOKIE & CREAM (4KG)",
+          "de": "COOKIE & CREAM (4KG)",
+          "it": "COOKIE & CREAM (4KG)",
+          "en": "COOKIE & CREAM (4KG)"
         },
         "format": "1 unité",
-        "priceChf": 59,
-        "inventoryQuantity": 50,
+        "priceChf": 70,
+        "inventoryQuantity": 7,
         "inStock": true,
-        "image": "/images/products/marvelous/big-vanilla.png",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BIG-COOKIE.webp",
+        "stockGeneva": 7,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 31,
+    "stockPortugal": 0
   },
   {
     "id": "prod-11236",
@@ -12247,22 +13044,44 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-9616",
-        "sku": "4029679676879-1-1",
+        "id": "1030782f-554a-4bdc-864d-bf2eb5309664",
+        "sku": "NF-20408",
         "flavorName": {
-          "fr": "Standard",
-          "de": "Standard",
-          "it": "Standard",
-          "en": "Standard"
+          "fr": "TRANSPARENT",
+          "de": "TRANSPARENT",
+          "it": "TRANSPARENT",
+          "en": "TRANSPARENT"
         },
         "format": "1 unité",
         "priceChf": 10,
-        "inventoryQuantity": 20,
-        "inStock": true
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
+      },
+      {
+        "id": "7c70d203-755d-41ce-a842-791f3f413254",
+        "sku": "NF-20409",
+        "flavorName": {
+          "fr": "NOIR",
+          "de": "NOIR",
+          "it": "NOIR",
+          "en": "NOIR"
+        },
+        "format": "1 unité",
+        "priceChf": 10,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 0,
+    "stockPortugal": 0
   },
   {
     "id": "prod-9526",
@@ -12470,45 +13289,45 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5702",
-        "sku": "SKU-5702",
+        "id": "81025721-e1c2-4c38-bf15-b2ce6dce48f3",
+        "sku": "634240129636",
         "flavorName": {
-          "fr": "Fruit Punch",
-          "de": "Fruit Punch",
-          "it": "Fruit Punch",
-          "en": "Fruit Punch"
+          "fr": "Ananas",
+          "de": "Ananas",
+          "it": "Ananas",
+          "en": "Ananas"
         },
         "format": "1 unité",
-        "priceChf": 42,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/Savior-flvours-1.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "priceChf": 55,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/SAVIOR-950G.png",
+        "stockGeneva": 0,
+        "stockPortugal": 0
       },
       {
-        "id": "var-5719",
-        "sku": "SKU-5719",
+        "id": "c0fc3f3c-b309-4127-b2ed-57f7be753fb7",
+        "sku": "634240022708",
         "flavorName": {
-          "fr": "Pineapple",
-          "de": "Pineapple",
-          "it": "Pineapple",
-          "en": "Pineapple"
+          "fr": "Fruits Punch",
+          "de": "Fruits Punch",
+          "it": "Fruits Punch",
+          "en": "Fruits Punch"
         },
         "format": "1 unité",
-        "priceChf": 42,
-        "inventoryQuantity": 50,
+        "priceChf": 55,
+        "inventoryQuantity": 8,
         "inStock": true,
-        "image": "/images/products/marvelous/Savior-flvours-2.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/74.webp",
+        "stockGeneva": 8,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 8,
+    "stockPortugal": 0
   },
   {
     "id": "prod-8942",
@@ -13464,7 +14283,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5760",
+        "id": "028c5f01-efcf-4abe-8ee0-4ad7af991101",
         "sku": "SKU-5760",
         "flavorName": {
           "fr": "mango peach",
@@ -13472,14 +14291,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "mango peach",
           "en": "mango peach"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous48.png"
+        "image": "/images/products/marvelous/Marveleous48.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5761",
+        "id": "41274861-6d3f-42de-8079-501444419fa0",
         "sku": "SKU-5761",
         "flavorName": {
           "fr": "tropical fruit",
@@ -13487,14 +14308,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "tropical fruit",
           "en": "tropical fruit"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous48.png"
+        "image": "/images/products/marvelous/Marveleous48.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5762",
+        "id": "3c81ab65-2ff1-4f44-884d-a332a4a5df28",
         "sku": "SKU-5762",
         "flavorName": {
           "fr": "pink strawberry",
@@ -13502,15 +14325,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "pink strawberry",
           "en": "pink strawberry"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous48.png"
+        "image": "/images/products/marvelous/Marveleous48.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 150
   },
   {
     "id": "prod-mv-5641",
@@ -13593,7 +14420,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5641-1",
+        "id": "00a166d3-4493-4747-8249-85934a9a7b6a",
         "sku": "SKU-MV-5641",
         "flavorName": {
           "fr": "Standard",
@@ -13601,15 +14428,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "90 gélules",
+        "format": "1 unité",
         "priceChf": 29,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous-63.png"
+        "image": "/images/products/marvelous/Marveleous-63.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5643",
@@ -13692,7 +14523,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5643-1",
+        "id": "a215f06a-1540-4df4-8ba1-d7187cb04cb2",
         "sku": "SKU-MV-5643",
         "flavorName": {
           "fr": "Standard",
@@ -13700,15 +14531,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "90 gélules",
+        "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 80,
         "inStock": true,
-        "image": "/images/products/marvelous/79-1.png"
+        "image": "/images/products/marvelous/79-1.png",
+        "stockGeneva": 30,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 30,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5645",
@@ -13791,7 +14626,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5665",
+        "id": "55a0f9e3-a49d-4160-8094-ea937699010b",
         "sku": "SKU-5665",
         "flavorName": {
           "fr": "Taille S",
@@ -13799,14 +14634,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille S",
           "en": "Taille S"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png"
+        "image": "/images/products/marvelous/Marveleous37.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5694",
+        "id": "a891c71c-1479-4998-8005-11c2e2fc75d9",
         "sku": "SKU-5694",
         "flavorName": {
           "fr": "Taille M",
@@ -13814,14 +14651,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille M",
           "en": "Taille M"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png"
+        "image": "/images/products/marvelous/Marveleous37.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5695",
+        "id": "3d41ec1e-4fd2-4efb-8555-d7154f3a0e63",
         "sku": "SKU-5695",
         "flavorName": {
           "fr": "Taille L",
@@ -13829,14 +14668,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille L",
           "en": "Taille L"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png"
+        "image": "/images/products/marvelous/Marveleous37.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5696",
+        "id": "4545c49c-21cc-484b-8da2-7051e9622a1c",
         "sku": "SKU-5696",
         "flavorName": {
           "fr": "Taille XL",
@@ -13844,14 +14685,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille XL",
           "en": "Taille XL"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png"
+        "image": "/images/products/marvelous/Marveleous37.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5697",
+        "id": "fda68258-6f2b-4c84-8b46-b7b5b94aeceb",
         "sku": "SKU-5697",
         "flavorName": {
           "fr": "Taille XXL",
@@ -13859,15 +14702,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille XXL",
           "en": "Taille XXL"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png"
+        "image": "/images/products/marvelous/Marveleous37.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 250
   },
   {
     "id": "prod-mv-5646",
@@ -13950,7 +14797,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5660",
+        "id": "4a029339-69e7-4c66-811e-c7a5cd0e2071",
         "sku": "SKU-5660",
         "flavorName": {
           "fr": "Taille S",
@@ -13958,14 +14805,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille S",
           "en": "Taille S"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png"
+        "image": "/images/products/marvelous/Marveleous28.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5661",
+        "id": "418f0e9e-0c11-474a-8dc5-901cee8f1ebf",
         "sku": "SKU-5661",
         "flavorName": {
           "fr": "Taille M",
@@ -13973,14 +14822,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille M",
           "en": "Taille M"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png"
+        "image": "/images/products/marvelous/Marveleous28.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5662",
+        "id": "1709ef1f-757e-41cd-8214-8da2b58a52e8",
         "sku": "SKU-5662",
         "flavorName": {
           "fr": "Taille L",
@@ -13988,14 +14839,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille L",
           "en": "Taille L"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png"
+        "image": "/images/products/marvelous/Marveleous28.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5663",
+        "id": "b4fbc07a-6f2a-43d0-88da-1e2612189be1",
         "sku": "SKU-5663",
         "flavorName": {
           "fr": "Taille XL",
@@ -14003,14 +14856,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille XL",
           "en": "Taille XL"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png"
+        "image": "/images/products/marvelous/Marveleous28.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5664",
+        "id": "c162ee14-1824-4c4c-8a06-4d0842e73b87",
         "sku": "SKU-5664",
         "flavorName": {
           "fr": "Taille XXL",
@@ -14018,15 +14873,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille XXL",
           "en": "Taille XXL"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png"
+        "image": "/images/products/marvelous/Marveleous28.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 250
   },
   {
     "id": "prod-mv-5647",
@@ -14109,7 +14968,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5655",
+        "id": "60935497-8c34-4599-86a0-6ee5ce04b156",
         "sku": "SKU-5655",
         "flavorName": {
           "fr": "Taille S",
@@ -14117,14 +14976,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille S",
           "en": "Taille S"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png"
+        "image": "/images/products/marvelous/Marveleous29.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5656",
+        "id": "5f4d247e-0622-44cf-8688-872df087c1e8",
         "sku": "SKU-5656",
         "flavorName": {
           "fr": "Taille M",
@@ -14132,14 +14993,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille M",
           "en": "Taille M"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png"
+        "image": "/images/products/marvelous/Marveleous29.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5657",
+        "id": "d236f362-eeb6-4fe2-8089-95d076dc70a9",
         "sku": "SKU-5657",
         "flavorName": {
           "fr": "Taille L",
@@ -14147,29 +15010,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille L",
           "en": "Taille L"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png"
+        "image": "/images/products/marvelous/Marveleous29.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5658",
-        "sku": "SKU-5658",
-        "flavorName": {
-          "fr": "Taille XL",
-          "de": "Taille XL",
-          "it": "Taille XL",
-          "en": "Taille XL"
-        },
-        "format": "Textile Sport",
-        "priceChf": 12,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png"
-      },
-      {
-        "id": "var-5659",
+        "id": "6e75c3bb-dbee-4395-8c6e-1abd6b92ea99",
         "sku": "SKU-5659",
         "flavorName": {
           "fr": "Taille XXL",
@@ -14177,15 +15027,36 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Taille XXL",
           "en": "Taille XXL"
         },
-        "format": "Textile Sport",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png"
+        "image": "/images/products/marvelous/Marveleous29.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
+      },
+      {
+        "id": "207252f8-307d-4e70-89bf-c71311322ac2",
+        "sku": "SKU-5658",
+        "flavorName": {
+          "fr": "Taille XL",
+          "de": "Taille XL",
+          "it": "Taille XL",
+          "en": "Taille XL"
+        },
+        "format": "1 unité",
+        "priceChf": 12,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/marvelous/Marveleous29.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 250
   },
   {
     "id": "prod-mv-5648",
@@ -14268,7 +15139,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5648-1",
+        "id": "68e839f4-6237-4cac-87ce-29f0a2304dfa",
         "sku": "SKU-MV-5648",
         "flavorName": {
           "fr": "Standard",
@@ -14276,15 +15147,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "700 ml",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous45.png"
+        "image": "/images/products/marvelous/Marveleous45.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5649",
@@ -14367,7 +15242,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5649-1",
+        "id": "d282c6ee-9d97-4399-8dfb-0c03bb5ea283",
         "sku": "SKU-MV-5649",
         "flavorName": {
           "fr": "Standard",
@@ -14375,15 +15250,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "700 ml",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous30.png"
+        "image": "/images/products/marvelous/Marveleous30.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5650",
@@ -14466,7 +15345,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5650-1",
+        "id": "7542f1fb-f931-4c30-8524-26828a3931dd",
         "sku": "SKU-MV-5650",
         "flavorName": {
           "fr": "Standard",
@@ -14474,15 +15353,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "700 ml",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous6.png"
+        "image": "/images/products/marvelous/Marveleous6.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5651",
@@ -14565,7 +15448,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5651-1",
+        "id": "a88e42ad-fba6-4eeb-8638-0abd1708acab",
         "sku": "SKU-MV-5651",
         "flavorName": {
           "fr": "Standard",
@@ -14573,15 +15456,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "Taille Unique Réglable",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous13.png"
+        "image": "/images/products/marvelous/Marveleous13.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5652",
@@ -14664,7 +15551,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5652-1",
+        "id": "f161b720-36a0-4e67-88d4-809fd8db6d44",
         "sku": "SKU-MV-5652",
         "flavorName": {
           "fr": "Standard",
@@ -14672,15 +15559,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "Taille Unique",
+        "format": "1 unité",
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous26.png"
+        "image": "/images/products/marvelous/Marveleous26.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5653",
@@ -14763,7 +15654,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5653-1",
+        "id": "553966c0-2a6a-4f43-8123-5a8c8dca07ce",
         "sku": "SKU-MV-5653",
         "flavorName": {
           "fr": "Standard",
@@ -14771,15 +15662,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "Grand Volume 45L",
+        "format": "1 unité",
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous42.png"
+        "image": "/images/products/marvelous/Marveleous42.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5654",
@@ -14862,7 +15757,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5654-1",
+        "id": "e23dd96d-b3d4-4a6c-8820-c123cdd7ec04",
         "sku": "SKU-MV-5654",
         "flavorName": {
           "fr": "Standard",
@@ -14870,15 +15765,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "30L Ergonomique",
+        "format": "1 unité",
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous21.png"
+        "image": "/images/products/marvelous/Marveleous21.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5693",
@@ -14995,22 +15894,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5951",
-        "sku": "SKU-5951",
-        "flavorName": {
-          "fr": "Fruit Punch",
-          "de": "Fruit Punch",
-          "it": "Fruit Punch",
-          "en": "Fruit Punch"
-        },
-        "format": "300g (30 doses)",
-        "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/49.jpg"
-      },
-      {
-        "id": "var-5952",
+        "id": "6e793678-b70c-4e25-8954-07284d626f9b",
         "sku": "SKU-5952",
         "flavorName": {
           "fr": "Mango",
@@ -15018,14 +15902,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Mango",
           "en": "Mango"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/48.jpg"
+        "image": "/images/products/marvelous/48.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5953",
+        "id": "d81f9b46-c08b-472b-8724-bf8828bd9585",
         "sku": "SKU-5953",
         "flavorName": {
           "fr": "Strawberry",
@@ -15033,14 +15919,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Strawberry",
           "en": "Strawberry"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/47.jpg"
+        "image": "/images/products/marvelous/47.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5954",
+        "id": "3679deea-8915-4a05-894e-da7f46894cd5",
         "sku": "SKU-5954",
         "flavorName": {
           "fr": "Watermelon",
@@ -15048,15 +15936,36 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Watermelon",
           "en": "Watermelon"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/49.jpg"
+        "image": "/images/products/marvelous/49.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
+      },
+      {
+        "id": "161dd794-c92b-460c-8fb5-b2faebb7b855",
+        "sku": "SKU-5951",
+        "flavorName": {
+          "fr": "Fruit Punch",
+          "de": "Fruit Punch",
+          "it": "Fruit Punch",
+          "en": "Fruit Punch"
+        },
+        "format": "1 unité",
+        "priceChf": 35,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/marvelous/49.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 200
   },
   {
     "id": "prod-mv-5703",
@@ -15139,7 +16048,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5703-1",
+        "id": "f9716627-9a2f-4b9f-8619-893017ad40aa",
         "sku": "SKU-MV-5703",
         "flavorName": {
           "fr": "Standard",
@@ -15147,15 +16056,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (60 doses)",
+        "format": "1 unité",
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous47.png"
+        "image": "/images/products/marvelous/Marveleous47.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5707",
@@ -15272,7 +16185,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5926",
+        "id": "c1b3c63c-d9a5-4872-879e-72be3d7837d9",
         "sku": "SKU-5926",
         "flavorName": {
           "fr": "Chocolate Peanut Butter",
@@ -15280,14 +16193,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Chocolate Peanut Butter",
           "en": "Chocolate Peanut Butter"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/66.jpg"
+        "image": "/images/products/marvelous/66.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5927",
+        "id": "5fa589e8-aeef-4e3d-8f38-253400a5780d",
         "sku": "SKU-5927",
         "flavorName": {
           "fr": "Cookies and Cream",
@@ -15295,14 +16210,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Cookies and Cream",
           "en": "Cookies and Cream"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/65.jpg"
+        "image": "/images/products/marvelous/65.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5928",
+        "id": "70ef6d2f-a68b-4750-82e4-92f0c7370a56",
         "sku": "SKU-5928",
         "flavorName": {
           "fr": "Strawberry",
@@ -15310,15 +16227,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Strawberry",
           "en": "Strawberry"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/64.jpg"
+        "image": "/images/products/marvelous/64.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 150
   },
   {
     "id": "prod-mv-5709",
@@ -15412,7 +16333,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5720",
+        "id": "efe6d867-0d5d-48ed-8c96-99f685ed90db",
         "sku": "SKU-5720",
         "flavorName": {
           "fr": "Orange",
@@ -15420,15 +16341,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Orange",
           "en": "Orange"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 28,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/63.jpg"
+        "image": "/images/products/marvelous/63.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5711",
@@ -15511,7 +16436,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5711-1",
+        "id": "e62435d8-205f-4250-8766-1bebeaa927d7",
         "sku": "SKU-MV-5711",
         "flavorName": {
           "fr": "Standard",
@@ -15519,15 +16444,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "90 gélules",
+        "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous50.png"
+        "image": "/images/products/marvelous/Marveleous50.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5733",
@@ -15714,7 +16643,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5741-1",
+        "id": "72515319-4bc1-45a2-80c8-7e8b5bee9f66",
         "sku": "SKU-MV-5741",
         "flavorName": {
           "fr": "Standard",
@@ -15722,15 +16651,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "90 gélules",
+        "format": "1 unité",
         "priceChf": 23,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous-53.png"
+        "image": "/images/products/marvelous/Marveleous-53.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5749",
@@ -15880,37 +16813,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5750",
-        "sku": "SKU-5750",
-        "flavorName": {
-          "fr": "Chocolate Peanut Butter",
-          "de": "Chocolate Peanut Butter",
-          "it": "Chocolate Peanut Butter",
-          "en": "Chocolate Peanut Butter"
-        },
-        "format": "2 kg (66 doses)",
-        "priceChf": 75,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-5.jpg"
-      },
-      {
-        "id": "var-5751",
-        "sku": "SKU-5751",
-        "flavorName": {
-          "fr": "Belgium Chocolate",
-          "de": "Belgium Chocolate",
-          "it": "Belgium Chocolate",
-          "en": "Belgium Chocolate"
-        },
-        "format": "2 kg (66 doses)",
-        "priceChf": 75,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-6.jpg"
-      },
-      {
-        "id": "var-5752",
+        "id": "1426390e-3251-43ab-8618-b6e9f2cfde46",
         "sku": "SKU-5752",
         "flavorName": {
           "fr": "Cookies",
@@ -15918,14 +16821,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Cookies",
           "en": "Cookies"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-4.jpg"
+        "image": "/images/products/marvelous/Lean-AF-flvours-4.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5753",
+        "id": "39a28d95-8353-45db-8b90-4f324fa64671",
         "sku": "SKU-5753",
         "flavorName": {
           "fr": "Creme Brulee",
@@ -15933,14 +16838,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Creme Brulee",
           "en": "Creme Brulee"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-3.jpg"
+        "image": "/images/products/marvelous/Lean-AF-flvours-3.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5754",
+        "id": "a1dfe3b3-4bfa-47fd-8a6c-9d6b4d72e3e1",
         "sku": "SKU-5754",
         "flavorName": {
           "fr": "Pinacolada",
@@ -15948,14 +16855,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Pinacolada",
           "en": "Pinacolada"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 70,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-2.jpg"
+        "image": "/images/products/marvelous/Lean-AF-flvours-2.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5755",
+        "id": "5b5a258c-36db-48fd-8232-db0214efd041",
         "sku": "SKU-5755",
         "flavorName": {
           "fr": "White Chocolate Raspberry",
@@ -15963,15 +16872,53 @@ export const PRODUCTS: ProductItem[] = [
           "it": "White Chocolate Raspberry",
           "en": "White Chocolate Raspberry"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-1.jpg"
+        "image": "/images/products/marvelous/Lean-AF-flvours-1.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
+      },
+      {
+        "id": "2b6adc65-4c00-47b7-8648-4b86821feeec",
+        "sku": "SKU-5751",
+        "flavorName": {
+          "fr": "Belgium Chocolate",
+          "de": "Belgium Chocolate",
+          "it": "Belgium Chocolate",
+          "en": "Belgium Chocolate"
+        },
+        "format": "1 unité",
+        "priceChf": 75,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/marvelous/Lean-AF-flvours-6.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
+      },
+      {
+        "id": "7e668f56-2f7d-4e22-8571-3e897f0b7bc5",
+        "sku": "SKU-5750",
+        "flavorName": {
+          "fr": "Chocolate Peanut Butter",
+          "de": "Chocolate Peanut Butter",
+          "it": "Chocolate Peanut Butter",
+          "en": "Chocolate Peanut Butter"
+        },
+        "format": "1 unité",
+        "priceChf": 75,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/marvelous/Lean-AF-flvours-5.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 300
   },
   {
     "id": "prod-mv-5756",
@@ -16054,7 +17001,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5756-1",
+        "id": "ef83f500-7ae7-4065-8151-330f91e3ace2",
         "sku": "SKU-MV-5756",
         "flavorName": {
           "fr": "Standard",
@@ -16062,15 +17009,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (88 doses)",
+        "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 99,
         "inStock": true,
-        "image": "/images/products/marvelous/creatine.png"
+        "image": "/images/products/marvelous/creatine.png",
+        "stockGeneva": 49,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 49,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5757",
@@ -16153,7 +17104,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5757-1",
+        "id": "4761b8e7-97c7-4a78-817d-1607c6d56165",
         "sku": "SKU-MV-5757",
         "flavorName": {
           "fr": "Standard",
@@ -16161,15 +17112,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "60 gélules",
+        "format": "1 unité",
         "priceChf": 39,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous20.png"
+        "image": "/images/products/marvelous/Marveleous20.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5758",
@@ -16252,7 +17207,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5758-1",
+        "id": "ec17824b-05de-4af3-8708-b73ae4b2216a",
         "sku": "SKU-MV-5758",
         "flavorName": {
           "fr": "Standard",
@@ -16260,15 +17215,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "90 gélules",
+        "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous7.png"
+        "image": "/images/products/marvelous/Marveleous7.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5759",
@@ -16351,7 +17310,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5759-1",
+        "id": "67f80b66-be2d-401d-8bc7-4a5f1dd059e7",
         "sku": "SKU-MV-5759",
         "flavorName": {
           "fr": "Standard",
@@ -16359,15 +17318,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "60 gélules",
+        "format": "1 unité",
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous2.png"
+        "image": "/images/products/marvelous/Marveleous2.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5763",
@@ -16472,22 +17435,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5806",
-        "sku": "SKU-5806",
-        "flavorName": {
-          "fr": "Blue razz",
-          "de": "Blue razz",
-          "it": "Blue razz",
-          "en": "Blue razz"
-        },
-        "format": "300g (30 doses)",
-        "priceChf": 30,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/61.jpg"
-      },
-      {
-        "id": "var-5807",
+        "id": "d67f49a5-9e7f-4fd6-8aed-cc435efd8aa1",
         "sku": "SKU-5807",
         "flavorName": {
           "fr": "Sweet Lemonade",
@@ -16495,15 +17443,36 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Sweet Lemonade",
           "en": "Sweet Lemonade"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/62.jpg"
+        "image": "/images/products/marvelous/62.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
+      },
+      {
+        "id": "57efaefe-e37e-4dd3-8ffb-b19b75daa7e4",
+        "sku": "SKU-5806",
+        "flavorName": {
+          "fr": "Blue razz",
+          "de": "Blue razz",
+          "it": "Blue razz",
+          "en": "Blue razz"
+        },
+        "format": "1 unité",
+        "priceChf": 30,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/marvelous/61.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 100
   },
   {
     "id": "prod-mv-5772",
@@ -16619,37 +17588,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5773",
-        "sku": "SKU-5773",
-        "flavorName": {
-          "fr": "Mango",
-          "de": "Mango",
-          "it": "Mango",
-          "en": "Mango"
-        },
-        "format": "300g (60 doses)",
-        "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/Creatine-flvours-1.jpg"
-      },
-      {
-        "id": "var-5774",
-        "sku": "SKU-5774",
-        "flavorName": {
-          "fr": "Watermelon",
-          "de": "Watermelon",
-          "it": "Watermelon",
-          "en": "Watermelon"
-        },
-        "format": "300g (60 doses)",
-        "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/Creatine-flvours-2.jpg"
-      },
-      {
-        "id": "var-5775",
+        "id": "a4bd7e8d-2a72-497b-8bd9-5fcc817e0bda",
         "sku": "SKU-5775",
         "flavorName": {
           "fr": "Pinacolada",
@@ -16657,15 +17596,53 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Pinacolada",
           "en": "Pinacolada"
         },
-        "format": "300g (60 doses)",
+        "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Creatine-flvours-3.jpg"
+        "image": "/images/products/marvelous/Creatine-flvours-3.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
+      },
+      {
+        "id": "911955ac-5ce8-4ce4-8ddc-0ffe4c0610f9",
+        "sku": "SKU-5774",
+        "flavorName": {
+          "fr": "Watermelon",
+          "de": "Watermelon",
+          "it": "Watermelon",
+          "en": "Watermelon"
+        },
+        "format": "1 unité",
+        "priceChf": 35,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/marvelous/Creatine-flvours-2.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
+      },
+      {
+        "id": "25d8d795-e72d-499b-8164-e3890ad50060",
+        "sku": "SKU-5773",
+        "flavorName": {
+          "fr": "Mango",
+          "de": "Mango",
+          "it": "Mango",
+          "en": "Mango"
+        },
+        "format": "1 unité",
+        "priceChf": 35,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "image": "/images/products/marvelous/Creatine-flvours-1.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 150
   },
   {
     "id": "prod-mv-5776",
@@ -16748,7 +17725,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5776-1",
+        "id": "e939cefe-7526-4747-82a1-16519636cfab",
         "sku": "SKU-MV-5776",
         "flavorName": {
           "fr": "Standard",
@@ -16756,15 +17733,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 54,
         "inStock": true,
-        "image": "/images/products/marvelous/collagen-Flavored.png"
+        "image": "/images/products/marvelous/collagen-Flavored.png",
+        "stockGeneva": 4,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 4,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5781",
@@ -16847,7 +17828,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5781-1",
+        "id": "db286907-b17d-40b5-8b35-141473e15713",
         "sku": "SKU-MV-5781",
         "flavorName": {
           "fr": "Standard",
@@ -16855,15 +17836,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "60 gélules",
+        "format": "1 unité",
         "priceChf": 15.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Organics.png"
+        "image": "/images/products/marvelous/Organics.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5794",
@@ -16946,7 +17931,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5794-1",
+        "id": "7232b7c3-68d4-4163-8216-53cb8050097f",
         "sku": "SKU-MV-5794",
         "flavorName": {
           "fr": "Standard",
@@ -16954,15 +17939,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (100 doses)",
+        "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 53,
         "inStock": true,
-        "image": "/images/products/marvelous/75.png"
+        "image": "/images/products/marvelous/75.png",
+        "stockGeneva": 3,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 3,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5795",
@@ -17045,7 +18034,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5795-1",
+        "id": "b6e5b4cd-9672-411e-85cf-f46b58d467a6",
         "sku": "SKU-MV-5795",
         "flavorName": {
           "fr": "Standard",
@@ -17053,15 +18042,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (60 doses)",
+        "format": "1 unité",
         "priceChf": 23.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/76.png"
+        "image": "/images/products/marvelous/76.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5796",
@@ -17144,7 +18137,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5796-1",
+        "id": "799d3bec-92c4-4b9f-83da-0ef22e4e0034",
         "sku": "SKU-MV-5796",
         "flavorName": {
           "fr": "Standard",
@@ -17152,15 +18145,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (60 doses)",
+        "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 60,
         "inStock": true,
-        "image": "/images/products/marvelous/Untitled-design-8-1.png"
+        "image": "/images/products/marvelous/Untitled-design-8-1.png",
+        "stockGeneva": 10,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 10,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5878",
@@ -17299,7 +18296,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-5884",
+        "id": "963fdd71-8999-40ca-8119-8a8c2cb84262",
         "sku": "SKU-5884",
         "flavorName": {
           "fr": "Capuccino",
@@ -17307,14 +18304,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Capuccino",
           "en": "Capuccino"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-cuppcino.png"
+        "image": "/images/products/marvelous/hydro-cuppcino.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5885",
+        "id": "e0002df3-a4a7-49ec-86bf-27d56421b6ed",
         "sku": "SKU-5885",
         "flavorName": {
           "fr": "Chocolate",
@@ -17322,14 +18321,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Chocolate",
           "en": "Chocolate"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-choco.png"
+        "image": "/images/products/marvelous/hydro-choco.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5886",
+        "id": "9865c660-fe06-4bd0-8c21-b1080fab360a",
         "sku": "SKU-5886",
         "flavorName": {
           "fr": "Cookies & Cream",
@@ -17337,14 +18338,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Cookies & Cream",
           "en": "Cookies & Cream"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-cookie-sbiscuit.png"
+        "image": "/images/products/marvelous/hydro-cookie-sbiscuit.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5887",
+        "id": "ac4dd468-3f22-4aea-8e2f-7d784f4229e0",
         "sku": "SKU-5887",
         "flavorName": {
           "fr": "Strawberry",
@@ -17352,14 +18355,16 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Strawberry",
           "en": "Strawberry"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-strawberry.png"
+        "image": "/images/products/marvelous/hydro-strawberry.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
-        "id": "var-5888",
+        "id": "0fc0135a-76cd-48f3-8d38-9e2208aed1bb",
         "sku": "SKU-5888",
         "flavorName": {
           "fr": "Vanilla",
@@ -17367,15 +18372,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Vanilla",
           "en": "Vanilla"
         },
-        "format": "2 kg (66 doses)",
+        "format": "1 unité",
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-vanilla.png"
+        "image": "/images/products/marvelous/hydro-vanilla.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 250
   },
   {
     "id": "prod-mv-6456",
@@ -17458,7 +18467,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-6456-1",
+        "id": "07af94a5-563b-41b5-8bf4-c52f4530ff01",
         "sku": "SKU-MV-6456",
         "flavorName": {
           "fr": "Standard",
@@ -17466,15 +18475,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png"
+        "image": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-6461",
@@ -17557,7 +18570,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-6461-1",
+        "id": "4e00f94e-1724-4fa1-8597-a87f36f996d8",
         "sku": "SKU-MV-6461",
         "flavorName": {
           "fr": "Standard",
@@ -17565,15 +18578,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "60 gélules",
+        "format": "1 unité",
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png"
+        "image": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-6465",
@@ -17656,7 +18673,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-6465-1",
+        "id": "91e93b95-f490-4db7-8cf6-046d0824d29f",
         "sku": "SKU-MV-6465",
         "flavorName": {
           "fr": "Standard",
@@ -17664,15 +18681,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "60 gélules",
+        "format": "1 unité",
         "priceChf": 14,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/caffine-gadwel-1.png"
+        "image": "/images/products/marvelous/caffine-gadwel-1.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-6468",
@@ -17755,7 +18776,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-6468-1",
+        "id": "85ab6b0a-49af-4765-8583-a52b5f3bcda8",
         "sku": "SKU-MV-6468",
         "flavorName": {
           "fr": "Standard",
@@ -17763,15 +18784,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "60 gélules",
+        "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 56,
         "inStock": true,
-        "image": "/images/products/marvelous/nad-mockup.png"
+        "image": "/images/products/marvelous/nad-mockup.png",
+        "stockGeneva": 6,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 6,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-6670",
@@ -17876,22 +18901,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-6678",
-        "sku": "SKU-6678",
-        "flavorName": {
-          "fr": "coconut water",
-          "de": "coconut water",
-          "it": "coconut water",
-          "en": "coconut water"
-        },
-        "format": "300g (30 doses)",
-        "priceChf": 20,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "image": "/images/products/marvelous/hydralytes-cocnut-water.png"
-      },
-      {
-        "id": "var-6679",
+        "id": "a54386cb-d206-41db-8395-666cf4a57d1b",
         "sku": "SKU-6679",
         "flavorName": {
           "fr": "lemon mint",
@@ -17899,15 +18909,36 @@ export const PRODUCTS: ProductItem[] = [
           "it": "lemon mint",
           "en": "lemon mint"
         },
-        "format": "300g (30 doses)",
+        "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 60,
         "inStock": true,
-        "image": "/images/products/marvelous/hydralytes-lemon-mint.png"
+        "image": "/images/products/marvelous/hydralytes-lemon-mint.png",
+        "stockGeneva": 10,
+        "stockPortugal": 50
+      },
+      {
+        "id": "acd208d8-6b45-4046-899a-ce4cc144a671",
+        "sku": "SKU-6678",
+        "flavorName": {
+          "fr": "coconut water",
+          "de": "coconut water",
+          "it": "coconut water",
+          "en": "coconut water"
+        },
+        "format": "1 unité",
+        "priceChf": 20,
+        "inventoryQuantity": 82,
+        "inStock": true,
+        "image": "/images/products/marvelous/hydralytes-cocnut-water.png",
+        "stockGeneva": 32,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 42,
+    "stockPortugal": 100
   },
   {
     "id": "prod-ds-198",
@@ -18183,7 +19214,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-200-1",
+        "id": "42e4f5ed-23f0-436a-8c1d-b3229157cc24",
         "sku": "DS-MULTI-V",
         "flavorName": {
           "fr": "Standard",
@@ -18191,15 +19222,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "60 gélules",
+        "format": "1 unité",
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall3.jpg"
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall3.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-201",
@@ -18293,7 +19328,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-201-1",
+        "id": "739fef4d-9949-458b-8228-962af2f240f6",
         "sku": "DS-TESTOEX",
         "flavorName": {
           "fr": "Standard",
@@ -18301,15 +19336,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "90 gélules",
+        "format": "1 unité",
         "priceChf": 42,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall6.jpg"
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall6.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-202",
@@ -18403,7 +19442,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-202-1",
+        "id": "87119eb5-b09c-4e18-8786-0958cf0e885d",
         "sku": "DS-OMEGA3",
         "flavorName": {
           "fr": "Standard",
@@ -18411,15 +19450,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "90 capsules",
+        "format": "1 unité",
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall5.jpg"
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall5.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-212",
@@ -18628,7 +19671,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-213-1",
+        "id": "8cf1c5b8-d6c5-40fb-8ebf-2f5614465b5a",
         "sku": "SKU-DS-213",
         "flavorName": {
           "fr": "Standard",
@@ -18636,15 +19679,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (88 doses)",
+        "format": "1 unité",
         "priceChf": 19.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall13.jpg"
+        "image": "/images/products/dirtysquads/dirty-sqauds-wall13.jpg",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-591",
@@ -18738,7 +19785,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-591-1",
+        "id": "40ad70d7-89b5-4ad7-8db5-59ec0f0a8358",
         "sku": "SKU-DS-591",
         "flavorName": {
           "fr": "Standard",
@@ -18746,15 +19793,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (60 doses)",
+        "format": "1 unité",
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png"
+        "image": "/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-596",
@@ -18848,7 +19899,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-596-1",
+        "id": "b4bfb31b-82da-4836-80d2-8d38260c9350",
         "sku": "SKU-DS-596",
         "flavorName": {
           "fr": "Standard",
@@ -18856,15 +19907,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (100 doses)",
+        "format": "1 unité",
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png"
+        "image": "/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-600",
@@ -18958,7 +20013,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-600-1",
+        "id": "eabb75a8-1579-49fa-83a7-9ccf50f066ac",
         "sku": "SKU-DS-600",
         "flavorName": {
           "fr": "Standard",
@@ -18966,15 +20021,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (60 doses)",
+        "format": "1 unité",
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png"
+        "image": "/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-604",
@@ -19068,7 +20127,7 @@ export const PRODUCTS: ProductItem[] = [
     },
     "variants": [
       {
-        "id": "var-ds-604-1",
+        "id": "3f6889f5-38ba-40ea-8078-ed91d919f69a",
         "sku": "SKU-DS-604",
         "flavorName": {
           "fr": "Standard",
@@ -19076,15 +20135,19 @@ export const PRODUCTS: ProductItem[] = [
           "it": "Standard",
           "en": "Standard"
         },
-        "format": "300g (60 doses)",
+        "format": "1 unité",
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png"
+        "image": "/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   }
 ];
 

@@ -26,7 +26,7 @@ interface Props {
 }
 
 export default function ProductDetailClient({ product, relatedProducts }: Props) {
-  const { addToCart, formatPrice, locale, countryCode, currency, t } = useStore();
+  const { addToCart, formatPrice, locale, countryCode, currency, t, getProductStock } = useStore();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -34,7 +34,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
   const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'reviews' | 'faq'>('desc');
   const [selectedFlavor, setSelectedFlavor] = useState<string>(
-    getLocalized(product.variants?.[0]?.flavorName, locale) || 'Standard'
+    product.variants?.find(v => v.inStock)?.flavorName?.fr ||
+    getLocalized(product.variants?.[0]?.flavorName, locale) ||
+    'Standard'
   );
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
@@ -249,15 +251,18 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
 
           {/* Flavor / Option Selector */}
-          {product.variants.length > 0 && (
+          {(product.variants.length > 1 || (product.variants.length === 1 && product.variants[0]?.flavorName?.fr !== 'Standard')) && (
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2 font-heading">
                 Option / Parfum :
               </label>
               <div className="flex flex-wrap gap-2">
                 {product.variants.map((v, i) => {
-                  const flv = v.flavorName.fr;
+                  const flv = v.flavorName?.fr || 'Standard';
                   const isSelected = selectedFlavor === flv;
+                  const vStock = getProductStock(product, flv);
+                  const isOutOfStock = vStock ? (!vStock.inStock || vStock.total <= 0) : !v.inStock;
+
                   return (
                     <button 
                       key={i}
@@ -268,13 +273,18 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                           setSelectedImage(v.image);
                         }
                       }}
-                      className={`min-h-[42px] px-4 py-2 text-xs font-bold rounded-xl border transition-all ${
+                      className={`min-h-[42px] px-4 py-2 text-xs font-bold rounded-xl border transition-all flex items-center gap-1.5 ${
                         isSelected 
                           ? 'border-[#95d600] bg-[#95d600]/20 text-white ring-1 ring-[#95d600]' 
                           : 'border-white/15 bg-white/5 text-white/80 hover:border-white'
                       }`}
                     >
-                      {flv}
+                      <span>{flv}</span>
+                      {isOutOfStock && (
+                        <span className="text-[10px] text-red-400 font-normal">
+                          (Épuisé)
+                        </span>
+                      )}
                     </button>
                   );
                 })}

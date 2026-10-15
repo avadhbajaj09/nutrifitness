@@ -175,15 +175,59 @@ export async function POST(request: Request) {
 
     // 2. Resolve variant if specified
     let targetVariant: any = null;
-    if (variantId || variantSku) {
-      let vQuery = supabase.from('product_variants').select('*').eq('product_id', product.id);
-      if (variantId && isUUID(variantId)) {
-        vQuery = vQuery.eq('id', variantId);
-      } else if (variantSku) {
-        vQuery = vQuery.or(`sku.eq.${variantSku},attribute_value.ilike.%${variantSku}%`);
+    const flavorHint = body.attributeValue || body.flavor || body.flavorName;
+    if (variantId || variantSku || flavorHint) {
+      const vIdStr = String(variantId || '').trim();
+      const cleanVId = vIdStr.replace(/^var-/, '').trim();
+
+      if (vIdStr && isUUID(vIdStr)) {
+        const { data: vData } = await supabase
+          .from('product_variants')
+          .select('*')
+          .eq('product_id', product.id)
+          .eq('id', vIdStr)
+          .maybeSingle();
+        targetVariant = vData;
+      } else if (cleanVId && isUUID(cleanVId)) {
+        const { data: vData } = await supabase
+          .from('product_variants')
+          .select('*')
+          .eq('product_id', product.id)
+          .eq('id', cleanVId)
+          .maybeSingle();
+        targetVariant = vData;
       }
-      const { data: vData } = await vQuery.maybeSingle();
-      targetVariant = vData;
+
+      if (!targetVariant) {
+        const { data: allVars } = await supabase
+          .from('product_variants')
+          .select('*')
+          .eq('product_id', product.id);
+
+        if (allVars && allVars.length > 0) {
+          const matchKeys = [
+            vIdStr.toLowerCase(),
+            cleanVId.toLowerCase(),
+            (variantSku || '').toLowerCase().trim(),
+            String(flavorHint || '').toLowerCase().trim()
+          ].filter(Boolean);
+
+          targetVariant = allVars.find((v: any) => {
+            const vIdLower = (v.id || '').toLowerCase();
+            const vWoo = String(v.woo_id || '').toLowerCase().trim();
+            const vSku = (v.sku || '').toLowerCase().trim();
+            const vAttr = (v.attribute_value || '').toLowerCase().trim();
+
+            return matchKeys.some(k =>
+              k === vIdLower ||
+              k === vWoo ||
+              (vSku && k === vSku) ||
+              (vAttr && k === vAttr) ||
+              (vAttr && (k.includes(vAttr) || vAttr.includes(k)))
+            );
+          }) || null;
+        }
+      }
     }
 
     // 3. Determine origins to update

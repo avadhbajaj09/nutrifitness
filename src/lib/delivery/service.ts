@@ -114,17 +114,28 @@ export async function resolveBatchEstimates(
       const supabase = getAdminSupabase();
       const { data: stockRows } = await supabase
         .from('fulfillment_stock')
-        .select('product_id, origin_id, quantity, reserved_quantity')
+        .select('product_id, variant_sku, origin_id, quantity, reserved_quantity')
         .in('product_id', productIds);
 
       if (stockRows && stockRows.length > 0) {
         for (const row of stockRows) {
           const pid = row.product_id;
-          const curr = stockMap.get(pid) || { genevaQty: 0, portugalQty: 0 };
           const avail = Math.max(0, (row.quantity || 0) - (row.reserved_quantity || 0));
-          if (row.origin_id === 'GENEVA') curr.genevaQty = avail;
-          if (row.origin_id === 'PORTUGAL') curr.portugalQty = avail;
+
+          // Base product stock
+          const curr = stockMap.get(pid) || { genevaQty: 0, portugalQty: 0 };
+          if (row.origin_id === 'GENEVA') curr.genevaQty += avail;
+          if (row.origin_id === 'PORTUGAL') curr.portugalQty += avail;
           stockMap.set(pid, curr);
+
+          // Variant specific stock
+          if (row.variant_sku) {
+            const vKey = `${pid}:${row.variant_sku.toLowerCase().trim()}`;
+            const vCurr = stockMap.get(vKey) || { genevaQty: 0, portugalQty: 0 };
+            if (row.origin_id === 'GENEVA') vCurr.genevaQty = avail;
+            if (row.origin_id === 'PORTUGAL') vCurr.portugalQty = avail;
+            stockMap.set(vKey, vCurr);
+          }
         }
       }
     } catch {}
@@ -136,7 +147,8 @@ export async function resolveBatchEstimates(
   const isSwissOrLi = country === 'CH' || country === 'LI';
 
   for (const item of items) {
-    const stockInfo = stockMap.get(item.productId);
+    const vKey = item.variantSku ? `${item.productId}:${item.variantSku.toLowerCase().trim()}` : null;
+    const stockInfo = (vKey ? stockMap.get(vKey) : null) || stockMap.get(item.productId);
     let genevaQty = 20;
     let portugalQty = 0;
 
@@ -244,6 +256,19 @@ export async function resolveBatchEstimates(
       overallLatestDate = estimate.latestDate;
     }
 
+    const isPortugal = resolvedOrigin === 'PORTUGAL';
+    const displayDates = isPortugal
+      ? {
+          fr: 'Livraison en 3–5 jours ouvrables',
+          en: 'Delivery in 3–5 business days',
+          de: 'Lieferung in 3–5 Werktagen'
+        }
+      : {
+          fr: formatDeliveryPromise(estimate.displayDate, 'fr'),
+          en: formatDeliveryPromise(estimate.displayDate, 'en'),
+          de: formatDeliveryPromise(estimate.displayDate, 'de')
+        };
+
     results.push({
       productId: item.productId,
       variantSku: item.variantSku,
@@ -253,11 +278,7 @@ export async function resolveBatchEstimates(
       stockCount: availableStock,
       stockPillText: formatStockPill(availableStock, 'fr'),
       estimate,
-      displayDates: {
-        fr: formatDeliveryPromise(estimate.displayDate, 'fr'),
-        en: formatDeliveryPromise(estimate.displayDate, 'en'),
-        de: formatDeliveryPromise(estimate.displayDate, 'de')
-      },
+      displayDates,
       shipsFromText: {
         fr: formatShipsFrom(resolvedOrigin, 'fr'),
         en: formatShipsFrom(resolvedOrigin, 'en'),
@@ -268,11 +289,18 @@ export async function resolveBatchEstimates(
 
   let overallLatestFormatted = null;
   if (overallLatestDate) {
-    overallLatestFormatted = {
-      fr: formatDeliveryPromise(overallLatestDate, 'fr'),
-      en: formatDeliveryPromise(overallLatestDate, 'en'),
-      de: formatDeliveryPromise(overallLatestDate, 'de')
-    };
+    const hasPortugalOnly = results.some(r => r.resolvedOrigin === 'PORTUGAL');
+    overallLatestFormatted = hasPortugalOnly
+      ? {
+          fr: 'Livraison en 3–5 jours ouvrables',
+          en: 'Delivery in 3–5 business days',
+          de: 'Lieferung in 3–5 Werktagen'
+        }
+      : {
+          fr: formatDeliveryPromise(overallLatestDate, 'fr'),
+          en: formatDeliveryPromise(overallLatestDate, 'en'),
+          de: formatDeliveryPromise(overallLatestDate, 'de')
+        };
   }
 
   return {

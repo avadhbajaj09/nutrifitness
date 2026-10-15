@@ -80,11 +80,58 @@ export default async function ProductDetailPage({ params }: Props) {
     notFound();
   }
 
-  const product = getProductBySlug(params.slug, 'fr');
+  const rawProduct = getProductBySlug(params.slug, 'fr');
 
-  if (!product) {
+  if (!rawProduct) {
     notFound();
   }
+
+  let product = { ...rawProduct };
+  try {
+    const supabase = getAdminSupabase();
+    const cleanId = (product.id || '').replace(/^prod-/, '');
+    const { data: dbProduct } = await supabase
+      .from('products')
+      .select(`
+        id, main_location,
+        product_variants (
+          id, woo_id, sku, attribute_name, attribute_value, price,
+          image_url, stock_geneva, stock_portugal
+        )
+      `)
+      .or(`slug.eq.${params.slug},id.eq.${product.id},woo_id.eq.${cleanId}`)
+      .maybeSingle();
+
+    if (dbProduct && dbProduct.product_variants && dbProduct.product_variants.length > 0) {
+      const vars = dbProduct.product_variants.map((v: any) => {
+        const gen = Number(v.stock_geneva) || 0;
+        const pt = Number(v.stock_portugal) || 0;
+        const tot = gen + pt;
+        const flavor = v.attribute_value || 'Standard';
+        return {
+          id: v.id,
+          sku: v.sku || ('NF-' + (v.woo_id || v.id.slice(0, 8))),
+          flavorName: { fr: flavor, de: flavor, it: flavor, en: flavor },
+          format: v.attribute_name === 'poids' ? flavor : '1 unité',
+          priceChf: Number(v.price) || product.priceChf,
+          inventoryQuantity: tot,
+          inStock: tot > 0,
+          image: v.image_url || product.images?.[0]?.src || '/images/placeholder.webp',
+          stockGeneva: gen,
+          stockPortugal: pt
+        };
+      });
+      const totalGen = vars.reduce((s: number, v: any) => s + (v.stockGeneva || 0), 0);
+      const totalPt = vars.reduce((s: number, v: any) => s + (v.stockPortugal || 0), 0);
+
+      product = {
+        ...product,
+        variants: vars,
+        stockGeneva: totalGen,
+        stockPortugal: totalPt
+      };
+    }
+  } catch {}
 
   const prodId = (product.id || '').toLowerCase().trim();
   const cleanId = prodId.replace(/^prod-/, '');

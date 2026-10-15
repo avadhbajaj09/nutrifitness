@@ -97,7 +97,7 @@ export default function QuickViewModal() {
               </p>
 
               {/* Flavor Selector */}
-              {flavors.length > 0 && (
+              {(flavors.length > 1 || (flavors.length === 1 && flavors[0] !== 'Standard')) && (
                 <div>
                   <label className="block text-[11px] font-bold uppercase tracking-wider text-white/60 mb-2">
                     Saveur / Flavor :

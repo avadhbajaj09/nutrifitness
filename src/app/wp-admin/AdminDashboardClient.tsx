@@ -260,16 +260,23 @@ function FulfillmentStocksTab() {
   }, [stocks]);
 
   async function handleSave(productId: string, productSku: string) {
-    for (const [originId, quantity] of [['GENEVA', editVal.geneva], ['PORTUGAL', editVal.portugal]] as const) {
-      await fetch('/api/fulfillment/stock/', {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ productId, productSku, originId, quantity }),
-      });
+    try {
+      for (const [originId, quantity] of [['GENEVA', editVal.geneva], ['PORTUGAL', editVal.portugal]] as const) {
+        await fetch('/api/fulfillment/stock/', {
+          method: 'PATCH',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ productId, productSku, originId, quantity }),
+        });
+      }
+      setEditingRow(null);
+      const res = await fetch('/api/fulfillment/stock/');
+      if (res.ok) {
+        const d = await res.json();
+        setStocks(d.stock ?? []);
+      }
+    } catch (e) {
+      console.error('[FulfillmentStocksTab save error]:', e);
     }
-    setEditingRow(null);
-    const d = await fetch('/api/fulfillment/stock/').then((r) => r.json());
-    setStocks(d.stock ?? []);
   }
 
   if (loading) return <div className="text-center py-12 text-slate-400">Chargement des stocks...</div>;
@@ -747,25 +754,26 @@ export default function AdminDashboardClient() {
 
         const savedStock = localStorage.getItem('nutrifitness_stock_overrides');
         const stockMap = savedStock ? JSON.parse(savedStock) : {};
+        const variantEntries: [string, any][] = [];
+        (savedProduct.variants || []).forEach(v => {
+          const vQty = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0);
+          const vData = {
+            geneva: typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'PORTUGAL' ? 0 : vQty),
+            portugal: typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'PORTUGAL' ? vQty : 0),
+            total: vQty,
+            inStock: vQty > 0
+          };
+          if (v.id) variantEntries.push([v.id.toLowerCase().trim(), vData]);
+          if (v.sku) variantEntries.push([v.sku.toLowerCase().trim(), vData]);
+          if (v.flavorName?.fr) variantEntries.push([v.flavorName.fr.toLowerCase().trim(), vData]);
+        });
+
         const entry = {
           geneva: targetOrigin === 'PORTUGAL' ? 0 : totalStock,
           portugal: targetOrigin === 'PORTUGAL' ? totalStock : (savedProduct.stockPortugal || 0),
           total: totalStock,
           inStock: totalStock > 0,
-          variants: Object.fromEntries(
-            (savedProduct.variants || []).map(v => {
-              const vQty = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0);
-              return [
-                (v.id || v.sku || '').toLowerCase().trim(),
-                {
-                  geneva: targetOrigin === 'PORTUGAL' ? 0 : vQty,
-                  portugal: targetOrigin === 'PORTUGAL' ? vQty : 0,
-                  total: vQty,
-                  inStock: vQty > 0
-                }
-              ];
-            })
-          )
+          variants: Object.fromEntries(variantEntries)
         };
         stockMap[prodId] = entry;
         stockMap[cleanId] = entry;
@@ -781,23 +789,42 @@ export default function AdminDashboardClient() {
       // Sync to Supabase Database
       try {
         const targetOrigin = savedProduct.shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA';
-        const totalStock = (savedProduct.variants && savedProduct.variants.length > 0)
+        const parentStockFallback = (savedProduct.variants && savedProduct.variants.length > 0)
           ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0)), 0)
           : ((savedProduct.stockGeneva || 0) + (savedProduct.stockPortugal || 0));
+
+        const totalGen = (savedProduct.variants && savedProduct.variants.length > 0)
+          ? savedProduct.variants.reduce((s, v) => s + (v.stockGeneva ?? 0), 0)
+          : (savedProduct.stockGeneva ?? (targetOrigin === 'GENEVA' ? parentStockFallback : 0));
+        const totalPt = (savedProduct.variants && savedProduct.variants.length > 0)
+          ? savedProduct.variants.reduce((s, v) => s + (v.stockPortugal ?? 0), 0)
+          : (savedProduct.stockPortugal ?? (targetOrigin === 'PORTUGAL' ? parentStockFallback : 0));
 
         fetch('/api/admin/stock/', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
             productId: savedProduct.id,
-            quantity: totalStock,
-            origin: targetOrigin
+            quantity: totalGen,
+            origin: 'GENEVA'
+          })
+        }).catch(() => {});
+
+        fetch('/api/admin/stock/', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            productId: savedProduct.id,
+            quantity: totalPt,
+            origin: 'PORTUGAL'
           })
         }).catch(() => {});
 
         if (savedProduct.variants && savedProduct.variants.length > 0) {
           for (const v of savedProduct.variants) {
-            const vQty = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0);
+            const vGen = typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'GENEVA' ? (v.inventoryQuantity ?? 0) : 0);
+            const vPt = typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'PORTUGAL' ? (v.inventoryQuantity ?? 0) : 0);
+
             fetch('/api/admin/stock/', {
               method: 'POST',
               headers: { 'Content-Type': 'application/json' },
@@ -805,8 +832,22 @@ export default function AdminDashboardClient() {
                 productId: savedProduct.id,
                 variantId: v.id,
                 variantSku: v.sku,
-                quantity: vQty,
-                origin: targetOrigin
+                flavor: v.flavorName?.fr,
+                quantity: vGen,
+                origin: 'GENEVA'
+              })
+            }).catch(() => {});
+
+            fetch('/api/admin/stock/', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({
+                productId: savedProduct.id,
+                variantId: v.id,
+                variantSku: v.sku,
+                flavor: v.flavorName?.fr,
+                quantity: vPt,
+                origin: 'PORTUGAL'
               })
             }).catch(() => {});
           }

@@ -223,7 +223,7 @@ export function DeliveryEstimate({
         {/* Expander Content */}
         {detailsOpen && (
           <div className="space-y-2 pt-2 border-t border-white/10 text-xs text-white/70 animate-in fade-in duration-150">
-            {earliestStr && latestStr && (
+            {resolvedOrigin !== 'PORTUGAL' && earliestStr && latestStr && (
               <div className="flex justify-between text-[11px]">
                 <span className="text-white/50">{currentLocale === 'en' ? 'Estimated delivery window:' : 'Fenêtre estimée de livraison :'}</span>
                 <span className="font-bold text-white">
