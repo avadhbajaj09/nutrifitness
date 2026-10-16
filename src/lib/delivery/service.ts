@@ -171,49 +171,9 @@ export async function resolveBatchEstimates(
     const isPortugalOnly = portugalQty > 0 && genevaQty <= 0;
     const isBothOOS = genevaQty <= 0 && portugalQty <= 0;
 
-    // Resolve Origin per Part 1 rules
-    let resolvedOrigin: OriginId = 'GENEVA';
-    let availableStock = 0;
-
-    if (isBothOOS) {
-      resolvedOrigin = 'GENEVA';
-      availableStock = 0;
-    } else if (isCommon) {
-      if (isSwissOrLi) {
-        resolvedOrigin = 'GENEVA';
-        availableStock = genevaQty;
-      } else {
-        resolvedOrigin = 'PORTUGAL';
-        availableStock = portugalQty;
-      }
-    } else if (isGenevaOnly) {
-      resolvedOrigin = 'GENEVA';
-      availableStock = genevaQty;
-    } else if (isPortugalOnly) {
-      resolvedOrigin = 'PORTUGAL';
-      availableStock = portugalQty;
-    }
-
-    // Out of Stock state
-    if (availableStock <= 0 || isBothOOS) {
-      results.push({
-        productId: item.productId,
-        variantSku: item.variantSku,
-        resolvedOrigin,
-        isAvailable: false,
-        stockStatus: 'out_of_stock',
-        stockCount: 0,
-        stockPillText: formatStockPill(0, 'fr'),
-        estimate: undefined,
-        displayDates: null,
-        shipsFromText: {
-          fr: formatShipsFrom(resolvedOrigin, 'fr'),
-          en: formatShipsFrom(resolvedOrigin, 'en'),
-          de: formatShipsFrom(resolvedOrigin, 'de')
-        }
-      });
-      continue;
-    }
+    // Sell exclusively from Portugal with no stock gating needed
+    const resolvedOrigin: OriginId = 'PORTUGAL';
+    const availableStock = 50;
 
     // Calculate delivery date using pure estimate function
     const estimate = estimateDelivery({

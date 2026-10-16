@@ -51,21 +51,11 @@ export default function DeliveryBadge({
     } catch {
       const isCom = locationType === 'COMMON' || shippingOrigin === 'common';
       const isCH = cc === 'CH' || cc === 'LI';
-      const lbl = isCom
-        ? isCH
-          ? '🇨🇭 Swiss Fulfillment – livraison en 1–3 jours ouvrables'
-          : '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'
-        : shippingOrigin === 'portugal'
-        ? isCH
-          ? '❌ Non livrable en Suisse'
-          : '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'
-        : isCH
-        ? '🇨🇭 Swiss Fulfillment – livraison en 1–3 jours ouvrables'
-        : "❌ Non livrable dans l'UE";
+      const lbl = '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables';
       setResult({
-        available: isCom ? true : shippingOrigin === 'portugal' ? !isCH : isCH,
-        origin: isCom ? (isCH ? 'GENEVA' : 'PORTUGAL') : shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA',
-        isCommon: isCom,
+        available: true,
+        origin: 'PORTUGAL',
+        isCommon: false,
         commonNote: undefined,
         label: lbl,
         labelFr: lbl,
@@ -80,14 +70,10 @@ export default function DeliveryBadge({
     void fetchAvailability(countryCode || 'CH');
   }, [countryCode, fetchAvailability]);
 
-  const isCommon = result?.isCommon || locationType === 'COMMON' || shippingOrigin === 'common';
-
   const badgeColor = !result
     ? 'border-white/10 bg-white/5'
     : !result.available
     ? 'border-red-500/30 bg-red-500/10'
-    : (result.origin === 'GENEVA' || (isCommon && isSwiss))
-    ? 'border-emerald-500/30 bg-emerald-500/10'
     : 'border-blue-500/30 bg-blue-500/10';
 
   return (
@@ -154,25 +140,14 @@ export default function DeliveryBadge({
       ) : (
         <div className="space-y-1.5">
           <p className={`font-bold flex items-center gap-1.5 ${result?.available === false ? 'text-red-400' : 'text-white'}`}>
-            <span>{result?.available === false ? '❌' : (result?.origin === 'GENEVA' || (isCommon && isSwiss)) ? '🇨🇭' : '🇵🇹'}</span>
-            <span>{result?.label ?? ''}</span>
+            <span>{result?.available === false ? '❌' : '🇵🇹'}</span>
+            <span>{result?.label ?? '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'}</span>
           </p>
-
 
           {result?.dutiesNote && (
             <p className="text-yellow-400/90 text-[11px] flex items-center gap-1 bg-yellow-500/10 px-2 py-1 rounded-md border border-yellow-500/20">
               <span>⚠️</span>
               <span>{result.dutiesNote}</span>
-            </p>
-          )}
-
-          {isSwiss && result?.available && (result?.origin === 'GENEVA' || isCommon) && (
-            <p className="text-[11px] text-white/70 pt-1 border-t border-white/5 flex items-center gap-1.5">
-              <span>📍</span>
-              <span>Retrait boutique :</span>
-              <a href="/click-and-collect/" className="text-[#F80404] hover:underline font-bold">
-                Click & Collect gratuit en 2h en boutique
-              </a>
             </p>
           )}
         </div>

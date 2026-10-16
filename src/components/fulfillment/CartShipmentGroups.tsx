@@ -36,27 +36,12 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
 
   if (!physicalItems.length) return null;
 
-  // Auto-route each item based on destination country and origin
+  // All items ship exclusively from Portugal
   const genevaItems: CartItem[] = [];
-  const ptItems: CartItem[] = [];
+  const ptItems: CartItem[] = [...physicalItems];
 
-  for (const it of physicalItems) {
-    const isCommon = it.locationType === 'COMMON' || it.shippingOrigin === 'common';
-    if (isCommon) {
-      if (isCH) {
-        genevaItems.push(it);
-      } else {
-        ptItems.push(it);
-      }
-    } else if (it.shippingOrigin === 'portugal' || it.locationType === 'PORTUGAL_ONLY' || it.isPortugal) {
-      ptItems.push(it);
-    } else {
-      genevaItems.push(it);
-    }
-  }
-
-  const isMixed = genevaItems.length > 0 && ptItems.length > 0;
-  const hasCommon = physicalItems.some(it => it.locationType === 'COMMON' || it.shippingOrigin === 'common');
+  const isMixed = false;
+  const hasCommon = false;
 
   // Find dynamic delivery date per shipment group
   const genevaEstimate = genevaItems[0] ? estimates.get(genevaItems[0].id || genevaItems[0].slug) : undefined;

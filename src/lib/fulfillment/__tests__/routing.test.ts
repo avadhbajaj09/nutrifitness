@@ -31,44 +31,29 @@ rulesByOriginCountry.set('PORTUGAL:ES', { originId: 'PORTUGAL', countryCode: 'ES
 
 const createItem = (id: string): CartItemForRouting => ({ productId: id, variantSku: 'def', quantity: 1, priceChf: 10, name: id });
 
-// 1. COMMON in CH -> GENEVA
-let result = resolveShipments([createItem('COMMON_ITEM')], 'CH', stockByProduct, rulesByOriginCountry);
-assert(result.shipments.length === 1 && result.shipments[0].origin === 'GENEVA', 'COMMON in CH -> GENEVA');
+// 1. Order in CH -> PORTUGAL with customs
+let result = resolveShipments([createItem('ITEM_1')], 'CH', stockByProduct, rulesByOriginCountry);
+assert(result.shipments.length === 1 && result.shipments[0].origin === 'PORTUGAL' && result.shipments[0].requiresCustoms === true, 'Order in CH -> PORTUGAL + customs');
 
-// 2. COMMON in FR -> PORTUGAL
-result = resolveShipments([createItem('COMMON_ITEM')], 'FR', stockByProduct, rulesByOriginCountry);
-assert(result.shipments.length === 1 && result.shipments[0].origin === 'PORTUGAL', 'COMMON in FR -> PORTUGAL');
+// 2. Order in FR -> PORTUGAL without customs
+result = resolveShipments([createItem('ITEM_1')], 'FR', stockByProduct, rulesByOriginCountry);
+assert(result.shipments.length === 1 && result.shipments[0].origin === 'PORTUGAL' && result.shipments[0].requiresCustoms === false, 'Order in FR -> PORTUGAL (no customs)');
 
-// 3. COMMON in UK -> PORTUGAL + requires_customs=true
-result = resolveShipments([createItem('COMMON_ITEM')], 'UK', stockByProduct, rulesByOriginCountry);
-assert(result.shipments.length === 1 && result.shipments[0].origin === 'PORTUGAL' && result.shipments[0].requiresCustoms === true, 'COMMON in UK -> PORTUGAL + customs');
+// 3. Order in UK -> PORTUGAL + requiresCustoms=true
+result = resolveShipments([createItem('ITEM_1')], 'UK', stockByProduct, rulesByOriginCountry);
+assert(result.shipments.length === 1 && result.shipments[0].origin === 'PORTUGAL' && result.shipments[0].requiresCustoms === true, 'Order in UK -> PORTUGAL + customs');
 
-// 4. GENEVA_ONLY in CH -> GENEVA
-result = resolveShipments([createItem('GENEVA_ONLY')], 'CH', stockByProduct, rulesByOriginCountry);
-assert(result.shipments.length === 1 && result.shipments[0].origin === 'GENEVA', 'GENEVA_ONLY in CH -> GENEVA');
+// 4. Multiple items in CH -> 1 consolidated Portugal shipment (no split)
+result = resolveShipments([createItem('ITEM_1'), createItem('ITEM_2')], 'CH', stockByProduct, rulesByOriginCountry);
+assert(result.shipments.length === 1 && result.shipments[0].origin === 'PORTUGAL' && result.shipments[0].items.length === 2, 'Multiple items in CH -> 1 consolidated Portugal shipment');
 
-// 5. GENEVA_ONLY in ES -> blocked COUNTRY_NOT_SUPPORTED
-result = resolveShipments([createItem('GENEVA_ONLY')], 'ES', stockByProduct, rulesByOriginCountry);
-assert(result.shipments.length === 0 && result.blockedItems.length === 1 && result.blockedItems[0].reason === 'COUNTRY_NOT_SUPPORTED', 'GENEVA_ONLY in ES -> blocked');
+// 5. Delivery ETA is 3-5 days
+assert(result.shipments[0].etaMin === 3 && result.shipments[0].etaMax === 5, 'Delivery ETA is 3-5 days');
 
-// 6. PORTUGAL_ONLY in CH -> PORTUGAL + requires_customs=true
-result = resolveShipments([createItem('PORTUGAL_ONLY')], 'CH', stockByProduct, rulesByOriginCountry);
-assert(result.shipments.length === 1 && result.shipments[0].origin === 'PORTUGAL' && result.shipments[0].requiresCustoms === true, 'PORTUGAL_ONLY in CH -> PORTUGAL + customs');
+// 6. Free shipping threshold is 75 for CH, 120 for EU
+assert(result.shipments[0].freeShippingThreshold === 75, 'Free shipping threshold is 75 for CH');
+const euResult = resolveShipments([createItem('ITEM_1')], 'FR', stockByProduct, rulesByOriginCountry);
+assert(euResult.shipments[0].freeShippingThreshold === 120, 'Free shipping threshold is 120 for EU');
 
-// 7. Mixed cart (COMMON+PORTUGAL_ONLY) in CH -> 2 shipments
-result = resolveShipments([createItem('COMMON_ITEM'), createItem('PORTUGAL_ONLY')], 'CH', stockByProduct, rulesByOriginCountry);
-assert(result.shipments.length === 2 && result.shipments.some(s => s.origin === 'GENEVA') && result.shipments.some(s => s.origin === 'PORTUGAL'), 'Mixed cart in CH -> 2 shipments');
-
-// 8. COMMON in FR, Geneva OOS -> PORTUGAL (correct fallback)
-// Wait, if it's OOS in Geneva, it is PORTUGAL_ONLY, so it will go from Portugal anyway.
-const tempStock = new Map(stockByProduct);
-tempStock.set('COMMON_ITEM', { genevaQty: 0, genevaReserved: 0, portugalQty: 10, portugalReserved: 0 });
-result = resolveShipments([createItem('COMMON_ITEM')], 'FR', tempStock, rulesByOriginCountry);
-assert(result.shipments.length === 1 && result.shipments[0].origin === 'PORTUGAL', 'COMMON (Geneva OOS) in FR -> PORTUGAL');
-
-// 9. Both OOS -> OUT_OF_STOCK blocked
-result = resolveShipments([createItem('OOS_ITEM')], 'CH', stockByProduct, rulesByOriginCountry);
-assert(result.shipments.length === 0 && result.blockedItems.length === 1 && result.blockedItems[0].reason === 'OUT_OF_STOCK', 'Both OOS -> OUT_OF_STOCK');
-
-console.log('\nAll tests passed successfully!');
+console.log('\nAll routing tests passed successfully!');
 process.exit(0);

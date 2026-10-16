@@ -55,67 +55,13 @@ export async function getAvailability(
     };
   };
 
-  // COMMON PRODUCT (Stocked in both Switzerland and Portugal)
-  if (isCommon) {
-    // 1. Switzerland or Liechtenstein -> Fulfilled from Swiss shop (1-3 days)
-    if (['CH', 'LI'].includes(countryCode)) {
-      if (stockGeneva === undefined || stockGeneva > 0) {
-        return getResult(
-          true,
-          'GENEVA',
-          1,
-          3,
-          false,
-          '🇨🇭 Swiss Fulfillment – livraison en 1–3 jours ouvrables'
-        );
-      }
-      return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
-    }
-
-    // 2. European countries -> Fulfilled from Portugal warehouse (3-5 days, intra-EU no customs)
-    if (euCountries.has(countryCode) || ['UK', 'GB', 'NO', 'IS'].includes(countryCode)) {
-      if (stockPortugal === undefined || stockPortugal > 0) {
-        return getResult(
-          true,
-          'PORTUGAL',
-          3,
-          5,
-          false,
-          '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'
-        );
-      }
-      return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
-    }
-
-    return getResult(false);
-  }
-
-  // PORTUGAL_ONLY PRODUCT
-  if (isPortugalOnly) {
-    if (['CH', 'LI'].includes(countryCode) || euCountries.has(countryCode) || ['UK', 'GB', 'NO', 'IS'].includes(countryCode)) {
-      if (stockPortugal === undefined || stockPortugal > 0) {
-        return getResult(
-          true,
-          'PORTUGAL',
-          3,
-          5,
-          false,
-          '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'
-        );
-      }
-      return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
-    }
-    return getResult(false);
-  }
-
-  // SWITZERLAND_ONLY PRODUCT (GENEVA_ONLY)
-  if (['CH', 'LI'].includes(countryCode)) {
-    if (stockGeneva === undefined || stockGeneva > 0) {
-      return getResult(true, 'GENEVA', 1, 3, false);
-    }
-    return getResult(false, undefined, undefined, undefined, false, '❌ Rupture de stock');
-  }
-
-  // Blocked for Europe (Swiss shop ships exclusively to Switzerland)
-  return getResult(false, undefined, undefined, undefined, false, "❌ Non disponible dans votre pays");
+  // All products ship exclusively from Portugal with no stock gating needed (3–5 working days to Switzerland & Europe)
+  return getResult(
+    true,
+    'PORTUGAL',
+    3,
+    5,
+    false,
+    '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'
+  );
 }

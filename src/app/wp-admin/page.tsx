@@ -3,8 +3,8 @@ import type { Metadata } from 'next';
 import AdminDashboardClient from './AdminDashboardClient';
 
 export const metadata: Metadata = {
-  title: 'Administration & POS Register | NutriFitness Geneva',
-  description: 'Management dashboard and POS register for NutriFitness Geneva.',
+  title: 'Administration E-Commerce | NutriFitness',
+  description: 'Management dashboard for NutriFitness e-commerce.',
   robots: {
     index: false,
     follow: false,

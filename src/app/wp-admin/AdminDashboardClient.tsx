@@ -521,10 +521,10 @@ export default function AdminDashboardClient() {
   // 2. DASHBOARD NAVIGATION & TIME
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState<'catalog' | 'pos' | 'sales' | 'fulfillment'>('pos');
+  const [activeTab, setActiveTab] = useState<'catalog' | 'sales' | 'fulfillment'>('catalog');
 
   useEffect(() => {
-    if (tabParam === 'catalog' || tabParam === 'pos' || tabParam === 'sales' || tabParam === 'fulfillment') {
+    if (tabParam === 'catalog' || tabParam === 'sales' || tabParam === 'fulfillment') {
       setActiveTab(tabParam);
     }
   }, [tabParam]);
@@ -2229,15 +2229,15 @@ export default function AdminDashboardClient() {
             <div className="inline-flex items-center justify-center w-16 h-16 rounded-2xl bg-slate-900 text-white mb-4 shadow-md">
               <span className="text-2xl font-black tracking-tight font-heading">NF</span>
             </div>
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-bold mb-3">
-              <span>🇨🇭</span>
-              <span>Boutique Genève (Rue des Pâquis 34)</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blue-50 text-blue-700 border border-blue-200 text-xs font-bold mb-3">
+              <span>🇵🇹</span>
+              <span>Expédition Portugal & E-Commerce</span>
             </div>
             <h1 className="text-2xl font-black tracking-tight text-slate-900 font-heading">
               NutriFitness OS
             </h1>
             <p className="text-xs text-slate-500 mt-1 font-medium">
-              Administration & Caisse Enregistreuse POS
+              Administration & Gestion de la Boutique
             </p>
           </div>
 
@@ -2281,7 +2281,7 @@ export default function AdminDashboardClient() {
               type="submit"
               className="w-full py-3.5 px-4 bg-slate-900 hover:bg-slate-800 text-white font-black text-sm uppercase tracking-wider rounded-xl transition-all shadow-md active:scale-98 flex items-center justify-center gap-2"
             >
-              <span>Ouvrir la Caisse & le Catalogue</span>
+              <span>Ouvrir l'Administration</span>
               <ArrowRight className="w-4 h-4" />
             </button>
           </form>
@@ -2314,16 +2314,15 @@ export default function AdminDashboardClient() {
           <div className="w-full px-4 sm:px-6 h-16 flex items-center justify-between gap-4">
             <div className="flex items-center gap-3 min-w-0">
               <h1 className="text-base font-bold text-slate-900 tracking-tight truncate">
-                {activeTab === 'pos' && (adminLang === 'fr' ? 'Caisse POS (Magasin Genève)' : 'Point of Sale (POS Register)')}
                 {activeTab === 'catalog' && (adminLang === 'fr' ? 'Catalogue Général' : 'Global Products Catalog')}
-                {activeTab === 'sales' && (adminLang === 'fr' ? 'Journal des Ventes' : 'Orders & Sales Journal')}
-                {activeTab === 'fulfillment' && (adminLang === 'fr' ? 'File d\'Expédition & Stocks' : 'Fulfillment & Shipping Queue')}
+                {activeTab === 'sales' && (adminLang === 'fr' ? 'Journal des Commandes & Ventes' : 'Orders & Sales Journal')}
+                {activeTab === 'fulfillment' && (adminLang === 'fr' ? 'Expédition Portugal & Stocks' : 'Portugal Fulfillment & Shipping Queue')}
               </h1>
               <span className="text-slate-300">/</span>
               <span className="text-xs text-slate-500 font-medium truncate flex items-center gap-1.5">
-                <span>Rue des Pâquis 34, Geneva</span>
+                <span>Expédition Portugal (3–5j)</span>
                 <span>·</span>
-                <span className="font-semibold text-slate-700">🇨🇭 {currentTime}</span>
+                <span className="font-semibold text-slate-700">🇵🇹 {currentTime}</span>
               </span>
             </div>
             <div className="flex items-center gap-3 shrink-0">
@@ -2386,9 +2385,9 @@ export default function AdminDashboardClient() {
 
         <div className="w-full flex-1 min-w-0">
           {/* =========================================================
-              MAIN BODY: TAB 1 — IN-STORE POS SYSTEM (GENEVA STOCK ONLY)
+              MAIN BODY: TAB 1 — IN-STORE POS SYSTEM (DISABLED / REMOVED)
               ========================================================= */}
-          {activeTab === 'pos' && (
+          {(activeTab as any) === 'pos' && false && (
             <div className="w-full p-4 sm:p-6 flex flex-col lg:flex-row gap-6">
           
           {/* LEFT 65%: PRODUCT BROWSER & SCANNER */}
@@ -5374,30 +5373,7 @@ export default function AdminDashboardClient() {
               </div>
             )}
 
-            {/* Quick POS action button if in Geneva stock */}
-            {inspectingProduct.shippingOrigin !== 'portugal' && (
-              <button
-                type="button"
-                onClick={() => {
-                  const defaultVar = inspectingProduct.variants?.[0] || {
-                    id: 'def',
-                    sku: inspectingProduct.id,
-                    flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
-                    format: '1 unité',
-                    priceChf: inspectingProduct.priceChf,
-                    inventoryQuantity: 20,
-                    inStock: true
-                  };
-                  addToPosTicket(inspectingProduct, defaultVar);
-                  setActiveTab('pos');
-                  setInspectingProduct(null);
-                }}
-                className="w-full py-3.5 bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider rounded-xl transition-all shadow-sm flex items-center justify-center gap-2"
-              >
-                <Store className="w-4 h-4" />
-                <span>Ajouter cet article à la Caisse POS</span>
-              </button>
-            )}
+
 
           </div>
         </div>

@@ -54,68 +54,15 @@ export default function ProductLocationBadge({
   const isSwissDestination = currentCc === 'CH' || currentCc === 'LI';
   const isGenevaAllowed = GENEVA_ALLOW_LIST.has(currentCc);
 
-  let isBlocked = false;
-  let locationLabel: string;
-  let flagIcon: string;
-  let activeOrigin: 'GENEVA' | 'PORTUGAL' = 'GENEVA';
+  const isBlocked = false;
+  const locationLabel = 'Portugal Fulfillment (3–5j)';
+  const flagIcon = '🇵🇹';
+  const isLowStock = false;
+  const stockText = 'En stock';
 
-  if (isCommon) {
-    // COMMON: auto-select nearest origin based on customer country
-    if (isSwissDestination) {
-      activeOrigin = 'GENEVA';
-      locationLabel = 'En stock';
-      flagIcon = '';
-    } else {
-      activeOrigin = 'PORTUGAL';
-      locationLabel = 'Portugal Fulfillment (3–5j)';
-      flagIcon = '🇵🇹';
-    }
-  } else if (isPortugalOnly) {
-    activeOrigin = 'PORTUGAL';
-    if (isSwissDestination) {
-      isBlocked = false;
-      locationLabel = 'Portugal Fulfillment (3–5j)';
-      flagIcon = '🇵🇹';
-    } else {
-      locationLabel = 'Portugal Fulfillment (3–5j)';
-      flagIcon = '🇵🇹';
-    }
-  } else {
-    // SWITZERLAND ONLY
-    activeOrigin = 'GENEVA';
-    if (!isGenevaAllowed) {
-      isBlocked = true;
-      locationLabel = 'Non disponible dans votre pays';
-      flagIcon = '';
-    } else {
-      locationLabel = 'En stock';
-      flagIcon = '';
-    }
-  }
-
-  // Stock text strictly without numbers: "En stock" / "Stock limité – vite épuisé" / "Rupture de stock" / "Non livrable"
-  const activeStockQty = isCommon
-    ? (activeOrigin === 'GENEVA' ? (typeof stockGeneva === 'number' ? stockGeneva : 25) : (typeof stockPortugal === 'number' ? stockPortugal : 25))
-    : isPortugalOnly
-    ? (typeof stockPortugal === 'number' ? stockPortugal : 25)
-    : (typeof stockGeneva === 'number' ? stockGeneva : 25);
-
-  const isLowStock = !isBlocked && !isOutOfStock && activeStockQty < 5;
-
-  let stockText: string;
-  if (isBlocked) {
-    stockText = `Non livrable (${currentCc})`;
-  } else if (isOutOfStock) {
-    stockText = t.common.ruptureStock || 'Rupture de stock';
-  } else if (isLowStock) {
-    stockText = 'Stock limité – vite épuisé';
-  } else {
-    stockText = 'En stock';
-  }
-
-  const isGreen = !isBlocked && !isOutOfStock && !isLowStock && activeOrigin === 'GENEVA';
-  const isBlue = !isBlocked && !isOutOfStock && !isLowStock && activeOrigin === 'PORTUGAL';
-  const isAmber = !isBlocked && !isOutOfStock && isLowStock;
+  const isGreen = false;
+  const isBlue = true;
+  const isAmber = false;
 
   // Compact Pill (e.g. over image corner or in product detail)
   if (variant === 'pill') {

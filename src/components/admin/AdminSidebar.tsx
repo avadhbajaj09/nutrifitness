@@ -16,8 +16,8 @@ import {
 } from 'lucide-react';
 
 interface AdminSidebarProps {
-  activeTab?: 'pos' | 'catalog' | 'sales' | 'fulfillment' | 'locations';
-  onSelectTab?: (tab: 'pos' | 'catalog' | 'sales' | 'fulfillment') => void;
+  activeTab?: 'catalog' | 'sales' | 'fulfillment' | 'locations';
+  onSelectTab?: (tab: 'catalog' | 'sales' | 'fulfillment') => void;
   posCount?: number;
   catalogCount?: number;
   salesCount?: number;
@@ -36,14 +36,6 @@ export default function AdminSidebar({
   const isLocationPage = pathname?.startsWith('/admin/products');
 
   const navItems = [
-    {
-      id: 'pos',
-      label: 'POS Register',
-      icon: Store,
-      badge: posCount,
-      href: '/wp-admin?tab=pos',
-      isRoute: false,
-    },
     {
       id: 'catalog',
       label: 'Products Catalog',
@@ -75,7 +67,7 @@ export default function AdminSidebar({
       router.push(item.href);
     } else {
       if (pathname?.startsWith('/wp-admin') && onSelectTab) {
-        onSelectTab(item.id as 'pos' | 'catalog' | 'sales' | 'fulfillment');
+        onSelectTab(item.id as 'catalog' | 'sales' | 'fulfillment');
       } else {
         router.push(item.href);
       }

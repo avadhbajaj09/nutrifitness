@@ -137,27 +137,12 @@ export default function CartDrawer() {
                           ✓ Exemplaire unique (téléchargement PDF)
                         </p>
                       )}
-                      {!item.isEbook && (() => {
-                        const isSwiss = countryCode === 'CH' || countryCode === 'LI';
-                        const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
-                        const isSwissOrigin = !item.isPortugal && (item.locationType === 'GENEVA_ONLY' || (isCommon && isSwiss) || (!item.locationType && isSwiss));
-
-                        if (isSwissOrigin) {
-                          return (
-                            <p className="text-[10px] text-emerald-400 font-bold pt-0.5 flex items-center gap-1">
-                              <span>🇨🇭</span>
-                              <span>Expédié de Suisse (24h)</span>
-                            </p>
-                          );
-                        } else {
-                          return (
-                            <p className="text-[10px] text-blue-400 font-bold pt-0.5 flex items-center gap-1">
-                              <span>🇵🇹</span>
-                              <span>Expédié du Portugal · 3–5j</span>
-                            </p>
-                          );
-                        }
-                      })()}
+                      {!item.isEbook && (
+                        <p className="text-[10px] text-blue-400 font-bold pt-0.5 flex items-center gap-1">
+                          <span>🇵🇹</span>
+                          <span>Expédié du Portugal · 3–5j</span>
+                        </p>
+                      )}
                     </div>
                     <button 
                       type="button" 

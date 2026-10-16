@@ -63,25 +63,11 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               CH
             </span>
           )}
-          {/* Origin badge based on visitor location without dual badges */}
-          {(() => {
-            const isSwiss = effectiveCountry === 'CH' || effectiveCountry === 'LI';
-            const isSwissOrigin = originType === 'GENEVA_ONLY' || (originType === 'COMMON' && isSwiss);
-            return (
-              <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ${
-                isSwissOrigin
-                  ? 'bg-black/80 border-white/20 text-white'
-                  : 'bg-blue-950/85 border-blue-500/40 text-blue-300'
-              }`}>
-                <span>{isSwissOrigin ? '🇨🇭' : '🇵🇹'}</span>
-                <span>
-                  {isSwissOrigin
-                    ? (t.common.originSwitzerland || 'Expédié de Suisse')
-                    : (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
-                </span>
-              </span>
-            );
-          })()}
+          {/* Origin badge: Always Portugal fulfillment */}
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border bg-blue-950/85 border-blue-500/40 text-blue-300">
+            <span>🇵🇹</span>
+            <span>{t.common.originPortugal || 'Expédié du Portugal (3-5 jours)'}</span>
+          </span>
         </div>
 
         {/* Floating Action Buttons (Top Right) */}

@@ -147,31 +147,8 @@ export function isProductDeliverableToCountry(
   const code = (countryCode || 'CH').toUpperCase().trim();
   if (!isCountrySupported(code)) return false;
 
-  const isSwissDestination = code === 'CH' || code === 'LI';
-
-  // In Switzerland: ALL products from both Swiss shop and Portugal warehouse are available!
-  // Do NOT hide products in Switzerland.
-  if (isSwissDestination) {
-    if (typeof stockGeneva === 'number' || typeof stockPortugal === 'number') {
-      const g = typeof stockGeneva === 'number' ? stockGeneva : 0;
-      const p = typeof stockPortugal === 'number' ? stockPortugal : 0;
-      return (g + p) > 0;
-    }
-    return true;
-  }
-
-  // Rest of Europe / Other destinations:
-  // Handled by Portugal warehouse. Swiss shop-only items do not ship to Europe.
-  const isCommon = locationType === 'COMMON' || shippingOrigin === 'common';
-  const isSwissOnly = (locationType === 'GENEVA_ONLY' || shippingOrigin === 'switzerland') && !isCommon;
-
-  if (isSwissOnly) {
-    return false;
-  }
-
-  if (typeof stockPortugal === 'number') {
-    return stockPortugal > 0;
-  }
+  // We sell exclusively from Portugal to all supported countries (Switzerland, Liechtenstein, EU, UK, NO, IS)
+  // All products are available from Portugal with no stock gating needed.
   return true;
 }
 
