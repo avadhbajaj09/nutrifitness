@@ -1,11 +1,11 @@
 /**
  * Swiss TWINT Payment Gateway Configuration & Helpers
- * Store UUID / Terminal: e63424a8-576d-c293-a4de-891c3737aa8b (hex: e63424a8576dc293a4de891c3737aa8b)
+ * Store UUID / Terminal: 284f5777-02b6-4718-9f87-bbb1c4224429
  */
 
 export const TWINT_CONFIG = {
-  storeUuid: process.env.NEXT_PUBLIC_TWINT_STORE_UUID || process.env.TWINT_STORE_UUID || 'e63424a8-576d-c293-a4de-891c3737aa8b',
-  rawKey: 'e63424a8576dc293a4de891c3737aa8b',
+  storeUuid: process.env.NEXT_PUBLIC_TWINT_STORE_UUID || process.env.TWINT_STORE_UUID || '284f5777-02b6-4718-9f87-bbb1c4224429',
+  rawKey: '284f577702b647189f87bbb1c4224429',
   merchantName: 'NutriFitness Suisse',
   location: 'Swiss Fulfillment, Suisse',
 };
