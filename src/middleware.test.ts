@@ -94,6 +94,45 @@ function assert(condition: boolean, message: string) {
   );
 }
 
+// Case 7: Page GET request without trailing slash gets 308 redirect
+{
+  const req = new NextRequest(new URL('https://nutrifitness.ch/boutique'), {
+    method: 'GET',
+    headers: new Headers({ host: 'nutrifitness.ch' })
+  });
+  const res = middleware(req);
+  assert(
+    res.status === 308 && res.headers.get('location') === 'https://nutrifitness.ch/boutique/',
+    'GET /boutique redirects with 308 to /boutique/'
+  );
+}
+
+// Case 8: Stripe webhook API route without trailing slash is NOT redirected
+{
+  const req = new NextRequest(new URL('https://nutrifitness.ch/api/webhooks/stripe'), {
+    method: 'POST',
+    headers: new Headers({ host: 'nutrifitness.ch' })
+  });
+  const res = middleware(req);
+  assert(
+    res.status !== 308 && res.headers.get('location') === null,
+    'POST /api/webhooks/stripe does NOT get 308 redirect'
+  );
+}
+
+// Case 9: Stripe webhook API route with trailing slash is NOT redirected
+{
+  const req = new NextRequest(new URL('https://nutrifitness.ch/api/webhooks/stripe/'), {
+    method: 'POST',
+    headers: new Headers({ host: 'nutrifitness.ch' })
+  });
+  const res = middleware(req);
+  assert(
+    res.status !== 308 && res.headers.get('location') === null,
+    'POST /api/webhooks/stripe/ does NOT get 308 redirect'
+  );
+}
+
 if (failed) {
   process.exit(1);
 } else {

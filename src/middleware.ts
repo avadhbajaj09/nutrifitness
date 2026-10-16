@@ -56,6 +56,20 @@ export function middleware(request: NextRequest) {
     return rewriteResponse;
   }
 
+  // 3. Enforce SEO trailing slash on page GET requests (exempting /api, files, and static assets)
+  if (
+    request.method === 'GET' &&
+    !pathname.startsWith('/api') &&
+    !pathname.startsWith('/_next') &&
+    !pathname.startsWith('/images') &&
+    !pathname.startsWith('/wp-content') &&
+    !pathname.endsWith('/') &&
+    !pathname.includes('.')
+  ) {
+    const targetUrl = new URL(`${pathname}/${request.nextUrl.search}`, request.url);
+    return NextResponse.redirect(targetUrl, 308);
+  }
+
   const response = NextResponse.next();
 
   // Extract hostname from headers or request URL
