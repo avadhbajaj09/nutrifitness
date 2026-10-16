@@ -710,7 +710,42 @@ export default function AdminDashboardClient() {
           };
         });
 
-        setAllProducts(withStocks);
+        // 6. Fetch permanently saved barcodes from Supabase (/api/admin/products/barcode/)
+        let finalProductsWithBarcodes = withStocks;
+        try {
+          const bRes = await fetch('/api/admin/products/barcode/', { cache: 'no-store' });
+          if (bRes.ok) {
+            const bData = await bRes.json();
+            if (bData.success) {
+              const pBarcodes = bData.productBarcodes || {};
+              const vBarcodes = bData.variantBarcodes || {};
+
+              finalProductsWithBarcodes = withStocks.map(p => {
+                const pId = (p.id || '').toLowerCase().trim();
+                const cleanId = pId.replace(/^prod-/, '');
+                const slug = (p.slug?.fr || '').toLowerCase().trim();
+                const savedGtin = pBarcodes[p.id] || pBarcodes[cleanId] || pBarcodes[slug] || p.gtin13;
+
+                const updatedVariants = (p.variants || []).map(v => {
+                  const vKey = (v.id || v.sku || '').toLowerCase().trim();
+                  const vFlavorKey = `${p.id}_${(v.flavorName?.fr || '').toLowerCase().trim()}`;
+                  const vGtin = vBarcodes[v.id] || vBarcodes[v.sku] || vBarcodes[vKey] || vBarcodes[vFlavorKey] || v.gtin13;
+                  return vGtin ? { ...v, gtin13: vGtin } : v;
+                });
+
+                return {
+                  ...p,
+                  gtin13: savedGtin || p.gtin13,
+                  variants: updatedVariants
+                };
+              });
+            }
+          }
+        } catch (bErr) {
+          console.warn('[POS] Barcode fetch non-fatal error:', bErr);
+        }
+
+        setAllProducts(finalProductsWithBarcodes);
       } catch (err) {
         console.error('Failed to load products in admin dashboard', err);
       }
@@ -1103,14 +1138,41 @@ export default function AdminDashboardClient() {
     setBarcodeModalValues(initial);
   };
 
-  // Save Barcode changes
-  const handleSaveBarcodeModal = () => {
+  // Save Barcode changes to Supabase permanently
+  const handleSaveBarcodeModal = async () => {
     if (!barcodeModalProduct) return;
     const prodId = barcodeModalProduct.id;
+    const mainBarcode = (barcodeModalValues['def'] || barcodeModalValues[barcodeModalProduct.variants?.[0]?.id || barcodeModalProduct.variants?.[0]?.sku || ''] || barcodeModalProduct.gtin13 || '').trim();
+
+    const variantsPayload = (barcodeModalProduct.variants || []).map(v => {
+      const key = v.id || v.sku;
+      return {
+        id: v.id,
+        sku: v.sku,
+        flavor: v.flavorName?.fr,
+        gtin13: (barcodeModalValues[key] || v.gtin13 || '').trim()
+      };
+    });
+
+    // 1. Immediately persist to Supabase database
+    try {
+      fetch('/api/admin/products/barcode/', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          productId: prodId,
+          gtin13: mainBarcode,
+          variants: variantsPayload
+        })
+      }).catch(err => console.error('[POS] Error saving barcode to Supabase:', err));
+    } catch (apiErr) {
+      console.error('[POS] Network error saving barcode:', apiErr);
+    }
+
+    // 2. Update in-memory and local state
     setAllProducts(prev => {
       const next = prev.map(p => {
         if (p.id !== prodId) return p;
-        const mainBarcode = (barcodeModalValues['def'] || barcodeModalValues[p.variants?.[0]?.id || p.variants?.[0]?.sku || ''] || p.gtin13 || '').trim();
         if (!p.variants || p.variants.length === 0) {
           return {
             ...p,
@@ -1155,10 +1217,10 @@ export default function AdminDashboardClient() {
     });
 
     setScanFeedback({
-      message: `Code-barres / GTIN enregistré pour "${barcodeModalProduct.name.fr}" !`,
+      message: `Code-barres / GTIN enregistré dans Supabase pour "${barcodeModalProduct.name.fr}" !`,
       type: 'success'
     });
-    setTimeout(() => setScanFeedback(null), 3000);
+    setTimeout(() => setScanFeedback(null), 3500);
     setBarcodeModalProduct(null);
   };
 
