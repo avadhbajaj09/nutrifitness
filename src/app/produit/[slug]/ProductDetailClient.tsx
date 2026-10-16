@@ -8,7 +8,6 @@ import ProductCarousel from '@/components/ProductCarousel';
 import DynamicPricingBox from '@/components/DynamicPricingBox';
 import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
-import { getProductReviewStats } from '@/lib/reviews';
 import { getProductFaqs } from '@/lib/productFaq';
 import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
@@ -32,7 +31,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
     setMounted(true);
   }, []);
 
-  const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'reviews' | 'faq'>('desc');
+  const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'faq'>('desc');
   const [selectedFlavor, setSelectedFlavor] = useState<string>(
     product.variants?.find(v => v.inStock)?.flavorName?.fr ||
     getLocalized(product.variants?.[0]?.flavorName, locale) ||
@@ -45,7 +44,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const slug = getLocalized(product.slug, locale);
   const name = getLocalized(product.name, locale);
   const vat = calculateVat(product.priceChf, product.taxCategory);
-  const reviewStats = getProductReviewStats(product.id, product.categorySlug, slug);
   const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
 
   const category = getCategoryBySlug(product.categorySlug);
@@ -105,13 +103,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {name}
         </h1>
         <div className="flex items-center gap-2 text-xs pt-0.5 flex-wrap">
-          <div className="flex text-amber-400">{reviewStats.stars}</div>
-          <span className="font-bold text-white">{reviewStats.rating.toFixed(1)} / 5</span>
-          <span className="text-white/40">· {reviewStats.count} avis vérifiés en Suisse</span>
           {(() => {
             const isSwissOrigin = originType === 'GENEVA_ONLY' || (originType === 'COMMON' && isSwissDestination);
             return (
-              <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ml-1 ${
+              <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ${
                 isSwissOrigin
                   ? 'bg-black/80 border-white/20 text-white'
                   : 'bg-blue-950/85 border-blue-500/40 text-blue-300'
@@ -389,21 +384,12 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             </button>
             <button 
               type="button"
-              onClick={() => setActiveTab('reviews')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
-                activeTab === 'reviews' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
-              }`}
-            >
-              4. Avis Clients Vérifiés ({reviewStats.count})
-            </button>
-            <button 
-              type="button"
               onClick={() => setActiveTab('faq')}
               className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
                 activeTab === 'faq' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
               }`}
             >
-              5. Questions Fréquentes ({productFaqs.length})
+              4. Questions Fréquentes ({productFaqs.length})
             </button>
           </div>
 
@@ -497,45 +483,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             </div>
           )}
 
-          {/* Tab 4: Reviews */}
-          {activeTab === 'reviews' && (
-            <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-5 animate-in fade-in duration-150">
-              <div className="flex items-center justify-between pb-4 border-b border-white/10">
-                <div>
-                  <h3 className="text-base font-black uppercase text-white font-heading">Avis Clients Suisse</h3>
-                  <p className="text-xs text-white/50">Note moyenne de {reviewStats.rating.toFixed(1)}/5 basée sur {reviewStats.count} avis vérifiés en Suisse</p>
-                </div>
-                <div className="flex text-amber-400 text-base">{reviewStats.stars}</div>
-              </div>
-
-              <div className="space-y-3">
-                {reviewStats.reviews.map((rev) => (
-                  <div key={rev.id} className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-1.5">
-                    <div className="flex justify-between items-center text-xs">
-                      <div className="flex items-center gap-2">
-                        <span className="font-bold text-white">{rev.author} ({rev.location})</span>
-                        {rev.verified && (
-                          <span className="text-[10px] text-emerald-400 bg-emerald-500/10 border border-emerald-500/20 px-1.5 py-0.2 rounded font-medium">
-                            ✓ Achat vérifié
-                          </span>
-                        )}
-                      </div>
-                      <div className="flex items-center gap-2">
-                        <span className="text-[10px] text-white/40">{rev.date}</span>
-                        <span className="text-amber-400">{'★'.repeat(rev.rating)}</span>
-                      </div>
-                    </div>
-                    {rev.title && (
-                      <p className="text-xs font-bold text-white">{rev.title}</p>
-                    )}
-                    <p className="text-xs text-white/70 leading-relaxed">&quot;{rev.comment}&quot;</p>
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Tab 5: FAQ & Conseils */}
+          {/* Tab 4: FAQ & Conseils */}
           {activeTab === 'faq' && (
             <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4 animate-in fade-in duration-150">
               <div className="pb-3 border-b border-white/10">

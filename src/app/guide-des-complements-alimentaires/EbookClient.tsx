@@ -13,7 +13,6 @@ import {
   ShieldCheck, 
   AlertCircle, 
   FileText, 
-  Star, 
   TrendingUp, 
   Sparkles, 
   Clock, 
@@ -25,13 +24,11 @@ import {
   ArrowRight
 } from 'lucide-react';
 import { formatChf } from '@/lib/tax';
-import { getProductReviewStats } from '@/lib/reviews';
 import { EBOOK_ITEM as ebookItem } from '@/lib/ebook';
 
 export default function EbookClient() {
   const router = useRouter();
   const { addToCart, openCart, formatPrice } = useStore();
-  const reviewStats = getProductReviewStats(ebookItem.id, ebookItem.categorySlug);
 
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
 
@@ -183,15 +180,6 @@ export default function EbookClient() {
               <div className="absolute top-4 right-4 bg-black/80 backdrop-blur-md border border-[#95d600]/50 text-[#95d600] text-[10px] font-black uppercase px-3 py-1 rounded-full">
                 Édition 66 Pages
               </div>
-            </div>
-
-            <div className="mt-4 flex items-center gap-1 text-[#95d600]">
-              {[...Array(5)].map((_, i) => (
-                <Star key={i} className="w-4 h-4 fill-[#95d600]" />
-              ))}
-              <span className="text-xs text-white/80 font-bold ml-2">
-                4.9 / 5 (120+ avis lecteurs vérifiés)
-              </span>
             </div>
           </div>
         </div>

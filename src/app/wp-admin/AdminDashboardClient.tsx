@@ -1005,12 +1005,23 @@ export default function AdminDashboardClient() {
     });
   }, [allProducts, catalogOriginFilter, catalogCategoryFilter, catalogBrandFilter, catalogSearch, catalogSort]);
 
+  // Helper to calculate Swiss store stock (Geneva strictly) for POS
+  const getPosSwissStock = (p: ProductItem): number => {
+    if (p.variants && p.variants.length > 0) {
+      return p.variants.reduce(
+        (sum, v) => sum + (typeof v.stockGeneva === 'number' ? Math.max(0, v.stockGeneva) : (typeof v.inventoryQuantity === 'number' && p.shippingOrigin !== 'portugal' ? Math.max(0, v.inventoryQuantity) : 0)),
+        0
+      );
+    }
+    return typeof p.stockGeneva === 'number' ? Math.max(0, p.stockGeneva) : 0;
+  };
+
   // -------------------------------------------------------------
   // 4. POS (POINT OF SALE) STATE — GENEVA STOCK ONLY
   // -------------------------------------------------------------
   // CRITICAL RULE: ONLY products from Geneva store (NOT from Portugal manufacturer)
   const posProducts = useMemo(() => {
-    return allProducts.filter(p => p.shippingOrigin !== 'portugal');
+    return allProducts.filter(p => p.shippingOrigin !== 'portugal' || (typeof p.stockGeneva === 'number' && p.stockGeneva > 0));
   }, [allProducts]);
 
   const [posSearch, setPosSearch] = useState<string>('');
@@ -1047,7 +1058,7 @@ export default function AdminDashboardClient() {
   const [barcodeModalProduct, setBarcodeModalProduct] = useState<ProductItem | null>(null);
   const [barcodeModalValues, setBarcodeModalValues] = useState<Record<string, string>>({});
 
-  // Helper to calculate total stock for a product
+  // Helper to calculate total stock for a product (Geneva + Portugal)
   const getProductTotalStock = (p: ProductItem): number => {
     if (p.variants && p.variants.length > 0) {
       return p.variants.reduce(
@@ -2450,7 +2461,7 @@ export default function AdminDashboardClient() {
               {filteredPosProducts.map(product => {
                 const img = product.images[0]?.src || '/images/placeholder.webp';
                 const hasMultipleVariants = (product.variants?.length || 0) > 1;
-                const stock = getProductTotalStock(product);
+                const stock = getPosSwissStock(product);
                 const isRupture = stock === 0;
                 const isCritical = stock > 0 && stock < 5;
                 const isMedium = stock >= 5 && stock <= 10;
@@ -2473,6 +2484,7 @@ export default function AdminDashboardClient() {
                           format: '1 unité',
                           priceChf: product.priceChf,
                           inventoryQuantity: stock,
+                          stockGeneva: stock,
                           inStock: stock > 0
                         };
                         addToPosTicket(product, defaultVariant);
@@ -3863,7 +3875,9 @@ export default function AdminDashboardClient() {
                 .map(v => {
                   const key = v.id || v.sku;
                   const variantImg = v.image || variantPickerProduct.images[0]?.src || '/images/placeholder.webp';
-                  const currentStock = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.inStock !== false ? 15 : 0);
+                  const currentStock = typeof v.stockGeneva === 'number'
+                    ? Math.max(0, v.stockGeneva)
+                    : (variantPickerProduct.shippingOrigin !== 'portugal' && typeof v.inventoryQuantity === 'number' ? Math.max(0, v.inventoryQuantity) : 0);
                   const isCrit = currentStock < 5;
                   const isMed = currentStock >= 5 && currentStock <= 10;
 
@@ -3890,7 +3904,7 @@ export default function AdminDashboardClient() {
                             {v.format} · <span className="font-mono text-slate-400 text-[10px] notranslate">{v.sku}</span>
                           </p>
 
-                          {/* Live Stock Badge with exact color rules */}
+                          {/* Live Swiss Stock Badge for POS */}
                           <div className="mt-1 flex items-center gap-1.5 flex-wrap">
                             <span className={`inline-flex items-center gap-1 px-2 py-0.5 rounded-md text-[10px] font-black border ${
                               isCrit
@@ -3903,35 +3917,9 @@ export default function AdminDashboardClient() {
                                 isCrit ? 'bg-red-500 animate-pulse' : isMed ? 'bg-amber-500' : 'bg-emerald-500'
                               }`} />
                               <span className="notranslate">
-                                {currentStock === 0 ? 'Rupture de stock' : `${currentStock} en stock`}
+                                {currentStock === 0 ? 'Rupture de stock (0)' : `${currentStock} en stock (Genève)`}
                               </span>
                             </span>
-
-                            {/* Mini inline stock adjustment steppers */}
-                            <div className="inline-flex items-center gap-0.5 bg-white border border-slate-200 rounded-lg p-0.5" title="Ajustement rapide du stock">
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleInlineVariantStockChange(variantPickerProduct.id, key, -1);
-                                }}
-                                className="w-5 h-5 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded text-xs"
-                                title="-1 stock"
-                              >
-                                <Minus className="w-2.5 h-2.5" />
-                              </button>
-                              <button
-                                type="button"
-                                onClick={(e) => {
-                                  e.stopPropagation();
-                                  handleInlineVariantStockChange(variantPickerProduct.id, key, 1);
-                                }}
-                                className="w-5 h-5 flex items-center justify-center text-slate-500 hover:text-slate-900 hover:bg-slate-100 rounded text-xs"
-                                title="+1 stock"
-                              >
-                                <Plus className="w-2.5 h-2.5" />
-                              </button>
-                            </div>
                           </div>
                         </div>
                       </div>

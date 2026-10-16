@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import { PRODUCTS } from '@/lib/catalog';
-import { getProductReviewStats } from '@/lib/reviews';
 import type { ProductItem } from '@/lib/types';
 import { 
   MessageSquare, 
@@ -740,7 +739,6 @@ export default function ChatBot() {
                     <div className="grid grid-cols-1 gap-2">
                       {msg.products.map((prod) => {
                         const imgSrc = prod.images?.[0]?.src || '/images/placeholder.webp';
-                        const reviewStats = getProductReviewStats(prod.id, prod.categorySlug, prod.slug.fr);
                         const isAdded = addedProductId === prod.id;
 
                         return (
@@ -774,9 +772,6 @@ export default function ChatBot() {
                               <div className="flex items-center justify-between gap-1 mt-1">
                                 <span className="text-xs font-black text-[#95d600] font-heading">
                                   {formatPrice(prod.priceChf)}
-                                </span>
-                                <span className="text-[10px] text-amber-400 font-bold">
-                                  ★ {reviewStats.rating.toFixed(1)}
                                 </span>
                               </div>
                             </div>

@@ -6,7 +6,6 @@ import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import { ProductItem, getLocalized } from '@/lib/types';
 import { calculateVat } from '@/lib/tax';
-import { getProductReviewStats } from '@/lib/reviews';
 import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
 import { getProductOriginType } from '@/lib/translations';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
@@ -45,7 +44,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   const discountPercent = compareAtPrice && compareAtPrice > pricing.price ? Math.round(((compareAtPrice - pricing.price) / compareAtPrice) * 100) : 0;
   const hasStock = product.variants?.some(v => v.inStock) ?? true;
   const vat = calculateVat(pricing.price, product.taxCategory);
-  const reviewStats = getProductReviewStats(product.id, product.categorySlug, slug);
 
   return (
     <article className="group relative flex flex-col bg-[#141414] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-[#F80404]/60 hover:shadow-2xl hover:shadow-[#F80404]/10 hover:-translate-y-1">
@@ -130,12 +128,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             {name}
           </Link>
         </h3>
-
-        {/* Rating Stars */}
-        <div className="flex items-center gap-1.5 mb-2.5 text-xs">
-          <div className="flex text-amber-400 text-xs">{reviewStats.stars}</div>
-          <span className="text-white/40 text-[11px]">{reviewStats.rating.toFixed(1)} ({reviewStats.count})</span>
-        </div>
 
         {/* Dynamic Delivery Date, Ships From & Live Stock Pill */}
         <DeliveryEstimate

@@ -226,10 +226,6 @@ export default function CartDrawer() {
                 </div>
                 <div>
                   <p className="text-[11px] font-bold text-white leading-tight">Shaker Pro 700ml Sans BPA</p>
-                  <div className="flex items-center gap-1 text-[10px] py-0.5">
-                    <span className="text-amber-400">★★★★★</span>
-                    <span className="text-white/50">4.9 (94 avis)</span>
-                  </div>
                   <p className="text-[10px] text-white/50">+{formatPrice(8.90)} · Accessoire</p>
                 </div>
               </div>

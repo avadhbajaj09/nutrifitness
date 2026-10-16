@@ -6,11 +6,9 @@ import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import type { ProductItem } from '@/lib/types';
 import type { SuggestedProduct } from '@/lib/blog';
-import { getProductReviewStats } from '@/lib/reviews';
 import { 
   ShoppingBag, 
   ArrowRight, 
-  Star, 
   Check, 
   ShieldCheck, 
   ExternalLink 
@@ -63,7 +61,6 @@ export default function BlogProductCards({ products, variant = 'in-article' }: B
           const price = product?.priceChf || 29.90;
           const brand = item.brand || product?.brand || 'NutriFitness';
           const title = item.name || product?.name.fr || '';
-          const reviewStats = product ? getProductReviewStats(product.id, product.categorySlug, product.slug.fr) : { rating: 4.9, count: 42, stars: '★★★★★' };
           const isAdded = addedId === (product?.id || `idx-${idx}`);
 
           return (
@@ -113,10 +110,6 @@ export default function BlogProductCards({ products, variant = 'in-article' }: B
                   >
                     {title}
                   </Link>
-                  <div className="flex items-center gap-1 mt-1 text-[11px]">
-                    <span className="text-amber-400 font-bold">★ {reviewStats.rating.toFixed(1)}</span>
-                    <span className="text-white/40 text-[10px]">({reviewStats.count})</span>
-                  </div>
                 </div>
               </div>
 
@@ -185,7 +178,6 @@ export default function BlogProductCards({ products, variant = 'in-article' }: B
         const compareAt = product?.compareAtPriceChf;
         const brand = item.brand || product?.brand || 'NutriFitness';
         const title = item.name || product?.name.fr || '';
-        const reviewStats = product ? getProductReviewStats(product.id, product.categorySlug, product.slug.fr) : { rating: 4.9, count: 48, stars: '★★★★★' };
         const isAdded = addedId === (product?.id || `idx-${idx}`);
 
         return (
@@ -235,13 +227,6 @@ export default function BlogProductCards({ products, variant = 'in-article' }: B
               >
                 {title}
               </Link>
-
-              {/* Star Rating */}
-              <div className="flex items-center gap-1.5 text-xs mb-3">
-                <span className="text-amber-400 font-bold">{reviewStats.stars}</span>
-                <span className="font-bold text-white text-xs">{reviewStats.rating.toFixed(1)}</span>
-                <span className="text-white/40 text-[11px]">({reviewStats.count} avis)</span>
-              </div>
             </div>
 
             {/* Bottom: Price + Actions */}

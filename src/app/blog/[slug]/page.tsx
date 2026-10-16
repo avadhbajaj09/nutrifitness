@@ -689,7 +689,6 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-[#95d600]/20 text-[#95d600] border border-[#95d600]/30 font-heading">
                   Ebook PDF · 66 Pages
                 </span>
-                <span className="text-xs font-bold text-amber-400">★★★★★ 5.0</span>
               </div>
               <div className="flex items-center gap-3">
                 <div className="relative w-14 h-16 shrink-0 rounded-lg overflow-hidden border border-[#95d600]/30 bg-black/60">

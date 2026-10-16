@@ -74,6 +74,8 @@ export interface ProductItem {
   mainLocation?: 'GENEVA' | 'PORTUGAL';
   stockGeneva?: number;
   stockPortugal?: number;
+  inventoryQuantity?: number;
+  inStock?: boolean;
   status?: 'published' | 'draft';
 }
 
