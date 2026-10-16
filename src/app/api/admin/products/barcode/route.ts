@@ -32,13 +32,18 @@ export async function GET() {
     const productBarcodes: Record<string, string> = {};
     const variantBarcodes: Record<string, string> = {};
 
+    const productMap = new Map<string, { id: string; slug?: string; woo_id?: string }>();
     for (const p of dbProducts || []) {
+      productMap.set(p.id, p);
       if (p.gtin13 && p.gtin13.trim()) {
         const val = p.gtin13.trim();
         productBarcodes[p.id] = val;
         if (p.slug) productBarcodes[p.slug] = val;
         if (p.sku) productBarcodes[p.sku] = val;
-        if (p.woo_id) productBarcodes[p.woo_id] = val;
+        if (p.woo_id) {
+          productBarcodes[p.woo_id] = val;
+          productBarcodes[`prod-${p.woo_id}`] = val;
+        }
       }
     }
 
@@ -47,9 +52,21 @@ export async function GET() {
         const val = v.gtin13.trim();
         variantBarcodes[v.id] = val;
         if (v.sku) variantBarcodes[v.sku] = val;
-        if (v.woo_id) variantBarcodes[v.woo_id] = val;
-        if (v.product_id && v.attribute_value) {
-          variantBarcodes[`${v.product_id}_${v.attribute_value.toLowerCase()}`] = val;
+        if (v.woo_id) {
+          variantBarcodes[v.woo_id] = val;
+          variantBarcodes[`var-${v.woo_id}`] = val;
+        }
+        if (v.attribute_value) {
+          const cleanAttr = v.attribute_value.toLowerCase().trim();
+          variantBarcodes[`${v.product_id}_${cleanAttr}`] = val;
+          const parent = productMap.get(v.product_id);
+          if (parent) {
+            if (parent.slug) variantBarcodes[`${parent.slug}_${cleanAttr}`] = val;
+            if (parent.woo_id) {
+              variantBarcodes[`${parent.woo_id}_${cleanAttr}`] = val;
+              variantBarcodes[`prod-${parent.woo_id}_${cleanAttr}`] = val;
+            }
+          }
         }
       }
     }
@@ -79,13 +96,17 @@ export async function POST(req: Request) {
     const now = new Date().toISOString();
     const mainBarcode = typeof gtin13 === 'string' ? gtin13.trim() : null;
 
-    // 1. Resolve product in DB (by id, slug, or clean id)
+    // 1. Resolve product in DB (by id, slug, woo_id, or sku safely without UUID cast error)
     const cleanId = String(productId).replace(/^prod-/, '');
-    const { data: dbProd } = await supabase
-      .from('products')
-      .select('id, slug, sku')
-      .or(`id.eq.${productId},id.eq.${cleanId},slug.eq.${productId},slug.eq.${cleanId}`)
-      .maybeSingle();
+    const isUuid = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
+
+    let prodQuery = supabase.from('products').select('id, slug, sku, woo_id');
+    if (isUuid(productId)) {
+      prodQuery = prodQuery.eq('id', productId);
+    } else {
+      prodQuery = prodQuery.or(`slug.eq.${productId},slug.eq.${cleanId},woo_id.eq.${cleanId},sku.eq.${productId}`);
+    }
+    const { data: dbProd } = await prodQuery.maybeSingle();
 
     if (dbProd) {
       // Update parent product in Supabase
@@ -100,16 +121,22 @@ export async function POST(req: Request) {
       if (Array.isArray(variants) && variants.length > 0) {
         const { data: dbVariants } = await supabase
           .from('product_variants')
-          .select('id, sku, attribute_value')
+          .select('id, woo_id, sku, attribute_value')
           .eq('product_id', dbProd.id);
 
         for (const vItem of variants) {
           const vBarcode = typeof vItem.gtin13 === 'string' ? vItem.gtin13.trim() : '';
+          const vItemIdClean = String(vItem.id || '').replace(/^var-/, '');
           const target = (dbVariants || []).find(
             dbV =>
               dbV.id === vItem.id ||
+              (dbV.woo_id && (dbV.woo_id === vItem.id || dbV.woo_id === vItemIdClean)) ||
               (vItem.sku && dbV.sku && dbV.sku.toLowerCase() === vItem.sku.toLowerCase()) ||
-              (vItem.flavor && dbV.attribute_value && dbV.attribute_value.toLowerCase() === vItem.flavor.toLowerCase())
+              (vItem.flavor && dbV.attribute_value && (
+                dbV.attribute_value.toLowerCase() === vItem.flavor.toLowerCase() ||
+                dbV.attribute_value.toLowerCase().includes(vItem.flavor.toLowerCase()) ||
+                vItem.flavor.toLowerCase().includes(dbV.attribute_value.toLowerCase())
+              ))
           );
 
           if (target) {
