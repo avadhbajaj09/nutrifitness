@@ -6,7 +6,7 @@ import type { SupportedLocale } from '@/lib/types';
 import { TRANSLATIONS, TranslationDictionary, SupportedCurrency } from '@/lib/translations';
 import { formatPrice as taxFormatPrice, convertPrice as taxConvertPrice } from '@/lib/tax';
 import { isEbookItem } from '@/lib/reviews';
-import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
+import { isProductDeliverableToCountry, isCountrySupported } from '@/lib/delivery/defaults';
 import { trackAddToCart, trackRemoveFromCart, trackMetaAddToCart } from '@/lib/analytics';
 
 export interface CartItem {
@@ -357,7 +357,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const initialCountry = savedCountry || cookieCountry;
 
       if (initialCountry && /^[A-Z]{2}$/i.test(initialCountry)) {
-        const upper = initialCountry.toUpperCase();
+        const rawUpper = initialCountry.toUpperCase();
+        const upper = isCountrySupported(rawUpper) ? rawUpper : 'CH';
         setCountryCodeState(upper);
         const autoCurrency: SupportedCurrency = (upper === 'CH' || upper === 'LI') ? 'CHF' : 'EUR';
         setCurrencyState(autoCurrency);
@@ -372,7 +373,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           .then(r => r.json())
           .then(data => {
             if (data?.country && typeof data.country === 'string' && /^[A-Z]{2}$/i.test(data.country)) {
-              const detected = data.country.toUpperCase();
+              const rawDetected = data.country.toUpperCase();
+              const detected = isCountrySupported(rawDetected) ? rawDetected : 'CH';
               setCountryCodeState(detected);
               const autoCurrency: SupportedCurrency = (detected === 'CH' || detected === 'LI') ? 'CHF' : 'EUR';
               setCurrencyState(autoCurrency);

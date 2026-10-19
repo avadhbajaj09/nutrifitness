@@ -102,25 +102,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight font-heading leading-tight">
           {name}
         </h1>
-        <div className="flex items-center gap-2 text-xs pt-0.5 flex-wrap">
-          {(() => {
-            const isSwissOrigin = originType === 'GENEVA_ONLY' || (originType === 'COMMON' && isSwissDestination);
-            return (
-              <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ${
-                isSwissOrigin
-                  ? 'bg-black/80 border-white/20 text-white'
-                  : 'bg-blue-950/85 border-blue-500/40 text-blue-300'
-              }`}>
-                <span>{isSwissOrigin ? '🇨🇭' : '🇵🇹'}</span>
-                <span>
-                  {isSwissOrigin
-                    ? (t.common.originSwitzerland || 'Expédié de Suisse')
-                    : (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
-                </span>
-              </span>
-            );
-          })()}
-        </div>
+
       </div>
 
       {/* Main Product Detail Grid (Desktop 2-Col) */}
@@ -136,24 +118,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   -{discountPercent}% Remise
                 </span>
               )}
-              {(() => {
-                const isSwiss = countryCode === 'CH' || countryCode === 'LI';
-                const isSwissOrigin = originType === 'GENEVA_ONLY' || (originType === 'COMMON' && isSwiss);
-                return (
-                  <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border ${
-                    isSwissOrigin
-                      ? 'bg-black/80 border-white/20 text-white'
-                      : 'bg-blue-950/85 border-blue-500/40 text-blue-300'
-                  }`}>
-                    <span>{isSwissOrigin ? '🇨🇭' : '🇵🇹'}</span>
-                    <span>
-                      {isSwissOrigin
-                        ? (t.common.originSwitzerland || 'Expédié de Suisse')
-                        : (t.common.originPortugal || 'Expédié du Portugal (3-5 jours)')}
-                    </span>
-                  </span>
-                );
-              })()}
+
             </div>
 
             <Image 
@@ -196,8 +161,8 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             {isPortugal ? (
               <>
                 <div className="p-2">
-                  <p className="font-bold text-white text-sm mb-0.5">🇵🇹 Expédié du Portugal</p>
-                  <p className="text-[11px]">Usine de fabrication</p>
+                  <p className="font-bold text-white text-sm mb-0.5">Direct Fabricant</p>
+                  <p className="text-[11px]">Garantie fraîcheur & pureté</p>
                 </div>
                 <div className="p-2 border-x border-white/10">
                   <p className="font-bold text-white text-sm mb-0.5">⚡ 3–5 Jours</p>

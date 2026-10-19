@@ -18,35 +18,35 @@ export const REGION_OPTIONS: CountryOption[] = [
     flag: '🇨🇭',
     name: { fr: 'Suisse (CHF)', de: 'Schweiz (CHF)', it: 'Svizzera (CHF)', en: 'Switzerland (CHF)' },
     currency: 'CHF',
-    originLabel: 'Expédié de Suisse (1–3 jours)'
+    originLabel: 'Livraison express (24–48h)'
   },
   {
     code: 'EU',
     flag: '🇪🇺',
     name: { fr: 'Europe (EUR €)', de: 'Europa (EUR €)', it: 'Europa (EUR €)', en: 'Europe (EUR €)' },
     currency: 'EUR',
-    originLabel: 'Expédié du Portugal (3–5 jours)'
+    originLabel: 'Livraison suivie (3–5 jours)'
   }
 ];
 
 export const SUPPORTED_COUNTRIES: CountryOption[] = [
   ...REGION_OPTIONS,
-  { code: 'LI', flag: '🇱🇮', name: { fr: 'Liechtenstein', de: 'Liechtenstein', it: 'Liechtenstein', en: 'Liechtenstein' }, currency: 'CHF', originLabel: 'Expédié de Suisse' },
-  { code: 'FR', flag: '🇫🇷', name: { fr: 'France', de: 'Frankreich', it: 'Francia', en: 'France' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'PT', flag: '🇵🇹', name: { fr: 'Portugal', de: 'Portugal', it: 'Portogallo', en: 'Portugal' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'ES', flag: '🇪🇸', name: { fr: 'Espagne', de: 'Spanien', it: 'Spagna', en: 'Spain' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'DE', flag: '🇩🇪', name: { fr: 'Allemagne', de: 'Deutschland', it: 'Germania', en: 'Germany' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'IT', flag: '🇮🇹', name: { fr: 'Italie', de: 'Italien', it: 'Italia', en: 'Italy' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'AT', flag: '🇦🇹', name: { fr: 'Autriche', de: 'Österreich', it: 'Austria', en: 'Austria' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'BE', flag: '🇧🇪', name: { fr: 'Belgique', de: 'Belgien', it: 'Belgio', en: 'Belgium' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'NL', flag: '🇳🇱', name: { fr: 'Pays-Bas', de: 'Niederlande', it: 'Paesi Bassi', en: 'Netherlands' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'LU', flag: '🇱🇺', name: { fr: 'Luxembourg', de: 'Luxemburg', it: 'Lussemburgo', en: 'Luxembourg' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'GB', flag: '🇬🇧', name: { fr: 'Royaume-Uni', de: 'Vereinigtes Königreich', it: 'Regno Unito', en: 'United Kingdom' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'NO', flag: '🇳🇴', name: { fr: 'Norvège', de: 'Norwegen', it: 'Norvegia', en: 'Norway' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'PL', flag: '🇵🇱', name: { fr: 'Pologne', de: 'Polen', it: 'Polonia', en: 'Poland' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'SE', flag: '🇸🇪', name: { fr: 'Suède', de: 'Schweden', it: 'Svezia', en: 'Sweden' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'DK', flag: '🇩🇰', name: { fr: 'Danemark', de: 'Dänemark', it: 'Danimarca', en: 'Denmark' }, currency: 'EUR', originLabel: 'Expédié du Portugal' },
-  { code: 'FI', flag: '🇫🇮', name: { fr: 'Finlande', de: 'Finnland', it: 'Finlandia', en: 'Finland' }, currency: 'EUR', originLabel: 'Expédié du Portugal' }
+  { code: 'LI', flag: '🇱🇮', name: { fr: 'Liechtenstein', de: 'Liechtenstein', it: 'Liechtenstein', en: 'Liechtenstein' }, currency: 'CHF', originLabel: 'Livraison express (24–48h)' },
+  { code: 'FR', flag: '🇫🇷', name: { fr: 'France', de: 'Frankreich', it: 'Francia', en: 'France' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'PT', flag: '🇵🇹', name: { fr: 'Portugal', de: 'Portugal', it: 'Portogallo', en: 'Portugal' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'ES', flag: '🇪🇸', name: { fr: 'Espagne', de: 'Spanien', it: 'Spagna', en: 'Spain' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'DE', flag: '🇩🇪', name: { fr: 'Allemagne', de: 'Deutschland', it: 'Germania', en: 'Germany' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'IT', flag: '🇮🇹', name: { fr: 'Italie', de: 'Italien', it: 'Italia', en: 'Italy' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'AT', flag: '🇦🇹', name: { fr: 'Autriche', de: 'Österreich', it: 'Austria', en: 'Austria' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'BE', flag: '🇧🇪', name: { fr: 'Belgique', de: 'Belgien', it: 'Belgio', en: 'Belgium' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'NL', flag: '🇳🇱', name: { fr: 'Pays-Bas', de: 'Niederlande', it: 'Paesi Bassi', en: 'Netherlands' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'LU', flag: '🇱🇺', name: { fr: 'Luxembourg', de: 'Luxemburg', it: 'Lussemburgo', en: 'Luxembourg' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'GB', flag: '🇬🇧', name: { fr: 'Royaume-Uni', de: 'Vereinigtes Königreich', it: 'Regno Unito', en: 'United Kingdom' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'NO', flag: '🇳🇴', name: { fr: 'Norvège', de: 'Norwegen', it: 'Norvegia', en: 'Norway' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'PL', flag: '🇵🇱', name: { fr: 'Pologne', de: 'Polen', it: 'Polonia', en: 'Poland' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'SE', flag: '🇸🇪', name: { fr: 'Suède', de: 'Schweden', it: 'Svezia', en: 'Sweden' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'DK', flag: '🇩🇰', name: { fr: 'Danemark', de: 'Dänemark', it: 'Danimarca', en: 'Denmark' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' },
+  { code: 'FI', flag: '🇫🇮', name: { fr: 'Finlande', de: 'Finnland', it: 'Finlandia', en: 'Finland' }, currency: 'EUR', originLabel: 'Livraison suivie (3–5j)' }
 ];
 
 interface CountrySelectorProps {

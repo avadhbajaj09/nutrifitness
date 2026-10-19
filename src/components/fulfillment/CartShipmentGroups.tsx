@@ -58,7 +58,6 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
     return (
       <div className={`rounded-xl border p-4 mb-4 text-xs ${origin === 'geneva' ? 'border-emerald-500/30 bg-emerald-950/20' : 'border-blue-500/30 bg-blue-950/20'}`}>
         <div className="flex items-start gap-3">
-          <FlagIcon countryCode={origin === 'geneva' ? 'CH' : 'PT'} className="w-5 h-5 shrink-0 mt-0.5" />
           <div className="space-y-1">
             <div className="flex items-center gap-2">
               <span className="font-bold text-white text-sm">
@@ -66,9 +65,9 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
               </span>
             </div>
             <p className="text-white/70">
-              {origin === 'geneva'
-                ? 'Tous vos articles sont expédiés via notre Swiss Fulfillment (Suisse).'
-                : 'Tous vos articles sont expédiés via notre Portugal Fulfillment.'}
+              {currentLocale === 'en'
+                ? 'All your items are prepared and shipped with tracked priority delivery.'
+                : 'Tous vos articles sont préparés avec soin et expédiés avec suivi prioritaire.'}
             </p>
           </div>
         </div>
@@ -110,7 +109,7 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
           <div className="flex items-center gap-2.5">
             <FlagIcon countryCode="CH" className="w-4 h-4 shrink-0" />
             <div>
-              <p className="text-white font-bold text-sm">Colis 1 — Swiss Fulfillment</p>
+              <p className="text-white font-bold text-sm">Colis 1 — Expédition Express Prioritaire</p>
               <p className="text-emerald-400 font-semibold text-xs">
                 Livraison estimée : {genevaDateText}
               </p>
@@ -145,7 +144,7 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
           <div className="flex items-center gap-2.5">
             <FlagIcon countryCode="PT" className="w-4 h-4 shrink-0" />
             <div>
-              <p className="text-white font-bold text-sm">Envoi 2 — Portugal Fulfillment</p>
+              <p className="text-white font-bold text-sm">Envoi 2 — Expédition Directe Partenaire</p>
               <p className="text-blue-400 font-semibold text-xs">
                 Livraison estimée : {ptDateText}
               </p>

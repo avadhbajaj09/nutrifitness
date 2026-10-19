@@ -12,9 +12,9 @@ export const COMPANY = {
   address: {
     street: 'Centre Logistique & Boutique Officielle',
     postalCode: '1200',
-    city: 'Suisse',
+    city: 'Genève',
     country: 'Suisse',
-    full: 'Swiss Fulfillment, Suisse',
+    full: 'Rue des Pâquis 34, 1201 Genève, Suisse',
   },
   contact: {
     phone: '+41 79 250 35 64',

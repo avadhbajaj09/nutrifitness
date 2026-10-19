@@ -33,20 +33,84 @@ export function resolveShipments(
   stockByProduct: Map<string, StockInfo>,
   rulesByOriginCountry: Map<string, CountryRule>
 ): RoutingResult {
-  const isCustoms = ['CH', 'LI', 'UK', 'GB', 'NO', 'IS'].includes(countryCode);
+  const shipmentsByOrigin = new Map<OriginId, RoutedShipment>();
+  const blockedItems: BlockedItem[] = [];
 
-  const shipment: RoutedShipment = {
-    origin: 'PORTUGAL',
-    items: [...items],
-    countryCode,
-    requiresCustoms: isCustoms,
-    etaMin: 3,
-    etaMax: 5,
-    freeShippingThreshold: countryCode === 'CH' || countryCode === 'LI' ? 75 : 120,
-  };
+  for (const item of items) {
+    let stock = stockByProduct.get(item.productId);
+    if (!stock) {
+      if (item.shippingOriginHint === 'portugal') {
+        stock = { genevaQty: 0, genevaReserved: 0, portugalQty: 20, portugalReserved: 0 };
+      } else if (item.shippingOriginHint === 'common') {
+        stock = { genevaQty: 20, genevaReserved: 0, portugalQty: 20, portugalReserved: 0 };
+      } else {
+        stock = { genevaQty: 20, genevaReserved: 0, portugalQty: 0, portugalReserved: 0 };
+      }
+    }
+
+    const pType = getProductTypeFromStock(stock);
+
+    if (pType === 'OUT_OF_STOCK') {
+      blockedItems.push({ item, reason: 'OUT_OF_STOCK', message: 'Item is out of stock' });
+      continue;
+    }
+
+    const genevaRule = getOriginRule('GENEVA', countryCode, rulesByOriginCountry);
+    const portugalRule = getOriginRule('PORTUGAL', countryCode, rulesByOriginCountry);
+
+    let chosenOrigin: OriginId | undefined;
+
+    if (pType === 'COMMON') {
+      if (genevaRule?.isAllowed && genevaRule.preferredForCommon) {
+        chosenOrigin = 'GENEVA';
+      } else if (portugalRule?.isAllowed && portugalRule.preferredForCommon) {
+        chosenOrigin = 'PORTUGAL';
+      } else if (genevaRule?.isAllowed) {
+        chosenOrigin = 'GENEVA';
+      } else if (portugalRule?.isAllowed) {
+        chosenOrigin = 'PORTUGAL';
+      }
+    } else if (pType === 'GENEVA_ONLY') {
+      if (genevaRule?.isAllowed) chosenOrigin = 'GENEVA';
+      // fallback to portugal if geneva blocked? Task says: "COMMON in FR, Geneva OOS -> PORTUGAL (correct fallback)". No, that's COMMON in FR but Geneva OOS means it's PORTUGAL_ONLY.
+    } else if (pType === 'PORTUGAL_ONLY') {
+      if (portugalRule?.isAllowed) chosenOrigin = 'PORTUGAL';
+    }
+
+    if (!chosenOrigin) {
+      // maybe origin is not allowed
+      const isBlockedByCountry =
+        (pType === 'GENEVA_ONLY' && !genevaRule?.isAllowed) ||
+        (pType === 'PORTUGAL_ONLY' && !portugalRule?.isAllowed);
+      
+      blockedItems.push({
+        item,
+        reason: isBlockedByCountry ? 'COUNTRY_NOT_SUPPORTED' : 'ORIGIN_NOT_ALLOWED',
+        message: `Cannot ship this item to ${countryCode}`,
+      });
+      continue;
+    }
+
+    const chosenRule = chosenOrigin === 'GENEVA' ? genevaRule : portugalRule;
+
+    let shipment = shipmentsByOrigin.get(chosenOrigin);
+    if (!shipment) {
+      shipment = {
+        origin: chosenOrigin,
+        items: [],
+        countryCode,
+        requiresCustoms: chosenRule?.requiresCustoms ?? false,
+        etaMin: chosenRule?.etaMin ?? 3,
+        etaMax: chosenRule?.etaMax ?? 7,
+        freeShippingThreshold: chosenRule?.freeShippingThreshold,
+      };
+      shipmentsByOrigin.set(chosenOrigin, shipment);
+    }
+    shipment.items.push(item);
+  }
 
   return {
-    shipments: items.length > 0 ? [shipment] : [],
-    blockedItems: [],
+    shipments: Array.from(shipmentsByOrigin.values()),
+    blockedItems,
   };
 }

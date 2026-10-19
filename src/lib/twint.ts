@@ -7,7 +7,7 @@ export const TWINT_CONFIG = {
   storeUuid: process.env.NEXT_PUBLIC_TWINT_STORE_UUID || process.env.TWINT_STORE_UUID || '284f5777-02b6-4718-9f87-bbb1c4224429',
   rawKey: '284f577702b647189f87bbb1c4224429',
   merchantName: 'NutriFitness Suisse',
-  location: 'Swiss Fulfillment, Suisse',
+  location: 'Genève, Suisse',
 };
 
 /**

@@ -67,11 +67,6 @@ export default function QuickViewModal() {
             
             {/* Image */}
             <div className="relative bg-[#1C1C1C] rounded-2xl p-8 flex items-center justify-center border border-white/10 aspect-square sticky top-0">
-              {/* Origin badge: Always Portugal fulfillment */}
-              <span className="absolute top-4 left-4 text-[10px] font-black uppercase tracking-wider px-2.5 py-1 rounded-full z-10 flex items-center gap-1 shadow-sm border bg-blue-950/90 border-blue-500/40 text-blue-300">
-                <span>🇵🇹</span>
-                <span>{t.common.originPortugal || 'Expédié du Portugal (3-5 jours)'}</span>
-              </span>
               <div className="relative w-full h-full max-h-[280px]">
                 <Image src={image} alt={name} fill className="object-contain filter drop-shadow-2xl" />
               </div>

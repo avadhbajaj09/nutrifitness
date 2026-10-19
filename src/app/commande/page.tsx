@@ -709,10 +709,10 @@ export default function CheckoutPage() {
     const clientFullName = `${firstName} ${lastName}`.trim() || 'Client NutriFitness';
 
     const shippingLabel = isMixedCart
-      ? `Expédition Multi-Origine (Colis 1: ${genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'Swiss Fulfillment'} + Colis 2: Portugal Fulfillment)`
+      ? `Expédition Combinée (Colis 1: ${genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'PostPac Priority 24h'} + Colis 2: Livraison Directe Partenaire)`
       : genevaItems.length > 0
-      ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique)' : 'Swiss Fulfillment (La Poste Suisse 24h)')
-      : 'Portugal Fulfillment (3-5j)';
+      ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique)' : 'PostPac Priority Suisse (24h)')
+      : 'Livraison Suivie (3-5j)';
 
     const newOrder = {
       id: `order-web-${Date.now()}`,
@@ -763,7 +763,7 @@ export default function CheckoutPage() {
         genevaCost: genevaShippingCost,
         portugalCost: portugalShippingCost,
         promised_date: isMixedCart ? (ptPromiseDate > genevaPromiseDate ? ptPromiseDate : genevaPromiseDate) : (portugalItems.length > 0 ? ptPromiseDate : genevaPromiseDate),
-        promised_date_formatted: isMixedCart ? `${genevaPromiseFormatted} (Swiss Fulfillment) / ${ptPromiseFormatted} (Portugal Fulfillment)` : (portugalItems.length > 0 ? ptPromiseFormatted : genevaPromiseFormatted),
+        promised_date_formatted: isMixedCart ? `${genevaPromiseFormatted} (Colis 1) / ${ptPromiseFormatted} (Colis 2)` : (portugalItems.length > 0 ? ptPromiseFormatted : genevaPromiseFormatted),
         fulfilment_location: isMixedCart ? 'MIXED' : (portugalItems.length > 0 ? 'PORTUGAL' : 'GENEVA'),
         shipments: [
           ...(genevaItems.length > 0 ? [{
@@ -772,7 +772,7 @@ export default function CheckoutPage() {
             promised_date: genevaPromiseDate,
             promised_date_formatted: genevaPromiseFormatted,
             cost: genevaShippingCost,
-            carrier: genevaShippingMethod === 'clickcollect' ? 'Click & Collect Boutique' : 'Swiss Fulfillment (La Poste Suisse)',
+            carrier: genevaShippingMethod === 'clickcollect' ? 'Click & Collect Boutique' : 'PostPac Priority (La Poste Suisse)',
             items: genevaItems.map(it => ({ id: it.id, name: it.name, quantity: it.quantity }))
           }] : []),
           ...(portugalItems.length > 0 ? [{
@@ -781,7 +781,7 @@ export default function CheckoutPage() {
             promised_date: ptPromiseDate,
             promised_date_formatted: ptPromiseFormatted,
             cost: portugalShippingCost,
-            carrier: 'Portugal Fulfillment Express',
+            carrier: 'Livraison Suivie Internationale',
             requires_customs: ['CH', 'LI', 'GB', 'NO', 'IS'].includes(customerCountry),
             items: portugalItems.map(it => ({ id: it.id, name: it.name, quantity: it.quantity }))
           }] : [])
@@ -1090,7 +1090,7 @@ export default function CheckoutPage() {
               </Link>
             </div>
             <p className="text-white/80">
-              Les articles suivants sont disponibles en Swiss Fulfillment uniquement et ne peuvent pas être expédiés vers {customerCountry} :
+              Les articles suivants sont livrables uniquement en Suisse et au Liechtenstein et ne peuvent pas être expédiés vers {customerCountry} :
             </p>
             <ul className="list-disc list-inside space-y-1 text-red-200/90 pl-1">
               {nonDeliverableItems.map(item => (
@@ -1314,7 +1314,7 @@ export default function CheckoutPage() {
                       <div className="flex items-center justify-between border-b border-emerald-500/20 pb-2">
                         <div className="flex items-center gap-2">
                           <span className="text-base">🇨🇭</span>
-                          <span className="font-bold text-white text-xs">Colis 1 — Swiss Fulfillment</span>
+                          <span className="font-bold text-white text-xs">Colis 1 — Expédition Prioritaire Suisse</span>
                           <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">
                             {genevaItems.length} article{genevaItems.length > 1 ? 's' : ''}
                           </span>
@@ -1392,7 +1392,7 @@ export default function CheckoutPage() {
                       <div className="flex items-center justify-between border-b border-blue-500/20 pb-2">
                         <div className="flex items-center gap-2">
                           <FlagIcon countryCode="PT" className="w-4 h-4 shrink-0" />
-                          <span className="font-bold text-white text-xs">Colis 2 — Portugal Fulfillment</span>
+                          <span className="font-bold text-white text-xs">Colis 2 — Expédition Directe Partenaire</span>
                           <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">
                             {portugalItems.length} article{portugalItems.length > 1 ? 's' : ''}
                           </span>
@@ -1410,7 +1410,7 @@ export default function CheckoutPage() {
                         <div className="flex justify-between font-bold text-white">
                           <span className="flex items-center gap-1.5">
                             <Truck className="w-3.5 h-3.5 text-blue-400" />
-                            <span>Portugal Fulfillment Express</span>
+                            <span>Livraison Suivie Express</span>
                             <span className="text-[10px] text-blue-400 font-bold flex items-center gap-1">
                               <FlagIcon countryCode="PT" className="w-3 h-3" />
                               <span>{ptPromiseFormatted}</span>
@@ -1419,7 +1419,7 @@ export default function CheckoutPage() {
                           <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
                         </div>
                         <p className="text-[11px] text-white/50 mt-0.5">
-                          Expédition directe via Portugal Fulfillment. Suivi complet par e-mail.
+                          Expédition directe avec suivi complet par e-mail.
                         </p>
                       </div>
                     </div>
@@ -1493,7 +1493,7 @@ export default function CheckoutPage() {
                         <div className="flex justify-between font-bold text-white">
                           <span className="flex items-center gap-2">
                             <Truck className="w-4 h-4 text-blue-400" />
-                            <span>Portugal Fulfillment Express</span>
+                            <span>Livraison Suivie Express</span>
                             <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold flex items-center gap-1">
                               <FlagIcon countryCode="PT" className="w-3 h-3" />
                               <span>{ptPromiseFormatted}</span>
@@ -1502,7 +1502,7 @@ export default function CheckoutPage() {
                           <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
                         </div>
                         <p className="text-white/50">
-                          Colis expédié via Portugal Fulfillment avec suivi en ligne.
+                          Colis expédié avec numéro de suivi en ligne direct.
                         </p>
                       </div>
                     )}
@@ -1665,11 +1665,13 @@ export default function CheckoutPage() {
                     <Image src={item.image} alt={item.name} fill className="object-contain p-1" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-1.5">
-                      <span className="text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider bg-white/10 text-white/80">
-                        {isPt ? '🇵🇹 Portugal Fulfillment' : '🇨🇭 Swiss Fulfillment'}
-                      </span>
-                    </div>
+                    {isMixedCart && (
+                      <div className="flex items-center gap-1.5">
+                        <span className="text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider bg-white/10 text-white/80">
+                          {isPt ? 'Colis 2' : 'Colis 1'}
+                        </span>
+                      </div>
+                    )}
                     <h4 className="text-xs font-bold text-white truncate mt-0.5">{item.name}</h4>
                     <p className="text-[10px] text-white/50">{flavorStr} · Qte: {item.quantity}</p>
                   </div>
@@ -1703,7 +1705,7 @@ export default function CheckoutPage() {
               <div className="space-y-1.5 bg-black/40 p-2.5 rounded-xl border border-white/5">
                 <div className="flex justify-between text-[11px]">
                   <span className="text-white/80 flex items-center gap-1">
-                    <span>🇨🇭</span> Frais Colis 1 (Swiss Fulfillment) :
+                    <span>🇨🇭</span> Frais Colis 1 (Expédition Suisse) :
                   </span>
                   <span className="font-bold text-white">
                     {genevaShippingCost === 0 ? t.common.free : formatPrice(genevaShippingCost)}
@@ -1711,7 +1713,7 @@ export default function CheckoutPage() {
                 </div>
                 <div className="flex justify-between text-[11px]">
                   <span className="text-white/80 flex items-center gap-1">
-                    <span>🇵🇹</span> Frais Colis 2 (Portugal Fulfillment) :
+                    <span>🇵🇹</span> Frais Colis 2 (Expédition Directe Partenaire) :
                   </span>
                   <span className="font-bold text-white">
                     {portugalShippingCost === 0 ? t.common.free : formatPrice(portugalShippingCost)}
@@ -1727,8 +1729,8 @@ export default function CheckoutPage() {
                 <span>
                   {t.common.shipping} (
                   {genevaItems.length > 0
-                    ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'Swiss Fulfillment')
-                    : 'Portugal Fulfillment'}
+                    ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'PostPac Priority')
+                    : 'Livraison Suivie'}
                   ) :
                 </span>
                 <span className="font-bold text-white">

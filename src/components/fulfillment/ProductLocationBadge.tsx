@@ -55,8 +55,8 @@ export default function ProductLocationBadge({
   const isGenevaAllowed = GENEVA_ALLOW_LIST.has(currentCc);
 
   const isBlocked = false;
-  const locationLabel = 'Portugal Fulfillment (3–5j)';
-  const flagIcon = '🇵🇹';
+  const locationLabel = 'Livraison suivie (3–5j)';
+  const flagIcon = '🚚';
   const isLowStock = false;
   const stockText = 'En stock';
 

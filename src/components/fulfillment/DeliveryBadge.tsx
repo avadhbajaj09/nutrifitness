@@ -51,7 +51,7 @@ export default function DeliveryBadge({
     } catch {
       const isCom = locationType === 'COMMON' || shippingOrigin === 'common';
       const isCH = cc === 'CH' || cc === 'LI';
-      const lbl = '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables';
+      const lbl = 'Livraison en 3–5 jours ouvrables';
       setResult({
         available: true,
         origin: 'PORTUGAL',
@@ -140,8 +140,8 @@ export default function DeliveryBadge({
       ) : (
         <div className="space-y-1.5">
           <p className={`font-bold flex items-center gap-1.5 ${result?.available === false ? 'text-red-400' : 'text-white'}`}>
-            <span>{result?.available === false ? '❌' : '🇵🇹'}</span>
-            <span>{result?.label ?? '🇵🇹 Portugal Fulfillment – livraison en 3–5 jours ouvrables'}</span>
+            <span>{result?.available === false ? '❌' : '🚚'}</span>
+            <span>{result?.label ?? 'Livraison en 3–5 jours ouvrables'}</span>
           </p>
 
           {result?.dutiesNote && (

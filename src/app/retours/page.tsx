@@ -163,7 +163,7 @@ export default function RetoursPage() {
             <p className="font-bold text-white">Adresse officielle pour l&apos;envoi de votre colis de retour :</p>
             <address className="not-italic text-xs text-white/80 space-y-0.5">
               <p className="text-white font-bold">NutriFitness — Service Retours</p>
-              <p>Swiss Fulfillment Retours</p>
+              <p>Rue des Pâquis 34, 1201 Genève</p>
               <p>Suisse 🇨🇭</p>
             </address>
             <p className="text-[11px] text-white/50 pt-1">

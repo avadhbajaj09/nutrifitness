@@ -1750,11 +1750,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 11,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 11,
+        "stockPortugal": 0
       },
       {
         "id": "a19cec0d-c4a5-4eae-aa80-e4a6423a0005",
@@ -1767,11 +1767,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 13,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CHOCOLAT.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 13,
+        "stockPortugal": 0
       },
       {
         "id": "df808d1f-0676-41f6-b31e-74f840210efa",
@@ -1784,11 +1784,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-VANILLE.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7,
+        "stockPortugal": 0
       },
       {
         "id": "e3bb3914-e201-4d84-b88a-6a1cb0e93de9",
@@ -1801,19 +1801,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 9,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CARAMEL.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 9,
+        "stockPortugal": 0
       }
     ],
-    "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "isSwissOrigin": true,
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 40,
+    "stockPortugal": 0,
+    "inStock": true
   },
   {
     "id": "prod-25611",
@@ -1917,18 +1916,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 29.9,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 12,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 12
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 12,
+    "inStock": true
   },
   {
     "id": "prod-25535",
@@ -2032,17 +2028,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 27,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 27,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 27,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -2137,11 +2133,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 100,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "/wp-content/uploads/2026/07/livre.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "16bc9666-ca00-49c0-9dd8-e0cd0ef8c30b",
@@ -2154,19 +2150,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 100,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "/wp-content/uploads/2026/07/livre.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-25175",
@@ -2303,11 +2297,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 15,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/1.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       },
       {
         "id": "8f84e225-ad41-4961-9f57-b02e2aa9e9c9",
@@ -2320,11 +2314,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 15,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BISCUITS-CACAO.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       },
       {
         "id": "2482e044-026d-422c-9dd3-2bf02b412a06",
@@ -2337,11 +2331,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 15,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/2.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       },
       {
         "id": "93aa460b-8196-4d36-8d45-7e218076e4b6",
@@ -2354,11 +2348,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 15,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/CHOCO-BLANC.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       },
       {
         "id": "947c506b-4c65-44af-80bd-ef5c34046130",
@@ -2371,19 +2365,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 15,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/CACAO.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 25,
+    "stockPortugal": 0
   },
   {
     "id": "prod-25041",
@@ -2487,18 +2479,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 7,
+    "inStock": true
   },
   {
     "id": "prod-25033",
@@ -2602,18 +2591,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 19,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 19
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 19,
+    "inStock": true
   },
   {
     "id": "prod-25024",
@@ -2717,18 +2703,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 5,
+    "inStock": true
   },
   {
     "id": "prod-24668",
@@ -2832,17 +2815,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 1,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -2947,18 +2930,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 6,
+    "inStock": true
   },
   {
     "id": "prod-23519",
@@ -3062,18 +3042,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 7,
+    "inStock": true
   },
   {
     "id": "prod-23499",
@@ -3243,11 +3220,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 1,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "6e5162be-62dc-4358-86a0-bccb8314de9b",
@@ -3260,11 +3237,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 1,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 31,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-COLA.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 31,
+        "stockPortugal": 0
       },
       {
         "id": "4a177cbc-2cbb-455e-a800-3969526d0acc",
@@ -3277,11 +3254,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 1,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 24,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-ICE-TEA-LEMON-.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 24,
+        "stockPortugal": 0
       },
       {
         "id": "5fcf30d0-041d-42ea-af78-244bbaf1a3a2",
@@ -3294,11 +3271,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 1,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-LEMON-LIME.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7,
+        "stockPortugal": 0
       },
       {
         "id": "72ba8430-82f1-4231-9a2c-97aad5c47b2b",
@@ -3311,11 +3288,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 1,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 19,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-PASTEQUE.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 19,
+        "stockPortugal": 0
       },
       {
         "id": "f5bd4ff7-fd3c-4f0e-8bdd-0cb2918204c5",
@@ -3328,19 +3305,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 1,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 11,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-POMME.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 11,
+        "stockPortugal": 0
       }
     ],
-    "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "isSwissOrigin": true,
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 73,
+    "stockPortugal": 0,
+    "inStock": true
   },
   {
     "id": "prod-22738",
@@ -3444,18 +3420,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": true
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-22614",
@@ -3559,11 +3529,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
         "image": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6,
+        "stockPortugal": 0
       },
       {
         "id": "c8f3bd88-c96d-40f8-a15f-eff82ebe1abc",
@@ -3576,11 +3546,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
         "image": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6,
+        "stockPortugal": 0
       },
       {
         "id": "fcbf844c-f34b-495b-b3b7-b059f32fd7c6",
@@ -3593,19 +3563,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
         "image": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 18,
+    "stockPortugal": 0,
+    "inStock": true
   },
   {
     "id": "prod-22608",
@@ -3698,18 +3667,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 6,
+    "inStock": true
   },
   {
     "id": "prod-22386",
@@ -3857,11 +3823,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 60,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "feb819e6-a2d1-4906-aef1-7f210b89c4f9",
@@ -3874,11 +3840,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 60,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "8cadc4f2-3e73-4888-9e52-61b366edeac9",
@@ -3891,11 +3857,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 60,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "fc04a8df-43f4-4f68-ba78-7c8f99cf49be",
@@ -3908,19 +3874,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 60,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-22011",
@@ -4024,17 +3989,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 45,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 7,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -4205,11 +4170,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 9,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-LEMON-300g.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 9,
+        "stockPortugal": 0
       },
       {
         "id": "5c315d63-b838-4d0b-afd6-ed5358cbb7b6",
@@ -4222,11 +4187,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-PASTEQUE-300g.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7,
+        "stockPortugal": 0
       },
       {
         "id": "4959f7cc-835b-4cca-8c64-c0ce5723795c",
@@ -4239,18 +4204,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-TUTTI-FRUTTI-300g.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 21,
+    "stockPortugal": 0,
     "inStock": true
   },
   {
@@ -4454,11 +4419,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 65,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 13,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMEL.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 13,
+        "stockPortugal": 0
       },
       {
         "id": "6311cecf-fabb-44e6-a8c6-c844ec809f6c",
@@ -4471,11 +4436,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 65,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 8,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-VANILLA.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 8,
+        "stockPortugal": 0
       },
       {
         "id": "029ca307-cca3-4675-9f44-d68981162531",
@@ -4488,11 +4453,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 65,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 11,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CHOCOLATE.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 11,
+        "stockPortugal": 0
       },
       {
         "id": "74b9a1a3-3d01-4f97-878a-40e54a63ac55",
@@ -4505,18 +4470,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 65,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 8,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-COOKIECREAM.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 8,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 40,
+    "stockPortugal": 0,
     "inStock": true
   },
   {
@@ -4709,11 +4674,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 89,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-VANILLA.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       },
       {
         "id": "1cb7b45c-a626-47dd-aa86-41f568217ef5",
@@ -4726,11 +4691,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 89,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "8f077f15-7b4e-4233-af22-6c72e2bc45c4",
@@ -4743,11 +4708,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 89,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "de2017e2-ed7a-4ee4-baf0-aea2beb47019",
@@ -4760,19 +4725,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 89,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 1,
+    "stockPortugal": 0
   },
   {
     "id": "prod-21877",
@@ -4878,16 +4842,13 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 9.9,
         "inventoryQuantity": 60,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 60
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 60,
+    "inStock": true
   },
   {
     "id": "prod-21850",
@@ -4991,18 +4952,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 7,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 22,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 22
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 22,
+    "inStock": true
   },
   {
     "id": "prod-21727",
@@ -5106,17 +5064,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 15,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 15,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 15,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -5221,17 +5179,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 33,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 14,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 14,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 14,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -5347,17 +5305,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 45,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 7,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -5462,17 +5420,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 17,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 1,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -5577,18 +5535,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 10,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 1,
+    "inStock": true
   },
   {
     "id": "prod-21360",
@@ -5692,18 +5647,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 8,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 8
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 8,
+    "inStock": true
   },
   {
     "id": "prod-21282",
@@ -5906,11 +5858,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALE-PEANUT-BUTTER-1.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "662f679e-91fb-4a82-bf78-10c1ceb0dfa7",
@@ -5923,11 +5875,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 2,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-BLACK-PEANUT-BUTTER.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 2,
+        "stockPortugal": 0
       },
       {
         "id": "d0297f02-a1fa-47f1-b1da-7f79cfb7b4b3",
@@ -5940,11 +5892,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "f4d20ffb-215a-4634-be95-20a9013ef436",
@@ -5957,11 +5909,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/10/NUTRY-NUTS-WHITE-CHOC-PEANUT-BUTTER.jpg.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "596f105b-632a-43e0-86b7-5804b346136a",
@@ -5974,11 +5926,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "c2779882-ae7d-4957-904f-cdf077d6fa7d",
@@ -5991,19 +5943,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 4,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-PEANUT-BUTTER.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 2,
+    "stockPortugal": 0
   },
   {
     "id": "prod-21181",
@@ -6107,18 +6057,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 10,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 6,
+    "inStock": true
   },
   {
     "id": "prod-21032",
@@ -6233,17 +6180,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 10,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 10,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 10,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -6359,11 +6306,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 79.9,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-CHOCO-3KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "777b9b9a-0ed4-443a-82f2-6cf3509649df",
@@ -6376,11 +6323,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 79.9,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-VANILLE-3KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "509321cb-77a6-4e82-9207-46463aaf6a2d",
@@ -6393,19 +6340,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 79.9,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-FRAISES-3KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-20727",
@@ -6597,19 +6542,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 80,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-20531",
@@ -6779,11 +6723,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "861e38b8-b98b-465a-8d0c-3dfd1cc39cda",
@@ -6796,11 +6740,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "8b816397-9c68-484b-9077-8fe539066893",
@@ -6813,11 +6757,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "3eb1f82b-00ec-40b9-beea-776306872407",
@@ -6830,11 +6774,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "2be16d9c-fce6-4af2-970f-a12dca5370ff",
@@ -6847,11 +6791,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "6a63a31d-edb0-41f9-89a1-4ace21b6e8ef",
@@ -6864,19 +6808,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-20464",
@@ -6980,17 +6923,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 33,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 6,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -7084,11 +7027,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/PANCAKE-800G-CHOCOLAT.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "12fa4648-4795-48b7-a1d9-fbdc231196ae",
@@ -7101,11 +7044,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/PANCAKE-800G-COOKIE.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "ea671ebd-fdab-4c14-97c2-8b48d8a845bf",
@@ -7118,19 +7061,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/PANCAKE-CARAMEL-BEURRE-SALE-800G.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 1,
+    "stockPortugal": 0
   },
   {
     "id": "prod-20370",
@@ -7223,18 +7164,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 20,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-20358",
@@ -7338,18 +7278,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 20,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-20353",
@@ -7453,17 +7392,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 30,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 30,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 30,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -7568,18 +7507,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 4,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 4
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 4,
+    "inStock": true
   },
   {
     "id": "prod-20150",
@@ -7694,18 +7630,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 45,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 30,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 30
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 30,
+    "inStock": true
   },
   {
     "id": "prod-20145",
@@ -7809,18 +7742,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 3,
+    "inStock": true
   },
   {
     "id": "prod-20141",
@@ -7924,18 +7854,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": true
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-19220",
@@ -8028,11 +7952,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1.4KG (FRUITS ROUGES)",
         "priceChf": 70,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "757b6cb9-7bf3-4e1b-aef1-cbcfadc607a5",
@@ -8045,11 +7969,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1.4KG (COOKIES)",
         "priceChf": 70,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "bc0c1e6e-5b7d-4046-a415-b7d551faf1ee",
@@ -8062,19 +7986,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1.4KG (ORIGINAL)",
         "priceChf": 70,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-19174",
@@ -8167,18 +8089,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 9,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 9
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 9,
+    "inStock": true
   },
   {
     "id": "prod-19143",
@@ -8282,18 +8201,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 3,
+    "inStock": true
   },
   {
     "id": "prod-18720",
@@ -8397,18 +8313,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 45,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": false
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-18598",
@@ -8512,18 +8422,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": false
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-18593",
@@ -8627,17 +8531,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 41,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 41,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 41,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -8731,18 +8635,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 28,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": true
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-15582",
@@ -8846,17 +8744,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 29,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 29,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 29,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -8961,11 +8859,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 3.5,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 20,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/02/CORNETTO-CROISSANT-KETO-FRUITS-DES-BOIS-50G.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       },
       {
         "id": "93764e60-bc2b-4075-bba1-676b1a7b2da6",
@@ -8978,11 +8876,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 3.5,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 20,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/02/CORNETTO-CROISSANT-KETO-CREME-50G.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       },
       {
         "id": "53eed3d1-f7dc-40f5-981f-27d306016d2a",
@@ -8995,11 +8893,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 3.5,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 20,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/02/CORNETTO-PISTACHE.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       },
       {
         "id": "21129d6f-3e7c-4a4e-8e1a-6a2e5bd9fbe3",
@@ -9012,19 +8910,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 3.5,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 20,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-50G.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 80,
+    "stockPortugal": 0,
+    "inStock": true
   },
   {
     "id": "prod-15357",
@@ -9128,18 +9025,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 3.5,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 30,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 30
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 30,
+    "inStock": true
   },
   {
     "id": "prod-15217",
@@ -9276,11 +9170,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 95,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 11,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 11
       },
       {
         "id": "72070f6d-f302-410b-91c7-6f2b82ed164a",
@@ -9293,11 +9187,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 95,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 22,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 12,
+        "stockPortugal": 10
       },
       {
         "id": "ed711e0d-e1df-479a-bb04-c79ff8ccc4c7",
@@ -9310,11 +9204,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 95,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 21,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 12,
+        "stockPortugal": 9
       },
       {
         "id": "0c5be10d-09b4-4518-a2f8-a7ef605959c9",
@@ -9327,19 +9221,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 95,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 20,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 10,
+        "stockPortugal": 10
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 34,
+    "stockPortugal": 40
   },
   {
     "id": "prod-14597",
@@ -9454,18 +9347,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 37,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 8,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 8
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 8,
+    "inStock": true
   },
   {
     "id": "prod-14500",
@@ -9569,11 +9459,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 59.9,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       },
       {
         "id": "8a4bae44-51c7-422e-bb1f-0067fa7419fc",
@@ -9586,11 +9476,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 59.9,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       },
       {
         "id": "21d16649-45d9-4a47-8185-ae0c9da5a7c0",
@@ -9603,11 +9493,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 59.9,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "05ce8253-36cc-4169-9356-71e506dc1e2d",
@@ -9620,19 +9510,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 59.9,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/09/GOLD-STANDARD-ON-FRAISES.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 3,
+    "stockPortugal": 0,
+    "inStock": true
   },
   {
     "id": "prod-14486",
@@ -9736,19 +9625,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-WHEY-900G-FRUITY-CEREAL-MILK.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-14371",
@@ -9863,11 +9750,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CREAMY.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       },
       {
         "id": "08445a10-08f7-458a-afa1-d74674fdc201",
@@ -9880,19 +9767,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CRUNCHY.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 2,
+    "stockPortugal": 0,
+    "inStock": true
   },
   {
     "id": "prod-14341",
@@ -10051,11 +9937,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 120,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-2KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "31a1b1ee-c8b9-44ef-8c7d-7a97753a57c3",
@@ -10068,11 +9954,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 120,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 13,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-COOKIE-2KG.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 13,
+        "stockPortugal": 0
       },
       {
         "id": "3dbfa1f4-6ef8-40e4-ac44-3d3bb237f2be",
@@ -10085,11 +9971,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 115,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/iso-bulk-choco.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7,
+        "stockPortugal": 0
       },
       {
         "id": "364f8a69-331f-4c93-935b-42df84c910e4",
@@ -10102,11 +9988,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 115,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/iso-bulk-choco.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       },
       {
         "id": "1132daf1-3cc3-4cb5-9b25-df674038c12a",
@@ -10119,18 +10005,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 120,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-2KG-FRAISES.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 30,
+    "stockPortugal": 0,
     "inStock": true
   },
   {
@@ -10224,11 +10110,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 69,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/ultimate-whey-1kg-fraises.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "d7b46394-9114-4157-ac54-e20dba316db9",
@@ -10241,19 +10127,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 69,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/ultimate-whey-1kg-pasteque.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-14215",
@@ -10357,11 +10241,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/EAA-MELON.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7,
+        "stockPortugal": 0
       },
       {
         "id": "abf1242e-201e-4667-b240-7f2b5925e409",
@@ -10374,11 +10258,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 14,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/EAA-ORANGE.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 14,
+        "stockPortugal": 0
       },
       {
         "id": "ea94a60a-e215-48e3-ba40-6ea57e1e79fb",
@@ -10391,11 +10275,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/EAA-LEMON.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6,
+        "stockPortugal": 0
       },
       {
         "id": "e7f2019e-2659-40ce-95c3-4f4f246251b0",
@@ -10408,19 +10292,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/BM-EAA-300G-1.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 30,
+    "stockPortugal": 0,
+    "inStock": true
   },
   {
     "id": "prod-13985",
@@ -10535,11 +10418,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 60,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 15,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/FURIUX-MASS-3K-CHOCO.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 15,
+        "stockPortugal": 0
       },
       {
         "id": "953e2e1e-f0b9-4110-ba27-04c9decb5471",
@@ -10552,19 +10435,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 60,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/FURIUX-MASS-3KG-VANILLE.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 18,
+    "stockPortugal": 0,
+    "inStock": true
   },
   {
     "id": "prod-13972",
@@ -10668,18 +10550,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": false
       }
     ],
-    "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "isSwissOrigin": true,
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-13873",
@@ -10783,18 +10659,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": false
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-13868",
@@ -10898,18 +10768,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 2,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 2
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 2,
+    "inStock": true
   },
   {
     "id": "prod-13708",
@@ -11013,18 +10880,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 3,
+    "inStock": true
   },
   {
     "id": "prod-13035",
@@ -11128,18 +10992,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": true
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-12992",
@@ -11243,17 +11101,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 14,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 14,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 14,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -11358,11 +11216,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "2.3kg",
         "priceChf": 42,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/20.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       },
       {
         "id": "c23fc714-67ec-458b-8dba-9ef86b2cfb81",
@@ -11375,19 +11233,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1kg",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 17,
         "inStock": true,
         "image": "/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 17,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "stockPortugal": 0,
+    "inStock": false
   },
   {
     "id": "prod-12902",
@@ -11502,18 +11359,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 3,
+    "inStock": true
   },
   {
     "id": "prod-12882",
@@ -11617,11 +11471,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 12,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/05/CREMA-FONDENTE-ZERO-.jpeg",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3,
+        "stockPortugal": 0
       },
       {
         "id": "80cb94a7-cee8-400a-938e-cea4571d7cba",
@@ -11634,19 +11488,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 12,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/05/CREMA-BONTA-DI-STELLE-.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 6,
+    "stockPortugal": 0
   },
   {
     "id": "prod-12867",
@@ -11750,11 +11602,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 10,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 10,
+        "stockPortugal": 0
       },
       {
         "id": "c7e9d2e8-ee6b-49df-813d-1e1bfdb923c5",
@@ -11767,11 +11619,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       },
       {
         "id": "5d1d4c9a-840c-4369-9fc4-354846c75e3e",
@@ -11784,11 +11636,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 23,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 23,
+        "stockPortugal": 0
       },
       {
         "id": "50ed2d8f-a17d-4bb1-90ce-441b1e9ebd23",
@@ -11801,11 +11653,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 27,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 27,
+        "stockPortugal": 0
       },
       {
         "id": "737524bf-4fb2-40bd-a18d-7c13dd2c8d71",
@@ -11818,19 +11670,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 61,
+    "stockPortugal": 0
   },
   {
     "id": "prod-12855",
@@ -11934,18 +11784,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 1,
+    "inStock": true
   },
   {
     "id": "prod-12650",
@@ -12049,11 +11896,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "efe387a3-4e59-4625-b37b-5d2308d30ad5",
@@ -12066,11 +11913,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "99bf34d0-ae6d-4baf-a099-ab0f7257b043",
@@ -12083,11 +11930,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "f8b98495-ddc3-4283-b0b7-8919875688f9",
@@ -12100,11 +11947,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1,
+        "stockPortugal": 0
       },
       {
         "id": "cfeb5e8f-d840-4a00-8aa1-21ce37621dd5",
@@ -12117,19 +11964,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/05/ISO-WHEY-ZERO.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 4,
+    "stockPortugal": 0
   },
   {
     "id": "prod-11806",
@@ -12233,17 +12078,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 7,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 7,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 7,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -12337,17 +12182,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 3,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 3,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 3,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -12441,18 +12286,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 20,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-11328",
@@ -12556,18 +12400,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 20,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-11296",
@@ -12693,11 +12536,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/63.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "ea7990d9-a410-46d8-b8f2-a107f46aeaa2",
@@ -12710,11 +12553,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/63.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "3c8fd234-3948-4968-8cd9-e3bad698cece",
@@ -12727,19 +12570,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/63.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-11269",
@@ -12865,11 +12707,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 60,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 17,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/64.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 17,
+        "stockPortugal": 0
       },
       {
         "id": "1e4a5172-9bdd-41f5-8e4f-fcc7e9948df6",
@@ -12882,11 +12724,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 70,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BIG-CHOCO.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       },
       {
         "id": "86894338-e85c-4afb-b768-a8459eaef164",
@@ -12899,18 +12741,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 70,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BIG-COOKIE.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 5,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 27,
+    "stockPortugal": 0,
     "inStock": true
   },
   {
@@ -13004,18 +12846,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 39.9,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 1,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 1
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 1,
+    "inStock": true
   },
   {
     "id": "prod-10083",
@@ -13108,18 +12947,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 10,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": true
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-10022",
@@ -13223,18 +13056,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": false
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-9616",
@@ -13327,11 +13154,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 10,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       },
       {
         "id": "7c70d203-755d-41ce-a842-791f3f413254",
@@ -13344,19 +13171,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 10,
-        "inventoryQuantity": 50,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "image": "/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp",
         "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 0
   },
   {
     "id": "prod-9526",
@@ -13449,17 +13274,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 49,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 49,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 49,
+    "stockPortugal": 25,
     "inStock": true
   },
   {
@@ -13575,11 +13400,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/SAVIOR-950G.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6,
+        "stockPortugal": 0
       },
       {
         "id": "c0fc3f3c-b309-4127-b2ed-57f7be753fb7",
@@ -13592,18 +13417,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 55,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/74.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 6,
+    "stockPortugal": 0,
     "inStock": true
   },
   {
@@ -13697,18 +13522,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 10,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": true
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-8867",
@@ -13812,18 +13631,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 10,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 10
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 10,
+    "inStock": true
   },
   {
     "id": "prod-8857",
@@ -13927,18 +13743,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 15,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 8,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 8
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 8,
+    "inStock": true
   },
   {
     "id": "prod-7901",
@@ -14042,18 +13855,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 20,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 6
       }
     ],
-    "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "isSwissOrigin": true,
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 6,
+    "inStock": true
   },
   {
     "id": "prod-7890",
@@ -14157,18 +13967,15 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 8,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 8
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY",
-    "stockPortugal": 50
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 8,
+    "inStock": true
   },
   {
     "id": "prod-7870",
@@ -14261,18 +14068,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 15,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": true
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-7854",
@@ -14376,18 +14177,12 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 50,
-        "inStock": true,
-        "stockPortugal": 50,
-        "stockGeneva": 0
+        "inventoryQuantity": 20,
+        "inStock": false
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true,
-    "stockPortugal": 50,
-    "stockGeneva": 0
+    "shippingOrigin": "switzerland"
   },
   {
     "id": "prod-mv-5639",
@@ -14494,8 +14289,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/50.jpg",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-5699",
@@ -14511,16 +14306,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/50.jpg",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-mv-5640",
@@ -14657,9 +14451,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 150,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 150
   },
   {
     "id": "prod-mv-5641",
@@ -14762,9 +14554,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5643",
@@ -14857,19 +14647,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 30,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 30,
         "inStock": true,
         "image": "/images/products/marvelous/79-1.png",
-        "stockGeneva": 0,
+        "stockGeneva": 30,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 0,
+    "stockGeneva": 30,
     "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "inStock": true
   },
   {
     "id": "prod-mv-5645",
@@ -15040,9 +14829,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 250,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 250
   },
   {
     "id": "prod-mv-5646",
@@ -15213,9 +15000,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 250,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 250
   },
   {
     "id": "prod-mv-5647",
@@ -15386,9 +15171,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 250,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 250
   },
   {
     "id": "prod-mv-5648",
@@ -15491,9 +15274,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5649",
@@ -15596,9 +15377,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5650",
@@ -15701,9 +15480,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5651",
@@ -15806,9 +15583,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5652",
@@ -15911,9 +15686,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5653",
@@ -16016,9 +15789,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5654",
@@ -16121,9 +15892,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5693",
@@ -16311,9 +16080,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 200,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 200
   },
   {
     "id": "prod-mv-5703",
@@ -16416,9 +16183,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5707",
@@ -16589,9 +16354,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 150,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 150
   },
   {
     "id": "prod-mv-5709",
@@ -16705,9 +16468,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5711",
@@ -16810,9 +16571,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5733",
@@ -16908,16 +16667,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/marvelous/Untitled-design-14-1.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-mv-5741",
@@ -17020,9 +16778,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5749",
@@ -17277,9 +17033,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 300,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 300
   },
   {
     "id": "prod-mv-5756",
@@ -17375,16 +17129,14 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 99,
         "inStock": true,
         "image": "/images/products/marvelous/creatine.png",
-        "stockGeneva": 0,
+        "stockGeneva": 49,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockGeneva": 49,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5757",
@@ -17477,19 +17229,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 39,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 15,
         "inStock": true,
         "image": "/images/products/marvelous/Marveleous20.png",
-        "stockGeneva": 0,
+        "stockGeneva": 15,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 0,
+    "stockGeneva": 15,
     "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "inStock": true
   },
   {
     "id": "prod-mv-5758",
@@ -17592,9 +17343,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5759",
@@ -17697,9 +17446,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5763",
@@ -17841,9 +17588,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 100,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 100
   },
   {
     "id": "prod-mv-5772",
@@ -18013,9 +17758,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 150,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 150
   },
   {
     "id": "prod-mv-5776",
@@ -18108,19 +17851,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 4,
         "inStock": true,
         "image": "/images/products/marvelous/collagen-Flavored.png",
-        "stockGeneva": 0,
+        "stockGeneva": 4,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 0,
+    "stockGeneva": 4,
     "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "inStock": true
   },
   {
     "id": "prod-mv-5781",
@@ -18223,9 +17965,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5794",
@@ -18321,16 +18061,14 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 53,
         "inStock": true,
         "image": "/images/products/marvelous/75.png",
-        "stockGeneva": 0,
+        "stockGeneva": 3,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockGeneva": 3,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5795",
@@ -18433,9 +18171,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5796",
@@ -18531,16 +18267,14 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 60,
         "inStock": true,
         "image": "/images/products/marvelous/Untitled-design-8-1.png",
-        "stockGeneva": 0,
+        "stockGeneva": 10,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockGeneva": 10,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5878",
@@ -18767,9 +18501,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 250,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 250
   },
   {
     "id": "prod-mv-6456",
@@ -18872,9 +18604,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-6461",
@@ -18977,9 +18707,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-6465",
@@ -19082,9 +18810,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-6468",
@@ -19177,19 +18903,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 6,
         "inStock": true,
         "image": "/images/products/marvelous/nad-mockup.png",
-        "stockGeneva": 0,
+        "stockGeneva": 6,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 0,
+    "stockGeneva": 6,
     "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "inStock": true
   },
   {
     "id": "prod-mv-6670",
@@ -19307,7 +19032,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 60,
         "inStock": true,
         "image": "/images/products/marvelous/hydralytes-lemon-mint.png",
-        "stockGeneva": 0,
+        "stockGeneva": 10,
         "stockPortugal": 50
       },
       {
@@ -19324,7 +19049,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 82,
         "inStock": true,
         "image": "/images/products/marvelous/hydralytes-cocnut-water.png",
-        "stockGeneva": 0,
+        "stockGeneva": 32,
         "stockPortugal": 50
       }
     ],
@@ -19332,8 +19057,7 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
     "stockPortugal": 100,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "inStock": false
   },
   {
     "id": "prod-ds-198",
@@ -19473,8 +19197,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/lemon-stim-x.jpg",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-285",
@@ -19490,8 +19214,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/red-cola-stim-x.jpg",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       },
       {
         "id": "var-ds-286",
@@ -19507,16 +19231,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/tutti-fruity-stimx.jpg",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-ds-200",
@@ -19630,9 +19353,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-201",
@@ -19746,9 +19467,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-202",
@@ -19862,9 +19581,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-212",
@@ -19971,16 +19688,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "/images/products/dirtysquads/dirty-sqauds-wall8.jpg",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 25,
+        "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inStock": true
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 25,
+    "stockPortugal": 25
   },
   {
     "id": "prod-ds-213",
@@ -20084,19 +19800,18 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 19.9,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 19,
         "inStock": true,
         "image": "/images/products/dirtysquads/dirty-sqauds-wall13.jpg",
-        "stockGeneva": 0,
+        "stockGeneva": 19,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 0,
+    "stockGeneva": 19,
     "stockPortugal": 50,
-    "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "inStock": true
   },
   {
     "id": "prod-ds-591",
@@ -20210,9 +19925,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-596",
@@ -20326,9 +20039,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-600",
@@ -20442,9 +20153,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   },
   {
     "id": "prod-ds-604",
@@ -20558,9 +20267,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY",
-    "inStock": true
+    "stockPortugal": 50
   }
 ];
 

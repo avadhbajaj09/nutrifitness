@@ -57,17 +57,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               -{discountPercent}%
             </span>
           )}
-          {product.isSwissOrigin && (
-            <span className="inline-flex items-center gap-1 bg-black/80 backdrop-blur-md border border-white/20 text-white text-[10px] font-bold px-2 py-0.5 rounded-full">
-              <span className="w-1.5 h-1.5 rounded-xs bg-[#D52B1E] inline-block" aria-hidden="true"></span>
-              CH
-            </span>
-          )}
-          {/* Origin badge: Always Portugal fulfillment */}
-          <span className="inline-flex items-center gap-1 text-[10px] font-bold px-2.5 py-0.5 rounded-full shadow-sm border bg-blue-950/85 border-blue-500/40 text-blue-300">
-            <span>🇵🇹</span>
-            <span>{t.common.originPortugal || 'Expédié du Portugal (3-5 jours)'}</span>
-          </span>
         </div>
 
         {/* Floating Action Buttons (Top Right) */}

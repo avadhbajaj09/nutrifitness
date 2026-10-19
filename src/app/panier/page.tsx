@@ -265,16 +265,8 @@ export default function CartPage() {
                       </p>
                       {item.isEbook ? (
                         <p className="text-[11px] text-[#95d600] font-bold mt-1">✓ Exemplaire unique (téléchargement immédiat)</p>
-                      ) : (item.locationType === 'COMMON' || item.shippingOrigin === 'common') ? (
-                        (countryCode === 'CH' || countryCode === 'LI') ? (
-                          <p className="text-[11px] text-emerald-400 font-bold mt-1">🇨🇭 Expédié de Suisse (24h)</p>
-                        ) : (
-                          <p className="text-[11px] text-blue-400 font-bold mt-1">🇵🇹 Expédié du Portugal (3–5j)</p>
-                        )
-                      ) : item.isPortugal || item.locationType === 'PORTUGAL_ONLY' || item.shippingOrigin === 'portugal' ? (
-                        <p className="text-[11px] text-blue-400 font-bold mt-1">🇵🇹 Expédié du Portugal (3–5j)</p>
                       ) : (
-                        <p className="text-[11px] text-emerald-400 font-bold mt-1">🇨🇭 Expédié de Suisse (24h)</p>
+                        <p className="text-[11px] text-emerald-400 font-bold mt-1">✓ En stock · Livraison suivie</p>
                       )}
                     </div>
                   </div>

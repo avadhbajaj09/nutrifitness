@@ -138,9 +138,8 @@ export default function CartDrawer() {
                         </p>
                       )}
                       {!item.isEbook && (
-                        <p className="text-[10px] text-blue-400 font-bold pt-0.5 flex items-center gap-1">
-                          <span>🇵🇹</span>
-                          <span>Expédié du Portugal · 3–5j</span>
+                        <p className="text-[10px] text-emerald-400 font-bold pt-0.5 flex items-center gap-1">
+                          <span>✓ En stock · Livraison suivie</span>
                         </p>
                       )}
                     </div>

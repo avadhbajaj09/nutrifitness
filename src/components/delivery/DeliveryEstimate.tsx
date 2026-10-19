@@ -106,9 +106,7 @@ export function DeliveryEstimate({
     currentLocale === 'en' ? 'Fast tracked delivery' : 'Livraison express suivie'
   );
   const shipsFrom = estimate?.shipsFromText?.[currentLocale] || (
-    resolvedOrigin === 'GENEVA' 
-      ? 'Swiss Fulfillment'
-      : 'Portugal Fulfillment'
+    currentLocale === 'en' ? 'Tracked priority delivery' : currentLocale === 'de' ? 'Verfolgter Versand' : 'Livraison suivie prioritaire'
   );
 
   // Stock Pill (Strictly no quantities shown on customer storefront)
@@ -125,20 +123,13 @@ export function DeliveryEstimate({
   if (mode === 'card') {
     return (
       <div className={`space-y-1 text-left text-xs ${className}`}>
-        {/* 1. Primary, bold: Flag icon (SVG) + Delivery Promise Date */}
+        {/* 1. Primary, bold: Truck icon + Delivery Promise Date */}
         <div className="flex items-center gap-1.5 font-bold text-white leading-tight">
-          <FlagIcon countryCode={originCountry} className="w-3.5 h-3.5 shrink-0" />
+          <Truck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
           <span className="font-semibold text-white/95 text-[11px] sm:text-xs">
             {displayPromise}
           </span>
         </div>
-
-        {/* 2. Secondary, small and muted: Ships from (Only show for Portugal imports, never Expédié de Suisse) */}
-        {resolvedOrigin === 'PORTUGAL' && (
-          <div className="text-[10px] text-white/50 leading-none">
-            {shipsFrom}
-          </div>
-        )}
 
         {/* 3. Stock pill on its own */}
         <div className="pt-0.5">
@@ -253,13 +244,6 @@ export function DeliveryEstimate({
               </span>
             </div>
 
-            <div className="flex justify-between text-[11px]">
-              <span className="text-white/50">{currentLocale === 'en' ? 'Fulfilment center:' : 'Centre logistique :'}</span>
-              <span className="font-bold text-white">
-                {resolvedOrigin === 'GENEVA' ? '🇨🇭 Swiss Fulfillment' : '🇵🇹 Portugal Fulfillment'}
-              </span>
-            </div>
-
             {requiresCustoms && (
               <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] flex items-start gap-2">
                 <ShieldAlert className="w-3.5 h-3.5 shrink-0 mt-0.5" />
@@ -278,11 +262,9 @@ export function DeliveryEstimate({
 
   // 3. COMPACT / CHECKOUT MODE
   return (
-    <div className={`flex items-center gap-2 text-xs text-white/80 ${className}`}>
-      <FlagIcon countryCode={originCountry} className="w-3.5 h-3.5 shrink-0" />
+    <div className={`flex items-center gap-1.5 text-xs text-white/80 ${className}`}>
+      <Truck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
       <span className="font-bold text-white">{displayPromise}</span>
-      <span className="text-white/40">·</span>
-      <span className="text-white/60">{shipsFrom}</span>
     </div>
   );
 }
