@@ -302,10 +302,16 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             )}
           </div>
 
-          {/* AEO Expert Direct Answer */}
+          {/* Expert Direct Answer */}
           <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
             <h2 className="text-xs font-black uppercase tracking-wider text-[#F80404] mb-1 font-heading">
-              Avis Expert NutriFitness Suisse (AEO) :
+              {locale === 'en'
+                ? 'Expert Opinion – NutriFitness Switzerland :'
+                : locale === 'de'
+                ? 'Expertenmeinung – NutriFitness Schweiz :'
+                : locale === 'it'
+                ? 'Parere dell\'Esperto – NutriFitness Svizzera :'
+                : 'Avis Expert NutriFitness Suisse :'}
             </h2>
             <p className="text-xs text-white/70 leading-relaxed">
               {getLocalized(product.directAnswerAeo, locale)}

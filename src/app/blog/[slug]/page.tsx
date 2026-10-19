@@ -316,7 +316,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
         <div className="mb-10 p-6 sm:p-8 rounded-2xl bg-gradient-to-br from-[#1E1111] to-[#141414] border-2 border-[#F80404]/50 shadow-2xl relative overflow-hidden">
           <div className="flex items-center gap-2 text-xs font-black uppercase tracking-widest text-[#F80404] mb-3 font-heading">
             <Sparkles className="w-4 h-4" />
-            <span>En Bref • La Réponse Directe de nos Experts (AEO)</span>
+            <span>En Bref • La Réponse Directe de nos Experts</span>
           </div>
           <p className="text-base sm:text-lg text-white font-medium leading-relaxed">
             {post.shortAnswer}
