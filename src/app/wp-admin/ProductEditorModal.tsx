@@ -17,7 +17,9 @@ import {
   AlertCircle, 
   HelpCircle,
   Eye,
-  ExternalLink
+  ExternalLink,
+  Upload,
+  Loader2
 } from 'lucide-react';
 
 interface ProductEditorModalProps {
@@ -65,6 +67,8 @@ export default function ProductEditorModal({
   // Images state
   const [images, setImages] = useState<{ src: string; altText: string }[]>([]);
   const [newImageUrl, setNewImageUrl] = useState<string>('');
+  const [isUploadingImage, setIsUploadingImage] = useState<boolean>(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
 
   // Descriptions state
   const [shortDescFr, setShortDescFr] = useState<string>('');
@@ -302,6 +306,40 @@ export default function ProductEditorModal({
     if (!newImageUrl.trim()) return;
     setImages(prev => [...prev, { src: newImageUrl.trim(), altText: nameFr || 'Photo produit' }]);
     setNewImageUrl('');
+  };
+
+  const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+
+    setIsUploadingImage(true);
+    setUploadError(null);
+
+    try {
+      const formData = new FormData();
+      formData.append('file', file);
+
+      const res = await fetch('/api/admin/upload-image', {
+        method: 'POST',
+        body: formData,
+      });
+
+      const data = await res.json();
+      if (!res.ok || !data.success) {
+        throw new Error(data.error || 'Erreur lors du téléchargement de l\'image');
+      }
+
+      setImages(prev => [
+        ...prev,
+        { src: data.url, altText: nameFr || file.name.replace(/\.[^/.]+$/, '') }
+      ]);
+    } catch (err: any) {
+      console.error('Image upload failed:', err);
+      setUploadError(err.message || 'Échec du téléchargement vers le cloud');
+    } finally {
+      setIsUploadingImage(false);
+      if (e.target) e.target.value = '';
+    }
   };
 
   const handleRemoveImage = (index: number) => {
@@ -1086,30 +1124,80 @@ export default function ProductEditorModal({
           {activeTab === 'images' && (
             <div className="space-y-6 animate-in fade-in duration-150">
               
-              {/* Add New Image Input */}
-              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                <label className="block text-xs font-bold uppercase tracking-wider text-slate-700">
-                  Ajouter une Image (URL ou chemin local)
-                </label>
-                <div className="flex gap-2">
-                  <input
-                    type="text"
-                    value={newImageUrl}
-                    onChange={(e) => setNewImageUrl(e.target.value)}
-                    placeholder="https://... ou /images/products/..."
-                    className="flex-1 px-3 py-2 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none"
-                  />
-                  <button
-                    type="button"
-                    onClick={handleAddImage}
-                    className="px-4 py-2 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase rounded-xl transition-all flex items-center gap-1 shrink-0"
-                  >
-                    <Plus className="w-3.5 h-3.5" />
-                    <span>Ajouter</span>
-                  </button>
+              {/* Direct Cloud Upload Box */}
+              <div className="p-5 bg-gradient-to-br from-slate-50 to-emerald-50/30 rounded-2xl border-2 border-dashed border-emerald-300 space-y-3">
+                <div className="flex items-center justify-between">
+                  <div>
+                    <label className="block text-xs font-black uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                      <Upload className="w-4 h-4 text-emerald-600" />
+                      <span>Téléverser une Photo (Supabase Cloud Storage)</span>
+                    </label>
+                    <p className="text-[11px] text-slate-500 mt-0.5">
+                      Les images sont sauvegardées sur le CDN Cloud et délivrées à haute vitesse.
+                    </p>
+                  </div>
+                  <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 border border-emerald-200">
+                    ☁️ Cloud CDN Actif
+                  </span>
                 </div>
-                <p className="text-[11px] text-slate-400">
-                  Conseil : La première image de la liste sert de visuel principal (packshot de couverture).
+
+                {uploadError && (
+                  <div className="p-2.5 rounded-xl bg-red-50 border border-red-200 text-red-700 text-xs font-bold flex items-center gap-2">
+                    <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                    <span>{uploadError}</span>
+                  </div>
+                )}
+
+                <div className="flex flex-col sm:flex-row items-center gap-3">
+                  <label className={`w-full sm:w-auto px-5 py-3 rounded-xl font-bold text-xs uppercase flex items-center justify-center gap-2 cursor-pointer transition-all ${
+                    isUploadingImage 
+                      ? 'bg-slate-300 text-slate-600 cursor-not-allowed' 
+                      : 'bg-emerald-600 hover:bg-emerald-700 text-white shadow-xs'
+                  }`}>
+                    {isUploadingImage ? (
+                      <>
+                        <Loader2 className="w-4 h-4 animate-spin" />
+                        <span>Téléversement vers le Cloud...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Upload className="w-4 h-4" />
+                        <span>Choisir un fichier (PNG, JPG, WebP)</span>
+                      </>
+                    )}
+                    <input
+                      type="file"
+                      accept="image/png,image/jpeg,image/webp,image/svg+xml"
+                      onChange={handleFileUpload}
+                      disabled={isUploadingImage}
+                      className="hidden"
+                    />
+                  </label>
+
+                  <span className="text-xs text-slate-400 font-bold hidden sm:inline">ou</span>
+
+                  {/* Manual URL / Path Input */}
+                  <div className="flex-1 w-full flex gap-2">
+                    <input
+                      type="text"
+                      value={newImageUrl}
+                      onChange={(e) => setNewImageUrl(e.target.value)}
+                      placeholder="Coller une URL directe (https://...)"
+                      className="flex-1 px-3 py-2.5 bg-white border border-slate-300 rounded-xl text-xs text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                    />
+                    <button
+                      type="button"
+                      onClick={handleAddImage}
+                      className="px-4 py-2.5 bg-slate-900 hover:bg-slate-800 text-white font-bold text-xs uppercase rounded-xl transition-all flex items-center gap-1 shrink-0"
+                    >
+                      <Plus className="w-3.5 h-3.5" />
+                      <span>Ajouter</span>
+                    </button>
+                  </div>
+                </div>
+
+                <p className="text-[10px] text-slate-400">
+                  💡 Astuce : La 1ère image est le visuel principal affiché sur la boutique et Google Merchant Center.
                 </p>
               </div>
 
