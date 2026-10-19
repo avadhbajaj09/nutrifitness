@@ -1,13 +1,15 @@
 /**
  * Swiss TWINT Payment Gateway Configuration & Helpers
- * Store UUID / Terminal: 284f5777-02b6-4718-9f87-bbb1c4224429
+ * Store UUID / Terminal: 284f5777-02b6-4718-9f87-bbb1c4224429: 1 NUTRIFIT, www.nutrifitness.ch
  */
 
 export const TWINT_CONFIG = {
   storeUuid: process.env.NEXT_PUBLIC_TWINT_STORE_UUID || process.env.TWINT_STORE_UUID || '284f5777-02b6-4718-9f87-bbb1c4224429',
   rawKey: '284f577702b647189f87bbb1c4224429',
-  merchantName: 'NutriFitness Suisse',
+  merchantName: '1 NUTRIFIT, www.nutrifitness.ch',
   location: 'Genève, Suisse',
+  mameToken: process.env.TWINT_MAME_TOKEN || '2465|F1KM1YheJp0H1ZkMea5bwZ4ndi2yl7eo9dJkgt7Ga516e187',
+  webhookSecret: process.env.TWINT_WEBHOOK_SECRET || 'cc630fe3fb5520c7ee579f3cea59799c51bdbd249fc3aee1c5f69f39c9e5ed405b8713b0e501e3ce5b50dd1eb194ad6cec4739de830d7063b56069b3484fb666',
 };
 
 /**

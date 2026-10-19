@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
+import { TWINT_CONFIG } from '@/lib/twint';
 import type { ProductItem, ProductVariant, SupportedLocale } from '@/lib/types';
 import { 
   Package, 
@@ -4300,15 +4301,18 @@ export default function AdminDashboardClient() {
                       {/* Live TWINT QR Code for In-Store Counter */}
                       <div className="flex flex-col items-center justify-center p-3.5 bg-white rounded-xl border border-emerald-200 shadow-2xs">
                         <img
-                          src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(`https://pay.twint.ch/?storeUUID=e63424a8-576d-c293-a4de-891c3737aa8b&amount=${grandTotalToPay.toFixed(2)}&currency=CHF&orderId=${encodeURIComponent(ticketNumber)}`)}`}
+                          src={`https://api.qrserver.com/v1/create-qr-code/?size=180x180&data=${encodeURIComponent(`https://pay.twint.ch/?storeUUID=${TWINT_CONFIG.storeUuid}&amount=${grandTotalToPay.toFixed(2)}&currency=CHF&orderId=${encodeURIComponent(ticketNumber)}`)}`}
                           alt="TWINT QR Code"
                           className="w-40 h-40 object-contain rounded-lg"
                         />
                         <p className="text-[11px] text-slate-600 font-bold mt-2 text-center">
                           Présentez ce QR Code au client au comptoir (Rue des Pâquis)
                         </p>
-                        <span className="text-[9px] text-slate-400 font-mono mt-0.5">
-                          ID Caisse TWINT : e63424a8-576d-c293-a4de-891c3737aa8b
+                        <span className="text-[9px] text-emerald-700 font-bold font-mono mt-0.5 text-center">
+                          ID Terminal TWINT : {TWINT_CONFIG.storeUuid}
+                        </span>
+                        <span className="text-[9px] text-slate-500 font-sans text-center">
+                          {TWINT_CONFIG.merchantName}
                         </span>
                       </div>
 
