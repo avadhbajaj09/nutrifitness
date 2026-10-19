@@ -1130,10 +1130,13 @@ export default function AdminDashboardClient() {
     if (product.variants && product.variants.length > 0) {
       product.variants.forEach(v => {
         const key = v.id || v.sku;
-        initial[key] = v.gtin13 || v.sku || '';
+        const validBarcode = v.gtin13 || (/^\d{8}$|^\d{12,14}$/.test(v.sku || '') ? v.sku : '');
+        initial[key] = validBarcode || '';
       });
     } else {
-      initial['def'] = product.gtin13 || product.id || '';
+      const prodSku = (product as any).sku || product.variants?.[0]?.sku;
+      const validBarcode = product.gtin13 || (/^\d{8}$|^\d{12,14}$/.test(prodSku || '') ? prodSku : '');
+      initial['def'] = validBarcode || '';
     }
     setBarcodeModalValues(initial);
   };
@@ -2609,17 +2612,29 @@ export default function AdminDashboardClient() {
                         </div>
 
                         {/* Barcode / GTIN popup trigger button */}
-                        <button
-                          type="button"
-                          onClick={() => openBarcodeModal(product)}
-                          title={adminLang === 'fr' ? 'Gérer le code-barres / GTIN-13' : 'Manage barcode / GTIN'}
-                          className="inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold bg-slate-100 hover:bg-slate-200 text-slate-700 border border-slate-200 transition-all hover:scale-102 active:scale-95 shadow-2xs"
-                        >
-                          <Barcode className="w-3 h-3 text-slate-600" />
-                          <span className="notranslate text-[9px] font-mono">
-                            {product.gtin13 ? 'GTIN' : '+ GTIN'}
-                          </span>
-                        </button>
+                        {(() => {
+                          const hasGtin = Boolean(
+                            product.gtin13 ||
+                            (product.variants && product.variants.some(v => v.gtin13 || /^\d{8}$|^\d{12,14}$/.test(v.sku || '')))
+                          );
+                          return (
+                            <button
+                              type="button"
+                              onClick={() => openBarcodeModal(product)}
+                              title={adminLang === 'fr' ? 'Gérer le code-barres / GTIN-13' : 'Manage barcode / GTIN'}
+                              className={`inline-flex items-center gap-1 px-1.5 py-0.5 rounded-lg text-[10px] font-bold border transition-all hover:scale-102 active:scale-95 shadow-2xs ${
+                                hasGtin
+                                  ? 'bg-emerald-50 text-emerald-700 border-emerald-300 hover:bg-emerald-100'
+                                  : 'bg-slate-100 hover:bg-slate-200 text-slate-600 border-slate-200'
+                              }`}
+                            >
+                              <Barcode className={`w-3 h-3 ${hasGtin ? 'text-emerald-600' : 'text-slate-500'}`} />
+                              <span className="notranslate text-[9px] font-mono">
+                                {hasGtin ? 'GTIN' : '+ GTIN'}
+                              </span>
+                            </button>
+                          );
+                        })()}
                       </div>
                     </div>
 
