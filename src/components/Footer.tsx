@@ -122,8 +122,20 @@ export default function Footer() {
 
           <div className="text-xs text-white/50 text-center md:text-right space-y-1">
             <p>🇨🇭 Expédition PostPac Priority (24h) par La Poste Suisse</p>
-            <p className="text-[11px] text-white/40">
-              © {currentYear} NutriFitness.ch. Tous droits réservés.
+            <p className="text-[11px] text-white/40 flex flex-wrap items-center justify-center md:justify-end gap-1.5">
+              <span>© {currentYear} NutriFitness.ch. Tous droits réservés.</span>
+              <span className="hidden sm:inline">•</span>
+              <span>
+                Designed and built by{' '}
+                <a 
+                  href="https://avadhbajaj.com" 
+                  target="_blank" 
+                  rel="noopener noreferrer" 
+                  className="text-white/60 hover:text-white transition-colors underline decoration-white/20 underline-offset-2 font-medium"
+                >
+                  avadhbajaj.com
+                </a>
+              </span>
             </p>
           </div>
         </div>
