@@ -5,14 +5,11 @@ const nextConfig = {
   trailingSlash: true,
   skipTrailingSlashRedirect: true,
   images: {
+    unoptimized: true,
     formats: ['image/avif', 'image/webp'],
     remotePatterns: [
-      { protocol: 'https', hostname: 'nutrifitness.ch' },
-      { protocol: 'https', hostname: 'fitrush.bzotech.com' },
-      { protocol: 'https', hostname: 'marvelousnutrition.com' },
-      { protocol: 'https', hostname: 'dirtysquads.com' },
-      { protocol: 'http', hostname: 'dirtysquads.com' },
-      { protocol: 'https', hostname: 'punhmwlpaghmjndpyusf.supabase.co' }
+      { protocol: 'https', hostname: '**' },
+      { protocol: 'http', hostname: '**' }
     ]
   },
   async redirects() {

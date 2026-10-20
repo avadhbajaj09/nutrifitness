@@ -38,6 +38,11 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   const slug = getLocalized(product.slug, locale);
   const name = getLocalized(product.name, locale);
   const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
+  const [imgSrc, setImgSrc] = React.useState<string>(primaryImg);
+
+  React.useEffect(() => {
+    setImgSrc(product.images?.[0]?.src || '/images/placeholder.webp');
+  }, [product.images]);
 
   const pricing = getProductPricing(product);
   const compareAtPrice = pricing.compareAt;
@@ -82,11 +87,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         {/* Packshot Image */}
         <Link href={`/produit/${slug}/`} className="block w-full h-full relative" tabIndex={-1}>
           <Image 
-            src={primaryImg} 
+            src={imgSrc} 
             alt={name}
             fill
             sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
             priority={priority}
+            onError={() => setImgSrc('/images/placeholder.webp')}
             className="object-contain object-center transition-transform duration-500 group-hover:scale-108 filter drop-shadow-md"
           />
         </Link>

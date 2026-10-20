@@ -56,6 +56,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   );
   const currentGtin = getProductGtin(product, selectedVariant);
   const activeImg = selectedImage || selectedVariant?.image || primaryImg;
+  const [mainImgSrc, setMainImgSrc] = useState<string>(activeImg);
+  useEffect(() => {
+    setMainImgSrc(activeImg);
+  }, [activeImg]);
   const currentPrice = selectedVariant?.priceChf || product.priceChf;
 
   const originType = getProductOriginType(product);
@@ -63,7 +67,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const effectiveCountry = mounted ? (countryCode || 'CH') : 'CH';
   const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
   const isSwissDestination = effectiveCountry === 'CH' || effectiveCountry === 'LI';
-  const isPortugal = isCommon ? !isSwissDestination : product.shippingOrigin === 'portugal';
+  const isPortugal = product.locationType === 'PORTUGAL_ONLY' || product.shippingOrigin === 'portugal' || (isCommon && !isSwissDestination);
   const isDeliverable = isProductDeliverableToCountry(effectiveCountry, product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal);
 
   const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
@@ -122,10 +126,11 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             </div>
 
             <Image 
-              src={activeImg} 
+              src={mainImgSrc || '/images/placeholder.webp'} 
               alt={name}
               fill
               priority
+              onError={() => setMainImgSrc('/images/placeholder.webp')}
               className="object-contain object-center filter drop-shadow-2xl transition-transform duration-500 hover:scale-105 p-2 sm:p-4"
             />
           </div>

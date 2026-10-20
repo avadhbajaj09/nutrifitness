@@ -159,11 +159,35 @@ export async function GET(request: Request) {
   }
 }
 
+function isUUID(str: string): boolean {
+  return /^[0-9a-f]{8}-[0-9a-f]{4}-[1-5][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i.test(str);
+}
+
+async function findProduct(supabase: any, rawId: string) {
+  const id = decodeURIComponent(rawId).trim();
+  if (isUUID(id)) {
+    const { data } = await supabase.from('products').select('*, product_stock(*)').eq('id', id).maybeSingle();
+    if (data) return data;
+  }
+  const cleanId = id.replace(/^prod-/, '');
+  const { data } = await supabase
+    .from('products')
+    .select('*, product_stock(*)')
+    .or(`woo_id.eq.${id},woo_id.eq.${cleanId},slug.eq.${id},sku.eq.${id},sku.eq.${cleanId}`)
+    .maybeSingle();
+  return data;
+}
+
 export async function PATCH(request: Request) {
   try {
     const body = await request.json();
     const {
       id,
+      name,
+      brand,
+      base_price,
+      compare_at_price,
+      images,
       main_location,
       status,
       stock_geneva,
@@ -181,19 +205,60 @@ export async function PATCH(request: Request) {
 
     const supabase = getAdminSupabase();
 
-    // Fetch existing product state for audit log
-    const { data: existingProduct, error: fetchErr } = await supabase
-      .from('products')
-      .select('*, product_stock(*)')
-      .eq('id', id)
-      .single();
+    // Fetch existing product state for audit log safely by UUID, woo_id, or slug
+    const existingProduct = await findProduct(supabase, id);
 
-    if (fetchErr || !existingProduct) {
+    if (!existingProduct) {
       return NextResponse.json({ error: 'Product not found' }, { status: 404 });
     }
 
+    const realDbId = existingProduct.id;
     const updates: Record<string, any> = { updated_at: new Date().toISOString() };
-    if (main_location) updates.main_location = main_location;
+
+    if (name) {
+      updates.name = name;
+      updates.normalized_name = name.toLowerCase().trim();
+    }
+    if (brand) updates.brand = brand;
+    if (base_price !== undefined) updates.base_price = Number(base_price);
+    if (compare_at_price !== undefined) updates.compare_at_price = compare_at_price ? Number(compare_at_price) : null;
+    if (images && Array.isArray(images)) {
+      updates.images = images.map((img: any) => ({
+        src: typeof img === 'string' ? img : img.src,
+        alt: typeof img === 'string' ? (name || existingProduct.name) : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || name || existingProduct.name || ''))
+      }));
+    }
+
+    if (main_location) {
+      updates.main_location = main_location;
+
+      if (main_location === 'PORTUGAL') {
+        await supabase.from('product_variants').update({ stock_geneva: 0 }).eq('product_id', realDbId);
+        await supabase.from('fulfillment_stock').update({ quantity: 0 }).eq('origin_id', 'GENEVA').or(`product_id.eq.${realDbId},product_id.eq.${existingProduct.woo_id},product_id.eq.prod-${existingProduct.woo_id}`);
+        await supabase.from('product_stock').upsert({
+          product_id: realDbId, variant_id: null, origin_id: 'GENEVA', quantity: 0, is_active: false, updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,origin_id' });
+        await supabase.from('product_stock').upsert({
+          product_id: realDbId, variant_id: null, origin_id: 'PORTUGAL', is_active: true, updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,origin_id' });
+      } else if (main_location === 'GENEVA') {
+        await supabase.from('product_variants').update({ stock_portugal: 0 }).eq('product_id', realDbId);
+        await supabase.from('fulfillment_stock').update({ quantity: 0 }).eq('origin_id', 'PORTUGAL').or(`product_id.eq.${realDbId},product_id.eq.${existingProduct.woo_id},product_id.eq.prod-${existingProduct.woo_id}`);
+        await supabase.from('product_stock').upsert({
+          product_id: realDbId, variant_id: null, origin_id: 'PORTUGAL', quantity: 0, is_active: false, updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,origin_id' });
+        await supabase.from('product_stock').upsert({
+          product_id: realDbId, variant_id: null, origin_id: 'GENEVA', is_active: true, updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,origin_id' });
+      } else if (main_location === 'COMMON') {
+        await supabase.from('product_stock').upsert({
+          product_id: realDbId, variant_id: null, origin_id: 'GENEVA', is_active: true, updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,origin_id' });
+        await supabase.from('product_stock').upsert({
+          product_id: realDbId, variant_id: null, origin_id: 'PORTUGAL', is_active: true, updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,origin_id' });
+      }
+    }
     if (status) updates.status = status;
 
     // Update products table if needed
@@ -201,7 +266,7 @@ export async function PATCH(request: Request) {
       await supabase
         .from('products')
         .update(updates)
-        .eq('id', id);
+        .eq('id', realDbId);
     }
 
     // Handle Location Toggles & Stock Updates
@@ -220,7 +285,7 @@ export async function PATCH(request: Request) {
         : (currentGeneva?.quantity ?? 0);
 
       await supabase.from('product_stock').upsert({
-        product_id: id,
+        product_id: realDbId,
         variant_id: null,
         origin_id: 'GENEVA',
         quantity: newQty,
@@ -242,7 +307,7 @@ export async function PATCH(request: Request) {
         : (currentPortugal?.quantity ?? 0);
 
       await supabase.from('product_stock').upsert({
-        product_id: id,
+        product_id: realDbId,
         variant_id: null,
         origin_id: 'PORTUGAL',
         quantity: newQty,
@@ -263,7 +328,7 @@ export async function PATCH(request: Request) {
 
         if (v.stock_geneva !== undefined) {
           await supabase.from('product_stock').upsert({
-            product_id: id,
+            product_id: realDbId,
             variant_id: v.id,
             origin_id: 'GENEVA',
             quantity: vUpdates.stock_geneva,
@@ -273,7 +338,7 @@ export async function PATCH(request: Request) {
         }
         if (v.stock_portugal !== undefined) {
           await supabase.from('product_stock').upsert({
-            product_id: id,
+            product_id: realDbId,
             variant_id: v.id,
             origin_id: 'PORTUGAL',
             quantity: vUpdates.stock_portugal,
@@ -285,17 +350,19 @@ export async function PATCH(request: Request) {
     }
 
     // Insert Audit Log
-    await supabase.from('product_audit_log').insert({
-      product_id: id,
-      user_id: user,
-      action: 'update_product_location',
-      old_values: {
-        status: existingProduct.status,
-        main_location: existingProduct.main_location,
-        stock: existingProduct.product_stock
-      },
-      new_values: body
-    });
+    try {
+      await supabase.from('product_audit_log').insert({
+        product_id: realDbId,
+        user_id: user,
+        action: 'update_product_location',
+        old_values: {
+          status: existingProduct.status,
+          main_location: existingProduct.main_location,
+          stock: existingProduct.product_stock
+        },
+        new_values: body
+      });
+    } catch {}
 
     // On-Demand Revalidation
     try {
@@ -306,14 +373,109 @@ export async function PATCH(request: Request) {
         revalidatePath(`/produit/${existingProduct.slug}`);
       }
       revalidateTag('products');
-      revalidateTag(`product:${id}`);
+      revalidateTag(`product:${realDbId}`);
     } catch (revalErr) {
       console.warn('[Admin Products API] Revalidation notice:', revalErr);
     }
 
-    return NextResponse.json({ success: true, id });
+    return NextResponse.json({ success: true, id: realDbId });
   } catch (err: any) {
     console.error('[Admin Products API] Patch error:', err);
+    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
+  }
+}
+
+export async function POST(request: Request) {
+  try {
+    const body = await request.json();
+    const {
+      id,
+      name,
+      slug,
+      brand = 'NutriFitness',
+      base_price = 0,
+      compare_at_price = null,
+      main_location = 'GENEVA',
+      status = 'published',
+      images = [],
+      user = 'admin'
+    } = body;
+
+    if (!name) {
+      return NextResponse.json({ error: 'Name is required' }, { status: 400 });
+    }
+
+    const supabase = getAdminSupabase();
+    let existingProduct = id ? await findProduct(supabase, id) : null;
+    if (!existingProduct && slug) {
+      existingProduct = await findProduct(supabase, slug);
+    }
+
+    const now = new Date().toISOString();
+    const formattedImages = Array.isArray(images) ? images.map((img: any) => ({
+      src: typeof img === 'string' ? img : img.src,
+      alt: typeof img === 'string' ? name : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || name))
+    })) : [];
+
+    let targetId = existingProduct?.id;
+    if (existingProduct) {
+      targetId = existingProduct.id;
+      const updates: Record<string, any> = {
+        name,
+        normalized_name: name.toLowerCase().trim(),
+        brand,
+        base_price: Number(base_price),
+        compare_at_price: compare_at_price ? Number(compare_at_price) : null,
+        main_location,
+        status,
+        images: formattedImages,
+        updated_at: now
+      };
+      if (slug) updates.slug = slug;
+      await supabase.from('products').update(updates).eq('id', targetId);
+    } else {
+      const crypto = await import('crypto');
+      const hash = crypto.createHash('md5').update((slug || name) + Date.now()).digest('hex');
+      targetId = [
+        hash.substring(0, 8),
+        hash.substring(8, 12),
+        '4' + hash.substring(13, 16),
+        '8' + hash.substring(17, 20),
+        hash.substring(20, 32)
+      ].join('-');
+
+      await supabase.from('products').insert({
+        id: targetId,
+        woo_id: id?.replace(/^prod-/, '') || slug,
+        sku: id || slug,
+        name,
+        normalized_name: name.toLowerCase().trim(),
+        slug: slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
+        type: 'simple',
+        brand,
+        base_price: Number(base_price),
+        compare_at_price: compare_at_price ? Number(compare_at_price) : null,
+        main_location,
+        status,
+        images: formattedImages,
+        is_featured: false,
+        created_at: now,
+        updated_at: now
+      });
+    }
+
+    try {
+      revalidatePath('/', 'layout');
+      revalidatePath('/');
+      revalidatePath('/boutique');
+      revalidatePath('/categorie');
+      if (slug) revalidatePath(`/produit/${slug}`);
+      revalidateTag('products');
+    } catch {}
+
+    return NextResponse.json({ success: true, id: targetId });
+  } catch (err: any) {
+    console.error('[Admin Products POST Error]:', err);
     return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
   }
 }

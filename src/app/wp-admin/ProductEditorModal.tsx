@@ -1213,12 +1213,14 @@ export default function ProductEditorModal({
                       key={idx}
                       className="p-3 bg-white border border-slate-200 rounded-2xl relative group flex flex-col items-center shadow-xs"
                     >
-                      <div className="relative w-full aspect-square rounded-xl bg-slate-50 border border-slate-100 overflow-hidden mb-2">
-                        <Image
+                      <div className="relative w-full aspect-square rounded-xl bg-slate-50 border border-slate-100 overflow-hidden mb-2 flex items-center justify-center">
+                        <img
                           src={img.src}
                           alt={img.altText || `Photo ${idx + 1}`}
-                          fill
-                          className="object-contain p-2"
+                          className="w-full h-full object-contain p-2"
+                          onError={(e) => {
+                            (e.target as HTMLImageElement).src = '/images/placeholder.webp';
+                          }}
                         />
                         {idx === 0 && (
                           <span className="absolute top-1.5 left-1.5 px-2 py-0.5 rounded-md bg-emerald-600 text-white text-[9px] font-black uppercase">

@@ -105,13 +105,36 @@ export async function resolveBatchEstimates(
   const country = (countryCode || 'CH').toUpperCase().trim();
   const { rules, countryGroups, holidays, settings } = await getDeliveryData();
 
-  // Try to load current stock from DB for the requested products
+  // Try to load current stock and main_location from DB for the requested products
   const productIds = Array.from(new Set(items.map(it => it.productId).filter(Boolean)));
   let stockMap = new Map<string, { genevaQty: number; portugalQty: number }>();
+  let locationMap = new Map<string, 'GENEVA' | 'PORTUGAL' | 'COMMON'>();
 
   if (productIds.length > 0) {
     try {
       const supabase = getAdminSupabase();
+
+      // 1. Fetch main_location from products table
+      const cleanIds = productIds.map(id => id.replace(/^prod-/, '').trim());
+      const { data: dbProducts } = await supabase
+        .from('products')
+        .select('id, woo_id, slug, main_location')
+        .or(`id.in.(${productIds.map(id => `"${id}"`).join(',')}),woo_id.in.(${cleanIds.map(id => `"${id}"`).join(',')}),slug.in.(${productIds.map(id => `"${id}"`).join(',')})`);
+
+      if (dbProducts) {
+        for (const p of dbProducts) {
+          if (p.main_location) {
+            if (p.id) locationMap.set(p.id, p.main_location);
+            if (p.woo_id) {
+              locationMap.set(p.woo_id, p.main_location);
+              locationMap.set(`prod-${p.woo_id}`, p.main_location);
+            }
+            if (p.slug) locationMap.set(p.slug, p.main_location);
+          }
+        }
+      }
+
+      // 2. Fetch fulfillment_stock
       const { data: stockRows } = await supabase
         .from('fulfillment_stock')
         .select('product_id, variant_sku, origin_id, quantity, reserved_quantity')
@@ -149,18 +172,23 @@ export async function resolveBatchEstimates(
   for (const item of items) {
     const vKey = item.variantSku ? `${item.productId}:${item.variantSku.toLowerCase().trim()}` : null;
     const stockInfo = (vKey ? stockMap.get(vKey) : null) || stockMap.get(item.productId);
+    const mainLoc = locationMap.get(item.productId);
+
     let genevaQty = 20;
     let portugalQty = 0;
 
-    if (stockInfo) {
+    if (mainLoc === 'PORTUGAL' || item.shippingOriginHint === 'portugal') {
+      genevaQty = 0;
+      portugalQty = stockInfo ? Math.max(stockInfo.portugalQty, 25) : 25;
+    } else if (mainLoc === 'COMMON' || item.shippingOriginHint === 'common') {
+      genevaQty = stockInfo ? Math.max(stockInfo.genevaQty, 20) : 20;
+      portugalQty = stockInfo ? Math.max(stockInfo.portugalQty, 25) : 25;
+    } else if (mainLoc === 'GENEVA') {
+      genevaQty = stockInfo ? Math.max(stockInfo.genevaQty, 20) : 20;
+      portugalQty = 0;
+    } else if (stockInfo) {
       genevaQty = stockInfo.genevaQty;
       portugalQty = stockInfo.portugalQty;
-    } else if (item.shippingOriginHint === 'portugal') {
-      genevaQty = 0;
-      portugalQty = 25;
-    } else if (item.shippingOriginHint === 'common') {
-      genevaQty = 20;
-      portugalQty = 25;
     } else {
       genevaQty = 20;
       portugalQty = 0;

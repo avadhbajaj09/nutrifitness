@@ -1646,7 +1646,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 4,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CARAMEL.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CARAMEL.png',
         "alt": {
           "fr": "Sandwich Keto Bar – Biscuit protéiné keto au beurre de cacahuètes, 16 g de protéines et 10,3 g de fibres.",
           "de": "Sandwich Keto Bar – Biscuit protéiné keto au beurre de cacahuètes, 16 g de protéines et 10,3 g de fibres.",
@@ -1657,7 +1657,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-VANILLE.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-VANILLE.png',
         "alt": {
           "fr": "Sandwich Keto Bar",
           "de": "Sandwich Keto Bar",
@@ -1668,7 +1668,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-.png',
         "alt": {
           "fr": "Sandwich Keto Bar",
           "de": "Sandwich Keto Bar",
@@ -1679,7 +1679,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CHOCOLAT.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CHOCOLAT.png',
         "alt": {
           "fr": "Sandwich Keto Bar",
           "de": "Sandwich Keto Bar",
@@ -1812,7 +1812,8 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "switzerland",
     "stockGeneva": 40,
     "stockPortugal": 0,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-25611",
@@ -1834,7 +1835,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 29.9,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-.png',
         "alt": {
           "fr": "Applied Creatine Monohydrate 250g",
           "de": "Applied Creatine Monohydrate 250g",
@@ -1845,7 +1846,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-NUTRI.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-NUTRI.webp',
         "alt": {
           "fr": "Applied Creatine Monohydrate 250g",
           "de": "Applied Creatine Monohydrate 250g",
@@ -1918,13 +1919,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 29.9,
         "inventoryQuantity": 12,
         "inStock": true,
-        "stockGeneva": 12
+        "stockGeneva": 12,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 12,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-25535",
@@ -1946,7 +1950,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "/images/products/marvelous/glutmine-red-and-yellow-mockup-scaled.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/glutmine-red-and-yellow-mockup-scaled.png',
         "alt": {
           "fr": "GLUTAMINE MARVELOUS 300G – L-Glutamine micronisée 99,9 % pure",
           "de": "GLUTAMINE MARVELOUS 300G – L-Glutamine micronisée 99,9 % pure",
@@ -1957,7 +1961,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/09/GLUTAMINE-KYOWA-300G-NUTRITION.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/09/GLUTAMINE-KYOWA-300G-NUTRITION.webp',
         "alt": {
           "fr": "Marvelous Glutamine Kyowa 300g",
           "de": "Marvelous Glutamine Kyowa 300g",
@@ -2062,7 +2066,7 @@ export const PRODUCTS: ProductItem[] = [
     "compareAtPriceChf": 49.9,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/07/livre.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp',
         "alt": {
           "fr": "Couverture du guide numérique « Le Guide ultime sur les compléments »",
           "de": "Couverture du guide numérique « Le Guide ultime sur les compléments »",
@@ -2134,9 +2138,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 100,
         "inventoryQuantity": 0,
-        "inStock": false,
-        "image": "/wp-content/uploads/2026/07/livre.webp",
-        "stockGeneva": 0,
+        "inStock": true,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp',
+        "stockGeneva": 25,
         "stockPortugal": 0
       },
       {
@@ -2151,16 +2155,17 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 100,
         "inventoryQuantity": 0,
-        "inStock": false,
-        "image": "/wp-content/uploads/2026/07/livre.webp",
-        "stockGeneva": 0,
+        "inStock": true,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp',
+        "stockGeneva": 25,
         "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "stockGeneva": 0,
-    "stockPortugal": 0
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-25175",
@@ -2182,7 +2187,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/08/4.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/4.png',
         "alt": {
           "fr": "FARINE D'AVOINE PRONUTRITION – Farine d'avoine instantanée avec goûts",
           "de": "FARINE D'AVOINE PRONUTRITION – Farine d'avoine instantanée avec goûts",
@@ -2193,7 +2198,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/08/CACAO-NOISETTES.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/CACAO-NOISETTES.png',
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2204,7 +2209,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/08/COOKIE.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/COOKIE.png',
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2215,7 +2220,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/08/CARAMEL.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/CARAMEL.png',
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2226,7 +2231,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/08/NOISETTES.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/NOISETTES.png',
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2244,10 +2249,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Fournit une source d'énergie progressive à index glycémique modéré sans provoquer de lourdeur gastrique. Advanced formula containing 100% farine d'avoine complète micronisée à froid, riche en bêta-glucanes et fibres solubles. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
     },
     "directAnswerAeo": {
-      "fr": "Pronutrition Farine d'Avoine Micronisée 1kg est un complément de nutrition sportive de haute qualité élaboré avec 100% farine d'avoine complète micronisée à froid, riche en bêta-glucanes et fibres solubles. Développé pour les sportifs recherchant un petit-déjeuner équilibré, une collation saine ou un apport glucidique propre en prise de masse., il permet de : fournit une source d'énergie progressive à index glycémique modéré sans provoquer de lourdeur gastrique. Posologie recommandée : mélanger 50 à 100 g dans du lait végétal ou de l'eau, ou incorporer dans vos pâtes à pancakes, gaufres et smoothies. Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 24h.",
-      "de": "Pronutrition Farine d'Avoine Micronisée 1kg von Pronutrition.it ist hochwertige Schweizer Sportnahrung mit 100% farine d'avoine complète micronisée à froid, riche en bêta-glucanes et fibres solubles. Entwickelt für Sportifs recherchant un petit-déjeuner équilibré, une collation saine ou un apport glucidique propre en prise de masse., unterstützt das Produkt Fournit une source d'énergie progressive à index glycémique modéré sans provoquer de lourdeur gastrique. 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
-      "it": "Pronutrition Farine d'Avoine Micronisée 1kg di Pronutrition.it è un integratore formulato con 100% farine d'avoine complète micronisée à froid, riche en bêta-glucanes et fibres solubles. Ideale per Sportifs recherchant un petit-déjeuner équilibré, une collation saine ou un apport glucidique propre en prise de masse., favorisce Fournit une source d'énergie progressive à index glycémique modéré sans provoquer de lourdeur gastrique. Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
-      "en": "Pronutrition Farine d'Avoine Micronisée 1kg by Pronutrition.it is a premium sports nutrition supplement formulated with 100% farine d'avoine complète micronisée à froid, riche en bêta-glucanes et fibres solubles. Designed for Sportifs recherchant un petit-déjeuner équilibré, une collation saine ou un apport glucidique propre en prise de masse., it delivers Fournit une source d'énergie progressive à index glycémique modéré sans provoquer de lourdeur gastrique. Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
+      "fr": "Pronutrition Farine d'Avoine Micronisée 1kg – Glucides Complexes & Énergie Durable est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Pronutrition Farine d'Avoine Micronisée 1kg – Glucides Complexes & Énergie Durable is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Pronutrition Farine d'Avoine Micronisée 1kg – Glucides Complexes & Énergie Durable ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Pronutrition Farine d'Avoine Micronisée 1kg – Glucides Complexes & Énergie Durable è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<h2>Pourquoi choisir Pronutrition Farine d'Avoine Micronisée 1kg chez NutriFitness Suisse ?</h2>\n<p>Fournit une source d'énergie progressive à index glycémique modéré sans provoquer de lourdeur gastrique. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Sportifs recherchant un petit-déjeuner équilibré, une collation saine ou un apport glucidique propre en prise de masse.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Mouture ultra-fine permettant un mélange instantané sans grumeaux dans le shaker :</strong> Mouture ultra-fine permettant un mélange instantané sans grumeaux dans le shaker</li>\n  <li><strong>Riche en fibres alimentaires favorisant la satiété durable et le transit intestinal :</strong> Riche en fibres alimentaires favorisant la satiété durable et le transit intestinal</li>\n  <li><strong>Source naturelle de minéraux (magnésium, fer, zinc) pour le métabolisme énergétique :</strong> Source naturelle de minéraux (magnésium, fer, zinc) pour le métabolisme énergétique</li>\n  <li><strong>Disponible en saveurs gourmandes ou neutre sans ajout de sucre :</strong> Disponible en saveurs gourmandes ou neutre sans ajout de sucre</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Mélanger 50 à 100 g dans du lait végétal ou de l'eau, ou incorporer dans vos pâtes à pancakes, gaufres et smoothies.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Pronutrition Farine d'Avoine Micronisée 1kg</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
@@ -2300,8 +2305,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/1.png",
-        "stockGeneva": 5,
-        "stockPortugal": 0
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
         "id": "8f84e225-ad41-4961-9f57-b02e2aa9e9c9",
@@ -2317,8 +2322,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BISCUITS-CACAO.png",
-        "stockGeneva": 5,
-        "stockPortugal": 0
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
         "id": "2482e044-026d-422c-9dd3-2bf02b412a06",
@@ -2334,8 +2339,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/2.png",
-        "stockGeneva": 5,
-        "stockPortugal": 0
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
         "id": "93aa460b-8196-4d36-8d45-7e218076e4b6",
@@ -2351,8 +2356,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/CHOCO-BLANC.png",
-        "stockGeneva": 5,
-        "stockPortugal": 0
+        "stockGeneva": 0,
+        "stockPortugal": 50
       },
       {
         "id": "947c506b-4c65-44af-80bd-ef5c34046130",
@@ -2368,14 +2373,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/CACAO.png",
-        "stockGeneva": 5,
-        "stockPortugal": 0
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "stockGeneva": 25,
-    "stockPortugal": 0
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-25041",
@@ -2397,7 +2403,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/07/GLYCINE-300G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/GLYCINE-300G.png',
         "alt": {
           "fr": "GLYCINE 300G BIGMAN – L-Glycine pure en poudre haute qualité",
           "de": "GLYCINE 300G BIGMAN – L-Glycine pure en poudre haute qualité",
@@ -2408,7 +2414,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/07/GLYCINE-300G-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/GLYCINE-300G-NUTRITION.png',
         "alt": {
           "fr": "Glycine 300g",
           "de": "Glycine 300g",
@@ -2481,13 +2487,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 20,
         "inventoryQuantity": 7,
         "inStock": true,
-        "stockGeneva": 7
+        "stockGeneva": 7,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 7,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-25033",
@@ -2509,7 +2518,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-1.png',
         "alt": {
           "fr": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
           "de": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
@@ -2520,7 +2529,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-NUTRI.png',
         "alt": {
           "fr": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
           "de": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
@@ -2593,13 +2602,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 19,
         "inStock": true,
-        "stockGeneva": 19
+        "stockGeneva": 19,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 19,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-25024",
@@ -2621,7 +2633,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS.png',
         "alt": {
           "fr": "ZINC BISGLYCINATE 160 CAPS Body Attack – Zinc bisglycinate hautement assimilable",
           "de": "ZINC BISGLYCINATE 160 CAPS Body Attack – Zinc bisglycinate hautement assimilable",
@@ -2632,7 +2644,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS-NUTRI.png',
         "alt": {
           "fr": "Zinc Bisglycinate 160 CAPS",
           "de": "Zinc Bisglycinate 160 CAPS",
@@ -2705,13 +2717,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 5,
         "inStock": true,
-        "stockGeneva": 5
+        "stockGeneva": 5,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 5,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-24668",
@@ -2733,7 +2748,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/images/products/dirtysquads/dirty-sqauds-wall4.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall4.jpg',
         "alt": {
           "fr": "fat burn 60 caps bruleur graisse thermogenique energie",
           "de": "fat burn 60 caps bruleur graisse thermogenique energie",
@@ -2744,7 +2759,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/FAT-BURN-60-CAPS-NUTRI.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FAT-BURN-60-CAPS-NUTRI.webp',
         "alt": {
           "fr": "Fat Burn 60 CAPS",
           "de": "Fat Burn 60 CAPS",
@@ -2848,7 +2863,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-1.png',
         "alt": {
           "fr": "bromelaine 60 tabs 1000mg pronutrition digestion inflammation ananas",
           "de": "bromelaine 60 tabs 1000mg pronutrition digestion inflammation ananas",
@@ -2859,7 +2874,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-NUTRI.png',
         "alt": {
           "fr": "Bromélaïne 60 TABS 1000mg",
           "de": "Bromélaïne 60 TABS 1000mg",
@@ -2932,13 +2947,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 6,
         "inStock": true,
-        "stockGeneva": 6
+        "stockGeneva": 6,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 6,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-23519",
@@ -2960,7 +2978,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/06/BERBERINA-60-TABS-1-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BERBERINA-60-TABS-1-1.png',
         "alt": {
           "fr": "BERBERINE 60 TABS – Complément à base de berbérine et chardon-marie",
           "de": "BERBERINE 60 TABS – Complément à base de berbérine et chardon-marie",
@@ -2971,7 +2989,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/BERBERINA-60-TABS-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BERBERINA-60-TABS-NUTRI.png',
         "alt": {
           "fr": "Berberina 60 TABS",
           "de": "Berberina 60 TABS",
@@ -3044,13 +3062,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 7,
         "inStock": true,
-        "stockGeneva": 7
+        "stockGeneva": 7,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 7,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-23499",
@@ -3072,7 +3093,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 1,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png',
         "alt": {
           "fr": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
           "de": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
@@ -3083,7 +3104,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/FRUTILU-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-NUTRITION.png',
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3094,7 +3115,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/FRUTILU-ICE-TEA-LEMON-.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-ICE-TEA-LEMON-.png',
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3105,7 +3126,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/FRUTILU-LEMON-LIME.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-LEMON-LIME.png',
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3116,7 +3137,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/FRUTILU-POMME.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-POMME.png',
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3127,7 +3148,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/FRUTILU-COLA.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-COLA.png',
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3138,7 +3159,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png',
         "alt": {
           "fr": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
           "de": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
@@ -3149,7 +3170,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/06/FRUTILU-PASTEQUE.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-PASTEQUE.png',
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3221,9 +3242,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 1,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0
       },
       {
@@ -3316,7 +3337,8 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "switzerland",
     "stockGeneva": 73,
     "stockPortugal": 0,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-22738",
@@ -3338,7 +3360,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-.png',
         "alt": {
           "fr": "\"purée amande complète bio 650g 100% naturelle\" \"beurre amande bio riche protéines fibres\" \"purée amande texture naturelle sans additifs\" \"amandes bio transformées en purée nutrition sportive\"",
           "de": "\"purée amande complète bio 650g 100% naturelle\" \"beurre amande bio riche protéines fibres\" \"purée amande texture naturelle sans additifs\" \"amandes bio transformées en purée nutrition sportive\"",
@@ -3349,7 +3371,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-NUTRI.png',
         "alt": {
           "fr": "Purée D’amande 650g",
           "de": "Purée D’amande 650g",
@@ -3367,10 +3389,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Source naturelle exceptionnelle d'acides gras mono-insaturés, de vitamine E antioxydante et de magnésium. Advanced formula containing 100% amandes complètes biologiques légèrement toastées et broyées sur meule sans aucun additif. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
     },
     "directAnswerAeo": {
-      "fr": "Bio Pour Tous Purée d'Amandes Complètes Bio 650g est un complément de nutrition sportive de haute qualité élaboré avec 100% amandes complètes biologiques légèrement toastées et broyées sur meule sans aucun additif. Développé pour les sportifs à la recherche d'une source saine de bons lipides pour leurs collations, petits-déjeuners et encas d'énergie., il constitue un source naturelle exceptionnelle d'acides gras mono-insaturés, de vitamine E antioxydante et de magnésium. Posologie recommandée : consommer 1 à 2 cuillères à soupe (20-30 g) tartiné sur du pain complet, mélangé à vos flocons d'avoine ou dans un smoothie. Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 24h.",
-      "de": "Bio Pour Tous Purée d'Amandes Complètes Bio 650g von Bio Pour Tous ist hochwertige Schweizer Sportnahrung mit 100% amandes complètes biologiques légèrement toastées et broyées sur meule sans aucun additif. Entwickelt für Sportifs à la recherche d'une source saine de bons lipides pour leurs collations, petits-déjeuners et encas d'énergie., unterstützt das Produkt Source naturelle exceptionnelle d'acides gras mono-insaturés, de vitamine E antioxydante et de magnésium. 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
-      "it": "Bio Pour Tous Purée d'Amandes Complètes Bio 650g di Bio Pour Tous è un integratore formulato con 100% amandes complètes biologiques légèrement toastées et broyées sur meule sans aucun additif. Ideale per Sportifs à la recherche d'une source saine de bons lipides pour leurs collations, petits-déjeuners et encas d'énergie., favorisce Source naturelle exceptionnelle d'acides gras mono-insaturés, de vitamine E antioxydante et de magnésium. Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
-      "en": "Bio Pour Tous Purée d'Amandes Complètes Bio 650g by Bio Pour Tous is a premium sports nutrition supplement formulated with 100% amandes complètes biologiques légèrement toastées et broyées sur meule sans aucun additif. Designed for Sportifs à la recherche d'une source saine de bons lipides pour leurs collations, petits-déjeuners et encas d'énergie., it delivers Source naturelle exceptionnelle d'acides gras mono-insaturés, de vitamine E antioxydante et de magnésium. Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
+      "fr": "Bio Pour Tous Purée d'Amandes Complètes Bio 650g – 100% Amandes Biologiques Sans Sucre est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Bio Pour Tous Purée d'Amandes Complètes Bio 650g – 100% Amandes Biologiques Sans Sucre is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Bio Pour Tous Purée d'Amandes Complètes Bio 650g – 100% Amandes Biologiques Sans Sucre ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Bio Pour Tous Purée d'Amandes Complètes Bio 650g – 100% Amandes Biologiques Sans Sucre è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<h2>Pourquoi choisir Bio Pour Tous Purée d'Amandes Complètes Bio 650g chez NutriFitness Suisse ?</h2>\n<p>Source naturelle exceptionnelle d'acides gras mono-insaturés, de vitamine E antioxydante et de magnésium. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Sportifs à la recherche d'une source saine de bons lipides pour leurs collations, petits-déjeuners et encas d'énergie.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Certifié 100% issu de l'agriculture biologique, sans sel ajouté ni huile de palme :</strong> Certifié 100% issu de l'agriculture biologique, sans sel ajouté ni huile de palme</li>\n  <li><strong>Riche en protéines végétales (environ 21 g pour 100 g) et en fibres rassasiantes :</strong> Riche en protéines végétales (environ 21 g pour 100 g) et en fibres rassasiantes</li>\n  <li><strong>Densité énergétique propre pour soutenir les dépenses caloriques des athlètes :</strong> Densité énergétique propre pour soutenir les dépenses caloriques des athlètes</li>\n  <li><strong>Texture onctueuse idéale pour les recettes de pâtisseries sportives saines :</strong> Texture onctueuse idéale pour les recettes de pâtisseries sportives saines</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Consommer 1 à 2 cuillères à soupe (20-30 g) tartiné sur du pain complet, mélangé à vos flocons d'avoine ou dans un smoothie.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Bio Pour Tous Purée d'Amandes Complètes Bio 650g</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
@@ -3422,12 +3444,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 20,
         "inStock": true,
-        "gtin13": "3760295170495"
+        "gtin13": "3760295170495",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "gtin13": "3760295170495"
+    "shippingOrigin": "portugal",
+    "gtin13": "3760295170495",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-22614",
@@ -3449,7 +3476,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 4,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp',
         "alt": {
           "fr": "Abe Drink",
           "de": "Abe Drink",
@@ -3460,7 +3487,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/05/ABE-DRINK-PRE-WORKOUT-NUTRITION.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-PRE-WORKOUT-NUTRITION.webp',
         "alt": {
           "fr": "Abe Drink",
           "de": "Abe Drink",
@@ -3533,7 +3560,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 6,
         "inStock": true,
-        "image": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp',
         "stockGeneva": 6,
         "stockPortugal": 0
       },
@@ -3550,7 +3577,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 6,
         "inStock": true,
-        "image": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp',
         "stockGeneva": 6,
         "stockPortugal": 0
       },
@@ -3567,7 +3594,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 6,
         "inStock": true,
-        "image": "/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp',
         "stockGeneva": 6,
         "stockPortugal": 0
       }
@@ -3576,7 +3603,8 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "switzerland",
     "stockGeneva": 18,
     "stockPortugal": 0,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-22608",
@@ -3598,7 +3626,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/05/ASHWAGANDHA-KSM-66-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ASHWAGANDHA-KSM-66-1.png',
         "alt": {
           "fr": "Textes ALT (images produit) \"Ashwagandha KSM-66 90 capsules BIGMAN complément alimentaire\" \"gélules ashwagandha KSM-66 extrait racine 5% withanolides\" \"flacon ashwagandha premium BIGMAN nutrition sportive\" \"ashwagandha KSM-66 capsules végétales haute qualité\"",
           "de": "Textes ALT (images produit) \"Ashwagandha KSM-66 90 capsules BIGMAN complément alimentaire\" \"gélules ashwagandha KSM-66 extrait racine 5% withanolides\" \"flacon ashwagandha premium BIGMAN nutrition sportive\" \"ashwagandha KSM-66 capsules végétales haute qualité\"",
@@ -3672,14 +3700,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 6,
         "inStock": true,
         "stockGeneva": 6,
-        "gtin13": "8436609603373"
+        "gtin13": "8436609603373",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 6,
     "inStock": true,
-    "gtin13": "8436609603373"
+    "gtin13": "8436609603373",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-22386",
@@ -3701,7 +3732,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 52,
     "images": [
       {
-        "src": "/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png',
         "alt": {
           "fr": "Anabolic X – Mass Gainer Hybride pour Prise de Masse",
           "de": "Anabolic X – Mass Gainer Hybride pour Prise de Masse",
@@ -3712,7 +3743,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2026/02/ANABOLIC-MASS-NUTRITION.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/02/ANABOLIC-MASS-NUTRITION.webp',
         "alt": {
           "fr": "Anabolic Mass 2.5kg",
           "de": "Anabolic Mass 2.5kg",
@@ -3774,10 +3805,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Fournit un apport calorique massif et équilibré pour enclencher une prise de muscle rapide chez les métabolismes rapides. Advanced formula containing Complexe de glucides complexes (avoine, maltodextrine), concentré de whey, monohydrate de créatine et BCAA. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
     },
     "directAnswerAeo": {
-      "fr": "Dirty Squads Anabolic Mass Gainer 2.5kg est un complément de nutrition sportive de haute qualité élaboré avec complexe de glucides complexes (avoine, maltodextrine), concentré de whey, monohydrate de créatine et bcaa. Développé pour les ectomorphes, pratiquants de musculation débutants ou confirmés peinant à prendre du poids corporel., il permet de : fournit un apport calorique massif et équilibré pour enclencher une prise de muscle rapide chez les métabolismes rapides. Posologie recommandée : mélanger 100 à 150 g de poudre dans 400 ml d'eau ou de lait, à consommer en collation l'après-midi ou après la séance. Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 24h.",
-      "de": "Dirty Squads Anabolic Mass Gainer 2.5kg von Dirty Squads ist hochwertige Schweizer Sportnahrung mit Complexe de glucides complexes (avoine, maltodextrine), concentré de whey, monohydrate de créatine et BCAA. Entwickelt für Ectomorphes, pratiquants de musculation débutants ou confirmés peinant à prendre du poids corporel., unterstützt das Produkt Fournit un apport calorique massif et équilibré pour enclencher une prise de muscle rapide chez les métabolismes rapides. 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
-      "it": "Dirty Squads Anabolic Mass Gainer 2.5kg di Dirty Squads è un integratore formulato con Complexe de glucides complexes (avoine, maltodextrine), concentré de whey, monohydrate de créatine et BCAA. Ideale per Ectomorphes, pratiquants de musculation débutants ou confirmés peinant à prendre du poids corporel., favorisce Fournit un apport calorique massif et équilibré pour enclencher une prise de muscle rapide chez les métabolismes rapides. Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
-      "en": "Dirty Squads Anabolic Mass Gainer 2.5kg by Dirty Squads is a premium sports nutrition supplement formulated with Complexe de glucides complexes (avoine, maltodextrine), concentré de whey, monohydrate de créatine et BCAA. Designed for Ectomorphes, pratiquants de musculation débutants ou confirmés peinant à prendre du poids corporel., it delivers Fournit un apport calorique massif et équilibré pour enclencher une prise de muscle rapide chez les métabolismes rapides. Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
+      "fr": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Dirty Squads Anabolic Mass Gainer 2.5kg – Prise de Masse Musculaire Haute Densité è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<h2>Pourquoi choisir Dirty Squads Anabolic Mass Gainer 2.5kg chez NutriFitness Suisse ?</h2>\n<p>Fournit un apport calorique massif et équilibré pour enclencher une prise de muscle rapide chez les métabolismes rapides. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Ectomorphes, pratiquants de musculation débutants ou confirmés peinant à prendre du poids corporel.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Ratio glucides/protéines calibré pour nourrir les muscles sans stockage adipeux excessif :</strong> Ratio glucides/protéines calibré pour nourrir les muscles sans stockage adipeux excessif</li>\n  <li><strong>Enrichi en créatine pour booster simultanément les gains de force et la volumisation cellulaire :</strong> Enrichi en créatine pour booster simultanément les gains de force et la volumisation cellulaire</li>\n  <li><strong>Miscibilité facile au shaker et texture ultra-crémeuse au goût chocolat ou vanille :</strong> Miscibilité facile au shaker et texture ultra-crémeuse au goût chocolat ou vanille</li>\n  <li><strong>Élaboré selon les normes de pureté de l'Union Européenne et contrôlé en laboratoire :</strong> Élaboré selon les normes de pureté de l'Union Européenne et contrôlé en laboratoire</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Mélanger 100 à 150 g de poudre dans 400 ml d'eau ou de lait, à consommer en collation l'après-midi ou après la séance.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Dirty Squads Anabolic Mass Gainer 2.5kg</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
@@ -3828,10 +3859,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 60,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504732"
       },
       {
@@ -3846,10 +3877,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 60,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504763"
       },
       {
@@ -3864,10 +3895,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 60,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504749"
       },
       {
@@ -3882,18 +3913,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 60,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504756"
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
     "stockGeneva": 0,
-    "stockPortugal": 0,
+    "stockPortugal": 50,
     "gtin13": "682683504732"
   },
   {
@@ -3916,7 +3947,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": "/images/products/dirtysquads/dirty-sqauds-wall2.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall2.jpg',
         "alt": {
           "fr": "Cluster Dex – Glucide HBCD à absorption rapide pour énergie et récupération",
           "de": "Cluster Dex – Glucide HBCD à absorption rapide pour énergie et récupération",
@@ -3927,7 +3958,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/Dirty-Cluster-Dextrin-1kg-nutrition.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/Dirty-Cluster-Dextrin-1kg-nutrition.webp',
         "alt": {
           "fr": "Dirty Cluster Dex 1kg",
           "de": "Dirty Cluster Dex 1kg",
@@ -4033,7 +4064,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/11/AMINIX-LEMON-FIRST-300g.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-LEMON-FIRST-300g.png',
         "alt": {
           "fr": "Dirty Squads AMINO X9 – Intra-workout aux 9 EAA et eau de coco, sans sucre",
           "de": "Dirty Squads AMINO X9 – Intra-workout aux 9 EAA et eau de coco, sans sucre",
@@ -4044,7 +4075,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/AMINIX-TUTTI-FRUTTI-300g.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-TUTTI-FRUTTI-300g.webp',
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -4055,7 +4086,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/AMINIX-PASTEQUE-300g.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-PASTEQUE-300g.webp',
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -4066,7 +4097,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/AMINIX-LEMON-300g.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-LEMON-300g.webp',
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -4077,7 +4108,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/AMINIX-NUTRITION.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-NUTRITION.webp',
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -4185,7 +4216,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-LEMON-300g.webp",
         "stockGeneva": 9,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504688"
       },
       {
@@ -4203,7 +4234,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-PASTEQUE-300g.webp",
         "stockGeneva": 7,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504701"
       },
       {
@@ -4221,7 +4252,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/AMINIX-TUTTI-FRUTTI-300g.webp",
         "stockGeneva": 5,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504695"
       }
     ],
@@ -4229,7 +4260,7 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "common",
     "locationType": "COMMON",
     "stockGeneva": 21,
-    "stockPortugal": 0,
+    "stockPortugal": 50,
     "inStock": true,
     "gtin13": "682683504688"
   },
@@ -4253,7 +4284,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 65,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMELO.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMELO.png',
         "alt": {
           "fr": "Pot ISO 90X CFM 1 kg Dirty Squads, saveur caramel, vue de face",
           "de": "Pot ISO 90X CFM 1 kg Dirty Squads, saveur caramel, vue de face",
@@ -4264,7 +4295,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-VANILLA.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-VANILLA.webp',
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -4286,7 +4317,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-COOKIECREAM.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-COOKIECREAM.webp',
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -4297,7 +4328,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CHOCOLATE.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CHOCOLATE.webp',
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -4308,7 +4339,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-NUTRITION.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-NUTRITION.webp',
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -4438,7 +4469,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMEL.webp",
         "stockGeneva": 13,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504855"
       },
       {
@@ -4456,7 +4487,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-VANILLA.webp",
         "stockGeneva": 8,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504848"
       },
       {
@@ -4474,7 +4505,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CHOCOLATE.webp",
         "stockGeneva": 11,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504817"
       },
       {
@@ -4492,7 +4523,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-COOKIECREAM.webp",
         "stockGeneva": 8,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504824"
       }
     ],
@@ -4500,7 +4531,7 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "common",
     "locationType": "COMMON",
     "stockGeneva": 40,
-    "stockPortugal": 0,
+    "stockPortugal": 50,
     "inStock": true,
     "gtin13": "682683504855"
   },
@@ -4524,7 +4555,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 80,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLAT-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLAT-1.png',
         "alt": {
           "fr": "Dirty Squads ISO 80X – Protéine triple phase WPC WPI MPI 83% pure",
           "de": "Dirty Squads ISO 80X – Protéine triple phase WPC WPI MPI 83% pure",
@@ -4535,7 +4566,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp',
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4546,7 +4577,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp',
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4557,7 +4588,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-VANILLA.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-VANILLA.webp',
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4568,7 +4599,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp',
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4579,7 +4610,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-NUTRITION.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-NUTRITION.webp',
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4698,7 +4729,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-VANILLA.webp",
         "stockGeneva": 1,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "682683504800"
       },
       {
@@ -4713,10 +4744,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 89,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockGeneva": 25,
+        "stockPortugal": 50,
         "gtin13": "682683504794"
       },
       {
@@ -4731,10 +4762,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 89,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockGeneva": 25,
+        "stockPortugal": 50,
         "gtin13": "682683504787"
       },
       {
@@ -4749,17 +4780,17 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 89,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 0
+        "stockGeneva": 25,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
     "stockGeneva": 1,
-    "stockPortugal": 0,
+    "stockPortugal": 50,
     "gtin13": "682683504800"
   },
   {
@@ -4782,7 +4813,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 9.9,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/10/CREATINE-90G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/CREATINE-90G.png',
         "alt": {
           "fr": "Créatine Poudre 90g – Créatine monohydrate pure pour force et performance",
           "de": "Créatine Poudre 90g – Créatine monohydrate pure pour force et performance",
@@ -4793,7 +4824,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/10/CREATINE-90G-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/CREATINE-90G-NUTRI.png',
         "alt": {
           "fr": "Creatine Poudre 90g",
           "de": "Creatine Poudre 90g",
@@ -4867,14 +4898,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 60,
         "inStock": true,
         "stockGeneva": 60,
-        "gtin13": "8436609602550"
+        "gtin13": "8436609602550",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 60,
     "inStock": true,
-    "gtin13": "8436609602550"
+    "gtin13": "8436609602550",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-21850",
@@ -4896,7 +4930,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 7,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/10/PIADINA-KETO.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/PIADINA-KETO.png',
         "alt": {
           "fr": "Piadina Keto Pronutrition – Piadina low carb et riche en protéines fabriquée en Italie",
           "de": "Piadina Keto Pronutrition – Piadina low carb et riche en protéines fabriquée en Italie",
@@ -4907,7 +4941,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/10/PIADINA-KETO-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/PIADINA-KETO-NUTRI.png',
         "alt": {
           "fr": "Piadina Keto 120g",
           "de": "Piadina Keto 120g",
@@ -4981,14 +5015,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 22,
         "inStock": true,
         "stockGeneva": 22,
-        "gtin13": "8050507514168"
+        "gtin13": "8050507514168",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 22,
     "inStock": true,
-    "gtin13": "8050507514168"
+    "gtin13": "8050507514168",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-21727",
@@ -5010,7 +5047,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous4.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous4.png',
         "alt": {
           "fr": "Super Digestive Marvelous Nutrition – Digestion & Assimilation Optimales",
           "de": "Super Digestive Marvelous Nutrition – Digestion & Assimilation Optimales",
@@ -5021,7 +5058,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/10/SUPER-DIGESTIVE-60-CAPS-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/SUPER-DIGESTIVE-60-CAPS-NUTRI.png',
         "alt": {
           "fr": "Super Digestive 60 CAPS",
           "de": "Super Digestive 60 CAPS",
@@ -5127,7 +5164,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 33,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous12.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous12.png',
         "alt": {
           "fr": "H.B.V.C – Formule Avancée pour la Santé Cardiovasculaire & le Bien-Être Global",
           "de": "H.B.V.C – Formule Avancée pour la Santé Cardiovasculaire & le Bien-Être Global",
@@ -5138,7 +5175,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/10/HBVC-CHOLESTEROL-SUPPORT-90-CAPS-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/HBVC-CHOLESTEROL-SUPPORT-90-CAPS-NUTRI.png',
         "alt": {
           "fr": "Hbvc Cholesterol Support 90 CAPS",
           "de": "Hbvc Cholesterol Support 90 CAPS",
@@ -5244,7 +5281,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": "/images/products/marvelous/80.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/80.png',
         "alt": {
           "fr": "TESTO MAN™ – Booster Naturel de Testostérone & Régulateur Hormonal",
           "de": "TESTO MAN™ – Booster Naturel de Testostérone & Régulateur Hormonal",
@@ -5255,7 +5292,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-1.png',
         "alt": {
           "fr": "Testoman 120 CAPS",
           "de": "Testoman 120 CAPS",
@@ -5266,7 +5303,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-2.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-2.png',
         "alt": {
           "fr": "Testoman 120 CAPS",
           "de": "Testoman 120 CAPS",
@@ -5372,7 +5409,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 17,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous34.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous34.png',
         "alt": {
           "fr": "NAC Pharma Grade 250 mg – Antioxydant puissant & détox du foie",
           "de": "NAC Pharma Grade 250 mg – Antioxydant puissant & détox du foie",
@@ -5383,7 +5420,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/NAC-PHARMA-GRADE-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NAC-PHARMA-GRADE-NUTRI.png',
         "alt": {
           "fr": "NAC Pharma Grade 60 CAPS",
           "de": "NAC Pharma Grade 60 CAPS",
@@ -5489,7 +5526,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G.png',
         "alt": {
           "fr": "Peanut Butter Crémeux 500g – Beurre de cacahuètes naturel riche en protéines et sans sucre ajouté",
           "de": "Peanut Butter Crémeux 500g – Beurre de cacahuètes naturel riche en protéines et sans sucre ajouté",
@@ -5500,7 +5537,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G-NUTRI-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G-NUTRI-1.png',
         "alt": {
           "fr": "Peanut Butter Cremeux 500g",
           "de": "Peanut Butter Cremeux 500g",
@@ -5574,14 +5611,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 1,
         "inStock": true,
         "stockGeneva": 1,
-        "gtin13": "8050507510061"
+        "gtin13": "8050507510061",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 1,
     "inStock": true,
-    "gtin13": "8050507510061"
+    "gtin13": "8050507510061",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-21360",
@@ -5603,7 +5643,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/09/CAFEINE-200MG-.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CAFEINE-200MG-.png',
         "alt": {
           "fr": "Cafeine 200mg Pronutrition – Complément en caféine pure pour énergie et concentration",
           "de": "Cafeine 200mg Pronutrition – Complément en caféine pure pour énergie et concentration",
@@ -5614,7 +5654,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/CAFFEINE-200MG-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CAFFEINE-200MG-NUTRI.png',
         "alt": {
           "fr": "Caffeine 200mg 60 TABS",
           "de": "Caffeine 200mg 60 TABS",
@@ -5688,14 +5728,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 8,
         "inStock": true,
         "stockGeneva": 8,
-        "gtin13": "8050507514090"
+        "gtin13": "8050507514090",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 8,
     "inStock": true,
-    "gtin13": "8050507514090"
+    "gtin13": "8050507514090",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-21282",
@@ -5717,7 +5760,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 4,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png',
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5728,7 +5771,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-PEANUT-BUTTER.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-PEANUT-BUTTER.png',
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5739,7 +5782,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE.png',
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5750,7 +5793,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALE-PEANUT-BUTTER-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALE-PEANUT-BUTTER-1.png',
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5761,7 +5804,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALEE-PEANUT-BUTTER.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALEE-PEANUT-BUTTER.png',
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5772,7 +5815,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-BEURRE-DE-CACAHOUETE.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-BEURRE-DE-CACAHOUETE.png',
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5783,7 +5826,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-NOISETTES-BEURRES.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-NOISETTES-BEURRES.png',
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5794,7 +5837,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png',
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5805,7 +5848,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER-NUTRI.png',
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5816,7 +5859,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/10/NUTRY-NUTS-WHITE-CHOC-PEANUT-BUTTER-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/NUTRY-NUTS-WHITE-CHOC-PEANUT-BUTTER-NUTRI.png',
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5827,7 +5870,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-BLACK-PEANUT-BUTTER.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-BLACK-PEANUT-BUTTER.png',
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5899,9 +5942,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 4,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALE-PEANUT-BUTTER-1.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "5060708600365"
       },
@@ -5935,9 +5978,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 4,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0
       },
       {
@@ -5952,9 +5995,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 4,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/10/NUTRY-NUTS-WHITE-CHOC-PEANUT-BUTTER.jpg.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0
       },
       {
@@ -5969,9 +6012,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 4,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0
       },
       {
@@ -5986,9 +6029,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 4,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-PEANUT-BUTTER.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "5060708600266"
       }
@@ -5997,7 +6040,8 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "switzerland",
     "stockGeneva": 2,
     "stockPortugal": 0,
-    "gtin13": "5060708600365"
+    "gtin13": "5060708600365",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-21181",
@@ -6019,7 +6063,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/09/SPRAY-COOKER.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/SPRAY-COOKER.png',
         "alt": {
           "fr": "More Nutrition 2 Calories Huile en Spray 200ml – cuisson légère et antiadhésive",
           "de": "More Nutrition 2 Calories Huile en Spray 200ml – cuisson légère et antiadhésive",
@@ -6030,7 +6074,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/09/spray-cooker-nutrition.jpeg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/spray-cooker-nutrition.jpeg',
         "alt": {
           "fr": "More Spray Cooker 200ml",
           "de": "More Spray Cooker 200ml",
@@ -6104,14 +6148,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 6,
         "inStock": true,
         "stockGeneva": 6,
-        "gtin13": "4260644045867"
+        "gtin13": "4260644045867",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 6,
     "inStock": true,
-    "gtin13": "4260644045867"
+    "gtin13": "4260644045867",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-21032",
@@ -6133,7 +6180,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous31.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous31.png',
         "alt": {
           "fr": "L-Citrulline 100% Pure – Booster Pré-Workout & Endurance | NutriFitness.ch",
           "de": "L-Citrulline 100% Pure – Booster Pré-Workout & Endurance | NutriFitness.ch",
@@ -6144,7 +6191,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/08/L-CITRULLINE-PURE-NUTRITION-2.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/L-CITRULLINE-PURE-NUTRITION-2.png',
         "alt": {
           "fr": "L-citrulline 100% Pure 250g",
           "de": "L-citrulline 100% Pure 250g",
@@ -6155,7 +6202,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/08/L-CITRULLINE-NUTRITION-2.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/L-CITRULLINE-NUTRITION-2.png',
         "alt": {
           "fr": "L-citrulline 100% Pure 250g",
           "de": "L-citrulline 100% Pure 250g",
@@ -6261,7 +6308,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 79.9,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/08/MEGA-MASS-CHOCO-3KG.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/MEGA-MASS-CHOCO-3KG.png',
         "alt": {
           "fr": "Dymatize Mega Mass 4000 – Gainer prise de masse",
           "de": "Dymatize Mega Mass 4000 – Gainer prise de masse",
@@ -6272,7 +6319,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/08/MEGA-MASS-FRAISES-3KG.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/MEGA-MASS-FRAISES-3KG.png',
         "alt": {
           "fr": "Mega Mass 4000 3kg",
           "de": "Mega Mass 4000 3kg",
@@ -6283,7 +6330,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/08/MEGA-MASS-VANILLE-3KG.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/MEGA-MASS-VANILLE-3KG.png',
         "alt": {
           "fr": "Mega Mass 4000 3kg",
           "de": "Mega Mass 4000 3kg",
@@ -6355,9 +6402,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 79.9,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-CHOCO-3KG.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "4044782325452"
       },
@@ -6373,9 +6420,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 79.9,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-VANILLE-3KG.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "4044782325353"
       },
@@ -6391,18 +6438,19 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 79.9,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-FRAISES-3KG.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "4044782325858"
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "stockGeneva": 0,
+    "stockGeneva": 25,
     "stockPortugal": 0,
-    "gtin13": "4044782325452"
+    "gtin13": "4044782325452",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-20727",
@@ -6424,7 +6472,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 79,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png',
         "alt": {
           "fr": "Muscles Whey 2kg – Protéine WPC80 pure dubai white chocolate",
           "de": "Muscles Whey 2kg – Protéine WPC80 pure dubai white chocolate",
@@ -6595,18 +6643,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 80,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
-        "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockGeneva": 25,
+        "stockPortugal": 50,
         "gtin13": "634240173028"
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 0,
-    "stockPortugal": 0,
+    "stockGeneva": 25,
+    "stockPortugal": 50,
     "gtin13": "634240173028"
   },
   {
@@ -6629,7 +6677,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 22,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png',
         "alt": {
           "fr": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
           "de": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
@@ -6640,7 +6688,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION.png',
         "alt": {
           "fr": "Marvelous Crème De Riz 1.4kg",
           "de": "Marvelous Crème De Riz 1.4kg",
@@ -6651,7 +6699,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION-2.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION-2.png',
         "alt": {
           "fr": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
           "de": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
@@ -6724,10 +6772,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "La source de glucides préférée des athlètes professionnels pour une recharge rapide du glycogène sans aucune lourdeur gastrique. Advanced formula containing 100% farine de riz blanc hydrolysée et précuite à la vapeur, sans gluten. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Crème de Riz Précuite 1.4kg est un complément de nutrition sportive de haute qualité élaboré avec 100% farine de riz blanc hydrolysée et précuite à la vapeur, sans gluten. Développé pour les culturistes, sportifs d'endurance et toute personne cherchant un apport d'énergie propre facile à digérer., il constitue un la source de glucides préférée des athlètes professionnels pour une recharge rapide du glycogène sans aucune lourdeur gastrique. Posologie recommandée : mélanger 50 g de crème de riz dans 150 à 200 ml d'eau tiède ou froide jusqu'à obtention d'une crème onctueuse, ou ajouter à votre whey. Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 24h.",
-      "de": "Marvelous Crème de Riz Précuite 1.4kg von Marvelous ist hochwertige Schweizer Sportnahrung mit 100% farine de riz blanc hydrolysée et précuite à la vapeur, sans gluten. Entwickelt für Culturistes, sportifs d'endurance et toute personne cherchant un apport d'énergie propre facile à digérer., unterstützt das Produkt La source de glucides préférée des athlètes professionnels pour une recharge rapide du glycogène sans aucune lourdeur gastrique. 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
-      "it": "Marvelous Crème de Riz Précuite 1.4kg di Marvelous è un integratore formulato con 100% farine de riz blanc hydrolysée et précuite à la vapeur, sans gluten. Ideale per Culturistes, sportifs d'endurance et toute personne cherchant un apport d'énergie propre facile à digérer., favorisce La source de glucides préférée des athlètes professionnels pour une recharge rapide du glycogène sans aucune lourdeur gastrique. Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
-      "en": "Marvelous Crème de Riz Précuite 1.4kg by Marvelous is a premium sports nutrition supplement formulated with 100% farine de riz blanc hydrolysée et précuite à la vapeur, sans gluten. Designed for Culturistes, sportifs d'endurance et toute personne cherchant un apport d'énergie propre facile à digérer., it delivers La source de glucides préférée des athlètes professionnels pour une recharge rapide du glycogène sans aucune lourdeur gastrique. Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
+      "fr": "Marvelous Crème de Riz Précuite 1.4kg – Glucides Digestes & Assimilation Rapide Pré/Post-Workout est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Crème de Riz Précuite 1.4kg – Glucides Digestes & Assimilation Rapide Pré/Post-Workout is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Crème de Riz Précuite 1.4kg – Glucides Digestes & Assimilation Rapide Pré/Post-Workout ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Crème de Riz Précuite 1.4kg – Glucides Digestes & Assimilation Rapide Pré/Post-Workout è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<h2>Pourquoi choisir Marvelous Crème de Riz Précuite 1.4kg chez NutriFitness Suisse ?</h2>\n<p>La source de glucides préférée des athlètes professionnels pour une recharge rapide du glycogène sans aucune lourdeur gastrique. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Culturistes, sportifs d'endurance et toute personne cherchant un apport d'énergie propre facile à digérer.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Digestion quasi instantanée permettant une consommation seulement 45 minutes avant l'effort :</strong> Digestion quasi instantanée permettant une consommation seulement 45 minutes avant l'effort</li>\n  <li><strong>Index glycémique élevé idéal pour la fenêtre anabolique post-entraînement :</strong> Index glycémique élevé idéal pour la fenêtre anabolique post-entraînement</li>\n  <li><strong>Naturellement exempte de gluten, de lactose et d'allergènes courants :</strong> Naturellement exempte de gluten, de lactose et d'allergènes courants</li>\n  <li><strong>Disponible en saveurs dessert exquises ou version neutre pour vos préparations salées :</strong> Disponible en saveurs dessert exquises ou version neutre pour vos préparations salées</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Mélanger 50 g de crème de riz dans 150 à 200 ml d'eau tiède ou froide jusqu'à obtention d'une crème onctueuse, ou ajouter à votre whey.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Marvelous Crème de Riz Précuite 1.4kg</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
@@ -6778,10 +6826,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "634240364815"
       },
       {
@@ -6796,10 +6844,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "634240364839"
       },
       {
@@ -6814,10 +6862,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "634240364853"
       },
       {
@@ -6832,10 +6880,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0
+        "stockPortugal": 50
       },
       {
         "id": "2be16d9c-fce6-4af2-970f-a12dca5370ff",
@@ -6849,10 +6897,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "634240364822"
       },
       {
@@ -6867,18 +6915,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "634240364808"
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
     "stockGeneva": 0,
-    "stockPortugal": 0,
+    "stockPortugal": 50,
     "gtin13": "634240364815"
   },
   {
@@ -6901,7 +6949,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 33,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous-56.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-56.png',
         "alt": {
           "fr": "Calibration – Complément Détox Foie Reins Cœur – NutriFitness.ch",
           "de": "Calibration – Complément Détox Foie Reins Cœur – NutriFitness.ch",
@@ -6912,7 +6960,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/06/CALIBRATION-120-CAPS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/CALIBRATION-120-CAPS-NUTRITION.png',
         "alt": {
           "fr": "Calibration Organe Support 120 CAPS",
           "de": "Calibration Organe Support 120 CAPS",
@@ -7018,7 +7066,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/06/PANCAKE-800G-CHOCOLAT.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/PANCAKE-800G-CHOCOLAT.png',
         "alt": {
           "fr": "Tableau des valeurs nutritionnelles pour pancake protéinés (par portion de 50 g et 100 g)",
           "de": "Tableau des valeurs nutritionnelles pour pancake protéinés (par portion de 50 g et 100 g)",
@@ -7090,9 +7138,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/PANCAKE-800G-CHOCOLAT.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "8050507510375"
       },
@@ -7108,9 +7156,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/06/PANCAKE-800G-COOKIE.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0
       },
       {
@@ -7136,7 +7184,8 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "switzerland",
     "stockGeneva": 1,
     "stockPortugal": 0,
-    "gtin13": "8050507510375"
+    "gtin13": "8050507510375",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-20370",
@@ -7158,7 +7207,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/images/products/marvelous/83.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/83.png',
         "alt": {
           "fr": "Complément RECHARGE NutriFitness.ch – 90 gélules pour glycémie stable et métabolisme équilibré",
           "de": "Complément RECHARGE NutriFitness.ch – 90 gélules pour glycémie stable et métabolisme équilibré",
@@ -7263,7 +7312,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous-64.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-64.png',
         "alt": {
           "fr": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
           "de": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
@@ -7274,7 +7323,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/06/STAGE-45-CAPS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/STAGE-45-CAPS-NUTRITION.png',
         "alt": {
           "fr": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
           "de": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
@@ -7379,7 +7428,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/images/products/marvelous/81.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/81.png',
         "alt": {
           "fr": "MK7 VIT D3 K2 – 90 CAPS",
           "de": "MK7 VIT D3 K2 – 90 CAPS",
@@ -7390,7 +7439,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/06/MK7-VIT-D3-K2-90-CAPS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/MK7-VIT-D3-K2-90-CAPS-NUTRITION.png',
         "alt": {
           "fr": "MK7 VIT D3 K2 – 90 CAPS",
           "de": "MK7 VIT D3 K2 – 90 CAPS",
@@ -7496,7 +7545,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-.png',
         "alt": {
           "fr": "Complément fer liposomale + B9 + B12 – haute absorption",
           "de": "Complément fer liposomale + B9 + B12 – haute absorption",
@@ -7507,7 +7556,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-NUTRITION.png',
         "alt": {
           "fr": "Complément fer liposomal + B9 + B12 – haute absorption",
           "de": "Complément fer liposomal + B9 + B12 – haute absorption",
@@ -7581,14 +7630,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 4,
         "inStock": true,
         "stockGeneva": 4,
-        "gtin13": "8050507511624"
+        "gtin13": "8050507511624",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 4,
     "inStock": true,
-    "gtin13": "8050507511624"
+    "gtin13": "8050507511624",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-20150",
@@ -7610,7 +7662,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/05/PURE-SHILAJIT.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/PURE-SHILAJIT.png',
         "alt": {
           "fr": "Résine pure de Shilajit naturel - Énergie et vitalité",
           "de": "Résine pure de Shilajit naturel - Énergie et vitalité",
@@ -7621,7 +7673,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/05/PURE-SHILAJIT-RESINE.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/PURE-SHILAJIT-RESINE.png',
         "alt": {
           "fr": "Résine pure de Shilajit naturel - Énergie et vitalité",
           "de": "Résine pure de Shilajit naturel - Énergie et vitalité",
@@ -7632,7 +7684,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/05/5-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/5-1.png',
         "alt": {
           "fr": "Résine pure de Shilajit naturel - Énergie et vitalité",
           "de": "Résine pure de Shilajit naturel - Énergie et vitalité",
@@ -7705,13 +7757,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 45,
         "inventoryQuantity": 30,
         "inStock": true,
-        "stockGeneva": 30
+        "stockGeneva": 30,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 30,
-    "inStock": true
+    "inStock": true,
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-20145",
@@ -7733,7 +7788,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G.png',
         "alt": {
           "fr": "Complément articulaire en poudre GLUCOART – Glucosamine, collagène, MSM, chondroïtine, acide hyaluronique",
           "de": "Complément articulaire en poudre GLUCOART – Glucosamine, collagène, MSM, chondroïtine, acide hyaluronique",
@@ -7744,7 +7799,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G-NUTRITION.png',
         "alt": {
           "fr": "Glucoart Poudre 200g",
           "de": "Glucoart Poudre 200g",
@@ -7818,14 +7873,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 3,
         "inStock": true,
         "stockGeneva": 3,
-        "gtin13": "8050507511891"
+        "gtin13": "8050507511891",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 3,
     "inStock": true,
-    "gtin13": "8050507511891"
+    "gtin13": "8050507511891",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-20141",
@@ -7847,7 +7905,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/05/GLUCOART-90-TABS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-90-TABS.png',
         "alt": {
           "fr": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
           "de": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
@@ -7858,7 +7916,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/05/GLUCOART-90-TABS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-90-TABS-NUTRITION.png',
         "alt": {
           "fr": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
           "de": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
@@ -7931,12 +7989,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 20,
         "inStock": true,
-        "gtin13": "8050507512706"
+        "gtin13": "8050507512706",
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "gtin13": "8050507512706"
+    "gtin13": "8050507512706",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-19220",
@@ -7958,7 +8021,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 70,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png',
         "alt": {
           "fr": "OZER Post Workout Protéine Végétale Cookie - Complément vegan riche en protéines, BCAA, spiruline et vitamine C\"",
           "de": "OZER Post Workout Protéine Végétale Cookie - Complément vegan riche en protéines, BCAA, spiruline et vitamine C\"",
@@ -8030,9 +8093,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1.4KG (FRUITS ROUGES)",
         "priceChf": 70,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "3770022245075"
       },
@@ -8048,9 +8111,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1.4KG (COOKIES)",
         "priceChf": 70,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "3770022245099"
       },
@@ -8066,18 +8129,19 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1.4KG (ORIGINAL)",
         "priceChf": 70,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "3770022245051"
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "stockGeneva": 0,
+    "stockGeneva": 25,
     "stockPortugal": 0,
-    "gtin13": "3770022245075"
+    "gtin13": "3770022245075",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-19174",
@@ -8099,7 +8163,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/04/12.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/12.png',
         "alt": {
           "fr": "NAC 600 mg + Vitamine D & C – Immunité et Détox",
           "de": "NAC 600 mg + Vitamine D & C – Immunité et Détox",
@@ -8173,14 +8237,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 9,
         "inStock": true,
         "stockGeneva": 9,
-        "gtin13": "8050507511976"
+        "gtin13": "8050507511976",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 9,
     "inStock": true,
-    "gtin13": "8050507511976"
+    "gtin13": "8050507511976",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-19143",
@@ -8202,7 +8269,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/04/11.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/11.png',
         "alt": {
           "fr": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
           "de": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
@@ -8213,7 +8280,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/04/CARNITINE-20-VIALS-LEMON-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/CARNITINE-20-VIALS-LEMON-NUTRITION.png',
         "alt": {
           "fr": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
           "de": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
@@ -8287,14 +8354,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 3,
         "inStock": true,
         "stockGeneva": 3,
-        "gtin13": "767501485483"
+        "gtin13": "767501485483",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 3,
     "inStock": true,
-    "gtin13": "767501485483"
+    "gtin13": "767501485483",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-18720",
@@ -8316,7 +8386,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-1.png',
         "alt": {
           "fr": "Testo anabol Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
           "de": "Testo anabol Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
@@ -8327,7 +8397,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-nutrition.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-nutrition.png',
         "alt": {
           "fr": "Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
           "de": "Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
@@ -8399,13 +8469,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 45,
         "inventoryQuantity": 20,
-        "inStock": false,
-        "gtin13": "8050507510153"
+        "inStock": true,
+        "gtin13": "8050507510153",
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "gtin13": "8050507510153"
+    "gtin13": "8050507510153",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-18598",
@@ -8427,7 +8502,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS.png',
         "alt": {
           "fr": "Nox Burn : brûleur de graisses thermogénique pour énergie et performance",
           "de": "Nox Burn : brûleur de graisses thermogénique pour énergie et performance",
@@ -8438,7 +8513,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS-NUTRITION.png',
         "alt": {
           "fr": "NOX Burn 90 CAPS",
           "de": "NOX Burn 90 CAPS",
@@ -8510,13 +8585,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 20,
-        "inStock": false,
-        "gtin13": "8436609603403"
+        "inStock": true,
+        "gtin13": "8436609603403",
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "gtin13": "8436609603403"
+    "gtin13": "8436609603403",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-18593",
@@ -8538,7 +8618,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/images/products/marvelous/78.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/78.png',
         "alt": {
           "fr": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
           "de": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
@@ -8549,7 +8629,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/02/Magnesium-Bisglycinate-nutrition.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/Magnesium-Bisglycinate-nutrition.png',
         "alt": {
           "fr": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
           "de": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
@@ -8655,7 +8735,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 28,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous43.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous43.png',
         "alt": {
           "fr": "Boisson brûle-graisses Ignite de Marvelous Nutrition en pot, idéale pour l’énergie et la performance.",
           "de": "Boisson brûle-graisses Ignite de Marvelous Nutrition en pot, idéale pour l’énergie et la performance.",
@@ -8728,12 +8808,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 28,
         "inventoryQuantity": 20,
         "inStock": true,
-        "gtin13": "634240278891"
+        "gtin13": "634240278891",
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "gtin13": "634240278891"
+    "gtin13": "634240278891",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-15582",
@@ -8755,7 +8840,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/images/products/marvelous/alive.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/alive.png',
         "alt": {
           "fr": "Alive, le complément idéal pour booster énergie, articulations et vitalité.",
           "de": "Alive, le complément idéal pour booster énergie, articulations et vitalité.",
@@ -8766,7 +8851,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/01/ALIVE-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/ALIVE-NUTRITION.png',
         "alt": {
           "fr": "Alive Systeme Immunitaire 120 CAPS",
           "de": "Alive Systeme Immunitaire 120 CAPS",
@@ -8872,7 +8957,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 3.5,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-POIRE-50G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-POIRE-50G.png',
         "alt": {
           "fr": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
           "de": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
@@ -8883,7 +8968,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-50G-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-50G-NUTRITION.png',
         "alt": {
           "fr": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
           "de": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
@@ -9018,7 +9103,8 @@ export const PRODUCTS: ProductItem[] = [
     "stockGeneva": 80,
     "stockPortugal": 0,
     "inStock": true,
-    "gtin13": "8050507513062"
+    "gtin13": "8050507513062",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-15357",
@@ -9040,7 +9126,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 3.5,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML.png',
         "alt": {
           "fr": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
           "de": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
@@ -9051,7 +9137,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML-NUTRITION-2.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML-NUTRITION-2.png',
         "alt": {
           "fr": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
           "de": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
@@ -9125,14 +9211,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 30,
         "inStock": true,
         "stockGeneva": 30,
-        "gtin13": "8056326432591"
+        "gtin13": "8056326432591",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 30,
     "inStock": true,
-    "gtin13": "8056326432591"
+    "gtin13": "8056326432591",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-15217",
@@ -9154,7 +9243,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 95,
     "images": [
       {
-        "src": "/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png',
         "alt": {
           "fr": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
           "de": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
@@ -9165,7 +9254,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-Nutrition.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-Nutrition.png',
         "alt": {
           "fr": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
           "de": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
@@ -9216,10 +9305,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "L'alternative numéro un pour tous ceux qui ne supportent pas les produits laitiers : anabolisme massif sans aucun ballonnement. Advanced formula containing 100% peptides d'isolat de viande de bœuf hydrolysés par voie enzymatique, naturellement riche en créatine. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg est un complément de nutrition sportive de haute qualité élaboré avec 100% peptides d'isolat de viande de bœuf hydrolysés par voie enzymatique, naturellement riche en créatine. Développé pour les sportifs intolérants au lactose, athlètes en prise de muscle sec et culturistes souhaitant varier leurs sources protéiques., il permet de : l'alternative numéro un pour tous ceux qui ne supportent pas les produits laitiers : anabolisme massif sans aucun ballonnement. Posologie recommandée : mélanger 30 g de poudre dans 300 ml d'eau fraîche immédiatement après l'entraînement. ne pas mélanger avec du lait. Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 24h.",
-      "de": "Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg von Marvelous ist hochwertige Schweizer Sportnahrung mit 100% peptides d'isolat de viande de bœuf hydrolysés par voie enzymatique, naturellement riche en créatine. Entwickelt für Sportifs intolérants au lactose, athlètes en prise de muscle sec et culturistes souhaitant varier leurs sources protéiques., unterstützt das Produkt L'alternative numéro un pour tous ceux qui ne supportent pas les produits laitiers : anabolisme massif sans aucun ballonnement. 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
-      "it": "Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg di Marvelous è un integratore formulato con 100% peptides d'isolat de viande de bœuf hydrolysés par voie enzymatique, naturellement riche en créatine. Ideale per Sportifs intolérants au lactose, athlètes en prise de muscle sec et culturistes souhaitant varier leurs sources protéiques., favorisce L'alternative numéro un pour tous ceux qui ne supportent pas les produits laitiers : anabolisme massif sans aucun ballonnement. Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
-      "en": "Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg by Marvelous is a premium sports nutrition supplement formulated with 100% peptides d'isolat de viande de bœuf hydrolysés par voie enzymatique, naturellement riche en créatine. Designed for Sportifs intolérants au lactose, athlètes en prise de muscle sec et culturistes souhaitant varier leurs sources protéiques., it delivers L'alternative numéro un pour tous ceux qui ne supportent pas les produits laitiers : anabolisme massif sans aucun ballonnement. Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
+      "fr": "Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg – 0 Lactose 0 Graisse est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg – 0 Lactose 0 Graisse is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg – 0 Lactose 0 Graisse ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg – 0 Lactose 0 Graisse è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<h2>Pourquoi choisir Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg chez NutriFitness Suisse ?</h2>\n<p>L'alternative numéro un pour tous ceux qui ne supportent pas les produits laitiers : anabolisme massif sans aucun ballonnement. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Sportifs intolérants au lactose, athlètes en prise de muscle sec et culturistes souhaitant varier leurs sources protéiques.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Zéro gramme de lactose, zéro sucre, zéro matière grasse et zéro cholestérol :</strong> Zéro gramme de lactose, zéro sucre, zéro matière grasse et zéro cholestérol</li>\n  <li><strong>Hydrolysat peptidique ultra-rapide absorbé plus promptement que n'importe quelle whey classique :</strong> Hydrolysat peptidique ultra-rapide absorbé plus promptement que n'importe quelle whey classique</li>\n  <li><strong>Naturellement concentré en créatine et acides aminés précurseurs de collagène :</strong> Naturellement concentré en créatine et acides aminés précurseurs de collagène</li>\n  <li><strong>Arômes fruités rafraîchissants masquant totalement le goût de viande d'origine :</strong> Arômes fruités rafraîchissants masquant totalement le goût de viande d'origine</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Mélanger 30 g de poudre dans 300 ml d'eau fraîche immédiatement après l'entraînement. Ne pas mélanger avec du lait.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Marvelous El Toro 100% Isolat de Protéine de Bœuf Hydrolysée 1.8kg</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
@@ -9290,7 +9379,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 22,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
-        "stockGeneva": 12,
+        "stockGeneva": 0,
         "stockPortugal": 10,
         "gtin13": "8789965565985"
       },
@@ -9308,7 +9397,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 21,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
-        "stockGeneva": 12,
+        "stockGeneva": 0,
         "stockPortugal": 9
       },
       {
@@ -9325,15 +9414,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 20,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
-        "stockGeneva": 10,
+        "stockGeneva": 0,
         "stockPortugal": 10,
         "gtin13": "634240129537"
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
-    "stockGeneva": 34,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
     "stockPortugal": 40,
     "gtin13": "634240173035"
   },
@@ -9357,7 +9446,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 37,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/12/PEPTAN-COLLAGEN-MARIN-300G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/PEPTAN-COLLAGEN-MARIN-300G.png',
         "alt": {
           "fr": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
           "de": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
@@ -9368,7 +9457,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.57.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.57.png',
         "alt": {
           "fr": "PEPTAN DE COLLAGEN LEMON NUTRITION",
           "de": "PEPTAN DE COLLAGEN LEMON NUTRITION",
@@ -9379,7 +9468,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.29.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.29.png',
         "alt": {
           "fr": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
           "de": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
@@ -9453,14 +9542,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 8,
         "inStock": true,
         "stockGeneva": 8,
-        "gtin13": "8436609602505"
+        "gtin13": "8436609602505",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 8,
     "inStock": true,
-    "gtin13": "8436609602505"
+    "gtin13": "8436609602505",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-14500",
@@ -9482,7 +9574,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 59.9,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png',
         "alt": {
           "fr": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
           "de": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
@@ -9493,7 +9585,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/12/WHEY-ON-900G-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/WHEY-ON-900G-NUTRITION.png',
         "alt": {
           "fr": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
           "de": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
@@ -9601,9 +9693,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 59.9,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "5060469989198"
       },
@@ -9630,7 +9722,8 @@ export const PRODUCTS: ProductItem[] = [
     "stockGeneva": 3,
     "stockPortugal": 0,
     "inStock": true,
-    "gtin13": "5060469988603"
+    "gtin13": "5060469988603",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-14486",
@@ -9652,7 +9745,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 55,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png',
         "alt": {
           "fr": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
           "de": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
@@ -9663,7 +9756,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/12/GHOST-WHEY-900G-NUTRI.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-WHEY-900G-NUTRI.png',
         "alt": {
           "fr": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
           "de": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
@@ -9735,18 +9828,19 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 55,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-WHEY-900G-FRUITY-CEREAL-MILK.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "857640006417"
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "stockGeneva": 0,
+    "stockGeneva": 25,
     "stockPortugal": 0,
-    "gtin13": "857640006417"
+    "gtin13": "857640006417",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-14371",
@@ -9768,7 +9862,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/11/BEURRE-DE-CACAHOUETE-1KG-PREMIUM.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BEURRE-DE-CACAHOUETE-1KG-PREMIUM.png',
         "alt": {
           "fr": "Beurre de cacahuètes body attack naturel, riche en protéines et en fibres, texture croquante.",
           "de": "Beurre de cacahuètes body attack naturel, riche en protéines et en fibres, texture croquante.",
@@ -9779,7 +9873,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CRUNCHY-NUTRI.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CRUNCHY-NUTRI.jpg',
         "alt": {
           "fr": "PEANUT BUTTER 1KG CRUNCHY NUTRI",
           "de": "PEANUT BUTTER 1KG CRUNCHY NUTRI",
@@ -9790,7 +9884,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CREAMY-NUTRI.jpeg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CREAMY-NUTRI.jpeg',
         "alt": {
           "fr": "PEANUT BUTTER 1KG CREAMY NUTRI",
           "de": "PEANUT BUTTER 1KG CREAMY NUTRI",
@@ -9892,7 +9986,8 @@ export const PRODUCTS: ProductItem[] = [
     "stockGeneva": 2,
     "stockPortugal": 0,
     "inStock": true,
-    "gtin13": "4250350538111"
+    "gtin13": "4250350538111",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-14341",
@@ -9914,7 +10009,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 120,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/11/ISO-BULK-CHOCO-1.8KG.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-CHOCO-1.8KG.png',
         "alt": {
           "fr": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
           "de": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
@@ -9925,7 +10020,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/ISO-BULK-NUTRI-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-NUTRI-1.png',
         "alt": {
           "fr": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
           "de": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
@@ -9936,7 +10031,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/ISO-BULK-NUTRI-2.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-NUTRI-2.png',
         "alt": {
           "fr": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
           "de": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
@@ -10052,10 +10147,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 120,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-2KG.png",
-        "stockGeneva": 0,
-        "stockPortugal": 0
+        "stockGeneva": 25,
+        "stockPortugal": 50
       },
       {
         "id": "31a1b1ee-c8b9-44ef-8c7d-7a97753a57c3",
@@ -10072,7 +10167,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-COOKIE-2KG.webp",
         "stockGeneva": 13,
-        "stockPortugal": 0
+        "stockPortugal": 50
       },
       {
         "id": "3dbfa1f4-6ef8-40e4-ac44-3d3bb237f2be",
@@ -10089,7 +10184,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/iso-bulk-choco.webp",
         "stockGeneva": 7,
-        "stockPortugal": 0
+        "stockPortugal": 50
       },
       {
         "id": "364f8a69-331f-4c93-935b-42df84c910e4",
@@ -10106,7 +10201,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/iso-bulk-choco.webp",
         "stockGeneva": 5,
-        "stockPortugal": 0
+        "stockPortugal": 50
       },
       {
         "id": "1132daf1-3cc3-4cb5-9b25-df674038c12a",
@@ -10123,14 +10218,14 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-2KG-FRAISES.webp",
         "stockGeneva": 5,
-        "stockPortugal": 0
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
     "stockGeneva": 30,
-    "stockPortugal": 0,
+    "stockPortugal": 50,
     "inStock": true
   },
   {
@@ -10153,7 +10248,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 69,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/11/ultimate-whey-2kg-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ultimate-whey-2kg-1.png',
         "alt": {
           "fr": "Ultimate Whey Bigman – Protéine riche en BCAA et faible en graisses, idéale pour la récupération musculaire",
           "de": "Ultimate Whey Bigman – Protéine riche en BCAA et faible en graisses, idéale pour la récupération musculaire",
@@ -10225,9 +10320,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 69,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/ultimate-whey-1kg-fraises.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "8436609600297"
       },
@@ -10243,18 +10338,19 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 69,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/11/ultimate-whey-1kg-pasteque.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "8436609600327"
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "stockGeneva": 0,
+    "stockGeneva": 25,
     "stockPortugal": 0,
-    "gtin13": "8436609600297"
+    "gtin13": "8436609600297",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-14215",
@@ -10276,7 +10372,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/11/BM-EAA-300G-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-EAA-300G-1.png',
         "alt": {
           "fr": "EAA BigMan avec électrolytes - récupération et performance",
           "de": "EAA BigMan avec électrolytes - récupération et performance",
@@ -10287,7 +10383,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/EAA-VALEUR-NUTRI.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/EAA-VALEUR-NUTRI.webp',
         "alt": {
           "fr": "EAA BM 300G",
           "de": "EAA BM 300G",
@@ -10425,7 +10521,8 @@ export const PRODUCTS: ProductItem[] = [
     "stockGeneva": 30,
     "stockPortugal": 0,
     "inStock": true,
-    "gtin13": "8436609600815"
+    "gtin13": "8436609600815",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-13985",
@@ -10447,7 +10544,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 60,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/11/FURIUX-MASS-3K-CHOCO.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/FURIUX-MASS-3K-CHOCO.png',
         "alt": {
           "fr": "Furiux Gainer Bigman - Complément pour prise de masse",
           "de": "Furiux Gainer Bigman - Complément pour prise de masse",
@@ -10458,7 +10555,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/Capture-decran-2024-11-13-a-18.12.49.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/Capture-decran-2024-11-13-a-18.12.49.png',
         "alt": {
           "fr": "FURIUX GAINER NUTRITION",
           "de": "FURIUX GAINER NUTRITION",
@@ -10469,7 +10566,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/6.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/6.jpg',
         "alt": {
           "fr": "Furiux Gainer 3kg",
           "de": "Furiux Gainer 3kg",
@@ -10570,7 +10667,8 @@ export const PRODUCTS: ProductItem[] = [
     "stockGeneva": 18,
     "stockPortugal": 0,
     "inStock": true,
-    "gtin13": "8436609600587"
+    "gtin13": "8436609600587",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-13972",
@@ -10592,7 +10690,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/11/ENERDYN-ELECTROLYTES.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ENERDYN-ELECTROLYTES.png',
         "alt": {
           "fr": "Booster de performance physique et énergie quotidienne.",
           "de": "Booster de performance physique et énergie quotidienne.",
@@ -10603,7 +10701,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/ENERDYN-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ENERDYN-NUTRITION.png',
         "alt": {
           "fr": "FURIUX NUTRITION 2",
           "de": "FURIUX NUTRITION 2",
@@ -10675,13 +10773,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 20,
         "inventoryQuantity": 20,
-        "inStock": false,
-        "gtin13": "8050507512157"
+        "inStock": true,
+        "gtin13": "8050507512157",
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": true,
     "shippingOrigin": "switzerland",
-    "gtin13": "8050507512157"
+    "gtin13": "8050507512157",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-13873",
@@ -10703,7 +10806,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/11/BM-CREAPURE-300G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-CREAPURE-300G.png',
         "alt": {
           "fr": "Creapure BigMan 300g - Créatine Monohydrate pure pour endurance et récupération optimale",
           "de": "Creapure BigMan 300g - Créatine Monohydrate pure pour endurance et récupération optimale",
@@ -10714,7 +10817,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/Capture-decran-2024-11-09-a-16.18.36.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/Capture-decran-2024-11-09-a-16.18.36.png',
         "alt": {
           "fr": "CREAPURE POUDRE 300G NUTRITION",
           "de": "CREAPURE POUDRE 300G NUTRITION",
@@ -10786,13 +10889,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 40,
         "inventoryQuantity": 20,
-        "inStock": false,
-        "gtin13": "843660960262"
+        "inStock": true,
+        "gtin13": "843660960262",
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "gtin13": "843660960262"
+    "gtin13": "843660960262",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-13868",
@@ -10814,7 +10922,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/11/BM-GLUTAMINE-KYOWA-300G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-GLUTAMINE-KYOWA-300G.png',
         "alt": {
           "fr": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
           "de": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
@@ -10825,7 +10933,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/11/glutamine-nutrition.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/glutamine-nutrition.png',
         "alt": {
           "fr": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
           "de": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
@@ -10899,14 +11007,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 2,
         "inStock": true,
         "stockGeneva": 2,
-        "gtin13": "8436609600730"
+        "gtin13": "8436609600730",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 2,
     "inStock": true,
-    "gtin13": "8436609600730"
+    "gtin13": "8436609600730",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-13708",
@@ -10928,7 +11039,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/10/CALCIUM-120-TABS-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/CALCIUM-120-TABS-1.png',
         "alt": {
           "fr": "Calcium puissant soutien des os et des dents – essentiel pour la santé osseuse, musculaire et cardiovasculaire.",
           "de": "Calcium puissant soutien des os et des dents – essentiel pour la santé osseuse, musculaire et cardiovasculaire.",
@@ -10939,7 +11050,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png',
         "alt": {
           "fr": "CALCIUM 1000MG 120 TABS NUTRITION",
           "de": "CALCIUM 1000MG 120 TABS NUTRITION",
@@ -11013,14 +11124,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 3,
         "inStock": true,
         "stockGeneva": 3,
-        "gtin13": "8050507512492"
+        "gtin13": "8050507512492",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 3,
     "inStock": true,
-    "gtin13": "8050507512492"
+    "gtin13": "8050507512492",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-13035",
@@ -11042,7 +11156,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/09/MAGNESIUM-BISGLYCINATE-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/MAGNESIUM-BISGLYCINATE-1.png',
         "alt": {
           "fr": "Magnésium bisglycinate pour relaxation, sommeil et récupération musculaire.",
           "de": "Magnésium bisglycinate pour relaxation, sommeil et récupération musculaire.",
@@ -11053,7 +11167,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/09/MAGNESIO-BISGLICINATE-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/MAGNESIO-BISGLICINATE-NUTRITION.png',
         "alt": {
           "fr": "MAGNESIO BISGLICINATE NUTRITION",
           "de": "MAGNESIO BISGLICINATE NUTRITION",
@@ -11126,12 +11240,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 20,
         "inStock": true,
-        "gtin13": "8050507513321"
+        "gtin13": "8050507513321",
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "gtin13": "8050507513321"
+    "gtin13": "8050507513321",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-12992",
@@ -11153,7 +11272,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous32.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous32.png',
         "alt": {
           "fr": "capsules de zma pour performance, récupération et équilibre hormonal",
           "de": "capsules de zma pour performance, récupération et équilibre hormonal",
@@ -11164,7 +11283,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/09/ZMA-MARVELOUS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/ZMA-MARVELOUS-NUTRITION.png',
         "alt": {
           "fr": "capsules de zma pour performance, récupération et équilibre hormonal",
           "de": "capsules de zma pour performance, récupération et équilibre hormonal",
@@ -11270,7 +11389,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png',
         "alt": {
           "fr": "Farine de patate douce blanche, sans gluten, riche en fibres, idéale pour shakes et recettes saines.",
           "de": "Farine de patate douce blanche, sans gluten, riche en fibres, idéale pour shakes et recettes saines.",
@@ -11281,7 +11400,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE-NUTRITION.png',
         "alt": {
           "fr": "FARINE DE PATATE DOUCE NUTRITION",
           "de": "FARINE DE PATATE DOUCE NUTRITION",
@@ -11372,7 +11491,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 17,
         "inStock": true,
-        "image": "/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png',
         "stockGeneva": 17,
         "stockPortugal": 0,
         "gtin13": "3770031854015"
@@ -11380,10 +11499,11 @@ export const PRODUCTS: ProductItem[] = [
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "stockGeneva": 0,
+    "stockGeneva": 25,
     "stockPortugal": 0,
     "inStock": false,
-    "gtin13": "3770031854046"
+    "gtin13": "3770031854046",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-12902",
@@ -11405,7 +11525,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/09/GLUTATHION-LIPOSOMALE-30-CAPS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/GLUTATHION-LIPOSOMALE-30-CAPS.png',
         "alt": {
           "fr": "Glutathion liposomal avec Q10 et vitamine E – protection antioxydante et bien-être.",
           "de": "Glutathion liposomal avec Q10 et vitamine E – protection antioxydante et bien-être.",
@@ -11416,7 +11536,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-2.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-2.png',
         "alt": {
           "fr": "GLUTATHIONE LIPO 30 CAPS",
           "de": "GLUTATHIONE LIPO 30 CAPS",
@@ -11427,7 +11547,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-1.png',
         "alt": {
           "fr": "GLUTATHIONE LIPO 30 CAPS LIPO 30 CAPS NUTRITION 1",
           "de": "GLUTATHIONE LIPO 30 CAPS LIPO 30 CAPS NUTRITION 1",
@@ -11501,14 +11621,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 3,
         "inStock": true,
         "stockGeneva": 3,
-        "gtin13": "8050507511914"
+        "gtin13": "8050507511914",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 3,
     "inStock": true,
-    "gtin13": "8050507511914"
+    "gtin13": "8050507511914",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-12882",
@@ -11530,7 +11653,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/09/CREME-A-TARTINER-350G.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/CREME-A-TARTINER-350G.png',
         "alt": {
           "fr": "Crème à tartiner zéro sucre avec protéines – délicieuse et saine.",
           "de": "Crème à tartiner zéro sucre avec protéines – délicieuse et saine.",
@@ -11541,7 +11664,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/09/NUT-ZERO-350G-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/NUT-ZERO-350G-NUTRITION.png',
         "alt": {
           "fr": "NUT ZERO 350G NUTRITION",
           "de": "NUT ZERO 350G NUTRITION",
@@ -11642,7 +11765,8 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "switzerland",
     "stockGeneva": 6,
     "stockPortugal": 0,
-    "gtin13": "8050507510337"
+    "gtin13": "8050507510337",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-12867",
@@ -11664,7 +11788,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/farine-de-riz-1kg.webp',
         "alt": {
           "fr": "Farine de riz BigMan – Sans gluten, source d'énergie naturelle.",
           "de": "Farine de riz BigMan – Sans gluten, source d'énergie naturelle.",
@@ -11675,7 +11799,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/09/FARINE-DE-RIZ-1.5KG-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-RIZ-1.5KG-NUTRITION.png',
         "alt": {
           "fr": "FARINE DE RIZ 1.5KG NUTRITION",
           "de": "FARINE DE RIZ 1.5KG NUTRITION",
@@ -11693,10 +11817,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Rechargez vos réserves musculaires en glycogène en un temps record sans aucun ballonnement ni gonflement abdominal. Advanced formula containing 100% farine de riz blanc finement moulue et précuite pour une assimilation digestive optimale, sans gluten. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
     },
     "directAnswerAeo": {
-      "fr": "Bigman Farine de Riz Précuite 1.5kg est un complément de nutrition sportive de haute qualité élaboré avec 100% farine de riz blanc finement moulue et précuite pour une assimilation digestive optimale, sans gluten. Développé pour les bodybuilders en préparation de compétition, sportifs en prise de masse et personnes ayant des intestins irritables., il permet de : rechargez vos réserves musculaires en glycogène en un temps record sans aucun ballonnement ni gonflement abdominal. Posologie recommandée : mélanger 50 à 80 g de farine de riz dans votre shaker de whey avec de l'eau tiède ou du lait végétal en pré ou post-workout. Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 24h.",
-      "de": "Bigman Farine de Riz Précuite 1.5kg von Bigman ist hochwertige Schweizer Sportnahrung mit 100% farine de riz blanc finement moulue et précuite pour une assimilation digestive optimale, sans gluten. Entwickelt für Bodybuilders en préparation de compétition, sportifs en prise de masse et personnes ayant des intestins irritables., unterstützt das Produkt Rechargez vos réserves musculaires en glycogène en un temps record sans aucun ballonnement ni gonflement abdominal. 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
-      "it": "Bigman Farine de Riz Précuite 1.5kg di Bigman è un integratore formulato con 100% farine de riz blanc finement moulue et précuite pour une assimilation digestive optimale, sans gluten. Ideale per Bodybuilders en préparation de compétition, sportifs en prise de masse et personnes ayant des intestins irritables., favorisce Rechargez vos réserves musculaires en glycogène en un temps record sans aucun ballonnement ni gonflement abdominal. Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
-      "en": "Bigman Farine de Riz Précuite 1.5kg by Bigman is a premium sports nutrition supplement formulated with 100% farine de riz blanc finement moulue et précuite pour une assimilation digestive optimale, sans gluten. Designed for Bodybuilders en préparation de compétition, sportifs en prise de masse et personnes ayant des intestins irritables., it delivers Rechargez vos réserves musculaires en glycogène en un temps record sans aucun ballonnement ni gonflement abdominal. Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
+      "fr": "Bigman Farine de Riz Précuite 1.5kg – Digestion Ultra-Rapide et Glucides Purs pour Sportifs est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Bigman Farine de Riz Précuite 1.5kg – Digestion Ultra-Rapide et Glucides Purs pour Sportifs is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Bigman Farine de Riz Précuite 1.5kg – Digestion Ultra-Rapide et Glucides Purs pour Sportifs ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Bigman Farine de Riz Précuite 1.5kg – Digestion Ultra-Rapide et Glucides Purs pour Sportifs è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<h2>Pourquoi choisir Bigman Farine de Riz Précuite 1.5kg chez NutriFitness Suisse ?</h2>\n<p>Rechargez vos réserves musculaires en glycogène en un temps record sans aucun ballonnement ni gonflement abdominal. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Bodybuilders en préparation de compétition, sportifs en prise de masse et personnes ayant des intestins irritables.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Précuite à la vapeur pour casser les chaînes d'amidon et garantir une digestibilité hors pair :</strong> Précuite à la vapeur pour casser les chaînes d'amidon et garantir une digestibilité hors pair</li>\n  <li><strong>Exempte de gluten et hypoallergénique, idéale pour les personnes intolérantes :</strong> Exempte de gluten et hypoallergénique, idéale pour les personnes intolérantes</li>\n  <li><strong>Apporte une énergie immédiate disponible pour les muscles en pleine contraction :</strong> Apporte une énergie immédiate disponible pour les muscles en pleine contraction</li>\n  <li><strong>Format économique de 1.5 kg idéal pour les utilisateurs quotidiens :</strong> Format économique de 1.5 kg idéal pour les utilisateurs quotidiens</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Mélanger 50 à 80 g de farine de riz dans votre shaker de whey avec de l'eau tiède ou du lait végétal en pré ou post-workout.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Bigman Farine de Riz Précuite 1.5kg</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
@@ -11749,8 +11873,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 10,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 10,
-        "stockPortugal": 0,
+        "stockGeneva": 0,
+        "stockPortugal": 50,
         "gtin13": "8436609601034"
       },
       {
@@ -11767,8 +11891,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 1,
-        "stockPortugal": 0,
+        "stockGeneva": 0,
+        "stockPortugal": 50,
         "gtin13": "8436609601058"
       },
       {
@@ -11785,8 +11909,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 23,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 23,
-        "stockPortugal": 0,
+        "stockGeneva": 0,
+        "stockPortugal": 50,
         "gtin13": "8436609601027"
       },
       {
@@ -11803,8 +11927,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 27,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 27,
-        "stockPortugal": 0,
+        "stockGeneva": 0,
+        "stockPortugal": 50,
         "gtin13": "8436609601010"
       },
       {
@@ -11819,18 +11943,19 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 20,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
         "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "8436609600990"
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "stockGeneva": 61,
-    "stockPortugal": 0,
-    "gtin13": "8436609601034"
+    "shippingOrigin": "portugal",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
+    "gtin13": "8436609601034",
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-12855",
@@ -11852,7 +11977,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/09/L-CARNITINE-ACETYL-60-CAPS-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/L-CARNITINE-ACETYL-60-CAPS-1.png',
         "alt": {
           "fr": "L-ACETIL-Carnitine 60 gélules – Performance physique et cognitive.",
           "de": "L-ACETIL-Carnitine 60 gélules – Performance physique et cognitive.",
@@ -11863,7 +11988,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/09/L-ACETYL-CARNITINE-60-CAPS-NUTRITION-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/L-ACETYL-CARNITINE-60-CAPS-NUTRITION-1.png',
         "alt": {
           "fr": "L-acetil Carnitine 60 CAPS",
           "de": "L-acetil Carnitine 60 CAPS",
@@ -11937,14 +12062,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 1,
         "inStock": true,
         "stockGeneva": 1,
-        "gtin13": "8050507511280"
+        "gtin13": "8050507511280",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 1,
     "inStock": true,
-    "gtin13": "8050507511280"
+    "gtin13": "8050507511280",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-12650",
@@ -11966,7 +12094,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 55,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png',
         "alt": {
           "fr": "ISO WHEY ZERO – Complément protéiné pour croissance musculaire et récupération.",
           "de": "ISO WHEY ZERO – Complément protéiné pour croissance musculaire et récupération.",
@@ -11977,7 +12105,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/07/BM-ISO-WHEY-907G-NUTRITION.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/07/BM-ISO-WHEY-907G-NUTRITION.jpg',
         "alt": {
           "fr": "BM ISO WHEY 907G NUTRITION",
           "de": "BM ISO WHEY 907G NUTRITION",
@@ -12049,9 +12177,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 55,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "8436609600358"
       },
@@ -12067,9 +12195,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 55,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "8436609600372"
       },
@@ -12085,9 +12213,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 55,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
-        "stockGeneva": 0,
+        "stockGeneva": 25,
         "stockPortugal": 0,
         "gtin13": "8436609600365"
       },
@@ -12132,7 +12260,8 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "switzerland",
     "stockGeneva": 4,
     "stockPortugal": 0,
-    "gtin13": "8436609600358"
+    "gtin13": "8436609600358",
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-11806",
@@ -12154,7 +12283,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/images/products/marvelous/73.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/73.png',
         "alt": {
           "fr": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
           "de": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
@@ -12165,7 +12294,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/06/OMEGA-3-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/06/OMEGA-3-NUTRITION.png',
         "alt": {
           "fr": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
           "de": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
@@ -12271,7 +12400,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/marvelous/glycrol-mockup-scaled.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/glycrol-mockup-scaled.png',
         "alt": {
           "fr": "Glycerol 300g de Nutrifitness pour améliorer la congestion musculaire et l'hydratation pendant l'entraînement.",
           "de": "Glycerol 300g de Nutrifitness pour améliorer la congestion musculaire et l'hydratation pendant l'entraînement.",
@@ -12377,7 +12506,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous46.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous46.png',
         "alt": {
           "fr": "Vitamine C 1000mg 60 caps de Nutrifitness pour un système immunitaire robuste et une protection cellulaire optimale.",
           "de": "Vitamine C 1000mg 60 caps de Nutrifitness pour un système immunitaire robuste et une protection cellulaire optimale.",
@@ -12482,7 +12611,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous1.png',
         "alt": {
           "fr": "Poudre de Collagène Mix - Bienfaits pour la peau, cheveux et articulations\"",
           "de": "Poudre de Collagène Mix - Bienfaits pour la peau, cheveux et articulations\"",
@@ -12493,7 +12622,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2024/04/COLLAGENE-MIX-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/COLLAGENE-MIX-NUTRITION.png',
         "alt": {
           "fr": "COLLAGENE MIX NUTRITION",
           "de": "COLLAGENE MIX NUTRITION",
@@ -12598,7 +12727,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/04/HYPE-EAA-300G.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/HYPE-EAA-300G.webp',
         "alt": {
           "fr": "HYPE AMINO 270G - Poudre d'acides aminés pour performance musculaire et endurance, avec BCAA et acides aminés complexes.",
           "de": "HYPE AMINO 270G - Poudre d'acides aminés pour performance musculaire et endurance, avec BCAA et acides aminés complexes.",
@@ -12703,10 +12832,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/63.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockGeneva": 25,
+        "stockPortugal": 50,
         "gtin13": "634240231223"
       },
       {
@@ -12721,10 +12850,10 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/63.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockGeneva": 25,
+        "stockPortugal": 50,
         "gtin13": "634240231292"
       },
       {
@@ -12739,18 +12868,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 0,
-        "inStock": false,
+        "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/63.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 0,
+        "stockGeneva": 25,
+        "stockPortugal": 50,
         "gtin13": "634240231308"
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 0,
-    "stockPortugal": 0,
+    "stockGeneva": 25,
+    "stockPortugal": 50,
     "gtin13": "634240231223"
   },
   {
@@ -12773,7 +12902,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 59,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/04/BIG-LEAN-GAINER-3KG.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/BIG-LEAN-GAINER-3KG.webp',
         "alt": {
           "fr": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines",
           "de": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines",
@@ -12881,7 +13010,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/64.webp",
         "stockGeneva": 17,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "634240129513"
       },
       {
@@ -12899,7 +13028,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BIG-CHOCO.webp",
         "stockGeneva": 5,
-        "stockPortugal": 0
+        "stockPortugal": 50
       },
       {
         "id": "86894338-e85c-4afb-b768-a8459eaef164",
@@ -12916,14 +13045,14 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BIG-COOKIE.webp",
         "stockGeneva": 5,
-        "stockPortugal": 0
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
     "stockGeneva": 27,
-    "stockPortugal": 0,
+    "stockPortugal": 50,
     "inStock": true,
     "gtin13": "634240129513"
   },
@@ -12947,7 +13076,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 39.9,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/04/PROTEINE-VEGAN-RIZ-BRUN-BIO-500G.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/PROTEINE-VEGAN-RIZ-BRUN-BIO-500G.webp',
         "alt": {
           "fr": "Protéine de Riz Brun Bio 82% pour la croissance musculaire et la récupération",
           "de": "Protéine de Riz Brun Bio 82% pour la croissance musculaire et la récupération",
@@ -13021,14 +13150,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 1,
         "inStock": true,
         "stockGeneva": 1,
-        "gtin13": "5213004631360"
+        "gtin13": "5213004631360",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 1,
     "inStock": true,
-    "gtin13": "5213004631360"
+    "gtin13": "5213004631360",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-10083",
@@ -13050,7 +13182,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "/wp-content/uploads/2023/11/GOURDE-NF-AVEC-PAILLE.-600ML.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/11/GOURDE-NF-AVEC-PAILLE.-600ML.webp',
         "alt": {
           "fr": "NutriFit gourde 600ml avec paille - pour une hydratation pratique et saine",
           "de": "NutriFit gourde 600ml avec paille - pour une hydratation pratique et saine",
@@ -13122,11 +13254,16 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 10,
         "inventoryQuantity": 20,
-        "inStock": true
+        "inStock": true,
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland"
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-10022",
@@ -13148,7 +13285,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS.png',
         "alt": {
           "fr": "Flacon de zinc bisglycinate Applied Nutrition, 90 gélules, vue de face",
           "de": "Flacon de zinc bisglycinate Applied Nutrition, 90 gélules, vue de face",
@@ -13159,7 +13296,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS-NUTRI.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS-NUTRI.webp',
         "alt": {
           "fr": "Zinc Bisglicinate 90 Cap",
           "de": "Zinc Bisglicinate 90 Cap",
@@ -13231,13 +13368,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 30,
         "inventoryQuantity": 20,
-        "inStock": false,
-        "gtin13": "5056555205624"
+        "inStock": true,
+        "gtin13": "5056555205624",
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "gtin13": "5056555205624"
+    "gtin13": "5056555205624",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-9616",
@@ -13259,7 +13401,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp',
         "alt": {
           "fr": "Shaker NutriFit avec double compartiment et fermeture étanche, idéal pour les boissons protéinées",
           "de": "Shaker NutriFit avec double compartiment et fermeture étanche, idéal pour les boissons protéinées",
@@ -13331,9 +13473,9 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 10,
         "inventoryQuantity": 0,
-        "inStock": false,
-        "image": "/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp",
-        "stockGeneva": 0,
+        "inStock": true,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp',
+        "stockGeneva": 25,
         "stockPortugal": 0
       },
       {
@@ -13348,16 +13490,17 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 10,
         "inventoryQuantity": 0,
-        "inStock": false,
-        "image": "/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp",
-        "stockGeneva": 0,
+        "inStock": true,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp',
+        "stockGeneva": 25,
         "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "stockGeneva": 0,
-    "stockPortugal": 0
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-9526",
@@ -13379,7 +13522,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/images/products/marvelous/crearine-old-school.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/crearine-old-school.png',
         "alt": {
           "fr": "créatine 300g 200 mesh, améliore endurance, récupération et performances sportives",
           "de": "créatine 300g 200 mesh, améliore endurance, récupération et performances sportives",
@@ -13485,7 +13628,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 42,
     "images": [
       {
-        "src": "/wp-content/uploads/2023/03/SAVIOR-CREATINE-950G.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/03/SAVIOR-CREATINE-950G.webp',
         "alt": {
           "fr": "récupération optimale et croissance musculaire avec savior 950g",
           "de": "récupération optimale et croissance musculaire avec savior 950g",
@@ -13582,7 +13725,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/SAVIOR-950G.png",
         "stockGeneva": 6,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "634240129636"
       },
       {
@@ -13600,7 +13743,7 @@ export const PRODUCTS: ProductItem[] = [
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/74.webp",
         "stockGeneva": 6,
-        "stockPortugal": 0,
+        "stockPortugal": 50,
         "gtin13": "634240022708"
       }
     ],
@@ -13608,7 +13751,7 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "common",
     "locationType": "COMMON",
     "stockGeneva": 6,
-    "stockPortugal": 0,
+    "stockPortugal": 50,
     "inStock": true,
     "gtin13": "634240129636"
   },
@@ -13632,7 +13775,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": "/wp-content/uploads/2023/03/LIQUIDE-DE-BLANC-DOEUF-1L.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/03/LIQUIDE-DE-BLANC-DOEUF-1L.webp',
         "alt": {
           "fr": "Blanc d'œuf liquide pasteurisé 1L, une source pratique de protéines de haute qualité, idéale pour cuisiner et ajouter à votre routine quotidienne.",
           "de": "Blanc d'œuf liquide pasteurisé 1L, une source pratique de protéines de haute qualité, idéale pour cuisiner et ajouter à votre routine quotidienne.",
@@ -13650,10 +13793,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Source de protéine entière pure sans gras, sans cholestérol et prête à l'emploi sans aucun gaspillage de jaune. Advanced formula containing 100% blancs d'œufs de poules élevées au sol pasteurisés, environ 32 blancs d'œufs frais par bouteille d'un litre. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
     },
     "directAnswerAeo": {
-      "fr": "Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L est un complément de nutrition sportive de haute qualité élaboré avec 100% blancs d'œufs de poules élevées au sol pasteurisés, environ 32 blancs d'œufs frais par bouteille d'un litre. Développé pour les sportifs en sèche, adeptes de petits-déjeuners hyper-protéinés et cuisiniers fitness préparant des pancakes sains., il constitue un source de protéine entière pure sans gras, sans cholestérol et prête à l'emploi sans aucun gaspillage de jaune. Posologie recommandée : secouer la bouteille et verser la quantité désirée directement dans la poêle chaude (100 ml équivalent à 3 blancs d'œufs). Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 24h.",
-      "de": "Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L von Eurovo ist hochwertige Schweizer Sportnahrung mit 100% blancs d'œufs de poules élevées au sol pasteurisés, environ 32 blancs d'œufs frais par bouteille d'un litre. Entwickelt für Sportifs en sèche, adeptes de petits-déjeuners hyper-protéinés et cuisiniers fitness préparant des pancakes sains., unterstützt das Produkt Source de protéine entière pure sans gras, sans cholestérol et prête à l'emploi sans aucun gaspillage de jaune. 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
-      "it": "Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L di Eurovo è un integratore formulato con 100% blancs d'œufs de poules élevées au sol pasteurisés, environ 32 blancs d'œufs frais par bouteille d'un litre. Ideale per Sportifs en sèche, adeptes de petits-déjeuners hyper-protéinés et cuisiniers fitness préparant des pancakes sains., favorisce Source de protéine entière pure sans gras, sans cholestérol et prête à l'emploi sans aucun gaspillage de jaune. Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
-      "en": "Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L by Eurovo is a premium sports nutrition supplement formulated with 100% blancs d'œufs de poules élevées au sol pasteurisés, environ 32 blancs d'œufs frais par bouteille d'un litre. Designed for Sportifs en sèche, adeptes de petits-déjeuners hyper-protéinés et cuisiniers fitness préparant des pancakes sains., it delivers Source de protéine entière pure sans gras, sans cholestérol et prête à l'emploi sans aucun gaspillage de jaune. Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
+      "fr": "Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L – Protéine Naturelle Pure Prête à Cuire est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L – Protéine Naturelle Pure Prête à Cuire is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L – Protéine Naturelle Pure Prête à Cuire ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L – Protéine Naturelle Pure Prête à Cuire è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<h2>Pourquoi choisir Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L chez NutriFitness Suisse ?</h2>\n<p>Source de protéine entière pure sans gras, sans cholestérol et prête à l'emploi sans aucun gaspillage de jaune. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Sportifs en sèche, adeptes de petits-déjeuners hyper-protéinés et cuisiniers fitness préparant des pancakes sains.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>10 g de protéines complètes à haute digestibilité pour seulement 48 kcal par 100 ml :</strong> 10 g de protéines complètes à haute digestibilité pour seulement 48 kcal par 100 ml</li>\n  <li><strong>Pasteurisation thermique garantissant une sécurité sanitaire absolue et une conservation longue durée :</strong> Pasteurisation thermique garantissant une sécurité sanitaire absolue et une conservation longue durée</li>\n  <li><strong>Zéro matière grasse, zéro sucre, idéal pour des omelettes légères et rassasiantes :</strong> Zéro matière grasse, zéro sucre, idéal pour des omelettes légères et rassasiantes</li>\n  <li><strong>Bouteille ergonomique avec bouchon verseur refermable hermétiquement :</strong> Bouteille ergonomique avec bouchon verseur refermable hermétiquement</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Secouer la bouteille et verser la quantité désirée directement dans la poêle chaude (100 ml équivalent à 3 blancs d'œufs).</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Eurovo Blanc d'Œuf Liquide 100% Pasteurisé 1L</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
@@ -13705,12 +13848,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 10,
         "inventoryQuantity": 20,
         "inStock": true,
-        "gtin13": "8010053033421"
+        "gtin13": "8010053033421",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "gtin13": "8010053033421"
+    "shippingOrigin": "portugal",
+    "gtin13": "8010053033421",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-8867",
@@ -13732,7 +13880,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/10/ASHWAGANDHA-60-CAPS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/ASHWAGANDHA-60-CAPS.png',
         "alt": {
           "fr": "Ashwagandha 60 Caps : Clarté mentale, stress réduit, récupération musculaire, bien-être optimal.",
           "de": "Ashwagandha 60 Caps : Clarté mentale, stress réduit, récupération musculaire, bien-être optimal.",
@@ -13743,7 +13891,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2023/02/ASHWAGANDA-60-CAPS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/ASHWAGANDA-60-CAPS-NUTRITION.png',
         "alt": {
           "fr": "ASHWAGANDA 60 CAPS NUTRITION",
           "de": "ASHWAGANDA 60 CAPS NUTRITION",
@@ -13817,14 +13965,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 10,
         "inStock": true,
         "stockGeneva": 10,
-        "gtin13": "8050507512508"
+        "gtin13": "8050507512508",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 10,
     "inStock": true,
-    "gtin13": "8050507512508"
+    "gtin13": "8050507512508",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-8857",
@@ -13846,7 +13997,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": "/wp-content/uploads/2023/02/CAFFEINE-200MG-90-CAPS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/CAFFEINE-200MG-90-CAPS.png',
         "alt": {
           "fr": "Supplément de Caféine 90 caps comprimés pour énergie et performance",
           "de": "Supplément de Caféine 90 caps comprimés pour énergie et performance",
@@ -13857,7 +14008,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2023/02/CAFFEINE-200MG-NUTRITION-90-CAPS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/CAFFEINE-200MG-NUTRITION-90-CAPS.png',
         "alt": {
           "fr": "Caffeine 90 CAPS 100mg",
           "de": "Caffeine 90 CAPS 100mg",
@@ -13931,14 +14082,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 8,
         "inStock": true,
         "stockGeneva": 8,
-        "gtin13": "8436609603380"
+        "gtin13": "8436609603380",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 8,
     "inStock": true,
-    "gtin13": "8436609603380"
+    "gtin13": "8436609603380",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-7901",
@@ -13960,7 +14114,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/wp-content/uploads/2023/01/PICOLINAT-DE-CHROME-100-CAPS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/PICOLINAT-DE-CHROME-100-CAPS.png',
         "alt": {
           "fr": "Chromium Picolinate Vegan, régulation glycémique, contrôle métabolique",
           "de": "Chromium Picolinate Vegan, régulation glycémique, contrôle métabolique",
@@ -13971,7 +14125,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png',
         "alt": {
           "fr": "CALCIUM 1000MG 120 TABS NUTRITION",
           "de": "CALCIUM 1000MG 120 TABS NUTRITION",
@@ -14045,14 +14199,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 6,
         "inStock": true,
         "stockGeneva": 6,
-        "gtin13": "8050507510818"
+        "gtin13": "8050507510818",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": true,
     "shippingOrigin": "switzerland",
     "stockGeneva": 6,
     "inStock": true,
-    "gtin13": "8050507510818"
+    "gtin13": "8050507510818",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-7890",
@@ -14074,7 +14231,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/10/VITAMINE-C-LIPOSOMALE-60-CAPS.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/VITAMINE-C-LIPOSOMALE-60-CAPS.png',
         "alt": {
           "fr": "vitamine C liposomale 60 capsules, renforcement du système immunitaire, antioxydant",
           "de": "vitamine C liposomale 60 capsules, renforcement du système immunitaire, antioxydant",
@@ -14085,7 +14242,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2023/01/VITAMINE-C-LIPOSOMAL-60-CAPS-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/VITAMINE-C-LIPOSOMAL-60-CAPS-NUTRITION.png',
         "alt": {
           "fr": "VITAMINE C LIPOSOMAL 60 CAPS NUTRITION",
           "de": "VITAMINE C LIPOSOMAL 60 CAPS NUTRITION",
@@ -14159,14 +14316,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 8,
         "inStock": true,
         "stockGeneva": 8,
-        "gtin13": "8050507511631"
+        "gtin13": "8050507511631",
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
     "stockGeneva": 8,
     "inStock": true,
-    "gtin13": "8050507511631"
+    "gtin13": "8050507511631",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0
   },
   {
     "id": "prod-7870",
@@ -14188,7 +14348,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": "/wp-content/uploads/2023/01/NF-GALLON-2.2L.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/NF-GALLON-2.2L.webp',
         "alt": {
           "fr": "Gallon 2,2L avec rangement intégré – Hydratation pratique et organisée",
           "de": "Gallon 2,2L avec rangement intégré – Hydratation pratique et organisée",
@@ -14206,10 +14366,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Contient exactement la quantité d'eau quotidienne recommandée (2.2 litres) pour ne plus jamais manquer d'hydratation à la salle. Engineered from durable BPA-free materials with a 100% leak-proof seal. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for pickup at our Geneva showroom."
     },
     "directAnswerAeo": {
-      "fr": "NutriFitness Gallon d'Hydratation Sport 2.2L est un accessoire officiel NutriFitness Suisse conçu en matériaux haute résistance certifiés sans BPA et 100% hermétique. Conçu pour faciliter l'hydratation quotidienne et la préparation des shakers sportifs sans grumeaux. Disponible immédiatement en stock à Genève avec expédition 24h par PostPac Priority ou retrait immédiat au 34 Rue des Pâquis.",
-      "de": "NutriFitness Gallon d'Hydratation Sport 2.2L ist offizielles NutriFitness Schweiz Zubehör aus BPA-freiem, langlebigem Material mit 100% Auslaufschutz. Entwickelt für einfache Flüssigkeitszufuhr und klumpenfreie Protein-Shakes. 100% Schweizer Lagerware in Genf mit 24h-Versand per PostPac Priority.",
-      "it": "NutriFitness Gallon d'Hydratation Sport 2.2L è un accessorio ufficiale NutriFitness Svizzera realizzato in materiali resistenti senza BPA e 100% ermetico. Ideale per l'idratazione quotidiana e la preparazione di shaker senza grumi. Disponibile con spedizione rapida 24h PostPac Priority o ritiro a Ginevra.",
-      "en": "NutriFitness Gallon d'Hydratation Sport 2.2L is an official NutriFitness Switzerland accessory crafted from durable, BPA-free materials with a 100% leak-proof seal. Designed for effortless hydration and lump-free protein shakes. In stock in Geneva with 24h PostPac Priority dispatch."
+      "fr": "NutriFitness Gallon d'Hydratation Sport 2.2L – Bidon Sans BPA avec Poignée Ergonomique pour la Salle est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "NutriFitness Gallon d'Hydratation Sport 2.2L – Bidon Sans BPA avec Poignée Ergonomique pour la Salle is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "NutriFitness Gallon d'Hydratation Sport 2.2L – Bidon Sans BPA avec Poignée Ergonomique pour la Salle ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "NutriFitness Gallon d'Hydratation Sport 2.2L – Bidon Sans BPA avec Poignée Ergonomique pour la Salle è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<h2>Pourquoi choisir NutriFitness Gallon d'Hydratation Sport 2.2L chez NutriFitness Suisse ?</h2>\n<p>Contient exactement la quantité d'eau quotidienne recommandée (2.2 litres) pour ne plus jamais manquer d'hydratation à la salle. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Culturistes, sportifs passant de longues heures à l'entraînement et adeptes de suivi précis de leur consommation d'eau.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Capacité géante de 2.2 litres éliminant les allers-retours incessants au robinet de la salle de sport :</strong> Capacité géante de 2.2 litres éliminant les allers-retours incessants au robinet de la salle de sport</li>\n  <li><strong>Poignée ergonomique intégrée assurant une prise en main ferme et confortable :</strong> Poignée ergonomique intégrée assurant une prise en main ferme et confortable</li>\n  <li><strong>Bouchon en acier inoxydable fixé par une sangle en nylon pour ne jamais le perdre :</strong> Bouchon en acier inoxydable fixé par une sangle en nylon pour ne jamais le perdre</li>\n  <li><strong>Design noir translucide signature NutriFitness Genève avec graduation en millilitres :</strong> Design noir translucide signature NutriFitness Genève avec graduation en millilitres</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Remplir d'eau le matin, ajouter éventuellement des BCAA ou une rondelle de citron, et vider le bidon au cours de la journée.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>NutriFitness Gallon d'Hydratation Sport 2.2L</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
@@ -14261,12 +14421,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 15,
         "inventoryQuantity": 20,
         "inStock": true,
-        "gtin13": "1111111111111"
+        "gtin13": "1111111111111",
+        "stockGeneva": 0,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "gtin13": "1111111111111"
+    "shippingOrigin": "portugal",
+    "gtin13": "1111111111111",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50
   },
   {
     "id": "prod-7854",
@@ -14288,7 +14453,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/wp-content/uploads/2024/09/84.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/84.webp',
         "alt": {
           "fr": "CREAPURE PREMIUM 250G",
           "de": "CREAPURE PREMIUM 250G",
@@ -14299,7 +14464,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/wp-content/uploads/2023/01/CREAPURE-500G-NUTRITION.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/CREAPURE-500G-NUTRITION.png',
         "alt": {
           "fr": "CREAPURE NUTRITION",
           "de": "CREAPURE NUTRITION",
@@ -14371,13 +14536,18 @@ export const PRODUCTS: ProductItem[] = [
         "format": "1 unité",
         "priceChf": 35,
         "inventoryQuantity": 20,
-        "inStock": false,
-        "gtin13": "798190247953"
+        "inStock": true,
+        "gtin13": "798190247953",
+        "stockPortugal": 0,
+        "stockGeneva": 25
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "gtin13": "798190247953"
+    "gtin13": "798190247953",
+    "locationType": "GENEVA_ONLY",
+    "stockPortugal": 0,
+    "stockGeneva": 25
   },
   {
     "id": "prod-mv-5639",
@@ -14399,7 +14569,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 32,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous27.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous27.png',
         "alt": {
           "fr": "Marvelous Infected Pre-Workout Sans Stimulant 300g – Congestion & Focus Extrême",
           "de": "Marvelous Infected Pre-Workout Sans Stimulant 300g – Congestion & Focus Extrême",
@@ -14410,7 +14580,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/50.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg',
         "alt": {
           "fr": "Marvelous Infected Pre-Workout Sans Stimulant 300g – Congestion & Focus Extrême - Fruit Punch",
           "de": "Marvelous Infected Pre-Workout Sans Stimulant 300g – Congestion & Focus Extrême - Fruit Punch",
@@ -14483,7 +14653,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/50.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg',
         "stockGeneva": 25,
         "stockPortugal": 25
       },
@@ -14500,7 +14670,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/50.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg',
         "stockGeneva": 25,
         "stockPortugal": 25
       }
@@ -14531,7 +14701,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 32,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous48.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png',
         "alt": {
           "fr": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense",
           "de": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense",
@@ -14549,10 +14719,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Experiment pre-workout is the outcome of real training experiments, not just the labs! Experiment the feeling of being superhero. With a complex blend of pure, ultra-pharmaceutical grade ingredients that boost the body’s energy that will take your training session to levels you have never imagined."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Experiment pre-workout is the outcome of real training experiments, not just the labs! Experiment the feeling of being superhero. With a complex blend of pure, ultra-pharmaceutical grade ingredients that boost the body’s energy that will take your training session to levels you have never imagined.\n\nProduct Intro: \\n Experiment Pre-Workout is the result of real training experiments — not just lab tests! \\nExperience the feeling of becoming a superhero with a complex blend of pure, ultra-pharmaceutical-grade ingredients \\nthat boost your body’s energy and take your training sessions to levels you’ve never imagined. \\n \\n Experiment is a fully dosed and highly effective pre-workout that delivers what you truly want — \\n results! Even better, these results get stronger the more you use it. \\nPacked with research-backed dosages that work synergistically, this formula drives extreme motivation \\nthrough a powerful blend of intense stimulants and advanced cognitive-enhancement agents. \\n \\nThe intense motivation gets you into the gym, and the extreme focus keeps you there. \\n Product Benefits: \\n \\n Stimulates nitric oxide production \\n Enhances energy, power, and stamina \\n Amplifies pump and blood circulation \\n Boosts focus for a strong mind-muscle connection \\n Delicious candy-like flavors \\n \\n Science Behind the Formula: \\n \\n Citrulline Malate + AAKG: \\n( L-Citrulline Malate 2:1 and Arginine AKG 2:1 blend ) in a 2:1 ratio \\nhas been shown to be more effective at increasing blood arginine levels \\nthan either ingredient alone. With greater nitric oxide (NO) production comes improved blood flow, \\noxygen delivery, and nutrient transport to muscles — optimizing performance. \\nAdditional research on L-Citrulline suggests enhanced VO₂ kinetics and ATP production, \\nleading to improved endurance and lean muscle growth. \\n Beta-Alanine: \\nA powerful amino acid that increases stamina and endurance by elevating muscle carnosine levels. \\nCarnosine buffers lactic acid buildup during intense exercise, delaying fatigue and allowing longer, \\nharder workouts before muscles give out. \\n Choline Bitartrate: \\nAn essential nutrient crucial for cognitive function, muscle movement, and cell structure. \\nIt’s a key precursor for acetylcholine — the “learning neurotransmitter” that enhances focus, memory, \\nand the mind-muscle connection. Supplementation supports optimal acetylcholine levels for superior training focus. \\n Caffeine: \\nA well-known stimulant that increases mental energy, focus, and alertness while also promoting fat metabolism \\nfor improved performance and endurance. \\n \\n",
@@ -14604,7 +14774,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous48.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14621,7 +14791,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous48.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14638,7 +14808,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous48.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -14646,7 +14816,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 150
+    "stockPortugal": 150,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5641",
@@ -14668,7 +14839,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 29,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous-63.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-63.png',
         "alt": {
           "fr": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération",
           "de": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération",
@@ -14686,10 +14857,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Escape the hard day to new levels of deep sleep that boosts recovery immunity and finally nothing adjusts your mood better than a good deep sleep. \\n \\nThis product provides you with a unique combination of GH-boosting amino acids, cortisol/stress-reducing & ZMA Increases Growth Hormone & Testosterone! Reduces Stress & Cortisol Improves Sleep, Recovery & Growth approach to improving muscle growth and recovery."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Escape the hard day to new levels of deep sleep that boosts recovery immunity and finally nothing adjusts your mood better than a good deep sleep. \\n \\nThis product provides you with a unique combination of GH-boosting amino acids, cortisol/stress-reducing & ZMA Increases Growth Hormone & Testosterone! Reduces Stress & Cortisol Improves Sleep, Recovery & Growth approach to improving muscle growth and recovery.\n\nProduct Intro: \\nEscape the hard day to new levels of deep sleep that boost recovery, immunity, and mood. Nothing adjusts your mood better than a good deep sleep. \\n \\nThis product provides a unique combination of GH-boosting amino acids, cortisol/stress-reducing compounds & ZMA to increase Growth Hormone & Testosterone, reduce stress & cortisol, and improve sleep, recovery & growth. It is designed to promote muscle tissue repair and optimize exercise performance. \\n Product Benefits: \\n \\n Increasing natural GH production \\n Regulating muscle growth and fat loss \\n Balancing metabolism \\n \\n Science Behind the Formula: \\n \\n L-Ornithine: An amino acid that regulates the urea cycle, helping to eliminate toxic ammonia from the body by converting it into urea for excretion. \\n L-Glycine: The smallest amino acid, essential for producing glutathione, DNA, creatine, bile, hemoglobin, and proteins. It supports glycogen storage for energy and acts as a calming neurotransmitter to promote healthy sleep patterns. \\n GABA: Gamma-Aminobutyric Acid functions as a neurotransmitter in the brain, promoting relaxation and easing nervous tension. \\n Melatonin: A hormone produced by the pineal gland that regulates sleep-wake cycles. Supplementing with melatonin safely enhances production and supports deep, restorative sleep, especially when blue light exposure inhibits natural secretion. \\n ZMA: A combination of zinc, magnesium, and vitamin B6 designed to maximize absorption and promote recovery. Zinc supports cellular growth, tissue repair, and immunity. Magnesium maintains electrolyte balance, energy production, and neuromuscular function. Physical activity increases the need for these minerals, making ZMA ideal for replenishment. \\n",
@@ -14741,7 +14912,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 29,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous-63.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-63.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -14749,7 +14920,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5643",
@@ -14771,7 +14943,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/images/products/marvelous/79-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/79-1.png',
         "alt": {
           "fr": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition",
           "de": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition",
@@ -14789,10 +14961,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "You will burn excess fat and reshape your body making you feel as superhero. \\n \\nAmputation features a complex blend of pure, ultra-pharmaceutical grade, Ingredients that boost the body’s Energy that will shred fat, water, and estrogen without any muscle loss."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "You will burn excess fat and reshape your body making you feel as superhero. \\n \\nAmputation features a complex blend of pure, ultra-pharmaceutical grade, Ingredients that boost the body’s Energy that will shred fat, water, and estrogen without any muscle loss.\n\nProduct Intro: \\nTransform your physique and feel like a superhero with Amputation — a powerful fat-burning formula designed to reshape your body while preserving lean muscle. \\n \\nAmputation features a complex blend of pure, ultra-pharmaceutical grade ingredients that supercharge your body’s energy levels, helping to shred fat, eliminate excess water, and reduce estrogen — all without sacrificing muscle mass. \\n \\nThis advanced formula attacks fat through multiple pathways, ensuring your body consistently burns stored fat while eliminating unwanted water retention. By raising your body’s core temperature, Amputation promotes thermogenesis — helping you torch calories and sweat intensely during every workout. \\n \\nEnriched with a potent mix of super herbs and ALCAR (Acetyl L-Carnitine) , Amputation enhances fat metabolism, boosts endurance, and supports impressive physical transformations by ensuring your energy is efficiently derived from fat stores. \\n Product Benefits: \\nThe unique formula contributes to: \\n \\n Increased metabolism \\n Balanced cortisol levels \\n Enhanced energy and focus \\n Improved thyroid output \\n Reduced excess body water \\n",
@@ -14844,16 +15016,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 30,
         "inStock": true,
-        "image": "/images/products/marvelous/79-1.png",
-        "stockGeneva": 30,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/79-1.png',
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 30,
+    "stockGeneva": 0,
     "stockPortugal": 50,
-    "inStock": true
+    "inStock": true,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5645",
@@ -14875,7 +15048,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous37.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
         "alt": {
           "fr": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium",
           "de": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium",
@@ -14893,10 +15066,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -14948,7 +15121,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14965,7 +15138,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14982,7 +15155,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14999,7 +15172,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15016,7 +15189,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous37.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15024,7 +15197,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 250
+    "stockPortugal": 250,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5646",
@@ -15046,7 +15220,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous28.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
         "alt": {
           "fr": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium",
           "de": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium",
@@ -15064,10 +15238,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -15119,7 +15293,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15136,7 +15310,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15153,7 +15327,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15170,7 +15344,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15187,7 +15361,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous28.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15195,7 +15369,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 250
+    "stockPortugal": 250,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5647",
@@ -15217,7 +15392,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous29.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
         "alt": {
           "fr": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation",
           "de": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation",
@@ -15235,10 +15410,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -15290,7 +15465,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15307,7 +15482,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15324,7 +15499,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15341,7 +15516,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15358,7 +15533,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous29.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15366,7 +15541,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 250
+    "stockPortugal": 250,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5648",
@@ -15388,7 +15564,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous45.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous45.png',
         "alt": {
           "fr": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche",
           "de": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche",
@@ -15406,10 +15582,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -15461,7 +15637,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous45.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous45.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15469,7 +15645,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5649",
@@ -15491,7 +15668,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous30.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous30.png',
         "alt": {
           "fr": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA",
           "de": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA",
@@ -15509,10 +15686,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -15564,7 +15741,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous30.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous30.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15572,7 +15749,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5650",
@@ -15594,7 +15772,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous6.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous6.png',
         "alt": {
           "fr": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite",
           "de": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite",
@@ -15612,10 +15790,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -15667,7 +15845,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous6.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous6.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15675,7 +15853,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5651",
@@ -15697,7 +15876,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous13.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous13.png',
         "alt": {
           "fr": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité",
           "de": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité",
@@ -15715,10 +15894,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -15770,7 +15949,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous13.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous13.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15778,7 +15957,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5652",
@@ -15800,7 +15980,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous26.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous26.png',
         "alt": {
           "fr": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver",
           "de": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver",
@@ -15818,10 +15998,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -15873,7 +16053,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous26.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous26.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15881,7 +16061,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5653",
@@ -15903,7 +16084,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous42.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous42.png',
         "alt": {
           "fr": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant",
           "de": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant",
@@ -15921,10 +16102,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -15976,7 +16157,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous42.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous42.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15984,7 +16165,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5654",
@@ -16006,7 +16188,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous21.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous21.png',
         "alt": {
           "fr": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable",
           "de": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable",
@@ -16024,10 +16206,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.",
@@ -16079,7 +16261,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous21.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous21.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16087,7 +16269,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5693",
@@ -16109,7 +16292,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous5.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous5.png',
         "alt": {
           "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels",
           "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels",
@@ -16120,7 +16303,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/49.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/49.jpg',
         "alt": {
           "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Fruit Punch",
           "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Fruit Punch",
@@ -16131,7 +16314,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/48.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/48.jpg',
         "alt": {
           "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Mango",
           "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Mango",
@@ -16142,7 +16325,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/47.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/47.jpg',
         "alt": {
           "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Strawberry",
           "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Strawberry",
@@ -16160,10 +16343,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Maze Premium Aminos will solve the mystery of muscle gains like no other! Now You can Grow All DAY. \\nThe perfect blend of Essential Amino Acids and extra innovative components suitable for use pre, intra, and post workouts to bring an edge to your muscles."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Maze Premium Aminos will solve the mystery of muscle gains like no other! Now You can Grow All DAY. \\nThe perfect blend of Essential Amino Acids and extra innovative components suitable for use pre, intra, and post workouts to bring an edge to your muscles.\n\nProduct Intro: \\n Maze Premium Aminos will solve the mystery of muscle gains like no other! Now you can grow all day. \\n \\nThis is the perfect blend of Essential Amino Acids (EAAs) and innovative components suitable for use pre, intra, and post workouts — designed to give your muscles the ultimate edge. \\n \\nBranched-Chain Amino Acids (BCAAs) signal muscle protein synthesis, but growth is incomplete without all nine Essential Amino Acids (EAAs) — which your body needs but cannot produce on its own. \\n Product Benefits: \\n \\n Promotes lean muscle production \\n Increases anabolic capacity \\n Delivers outstanding gains in muscle and strength, without the negative side effects of steroids or prohormones \\n Preserves muscle during high-intensity workouts and diets \\n Helps burn fat \\n Removes excess ammonia and toxins from the body \\n Boosts immune system response \\n \\n Science Behind the Formula: \\n \\n Leucine: The most powerful amino acid for stimulating skeletal muscle protein synthesis via the mTOR pathway. \\n Phenylalanine: A precursor for tyrosine, which supports dopamine, norepinephrine, and epinephrine production. \\n Lysine: A vital building block for muscle protein; aids calcium absorption, enhances recovery, and supports hormone, enzyme, and antibody production. \\n Valine: Essential for muscle metabolism, repair, and growth while maintaining nitrogen balance in the body. \\n Threonine: A key component of collagen, elastin, and enamel proteins; supports digestion, gut health, and immunity. Converts to glycine, which helps reduce unwanted muscle spasms. \\n Isoleucine: Promotes muscle recovery, helps form hemoglobin, and supports blood sugar regulation and energy levels. \\n Histidine: Crucial for muscle tissue growth and repair, supports nerve protection, aids red and white blood cell production, and promotes digestion through gastric juice formation. \\n Methionine: Acts as a potent antioxidant, assists fat metabolism, supports digestion, and detoxifies the liver. \\n L-Ornithine: Plays a key role in the urea cycle by helping the body eliminate toxic ammonia (NH3) through conversion to urea, which is then excreted in urine. \\n L-Carnitine L-Tartrate: A conditionally essential amino acid that helps convert fat into energy. Supports muscle, heart, and brain health. L-Tartrate enhances antioxidant activity and acts as an acidity regulator. \\n L-Glutamine: The most abundant amino acid in the body, making up over 60% of free amino acids in skeletal muscle. After intense exercise, glutamine levels can drop by up to 50%. Supplementation minimizes muscle breakdown, improves protein metabolism, supports immune health, and maintains intestinal health for optimal nutrient absorption and performance. \\n \\n",
@@ -16216,7 +16399,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/48.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/48.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16233,7 +16416,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/47.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/47.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16250,7 +16433,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/49.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/49.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16267,7 +16450,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/49.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/49.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16275,7 +16458,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 200
+    "stockPortugal": 200,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5703",
@@ -16297,7 +16481,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous47.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous47.png',
         "alt": {
           "fr": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation",
           "de": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation",
@@ -16315,10 +16499,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Our Arginine is Non Essesntail amino acid of high quality ingredients that involve in many areas of human biochemistry, including muscle metabolism, hormone secretion, ammonia detoxification, and the immune system. Arginine promotes nitric oxide production, which helps support circulation and muscles."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Our Arginine is Non Essesntail amino acid of high quality ingredients that involve in many areas of human biochemistry, including muscle metabolism, hormone secretion, ammonia detoxification, and the immune system. Arginine promotes nitric oxide production, which helps support circulation and muscles.\n\nHow to Use: \\nTake 4g 30 minutes before your workout. You can mix it with your Experiment pre-workout to maximize the effects. \\n Description: \\nOur Arginine is a non-essential amino acid made from high-quality ingredients. It is involved in many areas of human biochemistry, including muscle metabolism, hormone secretion, ammonia detoxification, and the immune system. Arginine promotes nitric oxide production, which helps support circulation and muscle performance. \\n Product Benefits: \\n \\n Supports protein synthesis. \\n Increases blood flow to muscle tissue. \\n Boosts circulatory health. \\n Increases levels of nitric oxide. \\n May increase levels of Growth Hormone (GH). \\n \\n Ingredients: \\nL-Arginine \\n Supplement Facts: \\n \\n \\n \\n Serving Per Container: 75 Servings \\n \\n \\n Serving Size: 4g \\n \\n \\n Ingredients \\n Amount per Dose \\n NRV \\n \\n \\n L-Arginine \\n 4000mg \\n – \\n \\n \\n",
@@ -16370,7 +16554,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous47.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous47.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16378,7 +16562,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5707",
@@ -16400,7 +16585,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous25.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous25.png',
         "alt": {
           "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance",
           "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance",
@@ -16411,7 +16596,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/66.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/66.jpg',
         "alt": {
           "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Chocolate Peanut Butter",
           "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Chocolate Peanut Butter",
@@ -16422,7 +16607,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/65.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/65.jpg',
         "alt": {
           "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Cookies and Cream",
           "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Cookies and Cream",
@@ -16433,7 +16618,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/64.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/64.jpg',
         "alt": {
           "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Strawberry",
           "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Strawberry",
@@ -16451,10 +16636,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Hyper Trophy Protein isolate blend provides a fast acting and delicious whey to add additional muscle-building protein into your daily workout. Hyper trophy whey high biological value and amino acid profile boosts protein synthesis, supports lean muscle growth, accelerates metabolism, and enhances recovery."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Hyper Trophy Protein isolate blend provides a fast acting and delicious whey to add additional muscle-building protein into your daily workout. Hyper trophy whey high biological value and amino acid profile boosts protein synthesis, supports lean muscle growth, accelerates metabolism, and enhances recovery.\n\nHow to Use: \\nMix 1 scoop (30g) with 300–400 ml of cold water and shake vigorously. Take one serving immediately post workout or anytime you desire. \\n Description: \\nHyper Trophy Protein Isolate Blend provides a fast-acting and delicious whey to add additional muscle-building protein into your daily workout. Hyper Trophy Whey has a high biological value and amino acid profile that boosts protein synthesis, supports lean muscle growth, accelerates metabolism, and enhances recovery. Hyper Trophy contains no proprietary blends. \\n \\nHyper Trophy blend consists of: \\n \\n Whey Protein Isolate 100 \\n Milk Protein Isolate 90 (Casein Isolate) \\n Whey Protein Concentrate 85 \\n \\n Ingredients: \\nMilk Protein Isolate, Whey Protein Isolate, Whey Protein Concentrate, L-Glycine, Low Fat Cocoa Powder, Flavor, Thickeners (Guar Gum, Xanthan Gum), Sodium Chloride, Sweetener (Sucralose E955). \\n Supplement Facts: \\n \\n \\n \\n Serving Per Container: 33 Servings \\n \\n \\n Serving Size: 30g \\n \\n \\n Nutrient \\n Amount per 30g \\n \\n \\n Energy Value \\n 114.80 Kcal \\n \\n \\n Fat – of which Saturates \\n 1.16g, 0.69g \\n \\n \\n Carbohydrates – of which Sugars \\n 1.41g, 0.91g \\n \\n \\n Protein \\n 24.36g \\n \\n \\n Dietary Fibers \\n 0.64g \\n \\n \\n Salt \\n 0.32g \\n \\n \\n \\n Amino Acids per 100g: \\n \\n \\n \\n Amino Acid \\n Amount \\n Amino Acid \\n Amount \\n Amino Acid \\n Amount \\n \\n \\n Alanine \\n 4.3g \\n Glycine \\n 8.34g \\n Lysine \\n 9.08g \\n \\n \\n Arginine \\n 3.06g \\n Histidine \\n 2.28g \\n Methionine \\n 2.6g \\n \\n \\n Aspartic Acid \\n 9.5g \\n Iso-leucine \\n 5.84g \\n Phenylalanine \\n 4.15g \\n \\n \\n Cysteine \\n 1.25g \\n Valine \\n 6.43g \\n Proline \\n 8.24g \\n \\n \\n Glutamic Acid \\n 20.5g \\n Leucine \\n 10.35g \\n Serine \\n 5.75g \\n \\n \\n Threonine \\n 6.07g \\n Tryptophan \\n 1.59g \\n Tyrosine \\n 4.2g \\n \\n \\n",
@@ -16507,7 +16692,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/66.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/66.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16524,7 +16709,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/65.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/65.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16541,7 +16726,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/64.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/64.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16549,7 +16734,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 150
+    "stockPortugal": 150,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5709",
@@ -16571,7 +16757,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 28,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous33.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous33.png',
         "alt": {
           "fr": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité",
           "de": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité",
@@ -16582,7 +16768,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/63.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/63.jpg',
         "alt": {
           "fr": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité - Orange",
           "de": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité - Orange",
@@ -16600,10 +16786,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Organics is a superfood made of greens, fibers and reds complex offering all the benefits of whole plant foods, and then some, to help fuel your active lifestyle. Organics is designed to support the body’s antioxidant system, digestive function, and immune health and help with giving the body natural vitamins source."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Organics is a superfood made of greens, fibers and reds complex offering all the benefits of whole plant foods, and then some, to help fuel your active lifestyle. Organics is designed to support the body’s antioxidant system, digestive function, and immune health and help with giving the body natural vitamins source.\n\nHow to Use: \\nTake 15g with breakfast. \\n Description: \\nOrganics is a superfood made of greens, fibers, and reds complex, offering all the benefits of whole plant foods—plus more—to help fuel your active lifestyle. Organics is designed to support the body’s antioxidant system, digestive function, and immune health, while providing a natural source of vitamins. \\n Product Benefits: \\n \\n Anti-Aging Nutrients \\n Boosts Immune System \\n Detoxifying Antioxidants \\n Supports Digestive Function \\n \\n Ingredients: \\nPolydextrose, Inulin, Wheat Grass Powder (Triticum aestivum L., leaf), Barley Grass Powder (Hordeum vulgare L., herb), Powdered Carrot, Powdered Pumpkin, Powdered Beetroot, Powdered Grapefruit Juice, Powdered Mandarin Juice, Powdered Organic Chlorella, Powdered Celery, Powdered Orange, Powdered Apple, Powdered Pomegranate Juice, Flavouring, Powdered Organic Spirulina, Powdered Spinach, Powdered Eggplant, Powdered Green Bean, Powdered Zucchini, Rose Hip Dry Extract (Rosa canina L., fruit), Orange Dry Extract (Citrus sinensis (L.) Osbeck, fruit) valued at citrus bioflavonoids, Maca Dry Extract (Lepidium meyenii, root), Ginseng Dry Extract (Panax ginseng C.A.Mey., leafs), Powdered Organic Açai, Powdered Kale, and Powdered Broccoli. \\n Supplement Facts: \\n \\n \\n \\n Serving Per Container: 14 Servings \\n \\n \\n Serving Size: 15g \\n \\n \\n Ingredients \\n Amount per Dose \\n NRV \\n \\n \\n Inulin \\n 2g \\n – \\n \\n \\n Powdered Wheat Grass \\n 1.5g \\n – \\n \\n \\n Powdered Barley Grass \\n 1.5g \\n – \\n \\n \\n Powdered Carrot \\n 600mg \\n – \\n \\n \\n Powdered Pumpkin \\n 600mg \\n – \\n \\n \\n Powdered Beetroot \\n 600mg \\n – \\n \\n \\n Powdered Organic Chlorella \\n 500mg \\n – \\n \\n \\n Powdered Celery \\n 500mg \\n – \\n \\n \\n Powdered Apple \\n 450mg \\n – \\n \\n \\n Powdered Orange \\n 400mg \\n – \\n \\n \\n Powdered Organic Spirulina \\n 250mg \\n – \\n \\n \\n Powdered Spinach \\n 250mg \\n – \\n \\n \\n Powdered Eggplant \\n 250mg \\n – \\n \\n \\n Powdered Green Bean \\n 250mg \\n – \\n \\n \\n Powdered Zucchini \\n 250mg \\n – \\n \\n \\n Powdered Grapefruit Juice \\n 250mg \\n – \\n \\n \\n Powdered Mandarin Juice \\n 250mg \\n – \\n \\n \\n Rose Hip Dry Extract \\n 250mg \\n – \\n \\n \\n Orange Dry Extract \\n 250mg \\n – \\n \\n \\n Powdered Pomegranate Juice \\n 150mg \\n – \\n \\n \\n Maca Dry Extract \\n 150mg \\n – \\n \\n \\n Ginseng Dry Extract \\n 150mg \\n – \\n \\n \\n Powdered Organic Açai \\n 50mg \\n – \\n \\n \\n Powdered Kale \\n 15mg \\n – \\n \\n \\n Powdered Broccoli \\n 15mg \\n – \\n \\n \\n",
@@ -16655,7 +16841,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 28,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/63.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/63.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16663,7 +16849,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5711",
@@ -16685,7 +16872,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous50.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous50.png',
         "alt": {
           "fr": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême",
           "de": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême",
@@ -16703,10 +16890,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.\n\nHow to Use: \\nTake 4 capsules before workout. \\n Description: \\n Beta Ecdysterone is a unique and powerful natural compound that builds lean muscle, burns fat, and increases energy. It carries muscle-building properties similar to anabolic steroids, but with NO harmful androgenic side effects . \\n \\nBeta Ecdysterone has been shown to increase lean muscle mass, stimulate muscle protein synthesis, reduce fat, boost metabolism, and enhance energy and endurance — all without negative hormonal impact. \\n \\n✔ NO androgenic side effects \\n✔ NO testosterone suppression \\n✔ NO conversion to estrogen \\n✔ NO liver toxicity \\n✔ NO post-cycle therapy required \\n Creatine – Kre-Alkalyn®: \\nKre-Alkalyn is a patented, pH-adjusted creatine designed to match the acidity of your digestive system. This keeps the creatine stable, allowing your body to absorb it efficiently with no loading phase required. \\nKre-Alkalyn is the only creatine that does not convert to creatinine in liquids, making it the safest and most stable form available. \\n C-HMB: \\nC-HMB helps decrease muscle breakdown while increasing lean muscle mass, improving strength, power, endurance, and supporting faster recovery after training, injury, or illness. \\n AstraGin®: \\nAstraGin® is a patented, 100% natural compound that enhances the absorption of key nutrients while supporting gut health. \\nIt increases the uptake of amino acids, vitamins, minerals, and omega-3s — making every ingredient in your formula work more effectively.",
@@ -16758,7 +16945,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous50.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous50.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16766,7 +16953,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5733",
@@ -16788,7 +16976,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/marvelous/Untitled-design-14-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-14-1.png',
         "alt": {
           "fr": "Marvelous Bêta-Alanine Pure Micronisée 300g – Tampon Lactique & Force Endurance",
           "de": "Marvelous Bêta-Alanine Pure Micronisée 300g – Tampon Lactique & Force Endurance",
@@ -16861,7 +17049,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Untitled-design-14-1.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-14-1.png',
         "stockGeneva": 25,
         "stockPortugal": 25
       }
@@ -16892,7 +17080,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 23,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous-53.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-53.png',
         "alt": {
           "fr": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles",
           "de": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles",
@@ -16910,10 +17098,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Vitamin provides a powerful combination of the highest quality vitamins, minerals to maximize the athlete’s potential through superior nutrition. Its formula contains higher levels of antioxidants to help counteract the oxidative stress caused by intense physical activity."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Vitamin provides a powerful combination of the highest quality vitamins, minerals to maximize the athlete’s potential through superior nutrition. Its formula contains higher levels of antioxidants to help counteract the oxidative stress caused by intense physical activity.\n\nHow to Use: \\nTake 1 capsule per day. \\n Description: \\nThis vitamin complex provides a powerful combination of high-quality vitamins and minerals to maximize an athlete’s performance through superior nutrition. \\nIts formula contains elevated levels of antioxidants to help counteract oxidative stress caused by intense physical activity. \\n Product Benefits: \\n \\n Supports overall health, immune system function, and natural hormone production. \\n Reinforces joint health, bone health, and gut/GI health. \\n Increases natural energy levels. \\n Improves mental focus and overall mood. \\n Reduces physical and mental fatigue. \\n \\n Ingredients: \\nVitamins and Minerals Blend (L-Ascorbic Acid, Calcium Carbonate, Magnesium Oxide, Nicotinamide, Calcium D-Pantothenate, Ferrous Sulfate, DL-α-Tocopheryl Acetate, Choline Hydrogen Tartrate, Zinc Oxide, Inositol, Beta-Carotene, Pyridoxine Hydrochloride, Thiamine Mononitrate, Riboflavin, Manganese Sulfate, Cupric Sulfate, Pteroilmonoglutamic Acid, Potassium Iodide, D-Biotin, Cyanocobalamin, Maltodextrin), \\nBulking Agent (Microcrystalline Cellulose), \\nCapsule Shell (Hypromellose), \\nDigeZyme® Enzyme Complex (Alpha-Amylase, Neutral Protease, Cellulase, Lactase, Lipase). \\n \\n",
@@ -16965,7 +17153,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 23,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous-53.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-53.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16973,7 +17161,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5749",
@@ -16995,7 +17184,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 70,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous-51.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-51.png',
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure",
@@ -17006,7 +17195,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/Lean-AF-flvours-5.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-5.jpg',
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Chocolate Peanut Butter",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Chocolate Peanut Butter",
@@ -17017,7 +17206,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/Lean-AF-flvours-6.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-6.jpg',
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Belgium Chocolate",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Belgium Chocolate",
@@ -17028,7 +17217,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/Lean-AF-flvours-4.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-4.jpg',
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Cookies",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Cookies",
@@ -17039,7 +17228,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/Lean-AF-flvours-3.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-3.jpg',
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Creme Brulee",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Creme Brulee",
@@ -17050,7 +17239,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/Lean-AF-flvours-2.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-2.jpg',
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Pinacolada",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Pinacolada",
@@ -17061,7 +17250,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/Lean-AF-flvours-1.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-1.jpg',
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - White Chocolate Raspberry",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - White Chocolate Raspberry",
@@ -17079,10 +17268,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "CFM whey protein isolate is considered to be one of the highest quality forms of whey protein available, as it contains a very high percentage of protein by weight, often over 90% protein content. \\n \\nThis type of whey protein isolate is commonly used by athletes, bodybuilders, and fitness enthusiasts to support muscle growth, recovery, and overall protein needs. It can be consumed as a post-workout shake, or used as a convenient source of high-quality protein throughout the day. \\n \\nPremium 100% CFM whey protein isolate \\n \\n1- No added amino acids \\n \\n2- zero lactose \\n \\n3- Low fat \\n \\n4- Zero Added sugar"
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "CFM whey protein isolate is considered to be one of the highest quality forms of whey protein available, as it contains a very high percentage of protein by weight, often over 90% protein content. \\n \\nThis type of whey protein isolate is commonly used by athletes, bodybuilders, and fitness enthusiasts to support muscle growth, recovery, and overall protein needs. It can be consumed as a post-workout shake, or used as a convenient source of high-quality protein throughout the day. \\n \\nPremium 100% CFM whey protein isolate \\n \\n1- No added amino acids \\n \\n2- zero lactose \\n \\n3- Low fat \\n \\n4- Zero Added sugar\n\nIngredients: \\nCross-flow microfiltered whey protein isolate (from milk, instantized with sunflower lecithin), \\nLow-fat cocoa powder, Flavouring (chocolate flavour), Sodium chloride, Thickener (xanthan gum), \\nSweeteners (Acesulfame K, Sucralose), and Digezyme® enzyme complex (alpha-amylase, neutral protease, cellulase, lactase, lipase). \\n How to Use: \\nMix 1 scoop (25g) with 200–300 ml of cold water and shake vigorously. \\nTake one serving immediately post-workout or anytime you desire for added protein intake. \\n Storage: \\nStore in a cool, dry place after opening. \\n Net Weight: \\n2 KG – 80 Servings \\n \\n",
@@ -17135,7 +17324,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-4.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-4.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17152,7 +17341,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-3.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-3.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17169,7 +17358,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 70,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-2.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-2.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17186,7 +17375,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-1.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-1.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17203,7 +17392,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-6.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-6.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17220,7 +17409,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Lean-AF-flvours-5.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-5.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17228,7 +17417,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 300
+    "stockPortugal": 300,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5756",
@@ -17250,7 +17440,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/images/products/marvelous/creatine.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/creatine.png',
         "alt": {
           "fr": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP",
           "de": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP",
@@ -17268,10 +17458,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Marvelous purest and most easily absorbed Creatine Monohydrate formula available. Studies report that increasing creatine levels helps delay the onset of fatigue, increase energy metabolism in muscle cells and improve overall training capacity and performance. \\n \\nCreatine is a compound naturally produced by our body in order to provide energy to our muscles. Produced in the liver, pancreas and kidneys, it is transported through the bloodstream and the body's muscles, where it is converted into phosphocreatine. This high-potency metabolite is used to regenerate muscle reserves of adenosine triphosphate, the main source of muscle energy. \\n Benefits: \\n• Gain explosive strength for super intensive training \\n \\n• It is processed at a higher pH (less acidic), increasing muscular resistance \\n \\n• Increases muscle recovery capacity \\n \\n• Allows muscles to grow faster, leaving them stronger, toned and more resistant to more training sessions"
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Marvelous purest and most easily absorbed Creatine Monohydrate formula available. Studies report that increasing creatine levels helps delay the onset of fatigue, increase energy metabolism in muscle cells and improve overall training capacity and performance. \\n \\nCreatine is a compound naturally produced by our body in order to provide energy to our muscles. Produced in the liver, pancreas and kidneys, it is transported through the bloodstream and the body's muscles, where it is converted into phosphocreatine. This high-potency metabolite is used to regenerate muscle reserves of adenosine triphosphate, the main source of muscle energy. \\n Benefits: \\n• Gain explosive strength for super intensive training \\n \\n• It is processed at a higher pH (less acidic), increasing muscular resistance \\n \\n• Increases muscle recovery capacity \\n \\n• Allows muscles to grow faster, leaving them stronger, toned and more resistant to more training sessions\n\nIngredients: \\nCreatine Monohydrate \\n How to Use: \\nMix 5g with 400–500 ml of water. Take one serving immediately post workout. \\n Storage: \\nStore in a cool, dry place after opening. \\n Net Weight: \\n300g \\n \\n",
@@ -17323,15 +17513,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 99,
         "inStock": true,
-        "image": "/images/products/marvelous/creatine.png",
-        "stockGeneva": 49,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/creatine.png',
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 49,
-    "stockPortugal": 50
+    "stockGeneva": 0,
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5757",
@@ -17353,7 +17544,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 39,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous20.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous20.png',
         "alt": {
           "fr": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant",
           "de": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant",
@@ -17371,10 +17562,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "CODEX contains High dose of Vitamin C 1.3g , contain Herbal Extracts for improving Health and having omeg3 dosage . \\n \\nCODEX contains MSM, Glucosamine Sulfate, Chondroitin sulfate for the improvement of Bones and Ligaments and avoid Injuries \\n \\nCODEX contains Soy lecithin for the improvement of Heart Health and improve lipid profile \\n \\n- Each pack contains 7 pills \\n \\n- Brain support, digestion, hydration, anabolic support and energy production, strong Bones and Ligaments \\n \\n- Premium ingredients \\n \\n- Supports health, wellness, recovery and anti-aging"
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "CODEX contains High dose of Vitamin C 1.3g , contain Herbal Extracts for improving Health and having omeg3 dosage . \\n \\nCODEX contains MSM, Glucosamine Sulfate, Chondroitin sulfate for the improvement of Bones and Ligaments and avoid Injuries \\n \\nCODEX contains Soy lecithin for the improvement of Heart Health and improve lipid profile \\n \\n- Each pack contains 7 pills \\n \\n- Brain support, digestion, hydration, anabolic support and energy production, strong Bones and Ligaments \\n \\n- Premium ingredients \\n \\n- Supports health, wellness, recovery and anti-aging\n\nIngredients: \\n 2 Multivitamin Capsules: Bulking Agent (Microcrystalline Cellulose), Calcium Carbonate, L-Ascorbic Acid, Bovine Gelatin (as capsule shell), Magnesium Oxide, Beta Carotene, Iron (II) Sulfate, Nicotinamide, DL-alpha-Tocopheryl Acetate, Calcium D Pantothenate, Choline Bitartrate, Potassium Iodide, Zinc Oxide, Inositol, Manganese(II) Sulfate, Cyanocobalamin, D-Biotin, Pyridoxine Hydrochloride, Color (Iron Oxide), Thiamine Monohydrate, Riboflavin, Copper(II) Sulfate, Folate. \\n \\n Fish Oil Soft Gelatin Capsule: Fish Oil, Capsule Shell (Gelatin, Glycerin, Purified Water), Antioxidant (DL-alpha-Tocopherol). \\n \\n CA-MG Tablet: Calcium Carbonate, Magnesium Oxide, Bulking Agent (Microcrystalline Cellulose), Anti-Caking Agent (Magnesium Stearate). \\n \\n C-Complex Capsule: L-Ascorbic Acid, Bovine Gelatin (as capsule shell), Citrus Bioflavonoid Complex, Rose Hip (Fruit) Extract 20:1, Vitis Vinifera (Seed) 120:1 Extract, Color (Iron Oxide), Bioperine® (Piper Nigrum (Fruit) 50:1 Extract). \\n Bioperine® is a licensed trademark of Sabinsa Europe GmbH. \\n \\n Joint-Complex Capsule: D-Glucosamine Sulfate 2KCL, Methylsulfonylmethane (MSM), Bovine Gelatin (as capsule shell), L-Ascorbic Acid, Chondroitin Sulfate, DL-Alpha Tocopheryl Acetate, Color (Iron Oxide). \\n \\n Soy Lecithin Soft Gelatin Capsule: Soy Lecithin (71%), Capsule Shell (Gelatin, Glycerin, Purified Water). \\n How to Use: \\nTake one pack with breakfast or any other meal, with plenty of water. \\n Storage: \\nStore in a cool, dry place after opening. \\n Net Weight: \\n250g / 30 packs of 7 capsules \\n \\n",
@@ -17426,16 +17617,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 39,
         "inventoryQuantity": 15,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous20.png",
-        "stockGeneva": 15,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous20.png',
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 15,
+    "stockGeneva": 0,
     "stockPortugal": 50,
-    "inStock": true
+    "inStock": true,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5758",
@@ -17457,7 +17649,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous7.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous7.png',
         "alt": {
           "fr": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité",
           "de": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité",
@@ -17475,10 +17667,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Unlock your inner beast with Testo! Become the epitome of strength and endurance with our elite testosterone booster formula. Our advanced natural ingredients are designed to push your training sessions and muscle growth to unprecedented levels. Experience the transformation with Testo, the ultimate choice for maximizing your potential. However, always prioritize your well-being and consult with healthcare professionals before incorporating any supplements into your routine."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Unlock your inner beast with Testo! Become the epitome of strength and endurance with our elite testosterone booster formula. Our advanced natural ingredients are designed to push your training sessions and muscle growth to unprecedented levels. Experience the transformation with Testo, the ultimate choice for maximizing your potential. However, always prioritize your well-being and consult with healthcare professionals before incorporating any supplements into your routine.\n\nHow to Use: \\n Take one serving (3 capsules) before workout. \\n \\n Description: \\n Food supplement based on plant extracts. \\n \\n Storage: \\n Store in a cool, dry place after opening. \\n \\n Lote: \\n See container bottom. \\n \\n Quantity: \\n 90 Capsules \\n \\n Ingredients: \\n \\nTribulus dry extract (Tribulus terrestris L., whole plant) / Extracto seco de Tribulus (Tribulus terrestris L., planta inteira), \\nFenugreek dry extract (Trigonella foenum-graecum L., seeds) / Extracto seco Fenugreek (Trigonella foenum-graecum L., sementes), \\nAshwagandha dry extract (Withania somnifera (L.) Dunal, root) / Extracto seco de Ashwagandha (Withania somnifera (L.) Dunal, raiz), \\nMaca dry extract (Lepidium meyenii Walpers, root) / Extracto seco de Maca (Lepidium meyenii Walpers, raiz), \\nOat dry extract (Avena sativa L., seed) / Extracto seco de Aveia (Avena sativa L., sementes), \\nAnti-caking agent: Magnesium salts of fatty acids / Antiaglomerante: Sais de magnésio de ácidos gordos, \\nBulking agent: Microcrystalline cellulose (E-460i) / Agente de volume: Celulose microcristalina (E-460i), \\nCapsule (glazing agent: Hydroxypropyl methylcellulose (E-464)) / Cápsula (Agente de revestimento: Hidroxipropilmetilcelulose (E-464)). \\n \\n \\n Supplement Facts: \\n \\n \\n Serving Per Container: 30 \\n \\n \\n Serving Size: 3 Capsules \\n \\n \\n \\n Active Ingredients \\n Per Serving (3 Capsules) \\n \\n \\n Tribulus dry extract / Extracto seco de Tribulus 600mg \\n \\n Fenugreek dry extract / Extracto seco de Fenugreek 375mg \\n \\n Maca dry extract / Extracto seco de Maca 375mg \\n \\n Ashwagandha dry extract / Extracto seco de Ashwagandha 375mg \\n \\n Oat dry extract / Extracto seco de Aveia 225mg \\n \\n Saw Palmetto 150mg \\n \\n",
@@ -17530,7 +17722,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous7.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous7.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17538,7 +17730,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5759",
@@ -17560,7 +17753,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 18,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous2.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous2.png',
         "alt": {
           "fr": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie",
           "de": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie",
@@ -17578,10 +17771,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "L-Carnitine serves as a pivotal compound in the body, facilitating the conversion of fatty acids into energy. This dual-action process offers significant advantages: \\nElevated Energy Levels: L-Carnitine transports fatty acids to the mitochondria, where they are converted into usable energy. By enhancing this mechanism, L-Carnitine effectively boosts energy levels, promoting enhanced stamina and vitality. \\nWeight Management Support: Through its role in utilizing fats for energy, L-Carnitine helps prevent the build up of excess fat in the body. This attribute makes it a valuable asset for individuals striving to manage their weight or promote fat loss in pursuit of a healthier lifestyle."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "L-Carnitine serves as a pivotal compound in the body, facilitating the conversion of fatty acids into energy. This dual-action process offers significant advantages: \\nElevated Energy Levels: L-Carnitine transports fatty acids to the mitochondria, where they are converted into usable energy. By enhancing this mechanism, L-Carnitine effectively boosts energy levels, promoting enhanced stamina and vitality. \\nWeight Management Support: Through its role in utilizing fats for energy, L-Carnitine helps prevent the build up of excess fat in the body. This attribute makes it a valuable asset for individuals striving to manage their weight or promote fat loss in pursuit of a healthier lifestyle.\n\nHow to Use: \\n Take 1 serving (15mL) per day with water, preferably before training. Shake well before each use. The packaging includes a meter. \\n \\n Description: \\n Food supplement based on L-Carnitine. \\n \\n Storage: \\n Store in a cool, dry place after opening. \\n \\n Lote: \\n See container bottom. \\n \\n Quantity: \\n 500ml \\n \\n Ingredients: \\n Water, L-Carnitine, Acidifier (Citric Acid), Aroma, Preservative (Potassium Sorbate), Preservative (Sodium Benzoate), Calcium D-Pantothenate, Sweetener (Sucralose). \\n \\n Ingredientes (Portuguese): \\n Água, L-Carnitina, Acidificante (Ácido cítrico), Aroma, Conservante (Sorbato de Potássio), Conservante (Benzoato de Sódio), D-Pantotenato de Cálcio, Edulcorante (Sucralose). \\n \\n Ingredientes (Spanish): \\n Agua, L-Carnitina, Acidulante (Ácido cítrico), Aroma, Conservante (Sorbato de Potasio), Conservante (Benzoato de Sodio), D-Pantotenato de Calcio, Edulcorante (Sucralosa). \\n \\n Supplement Facts: \\n \\n \\n Serving Per Container: 33 \\n \\n \\n Serving Size: 3 Capsules \\n \\n \\n Ingredients / Ingredientes / Ingredientes \\n Per Serving / Por Dose / Por Toma \\n NRV \\n \\n \\n L-Carnitine / L-Carnitina / L-Carnitina \\n 600mg \\n – \\n \\n \\n",
@@ -17633,7 +17826,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Marveleous2.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous2.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17641,7 +17834,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5763",
@@ -17663,7 +17857,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous23.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous23.png',
         "alt": {
           "fr": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus",
           "de": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus",
@@ -17674,7 +17868,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/61.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/61.jpg',
         "alt": {
           "fr": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus - Blue razz",
           "de": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus - Blue razz",
@@ -17685,7 +17879,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/62.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/62.jpg',
         "alt": {
           "fr": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus - Sweet Lemonade",
           "de": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus - Sweet Lemonade",
@@ -17703,10 +17897,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Power MF contains approximately 350mg of Caffiene from natural sources and 4000mg of beta-alanine that will give you the extra boost you need to achieve your goals in the gym and outside the gym. \\nPower MF is an industry leading thermogenic Pre-workout with 11g of Active ingredients of premium raw materials that will take your workout to the next level , featuring a blend of pump and thermogenic ingredients specifically designed to ignite fat loss , increase power, delay fatigue , increase body temperature and sweat."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Power MF contains approximately 350mg of Caffiene from natural sources and 4000mg of beta-alanine that will give you the extra boost you need to achieve your goals in the gym and outside the gym. \\nPower MF is an industry leading thermogenic Pre-workout with 11g of Active ingredients of premium raw materials that will take your workout to the next level , featuring a blend of pump and thermogenic ingredients specifically designed to ignite fat loss , increase power, delay fatigue , increase body temperature and sweat.\n\nIngredients: \\nBeta-Alanine, Creatine Monohydrate, Acidity Regulator (Citric Acid Anhydrous), Flavour, L-Tyrosine, Betaine Anhydrous, L-Taurine, Caffeine Anhydrous, Green Tea Extract (Camellia Sinensis) (leaf) ¾:1 extract, Bacopa Monnieri Extract (whole herb) 10% extract, Rhodiola Rosea (Sedum Roseum) (root) 20:1 extract, Choline Bitartrate, Bitter Orange Extract (Citrus Aurantium L., fruit) 15:1, Willow Bark (Salix Alba) (bark) 8:1 extract, Sweeteners (Acesulfame-K, Sucralose), Tri-Calcium Phosphate, Green Coffee Bean (Coffea Robusta) (seed) 12:1 extract, Forslean (Coleus Forskohlii) (root) 35:1 extract, Colour (Beetroot Red), L-Theanine, Cayenne Pepper (Capsicum Annuum) (fruit) 8:1 extract, Citrus Bioflavonoids (Citrus Aurantium) (fruit) 6:1 extract. \\n How to Use: \\nMix 1 scoop (11g) with 250 mL of water 15–30 minutes before workout. \\n Storage: \\nStore in a cool, dry place after opening. \\n Net Weight: \\n300g – 27 Servings \\n \\n",
@@ -17758,7 +17952,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/62.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/62.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17775,7 +17969,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/61.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/61.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17783,7 +17977,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 100
+    "stockPortugal": 100,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5772",
@@ -17805,7 +18000,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/images/products/marvelous/Marveleous-52.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-52.png',
         "alt": {
           "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités",
           "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités",
@@ -17816,7 +18011,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/Creatine-flvours-1.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-1.jpg',
         "alt": {
           "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Mango",
           "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Mango",
@@ -17827,7 +18022,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/Creatine-flvours-2.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-2.jpg',
         "alt": {
           "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Watermelon",
           "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Watermelon",
@@ -17838,7 +18033,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/Creatine-flvours-3.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-3.jpg',
         "alt": {
           "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Pinacolada",
           "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Pinacolada",
@@ -17856,10 +18051,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Marvelous purest and most easily absorbed Creatine Monohydrate formula available. Studies report that increasing creatine levels helps delay the onset of fatigue, increase energy metabolism in muscle cells and improve overall training capacity and performance. \\n \\nCreatine is a compound naturally produced by our body in order to provide energy to our muscles. Produced in the liver, pancreas and kidneys, it is transported through the bloodstream and the body's muscles, where it is converted into phosphocreatine. This high-potency metabolite is used to regenerate muscle reserves of adenosine triphosphate, the main source of muscle energy. \\n Benefits: \\n• Gain explosive strength for super intensive training \\n \\n• It is processed at a higher pH (less acidic), increasing muscular resistance \\n \\n• Increases muscle recovery capacity \\n \\n• Allows muscles to grow faster, leaving them stronger, toned and more resistant to more training sessions"
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Marvelous purest and most easily absorbed Creatine Monohydrate formula available. Studies report that increasing creatine levels helps delay the onset of fatigue, increase energy metabolism in muscle cells and improve overall training capacity and performance. \\n \\nCreatine is a compound naturally produced by our body in order to provide energy to our muscles. Produced in the liver, pancreas and kidneys, it is transported through the bloodstream and the body's muscles, where it is converted into phosphocreatine. This high-potency metabolite is used to regenerate muscle reserves of adenosine triphosphate, the main source of muscle energy. \\n Benefits: \\n• Gain explosive strength for super intensive training \\n \\n• It is processed at a higher pH (less acidic), increasing muscular resistance \\n \\n• Increases muscle recovery capacity \\n \\n• Allows muscles to grow faster, leaving them stronger, toned and more resistant to more training sessions\n\n\\n Ingredients: \\nCreatine Monohydrate, Acidity Regulator (Citric Acid), Flavour, Sweeteners (Acesulfame-K, Sucralose), Colours \\n How to Use: \\nMix 6g with 400–500 ml of water. Take one serving immediately post workout. \\n Storage: \\nStore in a cool, dry place after opening. \\n Net Weight: \\n300g",
@@ -17911,7 +18106,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Creatine-flvours-3.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-3.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17928,7 +18123,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Creatine-flvours-2.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-2.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17945,7 +18140,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Creatine-flvours-1.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-1.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17953,7 +18148,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 150
+    "stockPortugal": 150,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5776",
@@ -17975,7 +18171,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "/images/products/marvelous/collagen-Flavored.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/collagen-Flavored.png',
         "alt": {
           "fr": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons",
           "de": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons",
@@ -17993,10 +18189,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Collagen is a protein. It gives our bodies the structure, strength and flexibility we need to move around in our daily life. It allows us to travel, move freely, jump or fall without getting hurt. It protects and connects the parts of our body, to keep us standing. Collagen is the most important and abundant protein in our bodies. \\n Collagen constitutes 75% of our skin and: \\n - It provides it with its structure and support, \\n \\n - Maintains its elasticity, \\n \\n - Hydrates attracting hyaluronic acid. \\n \\nAs we age, the balance between collagen synthesis and breakdown is affected. This means that both the quantity and quality of collagen decrease. Your skin becomes thinner, dehydrated and loses its structure. \\n \\n Result: visible signs of aging, such as wrinkles, sagging and dull."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Collagen is a protein. It gives our bodies the structure, strength and flexibility we need to move around in our daily life. It allows us to travel, move freely, jump or fall without getting hurt. It protects and connects the parts of our body, to keep us standing. Collagen is the most important and abundant protein in our bodies. \\n Collagen constitutes 75% of our skin and: \\n - It provides it with its structure and support, \\n \\n - Maintains its elasticity, \\n \\n - Hydrates attracting hyaluronic acid. \\n \\nAs we age, the balance between collagen synthesis and breakdown is affected. This means that both the quantity and quality of collagen decrease. Your skin becomes thinner, dehydrated and loses its structure. \\n \\n Result: visible signs of aging, such as wrinkles, sagging and dull.\n\nIngredients: \\nHydrolyzed bovine collagen, Acidity Regulator (Citric Acid), Hydrolyzed Marine Collagen, Flavor, Coloring, Sweeteners (Acesulfame-K, Sucralose), Ascorbic Acid, Salt, Hyaluronic Acid, Zinc Oxide. \\n How to Use: \\nTake 12g with breakfast. \\n Storage: \\nStore in a cool, dry place after opening. \\n Net Weight: \\n210g – 30 Servings \\n \\n",
@@ -18048,16 +18244,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 4,
         "inStock": true,
-        "image": "/images/products/marvelous/collagen-Flavored.png",
-        "stockGeneva": 4,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/collagen-Flavored.png',
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 4,
+    "stockGeneva": 0,
     "stockPortugal": 50,
-    "inStock": true
+    "inStock": true,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5781",
@@ -18079,7 +18276,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15.9,
     "images": [
       {
-        "src": "/images/products/marvelous/Organics.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Organics.png',
         "alt": {
           "fr": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité",
           "de": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité",
@@ -18097,10 +18294,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité - Qualité supérieure Marvelous Nutrition. Disponible chez NutriFitness Genève avec livraison 24h en Suisse.\n\nIngredients: \\nWaxy Maize Corn Starch, Capsule Shell (Hypromellose), Olea europaea L., Vitis vinifera L., Punica granatum L., Camellia sinensis L. Kuntze, Citrus paradisi Macfad., Vaccinium myrtillus L., Vitis vinifera L., Citrus sinensis L. Osbeck. \\n How to Use: \\nTake 1 capsule with breakfast. \\n Storage: \\nStore in a cool, dry place after opening. \\n Net Weight: \\n42.5g – 60 Servings \\n",
@@ -18152,7 +18349,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 15.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/Organics.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Organics.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18160,7 +18357,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5794",
@@ -18182,7 +18380,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/marvelous/75.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/75.png',
         "alt": {
           "fr": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue",
           "de": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue",
@@ -18200,10 +18398,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Beta Alanine is a non-essential amino acid that has been shown in research to increase muscular carnosine concentrations. By promoting high intra-muscular Carnosine concentrations, works to reduce intra-muscular acidification created by intense exercise and heavy training."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Beta Alanine is a non-essential amino acid that has been shown in research to increase muscular carnosine concentrations. By promoting high intra-muscular Carnosine concentrations, works to reduce intra-muscular acidification created by intense exercise and heavy training.\n\nHow to Use: \\nTake 3g 30 minutes before workout. \\n Description: \\n100% highest quality beta alanine with no additives. Beta Alanine is a non-essential amino acid that has been shown in research to increase muscular carnosine concentrations. By promoting high intra-muscular carnosine concentrations, it works to reduce intra-muscular acidification created by intense exercise and heavy training. \\n \\n BETA-ALANINE delays muscular fatigue, allowing you to increase your performance. \\n \\nBeta alanine consumption may contribute to the following: \\n \\n Increase Strength & Power \\n Boost Muscular Endurance \\n Train with Greater Intensity \\n \\n",
@@ -18255,15 +18453,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 53,
         "inStock": true,
-        "image": "/images/products/marvelous/75.png",
-        "stockGeneva": 3,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/75.png',
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 3,
-    "stockPortugal": 50
+    "stockGeneva": 0,
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5795",
@@ -18285,7 +18484,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 23.9,
     "images": [
       {
-        "src": "/images/products/marvelous/76.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/76.png',
         "alt": {
           "fr": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique",
           "de": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique",
@@ -18303,10 +18502,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Our Arginine is Non Essesntail amino acid of high quality ingredients that involve in many areas of human biochemistry, including muscle metabolism, hormone secretion, ammonia detoxification, and the immune system. Arginine promotes nitric oxide production, which helps support circulation and muscles."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Our Arginine is Non Essesntail amino acid of high quality ingredients that involve in many areas of human biochemistry, including muscle metabolism, hormone secretion, ammonia detoxification, and the immune system. Arginine promotes nitric oxide production, which helps support circulation and muscles.\n\nHow to Use: \\nTake 4g 30 minutes before workout. You can mix it with your Experiment pre-workout to maximize the effects. \\n Description: \\nOur Arginine is a non-essential amino acid made from high-quality ingredients that are involved in many areas of human biochemistry, including muscle metabolism, hormone secretion, ammonia detoxification, and the immune system. Arginine promotes nitric oxide production, which helps support circulation and muscle function. \\n Product Benefits: \\n \\n Supports protein synthesis \\n Increases blood flow to muscle tissue \\n Boosts circulatory health \\n Increases level of nitric oxide \\n May increase levels of Growth Hormone (GH) \\n \\n",
@@ -18358,7 +18557,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 23.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/76.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/76.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18366,7 +18565,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5796",
@@ -18388,7 +18588,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "/images/products/marvelous/Untitled-design-8-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-8-1.png',
         "alt": {
           "fr": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire",
           "de": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire",
@@ -18406,10 +18606,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Result from vegan fermented, L citrulline, will help the production of nitric oxide facilitating more oxygen into muscles and more Vasodilation."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Result from vegan fermented, L citrulline, will help the production of nitric oxide facilitating more oxygen into muscles and more Vasodilation.\n\nHow to Use: \\nTake 3g 30 minutes before workout. \\n Description: \\n100% highest quality L-Citrulline Malate with no additives. Derived from vegan fermentation, L-Citrulline helps promote nitric oxide production, facilitating more oxygen delivery to muscles and enhancing vasodilation. \\n Product Benefits: \\n \\n May help reduce muscle fatigue while increasing endurance \\n May help reduce muscle soreness and improve recovery \\n May increase nitric oxide production \\n \\n",
@@ -18461,15 +18661,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 60,
         "inStock": true,
-        "image": "/images/products/marvelous/Untitled-design-8-1.png",
-        "stockGeneva": 10,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-8-1.png',
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 10,
-    "stockPortugal": 50
+    "stockGeneva": 0,
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-5878",
@@ -18491,7 +18692,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 85,
     "images": [
       {
-        "src": "/images/products/marvelous/hydro-mockup-choco.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-mockup-choco.png',
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose",
@@ -18502,7 +18703,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/hydro-cuppcino.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cuppcino.png',
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Capuccino",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Capuccino",
@@ -18513,7 +18714,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/hydro-choco.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-choco.png',
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Chocolate",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Chocolate",
@@ -18524,7 +18725,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/hydro-cookie-sbiscuit.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cookie-sbiscuit.png',
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Cookies & Cream",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Cookies & Cream",
@@ -18535,7 +18736,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/hydro-strawberry.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-strawberry.png',
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Strawberry",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Strawberry",
@@ -18546,7 +18747,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/hydro-vanilla.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-vanilla.png',
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Vanilla",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Vanilla",
@@ -18564,10 +18765,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Hydro was made to provide High quality bioavailable protein that’s easily absorbed. Hydro contains naturally occurred EAA (including BCAA), L Glutamine and all the amino acids. Hydro contains low Fat and without any added sugars."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Hydro was made to provide High quality bioavailable protein that’s easily absorbed. Hydro contains naturally occurred EAA (including BCAA), L Glutamine and all the amino acids. Hydro contains low Fat and without any added sugars.\n\nIngredients: \\n100% Hydrolyzed Whey Protein Isolate, Whey Protein Concentrate, L-Glycine, Low Fat Cocoa Powder, Flavor Thickeners (Guar Gum, Xanthan Gum), Sodium Chloride, Sweetener (Sucralose E955). \\n How to Use: \\nMix 1 scoop (30g) with 300–400 ml of cold water and shake vigorously. Take one serving immediately post workout or anytime you desire. \\n Storage: \\nStore in a cool, dry place after opening. \\n Net Weight: \\n1.8kg \\n \\n",
@@ -18620,7 +18821,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-cuppcino.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cuppcino.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -18637,7 +18838,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-choco.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-choco.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -18654,7 +18855,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-cookie-sbiscuit.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cookie-sbiscuit.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -18671,7 +18872,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-strawberry.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-strawberry.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -18688,7 +18889,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/hydro-vanilla.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-vanilla.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18696,7 +18897,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 250
+    "stockPortugal": 250,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-6456",
@@ -18718,7 +18920,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png',
         "alt": {
           "fr": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation",
           "de": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation",
@@ -18736,10 +18938,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "ILLEGAL – Enhanced Training Endurance \\n Illegal by Marvelous Nutrition is an advanced pre-workout formula developed to support energy, endurance, focus, and muscle pump during training. Featuring a powerful blend of Beetroot Extract, Arginine, Ornithine, Caffeine, Cocoa Extract, and Himalayan Pink Salt , Illegal is designed to help maximize workout performance and intensity. \\n \\n Key Benefits \\n ✔ Supports workout energy and focus ✔ Helps enhance muscle pump and blood circulation ✔ Supports training endurance and stamina ✔ Helps improve exercise performance ✔ Contains electrolytes for hydration support ✔ Vegan-friendly formula"
     },
     "directAnswerAeo": {
-      "fr": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "ILLEGAL – Enhanced Training Endurance \\n Illegal by Marvelous Nutrition is an advanced pre-workout formula developed to support energy, endurance, focus, and muscle pump during training. Featuring a powerful blend of Beetroot Extract, Arginine, Ornithine, Caffeine, Cocoa Extract, and Himalayan Pink Salt , Illegal is designed to help maximize workout performance and intensity. \\n \\n Key Benefits \\n ✔ Supports workout energy and focus ✔ Helps enhance muscle pump and blood circulation ✔ Supports training endurance and stamina ✔ Helps improve exercise performance ✔ Contains electrolytes for hydration support ✔ Vegan-friendly formula\n\nIngredients \\n \\n Beetroot Extract (2000 mg) – Supports nitric oxide production and endurance \\n L-Arginine AAKG + L-Arginine – Helps support blood flow and muscle pump \\n L-Ornithine Complex – Supports performance and recovery \\n Caffeine Anhydrous (200 mg) – Provides energy and focus \\n Himalayan Pink Salt – Electrolyte support for hydration \\n Cocoa Extract & Willow Bark Extract – Added performance support \\n \\n How to Use: \\n Take 5 capsules before training . Do not take within 4 hours before bedtime . \\n \\n Storage: \\nStore in a cool, dry place after opening. \\n",
@@ -18791,7 +18993,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18799,7 +19001,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-6461",
@@ -18821,7 +19024,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 18,
     "images": [
       {
-        "src": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png',
         "alt": {
           "fr": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération",
           "de": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération",
@@ -18839,10 +19042,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "ASHWAGANDHA KSM-66® – Highly Concentrated Formula \\n Marvelous Nutrition Ashwagandha KSM-66® is a premium high-strength adaptogen formula designed to support stress management, focus, recovery, and overall wellbeing . Featuring KSM-66® Ashwagandha , one of the most researched and highly concentrated forms of Ashwagandha, standardized to 5% Withanolides , plus added magnesium for daily wellness support. \\n \\n Key Benefits \\n ✔ Helps support stress management and relaxation ✔ Supports mental focus and cognitive performance ✔ May help improve recovery and physical performance ✔ Supports overall wellbeing and daily balance ✔ Contains added magnesium for normal muscle function ✔ Highly concentrated KSM-66® Ashwagandha extract ✔ Standardized to 5% Withanolides"
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "ASHWAGANDHA KSM-66® – Highly Concentrated Formula \\n Marvelous Nutrition Ashwagandha KSM-66® is a premium high-strength adaptogen formula designed to support stress management, focus, recovery, and overall wellbeing . Featuring KSM-66® Ashwagandha , one of the most researched and highly concentrated forms of Ashwagandha, standardized to 5% Withanolides , plus added magnesium for daily wellness support. \\n \\n Key Benefits \\n ✔ Helps support stress management and relaxation ✔ Supports mental focus and cognitive performance ✔ May help improve recovery and physical performance ✔ Supports overall wellbeing and daily balance ✔ Contains added magnesium for normal muscle function ✔ Highly concentrated KSM-66® Ashwagandha extract ✔ Standardized to 5% Withanolides\n\nKey Ingredients \\n \\n KSM-66® Ashwagandha Extract (300 mg) – Premium full-spectrum Ashwagandha extract to support stress resilience and wellbeing \\n Withanolides (15 mg) – Standardized active compounds naturally found in Ashwagandha \\n Magnesium (99.8 mg) – Supports muscle function, nervous system health, and energy metabolism \\n \\n Suggested Use \\n Take 1 capsule daily with a glass of water , preferably during a meal. \\n \\n Storage: \\nStore in a cool, dry place after opening. \\n \\n",
@@ -18894,7 +19097,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18902,7 +19105,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-6465",
@@ -18924,7 +19128,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 14,
     "images": [
       {
-        "src": "/images/products/marvelous/caffine-gadwel-1.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/caffine-gadwel-1.png',
         "alt": {
           "fr": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen",
           "de": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen",
@@ -18942,10 +19146,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "CAFFEINE – Energy & Mental Focus \\n Marvelous Nutrition Caffeine is a convenient and effective energy formula designed to support focus, alertness, energy, and cognitive performance throughout the day or before training. Ideal for athletes, professionals, and anyone looking for an extra boost in performance and concentration. \\n \\n Key Benefits \\n ✔ Supports energy and mental alertness ✔ Helps enhance cognitive performance and focus ✔ Supports workout performance and endurance ✔ Helps reduce tiredness and fatigue ✔ Convenient capsule format for easy daily use \\n \\n Why Choose Caffeine?"
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "CAFFEINE – Energy & Mental Focus \\n Marvelous Nutrition Caffeine is a convenient and effective energy formula designed to support focus, alertness, energy, and cognitive performance throughout the day or before training. Ideal for athletes, professionals, and anyone looking for an extra boost in performance and concentration. \\n \\n Key Benefits \\n ✔ Supports energy and mental alertness ✔ Helps enhance cognitive performance and focus ✔ Supports workout performance and endurance ✔ Helps reduce tiredness and fatigue ✔ Convenient capsule format for easy daily use \\n \\n Why Choose Caffeine?\n\nIngredients \\n Per Serving (1 Capsule): \\n \\n \\n Caffeine Anhydrous – Helps support energy, alertness, and mental focus \\n Capsule Shell (Hydroxypropyl Methylcellulose) \\n Bulking Agents / Stabilizers (if listed on packaging) \\n \\n Suggested Use \\n Take 1 capsule daily with water , preferably before training or when extra focus and energy are needed. \\n \\n Storage: \\nStore in a cool, dry place after opening. \\n \\n",
@@ -18997,7 +19201,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 14,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/marvelous/caffine-gadwel-1.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/caffine-gadwel-1.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19005,7 +19209,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-6468",
@@ -19027,7 +19232,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/marvelous/nad-mockup.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/nad-mockup.png',
         "alt": {
           "fr": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité",
           "de": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité",
@@ -19045,10 +19250,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "NAD 60 – Cell & DNA Formula \\n Marvelous Nutrition NAD 60 is an advanced next-generation cellular support formula developed to help support cellular energy, healthy ageing, DNA support, and overall wellbeing . Formulated with Nicotinamide Riboside Chloride (NR), Coenzyme Q10, L-Tryptophan, Selenium, and essential vitamins , NAD 60 is designed to support daily vitality and cellular performance. \\n \\n Key Benefits \\n ✔ Supports cellular energy production ✔ Helps support healthy ageing and vitality ✔ Supports DNA and cellular function ✔ Contributes to normal energy metabolism ✔ Helps support antioxidant protection ✔ Vegan-friendly formula"
     },
     "directAnswerAeo": {
-      "fr": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "NAD 60 – Cell & DNA Formula \\n Marvelous Nutrition NAD 60 is an advanced next-generation cellular support formula developed to help support cellular energy, healthy ageing, DNA support, and overall wellbeing . Formulated with Nicotinamide Riboside Chloride (NR), Coenzyme Q10, L-Tryptophan, Selenium, and essential vitamins , NAD 60 is designed to support daily vitality and cellular performance. \\n \\n Key Benefits \\n ✔ Supports cellular energy production ✔ Helps support healthy ageing and vitality ✔ Supports DNA and cellular function ✔ Contributes to normal energy metabolism ✔ Helps support antioxidant protection ✔ Vegan-friendly formula\n\nIngredients \\n Per Serving (2 Capsules): \\n \\n \\n Nicotinamide Riboside Chloride (NR) – 300 mg \\n \\n including Vitamin B3 (Niacin) – 126 mg \\n \\n \\n L-Tryptophan – 200 mg \\n Coenzyme Q10 (CoQ10) – 80 mg \\n Vitamin C – 80 mg (100% NRV) \\n Vitamin B3 (Niacin) – 16 mg (100% NRV) \\n Vitamin E – 2.88 mg (24% NRV) \\n Selenium – 27.5 µg (50% NRV) \\n Total Vitamin B3 Content – 142 mg (887% NRV) \\n \\n Suggested Use \\n Take 2 capsules daily with a glass of water during a meal . \\n",
@@ -19100,16 +19305,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 6,
         "inStock": true,
-        "image": "/images/products/marvelous/nad-mockup.png",
-        "stockGeneva": 6,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/nad-mockup.png',
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 6,
+    "stockGeneva": 0,
     "stockPortugal": 50,
-    "inStock": true
+    "inStock": true,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-mv-6670",
@@ -19131,7 +19337,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "/images/products/marvelous/ChatGPT-Image-Sep-30-2026-09_25_14-PM.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-Sep-30-2026-09_25_14-PM.png',
         "alt": {
           "fr": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes",
           "de": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes",
@@ -19142,7 +19348,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/hydralytes-cocnut-water.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-cocnut-water.png',
         "alt": {
           "fr": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes - coconut water",
           "de": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes - coconut water",
@@ -19153,7 +19359,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/marvelous/hydralytes-lemon-mint.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-lemon-mint.png',
         "alt": {
           "fr": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes - lemon mint",
           "de": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes - lemon mint",
@@ -19171,10 +19377,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Make everyday hydration more refreshing with HYDRALYTES by Marvelous Nutrition . This advanced hydration complex comes in delicious Lemon Mint and Coconut Water flavours, with 30 servings per tub —a refreshing addition to your active lifestyle."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Make everyday hydration more refreshing with HYDRALYTES by Marvelous Nutrition . This advanced hydration complex comes in delicious Lemon Mint and Coconut Water flavours, with 30 servings per tub —a refreshing addition to your active lifestyle.\n\nIIngredients / Ingredientes: \\nL-taurine / L-taurina, vitamin B12 (maltodextrin,cyanocobalamin) / vitamina B12 (maltodextrina, cianocobalamina),coconut water powder (coconut water powder, maltodextrin) / pó de água de coco (pó de água de coco, maltodextrina), acidity regulators (citric acid anhydrous, malic acid) / reguladores de acidez (ácido cítrico anidro, ácido málico), Himalayan pink salt / sal rosa dos Himalaias, flavourings / aromas, anti-caking agent (silicon dioxide) / antiaglomerante (dióxido de silício), tripotassium citrate monohydrate / citrato de tripotássio monohidratado, magnesium bisglycinate / bisglicinato de magnésio, sweeteners (acesulfame K, sucralose) / edulcorantes (acesulfame K, sucralose), vitamin B6 (pyridoxine hydrochloride) / vitamina B6 (cloridrato de piridoxina). \\n Directions of use: Mix one serving (5 g) in 250 ml of water or liquid of your choice. \\n Modo de utilização:Misturar uma dose (5 g) em 250 ml de água ou outro líquido à sua escolha. \\n Recomended Daily use / Toma diária recomendada: 5g. \\n Net weight / Quantidade líquida:150g, 30 servings. \\n \\n",
@@ -19226,8 +19432,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 20,
         "inventoryQuantity": 60,
         "inStock": true,
-        "image": "/images/products/marvelous/hydralytes-lemon-mint.png",
-        "stockGeneva": 10,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-lemon-mint.png',
+        "stockGeneva": 0,
         "stockPortugal": 50
       },
       {
@@ -19243,8 +19449,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 20,
         "inventoryQuantity": 82,
         "inStock": true,
-        "image": "/images/products/marvelous/hydralytes-cocnut-water.png",
-        "stockGeneva": 32,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-cocnut-water.png',
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
@@ -19252,7 +19458,8 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
     "stockPortugal": 100,
-    "inStock": false
+    "inStock": false,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-ds-198",
@@ -19274,7 +19481,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 31.9,
     "images": [
       {
-        "src": "/images/products/dirtysquads/edx.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/edx.jpg',
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
@@ -19285,7 +19492,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/stim-x.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/stim-x.png',
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
@@ -19296,7 +19503,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/lemon-stim-x.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/lemon-stim-x.jpg',
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Lemon",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Lemon",
@@ -19307,7 +19514,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/red-cola-stim-x.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/red-cola-stim-x.jpg',
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Red Cola",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Red Cola",
@@ -19318,7 +19525,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/tutti-fruity-stimx.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/tutti-fruity-stimx.jpg',
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Tutti Fruity",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Tutti Fruity",
@@ -19391,7 +19598,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 31.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/lemon-stim-x.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/lemon-stim-x.jpg',
         "stockGeneva": 25,
         "stockPortugal": 25
       },
@@ -19408,7 +19615,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 31.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/red-cola-stim-x.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/red-cola-stim-x.jpg',
         "stockGeneva": 25,
         "stockPortugal": 25
       },
@@ -19425,7 +19632,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 31.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/tutti-fruity-stimx.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/tutti-fruity-stimx.jpg',
         "stockGeneva": 25,
         "stockPortugal": 25
       }
@@ -19456,7 +19663,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 18,
     "images": [
       {
-        "src": "/images/products/dirtysquads/dirty-sqauds-wall3.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall3.jpg',
         "alt": {
           "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
           "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
@@ -19467,7 +19674,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/vitamin.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/vitamin.png',
         "alt": {
           "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
           "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
@@ -19485,10 +19692,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support."
     },
     "directAnswerAeo": {
-      "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "A complete daily multivitamin and mineral formula enhanced with digestive enzymes for \\noptimal nutrient absorption and overall health support.\n\n\\n What it is \\nThis is a comprehensive food supplement designed to provide a full spectrum of essential \\nvitamins and minerals. It is uniquely enhanced with a digestive enzyme complex containing \\n Bromelain, Papain, and Lactase to help break down food and improve the \\nabsorption of the nutrients within the formula, ensuring your body can use them effectively. \\n Who it's for \\n \\n Fill nutritional gaps in their diet. \\n Support overall health, immunity, and energy levels. \\n Benefit from added digestive enzymes for better nutrient absorption. \\n Follow a vegan or allergen-free lifestyle (free from gluten, soy, and sugar). \\n \\n Key Benefits \\n \\n Comprehensive Formula: Provides 100% or more of the NRV for most essential vitamins and key minerals. \\n Enhanced Absorption: Includes digestive enzymes (Bromelain, Papain, Lactase) to support the breakdown and absorption of nutrients. \\n High Potency Vitamin C: Delivers over 1390 mg per serving for immune and antioxidant support. \\n Vegan-Friendly: Carefully formulated to be free from animal products, gluten, soy, and added sugar. \\n Convenient Once-Daily Serving: Just one capsule per day with breakfast. \\n \\n How to Use \\nTake 1 capsule with breakfast. Do not exceed the recommended daily dose. \\n \\n",
@@ -19540,7 +19747,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall3.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall3.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19548,7 +19755,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-ds-201",
@@ -19570,7 +19778,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 42,
     "images": [
       {
-        "src": "/images/products/dirtysquads/dirty-sqauds-wall6.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall6.jpg',
         "alt": {
           "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
           "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
@@ -19581,7 +19789,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/testo-g.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/testo-g.png',
         "alt": {
           "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
           "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
@@ -19599,10 +19807,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production."
     },
     "directAnswerAeo": {
-      "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "An advanced herbal formula with D-Aspartic Acid designed to support male vitality, \\nperformance, and natural testosterone production.\n\n\\n Long Description \\n What it is: \\n \\nTesto Excess is a premium food supplement crafted with a powerful blend of scientifically \\nchosen ingredients to support male hormonal health. It features D-Aspartic Acid, a key \\namino acid in the testosterone production process, combined with renowned herbal extracts \\nlike Tribulus Terrestris, Fenugreek, Maca, Ashwagandha, and Saw Palmetto to create a \\ncomprehensive vitality and performance formula. \\n \\n Who it's for: \\n \\n Men looking to support their body's natural testosterone levels. \\n Those seeking to enhance vitality, energy, and overall male performance. \\n Adults interested in a natural approach to supporting strength, libido, and well-being. \\n Note: This product is only intended for healthy adults over 18. \\n \\n Key Benefits: \\n \\n Supports Testosterone Production: D-Aspartic Acid aids in luteinizing hormone and testosterone synthesis. \\n Enhances Vitality & Performance: Herbal adaptogens like Ashwagandha and Maca help the body manage stress and energy. \\n Promotes Male Health: Saw Palmetto supports prostate health. \\n Libido Support: Tribulus Terrestris and Fenugreek traditionally support libido and reproductive health. \\n Clean & Vegan-Friendly: Free from gluten, soy, and added sugar. \\n \\n How to Use: \\n \\nTake one serving (3 capsules) before your workout. \\n \\n",
@@ -19654,7 +19862,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 42,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall6.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall6.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19662,7 +19870,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-ds-202",
@@ -19684,7 +19893,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 18,
     "images": [
       {
-        "src": "/images/products/dirtysquads/dirty-sqauds-wall5.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall5.jpg',
         "alt": {
           "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
           "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
@@ -19695,7 +19904,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/omega-g.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/omega-g.png',
         "alt": {
           "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
           "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
@@ -19713,10 +19922,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health."
     },
     "directAnswerAeo": {
-      "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Premium, high-potency molecularly distilled fish oil providing essential EPA and DHA fatty \\nacids to support heart, brain, and joint health.\n\nWhat it is: \\n \\nThis is a high-quality food supplement based on Omega-3 fatty acids sourced from cold-water fish. The oil undergoes molecular distillation, a process that helps purify it and increase the concentration of beneficial EPA and DHA. Each serving delivers a substantial dose of these essential fatty acids in an easy-to-swallow soft gel capsule. \\n \\n Who it's for: \\n \\n Individuals seeking to support cardiovascular and heart health. \\n Those looking to maintain healthy brain function and cognitive health. \\n People wanting to support joint mobility and reduce inflammation. \\n Anyone who doesn’t consume fatty fish regularly in their diet. \\n \\n Key Benefits: \\n \\n High Potency: Delivers 3000 mg of fish oil, including 900 mg of combined EPA and DHA per serving. \\n Premium Quality: Made from cold-water fish and purified through molecular distillation. \\n Supports Heart Health: EPA and DHA contribute to the normal function of the heart. \\n Brain & Vision Health: DHA supports normal brain function and vision. \\n Clean Formula: Free from gluten, soy, and added sugar. \\n Convenient Serving: Just 3 capsules per day with breakfast. \\n \\n How to Use: \\nTake 3 capsules with breakfast. Do not exceed the recommended daily dose.",
@@ -19768,7 +19977,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall5.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall5.jpg',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19776,7 +19985,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-ds-212",
@@ -19798,7 +20008,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "/images/products/dirtysquads/dirty-sqauds-wall8.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall8.jpg',
         "alt": {
           "fr": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
           "de": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
@@ -19809,7 +20019,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/creatine-g.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/creatine-g.png',
         "alt": {
           "fr": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
           "de": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
@@ -19882,7 +20092,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall8.jpg",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall8.jpg',
         "stockGeneva": 25,
         "stockPortugal": 25
       }
@@ -19913,7 +20123,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 19.9,
     "images": [
       {
-        "src": "/images/products/dirtysquads/dirty-sqauds-wall13.jpg",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall13.jpg',
         "alt": {
           "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
           "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
@@ -19924,7 +20134,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/creatine-g.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/creatine-g.png',
         "alt": {
           "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
           "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
@@ -19942,10 +20152,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity."
     },
     "directAnswerAeo": {
-      "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Maximize your strength and power output with 100% pure Creapure® Creatine \\nMonohydrate. The gold standard in creatine supplementation, trusted by athletes worldwide \\nfor its proven efficacy and purity.\n\n\\n What it is: \\nDirty Squads Creatine is 100% pure Creapure® Creatine Monohydrate. Creapure® is a patented, pharmaceutical-grade form of creatine monohydrate manufactured in Germany, renowned for its exceptional purity and quality. This micronized powder is unflavored, mixes easily, and provides the most researched and effective form of creatine available to support high-intensity athletic performance. \\n Who it's for: \\n \\n Athletes, bodybuilders, strength trainers, and fitness enthusiasts of all levels. \\n Those who want to increase strength and power output during workouts. \\n People aiming to support muscle growth and volume. \\n Anyone looking to improve recovery between high-intensity efforts. \\n Users seeking the most proven and reliable form of creatine on the market. \\n \\n Key Benefits: \\n \\n 100% Creapure® Quality: Made in Germany, guaranteeing pharmaceutical-grade purity and potency. \\n Gold Standard Efficacy: Clinically researched to enhance strength, power, and muscle mass. \\n Unflavored & Versatile: Mixes into water, juice, or protein shakes without altering taste. \\n Easy to Mix: Micronized formula dissolves with minimal grit. \\n Value: 60 servings per container. \\n \\n How to Use: \\n \\n Mix 1 scoop (5g) with 400–500 ml of water or your beverage of choice. \\n Shake well until dissolved. \\n Consume one serving immediately post-workout. \\n Recommended Daily Use: 5 g \\n \\n",
@@ -19997,16 +20207,17 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 19.9,
         "inventoryQuantity": 19,
         "inStock": true,
-        "image": "/images/products/dirtysquads/dirty-sqauds-wall13.jpg",
-        "stockGeneva": 19,
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall13.jpg',
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
-    "stockGeneva": 19,
+    "stockGeneva": 0,
     "stockPortugal": 50,
-    "inStock": true
+    "inStock": true,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-ds-591",
@@ -20028,7 +20239,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png',
         "alt": {
           "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
           "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
@@ -20039,7 +20250,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/ARGANINE-GADWAL-scaled.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/ARGANINE-GADWAL-scaled.png',
         "alt": {
           "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
           "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
@@ -20057,10 +20268,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference."
     },
     "directAnswerAeo": {
-      "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Dirty Squads 100% Arginine delivers 5,000 mg of pure L-Arginine per serving to support nitric oxide production, promote intense muscle pumps, and enhance blood flow during training. Designed for athletes who demand maximum performance, this stimulant-free formula helps optimize nutrient delivery and workout intensity without unnecessary fillers. Take one scoop 30 minutes before training and experience the difference.\n\nWhat It Is \\n Dirty Squads 100% Arginine is a food supplement based on pure L-Arginine , an amino acid that acts as a precursor to Nitric Oxide (NO) , helping to support blood flow and nutrient delivery to working muscles. Each serving provides 5,000 mg of L-Arginine . The product contains 50 servings per container. \\n \\n Who It's For \\n \\n Athletes and gym-goers looking to improve workout performance. \\n Individuals seeking enhanced muscle pumps during training. \\n People aiming to support blood circulation during exercise. \\n Those wanting a stimulant-free pre-workout ingredient. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Enhanced Muscle Pump during resistance training. \\n Improved Nutrient & Oxygen Delivery to muscles. \\n May Support Exercise Performance and training intensity. \\n 100% Pure L-Arginine Formula with no added fillers. \\n \\n How to Use \\n Serving Size: 1 scoop (6 g) \\n Directions: \\n \\n \\n Add 1 scoop (6 g) to 200–300 ml of water . \\n Close the shaker and shake well. \\n Consume 30 minutes before your workout . \\n",
@@ -20112,7 +20323,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -20120,7 +20331,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-ds-596",
@@ -20142,7 +20354,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png',
         "alt": {
           "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
           "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
@@ -20153,7 +20365,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/BETA-ALNINE-DIRTYGADWAL-scaled.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALNINE-DIRTYGADWAL-scaled.png',
         "alt": {
           "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
           "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
@@ -20171,10 +20383,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop"
     },
     "directAnswerAeo": {
-      "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Dirty Squads Beta Alanine delivers 2,000 mg of pure Beta-Alanine per serving to help increase muscle carnosine levels, buffer fatigue-causing acid buildup, and support greater training intensity. Designed for athletes who push beyond their limits, this unflavoured formula helps improve muscular endurance, extend performance, and maximize workout output without unnecessary fillers. Take one scoop before training and keep pushing when others stop\n\nWhat It Is \\n Dirty Squads Beta Alanine is a food supplement containing 100% pure Beta-Alanine , a non-essential amino acid that serves as a precursor to Carnosine , a compound stored in muscles that helps buffer acid buildup during intense exercise. Each serving provides 2,000 mg of Beta-Alanine , with 150 servings per container. \\n \\n Who It's For \\n \\n Strength and power athletes. \\n Bodybuilders and fitness enthusiasts. \\n CrossFit and HIIT athletes. \\n Endurance athletes performing repeated high-intensity efforts. \\n Anyone looking to improve muscular endurance and delay fatigue during training. \\n \\n Key Benefits \\n \\n Supports Increased Muscle Carnosine Levels to improve exercise capacity. \\n Helps Delay Muscle Fatigue during high-intensity training. \\n Enhances Muscular Endurance for longer, more productive workouts. \\n Supports Improved Training Volume and performance. \\n Unflavoured 100% Pure Beta-Alanine with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (2 g) \\n Directions: \\n \\n \\n Mix 1 scoop (2 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume 30 minutes before your workout . \\n",
@@ -20226,7 +20438,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -20234,7 +20446,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-ds-600",
@@ -20256,7 +20469,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png',
         "alt": {
           "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
           "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
@@ -20267,7 +20480,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/CITRULINE-GADWAL-scaled.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/CITRULINE-GADWAL-scaled.png',
         "alt": {
           "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
           "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
@@ -20285,10 +20498,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery."
     },
     "directAnswerAeo": {
-      "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "Dirty Squads Citrulline delivers 3,000 mg of pure L-Citrulline per serving to support nitric oxide production, enhance blood flow, and maximize muscle pumps. Designed for athletes who demand peak performance, this stimulant-free formula helps improve endurance, increase training intensity, and optimize nutrient delivery to working muscles. Take one scoop before training and experience fuller pumps, greater performance, and better recovery.\n\n\\n \\n \\n \\n \\n \\n \\n \\n What It Is \\n Dirty Squads Citrulline is a food supplement containing 100% pure L-Citrulline , a naturally occurring amino acid that helps increase nitric oxide production and support blood flow during exercise. Each serving provides 3,000 mg of L-Citrulline , with 100 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders seeking maximum muscle pumps. \\n Strength and power athletes. \\n Endurance athletes looking to improve circulation and performance. \\n Gym-goers wanting enhanced workout intensity and recovery. \\n Anyone looking for a stimulant-free performance enhancer. \\n \\n Key Benefits \\n \\n Supports Nitric Oxide Production for improved blood flow. \\n Promotes Intense Muscle Pumps during training. \\n Enhances Nutrient and Oxygen Delivery to working muscles. \\n May Help Reduce Exercise Fatigue and improve endurance. \\n Supports Faster Recovery between training sessions. \\n 100% Pure L-Citrulline Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (3 g) \\n Directions: \\n \\n \\n Add 1 scoop (3 g) to 200–300 ml of water . \\n Shake thoroughly until dissolved. \\n Consume 30 minutes before your workou \\n \\n \\n \\n \\n \\n \\n \\n",
@@ -20340,7 +20553,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -20348,7 +20561,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-ds-604",
@@ -20370,7 +20584,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": "/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png',
         "alt": {
           "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
           "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
@@ -20381,7 +20595,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": "/images/products/dirtysquads/GLUTMINE-GADWAL-scaled.png",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/GLUTMINE-GADWAL-scaled.png',
         "alt": {
           "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
           "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
@@ -20399,10 +20613,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n"
     },
     "directAnswerAeo": {
-      "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale est expédié directement depuis notre usine de fabrication certifiée au Portugal avec numéro de suivi prioritaire (livraison en 3 à 5 jours ouvrés). Aucun frais de douane imprévu pour les commandes en Suisse.",
-      "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale wird direkt aus unserer zertifizierten Produktionsstätte in Portugal mit priorisierter Sendungsverfolgung geliefert (Lieferzeit 3–5 Werktage). Keine unerwarteten Zollgebühren für die Schweiz.",
-      "it": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale viene spedito direttamente dal nostro stabilimento di produzione certificato in Portogallo con spedizione tracciata prioritaria (consegna in 3-5 giorni lavorativi). Nessuna spesa doganale imprevista per la Svizzera.",
-      "en": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale is shipped directly from our certified manufacturing facility in Portugal with priority tracking (delivery in 3–5 business days). No unexpected customs fees for Swiss orders."
+      "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "\\n \\n \\n \\n Dirty Squads Glutamine delivers 5,000 mg of 100% micronized L-Glutamine per serving to support muscle recovery, immune health, and post-workout regeneration. Designed for athletes who train hard and recover harder, this pure formula helps replenish glutamine stores depleted during intense exercise, allowing you to stay consistent, recover faster, and perform at your best every session. \\n \\n \\n \\n \\n\n\nWhat It Is \\n Dirty Squads Glutamine is a food supplement containing 100% Micronized L-Glutamine , one of the most abundant amino acids in muscle tissue. Glutamine plays a key role in muscle recovery, immune system support, and maintaining muscle protein balance during periods of intense training. Each serving provides 5,000 mg of L-Glutamine , with 60 servings per container. \\n \\n Who It's For \\n \\n Bodybuilders and strength athletes. \\n Individuals training at high frequency or intensity. \\n Athletes looking to support recovery between workouts. \\n Anyone seeking to support immune function during demanding training periods. \\n Fitness enthusiasts aiming to preserve muscle mass during calorie-restricted diets. \\n \\n Key Benefits \\n \\n Supports Muscle Recovery following intense exercise. \\n Helps Reduce Muscle Breakdown during heavy training periods. \\n Supports Immune System Function , particularly during periods of physical stress. \\n Promotes Muscle Protein Balance and recovery processes. \\n Micronized for Easy Mixing and Absorption . \\n 100% Pure L-Glutamine Formula with no added fillers or banned substances. \\n \\n How to Use \\n Serving Size: 1 scoop (5 g) \\n Directions: \\n \\n \\n Mix 1 scoop (5 g) with 200–300 ml of water . \\n Shake well until fully dissolved. \\n Consume immediately after your workout for optimal recovery support. \\n",
@@ -20454,7 +20668,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": "/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png",
+        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png',
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -20462,7 +20676,8 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
-    "stockPortugal": 50
+    "stockPortugal": 50,
+    "locationType": "PORTUGAL_ONLY"
   },
   {
     "id": "prod-14057",
@@ -20524,10 +20739,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense."
     },
     "directAnswerAeo": {
-      "fr": "AUKAN PRE WORKOUT 300G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "AUKAN PRE WORKOUT 300G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "AUKAN PRE WORKOUT 300G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "AUKAN PRE WORKOUT 300G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "AUKAN PRE WORKOUT 300G est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "AUKAN PRE WORKOUT 300G is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "AUKAN PRE WORKOUT 300G ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "AUKAN PRE WORKOUT 300G è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -20579,7 +20794,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 55,
         "inStock": true,
-        "stockGeneva": 5,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-cassis-300g.png"
       },
@@ -20596,7 +20811,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 57,
         "inStock": true,
-        "stockGeneva": 7,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-citron-300g.png"
       },
@@ -20613,15 +20828,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 58,
         "inStock": true,
-        "stockGeneva": 8,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-mojito-300g.png"
       }
     ],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -20664,10 +20879,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé."
     },
     "directAnswerAeo": {
-      "fr": "GHOST PRE-WORKOUT 645G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "GHOST PRE-WORKOUT 645G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "GHOST PRE-WORKOUT 645G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "GHOST PRE-WORKOUT 645G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "GHOST PRE-WORKOUT 645G est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "GHOST PRE-WORKOUT 645G is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "GHOST PRE-WORKOUT 645G ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "GHOST PRE-WORKOUT 645G è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -20719,7 +20934,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 60,
         "inventoryQuantity": 54,
         "inStock": true,
-        "stockGeneva": 4,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-BOOST-BLUE-RASPBERRY-645G.webp"
       },
@@ -20736,7 +20951,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 60,
         "inventoryQuantity": 51,
         "inStock": true,
-        "stockGeneva": 1,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-PRE-WORKOUT-645G.png"
       },
@@ -20753,15 +20968,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 60,
         "inventoryQuantity": 55,
         "inStock": true,
-        "stockGeneva": 5,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png"
       }
     ],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -20859,10 +21074,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate."
     },
     "directAnswerAeo": {
-      "fr": "ABE ULTIMATE PRE WORKOUT 315G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "ABE ULTIMATE PRE WORKOUT 315G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "ABE ULTIMATE PRE WORKOUT 315G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "ABE ULTIMATE PRE WORKOUT 315G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "ABE ULTIMATE PRE WORKOUT 315G est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "ABE ULTIMATE PRE WORKOUT 315G is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "ABE ULTIMATE PRE WORKOUT 315G ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "ABE ULTIMATE PRE WORKOUT 315G è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -20914,7 +21129,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 50,
         "inStock": true,
-        "stockGeneva": 10,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-cool-watermelon-315g.png"
       },
@@ -20931,7 +21146,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 52,
         "inStock": true,
-        "stockGeneva": 2,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-icy-blue-raz-315g.png"
       },
@@ -20948,7 +21163,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 55,
         "inStock": true,
-        "stockGeneva": 5,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-energy-drink-315g.png"
       },
@@ -20965,7 +21180,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 58,
         "inStock": true,
-        "stockGeneva": 8,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-candy-ice-blast-315g.png"
       },
@@ -20982,7 +21197,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 52,
         "inStock": true,
-        "stockGeneva": 2,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-cherry-cola-315g.png"
       },
@@ -20999,15 +21214,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 52,
         "inStock": true,
-        "stockGeneva": 2,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-love-hearts-315g.png"
       }
     ],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21061,10 +21276,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée."
     },
     "directAnswerAeo": {
-      "fr": "INFECTED PRE WORKOUT SANS STIM 500G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "INFECTED PRE WORKOUT SANS STIM 500G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "INFECTED PRE WORKOUT SANS STIM 500G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "INFECTED PRE WORKOUT SANS STIM 500G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "INFECTED PRE WORKOUT SANS STIM 500G est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "INFECTED PRE WORKOUT SANS STIM 500G is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "INFECTED PRE WORKOUT SANS STIM 500G ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "INFECTED PRE WORKOUT SANS STIM 500G è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -21116,7 +21331,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 51,
         "inStock": true,
-        "stockGeneva": 1,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/infected-fruit-punch-500g.png"
       },
@@ -21133,15 +21348,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 54,
         "inStock": true,
-        "stockGeneva": 4,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/infected-watermelone-500g.png"
       }
     ],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21184,10 +21399,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand."
     },
     "directAnswerAeo": {
-      "fr": "MUFFIN KETO SANS SUCRES 50G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "MUFFIN KETO SANS SUCRES 50G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "MUFFIN KETO SANS SUCRES 50G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "MUFFIN KETO SANS SUCRES 50G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "MUFFIN KETO SANS SUCRES 50G est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "MUFFIN KETO SANS SUCRES 50G is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "MUFFIN KETO SANS SUCRES 50G ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "MUFFIN KETO SANS SUCRES 50G è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -21239,7 +21454,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 50,
         "inStock": true,
-        "stockGeneva": 10,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png"
       },
@@ -21256,7 +21471,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 50,
         "inStock": true,
-        "stockGeneva": 10,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png"
       },
@@ -21273,15 +21488,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 50,
         "inStock": true,
-        "stockGeneva": 10,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png"
       }
     ],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21306,7 +21521,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "/images/placeholder.webp",
+        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/placeholder.webp',
         "alt": {
           "fr": "UFO BLAST",
           "de": "UFO BLAST",
@@ -21324,10 +21539,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort."
     },
     "directAnswerAeo": {
-      "fr": "UFO BLAST est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "UFO BLAST ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "UFO BLAST è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "UFO BLAST is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "UFO BLAST est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "UFO BLAST is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "UFO BLAST ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "UFO BLAST è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -21366,10 +21581,10 @@ export const PRODUCTS: ProductItem[] = [
       "saltG": 0
     },
     "variants": [],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21412,10 +21627,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle."
     },
     "directAnswerAeo": {
-      "fr": "GINGER SHOT BIO 60ML est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "GINGER SHOT BIO 60ML ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "GINGER SHOT BIO 60ML è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "GINGER SHOT BIO 60ML is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "GINGER SHOT BIO 60ML est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "GINGER SHOT BIO 60ML is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "GINGER SHOT BIO 60ML ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "GINGER SHOT BIO 60ML è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -21467,7 +21682,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 3.9,
         "inventoryQuantity": 60,
         "inStock": true,
-        "stockGeneva": 10,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png"
       },
@@ -21484,7 +21699,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 3.9,
         "inventoryQuantity": 60,
         "inStock": true,
-        "stockGeneva": 10,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png"
       },
@@ -21501,15 +21716,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 3.9,
         "inventoryQuantity": 60,
         "inStock": true,
-        "stockGeneva": 10,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png"
       }
     ],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21552,10 +21767,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser."
     },
     "directAnswerAeo": {
-      "fr": "STIMX 300G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "STIMX 300G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "STIMX 300G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "STIMX 300G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "STIMX 300G est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "STIMX 300G is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "STIMX 300G ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "STIMX 300G è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -21607,7 +21822,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 55,
         "inventoryQuantity": 59,
         "inStock": true,
-        "stockGeneva": 9,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/STIMX-LEMON.webp"
       },
@@ -21624,7 +21839,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 55,
         "inventoryQuantity": 56,
         "inStock": true,
-        "stockGeneva": 6,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/STIMX-T-F.webp"
       },
@@ -21641,15 +21856,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 55,
         "inventoryQuantity": 51,
         "inStock": true,
-        "stockGeneva": 1,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/STIMX-COLA.webp"
       }
     ],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21703,10 +21918,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre."
     },
     "directAnswerAeo": {
-      "fr": "GRENADE CARB KILLA BARRE 60G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "GRENADE CARB KILLA BARRE 60G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "GRENADE CARB KILLA BARRE 60G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "GRENADE CARB KILLA BARRE 60G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "GRENADE CARB KILLA BARRE 60G est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "GRENADE CARB KILLA BARRE 60G is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "GRENADE CARB KILLA BARRE 60G ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "GRENADE CARB KILLA BARRE 60G è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -21758,7 +21973,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4.5,
         "inventoryQuantity": 70,
         "inStock": true,
-        "stockGeneva": 20,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/grenade-carb-killa-fudge-brownie.webp"
       },
@@ -21775,15 +21990,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4.5,
         "inventoryQuantity": 70,
         "inStock": true,
-        "stockGeneva": 20,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/grenade-carb-killa-caramel-chaos.webp"
       }
     ],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21826,10 +22041,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides."
     },
     "directAnswerAeo": {
-      "fr": "CARBO REDUCER 90 CAPS est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "CARBO REDUCER 90 CAPS ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "CARBO REDUCER 90 CAPS è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "CARBO REDUCER 90 CAPS is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "CARBO REDUCER 90 CAPS est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "CARBO REDUCER 90 CAPS is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "CARBO REDUCER 90 CAPS ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "CARBO REDUCER 90 CAPS è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -21868,10 +22083,10 @@ export const PRODUCTS: ProductItem[] = [
       "saltG": 0
     },
     "variants": [],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21914,10 +22129,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux."
     },
     "directAnswerAeo": {
-      "fr": "ESN MAGNESIUM CAPS 120 GÉLULES est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "ESN MAGNESIUM CAPS 120 GÉLULES ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "ESN MAGNESIUM CAPS 120 GÉLULES è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "ESN MAGNESIUM CAPS 120 GÉLULES is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "ESN MAGNESIUM CAPS 120 GÉLULES est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "ESN MAGNESIUM CAPS 120 GÉLULES is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "ESN MAGNESIUM CAPS 120 GÉLULES ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "ESN MAGNESIUM CAPS 120 GÉLULES è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -21956,10 +22171,10 @@ export const PRODUCTS: ProductItem[] = [
       "saltG": 0
     },
     "variants": [],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -22002,10 +22217,10 @@ export const PRODUCTS: ProductItem[] = [
       "en": "Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire."
     },
     "directAnswerAeo": {
-      "fr": "BETA-ALANINE EN POUDRE 250G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
-      "de": "BETA-ALANINE EN POUDRE 250G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
-      "it": "BETA-ALANINE EN POUDRE 250G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
-      "en": "BETA-ALANINE EN POUDRE 250G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+      "fr": "BETA-ALANINE EN POUDRE 250G est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "BETA-ALANINE EN POUDRE 250G is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
+      "de": "BETA-ALANINE EN POUDRE 250G ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
+      "it": "BETA-ALANINE EN POUDRE 250G è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
     },
     "longDescription": {
       "fr": "<p>Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
@@ -22044,12 +22259,119 @@ export const PRODUCTS: ProductItem[] = [
       "saltG": 0
     },
     "variants": [],
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-25722",
+    "slug": {
+      "fr": "ds-creapure-300g",
+      "de": "ds-creapure-300g",
+      "it": "ds-creapure-300g",
+      "en": "ds-creapure-300g"
+    },
+    "name": {
+      "fr": "DS CREAPURE 300G",
+      "de": "DS CREAPURE 300G",
+      "it": "DS CREAPURE 300G",
+      "en": "DS CREAPURE 300G"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "creatine",
+    "categorySlugs": ["creatine", "meilleures-ventes"],
+    "taxCategory": "food_reduced",
+    "priceChf": 40.00,
+    "priceEurSwiss": 42.00,
+    "priceEurEurope": 38.00,
+    "priceEur": 38.00,
+    "isSwissOrigin": false,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "mainLocation": "PORTUGAL",
+    "stockGeneva": 0,
+    "stockPortugal": 50,
+    "inventoryQuantity": 50,
+    "inStock": true,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-CREAPURE-300G.png",
+        "alt": {
+          "fr": "DS CREAPURE 300G",
+          "de": "DS CREAPURE 300G",
+          "it": "DS CREAPURE 300G",
+          "en": "DS CREAPURE 300G"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "100% créatine monohydrate Creapure® de pureté maximale fabriquée en Allemagne. 60 portions de 5g sans arôme pour développer la force explosive et la masse musculaire.",
+      "de": "100% reine Creapure® Kreatin-Monohydrat aus Deutschland. 60 Portionen à 5g ohne Aroma.",
+      "it": "100% pura creatina monoidrato Creapure® prodotta in Germania. 60 porzioni da 5g senza aroma.",
+      "en": "100% pure Creapure® creatine monohydrate made in Germany. 60 unflavored 5g servings."
+    },
+    "directAnswerAeo": {
+      "fr": "DS CREAPURE 300G est une créatine monohydrate 100% Creapure® de qualité pharmaceutique expédiée depuis le Portugal avec livraison suivie en 3-5 jours ouvrables.",
+      "en": "DS CREAPURE 300G is a pharmaceutical-grade 100% Creapure® creatine monohydrate shipped from Portugal with tracked delivery in 3-5 business days.",
+      "de": "DS CREAPURE 300G ist ein 100% reines Creapure® Kreatin-Monohydrat, geliefert aus Portugal in 3-5 Werktagen.",
+      "it": "DS CREAPURE 300G è una creatina monoidrato 100% Creapure® spedita dal Portogallo in 3-5 giorni lavorativi."
+    },
+    "longDescription": {
+      "fr": "<h2>Dirty Squads Creatine Creapure® – Créatine Monohydrate 100 % Pure</h2><p>Formule micronisée de haute pureté pour soutenir la force musculaire explosive et la récupération.</p>",
+      "de": "<h2>Dirty Squads Creatine Creapure®</h2><p>100% reines Kreatin-Monohydrat.</p>",
+      "it": "<h2>Dirty Squads Creatine Creapure®</h2><p>100% pura creatina monoidrato.</p>",
+      "en": "<h2>Dirty Squads Creatine Creapure®</h2><p>100% pure creatine monohydrate.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Mélanger 1 portion de 5g dans 400-500ml d'eau fraîche ou dans votre shaker de whey après l'entraînement.",
+      "de": "1 Portion (5g) in 400-500ml Wasser mischen.",
+      "it": "Miscelare 1 porzione (5g) in 400-500ml di acqua.",
+      "en": "Mix 1 serving (5g) with 400-500ml of water or shake."
+    },
+    "ingredients": {
+      "fr": "100% créatine monohydrate (Creapure®).",
+      "de": "100% Kreatin-Monohydrat (Creapure®).",
+      "it": "100% creatina monoidrato (Creapure®).",
+      "en": "100% creatine monohydrate (Creapure®)."
+    },
+    "allergens": {
+      "fr": "Sans allergènes majeurs. Peut contenir des traces de lait, soja, fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja und Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia e frutta a guscio.",
+      "en": "May contain traces of milk, soy, and tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "5 g",
+      "servingsPerContainer": 60,
+      "energyKcal": 0,
+      "energyKj": 0,
+      "proteinG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "var-ds-creapure-1",
+        "sku": "DS-CREAPURE-300G",
+        "flavorName": { "fr": "Neutre", "de": "Neutral", "it": "Neutro", "en": "Unflavored" },
+        "format": "300 g",
+        "priceChf": 40.00,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "stockGeneva": 0,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-CREAPURE-300G.png"
+      }
+    ],
     "status": "published"
   }
 ];

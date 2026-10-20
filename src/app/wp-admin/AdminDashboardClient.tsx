@@ -638,6 +638,41 @@ export default function AdminDashboardClient() {
           }
         }
 
+        // 3b. Fetch products from Supabase DB to pick up new images and location updates
+        try {
+          const dbRes = await fetch('/api/admin/products?limit=100&status=all', { cache: 'no-store' });
+          if (dbRes.ok) {
+            const dbData = await dbRes.json();
+            if (Array.isArray(dbData.products)) {
+              for (const dbP of dbData.products) {
+                const s = (dbP.slug || '').toLowerCase().trim();
+                const cleanId = (dbP.woo_id || dbP.id || '').replace(/^prod-/, '').toLowerCase().trim();
+                const matchedIndex = merged.findIndex(p => {
+                  const pSlug = (p.slug?.fr || '').toLowerCase().trim();
+                  const pClean = (p.id || '').replace(/^prod-/, '').toLowerCase().trim();
+                  return pSlug === s || pClean === cleanId;
+                });
+                if (matchedIndex >= 0) {
+                  if (Array.isArray(dbP.images) && dbP.images.length > 0) {
+                    merged[matchedIndex] = {
+                      ...merged[matchedIndex],
+                      images: dbP.images.map((img: any) => ({
+                        src: typeof img === 'string' ? img : img.src,
+                        alt: typeof img === 'string' ? { fr: merged[matchedIndex].name.fr, de: merged[matchedIndex].name.de || merged[matchedIndex].name.fr, it: merged[matchedIndex].name.it || merged[matchedIndex].name.fr, en: merged[matchedIndex].name.en || merged[matchedIndex].name.fr } : (typeof img.alt === 'string' ? { fr: img.alt, de: img.alt, it: img.alt, en: img.alt } : img.alt),
+                        width: 800,
+                        height: 800
+                      })),
+                      mainLocation: dbP.main_location || merged[matchedIndex].mainLocation
+                    };
+                  }
+                }
+              }
+            }
+          }
+        } catch (dbErr) {
+          console.warn('[Admin Dashboard] DB products fetch non-fatal notice:', dbErr);
+        }
+
         // 4. Filter out any product present in apiHidden
         const filtered = merged.filter(p => {
           const id = (p.id || '').toLowerCase().trim();
@@ -888,6 +923,26 @@ export default function AdminDashboardClient() {
             }).catch(() => {});
           }
         }
+
+        // Persist product details (images, name, price, brand, location) to Supabase Database
+        fetch('/api/admin/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            id: savedProduct.id,
+            name: savedProduct.name?.fr || '',
+            slug: savedProduct.slug?.fr || '',
+            brand: savedProduct.brand,
+            base_price: savedProduct.priceChf,
+            compare_at_price: savedProduct.compareAtPriceChf || null,
+            main_location: targetOrigin,
+            status: savedProduct.status || 'published',
+            images: (savedProduct.images || []).map(img => ({
+              src: typeof img === 'string' ? img : img.src,
+              alt: typeof img === 'string' ? savedProduct.name.fr : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || savedProduct.name.fr))
+            }))
+          })
+        }).catch(err => console.error('[handleSaveProduct] Error saving product to DB:', err));
       } catch {}
 
       return nextList;
