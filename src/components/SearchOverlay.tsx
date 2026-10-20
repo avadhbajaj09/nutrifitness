@@ -3,14 +3,16 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
+import { useRouter } from 'next/navigation';
 import { useStore } from '@/context/StoreContext';
 import { PRODUCTS } from '@/lib/catalog';
 import { formatChf } from '@/lib/tax';
 import { getLocalized } from '@/lib/types';
-import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
+import { searchProducts } from '@/lib/search';
 
 export default function SearchOverlay() {
-  const { isSearchOpen, closeSearch, isProductVisible, countryCode } = useStore();
+  const router = useRouter();
+  const { isSearchOpen, closeSearch, isProductVisible, locale } = useStore();
   const [query, setQuery] = useState('');
   const inputRef = useRef<HTMLInputElement>(null);
 
@@ -32,15 +34,21 @@ export default function SearchOverlay() {
 
   if (!isSearchOpen) return null;
 
-  const q = query.trim().toLowerCase();
+  const trimmedQuery = query.trim();
   const visibleProducts = PRODUCTS.filter(p => isProductVisible(p));
-  const results = q 
-    ? visibleProducts.filter(p => 
-        (p.name?.fr && p.name.fr.toLowerCase().includes(q)) ||
-        p.brand.toLowerCase().includes(q) ||
-        p.categorySlug.toLowerCase().includes(q)
-      ).slice(0, 12)
-    : visibleProducts.slice(0, 9);
+  const matchedProducts = trimmedQuery
+    ? searchProducts(visibleProducts, trimmedQuery, locale || 'fr')
+    : visibleProducts;
+
+  const results = trimmedQuery ? matchedProducts.slice(0, 15) : visibleProducts.slice(0, 9);
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (trimmedQuery) {
+      closeSearch();
+      router.push(`/boutique?q=${encodeURIComponent(trimmedQuery)}`);
+    }
+  };
 
   return (
     <div 
@@ -50,8 +58,8 @@ export default function SearchOverlay() {
       aria-label="Recherche de compléments"
     >
       <div className="w-full max-w-4xl pt-6 sm:pt-12">
-        {/* Search Bar Row */}
-        <div className="relative flex items-center gap-4">
+        {/* Search Bar Form Row */}
+        <form onSubmit={handleSubmit} className="relative flex items-center gap-4">
           <div className="relative flex-1">
             <svg className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-white/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
@@ -62,8 +70,8 @@ export default function SearchOverlay() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher par produit, marque ou objectif (ex: Isolate, Créatine, BigMan)..."
-              className="w-full min-h-[58px] pl-14 pr-12 text-sm sm:text-base font-medium bg-[#141414] border-2 border-white/20 rounded-2xl text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none transition-all shadow-2xl"
+              placeholder="Rechercher par produit, marque ou goût (ex: Créatine, Isolate, BigMan, ABE)..."
+              className="w-full min-h-[58px] pl-14 pr-20 text-sm sm:text-base font-medium bg-[#141414] border-2 border-white/20 rounded-2xl text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none transition-all shadow-2xl"
               autoComplete="off"
             />
 
@@ -89,12 +97,12 @@ export default function SearchOverlay() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
-        </div>
+        </form>
 
         {/* Quick Search Suggestions */}
         <div className="flex flex-wrap items-center gap-2 mt-4 pt-2">
           <span className="text-xs font-bold text-white/40 uppercase tracking-wider">Populaires :</span>
-          {['Whey Isolate', 'Creapure®', 'Pre-Workout Booster', 'BigMan', 'Vitamines & Zinc'].map(tag => (
+          {['Whey Isolate', 'Creapure®', 'Pre-Workout', 'BigMan', 'ABE', 'Vitamines'].map(tag => (
             <button 
               key={tag}
               type="button" 
@@ -109,44 +117,59 @@ export default function SearchOverlay() {
         {/* Results Container */}
         <div className="mt-6 max-h-[60vh] overflow-y-auto pr-2">
           <div className="text-xs font-bold text-white/50 mb-3 flex items-center justify-between">
-            <span>{q ? `Résultats pour "${query}"` : 'Produits populaires en Suisse'}</span>
-            <span className="text-[#F80404]">{results.length} produit(s)</span>
+            <span>{trimmedQuery ? `Résultats pour "${query}"` : 'Produits populaires en Suisse'}</span>
+            <span className="text-[#F80404] font-black">{matchedProducts.length} produit(s)</span>
           </div>
 
-          {results.length === 0 ? (
+          {matchedProducts.length === 0 ? (
             <div className="py-12 text-center text-white/50 space-y-2">
               <p className="text-sm font-bold text-white">Aucun produit ne correspond à &quot;{query}&quot;</p>
-              <p className="text-xs">Essayez un autre mot-clé comme &quot;whey&quot;, &quot;creatine&quot; ou &quot;vitamine&quot;.</p>
+              <p className="text-xs">Essayez un autre mot-clé comme &quot;whey&quot;, &quot;creatine&quot;, &quot;booster&quot; ou &quot;vitamines&quot;.</p>
             </div>
           ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
-              {results.map(item => {
-                const slug = getLocalized(item.slug);
-                const name = getLocalized(item.name);
-                const img = item.images?.[0]?.src || '/images/placeholder.webp';
+            <>
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
+                {results.map(item => {
+                  const slug = getLocalized(item.slug);
+                  const name = getLocalized(item.name);
+                  const img = item.images?.[0]?.src || '/images/placeholder.webp';
 
-                return (
-                  <Link 
-                    key={item.id}
-                    href={`/produit/${slug}/`}
-                    onClick={closeSearch}
-                    className="flex items-center gap-3 p-3 bg-[#181818] hover:bg-[#202020] rounded-xl border border-white/10 hover:border-[#F80404]/50 transition-all group"
-                  >
-                    <div className="relative w-14 h-14 bg-black/40 rounded-lg p-1.5 shrink-0 flex items-center justify-center border border-white/5">
-                      <Image src={img} alt={name} fill className="object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform p-1" />
-                    </div>
-                    <div className="min-w-0 flex-1">
-                      <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider truncate">{item.brand}</p>
-                      <h4 className="text-xs font-bold text-white truncate group-hover:text-[#F80404] transition-colors">{name}</h4>
-                      <div className="flex items-center justify-between mt-1">
-                        <span className="text-xs font-black text-white">{formatChf(item.priceChf)}</span>
-                        <span className="text-[10px] text-emerald-400 font-bold">En stock 24h</span>
+                  return (
+                    <Link 
+                      key={item.id}
+                      href={`/produit/${slug}/`}
+                      onClick={closeSearch}
+                      className="flex items-center gap-3 p-3 bg-[#181818] hover:bg-[#202020] rounded-xl border border-white/10 hover:border-[#F80404]/50 transition-all group"
+                    >
+                      <div className="relative w-14 h-14 bg-black/40 rounded-lg p-1.5 shrink-0 flex items-center justify-center border border-white/5">
+                        <Image src={img} alt={name} fill className="object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform p-1" />
                       </div>
-                    </div>
+                      <div className="min-w-0 flex-1">
+                        <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider truncate">{item.brand}</p>
+                        <h4 className="text-xs font-bold text-white truncate group-hover:text-[#F80404] transition-colors">{name}</h4>
+                        <div className="flex items-center justify-between mt-1">
+                          <span className="text-xs font-black text-white">{formatChf(item.priceChf)}</span>
+                          <span className="text-[10px] text-emerald-400 font-bold">En stock 24h</span>
+                        </div>
+                      </div>
+                    </Link>
+                  );
+                })}
+              </div>
+
+              {trimmedQuery && matchedProducts.length > results.length && (
+                <div className="mt-4 pt-2 text-center">
+                  <Link
+                    href={`/boutique?q=${encodeURIComponent(trimmedQuery)}`}
+                    onClick={closeSearch}
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl bg-white/10 hover:bg-[#F80404] text-white hover:text-black text-xs font-bold transition-all"
+                  >
+                    <span>Voir les {matchedProducts.length} résultats dans la boutique</span>
+                    <span>→</span>
                   </Link>
-                );
-              })}
-            </div>
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

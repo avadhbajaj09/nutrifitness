@@ -9,10 +9,11 @@ import { useStore } from '@/context/StoreContext';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 import { trackViewItemList } from '@/lib/analytics';
 import { getLocalized } from '@/lib/types';
+import { searchProducts, normalizeSearchString } from '@/lib/search';
 
 function ShopContent() {
   const searchParams = useSearchParams();
-  const { countryCode, isProductVisible, currency, getProductPricing } = useStore();
+  const { countryCode, isProductVisible, currency, getProductPricing, locale } = useStore();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -40,38 +41,33 @@ function ShopContent() {
   }, [isProductVisible]);
 
   const filteredProducts = useMemo(() => {
-    return PRODUCTS.filter(p => {
+    let baseList = PRODUCTS.filter(p => {
       // Exclude deleted or draft products
       if (!isProductVisible(p)) return false;
       // Ebook has its own dedicated landing page at /guide-des-complements-alimentaires/
       if (p.categorySlug === 'guides-ebooks' || p.id === 'prod-25430') return false;
       if (selectedCategory !== 'all' && p.categorySlug !== selectedCategory) return false;
       if (selectedBrand !== 'all') {
-        const pBrand = p.brand.toLowerCase();
-        const sBrand = selectedBrand.toLowerCase();
+        const pBrand = normalizeSearchString(p.brand || '');
+        const sBrand = normalizeSearchString(selectedBrand || '');
         if (pBrand !== sBrand && !pBrand.includes(sBrand) && !sBrand.includes(pBrand)) {
           return false;
         }
       }
-      if (searchQuery) {
-        const q = searchQuery.toLowerCase();
-        const pName = (p.name?.fr || '').toLowerCase();
-        const pBrand = (p.brand || '').toLowerCase();
-        const pDesc = (p.shortDescription?.fr || '').toLowerCase();
-        if (!pName.includes(q) && !pBrand.includes(q) && !pDesc.includes(q)) {
-          return false;
-        }
-      }
       if (swissOnly && !p.isSwissOrigin) return false;
-
       return true;
-    }).sort((a, b) => {
-      if (sortBy === 'price-asc') return a.priceChf - b.priceChf;
-      if (sortBy === 'price-desc') return b.priceChf - a.priceChf;
-      if (sortBy === 'name-asc') return (a.name?.fr || '').localeCompare(b.name?.fr || '');
-      return 0;
     });
-  }, [selectedCategory, selectedBrand, searchQuery, swissOnly, deliverableOnly, sortBy, isProductVisible]);
+
+    if (searchQuery.trim()) {
+      baseList = searchProducts(baseList, searchQuery, locale || 'fr');
+    }
+
+    if (sortBy === 'price-asc') return [...baseList].sort((a, b) => a.priceChf - b.priceChf);
+    if (sortBy === 'price-desc') return [...baseList].sort((a, b) => b.priceChf - a.priceChf);
+    if (sortBy === 'name-asc') return [...baseList].sort((a, b) => (a.name?.fr || '').localeCompare(b.name?.fr || ''));
+
+    return baseList;
+  }, [selectedCategory, selectedBrand, searchQuery, swissOnly, deliverableOnly, sortBy, isProductVisible, locale]);
 
   const clearFilters = () => {
     setSelectedCategory('all');
@@ -276,23 +272,50 @@ function ShopContent() {
 
         {/* Right Side: Sort Bar + Product Grid */}
         <div className="lg:col-span-9 space-y-6">
-          <div className="bg-[#141414] rounded-2xl border border-white/10 p-3.5 flex flex-wrap items-center justify-between gap-4">
-            <div className="flex items-center gap-2">
-              <span className="text-xs text-white/60 font-medium">Trier par :</span>
-              <select 
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="bg-[#1C1C1C] border border-white/15 rounded-xl text-xs text-white px-3 py-2 focus:border-[#F80404] focus:outline-none"
-              >
-                <option value="featured">Populaires & Bestsellers</option>
-                <option value="price-asc">Prix : Croissant</option>
-                <option value="price-desc">Prix : Décroissant</option>
-                <option value="name-asc">Nom : A - Z</option>
-              </select>
+          {/* Search & Sort Bar */}
+          <div className="bg-[#141414] rounded-2xl border border-white/10 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            {/* Direct Search Input */}
+            <div className="relative flex-1 max-w-md">
+              <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+              </svg>
+              <input
+                type="text"
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Rechercher un produit, marque, goût (ex: Isolate, Créatine, ABE)..."
+                className="w-full bg-[#1C1C1C] border border-white/15 rounded-xl pl-10 pr-9 py-2 text-xs text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none transition-colors"
+              />
+              {searchQuery && (
+                <button
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-white/40 hover:text-white text-xs font-bold"
+                  aria-label="Effacer la recherche"
+                >
+                  ✕
+                </button>
+              )}
             </div>
 
-            <div className="text-xs text-white/50">
-              Affichage de {filteredProducts.length} produits
+            <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+              <div className="flex items-center gap-2">
+                <span className="text-xs text-white/60 font-medium whitespace-nowrap">Trier par :</span>
+                <select 
+                  value={sortBy}
+                  onChange={(e) => setSortBy(e.target.value)}
+                  className="bg-[#1C1C1C] border border-white/15 rounded-xl text-xs text-white px-3 py-2 focus:border-[#F80404] focus:outline-none"
+                >
+                  <option value="featured">Populaires & Bestsellers</option>
+                  <option value="price-asc">Prix : Croissant</option>
+                  <option value="price-desc">Prix : Décroissant</option>
+                  <option value="name-asc">Nom : A - Z</option>
+                </select>
+              </div>
+
+              <div className="text-xs text-white/50 whitespace-nowrap font-medium">
+                {filteredProducts.length} produit(s)
+              </div>
             </div>
           </div>
 

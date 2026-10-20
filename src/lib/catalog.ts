@@ -20463,6 +20463,1594 @@ export const PRODUCTS: ProductItem[] = [
     "shippingOrigin": "portugal",
     "stockGeneva": 0,
     "stockPortugal": 50
+  },
+  {
+    "id": "prod-14057",
+    "slug": {
+      "fr": "aukan-pre-workout-300g",
+      "de": "aukan-pre-workout-300g",
+      "it": "aukan-pre-workout-300g",
+      "en": "aukan-pre-workout-300g"
+    },
+    "name": {
+      "fr": "AUKAN PRE WORKOUT 300G",
+      "de": "AUKAN PRE WORKOUT 300G",
+      "it": "AUKAN PRE WORKOUT 300G",
+      "en": "AUKAN PRE WORKOUT 300G"
+    },
+    "brand": "NutriFitness",
+    "categorySlug": "pre-workout",
+    "taxCategory": "food_reduced",
+    "priceChf": 40,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-cassis-300g.png",
+        "alt": {
+          "fr": "Aukan Pre-Workout 300g Cassis",
+          "de": "Aukan Pre-Workout 300g Cassis",
+          "it": "Aukan Pre-Workout 300g Cassis",
+          "en": "Aukan Pre-Workout 300g Cassis"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-citron-300g.png",
+        "alt": {
+          "fr": "Aukan Pre-Workout 300g Citron",
+          "de": "Aukan Pre-Workout 300g Citron",
+          "it": "Aukan Pre-Workout 300g Citron",
+          "en": "Aukan Pre-Workout 300g Citron"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-mojito-300g.png",
+        "alt": {
+          "fr": "Aukan Pre-Workout 300g Mojito",
+          "de": "Aukan Pre-Workout 300g Mojito",
+          "it": "Aukan Pre-Workout 300g Mojito",
+          "en": "Aukan Pre-Workout 300g Mojito"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense.",
+      "de": "Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense.",
+      "it": "Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense.",
+      "en": "Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense."
+    },
+    "directAnswerAeo": {
+      "fr": "AUKAN PRE WORKOUT 300G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "AUKAN PRE WORKOUT 300G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "AUKAN PRE WORKOUT 300G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "AUKAN PRE WORKOUT 300G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense.</p>",
+      "it": "<p>Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense.</p>",
+      "en": "<p>Pré-workout stimulant haut de gamme conçu pour une congestion maximale et un focus intense.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "300g",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "c1f83e10-8f2c-4ebb-8c6f-5f03c1259fc0",
+        "sku": "8436609601294",
+        "flavorName": {
+          "fr": "CASSIS",
+          "de": "CASSIS",
+          "it": "CASSIS",
+          "en": "CASSIS"
+        },
+        "format": "300g",
+        "priceChf": 40,
+        "inventoryQuantity": 55,
+        "inStock": true,
+        "stockGeneva": 5,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-cassis-300g.png"
+      },
+      {
+        "id": "c88189fd-70ac-48ee-ae44-317004866342",
+        "sku": "8436609601287",
+        "flavorName": {
+          "fr": "CITRON",
+          "de": "CITRON",
+          "it": "CITRON",
+          "en": "CITRON"
+        },
+        "format": "300g",
+        "priceChf": 40,
+        "inventoryQuantity": 57,
+        "inStock": true,
+        "stockGeneva": 7,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-citron-300g.png"
+      },
+      {
+        "id": "e5d7ae9d-6266-4fd6-80b5-904cda27d90e",
+        "sku": "8436609601270",
+        "flavorName": {
+          "fr": "MOJITO",
+          "de": "MOJITO",
+          "it": "MOJITO",
+          "en": "MOJITO"
+        },
+        "format": "300g",
+        "priceChf": 40,
+        "inventoryQuantity": 58,
+        "inStock": true,
+        "stockGeneva": 8,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-mojito-300g.png"
+      }
+    ],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-14520",
+    "slug": {
+      "fr": "ghost-pre-workout-645g",
+      "de": "ghost-pre-workout-645g",
+      "it": "ghost-pre-workout-645g",
+      "en": "ghost-pre-workout-645g"
+    },
+    "name": {
+      "fr": "GHOST PRE-WORKOUT 645G",
+      "de": "GHOST PRE-WORKOUT 645G",
+      "it": "GHOST PRE-WORKOUT 645G",
+      "en": "GHOST PRE-WORKOUT 645G"
+    },
+    "brand": "Ghost",
+    "categorySlug": "pre-workout",
+    "taxCategory": "food_reduced",
+    "priceChf": 60,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png",
+        "alt": {
+          "fr": "GHOST PRE-WORKOUT 645G",
+          "de": "GHOST PRE-WORKOUT 645G",
+          "it": "GHOST PRE-WORKOUT 645G",
+          "en": "GHOST PRE-WORKOUT 645G"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé.",
+      "de": "Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé.",
+      "it": "Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé.",
+      "en": "Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé."
+    },
+    "directAnswerAeo": {
+      "fr": "GHOST PRE-WORKOUT 645G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "GHOST PRE-WORKOUT 645G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "GHOST PRE-WORKOUT 645G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "GHOST PRE-WORKOUT 645G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé.</p>",
+      "it": "<p>Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé.</p>",
+      "en": "<p>Formule légendaire pré-entraînement Ghost alliant énergie explosive, vascularisation et focus aiguisé.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "645g",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "e9ffe32d-1688-4ad7-8c01-ced30c0f59f8",
+        "sku": "810128527743",
+        "flavorName": {
+          "fr": "BLUE RASPBERRY",
+          "de": "BLUE RASPBERRY",
+          "it": "BLUE RASPBERRY",
+          "en": "BLUE RASPBERRY"
+        },
+        "format": "645g",
+        "priceChf": 60,
+        "inventoryQuantity": 54,
+        "inStock": true,
+        "stockGeneva": 4,
+        "stockPortugal": 50,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-BOOST-BLUE-RASPBERRY-645G.webp"
+      },
+      {
+        "id": "bc61d3dd-6d01-4ccc-9919-d9811d9ae036",
+        "sku": "810128527729",
+        "flavorName": {
+          "fr": "ORANGE CREAM",
+          "de": "ORANGE CREAM",
+          "it": "ORANGE CREAM",
+          "en": "ORANGE CREAM"
+        },
+        "format": "645g",
+        "priceChf": 60,
+        "inventoryQuantity": 51,
+        "inStock": true,
+        "stockGeneva": 1,
+        "stockPortugal": 50,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-PRE-WORKOUT-645G.png"
+      },
+      {
+        "id": "f69b0a61-5435-4efc-9847-c722e90d7efb",
+        "sku": "ghost-pre-workout-645g-2",
+        "flavorName": {
+          "fr": "PASTÈQUE",
+          "de": "PASTÈQUE",
+          "it": "PASTÈQUE",
+          "en": "PASTÈQUE"
+        },
+        "format": "645g",
+        "priceChf": 60,
+        "inventoryQuantity": 55,
+        "inStock": true,
+        "stockGeneva": 5,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png"
+      }
+    ],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-12578",
+    "slug": {
+      "fr": "abe-ultimate-pre-workout-315g",
+      "de": "abe-ultimate-pre-workout-315g",
+      "it": "abe-ultimate-pre-workout-315g",
+      "en": "abe-ultimate-pre-workout-315g"
+    },
+    "name": {
+      "fr": "ABE ULTIMATE PRE WORKOUT 315G",
+      "de": "ABE ULTIMATE PRE WORKOUT 315G",
+      "it": "ABE ULTIMATE PRE WORKOUT 315G",
+      "en": "ABE ULTIMATE PRE WORKOUT 315G"
+    },
+    "brand": "Applied Nutrition",
+    "categorySlug": "pre-workout",
+    "taxCategory": "food_reduced",
+    "priceChf": 40,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-cool-watermelon-315g.png",
+        "alt": {
+          "fr": "ABE Ultimate Pre-Workout 315g Pastèque",
+          "de": "ABE Ultimate Pre-Workout 315g Pastèque",
+          "it": "ABE Ultimate Pre-Workout 315g Pastèque",
+          "en": "ABE Ultimate Pre-Workout 315g Pastèque"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-candy-ice-blast-315g.png",
+        "alt": {
+          "fr": "ABE Ultimate Pre-Workout 315g Candy Ice Blast",
+          "de": "ABE Ultimate Pre-Workout 315g Candy Ice Blast",
+          "it": "ABE Ultimate Pre-Workout 315g Candy Ice Blast",
+          "en": "ABE Ultimate Pre-Workout 315g Candy Ice Blast"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-icy-blue-raz-315g.png",
+        "alt": {
+          "fr": "ABE Ultimate Pre-Workout 315g Framboises Bleues",
+          "de": "ABE Ultimate Pre-Workout 315g Framboises Bleues",
+          "it": "ABE Ultimate Pre-Workout 315g Framboises Bleues",
+          "en": "ABE Ultimate Pre-Workout 315g Framboises Bleues"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-energy-drink-315g.png",
+        "alt": {
+          "fr": "ABE Ultimate Pre-Workout 315g Energy Drink",
+          "de": "ABE Ultimate Pre-Workout 315g Energy Drink",
+          "it": "ABE Ultimate Pre-Workout 315g Energy Drink",
+          "en": "ABE Ultimate Pre-Workout 315g Energy Drink"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-love-hearts-315g.png",
+        "alt": {
+          "fr": "ABE Ultimate Pre-Workout 315g Love Hearts",
+          "de": "ABE Ultimate Pre-Workout 315g Love Hearts",
+          "it": "ABE Ultimate Pre-Workout 315g Love Hearts",
+          "en": "ABE Ultimate Pre-Workout 315g Love Hearts"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-cherry-cola-315g.png",
+        "alt": {
+          "fr": "ABE Ultimate Pre-Workout 315g Cherry Cola",
+          "de": "ABE Ultimate Pre-Workout 315g Cherry Cola",
+          "it": "ABE Ultimate Pre-Workout 315g Cherry Cola",
+          "en": "ABE Ultimate Pre-Workout 315g Cherry Cola"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate.",
+      "de": "Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate.",
+      "it": "Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate.",
+      "en": "Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate."
+    },
+    "directAnswerAeo": {
+      "fr": "ABE ULTIMATE PRE WORKOUT 315G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "ABE ULTIMATE PRE WORKOUT 315G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "ABE ULTIMATE PRE WORKOUT 315G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "ABE ULTIMATE PRE WORKOUT 315G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate.</p>",
+      "it": "<p>Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate.</p>",
+      "en": "<p>Booster d'entraînement numéro 1 au Royaume-Uni avec TeaCrine, Bêta-Alanine et Citrulline Malate.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "315g",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "0a809b58-7a8f-40a8-90c9-f0626c73ff72",
+        "sku": "5056555210178",
+        "flavorName": {
+          "fr": "Pastèque",
+          "de": "Pastèque",
+          "it": "Pastèque",
+          "en": "Pastèque"
+        },
+        "format": "315g",
+        "priceChf": 40,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "stockGeneva": 10,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-cool-watermelon-315g.png"
+      },
+      {
+        "id": "793efb3c-5dab-489c-9c17-7b5834ef267a",
+        "sku": "5056555204818",
+        "flavorName": {
+          "fr": "Framboises Bleues",
+          "de": "Framboises Bleues",
+          "it": "Framboises Bleues",
+          "en": "Framboises Bleues"
+        },
+        "format": "315g",
+        "priceChf": 40,
+        "inventoryQuantity": 52,
+        "inStock": true,
+        "stockGeneva": 2,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-icy-blue-raz-315g.png"
+      },
+      {
+        "id": "fa35fa52-a954-43d1-bfb8-e9a1770063c0",
+        "sku": "5056555204788",
+        "flavorName": {
+          "fr": "Energy Drink",
+          "de": "Energy Drink",
+          "it": "Energy Drink",
+          "en": "Energy Drink"
+        },
+        "format": "315g",
+        "priceChf": 40,
+        "inventoryQuantity": 55,
+        "inStock": true,
+        "stockGeneva": 5,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-energy-drink-315g.png"
+      },
+      {
+        "id": "ab71d335-1a2a-4d63-bd8c-25b133091907",
+        "sku": "5056555204764",
+        "flavorName": {
+          "fr": "Candy Ice Blast",
+          "de": "Candy Ice Blast",
+          "it": "Candy Ice Blast",
+          "en": "Candy Ice Blast"
+        },
+        "format": "315g",
+        "priceChf": 40,
+        "inventoryQuantity": 58,
+        "inStock": true,
+        "stockGeneva": 8,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-candy-ice-blast-315g.png"
+      },
+      {
+        "id": "bf4e39e9-f7d6-46c7-95c0-bed79eab238b",
+        "sku": "abe-ultimate-pre-workout-315g-4",
+        "flavorName": {
+          "fr": "COLA",
+          "de": "COLA",
+          "it": "COLA",
+          "en": "COLA"
+        },
+        "format": "315g",
+        "priceChf": 40,
+        "inventoryQuantity": 52,
+        "inStock": true,
+        "stockGeneva": 2,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-cherry-cola-315g.png"
+      },
+      {
+        "id": "e9c6aa91-fdd7-447c-9cd8-faac9c519f5c",
+        "sku": "abe-ultimate-pre-workout-315g-5",
+        "flavorName": {
+          "fr": "Love Hearts",
+          "de": "Love Hearts",
+          "it": "Love Hearts",
+          "en": "Love Hearts"
+        },
+        "format": "315g",
+        "priceChf": 40,
+        "inventoryQuantity": 52,
+        "inStock": true,
+        "stockGeneva": 2,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-love-hearts-315g.png"
+      }
+    ],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-20198",
+    "slug": {
+      "fr": "infected-pre-workout-sans-stim-500g",
+      "de": "infected-pre-workout-sans-stim-500g",
+      "it": "infected-pre-workout-sans-stim-500g",
+      "en": "infected-pre-workout-sans-stim-500g"
+    },
+    "name": {
+      "fr": "INFECTED PRE WORKOUT SANS STIM 500G",
+      "de": "INFECTED PRE WORKOUT SANS STIM 500G",
+      "it": "INFECTED PRE WORKOUT SANS STIM 500G",
+      "en": "INFECTED PRE WORKOUT SANS STIM 500G"
+    },
+    "brand": "Marvelous",
+    "categorySlug": "pre-workout",
+    "taxCategory": "food_reduced",
+    "priceChf": 40,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/infected-fruit-punch-500g.png",
+        "alt": {
+          "fr": "Infected Pre Workout Sans Stim Fruit Punch",
+          "de": "Infected Pre Workout Sans Stim Fruit Punch",
+          "it": "Infected Pre Workout Sans Stim Fruit Punch",
+          "en": "Infected Pre Workout Sans Stim Fruit Punch"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/infected-watermelone-500g.png",
+        "alt": {
+          "fr": "Infected Pre Workout Sans Stim Pastèque",
+          "de": "Infected Pre Workout Sans Stim Pastèque",
+          "it": "Infected Pre Workout Sans Stim Pastèque",
+          "en": "Infected Pre Workout Sans Stim Pastèque"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée.",
+      "de": "Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée.",
+      "it": "Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée.",
+      "en": "Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée."
+    },
+    "directAnswerAeo": {
+      "fr": "INFECTED PRE WORKOUT SANS STIM 500G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "INFECTED PRE WORKOUT SANS STIM 500G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "INFECTED PRE WORKOUT SANS STIM 500G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "INFECTED PRE WORKOUT SANS STIM 500G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée.</p>",
+      "it": "<p>Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée.</p>",
+      "en": "<p>Pré-workout ultra dosé sans stimulants pour des pumps démesurés sans caféine, idéal en soirée.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "500g",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "2f924244-c131-4c11-9aa1-846ea52d8108",
+        "sku": "634240129629",
+        "flavorName": {
+          "fr": "FRUITS PUNCH",
+          "de": "FRUITS PUNCH",
+          "it": "FRUITS PUNCH",
+          "en": "FRUITS PUNCH"
+        },
+        "format": "500g",
+        "priceChf": 40,
+        "inventoryQuantity": 51,
+        "inStock": true,
+        "stockGeneva": 1,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/infected-fruit-punch-500g.png"
+      },
+      {
+        "id": "88c3561f-0d24-4bed-841f-30ebfd706b25",
+        "sku": "634240173004",
+        "flavorName": {
+          "fr": "PASTÈQUE",
+          "de": "PASTÈQUE",
+          "it": "PASTÈQUE",
+          "en": "PASTÈQUE"
+        },
+        "format": "500g",
+        "priceChf": 40,
+        "inventoryQuantity": 54,
+        "inStock": true,
+        "stockGeneva": 4,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/infected-watermelone-500g.png"
+      }
+    ],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-21210",
+    "slug": {
+      "fr": "muffin-keto-sans-sucres-50g",
+      "de": "muffin-keto-sans-sucres-50g",
+      "it": "muffin-keto-sans-sucres-50g",
+      "en": "muffin-keto-sans-sucres-50g"
+    },
+    "name": {
+      "fr": "MUFFIN KETO SANS SUCRES 50G",
+      "de": "MUFFIN KETO SANS SUCRES 50G",
+      "it": "MUFFIN KETO SANS SUCRES 50G",
+      "en": "MUFFIN KETO SANS SUCRES 50G"
+    },
+    "brand": "Pronutrition.it",
+    "categorySlug": "snacks",
+    "taxCategory": "food_reduced",
+    "priceChf": 4,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png",
+        "alt": {
+          "fr": "MUFFIN KETO SANS SUCRES 50G",
+          "de": "MUFFIN KETO SANS SUCRES 50G",
+          "it": "MUFFIN KETO SANS SUCRES 50G",
+          "en": "MUFFIN KETO SANS SUCRES 50G"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand.",
+      "de": "Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand.",
+      "it": "Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand.",
+      "en": "Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand."
+    },
+    "directAnswerAeo": {
+      "fr": "MUFFIN KETO SANS SUCRES 50G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "MUFFIN KETO SANS SUCRES 50G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "MUFFIN KETO SANS SUCRES 50G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "MUFFIN KETO SANS SUCRES 50G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand.</p>",
+      "it": "<p>Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand.</p>",
+      "en": "<p>Muffin protéiné cétogène ultra moelleux sans sucres ajoutés avec cœur fondant gourmand.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "50g",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "72869562-deda-46f3-b244-3f08caf42364",
+        "sku": "muffin-keto-sans-sucres-50g-0",
+        "flavorName": {
+          "fr": "AMARENA",
+          "de": "AMARENA",
+          "it": "AMARENA",
+          "en": "AMARENA"
+        },
+        "format": "50g",
+        "priceChf": 4,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "stockGeneva": 10,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png"
+      },
+      {
+        "id": "93c119af-1bfb-49ce-ba25-be6dcc6e1dd0",
+        "sku": "8050507513406",
+        "flavorName": {
+          "fr": "CHOCO POIRE",
+          "de": "CHOCO POIRE",
+          "it": "CHOCO POIRE",
+          "en": "CHOCO POIRE"
+        },
+        "format": "50g",
+        "priceChf": 4,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "stockGeneva": 10,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png"
+      },
+      {
+        "id": "5983d7bf-d7ba-4a27-b21f-90b7ca896aad",
+        "sku": "8050507513390",
+        "flavorName": {
+          "fr": "FRUITS DES BOIS",
+          "de": "FRUITS DES BOIS",
+          "it": "FRUITS DES BOIS",
+          "en": "FRUITS DES BOIS"
+        },
+        "format": "50g",
+        "priceChf": 4,
+        "inventoryQuantity": 50,
+        "inStock": true,
+        "stockGeneva": 10,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png"
+      }
+    ],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-21628",
+    "slug": {
+      "fr": "ufo-blast",
+      "de": "ufo-blast",
+      "it": "ufo-blast",
+      "en": "ufo-blast"
+    },
+    "name": {
+      "fr": "UFO BLAST",
+      "de": "UFO BLAST",
+      "it": "UFO BLAST",
+      "en": "UFO BLAST"
+    },
+    "brand": "NutriFitness",
+    "categorySlug": "pre-workout",
+    "taxCategory": "food_reduced",
+    "priceChf": 40,
+    "images": [
+      {
+        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/Design-sans-titre-86.png",
+        "alt": {
+          "fr": "UFO BLAST",
+          "de": "UFO BLAST",
+          "it": "UFO BLAST",
+          "en": "UFO BLAST"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.",
+      "de": "Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.",
+      "it": "Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.",
+      "en": "Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort."
+    },
+    "directAnswerAeo": {
+      "fr": "UFO BLAST est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "UFO BLAST ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "UFO BLAST è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "UFO BLAST is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.</p>",
+      "it": "<p>Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.</p>",
+      "en": "<p>Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "300g",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-4c457658",
+    "slug": {
+      "fr": "ginger-shot-60ml",
+      "de": "ginger-shot-60ml",
+      "it": "ginger-shot-60ml",
+      "en": "ginger-shot-60ml"
+    },
+    "name": {
+      "fr": "GINGER SHOT BIO 60ML",
+      "de": "GINGER SHOT BIO 60ML",
+      "it": "GINGER SHOT BIO 60ML",
+      "en": "GINGER SHOT BIO 60ML"
+    },
+    "brand": "Go Ginger",
+    "categorySlug": "sante-bien-etre",
+    "taxCategory": "food_reduced",
+    "priceChf": 3.9,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png",
+        "alt": {
+          "fr": "Ginger Shot Bio 60ml",
+          "de": "Ginger Shot Bio 60ml",
+          "it": "Ginger Shot Bio 60ml",
+          "en": "Ginger Shot Bio 60ml"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle.",
+      "de": "Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle.",
+      "it": "Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle.",
+      "en": "Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle."
+    },
+    "directAnswerAeo": {
+      "fr": "GINGER SHOT BIO 60ML est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "GINGER SHOT BIO 60ML ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "GINGER SHOT BIO 60ML è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "GINGER SHOT BIO 60ML is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle.</p>",
+      "it": "<p>Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle.</p>",
+      "en": "<p>Concentré de gingembre biologique pressé à froid pour booster l'immunité et la vitalité naturelle.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "60ml",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "ece19f41-37e1-415c-86a4-d717b6993126",
+        "sku": "ginger-shot-60ml-0",
+        "flavorName": {
+          "fr": "ORANGE",
+          "de": "ORANGE",
+          "it": "ORANGE",
+          "en": "ORANGE"
+        },
+        "format": "60ml",
+        "priceChf": 3.9,
+        "inventoryQuantity": 60,
+        "inStock": true,
+        "stockGeneva": 10,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png"
+      },
+      {
+        "id": "590db48d-d72a-42c4-9982-0b5a37fe5d39",
+        "sku": "ginger-shot-60ml-1",
+        "flavorName": {
+          "fr": "POMME",
+          "de": "POMME",
+          "it": "POMME",
+          "en": "POMME"
+        },
+        "format": "60ml",
+        "priceChf": 3.9,
+        "inventoryQuantity": 60,
+        "inStock": true,
+        "stockGeneva": 10,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png"
+      },
+      {
+        "id": "4e559371-1986-4782-baba-02e5001e7ec3",
+        "sku": "ginger-shot-60ml-2",
+        "flavorName": {
+          "fr": "LEMON",
+          "de": "LEMON",
+          "it": "LEMON",
+          "en": "LEMON"
+        },
+        "format": "60ml",
+        "priceChf": 3.9,
+        "inventoryQuantity": 60,
+        "inStock": true,
+        "stockGeneva": 10,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png"
+      }
+    ],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-24641",
+    "slug": {
+      "fr": "stimx-300g",
+      "de": "stimx-300g",
+      "it": "stimx-300g",
+      "en": "stimx-300g"
+    },
+    "name": {
+      "fr": "STIMX 300G",
+      "de": "STIMX 300G",
+      "it": "STIMX 300G",
+      "en": "STIMX 300G"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "pre-workout",
+    "taxCategory": "food_reduced",
+    "priceChf": 55,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/tutti-fruity-stimx.jpg",
+        "alt": {
+          "fr": "STIMX 300G",
+          "de": "STIMX 300G",
+          "it": "STIMX 300G",
+          "en": "STIMX 300G"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser.",
+      "de": "Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser.",
+      "it": "Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser.",
+      "en": "Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser."
+    },
+    "directAnswerAeo": {
+      "fr": "STIMX 300G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "STIMX 300G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "STIMX 300G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "STIMX 300G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser.</p>",
+      "it": "<p>Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser.</p>",
+      "en": "<p>Booster pré-entraînement hardcore haute intensité avec stimulants synergiques et focus laser.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "300g",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "970f0609-a59b-472b-a817-c3a7cb7b9fc7",
+        "sku": "stimx-300g-0",
+        "flavorName": {
+          "fr": "LEMON",
+          "de": "LEMON",
+          "it": "LEMON",
+          "en": "LEMON"
+        },
+        "format": "300g",
+        "priceChf": 55,
+        "inventoryQuantity": 59,
+        "inStock": true,
+        "stockGeneva": 9,
+        "stockPortugal": 50,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/STIMX-LEMON.webp"
+      },
+      {
+        "id": "936bb4d0-7cd6-4fb7-a4cc-445fb31dd78f",
+        "sku": "stimx-300g-1",
+        "flavorName": {
+          "fr": "TUTTI FRUTTI",
+          "de": "TUTTI FRUTTI",
+          "it": "TUTTI FRUTTI",
+          "en": "TUTTI FRUTTI"
+        },
+        "format": "300g",
+        "priceChf": 55,
+        "inventoryQuantity": 56,
+        "inStock": true,
+        "stockGeneva": 6,
+        "stockPortugal": 50,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/STIMX-T-F.webp"
+      },
+      {
+        "id": "98db5fb7-9a54-4117-baf4-8cb463f94dbc",
+        "sku": "stimx-300g-2",
+        "flavorName": {
+          "fr": "RED COLA",
+          "de": "RED COLA",
+          "it": "RED COLA",
+          "en": "RED COLA"
+        },
+        "format": "300g",
+        "priceChf": 55,
+        "inventoryQuantity": 51,
+        "inStock": true,
+        "stockGeneva": 1,
+        "stockPortugal": 50,
+        "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/STIMX-COLA.webp"
+      }
+    ],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-a136ce4a",
+    "slug": {
+      "fr": "grenade-carb-killa-barre-60g",
+      "de": "grenade-carb-killa-barre-60g",
+      "it": "grenade-carb-killa-barre-60g",
+      "en": "grenade-carb-killa-barre-60g"
+    },
+    "name": {
+      "fr": "GRENADE CARB KILLA BARRE 60G",
+      "de": "GRENADE CARB KILLA BARRE 60G",
+      "it": "GRENADE CARB KILLA BARRE 60G",
+      "en": "GRENADE CARB KILLA BARRE 60G"
+    },
+    "brand": "Grenade",
+    "categorySlug": "snacks",
+    "taxCategory": "food_reduced",
+    "priceChf": 4.5,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/grenade-carb-killa-caramel-chaos.webp",
+        "alt": {
+          "fr": "Grenade Carb Killa Caramel Chaos",
+          "de": "Grenade Carb Killa Caramel Chaos",
+          "it": "Grenade Carb Killa Caramel Chaos",
+          "en": "Grenade Carb Killa Caramel Chaos"
+        },
+        "width": 800,
+        "height": 800
+      },
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/grenade-carb-killa-fudge-brownie.webp",
+        "alt": {
+          "fr": "Grenade Carb Killa Fudge Brownie",
+          "de": "Grenade Carb Killa Fudge Brownie",
+          "it": "Grenade Carb Killa Fudge Brownie",
+          "en": "Grenade Carb Killa Fudge Brownie"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre.",
+      "de": "Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre.",
+      "it": "Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre.",
+      "en": "Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre."
+    },
+    "directAnswerAeo": {
+      "fr": "GRENADE CARB KILLA BARRE 60G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "GRENADE CARB KILLA BARRE 60G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "GRENADE CARB KILLA BARRE 60G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "GRENADE CARB KILLA BARRE 60G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre.</p>",
+      "it": "<p>Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre.</p>",
+      "en": "<p>Barre protéinée croustillante triple couche primée avec plus de 20 g de protéines et moins de 2 g de sucre.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "60g",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [
+      {
+        "id": "20c01517-4632-44f0-83a3-ea823a05e686",
+        "sku": "grenade-carb-killa-barre-60g-0",
+        "flavorName": {
+          "fr": "FUDGE BROWNIE",
+          "de": "FUDGE BROWNIE",
+          "it": "FUDGE BROWNIE",
+          "en": "FUDGE BROWNIE"
+        },
+        "format": "60g",
+        "priceChf": 4.5,
+        "inventoryQuantity": 70,
+        "inStock": true,
+        "stockGeneva": 20,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/grenade-carb-killa-fudge-brownie.webp"
+      },
+      {
+        "id": "edf5a43b-7872-4b5c-aa7c-90fe3fa853cb",
+        "sku": "grenade-carb-killa-barre-60g-1",
+        "flavorName": {
+          "fr": "CARAMEL CHAOS",
+          "de": "CARAMEL CHAOS",
+          "it": "CARAMEL CHAOS",
+          "en": "CARAMEL CHAOS"
+        },
+        "format": "60g",
+        "priceChf": 4.5,
+        "inventoryQuantity": 70,
+        "inStock": true,
+        "stockGeneva": 20,
+        "stockPortugal": 50,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/grenade-carb-killa-caramel-chaos.webp"
+      }
+    ],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-4f9155e0",
+    "slug": {
+      "fr": "carbo-reducer-90-caps",
+      "de": "carbo-reducer-90-caps",
+      "it": "carbo-reducer-90-caps",
+      "en": "carbo-reducer-90-caps"
+    },
+    "name": {
+      "fr": "CARBO REDUCER 90 CAPS",
+      "de": "CARBO REDUCER 90 CAPS",
+      "it": "CARBO REDUCER 90 CAPS",
+      "en": "CARBO REDUCER 90 CAPS"
+    },
+    "brand": "NutriFitness",
+    "categorySlug": "perte-de-poids",
+    "taxCategory": "food_reduced",
+    "priceChf": 34.9,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/carbo-reducer-90-caps.png",
+        "alt": {
+          "fr": "Carbo Reducer 90 Capsules",
+          "de": "Carbo Reducer 90 Capsules",
+          "it": "Carbo Reducer 90 Capsules",
+          "en": "Carbo Reducer 90 Capsules"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides.",
+      "de": "Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides.",
+      "it": "Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides.",
+      "en": "Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides."
+    },
+    "directAnswerAeo": {
+      "fr": "CARBO REDUCER 90 CAPS est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "CARBO REDUCER 90 CAPS ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "CARBO REDUCER 90 CAPS è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "CARBO REDUCER 90 CAPS is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides.</p>",
+      "it": "<p>Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides.</p>",
+      "en": "<p>Formule ciblée à base d'extraits de haricot blanc (Phaseolamine) pour modérer l'absorption des glucides.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "90 gélules",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-f6ff8edd",
+    "slug": {
+      "fr": "esn-magnesium-caps-120-gelules",
+      "de": "esn-magnesium-caps-120-gelules",
+      "it": "esn-magnesium-caps-120-gelules",
+      "en": "esn-magnesium-caps-120-gelules"
+    },
+    "name": {
+      "fr": "ESN MAGNESIUM CAPS 120 GÉLULES",
+      "de": "ESN MAGNESIUM CAPS 120 GÉLULES",
+      "it": "ESN MAGNESIUM CAPS 120 GÉLULES",
+      "en": "ESN MAGNESIUM CAPS 120 GÉLULES"
+    },
+    "brand": "ESN",
+    "categorySlug": "vitamines-mineraux",
+    "taxCategory": "food_reduced",
+    "priceChf": 26.9,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/esn-magnesium-bisglycinate-120-caps.png",
+        "alt": {
+          "fr": "ESN Magnesium Caps 120 Gélules",
+          "de": "ESN Magnesium Caps 120 Gélules",
+          "it": "ESN Magnesium Caps 120 Gélules",
+          "en": "ESN Magnesium Caps 120 Gélules"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux.",
+      "de": "Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux.",
+      "it": "Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux.",
+      "en": "Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux."
+    },
+    "directAnswerAeo": {
+      "fr": "ESN MAGNESIUM CAPS 120 GÉLULES est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "ESN MAGNESIUM CAPS 120 GÉLULES ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "ESN MAGNESIUM CAPS 120 GÉLULES è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "ESN MAGNESIUM CAPS 120 GÉLULES is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux.</p>",
+      "it": "<p>Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux.</p>",
+      "en": "<p>Bisglycinate de magnésium chélaté haute biodisponibilité pour la fonction musculaire et le système nerveux.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "120 gélules",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
+  },
+  {
+    "id": "prod-11648",
+    "slug": {
+      "fr": "beta-alanine-en-poudre-250g",
+      "de": "beta-alanine-en-poudre-250g",
+      "it": "beta-alanine-en-poudre-250g",
+      "en": "beta-alanine-en-poudre-250g"
+    },
+    "name": {
+      "fr": "BETA-ALANINE EN POUDRE 250G",
+      "de": "BETA-ALANINE EN POUDRE 250G",
+      "it": "BETA-ALANINE EN POUDRE 250G",
+      "en": "BETA-ALANINE EN POUDRE 250G"
+    },
+    "brand": "Dirty Squads",
+    "categorySlug": "acides-amines",
+    "taxCategory": "food_reduced",
+    "priceChf": 25,
+    "images": [
+      {
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png",
+        "alt": {
+          "fr": "BETA-ALANINE EN POUDRE 250G",
+          "de": "BETA-ALANINE EN POUDRE 250G",
+          "it": "BETA-ALANINE EN POUDRE 250G",
+          "en": "BETA-ALANINE EN POUDRE 250G"
+        },
+        "width": 800,
+        "height": 800
+      }
+    ],
+    "shortDescription": {
+      "fr": "Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire.",
+      "de": "Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire.",
+      "it": "Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire.",
+      "en": "Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire."
+    },
+    "directAnswerAeo": {
+      "fr": "BETA-ALANINE EN POUDRE 250G est un complément nutritionnel de référence disponible en stock à Genève chez NutriFitness avec livraison 24h en Suisse.",
+      "de": "BETA-ALANINE EN POUDRE 250G ist ein hochwertiges Nahrungsergänzungsmittel bei NutriFitness Genf mit 24h-Lieferung in der Schweiz.",
+      "it": "BETA-ALANINE EN POUDRE 250G è un integratore di riferimento disponibile presso NutriFitness Ginevra con consegna in 24h in Svizzera.",
+      "en": "BETA-ALANINE EN POUDRE 250G is a premium sports nutrition supplement in stock at NutriFitness Geneva with 24h delivery across Switzerland."
+    },
+    "longDescription": {
+      "fr": "<p>Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
+      "de": "<p>Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire.</p>",
+      "it": "<p>Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire.</p>",
+      "en": "<p>Bêta-Alanine pure micronisée pour repousser le seuil d'acide lactique et prolonger l'endurance musculaire.</p>"
+    },
+    "usageInstructions": {
+      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
+      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
+      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
+      "en": "Refer to product packaging for detailed usage directions."
+    },
+    "ingredients": {
+      "fr": "Voir liste complète sur l'emballage d'origine.",
+      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
+      "it": "Vedere la lista ingredienti sulla confezione originale.",
+      "en": "See full ingredients list on original packaging."
+    },
+    "allergens": {
+      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
+      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
+      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
+      "en": "May contain traces of milk, soy, egg or tree nuts."
+    },
+    "nutrition": {
+      "servingSize": "250g",
+      "servingsPerContainer": 30,
+      "energyKj": 0,
+      "energyKcal": 0,
+      "fatG": 0,
+      "saturatedFatG": 0,
+      "carbsG": 0,
+      "sugarsG": 0,
+      "proteinG": 0,
+      "saltG": 0
+    },
+    "variants": [],
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 25,
+    "stockPortugal": 0,
+    "inventoryQuantity": 25,
+    "inStock": true,
+    "status": "published"
   }
 ];
 

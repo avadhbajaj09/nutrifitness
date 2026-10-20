@@ -6,6 +6,7 @@ import Image from 'next/image';
 import { Search, Clock, Calendar, ArrowRight, BookOpen, ShieldCheck, Sparkles, Filter, X } from 'lucide-react';
 import type { BlogPost } from '@/lib/blog';
 import { BLOG_CATEGORIES } from '@/lib/blog';
+import { normalizeSearchString } from '@/lib/search';
 
 interface BlogListClientProps {
   posts: BlogPost[];
@@ -16,18 +17,20 @@ export default function BlogListClient({ posts }: BlogListClientProps) {
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
 
   const filteredPosts = useMemo(() => {
+    const normQuery = normalizeSearchString(searchQuery);
+    const tokens = normQuery.split(' ').filter(Boolean);
+
     return posts.filter(post => {
       const matchesCategory = 
         selectedCategory === 'all' || 
         post.categorySlug === selectedCategory;
 
-      const q = searchQuery.toLowerCase().trim();
-      const matchesSearch = 
-        !q ||
-        post.title.toLowerCase().includes(q) ||
-        post.targetKeyword.toLowerCase().includes(q) ||
-        post.shortAnswer.toLowerCase().includes(q) ||
-        post.category.toLowerCase().includes(q);
+      if (!tokens.length) return matchesCategory;
+
+      const haystack = normalizeSearchString(
+        `${post.title} ${post.targetKeyword} ${post.shortAnswer} ${post.category}`
+      );
+      const matchesSearch = tokens.every(t => haystack.includes(t));
 
       return matchesCategory && matchesSearch;
     });
