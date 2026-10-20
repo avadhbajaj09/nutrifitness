@@ -9,6 +9,7 @@ import { PRODUCTS } from '@/lib/catalog';
 import { formatChf } from '@/lib/tax';
 import { getLocalized } from '@/lib/types';
 import { searchProducts } from '@/lib/search';
+import { trackSearch } from '@/lib/analytics';
 
 export default function SearchOverlay() {
   const router = useRouter();
@@ -45,6 +46,7 @@ export default function SearchOverlay() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (trimmedQuery) {
+      trackSearch(trimmedQuery);
       closeSearch();
       router.push(`/boutique?q=${encodeURIComponent(trimmedQuery)}`);
     }

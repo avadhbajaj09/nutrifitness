@@ -77,13 +77,38 @@ function logDataLayerDebug(payload: Record<string, unknown>): void {
 }
 
 /**
- * Universal safe dataLayer pusher
+ * Universal safe dataLayer pusher (auto-syncs to window.gtag for direct GA4 feed)
  */
 export function pushDataLayer(payload: Record<string, unknown>): void {
   if (typeof window === 'undefined') return;
   window.dataLayer = window.dataLayer || [];
   logDataLayerDebug(payload);
   window.dataLayer.push(payload);
+
+  try {
+    if (typeof window.gtag === 'function' && payload.event && typeof payload.event === 'string' && payload.event !== 'dataLayer_push') {
+      const eventName = payload.event;
+      if (payload.ecommerce && typeof payload.ecommerce === 'object') {
+        window.gtag('event', eventName, payload.ecommerce as Record<string, any>);
+      } else {
+        const { event, ...rest } = payload;
+        window.gtag('event', eventName, rest);
+      }
+    }
+  } catch {
+    // ignore
+  }
+}
+
+/**
+ * 0. Search term tracking (GA4 search event)
+ */
+export function trackSearch(searchTerm: string): void {
+  if (!searchTerm || !searchTerm.trim()) return;
+  pushDataLayer({
+    event: 'search',
+    search_term: searchTerm.trim(),
+  });
 }
 
 /**
