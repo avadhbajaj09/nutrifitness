@@ -1010,7 +1010,7 @@ export default function CheckoutPage() {
                   handleApplyCoupon();
                 }
               }}
-              placeholder="Code promo (ex: TEST95)"
+              placeholder="Entrez votre code promo"
               className="flex-1 min-h-[42px] px-3.5 text-xs bg-black/80 border border-white/20 rounded-xl text-white uppercase placeholder-white/30 focus:outline-none focus:border-[#F80404] font-mono tracking-wider transition-all"
             />
             <button
@@ -1050,29 +1050,6 @@ export default function CheckoutPage() {
               <span className="font-semibold text-[11px]">{couponMessage.text}</span>
             </div>
           )}
-
-          <div className="flex items-center gap-2 text-[10px] text-white/40 pt-0.5">
-            <span>💡 Code d&apos;essai disponible :</span>
-            <button
-              type="button"
-              onClick={() => {
-                setCouponCode('TEST95');
-              }}
-              className="text-[#F80404] hover:underline font-mono font-bold"
-            >
-              TEST95 (-95%)
-            </button>
-            <span>ou</span>
-            <button
-              type="button"
-              onClick={() => {
-                setCouponCode('SWISS10');
-              }}
-              className="text-[#F80404] hover:underline font-mono font-bold"
-            >
-              SWISS10 (-10%)
-            </button>
-          </div>
         </div>
       )}
     </div>

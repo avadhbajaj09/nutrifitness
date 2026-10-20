@@ -10,12 +10,6 @@ interface LocalCoupon {
 }
 
 const LOCAL_FALLBACK_COUPONS: Record<string, LocalCoupon> = {
-  TEST95: {
-    rate: 0.95,
-    percentOff: 95,
-    discountType: 'percent',
-    description: '-95% de réduction pour tests',
-  },
   SWISS10: {
     rate: 0.10,
     percentOff: 10,
