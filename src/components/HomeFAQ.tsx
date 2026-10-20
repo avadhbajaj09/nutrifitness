@@ -26,7 +26,7 @@ export default function HomeFAQ() {
     },
     {
       q: 'Quelles marques de nutrition sportive proposez-vous ?',
-      a: 'Nous distribuons officiellement les marques de renommée internationale et européenne les plus fiables : Optimum Nutrition, Applied Nutrition, Dymatize, Marvelous, Ghost Lifestyle, Bigman Nutrition et Pronutrition, ainsi que notre marque propre d\'accessoires NutriFit.'
+      a: 'Nous distribuons officiellement les marques de renommée internationale et européenne les plus fiables : Optimum Nutrition, Applied Nutrition, Marvelous, Ghost Lifestyle, Bigman Nutrition, Pronutrition et Dirty Squads, ainsi que notre marque propre d\'accessoires NutriFitness Lab.'
     },
     {
       q: 'Puis-je retirer ma commande gratuitement en boutique en Suisse (Click & Collect) ?',

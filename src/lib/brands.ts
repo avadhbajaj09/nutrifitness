@@ -212,17 +212,16 @@ export const ALL_BRANDS: BrandInfo[] = [
     name: 'NutriFitness',
     displayName: 'NutriFitness Lab',
     slug: 'nutrifitness',
-    count: 6,
+    count: 2,
     logo: '/images/brands/logo-nutrifitness-lab.png',
     featured: true,
     indexable: true,
     h1: 'NutriFitness Lab en Suisse | NutriFitness',
-    metaTitle: 'NutriFitness Lab Genève : Shakers, Gourdes & Guides Officiels',
-    metaDescription: 'Découvrez les accessoires officiels NutriFitness Lab : shakers antifuites sans BPA, gourdes gallon 2.2L et Le Guide Ultime des Compléments Alimentaires.',
-    intro: "NutriFitness Lab est notre propre marque officielle d'équipements sportifs et de supports pédagogiques, conçue à Genève pour accompagner au quotidien les passionnés de musculation et de fitness. Développée sous la direction de Marco Scarpantoni fort de plus de 20 ans d'expérience sur le terrain, notre gamme regroupe des shakers ergonomiques et antifuites sans BPA (600 ml), des gourdes grand format 2.2 litres (« Gallon ») pour optimiser votre hydratation en salle, ainsi que notre ouvrage de référence « Le Guide Ultime des Compléments Alimentaires ». Tous nos accessoires sont testés en conditions réelles d'entraînement pour garantir solidité et praticité. Retrouvez nos créations exclusives directement au 34 Rue des Pâquis à Genève ou commandez-les en ligne avec livraison suisse rapide en 24 heures.",
+    metaTitle: 'NutriFitness Lab Genève : Gallon 2.2L & Gourde Sport Officiels',
+    metaDescription: 'Découvrez les accessoires officiels NutriFitness Lab : gourde sport ergonomique 600ml et gallon d\'hydratation 2.2L sans BPA. Retrait à Genève & envoi 24h.',
+    intro: "NutriFitness Lab est notre propre marque officielle d'équipements sportifs, conçue à Genève pour accompagner au quotidien les passionnés de musculation et de fitness. Retrouvez notre gourde ergonomique 600 ml avec paille sans BPA et notre gallon d'hydratation grand format 2.2 litres directement au 34 Rue des Pâquis à Genève ou commandez-les en ligne avec livraison suisse express en 24 heures.",
     relevantCategories: [
-      { name: 'Accessoires & Shakers', href: '/categorie/accessoires/' },
-      { name: 'Guides & Ebooks', href: '/categorie/guides-ebooks/' }
+      { name: 'Accessoires & Shakers', href: '/categorie/accessoires/' }
     ],
     relevantGuides: [
       { title: 'Premiers compléments : le guide du débutant en Suisse', href: '/blog/premiers-complements-guide-debutant-suisse/' },
@@ -312,41 +311,7 @@ export const ALL_BRANDS: BrandInfo[] = [
       }
     ]
   },
-  {
-    name: 'Dymatize',
-    displayName: 'Dymatize',
-    slug: 'dymatize',
-    count: 1,
-    logo: '/images/brands/logo-dymatize.png',
-    featured: true,
-    indexable: true,
-    h1: 'Dymatize en Suisse | NutriFitness',
-    metaTitle: 'Dymatize Suisse : ISO 100 Hydrolyzed Isolate à Genève',
-    metaDescription: 'Dymatize ISO 100 Hydrolyzed Whey Isolate en Suisse chez NutriFitness Genève. Pureté maximale, assimilation ultra-rapide. Retrait en boutique ou envoi 24h.',
-    intro: "Fondée aux États-Unis et plébiscitée par les culturistes et athlètes professionnels du monde entier, Dymatize est synonyme d'innovation scientifique et de filtration avancée, distribuée à Genève par NutriFitness. Sa référence reine, l'ISO 100 Hydrolyzed, associe whey isolate microfiltrée à flux croisé et hydrolysat de protéines pour une vitesse d'absorption record et une teneur quasi-nulle en glucides, lipides et lactose. Idéale en période de sèche ou pour les personnes intolérantes aux produits laitiers traditionnels, elle est stockée dans notre magasin de Genève et strictement conforme aux normes de l'OSAV. Retrouvez ce standard d'excellence au 34 Rue des Pâquis ou commandez en ligne avec réception garantie sous 24 heures en Suisse.",
-    relevantCategories: [
-      { name: 'Protéines & Whey', href: '/categorie/proteines/' },
-      { name: 'Gainers & Masse', href: '/categorie/gainers-prise-de-masse/' }
-    ],
-    relevantGuides: [
-      { title: 'Whey isolate ou concentrée : laquelle choisir ?', href: '/blog/whey-isolate-ou-concentree/' },
-      { title: 'Combien de protéines par jour pour un sportif ?', href: '/blog/combien-de-proteines-par-jour-sportif/' }
-    ],
-    faqs: [
-      {
-        q: 'Qu\'est-ce qui distingue Dymatize ISO 100 des autres isolates ?',
-        a: 'ISO 100 est pré-hydrolysée pour accélérer encore l\'absorption des peptides d\'acides aminés tout en éliminant les graisses et le lactose résiduels.'
-      },
-      {
-        q: 'Convient-elle aux personnes intolérantes au lactose ?',
-        a: 'Grâce à son procédé de purification extrême, la teneur en lactose est résiduelle (moins de 0.5g par portion), la rendant très bien tolérée.'
-      },
-      {
-        q: 'Peut-on l\'acheter directement en magasin à Genève ?',
-        a: 'Oui, au 34 Rue des Pâquis à Genève avec possibilité de Click & Collect immédiat.'
-      }
-    ]
-  },
+
   {
     name: 'Ghost',
     displayName: 'Ghost Lifestyle',

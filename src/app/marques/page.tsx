@@ -15,7 +15,7 @@ import {
 
 export const metadata: Metadata = {
   title: 'Toutes les Marques de Nutrition Sportive | NutriFitness.ch Genève',
-  description: 'Découvrez notre catalogue de marques de référence en Suisse : Optimum Nutrition, Applied Nutrition, Dymatize, Marvelous, Ghost, Pronutrition. Stock physique à Genève.',
+  description: 'Découvrez notre catalogue de marques de référence en Suisse : Optimum Nutrition, Applied Nutrition, Marvelous, Ghost, Pronutrition, Dirty Squads. Stock physique à Genève.',
   alternates: {
     canonical: 'https://nutrifitness.ch/marques/',
   }
@@ -25,11 +25,11 @@ export default function MarquesPage() {
   const faqs = [
     {
       q: 'Quelles marques de nutrition sportive trouve-t-on chez Nutrifitness ?',
-      a: 'Nous distribuons les marques de nutrition sportive les plus réputées mondialement et européennes : Optimum Nutrition, Applied Nutrition, Dymatize, Marvelous, Pronutrition, Ghost Lifestyle, Bigman Nutrition, Dirty Squads, ainsi que notre marque propre d\'accessoires sportifs NutriFit. Tous les produits sont rigoureusement sélectionnés pour leur traçabilité et leur pureté.'
+      a: 'Nous distribuons les marques de nutrition sportive les plus réputées mondialement et européennes : Optimum Nutrition, Applied Nutrition, Marvelous, Pronutrition, Ghost Lifestyle, Bigman Nutrition, Dirty Squads, ainsi que notre marque propre d\'accessoires sportifs NutriFitness Lab. Tous les produits sont rigoureusement sélectionnés pour leur traçabilité et leur pureté.'
     },
     {
       q: 'D\'où viennent ces marques et fabricants ?',
-      a: 'Nos partenaires proviennent de pays dotés de réglementations sanitaires très strictes : Optimum Nutrition et Dymatize (États-Unis), Applied Nutrition (Royaume-Uni), Ghost Lifestyle (États-Unis), Marvelous (Portugal) et Bigman Nutrition (Espagne). Tous les lots importés en Suisse sont contrôlés et conformes aux normes fédérales de l\'OSAV et du DFI.'
+      a: 'Nos partenaires proviennent de pays dotés de réglementations sanitaires très strictes : Optimum Nutrition (États-Unis), Applied Nutrition (Royaume-Uni), Ghost Lifestyle (États-Unis), Marvelous (Portugal) et Bigman Nutrition (Espagne). Tous les lots importés en Suisse sont contrôlés et conformes aux normes fédérales de l\'OSAV et du DFI.'
     },
     {
       q: 'Comment choisir entre deux marques de compléments ?',

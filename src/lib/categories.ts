@@ -176,7 +176,7 @@ export const CATEGORIES_DATA: CategoryData[] = [
       { title: 'Guide : Choisir son Gainer', href: '/blog/gainer-pour-qui-comment-choisir/' }
     ],
     featuredProductNames: [
-      'Mega Mass 4000 3kg Dymatize',
+      'Critical Mass Gainer Applied Nutrition',
       'Furiux Gainer 3kg Bigman',
       'Big Lean Mass Gainer Marvelous',
       'Farine d\'avoine 1kg Pronutrition'

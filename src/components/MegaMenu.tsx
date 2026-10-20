@@ -14,7 +14,7 @@ export default function MegaMenu({ isOpen, onClose }: MegaMenuProps) {
 
   return (
     <div 
-      className="absolute left-0 right-0 top-full mt-2 w-full bg-[#121212]/98 backdrop-blur-2xl border-y border-white/10 shadow-2xl p-8 z-50 text-white animate-in fade-in slide-in-from-top-2 duration-200"
+      className="absolute left-0 right-0 top-full mt-0 w-full bg-[#0d0d0d] border-b border-white/15 shadow-[0_30px_60px_-15px_rgba(0,0,0,0.95)] p-8 z-[60] text-white animate-in fade-in slide-in-from-top-1 duration-150"
       onMouseLeave={onClose}
     >
       <div className="max-w-7xl mx-auto grid grid-cols-1 md:grid-cols-4 gap-8">

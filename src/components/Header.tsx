@@ -40,9 +40,9 @@ export default function Header() {
   return (
     <>
       <header 
-        className={`sticky top-0 z-40 w-full transition-all duration-300 ${
+        className={`sticky top-0 z-50 w-full transition-all duration-300 ${
           isScrolled 
-            ? 'bg-[#0A0A0A]/95 backdrop-blur-xl border-b border-white/10 shadow-2xl py-2.5' 
+            ? 'bg-[#0A0A0A] border-b border-white/10 shadow-2xl py-2.5' 
             : 'bg-[#0A0A0A] border-b border-white/10 py-3.5'
         }`}
       >

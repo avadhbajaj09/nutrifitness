@@ -2059,7 +2059,7 @@ export const PRODUCTS: ProductItem[] = [
       "it": "NutriFitness Le Guide Ultime des Compléments Alimentaires – Ebook Expert PDF",
       "en": "NutriFitness Le Guide Ultime des Compléments Alimentaires – Ebook Expert PDF"
     },
-    "brand": "NutriFitness",
+    "brand": "NutriFitness Ebooks",
     "categorySlug": "guides-ebooks",
     "taxCategory": "standard",
     "priceChf": 29.9,
@@ -2512,7 +2512,7 @@ export const PRODUCTS: ProductItem[] = [
       "it": "NutriFitness Magnésium Bisglycinate Chélaté 60 Comprimés – Haute Biodisponibilité & Système Nerveux",
       "en": "NutriFitness Magnésium Bisglycinate Chélaté 60 Comprimés – Haute Biodisponibilité & Système Nerveux"
     },
-    "brand": "NutriFitness",
+    "brand": "Pronutrition.it",
     "categorySlug": "complements",
     "taxCategory": "food_reduced",
     "priceChf": 30,
@@ -6289,170 +6289,6 @@ export const PRODUCTS: ProductItem[] = [
     "gtin13": "634240078408"
   },
   {
-    "id": "prod-20929",
-    "slug": {
-      "fr": "mega-mass-4000-3kg",
-      "de": "mega-mass-4000-3kg",
-      "it": "mega-mass-4000-3kg",
-      "en": "mega-mass-4000-3kg"
-    },
-    "name": {
-      "fr": "Dymatize Super Mega Mass 4000 3kg – Hard Gainer Calibré Prise de Masse & Énergie",
-      "de": "Dymatize Super Mega Mass 4000 3kg – Hard Gainer Calibré Prise de Masse & Énergie",
-      "it": "Dymatize Super Mega Mass 4000 3kg – Hard Gainer Calibré Prise de Masse & Énergie",
-      "en": "Dymatize Super Mega Mass 4000 3kg – Hard Gainer Calibré Prise de Masse & Énergie"
-    },
-    "brand": "Dymatize",
-    "categorySlug": "prise-de-masse",
-    "taxCategory": "food_reduced",
-    "priceChf": 79.9,
-    "images": [
-      {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/MEGA-MASS-CHOCO-3KG.png',
-        "alt": {
-          "fr": "Dymatize Mega Mass 4000 – Gainer prise de masse",
-          "de": "Dymatize Mega Mass 4000 – Gainer prise de masse",
-          "it": "Dymatize Mega Mass 4000 – Gainer prise de masse",
-          "en": "Dymatize Mega Mass 4000 – Gainer prise de masse"
-        },
-        "width": 800,
-        "height": 800
-      },
-      {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/MEGA-MASS-FRAISES-3KG.png',
-        "alt": {
-          "fr": "Mega Mass 4000 3kg",
-          "de": "Mega Mass 4000 3kg",
-          "it": "Mega Mass 4000 3kg",
-          "en": "Mega Mass 4000 3kg"
-        },
-        "width": 800,
-        "height": 800
-      },
-      {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/MEGA-MASS-VANILLE-3KG.png',
-        "alt": {
-          "fr": "Mega Mass 4000 3kg",
-          "de": "Mega Mass 4000 3kg",
-          "it": "Mega Mass 4000 3kg",
-          "en": "Mega Mass 4000 3kg"
-        },
-        "width": 800,
-        "height": 800
-      }
-    ],
-    "shortDescription": {
-      "fr": "Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Cette formule intègre matrice glucidique dense, isolat et concentré de lactosérum, créatine monohydrate, complexe de 12 vitamines et minéraux pour des résultats visibles et durables. Stock direct 100% en Suisse, expédié sous 24h par PostPac Priority ou disponible en retrait immédiat à notre boutique NutriFitness Genève (34 Rue des Pâquis).",
-      "de": "Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Hochwertige Formel mit Matrice glucidique dense, isolat et concentré de lactosérum, créatine monohydrate, complexe de 12 vitamines et minéraux. 100% Schweizer Lagerware, versandfertig in 24 Stunden per PostPac Priority oder direkt abholbar im Store Genf.",
-      "it": "Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Formula avanzata con Matrice glucidique dense, isolat et concentré de lactosérum, créatine monohydrate, complexe de 12 vitamines et minéraux. Stock 100% svizzero con spedizione rapida 24h PostPac Priority o ritiro immediato nel negozio di Ginevra.",
-      "en": "Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Advanced formula containing Matrice glucidique dense, isolat et concentré de lactosérum, créatine monohydrate, complexe de 12 vitamines et minéraux. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
-    },
-    "directAnswerAeo": {
-      "fr": "Dymatize Super Mega Mass 4000 3kg est un complément de nutrition sportive de haute qualité élaboré avec matrice glucidique dense, isolat et concentré de lactosérum, créatine monohydrate, complexe de 12 vitamines et minéraux. Développé pour les athlètes très minces, ectomorphes et sportifs ayant des dépenses caloriques colossales impossibles à couvrir par l'alimentation seule., il constitue un le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Posologie recommandée : mélanger 150 g de poudre dans 500 ml d'eau ou de lait entier et consommer entre les repas ou après votre entraînement. Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 24h.",
-      "de": "Dymatize Super Mega Mass 4000 3kg von Dymatize ist hochwertige Schweizer Sportnahrung mit Matrice glucidique dense, isolat et concentré de lactosérum, créatine monohydrate, complexe de 12 vitamines et minéraux. Entwickelt für Athlètes très minces, ectomorphes et sportifs ayant des dépenses caloriques colossales impossibles à couvrir par l'alimentation seule., unterstützt das Produkt Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
-      "it": "Dymatize Super Mega Mass 4000 3kg di Dymatize è un integratore formulato con Matrice glucidique dense, isolat et concentré de lactosérum, créatine monohydrate, complexe de 12 vitamines et minéraux. Ideale per Athlètes très minces, ectomorphes et sportifs ayant des dépenses caloriques colossales impossibles à couvrir par l'alimentation seule., favorisce Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
-      "en": "Dymatize Super Mega Mass 4000 3kg by Dymatize is a premium sports nutrition supplement formulated with Matrice glucidique dense, isolat et concentré de lactosérum, créatine monohydrate, complexe de 12 vitamines et minéraux. Designed for Athlètes très minces, ectomorphes et sportifs ayant des dépenses caloriques colossales impossibles à couvrir par l'alimentation seule., it delivers Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
-    },
-    "longDescription": {
-      "fr": "<h2>Pourquoi choisir Dymatize Super Mega Mass 4000 3kg chez NutriFitness Suisse ?</h2>\n<p>Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Athlètes très minces, ectomorphes et sportifs ayant des dépenses caloriques colossales impossibles à couvrir par l'alimentation seule.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Apporte plus de 800 kcal de haute qualité nutritive par portion complète :</strong> Apporte plus de 800 kcal de haute qualité nutritive par portion complète</li>\n  <li><strong>Mélange de protéines à digestion rapide et lente pour nourrir les muscles sur plusieurs heures :</strong> Mélange de protéines à digestion rapide et lente pour nourrir les muscles sur plusieurs heures</li>\n  <li><strong>Enrichi en vitamines du groupe B et zinc pour un métabolisme énergétique optimal :</strong> Enrichi en vitamines du groupe B et zinc pour un métabolisme énergétique optimal</li>\n  <li><strong>Goût légendaire et onctuosité reconnue dans le monde de la musculation depuis des décennies :</strong> Goût légendaire et onctuosité reconnue dans le monde de la musculation depuis des décennies</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Mélanger 150 g de poudre dans 500 ml d'eau ou de lait entier et consommer entre les repas ou après votre entraînement.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Dymatize Super Mega Mass 4000 3kg</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
-      "de": "<h2>Warum Dymatize Super Mega Mass 4000 3kg bei NutriFitness Schweiz wählen?</h2>\n<p>Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Entwickelt mit hochwertigen Inhaltsstoffen für höchste Schweizer Qualitätsansprüche.</p>\n<h2>Formel & Wichtige Wirkstoffe</h2>\n<ul>\n  <li><strong>Apporte plus de 800 kcal de haute qualité nutritive par portion complète :</strong> Apporte plus de 800 kcal de haute qualité nutritive par portion complète</li>\n  <li><strong>Mélange de protéines à digestion rapide et lente pour nourrir les muscles sur plusieurs heures :</strong> Mélange de protéines à digestion rapide et lente pour nourrir les muscles sur plusieurs heures</li>\n  <li><strong>Enrichi en vitamines du groupe B et zinc pour un métabolisme énergétique optimal :</strong> Enrichi en vitamines du groupe B et zinc pour un métabolisme énergétique optimal</li>\n  <li><strong>Goût légendaire et onctuosité reconnue dans le monde de la musculation depuis des décennies :</strong> Goût légendaire et onctuosité reconnue dans le monde de la musculation depuis des décennies</li>\n</ul>\n<h2>Einnahmeempfehlung & Schweizer Richtlinien</h2>\n<p>Mélanger 150 g de poudre dans 500 ml d'eau ou de lait entier et consommer entre les repas ou après votre entraînement.</p>\n<h2>Ihr Vorteil bei NutriFitness Genf</h2>\n<p>100% Schweizer Lagerware an der Rue des Pâquis 34, 1201 Genf. Schneller 24h-Versand mit der Schweizerischen Post (PostPac Priority) ohne Zollgebühren.</p>",
-      "it": "<h2>Perché scegliere Dymatize Super Mega Mass 4000 3kg su NutriFitness Svizzera?</h2>\n<p>Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Formulato secondo i più alti standard di qualità e purezza per gli atleti esigenti.</p>\n<h2>Analisi della Formula & Principi Attivi</h2>\n<ul>\n  <li><strong>Apporte plus de 800 kcal de haute qualité nutritive par portion complète :</strong> Apporte plus de 800 kcal de haute qualité nutritive par portion complète</li>\n  <li><strong>Mélange de protéines à digestion rapide et lente pour nourrir les muscles sur plusieurs heures :</strong> Mélange de protéines à digestion rapide et lente pour nourrir les muscles sur plusieurs heures</li>\n  <li><strong>Enrichi en vitamines du groupe B et zinc pour un métabolisme énergétique optimal :</strong> Enrichi en vitamines du groupe B et zinc pour un métabolisme énergétique optimal</li>\n  <li><strong>Goût légendaire et onctuosité reconnue dans le monde de la musculation depuis des décennies :</strong> Goût légendaire et onctuosité reconnue dans le monde de la musculation depuis des décennies</li>\n</ul>\n<h2>Modalità d'uso e Dosaggio Svizzero</h2>\n<p>Mélanger 150 g de poudre dans 500 ml d'eau ou de lait entier et consommer entre les repas ou après votre entraînement.</p>\n<h2>La Garanzia NutriFitness Ginevra</h2>\n<p>Stock 100% svizzero a Ginevra con consegna rapida 24h PostPac Priority e ritiro diretto al negozio di Rue des Pâquis 34.</p>",
-      "en": "<h2>Why Choose Dymatize Super Mega Mass 4000 3kg at NutriFitness Switzerland?</h2>\n<p>Le gainer historique des légendes du bodybuilding conçu pour franchir les paliers de stagnation pondérale. Formulated with premium ingredients adhering to rigorous Swiss food safety and efficacy standards.</p>\n<h2>Formula Breakdown & Active Nutrients</h2>\n<ul>\n  <li><strong>Apporte plus de 800 kcal de haute qualité nutritive par portion complète :</strong> Apporte plus de 800 kcal de haute qualité nutritive par portion complète</li>\n  <li><strong>Mélange de protéines à digestion rapide et lente pour nourrir les muscles sur plusieurs heures :</strong> Mélange de protéines à digestion rapide et lente pour nourrir les muscles sur plusieurs heures</li>\n  <li><strong>Enrichi en vitamines du groupe B et zinc pour un métabolisme énergétique optimal :</strong> Enrichi en vitamines du groupe B et zinc pour un métabolisme énergétique optimal</li>\n  <li><strong>Goût légendaire et onctuosité reconnue dans le monde de la musculation depuis des décennies :</strong> Goût légendaire et onctuosité reconnue dans le monde de la musculation depuis des décennies</li>\n</ul>\n<h2>Recommended Usage & Swiss Compliance</h2>\n<p>Mélanger 150 g de poudre dans 500 ml d'eau ou de lait entier et consommer entre les repas ou après votre entraînement.</p>\n<h2>The NutriFitness Geneva Guarantee</h2>\n<p>100% genuine Swiss stock located in Geneva (34 Rue des Pâquis). Dispatched within 24 hours via Swiss Post (PostPac Priority) with zero hidden customs fees.</p>"
-    },
-    "usageInstructions": {
-      "fr": "Consommer selon les indications du fabricant ou les conseils de nos spécialistes en boutique à Genève.",
-      "de": "Gemäss Herstellerangaben oder nach persönlicher Beratung im Store Genf einnehmen.",
-      "it": "Assumere secondo le indicazioni della confezione.",
-      "en": "Consume according to manufacturer instructions or specialist advice."
-    },
-    "ingredients": {
-      "fr": "Ingrédients de haute qualité alimentaire contrôlés selon les normes de sécurité suisses.",
-      "de": "Geprüfte Rohstoffe nach Schweizer Lebensmittelstandard.",
-      "it": "Ingredienti controllati secondo gli standard svizzeri.",
-      "en": "Quality-controlled ingredients adhering to Swiss standards."
-    },
-    "allergens": {
-      "fr": "Voir emballage pour la liste détaillée des allergènes.",
-      "de": "Siehe Verpackung für detaillierte Allergenhinweise.",
-      "it": "Vedere confezione per allergeni.",
-      "en": "See packaging for allergen declarations."
-    },
-    "nutrition": {
-      "servingSize": "1 portion",
-      "servingsPerContainer": 30,
-      "energyKj": 500,
-      "energyKcal": 120,
-      "fatG": 1.5,
-      "saturatedFatG": 0.5,
-      "carbsG": 2,
-      "sugarsG": 1,
-      "proteinG": 24,
-      "saltG": 0.2
-    },
-    "variants": [
-      {
-        "id": "95955198-6035-4cdb-bae9-9cf40c520c6b",
-        "sku": "4044782325452",
-        "flavorName": {
-          "fr": "CHOCOLAT",
-          "de": "CHOCOLAT",
-          "it": "CHOCOLAT",
-          "en": "CHOCOLAT"
-        },
-        "format": "1 unité",
-        "priceChf": 79.9,
-        "inventoryQuantity": 0,
-        "inStock": true,
-        "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-CHOCO-3KG.png",
-        "stockGeneva": 25,
-        "stockPortugal": 0,
-        "gtin13": "4044782325452"
-      },
-      {
-        "id": "777b9b9a-0ed4-443a-82f2-6cf3509649df",
-        "sku": "4044782325353",
-        "flavorName": {
-          "fr": "VANILLE",
-          "de": "VANILLE",
-          "it": "VANILLE",
-          "en": "VANILLE"
-        },
-        "format": "1 unité",
-        "priceChf": 79.9,
-        "inventoryQuantity": 0,
-        "inStock": true,
-        "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-VANILLE-3KG.png",
-        "stockGeneva": 25,
-        "stockPortugal": 0,
-        "gtin13": "4044782325353"
-      },
-      {
-        "id": "509321cb-77a6-4e82-9207-46463aaf6a2d",
-        "sku": "4044782325858",
-        "flavorName": {
-          "fr": "FRAISES",
-          "de": "FRAISES",
-          "it": "FRAISES",
-          "en": "FRAISES"
-        },
-        "format": "1 unité",
-        "priceChf": 79.9,
-        "inventoryQuantity": 0,
-        "inStock": true,
-        "image": "https://nutrifitness.ch/wp-content/uploads/2025/08/MEGA-MASS-FRAISES-3KG.png",
-        "stockGeneva": 25,
-        "stockPortugal": 0,
-        "gtin13": "4044782325858"
-      }
-    ],
-    "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
-    "gtin13": "4044782325452",
-    "locationType": "GENEVA_ONLY"
-  },
-  {
     "id": "prod-20727",
     "slug": {
       "fr": "muscles-whey-2kg",
@@ -8729,7 +8565,7 @@ export const PRODUCTS: ProductItem[] = [
       "it": "NutriFitness Ignite Burn Thermogenic Pre-Workout 210g Orange Mangue – Énergie Focus & Brûleur",
       "en": "NutriFitness Ignite Burn Thermogenic Pre-Workout 210g Orange Mangue – Énergie Focus & Brûleur"
     },
-    "brand": "NutriFitness",
+    "brand": "Marvelous",
     "categorySlug": "complements-avant-sport",
     "taxCategory": "food_reduced",
     "priceChf": 28,
@@ -13176,7 +13012,7 @@ export const PRODUCTS: ProductItem[] = [
       "it": "NutriFitness Gourde Sport Ergonomique 600ml avec Paille – Sans BPA Hermétique & Design Genève",
       "en": "NutriFitness Gourde Sport Ergonomique 600ml avec Paille – Sans BPA Hermétique & Design Genève"
     },
-    "brand": "Nutrifit",
+    "brand": "NutriFitness",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
     "priceChf": 10,
@@ -13380,127 +13216,6 @@ export const PRODUCTS: ProductItem[] = [
     "locationType": "GENEVA_ONLY",
     "stockPortugal": 0,
     "stockGeneva": 25
-  },
-  {
-    "id": "prod-9616",
-    "slug": {
-      "fr": "nf-shaker-600ml",
-      "de": "nf-shaker-600ml",
-      "it": "nf-shaker-600ml",
-      "en": "nf-shaker-600ml"
-    },
-    "name": {
-      "fr": "NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments – 100% Étanche Sans BPA",
-      "de": "NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments – 100% Étanche Sans BPA",
-      "it": "NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments – 100% Étanche Sans BPA",
-      "en": "NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments – 100% Étanche Sans BPA"
-    },
-    "brand": "Nutrifit",
-    "categorySlug": "accessoires",
-    "taxCategory": "standard",
-    "priceChf": 10,
-    "images": [
-      {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp',
-        "alt": {
-          "fr": "Shaker NutriFit avec double compartiment et fermeture étanche, idéal pour les boissons protéinées",
-          "de": "Shaker NutriFit avec double compartiment et fermeture étanche, idéal pour les boissons protéinées",
-          "it": "Shaker NutriFit avec double compartiment et fermeture étanche, idéal pour les boissons protéinées",
-          "en": "Shaker NutriFit avec double compartiment et fermeture étanche, idéal pour les boissons protéinées"
-        },
-        "width": 800,
-        "height": 800
-      }
-    ],
-    "shortDescription": {
-      "fr": "Le shaker tout-en-un indispensable pour emporter votre whey, votre créatine et vos vitamines dans un seul contenant hermétique. Conçu en matériaux certifiés sans BPA et 100% hermétique pour accompagner tous vos entraînements. Stock direct 100% en Suisse, expédié sous 24h par PostPac Priority ou disponible en retrait immédiat au showroom NutriFitness Genève (34 Rue des Pâquis).",
-      "de": "Le shaker tout-en-un indispensable pour emporter votre whey, votre créatine et vos vitamines dans un seul contenant hermétique. Aus BPA-freiem, langlebigem Material mit zuverlässigem Auslaufschutz. 100% Schweizer Lagerware, versandfertig in 24 Stunden per PostPac Priority oder direkt abholbar im Store Genf.",
-      "it": "Le shaker tout-en-un indispensable pour emporter votre whey, votre créatine et vos vitamines dans un seul contenant hermétique. Realizzato in materiali resistenti senza BPA e 100% a tenuta stagna. Stock 100% svizzero con spedizione rapida 24h PostPac Priority o ritiro a Ginevra.",
-      "en": "Le shaker tout-en-un indispensable pour emporter votre whey, votre créatine et vos vitamines dans un seul contenant hermétique. Engineered from durable BPA-free materials with a 100% leak-proof seal. 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for pickup at our Geneva showroom."
-    },
-    "directAnswerAeo": {
-      "fr": "NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments est un accessoire officiel NutriFitness Suisse conçu en matériaux haute résistance certifiés sans BPA et 100% hermétique. Conçu pour faciliter l'hydratation quotidienne et la préparation des shakers sportifs sans grumeaux. Disponible immédiatement en stock à Genève avec expédition 24h par PostPac Priority ou retrait immédiat au 34 Rue des Pâquis.",
-      "de": "NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments ist offizielles NutriFitness Schweiz Zubehör aus BPA-freiem, langlebigem Material mit 100% Auslaufschutz. Entwickelt für einfache Flüssigkeitszufuhr und klumpenfreie Protein-Shakes. 100% Schweizer Lagerware in Genf mit 24h-Versand per PostPac Priority.",
-      "it": "NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments è un accessorio ufficiale NutriFitness Svizzera realizzato in materiali resistenti senza BPA e 100% ermetico. Ideale per l'idratazione quotidiana e la preparazione di shaker senza grumi. Disponibile con spedizione rapida 24h PostPac Priority o ritiro a Ginevra.",
-      "en": "NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments is an official NutriFitness Switzerland accessory crafted from durable, BPA-free materials with a 100% leak-proof seal. Designed for effortless hydration and lump-free protein shakes. In stock in Geneva with 24h PostPac Priority dispatch."
-    },
-    "longDescription": {
-      "fr": "<h2>Pourquoi choisir NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments chez NutriFitness Suisse ?</h2>\n<p>Le shaker tout-en-un indispensable pour emporter votre whey, votre créatine et vos vitamines dans un seul contenant hermétique. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Tous les pratiquants de musculation et sportifs consommant des poudres nutritionnelles en déplacement.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Fermeture à clapet sécurisée 'zéro fuite' testée sous haute pression pour ne jamais tacher votre sac :</strong> Fermeture à clapet sécurisée 'zéro fuite' testée sous haute pression pour ne jamais tacher votre sac</li>\n  <li><strong>Compartiments amovibles vissés sous la base pour stocker vos doses de compléments de la journée :</strong> Compartiments amovibles vissés sous la base pour stocker vos doses de compléments de la journée</li>\n  <li><strong>Grille conique brevetée pulvérisant instantanément les poudres les plus denses sans grumeau :</strong> Grille conique brevetée pulvérisant instantanément les poudres les plus denses sans grumeau</li>\n  <li><strong>Nettoyage facile au lave-vaisselle, garanti sans odeur plastique résiduelle :</strong> Nettoyage facile au lave-vaisselle, garanti sans odeur plastique résiduelle</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Verser d'abord le liquide, ajouter la poudre, visser fermement le bouchon et secouer énergiquement 10 secondes.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
-      "de": "<h2>Warum NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments bei NutriFitness Schweiz wählen?</h2>\n<p>Le shaker tout-en-un indispensable pour emporter votre whey, votre créatine et vos vitamines dans un seul contenant hermétique. Entwickelt mit hochwertigen Inhaltsstoffen für höchste Schweizer Qualitätsansprüche.</p>\n<h2>Formel & Wichtige Wirkstoffe</h2>\n<ul>\n  <li><strong>Fermeture à clapet sécurisée 'zéro fuite' testée sous haute pression pour ne jamais tacher votre sac :</strong> Fermeture à clapet sécurisée 'zéro fuite' testée sous haute pression pour ne jamais tacher votre sac</li>\n  <li><strong>Compartiments amovibles vissés sous la base pour stocker vos doses de compléments de la journée :</strong> Compartiments amovibles vissés sous la base pour stocker vos doses de compléments de la journée</li>\n  <li><strong>Grille conique brevetée pulvérisant instantanément les poudres les plus denses sans grumeau :</strong> Grille conique brevetée pulvérisant instantanément les poudres les plus denses sans grumeau</li>\n  <li><strong>Nettoyage facile au lave-vaisselle, garanti sans odeur plastique résiduelle :</strong> Nettoyage facile au lave-vaisselle, garanti sans odeur plastique résiduelle</li>\n</ul>\n<h2>Einnahmeempfehlung & Schweizer Richtlinien</h2>\n<p>Verser d'abord le liquide, ajouter la poudre, visser fermement le bouchon et secouer énergiquement 10 secondes.</p>\n<h2>Ihr Vorteil bei NutriFitness Genf</h2>\n<p>100% Schweizer Lagerware an der Rue des Pâquis 34, 1201 Genf. Schneller 24h-Versand mit der Schweizerischen Post (PostPac Priority) ohne Zollgebühren.</p>",
-      "it": "<h2>Perché scegliere NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments su NutriFitness Svizzera?</h2>\n<p>Le shaker tout-en-un indispensable pour emporter votre whey, votre créatine et vos vitamines dans un seul contenant hermétique. Formulato secondo i più alti standard di qualità e purezza per gli atleti esigenti.</p>\n<h2>Analisi della Formula & Principi Attivi</h2>\n<ul>\n  <li><strong>Fermeture à clapet sécurisée 'zéro fuite' testée sous haute pression pour ne jamais tacher votre sac :</strong> Fermeture à clapet sécurisée 'zéro fuite' testée sous haute pression pour ne jamais tacher votre sac</li>\n  <li><strong>Compartiments amovibles vissés sous la base pour stocker vos doses de compléments de la journée :</strong> Compartiments amovibles vissés sous la base pour stocker vos doses de compléments de la journée</li>\n  <li><strong>Grille conique brevetée pulvérisant instantanément les poudres les plus denses sans grumeau :</strong> Grille conique brevetée pulvérisant instantanément les poudres les plus denses sans grumeau</li>\n  <li><strong>Nettoyage facile au lave-vaisselle, garanti sans odeur plastique résiduelle :</strong> Nettoyage facile au lave-vaisselle, garanti sans odeur plastique résiduelle</li>\n</ul>\n<h2>Modalità d'uso e Dosaggio Svizzero</h2>\n<p>Verser d'abord le liquide, ajouter la poudre, visser fermement le bouchon et secouer énergiquement 10 secondes.</p>\n<h2>La Garanzia NutriFitness Ginevra</h2>\n<p>Stock 100% svizzero a Ginevra con consegna rapida 24h PostPac Priority e ritiro diretto al negozio di Rue des Pâquis 34.</p>",
-      "en": "<h2>Why Choose NutriFitness Shaker Anti-Grumeaux 600ml avec Compartiments at NutriFitness Switzerland?</h2>\n<p>Le shaker tout-en-un indispensable pour emporter votre whey, votre créatine et vos vitamines dans un seul contenant hermétique. Formulated with premium ingredients adhering to rigorous Swiss food safety and efficacy standards.</p>\n<h2>Formula Breakdown & Active Nutrients</h2>\n<ul>\n  <li><strong>Fermeture à clapet sécurisée 'zéro fuite' testée sous haute pression pour ne jamais tacher votre sac :</strong> Fermeture à clapet sécurisée 'zéro fuite' testée sous haute pression pour ne jamais tacher votre sac</li>\n  <li><strong>Compartiments amovibles vissés sous la base pour stocker vos doses de compléments de la journée :</strong> Compartiments amovibles vissés sous la base pour stocker vos doses de compléments de la journée</li>\n  <li><strong>Grille conique brevetée pulvérisant instantanément les poudres les plus denses sans grumeau :</strong> Grille conique brevetée pulvérisant instantanément les poudres les plus denses sans grumeau</li>\n  <li><strong>Nettoyage facile au lave-vaisselle, garanti sans odeur plastique résiduelle :</strong> Nettoyage facile au lave-vaisselle, garanti sans odeur plastique résiduelle</li>\n</ul>\n<h2>Recommended Usage & Swiss Compliance</h2>\n<p>Verser d'abord le liquide, ajouter la poudre, visser fermement le bouchon et secouer énergiquement 10 secondes.</p>\n<h2>The NutriFitness Geneva Guarantee</h2>\n<p>100% genuine Swiss stock located in Geneva (34 Rue des Pâquis). Dispatched within 24 hours via Swiss Post (PostPac Priority) with zero hidden customs fees.</p>"
-    },
-    "usageInstructions": {
-      "fr": "Consommer selon les indications du fabricant ou les conseils de nos spécialistes en boutique à Genève.",
-      "de": "Gemäss Herstellerangaben oder nach persönlicher Beratung im Store Genf einnehmen.",
-      "it": "Assumere secondo le indicazioni della confezione.",
-      "en": "Consume according to manufacturer instructions or specialist advice."
-    },
-    "ingredients": {
-      "fr": "Ingrédients de haute qualité alimentaire contrôlés selon les normes de sécurité suisses.",
-      "de": "Geprüfte Rohstoffe nach Schweizer Lebensmittelstandard.",
-      "it": "Ingredienti controllati secondo gli standard svizzeri.",
-      "en": "Quality-controlled ingredients adhering to Swiss standards."
-    },
-    "allergens": {
-      "fr": "Voir emballage pour la liste détaillée des allergènes.",
-      "de": "Siehe Verpackung für detaillierte Allergenhinweise.",
-      "it": "Vedere confezione per allergeni.",
-      "en": "See packaging for allergen declarations."
-    },
-    "nutrition": {
-      "servingSize": "1 portion",
-      "servingsPerContainer": 30,
-      "energyKj": 500,
-      "energyKcal": 120,
-      "fatG": 1.5,
-      "saturatedFatG": 0.5,
-      "carbsG": 2,
-      "sugarsG": 1,
-      "proteinG": 24,
-      "saltG": 0.2
-    },
-    "variants": [
-      {
-        "id": "1030782f-554a-4bdc-864d-bf2eb5309664",
-        "sku": "NF-20408",
-        "flavorName": {
-          "fr": "TRANSPARENT",
-          "de": "TRANSPARENT",
-          "it": "TRANSPARENT",
-          "en": "TRANSPARENT"
-        },
-        "format": "1 unité",
-        "priceChf": 10,
-        "inventoryQuantity": 0,
-        "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp',
-        "stockGeneva": 25,
-        "stockPortugal": 0
-      },
-      {
-        "id": "7c70d203-755d-41ce-a842-791f3f413254",
-        "sku": "NF-20409",
-        "flavorName": {
-          "fr": "NOIR",
-          "de": "NOIR",
-          "it": "NOIR",
-          "en": "NOIR"
-        },
-        "format": "1 unité",
-        "priceChf": 10,
-        "inventoryQuantity": 0,
-        "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/07/NF-SHAKER-600ML.webp',
-        "stockGeneva": 25,
-        "stockPortugal": 0
-      }
-    ],
-    "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "stockGeneva": 25,
-    "stockPortugal": 0,
-    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-9526",
@@ -14342,7 +14057,7 @@ export const PRODUCTS: ProductItem[] = [
       "it": "NutriFitness Gallon d'Hydratation Sport 2.2L – Bidon Sans BPA avec Poignée Ergonomique pour la Salle",
       "en": "NutriFitness Gallon d'Hydratation Sport 2.2L – Bidon Sans BPA avec Poignée Ergonomique pour la Salle"
     },
-    "brand": "Nutrifit",
+    "brand": "NutriFitness",
     "categorySlug": "accessoires",
     "taxCategory": "standard",
     "priceChf": 15,
@@ -20693,7 +20408,7 @@ export const PRODUCTS: ProductItem[] = [
       "it": "AUKAN PRE WORKOUT 300G",
       "en": "AUKAN PRE WORKOUT 300G"
     },
-    "brand": "NutriFitness",
+    "brand": "Bigman",
     "categorySlug": "pre-workout",
     "taxCategory": "food_reduced",
     "priceChf": 40,
@@ -21502,94 +21217,6 @@ export const PRODUCTS: ProductItem[] = [
     "status": "published"
   },
   {
-    "id": "prod-21628",
-    "slug": {
-      "fr": "ufo-blast",
-      "de": "ufo-blast",
-      "it": "ufo-blast",
-      "en": "ufo-blast"
-    },
-    "name": {
-      "fr": "UFO BLAST",
-      "de": "UFO BLAST",
-      "it": "UFO BLAST",
-      "en": "UFO BLAST"
-    },
-    "brand": "NutriFitness",
-    "categorySlug": "pre-workout",
-    "taxCategory": "food_reduced",
-    "priceChf": 40,
-    "images": [
-      {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/placeholder.webp',
-        "alt": {
-          "fr": "UFO BLAST",
-          "de": "UFO BLAST",
-          "it": "UFO BLAST",
-          "en": "UFO BLAST"
-        },
-        "width": 800,
-        "height": 800
-      }
-    ],
-    "shortDescription": {
-      "fr": "Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.",
-      "de": "Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.",
-      "it": "Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.",
-      "en": "Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort."
-    },
-    "directAnswerAeo": {
-      "fr": "UFO BLAST est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.",
-      "en": "UFO BLAST is a premium sports nutrition supplement shipped directly from our European warehouse in Portugal with tracked delivery in 3-5 business days.",
-      "de": "UFO BLAST ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.",
-      "it": "UFO BLAST è un integratore di riferimento spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi."
-    },
-    "longDescription": {
-      "fr": "<p>Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.</p><p>Certifié conforme aux normes suisses FSVO / DFI. Stocké et expédié depuis Genève.</p>",
-      "de": "<p>Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.</p>",
-      "it": "<p>Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.</p>",
-      "en": "<p>Formule pré-entraînement explosive pour booster l'énergie et la concentration pendant l'effort.</p>"
-    },
-    "usageInstructions": {
-      "fr": "Consulter l'étiquetage du produit pour les conseils d'utilisation détaillés.",
-      "de": "Bitte beachten Sie die Hinweise auf der Verpackung.",
-      "it": "Consultare l'etichetta per le istruzioni d'uso dettagliate.",
-      "en": "Refer to product packaging for detailed usage directions."
-    },
-    "ingredients": {
-      "fr": "Voir liste complète sur l'emballage d'origine.",
-      "de": "Siehe Inhaltsstoffe auf der Originalverpackung.",
-      "it": "Vedere la lista ingredienti sulla confezione originale.",
-      "en": "See full ingredients list on original packaging."
-    },
-    "allergens": {
-      "fr": "Peut contenir des traces de lait, soja, œuf ou fruits à coque.",
-      "de": "Kann Spuren von Milch, Soja, Ei oder Schalenfrüchten enthalten.",
-      "it": "Può contenere tracce di latte, soia, uova o frutta a guscio.",
-      "en": "May contain traces of milk, soy, egg or tree nuts."
-    },
-    "nutrition": {
-      "servingSize": "300g",
-      "servingsPerContainer": 30,
-      "energyKj": 0,
-      "energyKcal": 0,
-      "fatG": 0,
-      "saturatedFatG": 0,
-      "carbsG": 0,
-      "sugarsG": 0,
-      "proteinG": 0,
-      "saltG": 0
-    },
-    "variants": [],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "inventoryQuantity": 25,
-    "inStock": true,
-    "status": "published"
-  },
-  {
     "id": "prod-4c457658",
     "slug": {
       "fr": "ginger-shot-60ml",
@@ -22017,7 +21644,7 @@ export const PRODUCTS: ProductItem[] = [
       "it": "CARBO REDUCER 90 CAPS",
       "en": "CARBO REDUCER 90 CAPS"
     },
-    "brand": "NutriFitness",
+    "brand": "Bigman",
     "categorySlug": "perte-de-poids",
     "taxCategory": "food_reduced",
     "priceChf": 34.9,

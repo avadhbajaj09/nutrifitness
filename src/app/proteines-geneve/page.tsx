@@ -188,7 +188,7 @@ export default async function ProteinesGenevePage() {
               Ce Que Nous Stockons en Suisse
             </h3>
             <p>
-              Contrairement aux sites expédiant depuis l&apos;étranger avec des frais de douane imprévus et des délais incertains, NutriFitness dispose d&apos;un entrepôt physique et d&apos;un magasin officiel en Suisse. Nous stockons en direct les références de réputation mondiale : Marvelous Nutrition, Dirty Squads, BigMan Nutrition, Optimum Nutrition (Gold Standard 100% Whey), Dymatize (ISO 100) et Applied Nutrition.
+              Contrairement aux sites expédiant depuis l&apos;étranger avec des frais de douane imprévus et des délais incertains, NutriFitness dispose d&apos;un entrepôt physique et d&apos;un magasin officiel en Suisse. Nous stockons en direct les références de réputation mondiale : Marvelous Nutrition, Dirty Squads, BigMan Nutrition, Optimum Nutrition (Gold Standard 100% Whey) et Applied Nutrition.
             </p>
             <p>
               Toutes les protéines vendues sont déclarées auprès des autorités fédérales suisses (DFI / OSAV), étiquetées en français avec leur aminogramme détaillé et vérifiées sans aminospiking.
