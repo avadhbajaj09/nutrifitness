@@ -32,6 +32,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   }, []);
 
   const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'faq'>('desc');
+  const [mobileOpenSection, setMobileOpenSection] = useState<string | null>('desc');
   const [selectedFlavor, setSelectedFlavor] = useState<string>(
     product.variants?.find(v => v.inStock)?.flavorName?.fr ||
     getLocalized(product.variants?.[0]?.flavorName, locale) ||
@@ -114,52 +115,117 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         
         {/* Gallery Column (7 cols on lg, 2nd on mobile) */}
         <div className="lg:col-span-7 bg-[#141414] rounded-2xl sm:rounded-3xl border border-white/10 p-4 sm:p-10 flex flex-col items-center justify-center relative shadow-xl">
-          <div className="relative aspect-square w-full max-w-[340px] sm:max-w-[480px] flex items-center justify-center">
-            {/* Badges (Discount and Server-rendered Origin Badge) */}
-            <div className="absolute top-0 left-0 z-10 flex flex-col gap-1.5 items-start">
+          {/* Mobile Swipeable Gallery with Dots (sm:hidden) */}
+          <div className="sm:hidden w-full flex flex-col items-center">
+            <div className="relative aspect-square w-full max-w-[340px] flex items-center justify-center">
               {discountPercent > 0 && (
-                <span className="inline-flex items-center bg-[#F80404] text-black text-xs font-black px-2.5 py-1 rounded-full shadow-md">
-                  -{discountPercent}% Remise
-                </span>
+                <div className="absolute top-0 left-0 z-10">
+                  <span className="inline-flex items-center bg-[#F80404] text-black text-xs font-black px-2.5 py-1 rounded-full shadow-md">
+                    -{discountPercent}% Remise
+                  </span>
+                </div>
               )}
-
+              {product.images && product.images.length > 1 ? (
+                <div 
+                  className="w-full h-full flex overflow-x-auto snap-x snap-mandatory no-scrollbar"
+                  onScroll={(e) => {
+                    const target = e.currentTarget;
+                    const idx = Math.round(target.scrollLeft / target.clientWidth);
+                    if (product.images[idx] && product.images[idx].src !== activeImg) {
+                      setSelectedImage(product.images[idx].src);
+                    }
+                  }}
+                >
+                  {product.images.map((img, idx) => (
+                    <div key={idx} className="w-full h-full shrink-0 snap-center relative flex items-center justify-center p-3">
+                      <Image 
+                        src={img.src || '/images/placeholder.webp'} 
+                        alt={getLocalized(img.alt, locale) || name}
+                        fill
+                        priority={idx === 0}
+                        className="object-contain object-center filter drop-shadow-xl"
+                      />
+                    </div>
+                  ))}
+                </div>
+              ) : (
+                <Image 
+                  src={mainImgSrc || '/images/placeholder.webp'} 
+                  alt={name}
+                  fill
+                  priority
+                  className="object-contain object-center filter drop-shadow-xl p-2"
+                />
+              )}
             </div>
 
-            <Image 
-              src={mainImgSrc || '/images/placeholder.webp'} 
-              alt={name}
-              fill
-              priority
-              onError={() => setMainImgSrc('/images/placeholder.webp')}
-              className="object-contain object-center filter drop-shadow-2xl transition-transform duration-500 hover:scale-105 p-2 sm:p-4"
-            />
+            {/* Mobile Dots Indicator */}
+            {product.images && product.images.length > 1 && (
+              <div className="flex items-center justify-center gap-1.5 mt-3">
+                {product.images.map((img, idx) => {
+                  const isCurrent = (activeImg === img.src);
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setSelectedImage(img.src)}
+                      aria-label={`Photo ${idx + 1}`}
+                      className={`h-1.5 rounded-full transition-all duration-300 ${
+                        isCurrent ? 'w-5 bg-[#F80404]' : 'w-1.5 bg-white/20'
+                      }`}
+                    />
+                  );
+                })}
+              </div>
+            )}
           </div>
 
-          {/* Thumbnail Gallery if multiple images exist */}
-          {product.images && product.images.length > 1 && (
-            <div className="flex flex-wrap gap-2 justify-center mt-4 max-w-full overflow-x-auto pb-1">
-              {product.images.slice(0, 8).map((img, idx) => {
-                const isCurrent = (activeImg === img.src);
-                return (
-                  <button
-                    key={idx}
-                    type="button"
-                    onClick={() => setSelectedImage(img.src)}
-                    className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl border bg-black/40 p-1 transition-all overflow-hidden ${
-                      isCurrent ? 'border-[#95d600] ring-2 ring-[#95d600]' : 'border-white/10 hover:border-white/30 opacity-70 hover:opacity-100'
-                    }`}
-                  >
-                    <Image
-                      src={img.src}
-                      alt={getLocalized(img.alt, locale) || name}
-                      fill
-                      className="object-contain p-1"
-                    />
-                  </button>
-                );
-              })}
+          {/* Desktop Gallery (hidden sm:flex) */}
+          <div className="hidden sm:flex flex-col items-center justify-center w-full">
+            <div className="relative aspect-square w-full max-w-[480px] flex items-center justify-center">
+              {discountPercent > 0 && (
+                <div className="absolute top-0 left-0 z-10 flex flex-col gap-1.5 items-start">
+                  <span className="inline-flex items-center bg-[#F80404] text-black text-xs font-black px-2.5 py-1 rounded-full shadow-md">
+                    -{discountPercent}% Remise
+                  </span>
+                </div>
+              )}
+              <Image 
+                src={mainImgSrc || '/images/placeholder.webp'} 
+                alt={name}
+                fill
+                priority
+                onError={() => setMainImgSrc('/images/placeholder.webp')}
+                className="object-contain object-center filter drop-shadow-2xl transition-transform duration-500 hover:scale-105 p-2 sm:p-4"
+              />
             </div>
-          )}
+
+            {/* Thumbnail Gallery if multiple images exist */}
+            {product.images && product.images.length > 1 && (
+              <div className="flex flex-wrap gap-2 justify-center mt-4 max-w-full overflow-x-auto pb-1">
+                {product.images.slice(0, 8).map((img, idx) => {
+                  const isCurrent = (activeImg === img.src);
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => setSelectedImage(img.src)}
+                      className={`relative w-14 h-14 sm:w-16 sm:h-16 rounded-xl border bg-black/40 p-1 transition-all overflow-hidden ${
+                        isCurrent ? 'border-[#95d600] ring-2 ring-[#95d600]' : 'border-white/10 hover:border-white/30 opacity-70 hover:opacity-100'
+                      }`}
+                    >
+                      <Image
+                        src={img.src}
+                        alt={getLocalized(img.alt, locale) || name}
+                        fill
+                        className="object-contain p-1"
+                      />
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
 
           {/* Trust Pillars - Hidden on mobile, shown on desktop below image */}
           <div className="hidden lg:grid grid-cols-3 gap-3 w-full mt-8 pt-6 border-t border-white/10 text-center text-xs text-white/60">
@@ -248,7 +314,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                           setSelectedImage(v.image);
                         }
                       }}
-                      className={`min-h-[42px] px-4 py-2 text-xs font-bold rounded-xl border transition-all flex items-center gap-1.5 ${
+                      className={`min-h-[44px] px-4 py-2 text-xs font-bold rounded-xl border transition-all flex items-center gap-1.5 ${
                         isSelected 
                           ? 'border-[#95d600] bg-[#95d600]/20 text-white ring-1 ring-[#95d600]' 
                           : 'border-white/15 bg-white/5 text-white/80 hover:border-white'
@@ -336,166 +402,315 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
       </div>
 
       {/* Tabs Section */}
-      <section className="py-12 border-t border-white/10 my-8">
-        <div className="max-w-4xl mx-auto space-y-6">
+      <section className="py-8 sm:py-12 border-t border-white/10 my-6 sm:my-8">
+        <div className="max-w-4xl mx-auto">
           
-          {/* Tab Buttons */}
-          <div className="flex flex-wrap gap-2 border-b border-white/10 pb-4">
-            <button 
-              type="button"
-              onClick={() => setActiveTab('desc')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
-                activeTab === 'desc' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
-              }`}
-            >
-              1. Description & Bénéfices
-            </button>
-            <button 
-              type="button"
-              onClick={() => setActiveTab('usage')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
-                activeTab === 'usage' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
-              }`}
-            >
-              2. Posologie & Timing
-            </button>
-            <button 
-              type="button"
-              onClick={() => setActiveTab('nutrition')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
-                activeTab === 'nutrition' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
-              }`}
-            >
-              3. Tableau Nutritionnel (DFI/LGV)
-            </button>
-            <button 
-              type="button"
-              onClick={() => setActiveTab('faq')}
-              className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
-                activeTab === 'faq' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
-              }`}
-            >
-              4. Questions Fréquentes ({productFaqs.length})
-            </button>
-          </div>
-
-          {/* Tab 1: Description */}
-          {activeTab === 'desc' && (
-            <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-3 animate-in fade-in duration-150">
-              <h3 className="text-base font-black uppercase text-white font-heading">
-                Présentation Détaillée du Produit
-              </h3>
-              <div 
-                className="text-xs sm:text-sm text-white/70 leading-relaxed space-y-4 [&>h2]:text-sm [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-6 [&>h2]:mb-2 [&>h3]:text-xs [&>h3]:font-bold [&>h3]:text-white/90 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1.5 [&>p]:mb-3 [&>strong]:text-white"
-                dangerouslySetInnerHTML={{ __html: product.longDescription.fr }}
-              />
-            </div>
-          )}
-
-          {/* Tab 2: Usage */}
-          {activeTab === 'usage' && (
-            <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-3 animate-in fade-in duration-150">
-              <h3 className="text-base font-black uppercase text-white font-heading">
-                Conseils d&apos;Utilisation & Timing d&apos;Entraînement
-              </h3>
-              <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
-                {product.usageInstructions.fr}
-              </p>
-              <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white/60">
-                💡 <strong>Conseil du Coach NutriFitness Suisse :</strong> Pour optimiser l&apos;assimilation, hydratez-vous avec au moins 500 ml d&apos;eau par prise.
-              </div>
-            </div>
-          )}
-
-          {/* Tab 3: Nutrition */}
-          {activeTab === 'nutrition' && (
-            <div className="space-y-6 animate-in fade-in duration-150">
-              <div>
-                <h3 className="text-base font-black uppercase text-white font-heading mb-3">
-                  Informations Nutritionnelles (Norme DFI / LGV Suisse)
-                </h3>
-                <div className="overflow-x-auto bg-[#141414] rounded-2xl border border-white/10">
-                  <table className="w-full text-left text-sm text-white">
-                    <thead className="bg-white/5 border-b border-white/10 text-xs uppercase text-white/60 font-heading">
-                      <tr>
-                        <th className="py-3 px-4">Valeurs Moyennes</th>
-                        <th className="py-3 px-4">Pour 100 g</th>
-                        <th className="py-3 px-4">Par portion ({product.nutrition.servingSize})</th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-white/5 text-xs sm:text-sm text-white/80">
-                      <tr>
-                        <td className="py-2.5 px-4 font-medium text-white">Énergie (kJ / kcal)</td>
-                        <td className="py-2.5 px-4">{product.nutrition.energyKj} kJ / {product.nutrition.energyKcal} kcal</td>
-                        <td className="py-2.5 px-4">{Math.round(product.nutrition.energyKj * 0.3)} kJ / {Math.round(product.nutrition.energyKcal * 0.3)} kcal</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2.5 px-4 font-medium text-white">Matières grasses</td>
-                        <td className="py-2.5 px-4">{product.nutrition.fatG.toFixed(1)} g</td>
-                        <td className="py-2.5 px-4">{(product.nutrition.fatG * 0.3).toFixed(1)} g</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2.5 px-4 font-medium text-white">Glucides</td>
-                        <td className="py-2.5 px-4">{product.nutrition.carbsG.toFixed(1)} g</td>
-                        <td className="py-2.5 px-4">{(product.nutrition.carbsG * 0.3).toFixed(1)} g</td>
-                      </tr>
-                      <tr className="bg-[#F80404]/10 font-bold text-[#F80404]">
-                        <td className="py-2.5 px-4 font-heading">Protéines</td>
-                        <td className="py-2.5 px-4 font-heading">{product.nutrition.proteinG.toFixed(1)} g</td>
-                        <td className="py-2.5 px-4 font-heading">{(product.nutrition.proteinG * 0.3).toFixed(1)} g</td>
-                      </tr>
-                      <tr>
-                        <td className="py-2.5 px-4 font-medium text-white">Sel</td>
-                        <td className="py-2.5 px-4">{product.nutrition.saltG.toFixed(2)} g</td>
-                        <td className="py-2.5 px-4">{(product.nutrition.saltG * 0.3).toFixed(2)} g</td>
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-
-              <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-2">
-                <h4 className="font-bold text-xs uppercase text-white font-heading">Ingrédients</h4>
-                <p className="text-xs text-white/70 leading-relaxed">{product.ingredients.fr}</p>
-                <p className="text-xs font-bold text-red-400 pt-2">Allergènes : {product.allergens.fr}</p>
-              </div>
-
-              {currentGtin && (
-                <div className="bg-[#141414] rounded-2xl border border-white/10 p-4 flex items-center justify-between text-xs">
-                  <span className="font-bold text-white/60 uppercase font-heading">Code GTIN / EAN :</span>
-                  <span className="font-mono text-white tracking-wider font-semibold">{currentGtin}</span>
+          {/* Mobile Collapsible Accordions (lg:hidden) */}
+          <div className="lg:hidden space-y-3">
+            {/* Accordion 1: Description */}
+            <div className="bg-[#141414] rounded-2xl border border-white/10 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setMobileOpenSection(mobileOpenSection === 'desc' ? null : 'desc')}
+                className="w-full min-h-[48px] px-4 py-3 flex items-center justify-between text-left text-xs font-black uppercase tracking-wider text-white font-heading active:bg-white/5"
+              >
+                <span>1. Description &amp; Bénéfices</span>
+                <span className="text-[#F80404] text-base font-bold ml-2">
+                  {mobileOpenSection === 'desc' ? '−' : '+'}
+                </span>
+              </button>
+              {mobileOpenSection === 'desc' && (
+                <div className="p-4 pt-1 border-t border-white/5 space-y-3 animate-in fade-in duration-150">
+                  <div 
+                    className="text-xs text-white/70 leading-relaxed space-y-3 [&>h2]:text-xs [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-4 [&>h2]:mb-1 [&>h3]:text-xs [&>h3]:font-bold [&>h3]:text-white/90 [&>ul]:list-disc [&>ul]:pl-4 [&>ul]:space-y-1 [&>p]:mb-2 [&>strong]:text-white"
+                    dangerouslySetInnerHTML={{ __html: product.longDescription.fr }}
+                  />
                 </div>
               )}
             </div>
-          )}
 
-          {/* Tab 4: FAQ & Conseils */}
-          {activeTab === 'faq' && (
-            <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4 animate-in fade-in duration-150">
-              <div className="pb-3 border-b border-white/10">
-                <h3 className="text-base font-black uppercase text-white font-heading">
-                  Questions Fréquentes sur {name}
-                </h3>
-                <p className="text-xs text-white/50">
-                  Réponses directes et conseils pratiques basés sur l&apos;étiquette officielle et notre expertise en Suisse.
-                </p>
-              </div>
-
-              <div className="space-y-3">
-                {productFaqs.map((faq, idx) => (
-                  <div key={idx} className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-1.5">
-                    <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
-                      <span className="text-[#F80404] font-black">Q.</span>
-                      {faq.question}
-                    </h4>
-                    <p className="text-xs text-white/75 leading-relaxed pl-4 border-l-2 border-[#F80404]/40">
-                      {faq.answer}
-                    </p>
+            {/* Accordion 2: Usage */}
+            <div className="bg-[#141414] rounded-2xl border border-white/10 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setMobileOpenSection(mobileOpenSection === 'usage' ? null : 'usage')}
+                className="w-full min-h-[48px] px-4 py-3 flex items-center justify-between text-left text-xs font-black uppercase tracking-wider text-white font-heading active:bg-white/5"
+              >
+                <span>2. Posologie &amp; Timing</span>
+                <span className="text-[#F80404] text-base font-bold ml-2">
+                  {mobileOpenSection === 'usage' ? '−' : '+'}
+                </span>
+              </button>
+              {mobileOpenSection === 'usage' && (
+                <div className="p-4 pt-1 border-t border-white/5 space-y-3 animate-in fade-in duration-150">
+                  <p className="text-xs text-white/70 leading-relaxed">
+                    {product.usageInstructions.fr}
+                  </p>
+                  <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white/60">
+                    💡 <strong>Conseil du Coach :</strong> Pour optimiser l&apos;assimilation, hydratez-vous avec au moins 500 ml d&apos;eau par prise.
                   </div>
-                ))}
-              </div>
+                </div>
+              )}
             </div>
-          )}
+
+            {/* Accordion 3: Nutrition */}
+            <div className="bg-[#141414] rounded-2xl border border-white/10 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setMobileOpenSection(mobileOpenSection === 'nutrition' ? null : 'nutrition')}
+                className="w-full min-h-[48px] px-4 py-3 flex items-center justify-between text-left text-xs font-black uppercase tracking-wider text-white font-heading active:bg-white/5"
+              >
+                <span>3. Tableau Nutritionnel (DFI/LGV)</span>
+                <span className="text-[#F80404] text-base font-bold ml-2">
+                  {mobileOpenSection === 'nutrition' ? '−' : '+'}
+                </span>
+              </button>
+              {mobileOpenSection === 'nutrition' && (
+                <div className="p-4 pt-1 border-t border-white/5 space-y-4 animate-in fade-in duration-150">
+                  <div className="overflow-x-auto rounded-xl border border-white/10 bg-black/40">
+                    <table className="w-full text-left text-xs text-white">
+                      <thead className="bg-white/5 border-b border-white/10 text-[10px] uppercase text-white/60 font-heading">
+                        <tr>
+                          <th className="py-2.5 px-3">Valeurs</th>
+                          <th className="py-2.5 px-3">100g</th>
+                          <th className="py-2.5 px-3">Portion</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5 text-xs text-white/80">
+                        <tr>
+                          <td className="py-2 px-3 font-medium text-white">Énergie</td>
+                          <td className="py-2 px-3">{product.nutrition.energyKcal} kcal</td>
+                          <td className="py-2 px-3">{Math.round(product.nutrition.energyKcal * 0.3)} kcal</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 px-3 font-medium text-white">Matières grasses</td>
+                          <td className="py-2 px-3">{product.nutrition.fatG.toFixed(1)} g</td>
+                          <td className="py-2 px-3">{(product.nutrition.fatG * 0.3).toFixed(1)} g</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 px-3 font-medium text-white">Glucides</td>
+                          <td className="py-2 px-3">{product.nutrition.carbsG.toFixed(1)} g</td>
+                          <td className="py-2 px-3">{(product.nutrition.carbsG * 0.3).toFixed(1)} g</td>
+                        </tr>
+                        <tr className="bg-[#F80404]/10 font-bold text-[#F80404]">
+                          <td className="py-2 px-3 font-heading">Protéines</td>
+                          <td className="py-2 px-3 font-heading">{product.nutrition.proteinG.toFixed(1)} g</td>
+                          <td className="py-2 px-3 font-heading">{(product.nutrition.proteinG * 0.3).toFixed(1)} g</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2 px-3 font-medium text-white">Sel</td>
+                          <td className="py-2 px-3">{product.nutrition.saltG.toFixed(2)} g</td>
+                          <td className="py-2 px-3">{(product.nutrition.saltG * 0.3).toFixed(2)} g</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+
+                  <div className="space-y-1.5 text-xs text-white/70">
+                    <p><strong>Ingrédients :</strong> {product.ingredients.fr}</p>
+                    <p className="text-red-400 font-bold">Allergènes : {product.allergens.fr}</p>
+                  </div>
+
+                  {currentGtin && (
+                    <div className="p-3 bg-black/40 rounded-xl border border-white/10 flex items-center justify-between text-xs">
+                      <span className="font-bold text-white/60 uppercase font-heading">GTIN/EAN :</span>
+                      <span className="font-mono text-white tracking-wider font-semibold">{currentGtin}</span>
+                    </div>
+                  )}
+                </div>
+              )}
+            </div>
+
+            {/* Accordion 4: FAQ */}
+            <div className="bg-[#141414] rounded-2xl border border-white/10 overflow-hidden">
+              <button
+                type="button"
+                onClick={() => setMobileOpenSection(mobileOpenSection === 'faq' ? null : 'faq')}
+                className="w-full min-h-[48px] px-4 py-3 flex items-center justify-between text-left text-xs font-black uppercase tracking-wider text-white font-heading active:bg-white/5"
+              >
+                <span>4. Questions Fréquentes ({productFaqs.length})</span>
+                <span className="text-[#F80404] text-base font-bold ml-2">
+                  {mobileOpenSection === 'faq' ? '−' : '+'}
+                </span>
+              </button>
+              {mobileOpenSection === 'faq' && (
+                <div className="p-4 pt-1 border-t border-white/5 space-y-3 animate-in fade-in duration-150">
+                  {productFaqs.map((faq, idx) => (
+                    <div key={idx} className="p-3 bg-black/40 rounded-xl border border-white/5 space-y-1">
+                      <h4 className="text-xs font-bold text-white flex items-center gap-1.5">
+                        <span className="text-[#F80404] font-black">Q.</span>
+                        {faq.question}
+                      </h4>
+                      <p className="text-xs text-white/75 leading-relaxed pl-3 border-l border-[#F80404]/40">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              )}
+            </div>
+          </div>
+
+          {/* Desktop Tabs (hidden on mobile, kept on desktop) */}
+          <div className="hidden lg:block space-y-6">
+            {/* Tab Buttons */}
+            <div className="flex flex-wrap gap-2 border-b border-white/10 pb-4">
+              <button 
+                type="button"
+                onClick={() => setActiveTab('desc')}
+                className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+                  activeTab === 'desc' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
+                }`}
+              >
+                1. Description & Bénéfices
+              </button>
+              <button 
+                type="button"
+                onClick={() => setActiveTab('usage')}
+                className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+                  activeTab === 'usage' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
+                }`}
+              >
+                2. Posologie & Timing
+              </button>
+              <button 
+                type="button"
+                onClick={() => setActiveTab('nutrition')}
+                className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+                  activeTab === 'nutrition' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
+                }`}
+              >
+                3. Tableau Nutritionnel (DFI/LGV)
+              </button>
+              <button 
+                type="button"
+                onClick={() => setActiveTab('faq')}
+                className={`px-5 py-2.5 rounded-xl text-xs font-black uppercase tracking-wider transition-all ${
+                  activeTab === 'faq' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
+                }`}
+              >
+                4. Questions Fréquentes ({productFaqs.length})
+              </button>
+            </div>
+
+            {/* Tab 1: Description */}
+            {activeTab === 'desc' && (
+              <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-3 animate-in fade-in duration-150">
+                <h3 className="text-base font-black uppercase text-white font-heading">
+                  Présentation Détaillée du Produit
+                </h3>
+                <div 
+                  className="text-xs sm:text-sm text-white/70 leading-relaxed space-y-4 [&>h2]:text-sm [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-6 [&>h2]:mb-2 [&>h3]:text-xs [&>h3]:font-bold [&>h3]:text-white/90 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1.5 [&>p]:mb-3 [&>strong]:text-white"
+                  dangerouslySetInnerHTML={{ __html: product.longDescription.fr }}
+                />
+              </div>
+            )}
+
+            {/* Tab 2: Usage */}
+            {activeTab === 'usage' && (
+              <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-3 animate-in fade-in duration-150">
+                <h3 className="text-base font-black uppercase text-white font-heading">
+                  Conseils d&apos;Utilisation & Timing d&apos;Entraînement
+                </h3>
+                <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
+                  {product.usageInstructions.fr}
+                </p>
+                <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white/60">
+                  💡 <strong>Conseil du Coach NutriFitness Suisse :</strong> Pour optimiser l&apos;assimilation, hydratez-vous avec au moins 500 ml d&apos;eau par prise.
+                </div>
+              </div>
+            )}
+
+            {/* Tab 3: Nutrition */}
+            {activeTab === 'nutrition' && (
+              <div className="space-y-6 animate-in fade-in duration-150">
+                <div>
+                  <h3 className="text-base font-black uppercase text-white font-heading mb-3">
+                    Informations Nutritionnelles (Norme DFI / LGV Suisse)
+                  </h3>
+                  <div className="overflow-x-auto bg-[#141414] rounded-2xl border border-white/10">
+                    <table className="w-full text-left text-sm text-white">
+                      <thead className="bg-white/5 border-b border-white/10 text-xs uppercase text-white/60 font-heading">
+                        <tr>
+                          <th className="py-3 px-4">Valeurs Moyennes</th>
+                          <th className="py-3 px-4">Pour 100 g</th>
+                          <th className="py-3 px-4">Par portion ({product.nutrition.servingSize})</th>
+                        </tr>
+                      </thead>
+                      <tbody className="divide-y divide-white/5 text-xs sm:text-sm text-white/80">
+                        <tr>
+                          <td className="py-2.5 px-4 font-medium text-white">Énergie (kJ / kcal)</td>
+                          <td className="py-2.5 px-4">{product.nutrition.energyKj} kJ / {product.nutrition.energyKcal} kcal</td>
+                          <td className="py-2.5 px-4">{Math.round(product.nutrition.energyKj * 0.3)} kJ / {Math.round(product.nutrition.energyKcal * 0.3)} kcal</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2.5 px-4 font-medium text-white">Matières grasses</td>
+                          <td className="py-2.5 px-4">{product.nutrition.fatG.toFixed(1)} g</td>
+                          <td className="py-2.5 px-4">{(product.nutrition.fatG * 0.3).toFixed(1)} g</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2.5 px-4 font-medium text-white">Glucides</td>
+                          <td className="py-2.5 px-4">{product.nutrition.carbsG.toFixed(1)} g</td>
+                          <td className="py-2.5 px-4">{(product.nutrition.carbsG * 0.3).toFixed(1)} g</td>
+                        </tr>
+                        <tr className="bg-[#F80404]/10 font-bold text-[#F80404]">
+                          <td className="py-2.5 px-4 font-heading">Protéines</td>
+                          <td className="py-2.5 px-4 font-heading">{product.nutrition.proteinG.toFixed(1)} g</td>
+                          <td className="py-2.5 px-4 font-heading">{(product.nutrition.proteinG * 0.3).toFixed(1)} g</td>
+                        </tr>
+                        <tr>
+                          <td className="py-2.5 px-4 font-medium text-white">Sel</td>
+                          <td className="py-2.5 px-4">{product.nutrition.saltG.toFixed(2)} g</td>
+                          <td className="py-2.5 px-4">{(product.nutrition.saltG * 0.3).toFixed(2)} g</td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
+                <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-2">
+                  <h4 className="font-bold text-xs uppercase text-white font-heading">Ingrédients</h4>
+                  <p className="text-xs text-white/70 leading-relaxed">{product.ingredients.fr}</p>
+                  <p className="text-xs font-bold text-red-400 pt-2">Allergènes : {product.allergens.fr}</p>
+                </div>
+
+                {currentGtin && (
+                  <div className="bg-[#141414] rounded-2xl border border-white/10 p-4 flex items-center justify-between text-xs">
+                    <span className="font-bold text-white/60 uppercase font-heading">Code GTIN / EAN :</span>
+                    <span className="font-mono text-white tracking-wider font-semibold">{currentGtin}</span>
+                  </div>
+                )}
+              </div>
+            )}
+
+            {/* Tab 4: FAQ & Conseils */}
+            {activeTab === 'faq' && (
+              <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-4 animate-in fade-in duration-150">
+                <div className="pb-3 border-b border-white/10">
+                  <h3 className="text-base font-black uppercase text-white font-heading">
+                    Questions Fréquentes sur {name}
+                  </h3>
+                  <p className="text-xs text-white/50">
+                    Réponses directes et conseils pratiques basés sur l&apos;étiquette officielle et notre expertise en Suisse.
+                  </p>
+                </div>
+
+                <div className="space-y-3">
+                  {productFaqs.map((faq, idx) => (
+                    <div key={idx} className="p-4 bg-black/40 rounded-xl border border-white/5 space-y-1.5">
+                      <h4 className="text-xs sm:text-sm font-bold text-white flex items-center gap-2">
+                        <span className="text-[#F80404] font-black">Q.</span>
+                        {faq.question}
+                      </h4>
+                      <p className="text-xs text-white/75 leading-relaxed pl-4 border-l-2 border-[#F80404]/40">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            )}
+          </div>
         </div>
       </section>
 
@@ -541,30 +756,40 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         products={relatedProducts}
       />
 
-      {/* Sticky Mobile Add to Cart Bar */}
-      <div className="fixed bottom-0 left-0 right-0 z-40 bg-[#0A0A0A]/95 backdrop-blur-md border-t border-white/10 p-3 md:hidden shadow-2xl">
+      {/* Sticky Mobile Add to Cart Bar (Above Bottom Tab Bar) */}
+      <div className="fixed bottom-[calc(56px+env(safe-area-inset-bottom,0px))] left-0 right-0 z-30 bg-[#0A0A0A]/95 backdrop-blur-md border-t border-white/10 p-2.5 md:hidden shadow-2xl">
         <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
-          <div className="min-w-0 flex-1">
-            <p className="text-xs font-bold text-white truncate">{name}</p>
-            <p className="text-sm font-black text-[#F80404] font-heading">{formatPrice(currentPrice, product.priceEur)}</p>
+          <div className="flex items-center gap-2.5 min-w-0 flex-1">
+            <div className="relative w-10 h-10 rounded-lg bg-white/5 border border-white/10 shrink-0 overflow-hidden p-1 flex items-center justify-center">
+              <Image 
+                src={activeImg} 
+                alt={name} 
+                fill 
+                className="object-contain p-0.5" 
+              />
+            </div>
+            <div className="min-w-0 flex-1">
+              <p className="text-xs font-bold text-white truncate">{name}</p>
+              <p className="text-sm font-black text-[#F80404] font-heading leading-tight">{formatPrice(currentPrice, product.priceEur)}</p>
+            </div>
           </div>
 
           {!isDeliverable ? (
             <span 
               className="shrink-0 min-h-[44px] px-3 py-2 bg-red-950/40 text-red-300 font-bold uppercase tracking-wider text-[10px] rounded-xl border border-red-800/40 cursor-not-allowed flex items-center justify-center text-center"
             >
-              {t.common.notAvailableCountry || (locale === 'en' ? 'Not available in your country' : 'Non disponible dans votre pays')}
+              {t.common.notAvailableCountry || (locale === 'en' ? 'Indisponible' : 'Indisponible')}
             </span>
           ) : (
             <button 
               type="button"
               onClick={() => addToCart(product, { quantity, flavor: selectedFlavor, price: currentPrice, image: activeImg })}
-              className="shrink-0 min-h-[44px] px-5 py-2.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-colors flex items-center gap-2 active:scale-95"
+              className="shrink-0 min-h-[44px] px-5 py-2.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all flex items-center gap-2 active:scale-95 shadow-md"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
               </svg>
-              <span>{t.common.addToCart.split(' ')[0]}</span>
+              <span>Ajouter</span>
             </button>
           )}
         </div>

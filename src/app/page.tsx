@@ -122,7 +122,8 @@ export default async function HomePage() {
       <HomePerformanceSection products={physicalProducts} />
 
       {/* 9. SWISS BOUTIQUE SHOWCASE */}
-      <section className="bg-[#121212] rounded-3xl border border-white/10 p-8 sm:p-12 mb-16 shadow-xl">
+      {/* Desktop Showcase (Unchanged) */}
+      <section className="hidden md:block bg-[#121212] rounded-3xl border border-white/10 p-8 sm:p-12 mb-16 shadow-xl">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
           <div className="space-y-5">
             <span className="inline-flex items-center gap-2 px-3 py-1 bg-white/5 border border-white/15 text-white text-xs font-bold rounded-full">
@@ -181,6 +182,70 @@ export default async function HomePage() {
         <StoreMap />
       </section>
 
+      {/* Mobile Compact Store Card (Section J) */}
+      <section className="md:hidden mb-8 p-4 rounded-2xl bg-[#141414] border border-white/10 shadow-xl space-y-3.5">
+        <div>
+          <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 bg-white/5 border border-white/10 text-white text-[10px] font-bold rounded-full mb-1.5">
+            <span className="w-2 h-2 rounded-full bg-[#D52B1E] inline-block" />
+            Boutique Officielle Genève 🇨🇭
+          </span>
+          <h2 className="text-lg font-black text-white uppercase font-heading leading-tight">
+            Showroom &amp; Retrait en 2h
+          </h2>
+          <p className="text-xs text-white/70 mt-0.5">
+            34 Rue des Pâquis, 1201 Genève
+          </p>
+        </div>
+
+        {/* Hours */}
+        <div className="grid grid-cols-2 gap-2 text-xs">
+          <div className="bg-black/40 p-2.5 rounded-xl border border-white/10">
+            <p className="text-white/40 uppercase font-bold text-[10px] mb-0.5">Lun–Ven :</p>
+            <p className="font-bold text-white text-xs">12h30 – 19h00</p>
+          </div>
+          <div className="bg-black/40 p-2.5 rounded-xl border border-white/10">
+            <p className="text-white/40 uppercase font-bold text-[10px] mb-0.5">Samedi :</p>
+            <p className="font-bold text-white text-xs">12h00 – 17h00</p>
+          </div>
+        </div>
+
+        {/* 3 Mobile CTAs (min 44px tap targets) */}
+        <div className="grid grid-cols-3 gap-2 pt-0.5">
+          <a
+            href="tel:+41792503564"
+            className="min-h-[44px] px-2 py-2 bg-white/10 hover:bg-white/15 text-white font-bold text-[11px] rounded-xl border border-white/15 flex items-center justify-center text-center active:scale-95 transition-all"
+          >
+            Appeler
+          </a>
+          <a
+            href="https://maps.google.com/?q=34+Rue+des+P%C3%A2quis+1201+Gen%C3%A8ve+Switzerland"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="min-h-[44px] px-2 py-2 bg-[#F80404] text-black font-black uppercase text-[11px] rounded-xl flex items-center justify-center text-center shadow-md active:scale-95 transition-all"
+          >
+            Itinéraire
+          </a>
+          <Link
+            href="/click-and-collect/"
+            className="min-h-[44px] px-2 py-2 bg-white/10 hover:bg-white/15 text-white font-bold text-[11px] rounded-xl border border-white/15 flex items-center justify-center text-center active:scale-95 transition-all"
+          >
+            Click &amp; Collect
+          </Link>
+        </div>
+
+        {/* Lazy-Loaded 200px Embedded Map */}
+        <div className="w-full h-[200px] rounded-xl overflow-hidden border border-white/15 relative">
+          <iframe
+            title="Carte NutriFitness Genève"
+            src="https://maps.google.com/maps?q=34+Rue+des+P%C3%A2quis,+1201+Gen%C3%A8ve,+Switzerland&t=&z=15&ie=UTF8&iwloc=&output=embed"
+            className="w-full h-full border-0 filter contrast-[1.05] brightness-95"
+            loading="lazy"
+            allowFullScreen
+            referrerPolicy="no-referrer-when-downgrade"
+          />
+        </div>
+      </section>
+
       {/* 10. BRAND SHOWCASE */}
       <BrandShowcase />
 
@@ -191,22 +256,26 @@ export default async function HomePage() {
       <Testimonials />
 
       {/* 13. EDITORIAL NUTRITION GUIDES */}
-      <section className="mb-16">
-        <div className="flex items-end justify-between mb-8 pb-4 border-b border-white/10">
+      <section className="mb-8 sm:mb-16">
+        <div className="flex items-end justify-between mb-4 sm:mb-8 pb-3 sm:pb-4 border-b border-white/10 px-4 sm:px-0">
           <div>
-            <p className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-1 font-heading">Dossiers d&apos;Experts</p>
-            <h2 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">Guides & Conseils Nutrition</h2>
+            <p className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#F80404] mb-0.5 sm:mb-1 font-heading">Dossiers d&apos;Experts</p>
+            <h2 className="text-lg sm:text-2xl lg:text-3xl font-black text-white uppercase font-heading leading-tight">Guides &amp; Conseils Nutrition</h2>
           </div>
-          <Link href="/blog/" className="text-xs font-bold text-white/70 hover:text-white uppercase tracking-wider flex items-center gap-1 group">
-            <span>Tous les 20 Guides</span>
+          <Link href="/blog/" className="text-xs font-bold text-[#F80404] sm:text-white/70 hover:text-white uppercase tracking-wider flex items-center gap-1 group shrink-0 min-h-[44px]">
+            <span>Tous ({20})</span>
             <span className="text-[#F80404] group-hover:translate-x-1 transition-transform">→</span>
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+        {/* Mobile: Horizontal scroll carousel; Desktop: 3-column grid */}
+        <div 
+          className="flex md:grid md:grid-cols-3 gap-4 md:gap-6 overflow-x-auto md:overflow-visible pb-4 md:pb-0 snap-x snap-mandatory scrollbar-none -mx-4 px-4 md:mx-0 md:px-0"
+          style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+        >
           <Link 
             href="/blog/creatine-quand-comment-la-prendre/"
-            className="bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group hover:border-[#F80404]/50 transition-all flex flex-col"
+            className="w-[260px] md:w-auto shrink-0 snap-start bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group hover:border-[#F80404]/50 transition-all flex flex-col"
           >
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image 
@@ -216,9 +285,9 @@ export default async function HomePage() {
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
-            <div className="p-5 flex-1 flex flex-col">
+            <div className="p-4 sm:p-5 flex-1 flex flex-col">
               <span className="text-[10px] font-black uppercase tracking-wider text-[#F80404] mb-1">Créatine & Force</span>
-              <h3 className="text-base font-bold text-white group-hover:text-[#F80404] transition-colors mb-2 line-clamp-2">
+              <h3 className="text-xs sm:text-base font-bold text-white group-hover:text-[#F80404] transition-colors mb-2 line-clamp-2">
                 Créatine : quand et comment la prendre ?
               </h3>
               <p className="text-xs text-white/60 mb-4 line-clamp-2">
@@ -232,7 +301,7 @@ export default async function HomePage() {
 
           <Link 
             href="/blog/whey-isolate-ou-concentree/"
-            className="bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group hover:border-[#F80404]/50 transition-all flex flex-col"
+            className="w-[260px] md:w-auto shrink-0 snap-start bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group hover:border-[#F80404]/50 transition-all flex flex-col"
           >
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image 
@@ -242,9 +311,9 @@ export default async function HomePage() {
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
-            <div className="p-5 flex-1 flex flex-col">
+            <div className="p-4 sm:p-5 flex-1 flex flex-col">
               <span className="text-[10px] font-black uppercase tracking-wider text-[#F80404] mb-1">Protéines & Sèche</span>
-              <h3 className="text-base font-bold text-white group-hover:text-[#F80404] transition-colors mb-2 line-clamp-2">
+              <h3 className="text-xs sm:text-base font-bold text-white group-hover:text-[#F80404] transition-colors mb-2 line-clamp-2">
                 Whey concentrée ou isolate : que choisir ?
               </h3>
               <p className="text-xs text-white/60 mb-4 line-clamp-2">
@@ -258,7 +327,7 @@ export default async function HomePage() {
 
           <Link 
             href="/blog/electrolytes-hydratation-effort/"
-            className="bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group hover:border-[#F80404]/50 transition-all flex flex-col"
+            className="w-[260px] md:w-auto shrink-0 snap-start bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group hover:border-[#F80404]/50 transition-all flex flex-col"
           >
             <div className="relative aspect-[16/10] overflow-hidden">
               <Image 
@@ -268,9 +337,9 @@ export default async function HomePage() {
                 className="object-cover transition-transform duration-500 group-hover:scale-105"
               />
             </div>
-            <div className="p-5 flex-1 flex flex-col">
+            <div className="p-4 sm:p-5 flex-1 flex flex-col">
               <span className="text-[10px] font-black uppercase tracking-wider text-[#F80404] mb-1">Endurance & Énergie</span>
-              <h3 className="text-base font-bold text-white group-hover:text-[#F80404] transition-colors mb-2 line-clamp-2">
+              <h3 className="text-xs sm:text-base font-bold text-white group-hover:text-[#F80404] transition-colors mb-2 line-clamp-2">
                 Électrolytes et hydratation pendant l&apos;effort
               </h3>
               <p className="text-xs text-white/60 mb-4 line-clamp-2">

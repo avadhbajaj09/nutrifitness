@@ -272,12 +272,13 @@ export default function CartPage() {
                   </div>
 
                   <div className="flex items-center justify-between sm:justify-end gap-6 w-full sm:w-auto">
-                    <div className="flex items-center border border-white/20 rounded-xl bg-black/40">
+                    <div className="flex items-center border border-white/20 rounded-xl bg-black/40 overflow-hidden">
                       <button 
                         type="button" 
                         onClick={() => updateQuantity(item.itemKey, -1)}
-                        className="w-9 h-9 flex items-center justify-center text-white/70 hover:text-white font-bold"
+                        className="min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 sm:w-9 sm:h-9 flex items-center justify-center text-white/70 hover:text-white font-bold text-base sm:text-xs active:bg-white/10"
                         title="Diminuer ou retirer"
+                        aria-label="Diminuer la quantité"
                       >-</button>
                       <span className="w-9 text-center text-xs font-bold text-white">
                         {Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1}
@@ -286,12 +287,13 @@ export default function CartPage() {
                         type="button" 
                         disabled={item.isEbook}
                         onClick={() => updateQuantity(item.itemKey, 1)}
-                        className={`w-9 h-9 flex items-center justify-center font-bold ${
+                        className={`min-w-[44px] min-h-[44px] sm:min-w-0 sm:min-h-0 sm:w-9 sm:h-9 flex items-center justify-center font-bold text-base sm:text-xs active:bg-white/10 ${
                           item.isEbook 
                             ? 'opacity-20 cursor-not-allowed text-white/30' 
                             : 'text-white/70 hover:text-white'
                         }`}
                         title={item.isEbook ? 'Format numérique limité à 1 exemplaire par commande' : 'Augmenter la quantité'}
+                        aria-label="Augmenter la quantité"
                       >+</button>
                     </div>
 
@@ -305,8 +307,9 @@ export default function CartPage() {
                     <button 
                       type="button" 
                       onClick={() => removeFromCart(item.itemKey)}
-                      className="text-white/40 hover:text-red-400 p-2"
+                      className="text-white/40 hover:text-red-400 min-w-[44px] min-h-[44px] flex items-center justify-center p-2 text-sm"
                       title="Supprimer"
+                      aria-label="Supprimer du panier"
                     >
                       ✕
                     </button>
@@ -369,12 +372,12 @@ export default function CartPage() {
                   value={couponCode}
                   onChange={(e) => setCouponCode(e.target.value.toUpperCase())}
                   placeholder="Code promo" 
-                  className="flex-1 min-h-[42px] px-3 text-xs bg-black/60 border border-white/15 rounded-xl text-white uppercase focus:border-[#F80404] focus:outline-none"
+                  className="flex-1 min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white uppercase focus:border-[#F80404] focus:outline-none"
                 />
                 <button 
                   type="submit"
                   disabled={isApplyingCoupon || !couponCode.trim()}
-                  className="px-4 py-2 bg-white/10 hover:bg-[#F80404] hover:text-black text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all shrink-0 disabled:opacity-50"
+                  className="px-5 py-2.5 min-h-[44px] bg-white/10 hover:bg-[#F80404] hover:text-black text-white text-xs font-black uppercase tracking-wider rounded-xl transition-all shrink-0 disabled:opacity-50 flex items-center justify-center"
                 >
                   {isApplyingCoupon ? '...' : 'Appliquer'}
                 </button>
@@ -476,6 +479,45 @@ export default function CartPage() {
           </div>
         </div>
       </div>
+
+      {/* Mobile Sticky Checkout Bar (Above Bottom Tab Bar, lg:hidden) */}
+      {cart.length > 0 && (
+        <div className="fixed bottom-[calc(56px+env(safe-area-inset-bottom,0px))] left-0 right-0 z-30 bg-[#0A0A0A]/95 backdrop-blur-md border-t border-white/10 p-3 lg:hidden shadow-2xl">
+          <div className="flex items-center justify-between gap-3 max-w-md mx-auto">
+            <div>
+              <p className="text-[10px] text-white/50 uppercase tracking-wider font-bold">Total TTC</p>
+              <p className="text-lg font-black text-white font-heading">{formatPrice(totalCost)}</p>
+            </div>
+
+            {hasBlockedItems ? (
+              <span className="shrink-0 min-h-[44px] px-4 py-2 bg-red-950/60 border border-red-500/50 text-red-200 text-xs font-bold rounded-xl flex items-center">
+                ⚠️ Articles bloqués
+              </span>
+            ) : (
+              <Link
+                href="/commande/"
+                onClick={() => {
+                  const items = cart.map(item => ({
+                    item_id: (item as any).sku || item.itemKey || item.name,
+                    item_name: item.name,
+                    item_brand: (item as any).brand || 'NutriFitness',
+                    item_category: (item as any).categorySlug || 'Nutrition Sportive',
+                    price: item.price,
+                    quantity: item.quantity,
+                  }));
+                  const activeCurr = currency || 'CHF';
+                  trackBeginCheckout(items, cartSubtotal, activeCurr);
+                  trackMetaInitiateCheckout({ items, totalValue: cartSubtotal, currency: activeCurr });
+                }}
+                className="shrink-0 min-h-[44px] px-6 py-2.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-md active:scale-95 flex items-center gap-2"
+              >
+                <span>Commander</span>
+                <span>→</span>
+              </Link>
+            )}
+          </div>
+        </div>
+      )}
     </div>
   );
 }

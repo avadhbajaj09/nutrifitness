@@ -99,6 +99,8 @@ function ShopContent() {
     });
   }, [selectedCategory, selectedBrand, currency]);
 
+  const [isMobileFiltersOpen, setIsMobileFiltersOpen] = useState<boolean>(false);
+
   return (
     <div className="py-4">
       {/* Header */}
@@ -146,8 +148,8 @@ function ShopContent() {
       {/* Grid: Sidebar Filters + Products */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
         
-        {/* Left Sidebar: Filter Facets */}
-        <aside className="lg:col-span-3 bg-[#141414] rounded-2xl border border-white/10 p-5 space-y-6">
+        {/* Left Sidebar: Filter Facets (Desktop only) */}
+        <aside className="hidden lg:block lg:col-span-3 bg-[#141414] rounded-2xl border border-white/10 p-5 space-y-6">
           <div className="flex items-center justify-between pb-3 border-b border-white/10">
             <h3 className="text-xs font-black uppercase tracking-wider text-white font-heading">
               Filtres & Affinage
@@ -272,8 +274,41 @@ function ShopContent() {
 
         {/* Right Side: Sort Bar + Product Grid */}
         <div className="lg:col-span-9 space-y-6">
-          {/* Search & Sort Bar */}
-          <div className="bg-[#141414] rounded-2xl border border-white/10 p-3.5 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          {/* Mobile Filter & Sort Bar (lg:hidden) */}
+          <div className="lg:hidden flex items-center justify-between gap-2 bg-[#141414] rounded-2xl border border-white/10 p-2.5">
+            <button
+              type="button"
+              onClick={() => setIsMobileFiltersOpen(true)}
+              className="flex-1 min-h-[44px] px-4 bg-white/10 hover:bg-white/15 text-white font-bold text-xs rounded-xl flex items-center justify-center gap-2 border border-white/15 active:scale-95 transition-all"
+            >
+              <svg className="w-4 h-4 text-[#F80404]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z" />
+              </svg>
+              <span>Filtres</span>
+              {((selectedCategory !== 'all' ? 1 : 0) + (selectedBrand !== 'all' ? 1 : 0) + (swissOnly ? 1 : 0)) > 0 && (
+                <span className="w-5 h-5 rounded-full bg-[#F80404] text-black text-[10px] font-black flex items-center justify-center">
+                  {(selectedCategory !== 'all' ? 1 : 0) + (selectedBrand !== 'all' ? 1 : 0) + (swissOnly ? 1 : 0)}
+                </span>
+              )}
+            </button>
+
+            <div className="relative shrink-0">
+              <select
+                value={sortBy}
+                onChange={(e) => setSortBy(e.target.value)}
+                aria-label="Trier les produits"
+                className="min-h-[44px] bg-[#1C1C1C] border border-white/15 rounded-xl text-xs text-white px-3 py-2 focus:border-[#F80404] focus:outline-none"
+              >
+                <option value="featured">Populaires</option>
+                <option value="price-asc">Prix ↑</option>
+                <option value="price-desc">Prix ↓</option>
+                <option value="name-asc">Nom A-Z</option>
+              </select>
+            </div>
+          </div>
+
+          {/* Desktop Search & Sort Bar (hidden on mobile, kept on desktop) */}
+          <div className="hidden lg:flex bg-[#141414] rounded-2xl border border-white/10 p-3.5 flex-row items-center justify-between gap-3">
             {/* Direct Search Input */}
             <div className="relative flex-1 max-w-md">
               <svg className="absolute left-3.5 top-1/2 -translate-y-1/2 w-4 h-4 text-white/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -298,7 +333,7 @@ function ShopContent() {
               )}
             </div>
 
-            <div className="flex items-center justify-between sm:justify-end gap-3 shrink-0">
+            <div className="flex items-center justify-end gap-3 shrink-0">
               <div className="flex items-center gap-2">
                 <span className="text-xs text-white/60 font-medium whitespace-nowrap">Trier par :</span>
                 <select 
@@ -340,6 +375,153 @@ function ShopContent() {
           )}
         </div>
       </div>
+
+      {/* Mobile Filters Slide-Over Drawer (lg:hidden) */}
+      {isMobileFiltersOpen && (
+        <div className="lg:hidden fixed inset-0 z-50 flex justify-end">
+          <div 
+            className="fixed inset-0 bg-black/75 backdrop-blur-sm transition-opacity"
+            onClick={() => setIsMobileFiltersOpen(false)}
+            aria-hidden="true"
+          />
+          <div className="relative w-full max-w-sm bg-[#141414] h-full flex flex-col z-10 border-l border-white/10 shadow-2xl">
+            {/* Drawer Header */}
+            <div className="p-4 border-b border-white/10 flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <h3 className="text-sm font-black uppercase tracking-wider text-white font-heading">
+                  Filtres & Affinage
+                </h3>
+                <span className="text-xs font-bold text-white/50">
+                  ({filteredProducts.length})
+                </span>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsMobileFiltersOpen(false)}
+                className="w-11 h-11 flex items-center justify-center rounded-xl bg-white/5 text-white/70 hover:text-white active:scale-95 text-lg"
+                aria-label="Fermer les filtres"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Scrollable Filters Body */}
+            <div className="flex-1 overflow-y-auto p-4 space-y-6">
+              {/* Category Filter */}
+              <div>
+                <h4 className="text-xs font-bold uppercase tracking-wider text-white/80 mb-3 font-heading">
+                  Catégories
+                </h4>
+                <div className="space-y-1">
+                  <label className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.03] active:bg-white/10 text-xs text-white/80 cursor-pointer min-h-[44px]">
+                    <input 
+                      type="radio" 
+                      name="mobile-shop-cat" 
+                      checked={selectedCategory === 'all'} 
+                      onChange={() => setSelectedCategory('all')}
+                      className="text-[#F80404] focus:ring-[#F80404] w-4 h-4" 
+                    />
+                    <span className="font-medium">Toutes les catégories</span>
+                  </label>
+                  {CATEGORIES.filter(c => c.id !== 'guides-ebooks').map(cat => (
+                    <label key={cat.id} className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.03] active:bg-white/10 text-xs text-white/70 cursor-pointer min-h-[44px]">
+                      <input 
+                        type="radio" 
+                        name="mobile-shop-cat" 
+                        checked={selectedCategory === cat.slug.fr} 
+                        onChange={() => setSelectedCategory(cat.slug.fr)}
+                        className="text-[#F80404] focus:ring-[#F80404] w-4 h-4" 
+                      />
+                      <span className="truncate font-medium">{cat.name.fr}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Brand Filter */}
+              <div className="pt-4 border-t border-white/10">
+                <h4 className="text-xs font-bold uppercase tracking-wider text-white/80 mb-3 font-heading">
+                  Marques
+                </h4>
+                <div className="space-y-1 max-h-60 overflow-y-auto pr-1">
+                  <label className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.03] active:bg-white/10 text-xs text-white/80 cursor-pointer min-h-[44px]">
+                    <input 
+                      type="radio" 
+                      name="mobile-shop-brand" 
+                      checked={selectedBrand === 'all'} 
+                      onChange={() => setSelectedBrand('all')}
+                      className="text-[#F80404] focus:ring-[#F80404] w-4 h-4" 
+                    />
+                    <span className="font-medium">Toutes les marques</span>
+                  </label>
+                  {brands.map(b => (
+                    <label key={b} className="flex items-center gap-3 p-2 rounded-xl bg-white/[0.03] active:bg-white/10 text-xs text-white/70 cursor-pointer min-h-[44px]">
+                      <input 
+                        type="radio" 
+                        name="mobile-shop-brand" 
+                        checked={selectedBrand.toLowerCase() === b.toLowerCase()} 
+                        onChange={() => setSelectedBrand(b)}
+                        className="text-[#F80404] focus:ring-[#F80404] w-4 h-4" 
+                      />
+                      <span className="truncate font-medium">{b}</span>
+                    </label>
+                  ))}
+                </div>
+              </div>
+
+              {/* Swiss Origin */}
+              <div className="pt-4 border-t border-white/10">
+                <label className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.03] active:bg-white/10 text-xs font-bold text-white cursor-pointer min-h-[44px]">
+                  <input 
+                    type="checkbox" 
+                    checked={swissOnly} 
+                    onChange={(e) => setSwissOnly(e.target.checked)}
+                    className="rounded text-[#F80404] focus:ring-[#F80404] w-4 h-4" 
+                  />
+                  <span className="flex items-center gap-1.5">
+                    <span className="w-2 h-2 rounded-xs bg-[#D52B1E] inline-block" />
+                    Origine Suisse uniquement
+                  </span>
+                </label>
+              </div>
+
+              {/* Deliverable to Selected Country */}
+              <div className="pt-2">
+                <label className="flex items-center gap-3 p-2.5 rounded-xl bg-white/[0.03] active:bg-white/10 text-xs font-bold text-white cursor-pointer min-h-[44px]">
+                  <input 
+                    type="checkbox" 
+                    checked={deliverableOnly} 
+                    onChange={(e) => setDeliverableOnly(e.target.checked)}
+                    className="rounded text-[#F80404] focus:ring-[#F80404] w-4 h-4" 
+                  />
+                  <span className="flex items-center gap-1.5">
+                    <span>🚚</span>
+                    <span>Livrable en {countryCode || 'CH'}</span>
+                  </span>
+                </label>
+              </div>
+            </div>
+
+            {/* Bottom Drawer Actions with Safe Area Inset */}
+            <div className="p-4 border-t border-white/10 bg-[#0A0A0A] flex gap-3 pb-[calc(env(safe-area-inset-bottom,0px)+16px)]">
+              <button
+                type="button"
+                onClick={clearFilters}
+                className="min-h-[48px] px-4 rounded-xl bg-white/10 hover:bg-white/15 text-white font-bold text-xs"
+              >
+                Réinitialiser
+              </button>
+              <button
+                type="button"
+                onClick={() => setIsMobileFiltersOpen(false)}
+                className="flex-1 min-h-[48px] rounded-xl bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase text-xs flex items-center justify-center active:scale-98 transition-all"
+              >
+                Voir {filteredProducts.length} produits
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* Boutique FAQ Section */}
       <BoutiqueFAQ />

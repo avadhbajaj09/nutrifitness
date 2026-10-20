@@ -135,12 +135,21 @@ export default function GoogleReviewsSlider() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
   const [canScrollLeft, setCanScrollLeft] = useState(false);
   const [canScrollRight, setCanScrollRight] = useState(true);
+  const [activeIndex, setActiveIndex] = useState(0);
+  const [expandedIds, setExpandedIds] = useState<Record<string, boolean>>({});
+
+  const toggleExpand = (id: string) => {
+    setExpandedIds(prev => ({ ...prev, [id]: !prev[id] }));
+  };
 
   const checkScroll = () => {
     if (scrollContainerRef.current) {
       const { scrollLeft, scrollWidth, clientWidth } = scrollContainerRef.current;
       setCanScrollLeft(scrollLeft > 10);
       setCanScrollRight(scrollLeft < scrollWidth - clientWidth - 10);
+      const cardWidth = clientWidth * 0.84;
+      const idx = Math.round(scrollLeft / (cardWidth + 16));
+      setActiveIndex(Math.min(Math.max(0, idx), GOOGLE_REVIEWS.length - 1));
     }
   };
 
@@ -162,9 +171,9 @@ export default function GoogleReviewsSlider() {
   };
 
   return (
-    <section className="mb-16">
+    <section className="mb-8 sm:mb-16">
       {/* Header with Google Badge and Rating Overview */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-8 pb-6 border-b border-white/10">
+      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 sm:gap-6 mb-4 sm:mb-8 pb-4 sm:pb-6 border-b border-white/10">
         <div>
           <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-white/5 border border-white/10 mb-2">
             {/* Google "G" SVG */}
@@ -179,17 +188,24 @@ export default function GoogleReviewsSlider() {
             <span className="text-[11px] font-bold text-[#95d600]">Suisse 🇨🇭</span>
           </div>
 
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white uppercase font-heading tracking-tight">
-            Ce que Disent nos Athlètes & Clients
+          <h2 className="text-xl sm:text-3xl lg:text-4xl font-black text-white uppercase font-heading tracking-tight leading-tight">
+            Avis de nos Athlètes
           </h2>
-          <p className="text-xs text-white/60 mt-1 max-w-xl">
+
+          {/* Mobile Rating Summary (Section L) */}
+          <div className="sm:hidden flex items-center gap-2 mt-2">
+            <span className="text-sm font-black text-white">4.9 ★</span>
+            <span className="text-xs text-white/60">120+ avis certifiés Google</span>
+          </div>
+
+          <p className="hidden sm:block text-xs text-white/60 mt-1 max-w-xl">
             Avis vérifiés déposés par nos clients de toute la Suisse sur notre fiche Google Maps officielle.
           </p>
         </div>
 
-        {/* Rating Score & Actions */}
+        {/* Rating Score & Actions (Desktop) */}
         <div className="flex flex-wrap items-center gap-4 shrink-0">
-          <div className="p-3 bg-[#141414] rounded-2xl border border-white/10 flex items-center gap-3">
+          <div className="hidden sm:flex p-3 bg-[#141414] rounded-2xl border border-white/10 items-center gap-3">
             <span className="text-2xl sm:text-3xl font-black text-white font-heading">
               4.9
             </span>
@@ -207,14 +223,14 @@ export default function GoogleReviewsSlider() {
             href="https://g.page/r/CTNRUPlauq3cEBM/review"
             target="_blank"
             rel="noopener noreferrer"
-            className="px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider transition-all border border-white/10 flex items-center gap-2 hover:border-[#F80404]/50"
+            className="hidden sm:flex px-4 py-3 rounded-2xl bg-white/5 hover:bg-white/10 text-white font-bold text-xs uppercase tracking-wider transition-all border border-white/10 items-center gap-2 hover:border-[#F80404]/50"
           >
             <span>Laisser un avis Google</span>
             <ExternalLink className="w-3.5 h-3.5 text-white/60" />
           </a>
 
-          {/* Slider Arrow Controls */}
-          <div className="flex items-center gap-1.5 ml-auto sm:ml-0">
+          {/* Slider Arrow Controls (Desktop) */}
+          <div className="hidden sm:flex items-center gap-1.5 ml-auto sm:ml-0">
             <button
               type="button"
               onClick={() => scroll('left')}
@@ -245,23 +261,23 @@ export default function GoogleReviewsSlider() {
         </div>
       </div>
 
-      {/* Horizontal Scrollable Slider Track */}
+      {/* Horizontal Scrollable Slider Track: 1.1 cards visible on mobile with scroll snap */}
       <div 
         ref={scrollContainerRef}
         onScroll={checkScroll}
-        className="flex gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-none scroll-smooth"
+        className="flex gap-4 sm:gap-5 overflow-x-auto pb-4 snap-x snap-mandatory scrollbar-none scroll-smooth -mx-4 px-4 sm:mx-0 sm:px-0"
         style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
       >
         {GOOGLE_REVIEWS.map((rev) => (
           <div
             key={rev.id}
-            className="w-[300px] sm:w-[350px] shrink-0 snap-start p-6 rounded-3xl bg-[#141414] border border-white/10 hover:border-[#F80404]/50 transition-all duration-300 flex flex-col justify-between shadow-xl group hover:-translate-y-1"
+            className="w-[84vw] min-w-[280px] max-w-[340px] sm:w-[350px] sm:min-w-0 sm:max-w-none shrink-0 snap-start p-5 sm:p-6 rounded-2xl sm:rounded-3xl bg-[#141414] border border-white/10 hover:border-[#F80404]/50 transition-all duration-300 flex flex-col justify-between shadow-xl group hover:-translate-y-1"
           >
-            <div className="space-y-4">
+            <div className="space-y-3.5">
               {/* Header: Author + Google Logo */}
               <div className="flex items-center justify-between gap-3">
                 <div className="flex items-center gap-3">
-                  <div className={`w-10 h-10 rounded-full ${rev.avatarColor || 'bg-red-600'} text-white font-black text-sm flex items-center justify-center shadow-md font-heading`}>
+                  <div className={`w-9 h-9 sm:w-10 sm:h-10 rounded-full ${rev.avatarColor || 'bg-red-600'} text-white font-black text-xs sm:text-sm flex items-center justify-center shadow-md font-heading`}>
                     {rev.author.charAt(0)}
                   </div>
                   <div>
@@ -291,17 +307,26 @@ export default function GoogleReviewsSlider() {
                 ))}
               </div>
 
-              {/* Review Text */}
+              {/* Review Text (Clamped to 5 lines with Lire la suite) */}
               <div className="relative">
-                <Quote className="w-5 h-5 text-white/10 absolute -top-2.5 -left-1" />
-                <p className="text-xs text-white/80 leading-relaxed italic pl-3 line-clamp-4">
+                <Quote className="w-4 h-4 text-white/10 absolute -top-2 -left-1" />
+                <p className={`text-xs text-white/80 leading-relaxed italic pl-3 ${expandedIds[rev.id] ? '' : 'line-clamp-5'}`}>
                   « {rev.text} »
                 </p>
+                {rev.text.length > 140 && (
+                  <button
+                    type="button"
+                    onClick={() => toggleExpand(rev.id)}
+                    className="text-[11px] font-bold text-[#F80404] hover:underline pl-3 pt-1 cursor-pointer block min-h-[30px]"
+                  >
+                    {expandedIds[rev.id] ? 'Réduire' : 'Lire la suite'}
+                  </button>
+                )}
               </div>
             </div>
 
-            {/* Bottom: Google verified badge */}
-            <div className="pt-4 mt-4 border-t border-white/5 flex items-center justify-between text-[10px]">
+            {/* Bottom: Google verified badge (Desktop only) */}
+            <div className="hidden sm:flex pt-4 mt-4 border-t border-white/5 items-center justify-between text-[10px]">
               <span className="text-[#95d600] font-bold flex items-center gap-1">
                 <CheckCircle2 className="w-3.5 h-3.5" />
                 <span>Avis Google certifié</span>
@@ -309,6 +334,18 @@ export default function GoogleReviewsSlider() {
               <span className="text-white/40">Publié sur Google</span>
             </div>
           </div>
+        ))}
+      </div>
+
+      {/* Mobile Dots Indicator */}
+      <div className="sm:hidden flex items-center justify-center gap-1.5 pt-2">
+        {GOOGLE_REVIEWS.map((_, i) => (
+          <span
+            key={i}
+            className={`h-1.5 rounded-full transition-all duration-200 ${
+              activeIndex === i ? 'w-5 bg-[#F80404]' : 'w-1.5 bg-white/20'
+            }`}
+          />
         ))}
       </div>
     </section>

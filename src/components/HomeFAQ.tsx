@@ -81,33 +81,45 @@ export default function HomeFAQ() {
       <div className="space-y-3">
         {homeFaqs.map((faq, idx) => {
           const isOpen = openIndex === idx;
+          const isHiddenOnMobile = idx >= 5;
           return (
             <div 
               key={idx}
-              className={`rounded-2xl border transition-all duration-200 overflow-hidden ${
+              className={`${isHiddenOnMobile ? 'hidden sm:block' : ''} rounded-2xl border transition-all duration-200 overflow-hidden ${
                 isOpen ? 'bg-[#141414] border-[#F80404]/40 shadow-lg' : 'bg-[#141414]/70 border-white/10 hover:border-white/20'
               }`}
             >
               <button
                 type="button"
                 onClick={() => setOpenIndex(isOpen ? null : idx)}
-                className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-white cursor-pointer"
+                className="w-full min-h-[48px] p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-bold text-xs sm:text-sm text-white cursor-pointer"
+                aria-expanded={isOpen}
               >
-                <span>{faq.q}</span>
-                <span className={`w-7 h-7 rounded-full border border-white/10 flex items-center justify-center shrink-0 transition-colors ${
+                <span className="leading-snug">{faq.q}</span>
+                <span className={`w-8 h-8 rounded-full border border-white/10 flex items-center justify-center shrink-0 font-black text-sm sm:text-base transition-colors ${
                   isOpen ? 'bg-[#F80404] text-black' : 'bg-white/5 text-white/70'
                 }`}>
-                  {isOpen ? <ChevronUp className="w-4 h-4" /> : <ChevronDown className="w-4 h-4" />}
+                  {isOpen ? '−' : '+'}
                 </span>
               </button>
               {isOpen && (
-                <div className="px-4 pb-5 sm:px-5 sm:pb-5 text-xs text-white/70 leading-relaxed border-t border-white/5 pt-3">
+                <div className="px-4 pb-5 sm:px-5 sm:pb-5 text-xs text-white/70 leading-relaxed border-t border-white/5 pt-3 break-words">
                   <p>{faq.a}</p>
                 </div>
               )}
             </div>
           );
         })}
+      </div>
+
+      {/* Mobile: View all questions CTA */}
+      <div className="sm:hidden pt-4 text-center">
+        <Link
+          href="/faq/"
+          className="inline-flex items-center justify-center min-h-[48px] w-full px-6 py-3 bg-[#181818] border border-white/15 hover:border-[#F80404] text-white font-bold text-xs rounded-xl transition-all"
+        >
+          Voir toutes les {homeFaqs.length} questions →
+        </Link>
       </div>
     </section>
   );

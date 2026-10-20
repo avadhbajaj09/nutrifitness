@@ -11,28 +11,51 @@ const posts = [
 
 export default function SocialGrid() {
   return (
-    <section className="mb-16">
-      <div className="flex items-end justify-between mb-8 pb-4 border-b border-white/10">
+    <section className="mb-8 sm:mb-16">
+      <div className="flex items-end justify-between mb-4 sm:mb-8 pb-3 sm:pb-4 border-b border-white/10 px-4 sm:px-0">
         <div>
-          <p className="text-xs font-black uppercase tracking-widest text-[#F80404] mb-1 font-heading">
+          <p className="text-[10px] sm:text-xs font-black uppercase tracking-widest text-[#F80404] mb-0.5 sm:mb-1 font-heading">
             Communauté Athlètes
           </p>
-          <h2 className="text-2xl sm:text-3xl font-black text-white uppercase font-heading">
-            Rejoignez le Mouvement #NutriFitnessCH
+          <h2 className="text-lg sm:text-2xl lg:text-3xl font-black text-white uppercase font-heading leading-tight">
+            #NutriFitnessCH
           </h2>
         </div>
         <a 
           href="https://instagram.com" 
           target="_blank" 
           rel="noopener noreferrer" 
-          className="text-xs font-bold text-white/70 hover:text-white uppercase tracking-wider flex items-center gap-1.5"
+          className="text-xs font-bold text-[#F80404] sm:text-white/70 hover:text-white uppercase tracking-wider flex items-center gap-1.5 min-h-[44px] shrink-0"
         >
-          <span>Suivre @NutriFitness.ch</span>
+          <span>@NutriFitness.ch</span>
           <span>→</span>
         </a>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
+      {/* Mobile: Horizontal scroll row */}
+      <div 
+        className="sm:hidden flex gap-3 overflow-x-auto pb-2 scrollbar-none snap-x snap-mandatory -mx-4 px-4"
+        style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
+      >
+        {posts.map((p, idx) => (
+          <div key={idx} className="w-[140px] min-w-[140px] shrink-0 snap-start rounded-2xl overflow-hidden aspect-square border border-white/10 relative shadow-md">
+            <Image 
+              src={p.img} 
+              alt="Athlète NutriFitness" 
+              fill
+              className="object-cover"
+            />
+            <div className="absolute bottom-2 left-2 right-2">
+              <span className="text-[9px] font-bold text-white bg-black/80 px-2 py-0.5 rounded-full border border-white/10 truncate block text-center">
+                {p.tag}
+              </span>
+            </div>
+          </div>
+        ))}
+      </div>
+
+      {/* Desktop Grid (Unchanged) */}
+      <div className="hidden sm:grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3">
         {posts.map((p, idx) => (
           <div key={idx} className="group relative rounded-2xl overflow-hidden aspect-square border border-white/10 shadow-lg">
             <Image 
