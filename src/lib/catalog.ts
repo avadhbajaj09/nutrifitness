@@ -1626,7 +1626,7 @@ export const CATEGORIES: CategoryItem[] = [
 ];
 
 export const PRODUCTS: ProductItem[] = [
-  {
+{
     "id": "prod-25678",
     "slug": {
       "fr": "sandwich-keto-bar",
@@ -1646,7 +1646,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 4,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CARAMEL.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CARAMEL.png",
         "alt": {
           "fr": "Sandwich Keto Bar – Biscuit protéiné keto au beurre de cacahuètes, 16 g de protéines et 10,3 g de fibres.",
           "de": "Sandwich Keto Bar – Biscuit protéiné keto au beurre de cacahuètes, 16 g de protéines et 10,3 g de fibres.",
@@ -1657,7 +1657,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-VANILLE.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-VANILLE.png",
         "alt": {
           "fr": "Sandwich Keto Bar",
           "de": "Sandwich Keto Bar",
@@ -1668,7 +1668,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-.png",
         "alt": {
           "fr": "Sandwich Keto Bar",
           "de": "Sandwich Keto Bar",
@@ -1679,7 +1679,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CHOCOLAT.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/10/SANDWICH-BEURRE-DE-CACAHUETE-CHOCOLAT.png",
         "alt": {
           "fr": "Sandwich Keto Bar",
           "de": "Sandwich Keto Bar",
@@ -1835,7 +1835,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 29.9,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-.png",
         "alt": {
           "fr": "Applied Creatine Monohydrate 250g",
           "de": "Applied Creatine Monohydrate 250g",
@@ -1846,7 +1846,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-NUTRI.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/09/APPLIED-CREATINE-MONOHYDRATE-250G-NUTRI.webp",
         "alt": {
           "fr": "Applied Creatine Monohydrate 250g",
           "de": "Applied Creatine Monohydrate 250g",
@@ -1950,7 +1950,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/glutmine-red-and-yellow-mockup-scaled.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/glutmine-red-and-yellow-mockup-scaled.png",
         "alt": {
           "fr": "GLUTAMINE MARVELOUS 300G – L-Glutamine micronisée 99,9 % pure",
           "de": "GLUTAMINE MARVELOUS 300G – L-Glutamine micronisée 99,9 % pure",
@@ -1961,7 +1961,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/09/GLUTAMINE-KYOWA-300G-NUTRITION.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/09/GLUTAMINE-KYOWA-300G-NUTRITION.webp",
         "alt": {
           "fr": "Marvelous Glutamine Kyowa 300g",
           "de": "Marvelous Glutamine Kyowa 300g",
@@ -2066,7 +2066,7 @@ export const PRODUCTS: ProductItem[] = [
     "compareAtPriceChf": 49.9,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp",
         "alt": {
           "fr": "Couverture du guide numérique « Le Guide ultime sur les compléments »",
           "de": "Couverture du guide numérique « Le Guide ultime sur les compléments »",
@@ -2139,7 +2139,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 100,
         "inventoryQuantity": 0,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp",
         "stockGeneva": 25,
         "stockPortugal": 0
       },
@@ -2156,7 +2156,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 100,
         "inventoryQuantity": 0,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp",
         "stockGeneva": 25,
         "stockPortugal": 0
       }
@@ -2187,7 +2187,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/4.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/4.png",
         "alt": {
           "fr": "FARINE D'AVOINE PRONUTRITION – Farine d'avoine instantanée avec goûts",
           "de": "FARINE D'AVOINE PRONUTRITION – Farine d'avoine instantanée avec goûts",
@@ -2198,7 +2198,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/CACAO-NOISETTES.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/CACAO-NOISETTES.png",
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2209,7 +2209,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/COOKIE.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/COOKIE.png",
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2220,7 +2220,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/CARAMEL.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/CARAMEL.png",
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2231,7 +2231,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/NOISETTES.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/08/NOISETTES.png",
         "alt": {
           "fr": "Farine D’avoine 1kg",
           "de": "Farine D’avoine 1kg",
@@ -2305,8 +2305,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/1.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       },
       {
         "id": "8f84e225-ad41-4961-9f57-b02e2aa9e9c9",
@@ -2322,8 +2322,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BISCUITS-CACAO.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       },
       {
         "id": "2482e044-026d-422c-9dd3-2bf02b412a06",
@@ -2339,8 +2339,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/2.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       },
       {
         "id": "93aa460b-8196-4d36-8d45-7e218076e4b6",
@@ -2356,8 +2356,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/CHOCO-BLANC.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       },
       {
         "id": "947c506b-4c65-44af-80bd-ef5c34046130",
@@ -2373,15 +2373,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/CACAO.png",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY"
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-25041",
@@ -2403,7 +2403,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/GLYCINE-300G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/GLYCINE-300G.png",
         "alt": {
           "fr": "GLYCINE 300G BIGMAN – L-Glycine pure en poudre haute qualité",
           "de": "GLYCINE 300G BIGMAN – L-Glycine pure en poudre haute qualité",
@@ -2414,7 +2414,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/GLYCINE-300G-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/GLYCINE-300G-NUTRITION.png",
         "alt": {
           "fr": "Glycine 300g",
           "de": "Glycine 300g",
@@ -2518,7 +2518,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-1.png",
         "alt": {
           "fr": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
           "de": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
@@ -2529,7 +2529,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/MAGNESIO-BISGLYCINATE-60-TABS-NUTRI.png",
         "alt": {
           "fr": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
           "de": "MAGNÉSIUM BISGLYCINATE PRONUTRITION – Magnésium hautement assimilable pour les sportifs",
@@ -2633,7 +2633,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS.png",
         "alt": {
           "fr": "ZINC BISGLYCINATE 160 CAPS Body Attack – Zinc bisglycinate hautement assimilable",
           "de": "ZINC BISGLYCINATE 160 CAPS Body Attack – Zinc bisglycinate hautement assimilable",
@@ -2644,7 +2644,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/ZINC-BISGLYCINATE-160-CAPS-NUTRI.png",
         "alt": {
           "fr": "Zinc Bisglycinate 160 CAPS",
           "de": "Zinc Bisglycinate 160 CAPS",
@@ -2748,7 +2748,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall4.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall4.jpg",
         "alt": {
           "fr": "fat burn 60 caps bruleur graisse thermogenique energie",
           "de": "fat burn 60 caps bruleur graisse thermogenique energie",
@@ -2759,7 +2759,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FAT-BURN-60-CAPS-NUTRI.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FAT-BURN-60-CAPS-NUTRI.webp",
         "alt": {
           "fr": "Fat Burn 60 CAPS",
           "de": "Fat Burn 60 CAPS",
@@ -2863,7 +2863,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-1.png",
         "alt": {
           "fr": "bromelaine 60 tabs 1000mg pronutrition digestion inflammation ananas",
           "de": "bromelaine 60 tabs 1000mg pronutrition digestion inflammation ananas",
@@ -2874,7 +2874,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BROMELINA-1000MG-60-TABS-NUTRI.png",
         "alt": {
           "fr": "Bromélaïne 60 TABS 1000mg",
           "de": "Bromélaïne 60 TABS 1000mg",
@@ -2978,7 +2978,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BERBERINA-60-TABS-1-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BERBERINA-60-TABS-1-1.png",
         "alt": {
           "fr": "BERBERINE 60 TABS – Complément à base de berbérine et chardon-marie",
           "de": "BERBERINE 60 TABS – Complément à base de berbérine et chardon-marie",
@@ -2989,7 +2989,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BERBERINA-60-TABS-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/BERBERINA-60-TABS-NUTRI.png",
         "alt": {
           "fr": "Berberina 60 TABS",
           "de": "Berberina 60 TABS",
@@ -3093,7 +3093,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 1,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
         "alt": {
           "fr": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
           "de": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
@@ -3104,7 +3104,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-NUTRITION.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3115,7 +3115,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-ICE-TEA-LEMON-.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-ICE-TEA-LEMON-.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3126,7 +3126,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-LEMON-LIME.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-LEMON-LIME.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3137,7 +3137,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-POMME.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-POMME.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3148,7 +3148,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-COLA.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-COLA.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3159,7 +3159,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-ABRICOTS.png",
         "alt": {
           "fr": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
           "de": "FRUTILU HYDRATION – Boisson instantanée sans sucre enrichie en vitamine C",
@@ -3170,7 +3170,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-PASTEQUE.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/06/FRUTILU-PASTEQUE.png",
         "alt": {
           "fr": "Frutilu Hydration Sachet",
           "de": "Frutilu Hydration Sachet",
@@ -3360,7 +3360,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-.png",
         "alt": {
           "fr": "\"purée amande complète bio 650g 100% naturelle\" \"beurre amande bio riche protéines fibres\" \"purée amande texture naturelle sans additifs\" \"amandes bio transformées en purée nutrition sportive\"",
           "de": "\"purée amande complète bio 650g 100% naturelle\" \"beurre amande bio riche protéines fibres\" \"purée amande texture naturelle sans additifs\" \"amandes bio transformées en purée nutrition sportive\"",
@@ -3371,7 +3371,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/PUREE-DAMANDE-COMPLETE-NUTRI.png",
         "alt": {
           "fr": "Purée D’amande 650g",
           "de": "Purée D’amande 650g",
@@ -3445,16 +3445,16 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 20,
         "inStock": true,
         "gtin13": "3760295170495",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "gtin13": "3760295170495",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0
   },
   {
     "id": "prod-22614",
@@ -3476,7 +3476,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 4,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
         "alt": {
           "fr": "Abe Drink",
           "de": "Abe Drink",
@@ -3487,7 +3487,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-PRE-WORKOUT-NUTRITION.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-PRE-WORKOUT-NUTRITION.webp",
         "alt": {
           "fr": "Abe Drink",
           "de": "Abe Drink",
@@ -3560,7 +3560,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 6,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
         "stockGeneva": 6,
         "stockPortugal": 0
       },
@@ -3577,7 +3577,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 6,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
         "stockGeneva": 6,
         "stockPortugal": 0
       },
@@ -3594,7 +3594,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 6,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ABE-DRINK-CHERRY-SLUSHIE-.webp",
         "stockGeneva": 6,
         "stockPortugal": 0
       }
@@ -3626,7 +3626,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ASHWAGANDHA-KSM-66-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/05/ASHWAGANDHA-KSM-66-1.png",
         "alt": {
           "fr": "Textes ALT (images produit) \"Ashwagandha KSM-66 90 capsules BIGMAN complément alimentaire\" \"gélules ashwagandha KSM-66 extrait racine 5% withanolides\" \"flacon ashwagandha premium BIGMAN nutrition sportive\" \"ashwagandha KSM-66 capsules végétales haute qualité\"",
           "de": "Textes ALT (images produit) \"Ashwagandha KSM-66 90 capsules BIGMAN complément alimentaire\" \"gélules ashwagandha KSM-66 extrait racine 5% withanolides\" \"flacon ashwagandha premium BIGMAN nutrition sportive\" \"ashwagandha KSM-66 capsules végétales haute qualité\"",
@@ -3732,7 +3732,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 52,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/02/ANABOLIC-MASS-2.5KG.png",
         "alt": {
           "fr": "Anabolic X – Mass Gainer Hybride pour Prise de Masse",
           "de": "Anabolic X – Mass Gainer Hybride pour Prise de Masse",
@@ -3743,7 +3743,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/02/ANABOLIC-MASS-NUTRITION.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/02/ANABOLIC-MASS-NUTRITION.webp",
         "alt": {
           "fr": "Anabolic Mass 2.5kg",
           "de": "Anabolic Mass 2.5kg",
@@ -3947,7 +3947,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall2.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall2.jpg",
         "alt": {
           "fr": "Cluster Dex – Glucide HBCD à absorption rapide pour énergie et récupération",
           "de": "Cluster Dex – Glucide HBCD à absorption rapide pour énergie et récupération",
@@ -3958,7 +3958,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/Dirty-Cluster-Dextrin-1kg-nutrition.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/Dirty-Cluster-Dextrin-1kg-nutrition.webp",
         "alt": {
           "fr": "Dirty Cluster Dex 1kg",
           "de": "Dirty Cluster Dex 1kg",
@@ -4064,7 +4064,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-LEMON-FIRST-300g.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-LEMON-FIRST-300g.png",
         "alt": {
           "fr": "Dirty Squads AMINO X9 – Intra-workout aux 9 EAA et eau de coco, sans sucre",
           "de": "Dirty Squads AMINO X9 – Intra-workout aux 9 EAA et eau de coco, sans sucre",
@@ -4075,7 +4075,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-TUTTI-FRUTTI-300g.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-TUTTI-FRUTTI-300g.webp",
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -4086,7 +4086,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-PASTEQUE-300g.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-PASTEQUE-300g.webp",
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -4097,7 +4097,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-LEMON-300g.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-LEMON-300g.webp",
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -4108,7 +4108,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-NUTRITION.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/AMINIX-NUTRITION.webp",
         "alt": {
           "fr": "Dirty Amino X9 300g",
           "de": "Dirty Amino X9 300g",
@@ -4284,7 +4284,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 65,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMELO.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CARAMELO.png",
         "alt": {
           "fr": "Pot ISO 90X CFM 1 kg Dirty Squads, saveur caramel, vue de face",
           "de": "Pot ISO 90X CFM 1 kg Dirty Squads, saveur caramel, vue de face",
@@ -4295,7 +4295,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-VANILLA.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-VANILLA.webp",
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -4317,7 +4317,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-COOKIECREAM.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-COOKIECREAM.webp",
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -4328,7 +4328,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CHOCOLATE.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-CHOCOLATE.webp",
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -4339,7 +4339,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-NUTRITION.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-90X-CFM-1KG-NUTRITION.webp",
         "alt": {
           "fr": "ISO 90x Cfm 1kg",
           "de": "ISO 90x Cfm 1kg",
@@ -4555,7 +4555,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 80,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLAT-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLAT-1.png",
         "alt": {
           "fr": "Dirty Squads ISO 80X – Protéine triple phase WPC WPI MPI 83% pure",
           "de": "Dirty Squads ISO 80X – Protéine triple phase WPC WPI MPI 83% pure",
@@ -4566,7 +4566,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4577,7 +4577,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4588,7 +4588,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-VANILLA.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-VANILLA.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4599,7 +4599,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4610,7 +4610,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-NUTRITION.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-NUTRITION.webp",
         "alt": {
           "fr": "ISO 80x Grass Fed 2kg",
           "de": "ISO 80x Grass Fed 2kg",
@@ -4813,7 +4813,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 9.9,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/CREATINE-90G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/CREATINE-90G.png",
         "alt": {
           "fr": "Créatine Poudre 90g – Créatine monohydrate pure pour force et performance",
           "de": "Créatine Poudre 90g – Créatine monohydrate pure pour force et performance",
@@ -4824,7 +4824,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/CREATINE-90G-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/CREATINE-90G-NUTRI.png",
         "alt": {
           "fr": "Creatine Poudre 90g",
           "de": "Creatine Poudre 90g",
@@ -4930,7 +4930,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 7,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/PIADINA-KETO.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/PIADINA-KETO.png",
         "alt": {
           "fr": "Piadina Keto Pronutrition – Piadina low carb et riche en protéines fabriquée en Italie",
           "de": "Piadina Keto Pronutrition – Piadina low carb et riche en protéines fabriquée en Italie",
@@ -4941,7 +4941,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/PIADINA-KETO-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/PIADINA-KETO-NUTRI.png",
         "alt": {
           "fr": "Piadina Keto 120g",
           "de": "Piadina Keto 120g",
@@ -5047,7 +5047,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous4.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous4.png",
         "alt": {
           "fr": "Super Digestive Marvelous Nutrition – Digestion & Assimilation Optimales",
           "de": "Super Digestive Marvelous Nutrition – Digestion & Assimilation Optimales",
@@ -5058,7 +5058,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/SUPER-DIGESTIVE-60-CAPS-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/SUPER-DIGESTIVE-60-CAPS-NUTRI.png",
         "alt": {
           "fr": "Super Digestive 60 CAPS",
           "de": "Super Digestive 60 CAPS",
@@ -5164,7 +5164,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 33,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous12.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous12.png",
         "alt": {
           "fr": "H.B.V.C – Formule Avancée pour la Santé Cardiovasculaire & le Bien-Être Global",
           "de": "H.B.V.C – Formule Avancée pour la Santé Cardiovasculaire & le Bien-Être Global",
@@ -5175,7 +5175,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/HBVC-CHOLESTEROL-SUPPORT-90-CAPS-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/HBVC-CHOLESTEROL-SUPPORT-90-CAPS-NUTRI.png",
         "alt": {
           "fr": "Hbvc Cholesterol Support 90 CAPS",
           "de": "Hbvc Cholesterol Support 90 CAPS",
@@ -5281,7 +5281,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/80.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/80.png",
         "alt": {
           "fr": "TESTO MAN™ – Booster Naturel de Testostérone & Régulateur Hormonal",
           "de": "TESTO MAN™ – Booster Naturel de Testostérone & Régulateur Hormonal",
@@ -5292,7 +5292,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-1.png",
         "alt": {
           "fr": "Testoman 120 CAPS",
           "de": "Testoman 120 CAPS",
@@ -5303,7 +5303,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-2.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/TESTOMAN-120-CAPS-NUTRI-2.png",
         "alt": {
           "fr": "Testoman 120 CAPS",
           "de": "Testoman 120 CAPS",
@@ -5409,7 +5409,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 17,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous34.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous34.png",
         "alt": {
           "fr": "NAC Pharma Grade 250 mg – Antioxydant puissant & détox du foie",
           "de": "NAC Pharma Grade 250 mg – Antioxydant puissant & détox du foie",
@@ -5420,7 +5420,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NAC-PHARMA-GRADE-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NAC-PHARMA-GRADE-NUTRI.png",
         "alt": {
           "fr": "NAC Pharma Grade 60 CAPS",
           "de": "NAC Pharma Grade 60 CAPS",
@@ -5526,7 +5526,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G.png",
         "alt": {
           "fr": "Peanut Butter Crémeux 500g – Beurre de cacahuètes naturel riche en protéines et sans sucre ajouté",
           "de": "Peanut Butter Crémeux 500g – Beurre de cacahuètes naturel riche en protéines et sans sucre ajouté",
@@ -5537,7 +5537,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G-NUTRI-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/PEANUT-BUTTER-CREMEUX-500G-NUTRI-1.png",
         "alt": {
           "fr": "Peanut Butter Cremeux 500g",
           "de": "Peanut Butter Cremeux 500g",
@@ -5643,7 +5643,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CAFEINE-200MG-.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CAFEINE-200MG-.png",
         "alt": {
           "fr": "Cafeine 200mg Pronutrition – Complément en caféine pure pour énergie et concentration",
           "de": "Cafeine 200mg Pronutrition – Complément en caféine pure pour énergie et concentration",
@@ -5654,7 +5654,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CAFFEINE-200MG-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CAFFEINE-200MG-NUTRI.png",
         "alt": {
           "fr": "Caffeine 200mg 60 TABS",
           "de": "Caffeine 200mg 60 TABS",
@@ -5760,7 +5760,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 4,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5771,7 +5771,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-PEANUT-BUTTER.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-PEANUT-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5782,7 +5782,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5793,7 +5793,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALE-PEANUT-BUTTER-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALE-PEANUT-BUTTER-1.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5804,7 +5804,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALEE-PEANUT-BUTTER.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CARAMEL-SALEE-PEANUT-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5815,7 +5815,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-BEURRE-DE-CACAHOUETE.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-AU-LAIT-BEURRE-DE-CACAHOUETE.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5826,7 +5826,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-NOISETTES-BEURRES.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-NOISETTES-BEURRES.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5837,7 +5837,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -5848,7 +5848,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/CUPCAKE-PISTACHIO-BUTTER-NUTRI.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5859,7 +5859,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/NUTRY-NUTS-WHITE-CHOC-PEANUT-BUTTER-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/10/NUTRY-NUTS-WHITE-CHOC-PEANUT-BUTTER-NUTRI.png",
         "alt": {
           "fr": "Nutry Nuts Cups",
           "de": "Nutry Nuts Cups",
@@ -5870,7 +5870,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-BLACK-PEANUT-BUTTER.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/NUTRY-NUTS-BARRE-CHOCO-BLACK-PEANUT-BUTTER.png",
         "alt": {
           "fr": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
           "de": "Nutry Nuts Barre – Snack protéiné sans sucre ajouté",
@@ -6063,7 +6063,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/SPRAY-COOKER.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/SPRAY-COOKER.png",
         "alt": {
           "fr": "More Nutrition 2 Calories Huile en Spray 200ml – cuisson légère et antiadhésive",
           "de": "More Nutrition 2 Calories Huile en Spray 200ml – cuisson légère et antiadhésive",
@@ -6074,7 +6074,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/spray-cooker-nutrition.jpeg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/09/spray-cooker-nutrition.jpeg",
         "alt": {
           "fr": "More Spray Cooker 200ml",
           "de": "More Spray Cooker 200ml",
@@ -6180,7 +6180,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous31.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous31.png",
         "alt": {
           "fr": "L-Citrulline 100% Pure – Booster Pré-Workout & Endurance | NutriFitness.ch",
           "de": "L-Citrulline 100% Pure – Booster Pré-Workout & Endurance | NutriFitness.ch",
@@ -6191,7 +6191,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/L-CITRULLINE-PURE-NUTRITION-2.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/L-CITRULLINE-PURE-NUTRITION-2.png",
         "alt": {
           "fr": "L-citrulline 100% Pure 250g",
           "de": "L-citrulline 100% Pure 250g",
@@ -6202,7 +6202,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/L-CITRULLINE-NUTRITION-2.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/08/L-CITRULLINE-NUTRITION-2.png",
         "alt": {
           "fr": "L-citrulline 100% Pure 250g",
           "de": "L-citrulline 100% Pure 250g",
@@ -6308,7 +6308,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 79,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
         "alt": {
           "fr": "Muscles Whey 2kg – Protéine WPC80 pure dubai white chocolate",
           "de": "Muscles Whey 2kg – Protéine WPC80 pure dubai white chocolate",
@@ -6481,15 +6481,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 0,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
-        "stockGeneva": 25,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "gtin13": "634240173028"
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
-    "stockGeneva": 25,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
     "stockPortugal": 50,
     "gtin13": "634240173028"
   },
@@ -6513,7 +6513,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 22,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG.png",
         "alt": {
           "fr": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
           "de": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
@@ -6524,7 +6524,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION.png",
         "alt": {
           "fr": "Marvelous Crème De Riz 1.4kg",
           "de": "Marvelous Crème De Riz 1.4kg",
@@ -6535,7 +6535,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION-2.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/RICE-CREAM-MARVELOUS-1.4KG-NUTRITION-2.png",
         "alt": {
           "fr": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
           "de": "Marvelous Crème De Riz 1.4KG – Crème de riz énergétique sans gluten",
@@ -6785,7 +6785,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 33,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-56.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-56.png",
         "alt": {
           "fr": "Calibration – Complément Détox Foie Reins Cœur – NutriFitness.ch",
           "de": "Calibration – Complément Détox Foie Reins Cœur – NutriFitness.ch",
@@ -6796,7 +6796,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/CALIBRATION-120-CAPS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/CALIBRATION-120-CAPS-NUTRITION.png",
         "alt": {
           "fr": "Calibration Organe Support 120 CAPS",
           "de": "Calibration Organe Support 120 CAPS",
@@ -6902,7 +6902,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/PANCAKE-800G-CHOCOLAT.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/PANCAKE-800G-CHOCOLAT.png",
         "alt": {
           "fr": "Tableau des valeurs nutritionnelles pour pancake protéinés (par portion de 50 g et 100 g)",
           "de": "Tableau des valeurs nutritionnelles pour pancake protéinés (par portion de 50 g et 100 g)",
@@ -7043,7 +7043,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/83.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/83.png",
         "alt": {
           "fr": "Complément RECHARGE NutriFitness.ch – 90 gélules pour glycémie stable et métabolisme équilibré",
           "de": "Complément RECHARGE NutriFitness.ch – 90 gélules pour glycémie stable et métabolisme équilibré",
@@ -7148,7 +7148,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-64.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-64.png",
         "alt": {
           "fr": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
           "de": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
@@ -7159,7 +7159,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/STAGE-45-CAPS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/STAGE-45-CAPS-NUTRITION.png",
         "alt": {
           "fr": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
           "de": "STAGE DIURÉTIQUE – Complément drainage rétention d’eau NutriFitness 45 gélules",
@@ -7264,7 +7264,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/81.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/81.png",
         "alt": {
           "fr": "MK7 VIT D3 K2 – 90 CAPS",
           "de": "MK7 VIT D3 K2 – 90 CAPS",
@@ -7275,7 +7275,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/MK7-VIT-D3-K2-90-CAPS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/06/MK7-VIT-D3-K2-90-CAPS-NUTRITION.png",
         "alt": {
           "fr": "MK7 VIT D3 K2 – 90 CAPS",
           "de": "MK7 VIT D3 K2 – 90 CAPS",
@@ -7381,7 +7381,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-.png",
         "alt": {
           "fr": "Complément fer liposomale + B9 + B12 – haute absorption",
           "de": "Complément fer liposomale + B9 + B12 – haute absorption",
@@ -7392,7 +7392,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/FERRO-LIPOSOMALE-NUTRITION.png",
         "alt": {
           "fr": "Complément fer liposomal + B9 + B12 – haute absorption",
           "de": "Complément fer liposomal + B9 + B12 – haute absorption",
@@ -7498,7 +7498,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/PURE-SHILAJIT.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/PURE-SHILAJIT.png",
         "alt": {
           "fr": "Résine pure de Shilajit naturel - Énergie et vitalité",
           "de": "Résine pure de Shilajit naturel - Énergie et vitalité",
@@ -7509,7 +7509,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/PURE-SHILAJIT-RESINE.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/PURE-SHILAJIT-RESINE.png",
         "alt": {
           "fr": "Résine pure de Shilajit naturel - Énergie et vitalité",
           "de": "Résine pure de Shilajit naturel - Énergie et vitalité",
@@ -7520,7 +7520,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/5-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/5-1.png",
         "alt": {
           "fr": "Résine pure de Shilajit naturel - Énergie et vitalité",
           "de": "Résine pure de Shilajit naturel - Énergie et vitalité",
@@ -7624,7 +7624,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G.png",
         "alt": {
           "fr": "Complément articulaire en poudre GLUCOART – Glucosamine, collagène, MSM, chondroïtine, acide hyaluronique",
           "de": "Complément articulaire en poudre GLUCOART – Glucosamine, collagène, MSM, chondroïtine, acide hyaluronique",
@@ -7635,7 +7635,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-POUDRE-200G-NUTRITION.png",
         "alt": {
           "fr": "Glucoart Poudre 200g",
           "de": "Glucoart Poudre 200g",
@@ -7741,7 +7741,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-90-TABS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-90-TABS.png",
         "alt": {
           "fr": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
           "de": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
@@ -7752,7 +7752,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-90-TABS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/05/GLUCOART-90-TABS-NUTRITION.png",
         "alt": {
           "fr": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
           "de": "Complément alimentaire Glucoart articulations – 90 comprimés avec glucosamine, chondroïtine, MSM et plantes.",
@@ -7857,7 +7857,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 70,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/VEGAN-PROTEIN-OZER-1.png",
         "alt": {
           "fr": "OZER Post Workout Protéine Végétale Cookie - Complément vegan riche en protéines, BCAA, spiruline et vitamine C\"",
           "de": "OZER Post Workout Protéine Végétale Cookie - Complément vegan riche en protéines, BCAA, spiruline et vitamine C\"",
@@ -7999,7 +7999,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/12.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/12.png",
         "alt": {
           "fr": "NAC 600 mg + Vitamine D & C – Immunité et Détox",
           "de": "NAC 600 mg + Vitamine D & C – Immunité et Détox",
@@ -8105,7 +8105,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/11.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/11.png",
         "alt": {
           "fr": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
           "de": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
@@ -8116,7 +8116,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/CARNITINE-20-VIALS-LEMON-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/04/CARNITINE-20-VIALS-LEMON-NUTRITION.png",
         "alt": {
           "fr": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
           "de": "shot liquide de carnitine 2000 mg goût citron – BIGMAN",
@@ -8222,7 +8222,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 45,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-1.png",
         "alt": {
           "fr": "Testo anabol Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
           "de": "Testo anabol Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
@@ -8233,7 +8233,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-nutrition.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/Testo-Anabol-90-comprimes-nutrition.png",
         "alt": {
           "fr": "Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
           "de": "Complément naturel pour optimiser la testostérone, améliorer la performance et accélérer la récupération.",
@@ -8338,7 +8338,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS.png",
         "alt": {
           "fr": "Nox Burn : brûleur de graisses thermogénique pour énergie et performance",
           "de": "Nox Burn : brûleur de graisses thermogénique pour énergie et performance",
@@ -8349,7 +8349,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/NOX-BIG-BURNER-90-CAPS-NUTRITION.png",
         "alt": {
           "fr": "NOX Burn 90 CAPS",
           "de": "NOX Burn 90 CAPS",
@@ -8454,7 +8454,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/78.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/78.png",
         "alt": {
           "fr": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
           "de": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
@@ -8465,7 +8465,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/Magnesium-Bisglycinate-nutrition.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/02/Magnesium-Bisglycinate-nutrition.png",
         "alt": {
           "fr": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
           "de": "Flacon de magnésium bisglycinate de Marvelous Nutrition, un complément alimentaire pour la santé.",
@@ -8571,7 +8571,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 28,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous43.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous43.png",
         "alt": {
           "fr": "Boisson brûle-graisses Ignite de Marvelous Nutrition en pot, idéale pour l’énergie et la performance.",
           "de": "Boisson brûle-graisses Ignite de Marvelous Nutrition en pot, idéale pour l’énergie et la performance.",
@@ -8676,7 +8676,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/alive.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/alive.png",
         "alt": {
           "fr": "Alive, le complément idéal pour booster énergie, articulations et vitalité.",
           "de": "Alive, le complément idéal pour booster énergie, articulations et vitalité.",
@@ -8687,7 +8687,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/ALIVE-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/ALIVE-NUTRITION.png",
         "alt": {
           "fr": "Alive Systeme Immunitaire 120 CAPS",
           "de": "Alive Systeme Immunitaire 120 CAPS",
@@ -8793,7 +8793,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 3.5,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-POIRE-50G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-POIRE-50G.png",
         "alt": {
           "fr": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
           "de": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
@@ -8804,7 +8804,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-50G-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-50G-NUTRITION.png",
         "alt": {
           "fr": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
           "de": "Cornetto croissant keto 50g, croissant multicéréales moelleux, faible en glucides, adapté au régime cétogène.",
@@ -8962,7 +8962,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 3.5,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML.png",
         "alt": {
           "fr": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
           "de": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
@@ -8973,7 +8973,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML-NUTRITION-2.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/BEEBAD-CANNETTE-250ML-NUTRITION-2.png",
         "alt": {
           "fr": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
           "de": "Canette de Beebad Energy Drink, boisson énergisante naturelle sucrée au miel et enrichie en ingrédients sains.",
@@ -9079,7 +9079,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 95,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-1.png",
         "alt": {
           "fr": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
           "de": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
@@ -9090,7 +9090,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-Nutrition.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/100-Clear-Beef-Hydro-Proteine-Nutrition.png",
         "alt": {
           "fr": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
           "de": "100% Clear Beef Hydro Protéine Complément alimentaire de protéines de haute qualité issue de sources bovines, idéale pour la croissance musculaire, la récupération et l'amélioration des performances sportives.",
@@ -9282,7 +9282,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 37,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/PEPTAN-COLLAGEN-MARIN-300G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/PEPTAN-COLLAGEN-MARIN-300G.png",
         "alt": {
           "fr": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
           "de": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
@@ -9293,7 +9293,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.57.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.57.png",
         "alt": {
           "fr": "PEPTAN DE COLLAGEN LEMON NUTRITION",
           "de": "PEPTAN DE COLLAGEN LEMON NUTRITION",
@@ -9304,7 +9304,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.29.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/Capture-decran-2024-12-21-a-14.19.29.png",
         "alt": {
           "fr": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
           "de": "Peptan Collagen Marin 300g, collagène marin au goût citron, idéal pour la santé de la peau. des articulations, et des tendons et os.",
@@ -9410,7 +9410,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 59.9,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/WHEY-ON-GOLD-STANDARD-900G.png",
         "alt": {
           "fr": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
           "de": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
@@ -9421,7 +9421,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/WHEY-ON-900G-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/WHEY-ON-900G-NUTRITION.png",
         "alt": {
           "fr": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
           "de": "Gold Standard Whey - Protéine de lactosérum pour la récupération musculaire.",
@@ -9581,7 +9581,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 55,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png",
         "alt": {
           "fr": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
           "de": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
@@ -9592,7 +9592,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-WHEY-900G-NUTRI.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-WHEY-900G-NUTRI.png",
         "alt": {
           "fr": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
           "de": "GHOST Whey – Protéine premium avec des saveurs gourmandes.",
@@ -9698,7 +9698,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BEURRE-DE-CACAHOUETE-1KG-PREMIUM.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BEURRE-DE-CACAHOUETE-1KG-PREMIUM.png",
         "alt": {
           "fr": "Beurre de cacahuètes body attack naturel, riche en protéines et en fibres, texture croquante.",
           "de": "Beurre de cacahuètes body attack naturel, riche en protéines et en fibres, texture croquante.",
@@ -9709,7 +9709,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CRUNCHY-NUTRI.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CRUNCHY-NUTRI.jpg",
         "alt": {
           "fr": "PEANUT BUTTER 1KG CRUNCHY NUTRI",
           "de": "PEANUT BUTTER 1KG CRUNCHY NUTRI",
@@ -9720,7 +9720,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CREAMY-NUTRI.jpeg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/PEANUT-BUTTER-1KG-CREAMY-NUTRI.jpeg",
         "alt": {
           "fr": "PEANUT BUTTER 1KG CREAMY NUTRI",
           "de": "PEANUT BUTTER 1KG CREAMY NUTRI",
@@ -9845,7 +9845,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 120,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-CHOCO-1.8KG.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-CHOCO-1.8KG.png",
         "alt": {
           "fr": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
           "de": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
@@ -9856,7 +9856,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-NUTRI-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-NUTRI-1.png",
         "alt": {
           "fr": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
           "de": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
@@ -9867,7 +9867,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-NUTRI-2.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-NUTRI-2.png",
         "alt": {
           "fr": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
           "de": "ISO Bulk Whey biologique – 27,5g de protéines premium pour une croissance musculaire rapide et efficace.",
@@ -10084,7 +10084,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 69,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ultimate-whey-2kg-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ultimate-whey-2kg-1.png",
         "alt": {
           "fr": "Ultimate Whey Bigman – Protéine riche en BCAA et faible en graisses, idéale pour la récupération musculaire",
           "de": "Ultimate Whey Bigman – Protéine riche en BCAA et faible en graisses, idéale pour la récupération musculaire",
@@ -10208,7 +10208,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-EAA-300G-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-EAA-300G-1.png",
         "alt": {
           "fr": "EAA BigMan avec électrolytes - récupération et performance",
           "de": "EAA BigMan avec électrolytes - récupération et performance",
@@ -10219,7 +10219,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/EAA-VALEUR-NUTRI.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/EAA-VALEUR-NUTRI.webp",
         "alt": {
           "fr": "EAA BM 300G",
           "de": "EAA BM 300G",
@@ -10380,7 +10380,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 60,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/FURIUX-MASS-3K-CHOCO.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/FURIUX-MASS-3K-CHOCO.png",
         "alt": {
           "fr": "Furiux Gainer Bigman - Complément pour prise de masse",
           "de": "Furiux Gainer Bigman - Complément pour prise de masse",
@@ -10391,7 +10391,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/Capture-decran-2024-11-13-a-18.12.49.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/Capture-decran-2024-11-13-a-18.12.49.png",
         "alt": {
           "fr": "FURIUX GAINER NUTRITION",
           "de": "FURIUX GAINER NUTRITION",
@@ -10402,7 +10402,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/6.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/6.jpg",
         "alt": {
           "fr": "Furiux Gainer 3kg",
           "de": "Furiux Gainer 3kg",
@@ -10526,7 +10526,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ENERDYN-ELECTROLYTES.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ENERDYN-ELECTROLYTES.png",
         "alt": {
           "fr": "Booster de performance physique et énergie quotidienne.",
           "de": "Booster de performance physique et énergie quotidienne.",
@@ -10537,7 +10537,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ENERDYN-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ENERDYN-NUTRITION.png",
         "alt": {
           "fr": "FURIUX NUTRITION 2",
           "de": "FURIUX NUTRITION 2",
@@ -10642,7 +10642,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-CREAPURE-300G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-CREAPURE-300G.png",
         "alt": {
           "fr": "Creapure BigMan 300g - Créatine Monohydrate pure pour endurance et récupération optimale",
           "de": "Creapure BigMan 300g - Créatine Monohydrate pure pour endurance et récupération optimale",
@@ -10653,7 +10653,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/Capture-decran-2024-11-09-a-16.18.36.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/Capture-decran-2024-11-09-a-16.18.36.png",
         "alt": {
           "fr": "CREAPURE POUDRE 300G NUTRITION",
           "de": "CREAPURE POUDRE 300G NUTRITION",
@@ -10758,7 +10758,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-GLUTAMINE-KYOWA-300G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/BM-GLUTAMINE-KYOWA-300G.png",
         "alt": {
           "fr": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
           "de": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
@@ -10769,7 +10769,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/glutamine-nutrition.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/glutamine-nutrition.png",
         "alt": {
           "fr": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
           "de": "Glutamine bigman kyowa 300g – poudre de glutamine pure pour une meilleure digestion et récupération musculaire.",
@@ -10875,7 +10875,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/CALCIUM-120-TABS-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/CALCIUM-120-TABS-1.png",
         "alt": {
           "fr": "Calcium puissant soutien des os et des dents – essentiel pour la santé osseuse, musculaire et cardiovasculaire.",
           "de": "Calcium puissant soutien des os et des dents – essentiel pour la santé osseuse, musculaire et cardiovasculaire.",
@@ -10886,7 +10886,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png",
         "alt": {
           "fr": "CALCIUM 1000MG 120 TABS NUTRITION",
           "de": "CALCIUM 1000MG 120 TABS NUTRITION",
@@ -10992,7 +10992,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/MAGNESIUM-BISGLYCINATE-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/MAGNESIUM-BISGLYCINATE-1.png",
         "alt": {
           "fr": "Magnésium bisglycinate pour relaxation, sommeil et récupération musculaire.",
           "de": "Magnésium bisglycinate pour relaxation, sommeil et récupération musculaire.",
@@ -11003,7 +11003,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/MAGNESIO-BISGLICINATE-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/MAGNESIO-BISGLICINATE-NUTRITION.png",
         "alt": {
           "fr": "MAGNESIO BISGLICINATE NUTRITION",
           "de": "MAGNESIO BISGLICINATE NUTRITION",
@@ -11108,7 +11108,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous32.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous32.png",
         "alt": {
           "fr": "capsules de zma pour performance, récupération et équilibre hormonal",
           "de": "capsules de zma pour performance, récupération et équilibre hormonal",
@@ -11119,7 +11119,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/ZMA-MARVELOUS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/ZMA-MARVELOUS-NUTRITION.png",
         "alt": {
           "fr": "capsules de zma pour performance, récupération et équilibre hormonal",
           "de": "capsules de zma pour performance, récupération et équilibre hormonal",
@@ -11225,7 +11225,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png",
         "alt": {
           "fr": "Farine de patate douce blanche, sans gluten, riche en fibres, idéale pour shakes et recettes saines.",
           "de": "Farine de patate douce blanche, sans gluten, riche en fibres, idéale pour shakes et recettes saines.",
@@ -11236,7 +11236,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE-NUTRITION.png",
         "alt": {
           "fr": "FARINE DE PATATE DOUCE NUTRITION",
           "de": "FARINE DE PATATE DOUCE NUTRITION",
@@ -11327,7 +11327,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 17,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-PATATE-DOUCE.png",
         "stockGeneva": 17,
         "stockPortugal": 0,
         "gtin13": "3770031854015"
@@ -11361,7 +11361,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/GLUTATHION-LIPOSOMALE-30-CAPS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/GLUTATHION-LIPOSOMALE-30-CAPS.png",
         "alt": {
           "fr": "Glutathion liposomal avec Q10 et vitamine E – protection antioxydante et bien-être.",
           "de": "Glutathion liposomal avec Q10 et vitamine E – protection antioxydante et bien-être.",
@@ -11372,7 +11372,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-2.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-2.png",
         "alt": {
           "fr": "GLUTATHIONE LIPO 30 CAPS",
           "de": "GLUTATHIONE LIPO 30 CAPS",
@@ -11383,7 +11383,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/GLUTATIONE-LIPO-30-CAPS-NUTRITION-1.png",
         "alt": {
           "fr": "GLUTATHIONE LIPO 30 CAPS LIPO 30 CAPS NUTRITION 1",
           "de": "GLUTATHIONE LIPO 30 CAPS LIPO 30 CAPS NUTRITION 1",
@@ -11489,7 +11489,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/CREME-A-TARTINER-350G.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/CREME-A-TARTINER-350G.png",
         "alt": {
           "fr": "Crème à tartiner zéro sucre avec protéines – délicieuse et saine.",
           "de": "Crème à tartiner zéro sucre avec protéines – délicieuse et saine.",
@@ -11500,7 +11500,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/NUT-ZERO-350G-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/NUT-ZERO-350G-NUTRITION.png",
         "alt": {
           "fr": "NUT ZERO 350G NUTRITION",
           "de": "NUT ZERO 350G NUTRITION",
@@ -11624,7 +11624,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/farine-de-riz-1kg.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
         "alt": {
           "fr": "Farine de riz BigMan – Sans gluten, source d'énergie naturelle.",
           "de": "Farine de riz BigMan – Sans gluten, source d'énergie naturelle.",
@@ -11635,7 +11635,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-RIZ-1.5KG-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/FARINE-DE-RIZ-1.5KG-NUTRITION.png",
         "alt": {
           "fr": "FARINE DE RIZ 1.5KG NUTRITION",
           "de": "FARINE DE RIZ 1.5KG NUTRITION",
@@ -11709,8 +11709,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 10,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "gtin13": "8436609601034"
       },
       {
@@ -11727,8 +11727,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 1,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "gtin13": "8436609601058"
       },
       {
@@ -11745,8 +11745,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 23,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "gtin13": "8436609601027"
       },
       {
@@ -11763,8 +11763,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 27,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "gtin13": "8436609601010"
       },
       {
@@ -11781,17 +11781,17 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 0,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/farine-de-riz-1kg.webp",
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "gtin13": "8436609600990"
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
     "gtin13": "8436609601034",
-    "locationType": "PORTUGAL_ONLY"
+    "locationType": "GENEVA_ONLY"
   },
   {
     "id": "prod-12855",
@@ -11813,7 +11813,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/L-CARNITINE-ACETYL-60-CAPS-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/L-CARNITINE-ACETYL-60-CAPS-1.png",
         "alt": {
           "fr": "L-ACETIL-Carnitine 60 gélules – Performance physique et cognitive.",
           "de": "L-ACETIL-Carnitine 60 gélules – Performance physique et cognitive.",
@@ -11824,7 +11824,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/L-ACETYL-CARNITINE-60-CAPS-NUTRITION-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/L-ACETYL-CARNITINE-60-CAPS-NUTRITION-1.png",
         "alt": {
           "fr": "L-acetil Carnitine 60 CAPS",
           "de": "L-acetil Carnitine 60 CAPS",
@@ -11930,7 +11930,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 55,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/07/ISO-WHEY-ZERO.png",
         "alt": {
           "fr": "ISO WHEY ZERO – Complément protéiné pour croissance musculaire et récupération.",
           "de": "ISO WHEY ZERO – Complément protéiné pour croissance musculaire et récupération.",
@@ -11941,7 +11941,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/07/BM-ISO-WHEY-907G-NUTRITION.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/07/BM-ISO-WHEY-907G-NUTRITION.jpg",
         "alt": {
           "fr": "BM ISO WHEY 907G NUTRITION",
           "de": "BM ISO WHEY 907G NUTRITION",
@@ -12119,7 +12119,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/73.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/73.png",
         "alt": {
           "fr": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
           "de": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
@@ -12130,7 +12130,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/06/OMEGA-3-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/06/OMEGA-3-NUTRITION.png",
         "alt": {
           "fr": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
           "de": "Omega-3 de Marvelous – Supplément de haute qualité pour la santé cardiaque et la gestion des triglycérides.",
@@ -12236,7 +12236,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/glycrol-mockup-scaled.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/glycrol-mockup-scaled.png",
         "alt": {
           "fr": "Glycerol 300g de Nutrifitness pour améliorer la congestion musculaire et l'hydratation pendant l'entraînement.",
           "de": "Glycerol 300g de Nutrifitness pour améliorer la congestion musculaire et l'hydratation pendant l'entraînement.",
@@ -12342,7 +12342,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous46.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous46.png",
         "alt": {
           "fr": "Vitamine C 1000mg 60 caps de Nutrifitness pour un système immunitaire robuste et une protection cellulaire optimale.",
           "de": "Vitamine C 1000mg 60 caps de Nutrifitness pour un système immunitaire robuste et une protection cellulaire optimale.",
@@ -12447,7 +12447,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous1.png",
         "alt": {
           "fr": "Poudre de Collagène Mix - Bienfaits pour la peau, cheveux et articulations\"",
           "de": "Poudre de Collagène Mix - Bienfaits pour la peau, cheveux et articulations\"",
@@ -12458,7 +12458,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/COLLAGENE-MIX-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/COLLAGENE-MIX-NUTRITION.png",
         "alt": {
           "fr": "COLLAGENE MIX NUTRITION",
           "de": "COLLAGENE MIX NUTRITION",
@@ -12563,7 +12563,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/HYPE-EAA-300G.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/HYPE-EAA-300G.webp",
         "alt": {
           "fr": "HYPE AMINO 270G - Poudre d'acides aminés pour performance musculaire et endurance, avec BCAA et acides aminés complexes.",
           "de": "HYPE AMINO 270G - Poudre d'acides aminés pour performance musculaire et endurance, avec BCAA et acides aminés complexes.",
@@ -12738,7 +12738,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 59,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/BIG-LEAN-GAINER-3KG.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/BIG-LEAN-GAINER-3KG.webp",
         "alt": {
           "fr": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines",
           "de": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines",
@@ -12912,7 +12912,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 39.9,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/PROTEINE-VEGAN-RIZ-BRUN-BIO-500G.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/PROTEINE-VEGAN-RIZ-BRUN-BIO-500G.webp",
         "alt": {
           "fr": "Protéine de Riz Brun Bio 82% pour la croissance musculaire et la récupération",
           "de": "Protéine de Riz Brun Bio 82% pour la croissance musculaire et la récupération",
@@ -13018,7 +13018,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/11/GOURDE-NF-AVEC-PAILLE.-600ML.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/11/GOURDE-NF-AVEC-PAILLE.-600ML.webp",
         "alt": {
           "fr": "NutriFit gourde 600ml avec paille - pour une hydratation pratique et saine",
           "de": "NutriFit gourde 600ml avec paille - pour une hydratation pratique et saine",
@@ -13121,7 +13121,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS.png",
         "alt": {
           "fr": "Flacon de zinc bisglycinate Applied Nutrition, 90 gélules, vue de face",
           "de": "Flacon de zinc bisglycinate Applied Nutrition, 90 gélules, vue de face",
@@ -13132,7 +13132,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS-NUTRI.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/11/ZINC-BISGLYCINATE-90-CAPS-NUTRI.webp",
         "alt": {
           "fr": "Zinc Bisglicinate 90 Cap",
           "de": "Zinc Bisglicinate 90 Cap",
@@ -13237,7 +13237,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/crearine-old-school.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/crearine-old-school.png",
         "alt": {
           "fr": "créatine 300g 200 mesh, améliore endurance, récupération et performances sportives",
           "de": "créatine 300g 200 mesh, améliore endurance, récupération et performances sportives",
@@ -13343,7 +13343,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 42,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/03/SAVIOR-CREATINE-950G.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/03/SAVIOR-CREATINE-950G.webp",
         "alt": {
           "fr": "récupération optimale et croissance musculaire avec savior 950g",
           "de": "récupération optimale et croissance musculaire avec savior 950g",
@@ -13490,7 +13490,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 10,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/03/LIQUIDE-DE-BLANC-DOEUF-1L.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/03/LIQUIDE-DE-BLANC-DOEUF-1L.webp",
         "alt": {
           "fr": "Blanc d'œuf liquide pasteurisé 1L, une source pratique de protéines de haute qualité, idéale pour cuisiner et ajouter à votre routine quotidienne.",
           "de": "Blanc d'œuf liquide pasteurisé 1L, une source pratique de protéines de haute qualité, idéale pour cuisiner et ajouter à votre routine quotidienne.",
@@ -13564,16 +13564,16 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 20,
         "inStock": true,
         "gtin13": "8010053033421",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "gtin13": "8010053033421",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0
   },
   {
     "id": "prod-8867",
@@ -13595,7 +13595,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/ASHWAGANDHA-60-CAPS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/ASHWAGANDHA-60-CAPS.png",
         "alt": {
           "fr": "Ashwagandha 60 Caps : Clarté mentale, stress réduit, récupération musculaire, bien-être optimal.",
           "de": "Ashwagandha 60 Caps : Clarté mentale, stress réduit, récupération musculaire, bien-être optimal.",
@@ -13606,7 +13606,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/ASHWAGANDA-60-CAPS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/ASHWAGANDA-60-CAPS-NUTRITION.png",
         "alt": {
           "fr": "ASHWAGANDA 60 CAPS NUTRITION",
           "de": "ASHWAGANDA 60 CAPS NUTRITION",
@@ -13712,7 +13712,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/CAFFEINE-200MG-90-CAPS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/CAFFEINE-200MG-90-CAPS.png",
         "alt": {
           "fr": "Supplément de Caféine 90 caps comprimés pour énergie et performance",
           "de": "Supplément de Caféine 90 caps comprimés pour énergie et performance",
@@ -13723,7 +13723,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/CAFFEINE-200MG-NUTRITION-90-CAPS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/CAFFEINE-200MG-NUTRITION-90-CAPS.png",
         "alt": {
           "fr": "Caffeine 90 CAPS 100mg",
           "de": "Caffeine 90 CAPS 100mg",
@@ -13829,7 +13829,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/PICOLINAT-DE-CHROME-100-CAPS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/PICOLINAT-DE-CHROME-100-CAPS.png",
         "alt": {
           "fr": "Chromium Picolinate Vegan, régulation glycémique, contrôle métabolique",
           "de": "Chromium Picolinate Vegan, régulation glycémique, contrôle métabolique",
@@ -13840,7 +13840,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/CROMO-PICOLINATE-100-CAPS-NUTRITION.png",
         "alt": {
           "fr": "CALCIUM 1000MG 120 TABS NUTRITION",
           "de": "CALCIUM 1000MG 120 TABS NUTRITION",
@@ -13946,7 +13946,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/VITAMINE-C-LIPOSOMALE-60-CAPS.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/VITAMINE-C-LIPOSOMALE-60-CAPS.png",
         "alt": {
           "fr": "vitamine C liposomale 60 capsules, renforcement du système immunitaire, antioxydant",
           "de": "vitamine C liposomale 60 capsules, renforcement du système immunitaire, antioxydant",
@@ -13957,7 +13957,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/VITAMINE-C-LIPOSOMAL-60-CAPS-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/VITAMINE-C-LIPOSOMAL-60-CAPS-NUTRITION.png",
         "alt": {
           "fr": "VITAMINE C LIPOSOMAL 60 CAPS NUTRITION",
           "de": "VITAMINE C LIPOSOMAL 60 CAPS NUTRITION",
@@ -14063,7 +14063,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/NF-GALLON-2.2L.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/NF-GALLON-2.2L.webp",
         "alt": {
           "fr": "Gallon 2,2L avec rangement intégré – Hydratation pratique et organisée",
           "de": "Gallon 2,2L avec rangement intégré – Hydratation pratique et organisée",
@@ -14137,16 +14137,16 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 20,
         "inStock": true,
         "gtin13": "1111111111111",
-        "stockGeneva": 0,
-        "stockPortugal": 50
+        "stockGeneva": 20,
+        "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
+    "shippingOrigin": "switzerland",
     "gtin13": "1111111111111",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0
   },
   {
     "id": "prod-7854",
@@ -14168,7 +14168,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/84.webp',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/84.webp",
         "alt": {
           "fr": "CREAPURE PREMIUM 250G",
           "de": "CREAPURE PREMIUM 250G",
@@ -14179,7 +14179,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/CREAPURE-500G-NUTRITION.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/CREAPURE-500G-NUTRITION.png",
         "alt": {
           "fr": "CREAPURE NUTRITION",
           "de": "CREAPURE NUTRITION",
@@ -14284,7 +14284,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 32,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous27.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous27.png",
         "alt": {
           "fr": "Marvelous Infected Pre-Workout Sans Stimulant 300g – Congestion & Focus Extrême",
           "de": "Marvelous Infected Pre-Workout Sans Stimulant 300g – Congestion & Focus Extrême",
@@ -14295,7 +14295,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg",
         "alt": {
           "fr": "Marvelous Infected Pre-Workout Sans Stimulant 300g – Congestion & Focus Extrême - Fruit Punch",
           "de": "Marvelous Infected Pre-Workout Sans Stimulant 300g – Congestion & Focus Extrême - Fruit Punch",
@@ -14368,7 +14368,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg",
         "stockGeneva": 25,
         "stockPortugal": 25
       },
@@ -14385,7 +14385,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg",
         "stockGeneva": 25,
         "stockPortugal": 25
       }
@@ -14416,7 +14416,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 32,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png",
         "alt": {
           "fr": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense",
           "de": "Marvelous Experiment Pre-Workout Booster 300g – Énergie Explosive & Endurance Intense",
@@ -14489,7 +14489,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14506,7 +14506,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14523,7 +14523,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 32,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous48.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -14554,7 +14554,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 29,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-63.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-63.png",
         "alt": {
           "fr": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération",
           "de": "Marvelous Escape Formule Sommeil & GH 90 Gélules – Récupération Nocturne & Régénération",
@@ -14627,7 +14627,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 29,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-63.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-63.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -14658,7 +14658,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/79-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/79-1.png",
         "alt": {
           "fr": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition",
           "de": "Marvelous Amputation Brûleur de Graisse Hardcore 90 Gélules – Thermogenèse & Définition",
@@ -14731,7 +14731,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 30,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/79-1.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/79-1.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -14763,7 +14763,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png",
         "alt": {
           "fr": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium",
           "de": "T-Shirt Marvelous Nutrition Femme – Coupe Athlétique Coton Premium",
@@ -14836,7 +14836,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14853,7 +14853,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14870,7 +14870,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14887,7 +14887,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -14904,7 +14904,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous37.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -14935,7 +14935,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png",
         "alt": {
           "fr": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium",
           "de": "T-Shirt Marvelous Nutrition Homme – Coupe Athlétique Coton Premium",
@@ -15008,7 +15008,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15025,7 +15025,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15042,7 +15042,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15059,7 +15059,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15076,7 +15076,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous28.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15107,7 +15107,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png",
         "alt": {
           "fr": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation",
           "de": "Débardeur Stringer Cut-Off Marvelous Nutrition – Entraînement & Musculation",
@@ -15180,7 +15180,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15197,7 +15197,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15214,7 +15214,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15231,7 +15231,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -15248,7 +15248,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous29.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15279,7 +15279,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous45.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous45.png",
         "alt": {
           "fr": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche",
           "de": "Shaker Marvelous Nutrition Classique 700ml – Grille Anti-Grumeaux Étanche",
@@ -15352,7 +15352,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous45.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous45.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15383,7 +15383,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous30.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous30.png",
         "alt": {
           "fr": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA",
           "de": "Shaker Marvelous Nutrition Pro Black Edition 700ml – Hermétique Sans BPA",
@@ -15456,7 +15456,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous30.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous30.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15487,7 +15487,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous6.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous6.png",
         "alt": {
           "fr": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite",
           "de": "Shaker Marvelous Nutrition Wave 700ml – Mélange Parfait Sans Fuite",
@@ -15560,7 +15560,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous6.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous6.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15591,7 +15591,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous13.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous13.png",
         "alt": {
           "fr": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité",
           "de": "Casquette Marvelous Nutrition Baseball – Réglable Broderie Haute Qualité",
@@ -15664,7 +15664,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous13.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous13.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15695,7 +15695,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 12,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous26.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous26.png",
         "alt": {
           "fr": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver",
           "de": "Bonnet Marvelous Nutrition Black Edition – Style & Confort Hiver",
@@ -15768,7 +15768,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 12,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous26.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous26.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15799,7 +15799,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous42.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous42.png",
         "alt": {
           "fr": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant",
           "de": "Sac de Sport Marvelous Nutrition Gym Bag – Compartiments Multiples & Ultra Résistant",
@@ -15872,7 +15872,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous42.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous42.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -15903,7 +15903,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous21.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous21.png",
         "alt": {
           "fr": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable",
           "de": "Sac à Dos Sport Marvelous Nutrition Urban – Ergonomique & Imperméable",
@@ -15976,7 +15976,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous21.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous21.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16007,7 +16007,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous5.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous5.png",
         "alt": {
           "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels",
           "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels",
@@ -16018,7 +16018,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/49.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/49.jpg",
         "alt": {
           "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Fruit Punch",
           "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Fruit Punch",
@@ -16029,7 +16029,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/48.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/48.jpg",
         "alt": {
           "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Mango",
           "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Mango",
@@ -16040,7 +16040,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/47.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/47.jpg",
         "alt": {
           "fr": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Strawberry",
           "de": "Marvelous Maze EAA Matrix 300g – Matrice Complète d'Acides Aminés Essentiels - Strawberry",
@@ -16114,7 +16114,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/48.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/48.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16131,7 +16131,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/47.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/47.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16148,7 +16148,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/49.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/49.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16165,7 +16165,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/49.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/49.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16196,7 +16196,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous47.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous47.png",
         "alt": {
           "fr": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation",
           "de": "Marvelous L-Arginine Pure Micronisée 300g – Oxyde Nitrique & Vasodilatation",
@@ -16269,7 +16269,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous47.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous47.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16300,7 +16300,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous25.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous25.png",
         "alt": {
           "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance",
           "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance",
@@ -16311,7 +16311,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/66.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/66.jpg",
         "alt": {
           "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Chocolate Peanut Butter",
           "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Chocolate Peanut Butter",
@@ -16322,7 +16322,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/65.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/65.jpg",
         "alt": {
           "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Cookies and Cream",
           "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Cookies and Cream",
@@ -16333,7 +16333,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/64.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/64.jpg",
         "alt": {
           "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Strawberry",
           "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance - Strawberry",
@@ -16407,7 +16407,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/66.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/66.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16424,7 +16424,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/65.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/65.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -16441,7 +16441,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/64.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/64.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16472,7 +16472,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 28,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous33.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous33.png",
         "alt": {
           "fr": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité",
           "de": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité",
@@ -16483,7 +16483,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/63.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/63.jpg",
         "alt": {
           "fr": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité - Orange",
           "de": "Marvelous Organics Superfood Greens & Reds – Antioxydants Fibres & Vitalité - Orange",
@@ -16556,7 +16556,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 28,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/63.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/63.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16587,7 +16587,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous50.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous50.png",
         "alt": {
           "fr": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême",
           "de": "Marvelous Dr Strong Brûleur Diurétique 90 Gélules – Définition & Sèche Extrême",
@@ -16660,7 +16660,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous50.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous50.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16691,7 +16691,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-14-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-14-1.png",
         "alt": {
           "fr": "Marvelous Bêta-Alanine Pure Micronisée 300g – Tampon Lactique & Force Endurance",
           "de": "Marvelous Bêta-Alanine Pure Micronisée 300g – Tampon Lactique & Force Endurance",
@@ -16764,7 +16764,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-14-1.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-14-1.png",
         "stockGeneva": 25,
         "stockPortugal": 25
       }
@@ -16795,7 +16795,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 23,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-53.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-53.png",
         "alt": {
           "fr": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles",
           "de": "Marvelous Loaded Multivitamines & Minéraux 90 Gélules – Énergie & Défenses Naturelles",
@@ -16868,7 +16868,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 23,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-53.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-53.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -16899,7 +16899,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 70,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-51.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-51.png",
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure",
@@ -16910,7 +16910,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-5.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-5.jpg",
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Chocolate Peanut Butter",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Chocolate Peanut Butter",
@@ -16921,7 +16921,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-6.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-6.jpg",
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Belgium Chocolate",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Belgium Chocolate",
@@ -16932,7 +16932,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-4.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-4.jpg",
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Cookies",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Cookies",
@@ -16943,7 +16943,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-3.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-3.jpg",
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Creme Brulee",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Creme Brulee",
@@ -16954,7 +16954,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-2.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-2.jpg",
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Pinacolada",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - Pinacolada",
@@ -16965,7 +16965,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-1.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-1.jpg",
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - White Chocolate Raspberry",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure - White Chocolate Raspberry",
@@ -17039,7 +17039,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-4.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-4.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17056,7 +17056,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-3.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-3.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17073,7 +17073,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 70,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-2.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-2.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17090,7 +17090,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-1.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-1.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17107,7 +17107,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-6.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-6.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17124,7 +17124,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 75,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-5.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Lean-AF-flvours-5.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17155,7 +17155,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/creatine.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/creatine.png",
         "alt": {
           "fr": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP",
           "de": "Marvelous Line Créatine Monohydrate Pure 300g – Force Maximale & Puissance ATP",
@@ -17228,7 +17228,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 99,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/creatine.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/creatine.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17259,7 +17259,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 39,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous20.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous20.png",
         "alt": {
           "fr": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant",
           "de": "Marvelous Code X Forte Dose 1.3g Vitamine C & Plantes 60 Gélules – Bouclier Antioxydant",
@@ -17332,7 +17332,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 39,
         "inventoryQuantity": 15,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous20.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous20.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17364,7 +17364,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous7.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous7.png",
         "alt": {
           "fr": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité",
           "de": "Marvelous Testo Booster Anabolique Naturel 90 Gélules – Vigueur Force & Vitalité",
@@ -17437,7 +17437,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous7.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous7.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17468,7 +17468,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 18,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous2.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous2.png",
         "alt": {
           "fr": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie",
           "de": "Marvelous L-Carnitine Pure 60 Gélules – Déstockage Lipidique & Énergie",
@@ -17541,7 +17541,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous2.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous2.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17572,7 +17572,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous23.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous23.png",
         "alt": {
           "fr": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus",
           "de": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus",
@@ -17583,7 +17583,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/61.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/61.jpg",
         "alt": {
           "fr": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus - Blue razz",
           "de": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus - Blue razz",
@@ -17594,7 +17594,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/62.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/62.jpg",
         "alt": {
           "fr": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus - Sweet Lemonade",
           "de": "Marvelous POWER M.F Pre-Workout Extrême 300g – 350mg Caféine Congestion & Focus - Sweet Lemonade",
@@ -17667,7 +17667,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/62.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/62.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17684,7 +17684,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/61.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/61.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17715,7 +17715,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-52.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-52.png",
         "alt": {
           "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités",
           "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités",
@@ -17726,7 +17726,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-1.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-1.jpg",
         "alt": {
           "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Mango",
           "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Mango",
@@ -17737,7 +17737,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-2.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-2.jpg",
         "alt": {
           "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Watermelon",
           "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Watermelon",
@@ -17748,7 +17748,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-3.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-3.jpg",
         "alt": {
           "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Pinacolada",
           "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités - Pinacolada",
@@ -17821,7 +17821,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-3.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-3.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17838,7 +17838,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-2.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-2.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -17855,7 +17855,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-1.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-1.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17886,7 +17886,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/collagen-Flavored.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/collagen-Flavored.png",
         "alt": {
           "fr": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons",
           "de": "Marvelous Collagène Peptides Aromatisé 300g – Éclat Peau Articulations & Tendons",
@@ -17959,7 +17959,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 4,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/collagen-Flavored.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/collagen-Flavored.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -17991,7 +17991,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15.9,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Organics.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Organics.png",
         "alt": {
           "fr": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité",
           "de": "Marvelous Organics Multivitamines Végétales 60 Gélules – Extraits Bio & Vitalité",
@@ -18064,7 +18064,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 15.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Organics.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Organics.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18095,7 +18095,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/75.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/75.png",
         "alt": {
           "fr": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue",
           "de": "Marvelous Bêta-Alanine Black & Yellow Edition 300g – Endurance & Résistance à la Fatigue",
@@ -18168,7 +18168,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 53,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/75.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/75.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18199,7 +18199,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 23.9,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/76.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/76.png",
         "alt": {
           "fr": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique",
           "de": "Marvelous L-Arginine Black & Yellow Edition 300g – Pompe Vasculaire & Oxyde Nitrique",
@@ -18272,7 +18272,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 23.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/76.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/76.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18303,7 +18303,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-8-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-8-1.png",
         "alt": {
           "fr": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire",
           "de": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire",
@@ -18376,7 +18376,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 60,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-8-1.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-8-1.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18407,7 +18407,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 85,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-mockup-choco.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-mockup-choco.png",
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose",
@@ -18418,7 +18418,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cuppcino.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cuppcino.png",
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Capuccino",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Capuccino",
@@ -18429,7 +18429,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-choco.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-choco.png",
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Chocolate",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Chocolate",
@@ -18440,7 +18440,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cookie-sbiscuit.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cookie-sbiscuit.png",
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Cookies & Cream",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Cookies & Cream",
@@ -18451,7 +18451,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-strawberry.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-strawberry.png",
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Strawberry",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Strawberry",
@@ -18462,7 +18462,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-vanilla.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-vanilla.png",
         "alt": {
           "fr": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Vanilla",
           "de": "Marvelous Hydro Whey 100% Isolat Hydrolysé 2kg – Assimilation Flash Zéro Lactose - Vanilla",
@@ -18536,7 +18536,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cuppcino.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cuppcino.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -18553,7 +18553,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-choco.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-choco.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -18570,7 +18570,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cookie-sbiscuit.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-cookie-sbiscuit.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -18587,7 +18587,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-strawberry.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-strawberry.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -18604,7 +18604,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 85,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-vanilla.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-vanilla.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18635,7 +18635,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png",
         "alt": {
           "fr": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation",
           "de": "Marvelous ILLEGAL Hardcore Pre-Workout 300g – Énergie Inaltérable & Vasodilatation",
@@ -18708,7 +18708,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 30,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_18_49-PM.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18739,7 +18739,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 18,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png",
         "alt": {
           "fr": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération",
           "de": "Marvelous Ashwagandha KSM-66® Titrée 60 Gélules – Anti-Stress Sommeil & Récupération",
@@ -18812,7 +18812,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18843,7 +18843,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 14,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/caffine-gadwel-1.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/caffine-gadwel-1.png",
         "alt": {
           "fr": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen",
           "de": "Marvelous Caféine 200mg & L-Théanine 100mg 60 Gélules – Énergie Propre & Focus Zen",
@@ -18916,7 +18916,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 14,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/caffine-gadwel-1.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/caffine-gadwel-1.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -18947,7 +18947,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/nad-mockup.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/nad-mockup.png",
         "alt": {
           "fr": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité",
           "de": "Marvelous NAD+ Cell Rejuvenation 60 Gélules – Énergie Cellulaire & Longévité",
@@ -19020,7 +19020,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 6,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/nad-mockup.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/nad-mockup.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19052,7 +19052,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-Sep-30-2026-09_25_14-PM.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-Sep-30-2026-09_25_14-PM.png",
         "alt": {
           "fr": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes",
           "de": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes",
@@ -19063,7 +19063,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-cocnut-water.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-cocnut-water.png",
         "alt": {
           "fr": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes - coconut water",
           "de": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes - coconut water",
@@ -19074,7 +19074,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-lemon-mint.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-lemon-mint.png",
         "alt": {
           "fr": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes - lemon mint",
           "de": "Marvelous Hydralytes Électrolytes & Eau de Coco 300g – Hydratation Cellulaire & Anti-Crampes - lemon mint",
@@ -19147,7 +19147,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 20,
         "inventoryQuantity": 60,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-lemon-mint.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-lemon-mint.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       },
@@ -19164,7 +19164,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 20,
         "inventoryQuantity": 82,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-cocnut-water.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-cocnut-water.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19196,7 +19196,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 31.9,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/edx.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/edx.jpg",
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
@@ -19207,7 +19207,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/stim-x.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/stim-x.png",
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion",
@@ -19218,7 +19218,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/lemon-stim-x.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/lemon-stim-x.jpg",
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Lemon",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Lemon",
@@ -19229,7 +19229,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/red-cola-stim-x.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/red-cola-stim-x.jpg",
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Red Cola",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Red Cola",
@@ -19240,7 +19240,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/tutti-fruity-stimx.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/tutti-fruity-stimx.jpg",
         "alt": {
           "fr": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Tutti Fruity",
           "de": "Dirty Squads StimX Pre-Workout Hardcore 300g – Énergie Explosive Focus Laser & Congestion - Tutti Fruity",
@@ -19313,7 +19313,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 31.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/lemon-stim-x.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/lemon-stim-x.jpg",
         "stockGeneva": 25,
         "stockPortugal": 25
       },
@@ -19330,7 +19330,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 31.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/red-cola-stim-x.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/red-cola-stim-x.jpg",
         "stockGeneva": 25,
         "stockPortugal": 25
       },
@@ -19347,7 +19347,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 31.9,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/tutti-fruity-stimx.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/tutti-fruity-stimx.jpg",
         "stockGeneva": 25,
         "stockPortugal": 25
       }
@@ -19378,7 +19378,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 18,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall3.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall3.jpg",
         "alt": {
           "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
           "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
@@ -19389,7 +19389,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/vitamin.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/vitamin.png",
         "alt": {
           "fr": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
           "de": "Dirty Squads Multi-V Complexe Quotidien 60 Gélules – Multivitamines Minéraux & Enzymes",
@@ -19462,7 +19462,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall3.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall3.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19493,7 +19493,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 42,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall6.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall6.jpg",
         "alt": {
           "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
           "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
@@ -19504,7 +19504,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/testo-g.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/testo-g.png",
         "alt": {
           "fr": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
           "de": "Dirty Squads Testo EXcess Booster Naturel 90 Gélules – Amplificateur Anabolique DAA & Tribulus",
@@ -19577,7 +19577,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 42,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall6.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall6.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19608,7 +19608,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 18,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall5.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall5.jpg",
         "alt": {
           "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
           "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
@@ -19619,7 +19619,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/omega-g.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/omega-g.png",
         "alt": {
           "fr": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
           "de": "Dirty Squads Omega-3 Huile de Poisson Pure 90 Capsules – Haute Concentration EPA / DHA",
@@ -19692,7 +19692,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 18,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall5.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall5.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19723,7 +19723,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall8.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall8.jpg",
         "alt": {
           "fr": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
           "de": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
@@ -19734,7 +19734,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/creatine-g.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/creatine-g.png",
         "alt": {
           "fr": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
           "de": "Dirty Squads Creapure® Créatine Monohydrate Pure 300g – Label Allemand Pureté Maximale 99.99%",
@@ -19807,7 +19807,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall8.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall8.jpg",
         "stockGeneva": 25,
         "stockPortugal": 25
       }
@@ -19838,7 +19838,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 19.9,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall13.jpg',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall13.jpg",
         "alt": {
           "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
           "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
@@ -19849,7 +19849,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/creatine-g.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/creatine-g.png",
         "alt": {
           "fr": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
           "de": "Dirty Squads Créatine Monohydrate Micronisée 300g – Force Brute & Puissance Musculaire",
@@ -19922,7 +19922,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 19.9,
         "inventoryQuantity": 19,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall13.jpg',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/dirty-sqauds-wall13.jpg",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -19954,7 +19954,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png",
         "alt": {
           "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
           "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
@@ -19965,7 +19965,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/ARGANINE-GADWAL-scaled.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/ARGANINE-GADWAL-scaled.png",
         "alt": {
           "fr": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
           "de": "Dirty Squads L-Arginine Pure 300g – Pompe Musculaire Vasodilatation & Oxyde Nitrique",
@@ -20038,7 +20038,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/ARGANINE-DIRTY-WEBSITE-mockup-NEW.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -20069,7 +20069,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png",
         "alt": {
           "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
           "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
@@ -20080,7 +20080,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALNINE-DIRTYGADWAL-scaled.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALNINE-DIRTYGADWAL-scaled.png",
         "alt": {
           "fr": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
           "de": "Dirty Squads Bêta-Alanine Pure 300g – Résistance à l'Acide Lactique & Endurance Supérieure",
@@ -20153,7 +20153,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/BETA-ALININE-DIRTY-mockup-WEBSITE-NEW.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -20184,7 +20184,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png",
         "alt": {
           "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
           "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
@@ -20195,7 +20195,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/CITRULINE-GADWAL-scaled.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/CITRULINE-GADWAL-scaled.png",
         "alt": {
           "fr": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
           "de": "Dirty Squads L-Citrulline Malate Pure 300g – Congestion Intense & Afflux Sanguin",
@@ -20268,7 +20268,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/citrulline-DIRTY-NEW-MOCUP-WEBSITE-NEW.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -20299,7 +20299,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 25,
     "images": [
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png",
         "alt": {
           "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
           "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
@@ -20310,7 +20310,7 @@ export const PRODUCTS: ProductItem[] = [
         "height": 800
       },
       {
-        "src": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/GLUTMINE-GADWAL-scaled.png',
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/GLUTMINE-GADWAL-scaled.png",
         "alt": {
           "fr": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
           "de": "Dirty Squads L-Glutamine Pure Micronisée 300g – Récupération Musculaire & Protection Intestinale",
@@ -20383,7 +20383,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 25,
         "inventoryQuantity": 50,
         "inStock": true,
-        "image": 'https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png',
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/GLUTMINE-DIRTY-WEBSITE-mockup-NEW.png",
         "stockGeneva": 0,
         "stockPortugal": 50
       }
@@ -20509,8 +20509,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 55,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-cassis-300g.png"
       },
       {
@@ -20526,8 +20526,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 57,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-citron-300g.png"
       },
       {
@@ -20543,15 +20543,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 58,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/aukan-mojito-300g.png"
       }
     ],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -20649,8 +20649,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 60,
         "inventoryQuantity": 54,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-BOOST-BLUE-RASPBERRY-645G.webp"
       },
       {
@@ -20666,8 +20666,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 60,
         "inventoryQuantity": 51,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://nutrifitness.ch/wp-content/uploads/2024/12/GHOST-PRE-WORKOUT-645G.png"
       },
       {
@@ -20683,15 +20683,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 60,
         "inventoryQuantity": 55,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png"
       }
     ],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -20844,8 +20844,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 50,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-cool-watermelon-315g.png"
       },
       {
@@ -20861,8 +20861,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 52,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-icy-blue-raz-315g.png"
       },
       {
@@ -20878,8 +20878,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 55,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-energy-drink-315g.png"
       },
       {
@@ -20895,8 +20895,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 58,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-candy-ice-blast-315g.png"
       },
       {
@@ -20912,8 +20912,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 52,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-cherry-cola-315g.png"
       },
       {
@@ -20929,15 +20929,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 52,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/abe-love-hearts-315g.png"
       }
     ],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21169,8 +21169,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 50,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png"
       },
       {
@@ -21186,8 +21186,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 50,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png"
       },
       {
@@ -21203,15 +21203,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4,
         "inventoryQuantity": 50,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png"
       }
     ],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21309,8 +21309,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 3.9,
         "inventoryQuantity": 60,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png"
       },
       {
@@ -21326,8 +21326,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 3.9,
         "inventoryQuantity": 60,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png"
       },
       {
@@ -21343,15 +21343,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 3.9,
         "inventoryQuantity": 60,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png"
       }
     ],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21600,8 +21600,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4.5,
         "inventoryQuantity": 70,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/grenade-carb-killa-fudge-brownie.webp"
       },
       {
@@ -21617,15 +21617,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 4.5,
         "inventoryQuantity": 70,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 20,
+        "stockPortugal": 0,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/grenade-carb-killa-caramel-chaos.webp"
       }
     ],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21710,10 +21710,10 @@ export const PRODUCTS: ProductItem[] = [
       "saltG": 0
     },
     "variants": [],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21798,10 +21798,10 @@ export const PRODUCTS: ProductItem[] = [
       "saltG": 0
     },
     "variants": [],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 20,
+    "stockPortugal": 0,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"
@@ -21910,12 +21910,15 @@ export const PRODUCTS: ProductItem[] = [
     },
     "brand": "Dirty Squads",
     "categorySlug": "creatine",
-    "categorySlugs": ["creatine", "meilleures-ventes"],
+    "categorySlugs": [
+      "creatine",
+      "meilleures-ventes"
+    ],
     "taxCategory": "food_reduced",
-    "priceChf": 40.00,
-    "priceEurSwiss": 42.00,
-    "priceEurEurope": 38.00,
-    "priceEur": 38.00,
+    "priceChf": 40,
+    "priceEurSwiss": 42,
+    "priceEurEurope": 38,
+    "priceEur": 38,
     "isSwissOrigin": false,
     "shippingOrigin": "portugal",
     "locationType": "PORTUGAL_ONLY",
@@ -21989,9 +21992,14 @@ export const PRODUCTS: ProductItem[] = [
       {
         "id": "var-ds-creapure-1",
         "sku": "DS-CREAPURE-300G",
-        "flavorName": { "fr": "Neutre", "de": "Neutral", "it": "Neutro", "en": "Unflavored" },
+        "flavorName": {
+          "fr": "Neutre",
+          "de": "Neutral",
+          "it": "Neutro",
+          "en": "Unflavored"
+        },
         "format": "300 g",
-        "priceChf": 40.00,
+        "priceChf": 40,
         "inventoryQuantity": 50,
         "inStock": true,
         "stockGeneva": 0,

@@ -90,6 +90,16 @@ export default async function ProductDetailPage({ params }: Props) {
   try {
     const supabase = getAdminSupabase();
     const cleanId = (product.id || '').replace(/^prod-/, '');
+    const isUuid = (val: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val);
+    const isNumeric = (val: string) => /^\d+$/.test(val);
+    const conditions: string[] = [`slug.eq.${params.slug}`];
+    if (product.id && isUuid(product.id)) {
+      conditions.push(`id.eq.${product.id}`);
+    }
+    if (cleanId && isNumeric(cleanId)) {
+      conditions.push(`woo_id.eq.${cleanId}`);
+    }
+
     const { data: dbProduct } = await supabase
       .from('products')
       .select(`
@@ -99,7 +109,7 @@ export default async function ProductDetailPage({ params }: Props) {
           image_url, stock_geneva, stock_portugal
         )
       `)
-      .or(`slug.eq.${params.slug},id.eq.${product.id},woo_id.eq.${cleanId}`)
+      .or(conditions.join(','))
       .maybeSingle();
 
     if (dbProduct) {

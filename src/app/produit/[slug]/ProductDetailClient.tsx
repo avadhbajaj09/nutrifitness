@@ -202,7 +202,17 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {/* Short Description - Right below image on mobile */}
           <div className="bg-white/[0.03] lg:bg-transparent p-3.5 lg:p-0 rounded-2xl border border-white/10 lg:border-0">
             <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
-              {getLocalized(product.shortDescription, locale)}
+              {(() => {
+                const desc = getLocalized(product.shortDescription, locale);
+                if (isPortugal) {
+                  return desc
+                    .replace(/Stock direct 100% en Suisse[^\.]*\./gi, 'Expédié directement depuis notre plateforme logistique au Portugal – livraison suivie en 3 à 5 jours ouvrables.')
+                    .replace(/100% Schweizer Lagerware[^\.]*\./gi, 'Direktversand aus unserem Logistikzentrum in Portugal – Sendungsverfolgung in 3–5 Werktagen.')
+                    .replace(/Stock 100% svizzero[^\.]*\./gi, 'Spedito direttamente dal nostro polo logistico in Portogallo – consegna tracciata in 3–5 giorni lavorativi.')
+                    .replace(/100% Swiss stock[^\.]*\./gi, 'Dispatched directly from our logistics hub in Portugal – tracked delivery in 3–5 business days.');
+                }
+                return desc;
+              })()}
             </p>
           </div>
 

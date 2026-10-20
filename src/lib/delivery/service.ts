@@ -115,21 +115,44 @@ export async function resolveBatchEstimates(
       const supabase = getAdminSupabase();
 
       // 1. Fetch main_location from products table
-      const cleanIds = productIds.map(id => id.replace(/^prod-/, '').trim());
-      const { data: dbProducts } = await supabase
-        .from('products')
-        .select('id, woo_id, slug, main_location')
-        .or(`id.in.(${productIds.map(id => `"${id}"`).join(',')}),woo_id.in.(${cleanIds.map(id => `"${id}"`).join(',')}),slug.in.(${productIds.map(id => `"${id}"`).join(',')})`);
+      const isUuid = (val: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val);
+      const isNumeric = (val: string) => /^\d+$/.test(val);
 
-      if (dbProducts) {
-        for (const p of dbProducts) {
-          if (p.main_location) {
-            if (p.id) locationMap.set(p.id, p.main_location);
-            if (p.woo_id) {
-              locationMap.set(p.woo_id, p.main_location);
-              locationMap.set(`prod-${p.woo_id}`, p.main_location);
+      const uuidIds = productIds.filter(isUuid);
+      const numericIds = productIds
+        .map(id => id.replace(/^prod-/, '').trim())
+        .filter(isNumeric);
+      const rawSlugs = productIds
+        .filter(id => !isUuid(id))
+        .map(id => id.replace(/^prod-/, '').trim());
+
+      const orClauses: string[] = [];
+      if (uuidIds.length > 0) {
+        orClauses.push(`id.in.(${uuidIds.map(id => `"${id}"`).join(',')})`);
+      }
+      if (numericIds.length > 0) {
+        orClauses.push(`woo_id.in.(${numericIds.map(id => `"${id}"`).join(',')})`);
+      }
+      if (rawSlugs.length > 0) {
+        orClauses.push(`slug.in.(${rawSlugs.map(id => `"${id}"`).join(',')})`);
+      }
+
+      if (orClauses.length > 0) {
+        const { data: dbProducts } = await supabase
+          .from('products')
+          .select('id, woo_id, slug, main_location')
+          .or(orClauses.join(','));
+
+        if (dbProducts) {
+          for (const p of dbProducts) {
+            if (p.main_location) {
+              if (p.id) locationMap.set(p.id, p.main_location);
+              if (p.woo_id) {
+                locationMap.set(p.woo_id, p.main_location);
+                locationMap.set(`prod-${p.woo_id}`, p.main_location);
+              }
+              if (p.slug) locationMap.set(p.slug, p.main_location);
             }
-            if (p.slug) locationMap.set(p.slug, p.main_location);
           }
         }
       }
