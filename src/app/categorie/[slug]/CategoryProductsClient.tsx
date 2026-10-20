@@ -142,7 +142,7 @@ export default function CategoryProductsClient({ products, categoryName }: Categ
           </button>
         </div>
       ) : (
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {filteredProducts.map((product, idx) => (
             <ProductCard 
               key={product.id} 

@@ -16,11 +16,19 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const { addToCart, openQuickView, getProductPricing, locale, countryCode, t } = useStore();
+  const { addToCart, closeCart, openQuickView, getProductPricing, locale, countryCode, t } = useStore();
 
   const [mounted, setMounted] = React.useState(false);
+  const [isMobile, setIsMobile] = React.useState(false);
+  const [isAdded, setIsAdded] = React.useState(false);
+
   React.useEffect(() => {
     setMounted(true);
+    const mql = window.matchMedia('(max-width: 767px)');
+    setIsMobile(mql.matches);
+    const handler = (e: MediaQueryListEvent) => setIsMobile(e.matches);
+    mql.addEventListener('change', handler);
+    return () => mql.removeEventListener('change', handler);
   }, []);
 
   // First client render matches server HTML (CH) to prevent hydration mismatch
@@ -50,22 +58,52 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   const hasStock = product.variants?.some(v => v.inStock) ?? true;
   const vat = calculateVat(pricing.price, product.taxCategory);
 
+  // Mobile text transform for Pronutrition.it -> Pronutrition
+  const displayBrand = React.useMemo(() => {
+    if (isMobile && product.brand?.toLowerCase() === 'pronutrition.it') {
+      return 'Pronutrition';
+    }
+    return product.brand;
+  }, [isMobile, product.brand]);
+
+  const handleAddToCart = (e: React.MouseEvent) => {
+    e.preventDefault();
+    e.stopPropagation();
+    addToCart(product);
+    if (isMobile) {
+      // Keep mobile user in context with quick feedback
+      closeCart();
+    }
+    setIsAdded(true);
+    setTimeout(() => setIsAdded(false), 1500);
+  };
+
   return (
-    <article className="group relative flex flex-col bg-[#141414] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-[#F80404]/60 hover:shadow-2xl hover:shadow-[#F80404]/10 hover:-translate-y-1">
+    <article className={`group relative flex flex-col bg-[#141414] rounded-2xl border border-white/10 overflow-hidden transition-all duration-300 hover:border-[#F80404]/60 hover:shadow-2xl hover:shadow-[#F80404]/10 hover:-translate-y-1 ${!isDeliverable ? 'max-md:opacity-75' : ''}`}>
       
       {/* Image Container */}
-      <div className="relative block aspect-square w-full bg-[#1A1A1A] p-6 overflow-hidden">
+      <div className="relative block aspect-square w-full bg-[#1A1A1A] p-3 sm:p-6 overflow-hidden">
         {/* Badges (Top Left) */}
-        <div className="absolute top-3 left-3 z-10 flex flex-col gap-1.5 items-start">
+        <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 flex flex-col gap-1 items-start pointer-events-none">
           {discountPercent > 0 && (
-            <span className="inline-flex items-center bg-[#F80404] text-white text-[10px] font-black px-2.5 py-0.5 rounded-full shadow-sm">
+            <span className="inline-flex items-center bg-[#F80404] text-white text-[9px] sm:text-[10px] font-black px-2 sm:px-2.5 py-0.5 rounded-full shadow-sm">
               -{discountPercent}%
+            </span>
+          )}
+          {!hasStock && (
+            <span className="inline-flex items-center bg-black/80 text-white/90 border border-white/20 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+              Épuisé
+            </span>
+          )}
+          {!isDeliverable && (
+            <span className="sm:hidden inline-flex items-center bg-red-950/90 text-red-300 border border-red-800/60 text-[9px] font-bold px-2 py-0.5 rounded-full shadow-sm">
+              Indisponible
             </span>
           )}
         </div>
 
-        {/* Floating Action Buttons (Top Right) */}
-        <div className="absolute top-3 right-3 z-20 flex flex-col gap-2">
+        {/* Floating Action Buttons (Top Right - Desktop Only) */}
+        <div className="hidden sm:flex absolute top-3 right-3 z-20 flex-col gap-2">
           {/* Quick View Eye Button */}
           <button 
             type="button" 
@@ -90,7 +128,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             src={imgSrc} 
             alt={name}
             fill
-            sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 25vw"
+            sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
             priority={priority}
             onError={() => setImgSrc('/images/placeholder.webp')}
             className="object-contain object-center transition-transform duration-500 group-hover:scale-108 filter drop-shadow-md"
@@ -99,12 +137,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
       </div>
 
       {/* Card Body */}
-      <div className="flex flex-col flex-1 p-5">
-        <p className="text-[11px] font-black tracking-widest uppercase text-[#F80404] mb-1 font-heading">
-          {product.brand}
+      <div className="flex flex-col flex-1 p-3 sm:p-5">
+        <p className="text-[10px] sm:text-[11px] font-bold text-white/60 sm:text-[#F80404] tracking-widest uppercase mb-1 font-heading truncate">
+          {displayBrand}
         </p>
 
-        <h3 className="text-sm font-bold text-white line-clamp-2 mb-2 group-hover:text-[#F80404] transition-colors leading-snug">
+        <h3 className="text-xs sm:text-sm font-bold text-white line-clamp-2 min-h-[2rem] sm:min-h-[2.5rem] mb-1.5 sm:mb-2 group-hover:text-[#F80404] transition-colors leading-snug">
           <Link href={`/produit/${slug}/`}>
             {name}
           </Link>
@@ -115,55 +153,96 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
           productId={product.id}
           shippingOriginHint={product.shippingOrigin}
           mode="card"
-          className="mb-3.5"
+          className="mb-2 sm:mb-3.5"
         />
 
         {/* Price & Add to Cart Row */}
-        <div className="mt-auto pt-3 border-t border-white/10 flex items-center justify-between gap-3">
-          <div>
-            <div className="flex items-baseline gap-1.5">
-              <span className="text-base sm:text-lg font-black text-white font-heading">
+        <div className="mt-auto pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between gap-2 sm:gap-3">
+          <div className="min-w-0">
+            <div className="flex items-baseline gap-1 sm:gap-1.5 flex-wrap">
+              <span className="text-sm sm:text-lg font-black text-white font-heading">
                 {pricing.formatted}
               </span>
               {pricing.formattedCompareAt && (
-                <span className="text-xs text-white/40 line-through">
+                <span className="text-[10px] sm:text-xs text-white/40 line-through">
                   {pricing.formattedCompareAt}
                 </span>
               )}
             </div>
-            <p className="text-[10px] text-white/40">
+            <p className="hidden sm:block text-[10px] text-white/40">
               {t.common.vatIncluded} ({vat.ratePercentage})
             </p>
           </div>
 
-          {!isDeliverable ? (
-            <span 
-              className="inline-flex items-center justify-center min-h-[40px] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-red-300/80 bg-red-950/40 rounded-xl border border-red-800/40 cursor-not-allowed text-center leading-tight"
-              title={
-                locale === 'en'
-                  ? 'Not available in your country'
-                  : locale === 'de'
-                  ? 'In Ihrem Land nicht verfügbar'
-                  : locale === 'it'
-                  ? 'Non disponibile nel tuo paese'
-                  : 'Non disponible dans votre pays'
-              }
-            >
-              {locale === 'en' ? 'Not available in your country' : 'Non disponible dans votre pays'}
-            </span>
-          ) : (
-            <button 
-              type="button"
-              onClick={() => addToCart(product)}
-              className="inline-flex items-center justify-center min-h-[40px] px-3.5 py-2 text-xs font-black uppercase tracking-wider text-black bg-[#F80404] hover:bg-[#FF3D00] rounded-xl transition-all shadow-sm active:scale-95 gap-1.5"
-              aria-label={`${t.common.addToCart}: ${name}`}
-            >
-              <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
-              </svg>
-              <span>+</span>
-            </button>
-          )}
+          {/* Desktop Actions (Unchanged) */}
+          <div className="hidden sm:block shrink-0">
+            {!isDeliverable ? (
+              <span 
+                className="inline-flex items-center justify-center min-h-[40px] px-2.5 py-1 text-[10px] font-bold uppercase tracking-wider text-red-300/80 bg-red-950/40 rounded-xl border border-red-800/40 cursor-not-allowed text-center leading-tight"
+                title={
+                  locale === 'en'
+                    ? 'Not available in your country'
+                    : locale === 'de'
+                    ? 'In Ihrem Land nicht verfügbar'
+                    : locale === 'it'
+                    ? 'Non disponible nel tuo paese'
+                    : 'Non disponible dans votre pays'
+                }
+              >
+                {locale === 'en' ? 'Not available in your country' : 'Non disponible dans votre pays'}
+              </span>
+            ) : (
+              <button 
+                type="button"
+                onClick={() => addToCart(product)}
+                className="inline-flex items-center justify-center min-h-[40px] px-3.5 py-2 text-xs font-black uppercase tracking-wider text-black bg-[#F80404] hover:bg-[#FF3D00] rounded-xl transition-all shadow-sm active:scale-95 gap-1.5"
+                aria-label={`${t.common.addToCart}: ${name}`}
+              >
+                <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M12 4v16m8-8H4" />
+                </svg>
+                <span>+</span>
+              </button>
+            )}
+          </div>
+
+          {/* Mobile Actions: 44px tap target, clear "Ajouter" label + cart icon, instant feedback */}
+          <div className="sm:hidden shrink-0">
+            {!isDeliverable ? (
+              <span 
+                className="inline-flex items-center justify-center min-h-[44px] px-2.5 py-2 text-[10px] font-bold uppercase tracking-wider text-white/40 bg-white/5 rounded-xl border border-white/10 cursor-not-allowed text-center"
+              >
+                Indisponible
+              </span>
+            ) : (
+              <button 
+                type="button"
+                onClick={handleAddToCart}
+                className={`inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-2.5 py-2 text-[11px] font-black uppercase tracking-wider rounded-xl transition-all shadow-sm active:scale-95 gap-1.5 ${
+                  isAdded
+                    ? 'bg-emerald-500 text-black'
+                    : 'bg-[#F80404] hover:bg-[#FF3D00] text-black'
+                }`}
+                aria-label={`Ajouter au panier: ${name}`}
+              >
+                {isAdded ? (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
+                    </svg>
+                    <span>Ajouté</span>
+                  </>
+                ) : (
+                  <>
+                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+                    </svg>
+                    <span>Ajouter</span>
+                  </>
+                )}
+              </button>
+            )}
+          </div>
         </div>
       </div>
     </article>

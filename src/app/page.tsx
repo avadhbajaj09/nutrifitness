@@ -64,7 +64,8 @@ export default async function HomePage() {
       <HomeBestsellersSection products={physicalProducts} />
 
       {/* 5. LARGE PROMOTIONAL BANNER */}
-      <section className="relative rounded-3xl overflow-hidden border border-white/15 my-16 shadow-2xl">
+      {/* Desktop Banner (Unchanged) */}
+      <section className="hidden sm:block relative rounded-3xl overflow-hidden border border-white/15 my-16 shadow-2xl">
         <div className="relative w-full h-[360px] sm:h-[420px]">
           <Image 
             src="/images/blog/nutriftiness-images35.jpg" 
@@ -95,6 +96,20 @@ export default async function HomePage() {
             </Link>
           </div>
         </div>
+      </section>
+
+      {/* Mobile Compact Promo Card (Section I: Compact card, one line + one button) */}
+      <section className="sm:hidden my-6 mx-4 p-4 rounded-2xl bg-gradient-to-r from-[#1E1111] via-[#161616] to-[#121212] border border-[#F80404]/30 shadow-lg flex items-center justify-between gap-3">
+        <div className="min-w-0">
+          <p className="text-[10px] font-black uppercase tracking-wider text-[#F80404]">Offre Suisse</p>
+          <p className="text-xs font-black text-white leading-tight">Livraison offerte dès 75 CHF en Suisse</p>
+        </div>
+        <Link 
+          href="/boutique/"
+          className="shrink-0 min-h-[44px] px-4 py-2 bg-[#F80404] text-black font-black uppercase text-[11px] rounded-xl flex items-center justify-center shadow-md active:scale-95"
+        >
+          Boutique →
+        </Link>
       </section>
 
       {/* 6. SHOP BY GOAL */}

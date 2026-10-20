@@ -251,7 +251,7 @@ export default async function ProteinesGenevePage() {
           </Link>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 sm:gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-6">
           {proteinProducts.map((p) => (
             <ProductCard key={p.id} product={p} />
           ))}
