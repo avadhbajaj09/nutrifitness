@@ -11,7 +11,8 @@ const nextConfig = {
       { protocol: 'https', hostname: 'fitrush.bzotech.com' },
       { protocol: 'https', hostname: 'marvelousnutrition.com' },
       { protocol: 'https', hostname: 'dirtysquads.com' },
-      { protocol: 'http', hostname: 'dirtysquads.com' }
+      { protocol: 'http', hostname: 'dirtysquads.com' },
+      { protocol: 'https', hostname: 'punhmwlpaghmjndpyusf.supabase.co' }
     ]
   },
   async redirects() {

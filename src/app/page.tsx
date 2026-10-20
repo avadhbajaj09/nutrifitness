@@ -213,7 +213,7 @@ export default async function HomePage() {
           </Link>
 
           <Link 
-            href="/blog/whey-concentree-ou-isolate/"
+            href="/blog/whey-isolate-ou-concentree/"
             className="bg-[#141414] rounded-2xl overflow-hidden border border-white/10 group hover:border-[#F80404]/50 transition-all flex flex-col"
           >
             <div className="relative aspect-[16/10] overflow-hidden">

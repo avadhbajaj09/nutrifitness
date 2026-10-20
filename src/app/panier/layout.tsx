@@ -1,6 +1,8 @@
 import type { Metadata } from 'next';
 
 export const metadata: Metadata = {
+  title: 'Mon Panier d\'Achat | NutriFitness.ch Genève',
+  description: 'Consultez votre panier de compléments alimentaires, vos réductions exclusives et vos options de livraison rapide 24h ou Click & Collect en Suisse.',
   robots: {
     index: false,
     follow: false,

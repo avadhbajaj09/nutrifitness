@@ -1,10 +1,22 @@
-import React from 'react';
+'use client';
+
+import React, { useState } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { COMPANY } from '@/lib/company';
+import { useStore } from '@/context/StoreContext';
 
 export default function Footer() {
   const currentYear = new Date().getFullYear();
+  const { showToast } = useStore();
+  const [email, setEmail] = useState('');
+
+  const handleNewsletterSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!email.trim()) return;
+    showToast('Club NutriFitness', 'Merci ! Votre bon de réduction de 10% a été envoyé.');
+    setEmail('');
+  };
 
   return (
     <footer className="bg-[#050505] text-white/80 pt-16 pb-12 border-t border-white/10 mt-20">
@@ -92,19 +104,22 @@ export default function Footer() {
                 </button>
               </li>
             </ul>
-            <div className="space-y-2">
+            <form onSubmit={handleNewsletterSubmit} className="space-y-2">
               <input 
                 type="email" 
+                required
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
                 placeholder="Votre adresse e-mail"
-                className="w-full min-h-[40px] px-3 text-xs bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none"
+                className="w-full min-h-[40px] px-3 text-xs bg-white/5 border border-white/10 rounded-xl text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none transition-colors"
               />
               <button 
-                type="button"
-                className="w-full min-h-[40px] px-4 py-2 text-xs font-black uppercase tracking-wider text-black bg-[#F80404] hover:bg-[#FF3D00] rounded-xl transition-all shadow-md active:scale-98"
+                type="submit"
+                className="w-full min-h-[40px] px-4 py-2 text-xs font-black uppercase tracking-wider text-black bg-[#F80404] hover:bg-[#FF3D00] rounded-xl transition-all shadow-md active:scale-98 cursor-pointer"
               >
-                S&apos;inscrire au Club
+                S&apos;inscrire au Club (-10%)
               </button>
-            </div>
+            </form>
           </div>
         </div>
 

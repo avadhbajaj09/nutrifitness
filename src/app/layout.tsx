@@ -42,6 +42,14 @@ export const metadata: Metadata = {
   title: 'Nutrition Sportive & Protéines en Suisse | NutriFitness.ch',
   description: 'Boutique de nutrition sportive en Suisse et en ligne. Protéines whey, créatine Creapure®, pré-workout. 100% stock en Suisse, livraison 24h offerte dès 75 CHF ou retrait Click & Collect.',
   metadataBase: new URL('https://nutrifitness.ch'),
+  icons: {
+    icon: [
+      { url: '/icon.svg', type: 'image/svg+xml' },
+      { url: '/favicon.ico' },
+    ],
+    shortcut: '/icon.svg',
+    apple: '/icon.svg',
+  },
   openGraph: {
     title: 'NutriFitness.ch — Nutrition Sportive Suisse',
     description: 'Protéines whey, créatine Creapure®, pré-workouts et vitamines certifiées. Stock 100% en Suisse et livraison 24h.',
