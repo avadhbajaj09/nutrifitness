@@ -11,6 +11,7 @@ import SearchOverlay from '@/components/SearchOverlay';
 import ToastContainer from '@/components/ToastContainer';
 import ChatBot from '@/components/ChatBot';
 import GoogleTranslate from '@/components/GoogleTranslate';
+import MobileBottomTabBar from '@/components/MobileBottomTabBar';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
@@ -37,14 +38,21 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     );
   }
 
+  const handleOpenCategories = () => {
+    if (typeof window !== 'undefined') {
+      window.dispatchEvent(new CustomEvent('openMobileCategories'));
+    }
+  };
+
   return (
     <>
       <TopBar />
       <Header />
-      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6">
+      <main className="flex-1 max-w-7xl w-full mx-auto px-4 py-6 max-md:pb-[calc(56px+env(safe-area-inset-bottom,16px)+20px)]">
         {children}
       </main>
       <Footer />
+      <MobileBottomTabBar onOpenCategories={handleOpenCategories} />
       <CartDrawer />
       <QuickViewModal />
       <SearchOverlay />

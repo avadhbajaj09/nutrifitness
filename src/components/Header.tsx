@@ -16,6 +16,7 @@ export default function Header() {
   const [isMegaOpen, setIsMegaOpen] = useState(false);
   const [isBrandsOpen, setIsBrandsOpen] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [mobileMenuTab, setMobileMenuTab] = useState<'categories' | 'goals' | 'brands' | null>('categories');
   const brandsDropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
@@ -24,6 +25,23 @@ export default function Header() {
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
     return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  useEffect(() => {
+    const handleOpenMenu = () => {
+      setMobileMenuTab('categories');
+      setIsMobileMenuOpen(true);
+    };
+    const handleOpenCategories = () => {
+      setMobileMenuTab('categories');
+      setIsMobileMenuOpen(true);
+    };
+    window.addEventListener('openMobileMenu', handleOpenMenu);
+    window.addEventListener('openMobileCategories', handleOpenCategories);
+    return () => {
+      window.removeEventListener('openMobileMenu', handleOpenMenu);
+      window.removeEventListener('openMobileCategories', handleOpenCategories);
+    };
   }, []);
 
   // Close brands dropdown on outside click
@@ -49,12 +67,12 @@ export default function Header() {
         <div className="max-w-7xl w-full mx-auto px-4 flex items-center justify-between gap-2 sm:gap-4 relative">
           
           {/* Left: Mobile Hamburger & Brand Logo */}
-          <div className="flex items-center gap-3">
-            {/* Mobile Hamburger Button */}
+          <div className="flex items-center gap-2.5 sm:gap-3">
+            {/* Mobile Hamburger Button (44px min tap target) */}
             <button 
               type="button" 
               onClick={() => setIsMobileMenuOpen(true)}
-              className="lg:hidden w-10 h-10 rounded-xl bg-white/5 hover:bg-white/10 text-white flex items-center justify-center border border-white/10 transition-colors"
+              className="lg:hidden w-11 h-11 rounded-xl bg-white/5 hover:bg-white/10 active:bg-white/15 text-white flex items-center justify-center border border-white/10 transition-colors shrink-0"
               aria-label="Ouvrir le menu"
             >
               <Menu className="w-5 h-5 text-white" />
@@ -62,7 +80,7 @@ export default function Header() {
 
             {/* Brand Logo */}
             <Link href="/" className="flex items-center shrink-0 py-1" aria-label="NutriFitness.ch Accueil">
-              <div className="relative h-9 w-36 sm:w-44">
+              <div className="relative h-8 sm:h-9 w-32 sm:w-44">
                 <Image 
                   src="/images/brand/logo.png" 
                   alt="NutriFitness.ch" 
@@ -214,31 +232,31 @@ export default function Header() {
               </kbd>
             </button>
 
-            {/* Mobile Search Button */}
+            {/* Mobile Search Button - Hidden on mobile phones since full search bar is directly below */}
             <button 
-              type="button"
+              type="button" 
               onClick={openSearch}
-              className="md:hidden flex items-center justify-center w-10 h-10 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors"
+              className="hidden sm:flex md:hidden items-center justify-center w-11 h-11 rounded-full bg-white/5 hover:bg-white/10 text-white border border-white/10 transition-colors"
               aria-label="Rechercher"
             >
               <Search className="w-4 h-4 text-white/80" />
             </button>
 
-            {/* Account Icon */}
+            {/* Account Icon (44px min touch target on mobile) */}
             <Link 
               href="/compte/"
-              className="flex items-center justify-center w-10 h-10 bg-white/5 hover:bg-white/10 text-white rounded-full border border-white/10 transition-colors"
+              className="flex items-center justify-center w-10 sm:w-11 h-10 sm:h-11 min-h-[44px] min-w-[44px] bg-white/5 hover:bg-white/10 text-white rounded-full border border-white/10 transition-colors shrink-0"
               aria-label="Espace compte client"
               title={t.nav.account}
             >
               <User className="w-4 h-4 text-white/80 hover:text-[#F80404]" />
             </Link>
 
-            {/* Cart Trigger Button - Clean Icon only with Badge */}
+            {/* Cart Trigger Button (44px min touch target on mobile) */}
             <button 
               type="button" 
               onClick={openCart}
-              className="relative flex items-center justify-center w-10 h-10 rounded-full bg-[#F80404] hover:bg-[#FF3D00] text-black transition-all shadow-md active:scale-95 group shrink-0"
+              className="relative flex items-center justify-center w-10 sm:w-11 h-10 sm:h-11 min-h-[44px] min-w-[44px] rounded-full bg-[#F80404] hover:bg-[#FF3D00] text-black transition-all shadow-md active:scale-95 group shrink-0"
               aria-label={`Panier (${cartCount})`}
               title={t.nav.cart}
             >
@@ -252,6 +270,19 @@ export default function Header() {
           </div>
         </div>
 
+        {/* Full-width Mobile Search Bar (Directly under Header, 44px high, always visible on phones) */}
+        <div className="md:hidden w-full px-4 pt-2 pb-0.5">
+          <button
+            type="button"
+            onClick={openSearch}
+            className="w-full h-11 px-3.5 bg-[#141414] hover:bg-[#1a1a1a] text-white/60 border border-white/15 rounded-xl flex items-center gap-2.5 text-xs transition-all active:scale-[0.99] shadow-inner"
+            aria-label="Rechercher un produit, une marque..."
+          >
+            <Search className="w-4 h-4 text-white/60 shrink-0" />
+            <span className="truncate text-white/60 text-xs font-medium">Rechercher un produit, une marque...</span>
+          </button>
+        </div>
+
         {/* Mega Menu Dropdown */}
         <MegaMenu isOpen={isMegaOpen} onClose={() => setIsMegaOpen(false)} />
       </header>
@@ -260,6 +291,7 @@ export default function Header() {
       <MobileNavigation 
         isOpen={isMobileMenuOpen} 
         onClose={() => setIsMobileMenuOpen(false)} 
+        initialTab={mobileMenuTab}
       />
     </>
   );

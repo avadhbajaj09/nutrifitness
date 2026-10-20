@@ -90,3 +90,34 @@ body > .skiptranslate {
 #google_translate_element {
   display: none !important;
 }
+
+/* ==========================================================================
+   MOBILE-ONLY RULES (Phones <= 767px)
+   ABSOLUTE RULE: Desktop (>= 1024px) & Tablet (>= 768px) remain 100% untouched.
+   ========================================================================== */
+@media (max-width: 767px) {
+  html, body {
+    overflow-x: clip !important;
+    max-width: 100vw !important;
+  }
+
+  /* Prevent iOS Safari auto-zoom on form inputs by ensuring 16px min font size */
+  input[type="text"],
+  input[type="search"],
+  input[type="email"],
+  input[type="tel"],
+  input[type="password"],
+  input[type="number"],
+  select,
+  textarea {
+    font-size: 16px !important;
+  }
+
+  /* Support safe-area-inset on mobile devices */
+  .safe-area-bottom {
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  .safe-area-top {
+    padding-top: env(safe-area-inset-top, 0px);
+  }
+}

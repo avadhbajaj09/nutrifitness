@@ -619,8 +619,8 @@ export default function ChatBot() {
 
   return (
     <>
-      {/* Floating Trigger Button (Bottom-Right) */}
-      <div className="fixed bottom-6 right-6 z-40 flex items-center gap-3">
+      {/* Floating Trigger Button (Bottom-Right, offset above mobile tab bar) */}
+      <div className="fixed bottom-[calc(env(safe-area-inset-bottom,0px)+72px)] right-4 sm:bottom-6 sm:right-6 z-40 flex items-center gap-3">
         {!isOpen && (
           <button
             type="button"
@@ -641,7 +641,7 @@ export default function ChatBot() {
         <button
           type="button"
           onClick={() => setIsOpen(!isOpen)}
-          className={`w-14 h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform active:scale-95 ${
+          className={`w-12 h-12 sm:w-14 sm:h-14 rounded-full shadow-2xl flex items-center justify-center transition-all duration-300 transform active:scale-95 ${
             isOpen 
               ? 'bg-[#181818] text-white border border-white/20 rotate-90' 
               : 'bg-gradient-to-tr from-[#F80404] to-[#FF3D00] text-black hover:scale-105 shadow-[#F80404]/30'
@@ -649,19 +649,19 @@ export default function ChatBot() {
           aria-label={isOpen ? 'Fermer le chat' : 'Ouvrir le chat NutriFitness'}
         >
           {isOpen ? (
-            <X className="w-6 h-6" />
+            <X className="w-5 h-5 sm:w-6 sm:h-6" />
           ) : (
             <div className="relative">
-              <MessageSquare className="w-6 h-6" />
-              <span className="absolute -top-1 -right-1 w-3 h-3 bg-[#95d600] border-2 border-black rounded-full" />
+              <MessageSquare className="w-5 h-5 sm:w-6 sm:h-6" />
+              <span className="absolute -top-1 -right-1 w-2.5 h-2.5 sm:w-3 sm:h-3 bg-[#95d600] border-2 border-black rounded-full" />
             </div>
           )}
         </button>
       </div>
 
-      {/* Chat Window */}
+      {/* Chat Window: Full-screen sheet on mobile, rounded card on desktop */}
       {isOpen && (
-        <div className="fixed bottom-24 right-4 sm:right-6 z-50 w-[calc(100vw-32px)] sm:w-[420px] h-[610px] max-h-[82vh] bg-[#121212] border border-white/15 rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300">
+        <div className="fixed inset-0 sm:inset-auto sm:bottom-24 sm:right-6 z-50 w-full sm:w-[420px] h-full sm:h-[610px] sm:max-h-[82vh] bg-[#121212] border-0 sm:border sm:border-white/15 rounded-none sm:rounded-3xl shadow-2xl flex flex-col overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-300">
           
           {/* Header */}
           <div className="px-5 py-4 bg-gradient-to-r from-[#1A0A0A] via-[#141414] to-[#1A0A0A] border-b border-white/10 flex items-center justify-between">

@@ -15,7 +15,35 @@ export default function SearchOverlay() {
   const router = useRouter();
   const { isSearchOpen, closeSearch, isProductVisible, locale } = useStore();
   const [query, setQuery] = useState('');
+  const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
+
+  // Load recent searches on mount (guarded)
+  useEffect(() => {
+    try {
+      const saved = localStorage.getItem('nf_recent_searches');
+      if (saved) {
+        setRecentSearches(JSON.parse(saved).slice(0, 5));
+      }
+    } catch (_) {}
+  }, []);
+
+  const saveRecentSearch = (term: string) => {
+    const clean = term.trim();
+    if (!clean) return;
+    try {
+      const next = [clean, ...recentSearches.filter(s => s.toLowerCase() !== clean.toLowerCase())].slice(0, 5);
+      setRecentSearches(next);
+      localStorage.setItem('nf_recent_searches', JSON.stringify(next));
+    } catch (_) {}
+  };
+
+  const clearRecentSearches = () => {
+    try {
+      localStorage.removeItem('nf_recent_searches');
+      setRecentSearches([]);
+    } catch (_) {}
+  };
 
   useEffect(() => {
     if (isSearchOpen) {
@@ -46,24 +74,27 @@ export default function SearchOverlay() {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (trimmedQuery) {
+      saveRecentSearch(trimmedQuery);
       trackSearch(trimmedQuery);
       closeSearch();
       router.push(`/boutique?q=${encodeURIComponent(trimmedQuery)}`);
     }
   };
 
+  const POPULAR_SEARCHES = ['Créatine', 'Whey', 'Magnésium', 'Zinc', 'Pre-Workout', 'Isolate'];
+
   return (
     <div 
-      className="fixed inset-0 bg-black/90 backdrop-blur-xl z-[110] flex flex-col justify-start items-center p-4 sm:p-8 animate-in fade-in duration-200"
+      className="fixed inset-0 bg-black/95 backdrop-blur-xl z-[110] flex flex-col justify-start items-center p-3 sm:p-6 md:p-8 animate-in fade-in duration-200"
       role="dialog"
       aria-modal="true"
       aria-label="Recherche de compléments"
     >
-      <div className="w-full max-w-4xl pt-6 sm:pt-12">
+      <div className="w-full max-w-4xl pt-2 sm:pt-6 md:pt-10">
         {/* Search Bar Form Row */}
-        <form onSubmit={handleSubmit} className="relative flex items-center gap-4">
+        <form onSubmit={handleSubmit} className="relative flex items-center gap-2 sm:gap-4">
           <div className="relative flex-1">
-            <svg className="absolute left-5 top-1/2 -translate-y-1/2 w-6 h-6 text-white/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <svg className="absolute left-4 sm:left-5 top-1/2 -translate-y-1/2 w-5 h-5 sm:w-6 sm:h-6 text-white/40 pointer-events-none" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
 
@@ -72,8 +103,8 @@ export default function SearchOverlay() {
               type="search"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
-              placeholder="Rechercher par produit, marque ou goût (ex: Créatine, Isolate, BigMan, ABE)..."
-              className="w-full min-h-[58px] pl-14 pr-20 text-sm sm:text-base font-medium bg-[#141414] border-2 border-white/20 rounded-2xl text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none transition-all shadow-2xl"
+              placeholder="Rechercher un produit, une marque..."
+              className="w-full min-h-[48px] sm:min-h-[58px] pl-11 sm:pl-14 pr-10 sm:pr-12 text-sm sm:text-base font-medium bg-[#141414] border-2 border-white/20 rounded-2xl text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none transition-all shadow-2xl"
               autoComplete="off"
             />
 
@@ -81,7 +112,7 @@ export default function SearchOverlay() {
               <button 
                 type="button" 
                 onClick={() => setQuery('')}
-                className="absolute right-4 top-1/2 -translate-y-1/2 text-white/40 hover:text-white p-1 text-xs"
+                className="absolute right-3.5 top-1/2 -translate-y-1/2 w-7 h-7 rounded-full bg-white/10 hover:bg-white/20 text-white/60 hover:text-white flex items-center justify-center text-xs"
                 aria-label="Effacer la recherche"
               >
                 ✕
@@ -89,26 +120,63 @@ export default function SearchOverlay() {
             )}
           </div>
 
+          {/* Close button with explicit 'Fermer' text on mobile + icon on desktop */}
           <button 
             type="button" 
             onClick={closeSearch}
-            className="w-12 h-12 rounded-2xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center shrink-0 transition-colors"
+            className="min-h-[48px] sm:min-h-[58px] px-3.5 sm:px-4 rounded-2xl bg-white/10 hover:bg-white/20 text-white flex items-center justify-center gap-1.5 shrink-0 transition-colors text-xs font-bold"
             aria-label="Fermer la recherche"
           >
-            <svg className="w-5 h-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+            <span className="md:hidden">Fermer</span>
+            <svg className="w-5 h-5 hidden md:block" fill="none" viewBox="0 0 24 24" stroke="currentColor">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" />
             </svg>
           </button>
         </form>
 
-        {/* Quick Search Suggestions */}
-        <div className="flex flex-wrap items-center gap-2 mt-4 pt-2">
-          <span className="text-xs font-bold text-white/40 uppercase tracking-wider">Populaires :</span>
-          {['Whey Isolate', 'Creapure®', 'Pre-Workout', 'BigMan', 'ABE', 'Vitamines'].map(tag => (
+        {/* Recent Searches (if available and query is empty) */}
+        {!trimmedQuery && recentSearches.length > 0 && (
+          <div className="mt-3.5 pt-1">
+            <div className="flex items-center justify-between mb-1.5">
+              <span className="text-[11px] font-bold text-white/40 uppercase tracking-wider">Recherches récentes :</span>
+              <button 
+                type="button" 
+                onClick={clearRecentSearches}
+                className="text-[10px] text-white/40 hover:text-[#F80404] transition-colors"
+              >
+                Effacer
+              </button>
+            </div>
+            <div className="flex flex-wrap items-center gap-1.5">
+              {recentSearches.map(term => (
+                <button
+                  key={term}
+                  type="button"
+                  onClick={() => {
+                    setQuery(term);
+                    saveRecentSearch(term);
+                  }}
+                  className="px-2.5 py-1 bg-white/5 hover:bg-white/15 text-white/90 text-xs font-medium rounded-lg border border-white/10 transition-colors flex items-center gap-1.5"
+                >
+                  <span className="text-white/40 text-[10px]">⏱</span>
+                  <span>{term}</span>
+                </button>
+              ))}
+            </div>
+          </div>
+        )}
+
+        {/* Quick Popular Searches (créatine, whey, magnésium, zinc) */}
+        <div className="flex flex-wrap items-center gap-1.5 mt-3 pt-1">
+          <span className="text-[11px] font-bold text-white/40 uppercase tracking-wider">Populaires :</span>
+          {POPULAR_SEARCHES.map(tag => (
             <button 
               key={tag}
               type="button" 
-              onClick={() => setQuery(tag)}
+              onClick={() => {
+                setQuery(tag);
+                saveRecentSearch(tag);
+              }}
               className="px-3 py-1 bg-white/5 hover:bg-[#F80404] hover:text-black text-white/80 text-xs font-bold rounded-lg border border-white/10 transition-colors"
             >
               {tag}

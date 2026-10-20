@@ -1,4 +1,4 @@
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Inter, Unbounded, Roboto_Condensed } from 'next/font/google';
 import './globals.css';
 import { StoreProvider } from '@/context/StoreContext';
@@ -6,6 +6,12 @@ import AppShell from '@/components/AppShell';
 import GoogleAnalytics from '@/components/GoogleAnalytics';
 import CookieConsentBanner from '@/components/CookieConsentBanner';
 import { organization, website } from '@/lib/schema';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+};
 
 const inter = Inter({
   subsets: ['latin'],

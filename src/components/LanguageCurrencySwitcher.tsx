@@ -39,10 +39,10 @@ export default function LanguageCurrencySwitcher({ variant = 'header' }: Languag
       <div className="space-y-3 pt-2">
         {/* Language selector for mobile */}
         <div>
-          <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider block mb-1.5">
-            🌐 Langue / Language
+          <span className="text-[10px] font-bold text-white/50 uppercase tracking-wider block mb-2">
+            Langue / Language
           </span>
-          <div className="grid grid-cols-4 gap-1.5">
+          <div className="grid grid-cols-4 gap-1.5 bg-black/40 p-1 rounded-xl border border-white/10">
             {LANGUAGE_OPTIONS.map((item) => {
               const active = item.code === locale;
               return (
@@ -50,14 +50,14 @@ export default function LanguageCurrencySwitcher({ variant = 'header' }: Languag
                   key={item.code}
                   type="button"
                   onClick={() => handleLanguageSelect(item.code)}
-                  className={`py-2 px-1 rounded-xl text-xs font-bold flex flex-col items-center justify-center gap-1 border transition-all ${
+                  className={`min-h-[44px] rounded-lg text-xs font-black uppercase tracking-wider flex items-center justify-center transition-all ${
                     active 
-                      ? 'bg-[#F80404] text-black border-[#F80404] font-black shadow-md' 
-                      : 'bg-white/5 text-white/80 border-white/10 hover:bg-white/10 hover:text-white'
+                      ? 'bg-[#F80404] text-black shadow-md' 
+                      : 'text-white/70 hover:text-white hover:bg-white/5'
                   }`}
+                  aria-label={`Changer de langue: ${item.label}`}
                 >
-                  <span className="text-sm">{item.flag}</span>
-                  <span className="text-[11px] uppercase tracking-wider">{item.shortName}</span>
+                  <span>{item.shortName}</span>
                 </button>
               );
             })}
