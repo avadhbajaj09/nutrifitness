@@ -6,7 +6,7 @@ import HeroSlider from '@/components/HeroSlider';
 import CategorySection from '@/components/CategorySection';
 import ShopByGoal from '@/components/ShopByGoal';
 import BrandShowcase from '@/components/BrandShowcase';
-import TrustStrip from '@/components/TrustStrip';
+import TrustStrip, { MobileTrustStrip } from '@/components/TrustStrip';
 import Testimonials from '@/components/Testimonials';
 import SocialGrid from '@/components/SocialGrid';
 import Newsletter from '@/components/Newsletter';
@@ -50,6 +50,9 @@ export default async function HomePage() {
 
       {/* 1. HERO SLIDER */}
       <HeroSlider />
+
+      {/* MOBILE TRUST STRIP (< 768px: compact horizontal strip under Hero) */}
+      <MobileTrustStrip />
 
       {/* 2. RUNNING PRODUCT IMAGES MARQUEE (Filtered by country) */}
       <HomeMarqueeSection products={physicalProducts} />
