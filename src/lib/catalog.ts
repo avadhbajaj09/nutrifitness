@@ -21306,7 +21306,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "https://nutrifitness.ch/wp-content/uploads/2025/09/Design-sans-titre-86.png",
+        "src": "/images/placeholder.webp",
         "alt": {
           "fr": "UFO BLAST",
           "de": "UFO BLAST",
