@@ -147,8 +147,10 @@ export interface PosSaleRecord {
     phone?: string;
     email?: string;
     address?: string;
+    street?: string;
     city?: string;
     postalCode?: string;
+    country?: string;
   };
   shipping?: {
     method: 'store_pickup' | 'post_priority' | 'post_economy' | 'express_geneva' | string;
@@ -4932,13 +4934,23 @@ export default function AdminDashboardClient() {
                   {inspectingSale.client?.phone ? (
                     <div>
                       <span className="text-[10px] text-slate-400 block">Téléphone :</span>
-                      <a 
-                        href={`tel:${inspectingSale.client.phone}`}
-                        className="text-emerald-700 font-bold hover:underline flex items-center gap-1.5"
-                      >
-                        <Phone className="w-3.5 h-3.5" />
-                        <span>{inspectingSale.client.phone}</span>
-                      </a>
+                      <div className="flex items-center gap-2 mt-0.5">
+                        <a 
+                          href={`tel:${inspectingSale.client.phone}`}
+                          className="text-emerald-700 font-bold hover:underline flex items-center gap-1.5"
+                        >
+                          <Phone className="w-3.5 h-3.5" />
+                          <span>{inspectingSale.client.phone}</span>
+                        </a>
+                        <a
+                          href={`https://wa.me/${inspectingSale.client.phone.replace(/[^0-9]/g, '')}`}
+                          target="_blank"
+                          rel="noreferrer"
+                          className="px-2 py-0.5 rounded text-[10px] font-bold bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition-colors"
+                        >
+                          WhatsApp
+                        </a>
+                      </div>
                     </div>
                   ) : (
                     <div className="text-slate-400 text-[11px]">Téléphone : Non renseigné</div>
@@ -4949,9 +4961,9 @@ export default function AdminDashboardClient() {
                       <span className="text-[10px] text-slate-400 block">Email :</span>
                       <a 
                         href={`mailto:${inspectingSale.client.email}`}
-                        className="text-blue-700 font-medium hover:underline flex items-center gap-1.5 break-all"
+                        className="text-blue-700 font-medium hover:underline flex items-center gap-1.5 break-all mt-0.5"
                       >
-                        <Mail className="w-3.5 h-3.5" />
+                        <Mail className="w-3.5 h-3.5 shrink-0" />
                         <span>{inspectingSale.client.email}</span>
                       </a>
                     </div>
@@ -4959,18 +4971,19 @@ export default function AdminDashboardClient() {
                     <div className="text-slate-400 text-[11px]">Email : Non renseigné</div>
                   )}
 
-                  {inspectingSale.client?.address || inspectingSale.client?.city ? (
-                    <div>
-                      <span className="text-[10px] text-slate-400 block">Adresse & Ville :</span>
-                      <p className="text-slate-800 font-medium flex items-start gap-1.5">
-                        <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
-                        <span>
-                          {inspectingSale.client?.address ? `${inspectingSale.client.address}, ` : ''}
-                          {inspectingSale.client?.city || 'Genève'}
-                        </span>
-                      </p>
-                    </div>
-                  ) : null}
+                  <div>
+                    <span className="text-[10px] text-slate-400 block">Adresse de Livraison :</span>
+                    <p className="text-slate-800 font-medium flex items-start gap-1.5 mt-0.5">
+                      <MapPin className="w-3.5 h-3.5 text-slate-400 shrink-0 mt-0.5" />
+                      <span>
+                        {[
+                          inspectingSale.client?.address || inspectingSale.client?.street,
+                          [inspectingSale.client?.postalCode, inspectingSale.client?.city].filter(Boolean).join(' '),
+                          inspectingSale.client?.country || 'Suisse'
+                        ].filter(Boolean).join(', ') || 'Adresse non renseignée (Retrait magasin)'}
+                      </span>
+                    </p>
+                  </div>
                 </div>
               </div>
 
@@ -4988,7 +5001,9 @@ export default function AdminDashboardClient() {
                       {inspectingSale.paymentMethod === 'twint' ? '⚡ TWINT' : inspectingSale.paymentMethod === 'card' ? '💳 Carte Bancaire' : '💵 Espèces (Cash)'}
                     </span>
                     {inspectingSale.paymentDetails?.reference && (
-                      <span className="text-[11px] text-slate-500 block">Réf : {inspectingSale.paymentDetails.reference}</span>
+                      <span className="text-[11px] text-slate-500 block truncate font-mono">
+                        Réf : {inspectingSale.paymentDetails.reference}
+                      </span>
                     )}
                     {inspectingSale.paymentDetails?.cardType && (
                       <span className="text-[11px] text-slate-500 block">Type : {inspectingSale.paymentDetails.cardType}</span>
@@ -5025,42 +5040,69 @@ export default function AdminDashboardClient() {
 
             {/* Articles Purchased */}
             <div className="space-y-3">
-              <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 font-heading">
-                Articles Commandés ({inspectingSale.items.length})
-              </h4>
-
-              <div className="space-y-2 border border-slate-200 rounded-2xl p-3 bg-slate-50/50 max-h-[220px] overflow-y-auto">
-                {inspectingSale.items.map((it, idx) => (
-                  <div key={idx} className="flex items-center justify-between p-2 bg-white rounded-xl border border-slate-200">
-                    <div className="flex items-center gap-3">
-                      <div className="relative w-10 h-10 rounded-lg bg-slate-50 border border-slate-200 overflow-hidden shrink-0">
-                        <Image
-                          src={it.image || '/images/placeholder.webp'}
-                          alt={it.name}
-                          fill
-                          className="object-contain p-0.5"
-                          sizes="40px"
-                        />
-                      </div>
-                      <div>
-                        <p className="font-bold text-xs text-slate-900 leading-tight">{it.name}</p>
-                        <p className="text-[11px] text-slate-500 font-medium">
-                          {it.flavor} · {it.format}
-                        </p>
-                        <p className="text-[10px] font-mono text-slate-400">SKU: {it.sku}</p>
-                      </div>
-                    </div>
-                    <div className="text-right">
-                      <span className="font-bold text-xs text-slate-900">
-                        {it.quantity} x CHF {it.price.toFixed(2)}
-                      </span>
-                      <p className="font-black text-xs text-slate-900 font-heading">
-                        CHF {(it.price * it.quantity).toFixed(2)}
-                      </p>
-                    </div>
-                  </div>
-                ))}
+              <div className="flex items-center justify-between">
+                <h4 className="text-xs font-black uppercase tracking-wider text-slate-900 font-heading">
+                  Articles Commandés ({inspectingSale.items?.length || 0})
+                </h4>
+                {inspectingSale.items && inspectingSale.items.length > 0 && (
+                  <span className="text-[11px] font-bold text-slate-500">
+                    Total : {inspectingSale.items.reduce((acc, it) => acc + (it.quantity || 1), 0)} unité(s)
+                  </span>
+                )}
               </div>
+
+              {(!inspectingSale.items || inspectingSale.items.length === 0) ? (
+                <div className="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-center space-y-1">
+                  <p className="text-xs font-bold text-amber-900">Aucun article enregistré pour cette commande</p>
+                  <p className="text-[11px] text-amber-700">Les détails de chaque produit, photo, parfum et quantité apparaîtront automatiquement ici.</p>
+                </div>
+              ) : (
+                <div className="space-y-2 border border-slate-200 rounded-2xl p-3 bg-slate-50/50 max-h-[260px] overflow-y-auto">
+                  {inspectingSale.items.map((it, idx) => (
+                    <div key={idx} className="flex items-center justify-between p-2.5 bg-white rounded-xl border border-slate-200 shadow-xs">
+                      <div className="flex items-center gap-3">
+                        <div className="relative w-12 h-12 rounded-lg bg-slate-50 border border-slate-200 overflow-hidden shrink-0">
+                          <Image
+                            src={it.image || '/images/placeholder.webp'}
+                            alt={it.name}
+                            fill
+                            className="object-contain p-0.5"
+                            sizes="48px"
+                          />
+                        </div>
+                        <div>
+                          <p className="font-bold text-xs text-slate-900 leading-tight">{it.name}</p>
+                          <div className="flex flex-wrap items-center gap-1.5 mt-1">
+                            {it.flavor && (
+                              <span className="inline-block text-[10px] font-semibold bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">
+                                {it.flavor}
+                              </span>
+                            )}
+                            {it.format && (
+                              <span className="inline-block text-[10px] font-semibold bg-slate-100 text-slate-700 px-1.5 py-0.5 rounded">
+                                {it.format}
+                              </span>
+                            )}
+                            {it.sku && (
+                              <span className="text-[10px] font-mono text-slate-400">
+                                SKU: {it.sku}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                      </div>
+                      <div className="text-right shrink-0 pl-3">
+                        <span className="font-medium text-xs text-slate-500 block">
+                          {it.quantity} × CHF {Number(it.price).toFixed(2)}
+                        </span>
+                        <p className="font-black text-sm text-slate-900 font-heading">
+                          CHF {(Number(it.price) * Number(it.quantity || 1)).toFixed(2)}
+                        </p>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              )}
             </div>
 
             {/* Total Recap */}

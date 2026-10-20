@@ -70,12 +70,14 @@ function supabaseRowToSaleRecord(row: any): any {
     },
     seller: addr.seller || (isPos ? 'Boutique Genève (Caisse POS)' : 'Site Web Public (nutrifitness.ch)'),
     client: {
-      name: row.customer_name || 'Client',
-      phone: row.customer_phone || '',
-      email: row.customer_email || '',
-      address: addr.address || '',
+      name: row.customer_name || addr.name || 'Client',
+      phone: row.customer_phone || addr.phone || '',
+      email: row.customer_email || addr.email || '',
+      address: addr.address || addr.street || '',
+      street: addr.street || addr.address || '',
       city: addr.city || '',
-      postalCode: addr.postalCode || ''
+      postalCode: addr.postalCode || addr.postal_code || addr.zip || '',
+      country: addr.country || 'Suisse'
     },
     shipping: {
       method: addr.shippingMethod || (isPos ? 'store_pickup' : 'post_priority'),

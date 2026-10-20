@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
 import { stripe } from '@/lib/stripe';
+import { getAdminSupabase } from '@/lib/supabase';
 
 export async function POST(req: Request) {
   try {
@@ -27,6 +28,68 @@ export async function POST(req: Request) {
 
     if (!items || !Array.isArray(items) || items.length === 0) {
       return NextResponse.json({ error: 'Cart is empty.' }, { status: 400 });
+    }
+
+    // Pre-record pending order with full cart items into Supabase
+    try {
+      const supabase = getAdminSupabase();
+      const orderNum = String(orderNumber || `NF-${Date.now()}`);
+      const cleanItems = items.map((item: any) => {
+        const nameStr = typeof item.name === 'object' && item.name !== null 
+          ? ((item.name as any).fr || Object.values(item.name)[0] || 'Produit') 
+          : String(item.name || 'Produit');
+        const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
+          ? ((item.flavor as any).fr || '')
+          : (item.flavor ? String(item.flavor) : 'Standard');
+        const formatStr = typeof item.format === 'object' && item.format !== null
+          ? ((item.format as any).fr || '')
+          : (item.format || item.size ? String(item.format || item.size) : 'Standard');
+        const unitPrice = Number(item.price || 0);
+        const qty = Math.max(1, Number(item.quantity || 1));
+
+        return {
+          id: item.id || item.productId || '',
+          name: nameStr,
+          sku: item.sku || item.itemKey || '',
+          flavor: flavorStr,
+          format: formatStr,
+          price: unitPrice,
+          quantity: qty,
+          image: item.image || '/images/placeholder.webp',
+        };
+      });
+
+      const subtotalVal = cleanItems.reduce((acc: number, it: any) => acc + (it.price * it.quantity), 0);
+      const totalVal = subtotalVal + Number(shippingCost || 0);
+
+      await supabase.from('orders').upsert({
+        order_number: orderNum,
+        customer_name: customerName || 'Client',
+        customer_email: customerEmail || '',
+        customer_phone: customerPhone || '',
+        total_amount: totalVal,
+        currency: (currency || 'CHF').toUpperCase(),
+        payment_method: (paymentMethod || 'card').toUpperCase(),
+        status: 'pending',
+        items: cleanItems,
+        shipping_address: {
+          name: customerName || '',
+          email: customerEmail || '',
+          phone: customerPhone || '',
+          street: shippingAddress?.street || '',
+          address: shippingAddress?.street || '',
+          city: shippingAddress?.city || '',
+          postalCode: shippingAddress?.postalCode || '',
+          country: shippingAddress?.country || 'Suisse',
+          shippingCost: Number(shippingCost) || 0,
+          shippingMethod: 'post_priority',
+          shippingLabel: 'PostPac Priority (La Poste Suisse 24h)',
+          subtotal: subtotalVal,
+          couponCode: couponCode || ''
+        }
+      }, { onConflict: 'order_number' });
+    } catch (dbErr) {
+      console.warn('[Checkout API] Could not pre-record pending order:', dbErr);
     }
 
     const host = req.headers.get('host') || 'nutrifitness.ch';

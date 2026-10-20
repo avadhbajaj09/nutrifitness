@@ -128,7 +128,7 @@ export async function POST(req: Request) {
 
         const { data: existing, error: fetchErr } = await supabase
           .from('orders')
-          .select('id, status, shipping_address')
+          .select('id, status, items, shipping_address')
           .eq('order_number', orderNum)
           .maybeSingle();
 
@@ -136,6 +136,44 @@ export async function POST(req: Request) {
           console.error(`[Stripe Webhook] Supabase error fetching order ${orderNum}:`, fetchErr);
           // Return 500 so Stripe retries when database recovers
           return NextResponse.json({ error: 'Database temporary error' }, { status: 500 });
+        }
+
+        // Retrieve purchased items from Stripe line items as fallback
+        let sessionItems: any[] = [];
+        try {
+          const lineItems = await stripe.checkout.sessions.listLineItems(session.id, {
+            limit: 100,
+            expand: ['data.price.product'],
+          });
+          for (const item of (lineItems.data || [])) {
+            const product = item.price?.product as any;
+            const desc = item.description || '';
+            if (
+              desc.toLowerCase().includes('frais de livraison') ||
+              desc.toLowerCase().includes('frais de port') ||
+              desc.toLowerCase().includes('expédition') ||
+              product?.name?.toLowerCase().includes('frais de')
+            ) {
+              continue;
+            }
+            const img = Array.isArray(product?.images) && product.images.length > 0 ? product.images[0] : '';
+            const meta = product?.metadata || {};
+            const descParts = (product?.description || '').split('·').map((s: string) => s.trim());
+            const unitPrice = item.amount_total && item.quantity ? (item.amount_total / item.quantity) / 100 : ((item.price?.unit_amount || 0) / 100);
+
+            sessionItems.push({
+              id: meta.product_id || product?.id || `item-${item.id}`,
+              name: product?.name || desc || 'Produit',
+              sku: meta.sku || item.price?.id || '',
+              flavor: descParts[0] || 'Standard',
+              format: descParts[1] || 'Standard',
+              price: unitPrice,
+              quantity: item.quantity || 1,
+              image: img || '/images/placeholder.webp',
+            });
+          }
+        } catch (itemErr) {
+          console.warn('[Stripe Webhook] Error retrieving session line items:', itemErr);
         }
 
         if (existing) {
@@ -146,18 +184,25 @@ export async function POST(req: Request) {
 
           // Update pending/unpaid order to in_processing
           const currentAddress = typeof existing.shipping_address === 'object' && existing.shipping_address ? existing.shipping_address : {};
+          const updatePayload: any = {
+            status: 'in_processing',
+            payment_method: paymentMethod,
+            shipping_address: {
+              ...currentAddress,
+              stripeSessionId: session.id,
+              confirmedByWebhook: true,
+              webhookConfirmedAt: new Date().toISOString(),
+            }
+          };
+
+          // If existing order was created with empty items, fill with sessionItems
+          if ((!existing.items || (Array.isArray(existing.items) && existing.items.length === 0)) && sessionItems.length > 0) {
+            updatePayload.items = sessionItems;
+          }
+
           const { error: updateErr } = await supabase
             .from('orders')
-            .update({
-              status: 'in_processing',
-              payment_method: paymentMethod,
-              shipping_address: {
-                ...currentAddress,
-                stripeSessionId: session.id,
-                confirmedByWebhook: true,
-                webhookConfirmedAt: new Date().toISOString(),
-              }
-            })
+            .update(updatePayload)
             .eq('order_number', orderNum);
 
           if (updateErr) {
@@ -187,7 +232,7 @@ export async function POST(req: Request) {
               confirmedByWebhook: true,
               webhookConfirmedAt: new Date().toISOString(),
             },
-            items: [],
+            items: sessionItems,
           });
 
           if (insertErr) {
