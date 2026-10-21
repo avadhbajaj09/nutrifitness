@@ -212,10 +212,10 @@ export default function HeroSlider() {
       </section>
 
       {/* ============================================================
-          MOBILE HERO CAROUSEL (< 768px only, full-bleed images, auto-slide & swipe)
+          MOBILE HERO SLIDER (< 768px only, same horizontal wide images as desktop, auto-slide & swipe)
          ============================================================ */}
       <section 
-        className="block md:hidden relative rounded-2xl overflow-hidden bg-black border border-white/10 mb-6 shadow-xl select-none"
+        className="block md:hidden relative rounded-2xl overflow-hidden bg-[#0A0A0A] border border-white/10 mb-6 shadow-xl select-none"
         aria-label="Bannières et offres mobiles"
         onTouchStart={() => setIsPaused(true)}
         onTouchEnd={() => setIsPaused(false)}
@@ -223,63 +223,48 @@ export default function HeroSlider() {
         <div 
           ref={mobileTrackRef}
           onScroll={handleMobileScroll}
-          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar w-full aspect-[4/5] max-h-[440px]"
+          className="flex overflow-x-auto snap-x snap-mandatory scroll-smooth no-scrollbar w-full"
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {slides.map((s, idx) => (
-            <div key={s.id} className="w-full shrink-0 snap-center relative h-full flex flex-col justify-end">
-              {/* Full-bleed banner image */}
-              <Link href={s.link} className="absolute inset-0 block" aria-label={`Voir ${s.productName}`}>
+            <div key={s.id} className="w-full shrink-0 snap-center relative flex flex-col">
+              {/* Horizontal Wide Banner Image (Identical to Desktop) */}
+              <Link href={s.link} className="relative w-full aspect-[1600/670] block overflow-hidden bg-black" aria-label={`Voir ${s.productName}`}>
                 <Image
-                  src={s.mobileImage}
+                  src={s.wideImage}
                   alt={s.productName}
                   fill
                   priority={idx === 0}
-                  sizes="(max-width: 768px) 100vw, 450px"
+                  sizes="(max-width: 768px) 100vw, 600px"
                   className="object-cover object-center"
                 />
-                <div className="absolute inset-x-0 bottom-0 h-36 bg-gradient-to-t from-black/95 via-black/60 to-transparent pointer-events-none" />
               </Link>
 
-              {/* Bottom overlay with text & CTA */}
-              <div className="relative z-10 p-3.5 space-y-2 pointer-events-auto">
-                <div className="flex items-center gap-1.5 flex-wrap">
-                  <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 rounded-full bg-[#F80404] text-black">
-                    {s.badge}
-                  </span>
-                  <span className="text-[10px] text-white/90 font-bold truncate">
-                    {s.tag}
-                  </span>
+              {/* Bottom bar with brand, title & CTA */}
+              <div className="p-3 bg-[#141414] border-t border-white/10 flex items-center justify-between gap-2.5">
+                <div className="min-w-0 flex-1">
+                  <div className="flex items-center gap-1.5 mb-0.5">
+                    <span className="text-[9px] font-black uppercase text-[#F80404] tracking-wider truncate">
+                      {s.brand}
+                    </span>
+                    <span className="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 truncate">
+                      100% Stock Suisse
+                    </span>
+                  </div>
+                  <h3 className="text-xs font-bold text-white truncate font-heading">
+                    {s.productName}
+                  </h3>
                 </div>
-                <h2 className="text-sm font-black text-white uppercase font-heading leading-tight drop-shadow line-clamp-1">
-                  {s.productName}
-                </h2>
-                <div className="pt-0.5">
-                  <Link
-                    href={s.link}
-                    className="w-full min-h-[42px] px-4 py-2 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-[11px] rounded-xl flex items-center justify-center gap-1.5 transition-all shadow-lg active:scale-95 text-center"
-                  >
-                    <span>{s.ctaText}</span>
-                    <ArrowRight className="w-3.5 h-3.5" />
-                  </Link>
-                </div>
+
+                <Link
+                  href={s.link}
+                  className="shrink-0 px-3.5 py-2 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-[10px] rounded-xl flex items-center justify-center gap-1 transition-all shadow-md active:scale-95"
+                >
+                  <span>{s.ctaText}</span>
+                  <ArrowRight className="w-3 h-3" />
+                </Link>
               </div>
             </div>
-          ))}
-        </div>
-
-        {/* Mobile Pagination Dots */}
-        <div className="absolute top-3 right-3 z-20 flex items-center gap-1.5 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-full border border-white/10">
-          {slides.map((_, idx) => (
-            <button
-              key={idx}
-              type="button"
-              onClick={() => scrollToMobileSlide(idx)}
-              className={`h-1.5 rounded-full transition-all duration-300 ${
-                mobileSlide === idx ? 'w-4 bg-[#F80404]' : 'w-1.5 bg-white/40'
-              }`}
-              aria-label={`Aller au slide ${idx + 1}`}
-            />
           ))}
         </div>
       </section>
