@@ -32,6 +32,7 @@ import {
   trackMetaInitiateCheckout, 
   trackMetaPurchase 
 } from '@/lib/analytics';
+import { TWINT_CONFIG } from '@/lib/twint';
 
 interface SupportedCountry {
   code: string;
@@ -824,8 +825,8 @@ export default function CheckoutPage() {
           paymentMethod: 'twint',
           paymentDetails: {
             reference: `TWINT-${generatedOrderNum}`,
-            twintStoreUuid: '284f5777-02b6-4718-9f87-bbb1c4224429',
-            twintStoreName: '1 NUTRIFIT, www.nutrifitness.ch',
+            twintStoreUuid: TWINT_CONFIG.storeUuid,
+            twintStoreName: TWINT_CONFIG.merchantName,
             notes: `Commande validée par TWINT Suisse (${formatPrice(grandTotal)})`
           },
           status: 'in_processing'
@@ -1648,7 +1649,7 @@ export default function CheckoutPage() {
                           <div className="flex flex-col sm:flex-row items-center gap-4">
                             <div className="p-2.5 bg-white rounded-xl shrink-0 shadow-md">
                               <img
-                                src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://pay.twint.ch/?storeUUID=284f5777-02b6-4718-9f87-bbb1c4224429&amount=${grandTotal.toFixed(2)}&currency=CHF`)}`}
+                                src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://pay.twint.ch/?storeUUID=${TWINT_CONFIG.storeUuid}&amount=${grandTotal.toFixed(2)}&currency=CHF`)}`}
                                 alt="Code QR TWINT"
                                 className="w-32 h-32 object-contain"
                               />
@@ -1661,10 +1662,10 @@ export default function CheckoutPage() {
                               <p className="text-[11px] text-white/70 leading-relaxed">
                                 1. Ouvrez votre app TWINT sur smartphone<br/>
                                 2. Scannez ce code QR ou cliquez ci-dessous<br/>
-                                3. Confirmez le montant de <strong className="text-white">CHF {grandTotal.toFixed(2)}</strong> pour <strong className="text-white">1 NUTRIFIT, www.nutrifitness.ch</strong>
+                                3. Confirmez le montant de <strong className="text-white">CHF {grandTotal.toFixed(2)}</strong> pour <strong className="text-white">{TWINT_CONFIG.merchantName}</strong>
                               </p>
                               <a
-                                href={`twint://app/pay?storeUUID=284f5777-02b6-4718-9f87-bbb1c4224429&amount=${grandTotal.toFixed(2)}&currency=CHF`}
+                                href={`twint://app/pay?storeUUID=${TWINT_CONFIG.storeUuid}&amount=${grandTotal.toFixed(2)}&currency=CHF`}
                                 className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#95d600] hover:bg-[#85c000] text-black font-black text-[11px] uppercase tracking-wider rounded-lg transition-colors mt-1"
                               >
                                 <span>📱 Ouvrir l&apos;App TWINT sur mobile</span>
@@ -1672,8 +1673,8 @@ export default function CheckoutPage() {
                             </div>
                           </div>
                           <div className="text-[10px] text-white/50 border-t border-white/10 pt-2 flex items-center justify-between">
-                            <span>Terminal : 1 NUTRIFIT, www.nutrifitness.ch</span>
-                            <span className="font-mono">UUID: 284f5777-02b6-4718-9f87-bbb1c4224429</span>
+                            <span>Terminal : {TWINT_CONFIG.merchantName}</span>
+                            <span className="font-mono">UUID: {TWINT_CONFIG.storeUuid}</span>
                           </div>
                         </div>
                       )}
