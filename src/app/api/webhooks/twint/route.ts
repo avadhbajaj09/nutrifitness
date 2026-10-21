@@ -31,11 +31,24 @@ export async function POST(req: Request) {
     }
 
     const authHeader = req.headers.get('authorization') || '';
-    const secretHeader = req.headers.get('x-twint-signature') || req.headers.get('x-webhook-secret') || '';
+    const secretHeader = 
+      req.headers.get('x-twint-signature') || 
+      req.headers.get('x-webhook-secret') || 
+      req.headers.get('x-webhook-key') ||
+      req.headers.get('x-api-key') ||
+      (authHeader.startsWith('Bearer ') ? authHeader.slice(7) : authHeader) ||
+      payload.secret ||
+      payload.webhook_secret ||
+      payload.key ||
+      '';
 
-    // Validate secret if configured
-    if (TWINT_CONFIG.webhookSecret && secretHeader && secretHeader !== TWINT_CONFIG.webhookSecret) {
-      console.warn('[TWINT Webhook] Webhook secret mismatch:', secretHeader);
+    const isSecretValid = !TWINT_CONFIG.webhookSecret || !secretHeader || secretHeader === TWINT_CONFIG.webhookSecret;
+    if (TWINT_CONFIG.webhookSecret && secretHeader) {
+      if (secretHeader === TWINT_CONFIG.webhookSecret) {
+        console.log('[TWINT Webhook] Webhook secret verified successfully');
+      } else {
+        console.warn('[TWINT Webhook] Webhook secret mismatch:', secretHeader);
+      }
     }
 
     const orderNumber = payload.orderNumber || payload.order_id || payload.orderId || payload.reference;
