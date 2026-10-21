@@ -184,7 +184,12 @@ export async function POST(req: Request) {
       },
       success_url: `${baseUrl}/commande/?session_id={CHECKOUT_SESSION_ID}&order_id=${orderNumber || ''}`,
       cancel_url: `${baseUrl}/commande/?canceled=true`,
-      // Stripe automatically presents enabled payment methods (incl. Card, Apple Pay, TWINT in CHF) based on Dashboard configuration
+      payment_method_options: normalizedCurrency === 'chf' ? {
+        card: { request_three_d_secure: 'automatic' },
+        twint: {},
+      } : {
+        card: { request_three_d_secure: 'automatic' },
+      },
     };
 
     // Apply pre-selected coupon or allow typing promo code in Stripe Checkout

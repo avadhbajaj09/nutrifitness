@@ -815,81 +815,7 @@ export default function CheckoutPage() {
       paymentType: paymentMethod,
     });
 
-    // 3. Process payment based on selected mode
-    if (paymentMethod === 'twint') {
-      setIsRedirectingToStripe(true);
-      setStripeError(null);
-      try {
-        const twintOrderPayload = {
-          ...newOrder,
-          paymentMethod: 'twint',
-          paymentDetails: {
-            reference: `TWINT-${generatedOrderNum}`,
-            twintStoreUuid: TWINT_CONFIG.storeUuid,
-            twintStoreName: TWINT_CONFIG.merchantName,
-            notes: `Commande validée par TWINT Suisse (${formatPrice(grandTotal)})`
-          },
-          status: 'in_processing'
-        };
-
-        // Post order to database
-        await fetch('/api/orders/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify(twintOrderPayload)
-        });
-
-        // Save to POS sales local buffer
-        try {
-          const stored = localStorage.getItem('nutrifitness_pos_sales');
-          const currentList = stored ? JSON.parse(stored) : [];
-          localStorage.setItem('nutrifitness_pos_sales', JSON.stringify([twintOrderPayload, ...currentList]));
-          window.dispatchEvent(new Event('storage'));
-        } catch {}
-
-        // Track purchase
-        trackPurchase({
-          transaction_id: generatedOrderNum,
-          value: grandTotal,
-          shipping: totalShippingCost,
-          tax: vatEst,
-          currency: activeCurr,
-          items: purchaseItems,
-        });
-
-        trackMetaPurchase({
-          transaction_id: generatedOrderNum,
-          eventId: generatedOrderNum,
-          value: grandTotal,
-          currency: activeCurr,
-          items: purchaseItems,
-        });
-
-        const promisedDate = isMixedCart
-          ? (ptPromiseDate > genevaPromiseDate ? ptPromiseDate : genevaPromiseDate)
-          : (portugalItems.length > 0 ? ptPromiseDate : genevaPromiseDate);
-
-        const validGtins = (cart || [])
-          .map(item => ({ gtin: (item as any).gtin || (item as any).barcode }))
-          .filter((it): it is { gtin: string } => Boolean(it.gtin));
-
-        setConfirmedCountry(customerCountry || 'CH');
-        setConfirmedDeliveryDate(promisedDate || '1–3 jours ouvrables');
-        setConfirmedProducts(validGtins);
-
-        clearCart();
-        setIsRedirectingToStripe(false);
-        setIsSuccess(true);
-        window.scrollTo({ top: 0, behavior: 'smooth' });
-        return;
-      } catch (err: any) {
-        setIsRedirectingToStripe(false);
-        setStripeError('Erreur lors de l\'enregistrement de votre commande TWINT. Veuillez réessayer.');
-        return;
-      }
-    }
-
-    // 4. For Card / PostFinance: Redirect to live Stripe Hosted Checkout
+    // 3. Process payment through Stripe Hosted Checkout (Card, TWINT, PostFinance)
     setIsRedirectingToStripe(true);
     setStripeError(null);
     try {
@@ -1645,36 +1571,24 @@ export default function CheckoutPage() {
                       <p className="text-white/60">Payez en 1 clic avec l&apos;application TWINT de votre banque suisse (UBS, PostFinance, BCGE, Raiffeisen, etc.).</p>
 
                       {paymentMethod === 'twint' && (
-                        <div className="mt-3 p-4 bg-black/70 rounded-xl border border-white/10 space-y-3">
-                          <div className="flex flex-col sm:flex-row items-center gap-4">
-                            <div className="p-2.5 bg-white rounded-xl shrink-0 shadow-md">
-                              <img
-                                src={`https://api.qrserver.com/v1/create-qr-code/?size=160x160&data=${encodeURIComponent(`https://pay.twint.ch/?storeUUID=${TWINT_CONFIG.storeUuid}&amount=${grandTotal.toFixed(2)}&currency=CHF`)}`}
-                                alt="Code QR TWINT"
-                                className="w-32 h-32 object-contain"
-                              />
+                        <div className="mt-3 p-3.5 bg-black/60 rounded-xl border border-white/10 space-y-2.5">
+                          <div className="flex items-start gap-3">
+                            <div className="px-2 py-1 bg-white rounded-lg shrink-0 flex items-center justify-center">
+                              <span className="text-black font-black text-[11px] tracking-wide">TWINT</span>
                             </div>
-                            <div className="space-y-1.5 text-xs text-white/80">
-                              <p className="font-bold text-white text-sm flex items-center gap-2">
-                                <span className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse" />
-                                <span>Paiement TWINT Officiel</span>
+                            <div className="space-y-1 text-xs text-white/80">
+                              <p className="font-bold text-white flex items-center gap-2">
+                                <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse" />
+                                <span>Paiement TWINT officiel via Stripe</span>
                               </p>
                               <p className="text-[11px] text-white/70 leading-relaxed">
-                                1. Ouvrez votre app TWINT sur smartphone<br/>
-                                2. Scannez ce code QR ou cliquez ci-dessous<br/>
-                                3. Confirmez le montant de <strong className="text-white">CHF {grandTotal.toFixed(2)}</strong> pour <strong className="text-white">{TWINT_CONFIG.merchantName}</strong>
+                                En cliquant sur le bouton ci-dessous, vous serez redirigé vers l&apos;interface sécurisée Stripe. Vous pourrez scanner le QR code TWINT officiel ou valider directement dans votre application TWINT bancaire (UBS, PostFinance, BCGE, Raiffeisen, etc.).
                               </p>
-                              <a
-                                href={`twint://app/pay?storeUUID=${TWINT_CONFIG.storeUuid}&amount=${grandTotal.toFixed(2)}&currency=CHF`}
-                                className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#95d600] hover:bg-[#85c000] text-black font-black text-[11px] uppercase tracking-wider rounded-lg transition-colors mt-1"
-                              >
-                                <span>📱 Ouvrir l&apos;App TWINT sur mobile</span>
-                              </a>
                             </div>
                           </div>
-                          <div className="text-[10px] text-white/50 border-t border-white/10 pt-2 flex items-center justify-between">
-                            <span>Terminal : {TWINT_CONFIG.merchantName}</span>
-                            <span className="font-mono">UUID: {TWINT_CONFIG.storeUuid}</span>
+                          <div className="text-[10px] text-white/40 border-t border-white/10 pt-2 flex items-center justify-between">
+                            <span>Validation instantanée &amp; automatisée</span>
+                            <span>🔒 Cryptage bancaire SSL</span>
                           </div>
                         </div>
                       )}
@@ -1853,13 +1767,13 @@ export default function CheckoutPage() {
             {isRedirectingToStripe ? (
               <>
                 <div className="w-4 h-4 border-2 border-black border-t-transparent rounded-full animate-spin" />
-                <span>{paymentMethod === 'twint' ? 'Validation de votre commande TWINT...' : 'Connexion sécurisée à Stripe...'}</span>
+                <span>{paymentMethod === 'twint' ? 'Redirection sécurisée vers TWINT (Stripe)...' : 'Connexion sécurisée à Stripe...'}</span>
               </>
             ) : (
               <>
                 <span>
                   {paymentMethod === 'twint'
-                    ? 'Payer avec TWINT'
+                    ? 'Payer avec TWINT via Stripe'
                     : paymentMethod === 'postfinance'
                     ? 'Payer avec PostFinance'
                     : 'Payer par Carte Bancaire'} ({formatPrice(grandTotal)})
