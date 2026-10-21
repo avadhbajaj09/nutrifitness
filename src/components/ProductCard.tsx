@@ -157,14 +157,14 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         />
 
         {/* Price & Add to Cart Row */}
-        <div className="mt-auto pt-2.5 sm:pt-3 border-t border-white/10 flex items-center justify-between gap-2 sm:gap-3">
-          <div className="min-w-0">
+        <div className="mt-auto pt-2 sm:pt-3 border-t border-white/10 flex items-center justify-between gap-1.5 sm:gap-3">
+          <div className="min-w-0 flex-1">
             <div className="flex items-baseline gap-1 sm:gap-1.5 flex-wrap">
-              <span className="text-sm sm:text-lg font-black text-white font-heading">
+              <span className="text-[11px] sm:text-lg font-black text-white font-heading whitespace-nowrap tracking-tight leading-none">
                 {pricing.formatted}
               </span>
               {pricing.formattedCompareAt && (
-                <span className="text-[10px] sm:text-xs text-white/40 line-through">
+                <span className="text-[9px] sm:text-xs text-white/40 line-through whitespace-nowrap">
                   {pricing.formattedCompareAt}
                 </span>
               )}
@@ -206,11 +206,11 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
             )}
           </div>
 
-          {/* Mobile Actions: 44px tap target, clear "Ajouter" label + cart icon, instant feedback */}
+          {/* Mobile Actions: Compact button, prevents price collision */}
           <div className="sm:hidden shrink-0">
             {!isDeliverable ? (
               <span 
-                className="inline-flex items-center justify-center min-h-[44px] px-2.5 py-2 text-[10px] font-bold uppercase tracking-wider text-white/40 bg-white/5 rounded-xl border border-white/10 cursor-not-allowed text-center"
+                className="inline-flex items-center justify-center h-8 px-2 text-[9px] font-bold uppercase tracking-wider text-white/40 bg-white/5 rounded-lg border border-white/10 cursor-not-allowed text-center"
               >
                 Indisponible
               </span>
@@ -218,7 +218,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               <button 
                 type="button"
                 onClick={handleAddToCart}
-                className={`inline-flex items-center justify-center min-h-[44px] min-w-[44px] px-2.5 py-2 text-[11px] font-black uppercase tracking-wider rounded-xl transition-all shadow-sm active:scale-95 gap-1.5 ${
+                className={`inline-flex items-center justify-center h-8 px-2 text-[10px] font-black uppercase tracking-wider rounded-lg transition-all shadow-sm active:scale-95 gap-1 shrink-0 ${
                   isAdded
                     ? 'bg-emerald-500 text-black'
                     : 'bg-[#F80404] hover:bg-[#FF3D00] text-black'
@@ -227,14 +227,14 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               >
                 {isAdded ? (
                   <>
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="3" d="M5 13l4 4L19 7" />
                     </svg>
                     <span>Ajouté</span>
                   </>
                 ) : (
                   <>
-                    <svg className="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                    <svg className="w-3 h-3" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
                     </svg>
                     <span>Ajouter</span>

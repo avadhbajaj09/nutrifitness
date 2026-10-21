@@ -101,35 +101,35 @@ export default function ShopByGoal() {
       </div>
 
       {/* ============================================================
-          MOBILE: 2-COLUMN COMPACT GRID (< 768px)
+          MOBILE: 2-COLUMN VERTICAL PORTRAIT GRID (< 768px)
          ============================================================ */}
-      <div className="md:hidden grid grid-cols-2 gap-2.5">
+      <div className="md:hidden grid grid-cols-2 gap-3">
         {goals.map((goal, idx) => (
           <Link
             key={idx}
             href={goal.link}
-            className="group relative rounded-xl overflow-hidden h-[130px] p-2.5 flex flex-col justify-between border border-white/10 bg-[#121212] active:scale-[0.98] transition-transform shadow-md"
+            className="group relative rounded-2xl overflow-hidden aspect-[3/4] min-h-[220px] p-3 flex flex-col justify-between border border-white/10 bg-[#121212] active:scale-[0.98] transition-transform shadow-lg"
           >
             <Image
               src={goal.image}
               alt={`${goal.title} - Objectif Sportif`}
               fill
-              sizes="(max-width: 640px) 50vw, 200px"
-              className="object-cover object-center filter brightness-[0.5] contrast-[1.05] group-hover:scale-105 transition-transform duration-500"
+              sizes="(max-width: 640px) 50vw, 250px"
+              className="object-cover object-top filter brightness-[0.6] contrast-[1.05] group-hover:scale-105 transition-transform duration-500"
             />
-            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/60 to-transparent pointer-events-none" />
+            <div className="absolute inset-0 bg-gradient-to-t from-black via-black/50 to-transparent pointer-events-none" />
 
             <div className="relative z-10">
-              <span className="inline-block px-1.5 py-0.5 bg-black/80 border border-[#F80404]/60 text-[8px] font-black uppercase text-[#F80404] tracking-wider rounded">
+              <span className="inline-block px-2 py-0.5 bg-black/80 backdrop-blur-sm border border-[#F80404]/70 text-[9px] font-black uppercase text-[#F80404] tracking-wider rounded-md">
                 {goal.tag}
               </span>
             </div>
 
-            <div className="relative z-10">
-              <h3 className="text-xs font-black text-white uppercase font-heading leading-tight line-clamp-1">
+            <div className="relative z-10 space-y-1">
+              <h3 className="text-xs font-black text-white uppercase font-heading leading-snug line-clamp-2 drop-shadow">
                 {goal.title}
               </h3>
-              <p className="text-[10px] text-white/70 line-clamp-2 mt-0.5 leading-snug">
+              <p className="text-[10px] text-white/80 line-clamp-2 leading-relaxed">
                 {goal.desc}
               </p>
             </div>

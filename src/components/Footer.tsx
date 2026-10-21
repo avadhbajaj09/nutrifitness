@@ -10,11 +10,6 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   const { showToast } = useStore();
   const [email, setEmail] = useState('');
-  const [openSection, setOpenSection] = useState<string | null>(null);
-
-  const toggleSection = (sec: string) => {
-    setOpenSection(prev => prev === sec ? null : sec);
-  };
 
   const handleNewsletterSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -24,12 +19,12 @@ export default function Footer() {
   };
 
   return (
-    <footer className="bg-[#050505] text-white/80 pt-10 sm:pt-16 pb-12 border-t border-white/10 mt-12 sm:mt-20">
+    <footer className="bg-[#050505] text-white/80 pt-10 sm:pt-16 pb-[calc(56px+env(safe-area-inset-bottom,20px)+48px)] md:pb-12 border-t border-white/10 mt-12 sm:mt-20">
       <div className="max-w-7xl mx-auto px-4">
-        {/* Mobile Accordion Navigation (Section P) */}
-        <div className="md:hidden space-y-2 mb-8">
-          {/* Logo & Entity intro */}
-          <div className="mb-6">
+        {/* Mobile Full Footer Content (< 768px) */}
+        <div className="md:hidden space-y-6 mb-8">
+          {/* Logo & Physical Showroom Details */}
+          <div>
             <Link href="/" className="inline-block mb-3">
               <div className="relative h-9 w-40">
                 <Image 
@@ -40,95 +35,132 @@ export default function Footer() {
                 />
               </div>
             </Link>
-            <p className="text-xs text-white/60 leading-relaxed">
-              Boutique suisse officielle de nutrition sportive &amp; compléments alimentaires à Genève.
+            <p className="text-xs text-white/60 leading-relaxed mb-3">
+              Boutique suisse officielle de nutrition sportive, protéines pures et compléments haute performance.
             </p>
+            <div className="text-xs text-white/70 space-y-1.5 bg-white/5 border border-white/10 p-3 rounded-xl">
+              <p className="font-bold text-white flex items-center gap-1.5">
+                <span className="w-2 h-2 rounded-full bg-[#F80404] inline-block" />
+                Showroom physique à Genève :
+              </p>
+              <p className="text-white/80">{COMPANY.address.street}, {COMPANY.address.postalCode} Genève</p>
+              <div className="pt-1 flex flex-wrap gap-x-4 gap-y-1">
+                <a href={`tel:${COMPANY.contact.phone.replace(/\s+/g, '')}`} className="text-white hover:text-[#F80404] font-medium flex items-center gap-1">
+                  📞 {COMPANY.contact.phoneFormatted}
+                </a>
+                <a href={`mailto:${COMPANY.contact.email}`} className="text-white hover:text-[#F80404] font-medium flex items-center gap-1">
+                  ✉️ {COMPANY.contact.email}
+                </a>
+              </div>
+              <p className="text-[10px] text-white/40 pt-0.5">IDE / UID : {COMPANY.uid}</p>
+            </div>
           </div>
 
-          {/* Group 1: Boutique */}
-          <div className="border-b border-white/10">
-            <button
-              type="button"
-              onClick={() => toggleSection('boutique')}
-              className="w-full min-h-[48px] flex items-center justify-between text-xs font-black uppercase tracking-wider text-white py-3 text-left"
-            >
-              <span>Boutique &amp; Produits</span>
-              <span className="text-sm font-bold text-white/60">{openSection === 'boutique' ? '−' : '+'}</span>
-            </button>
-            {openSection === 'boutique' && (
-              <ul className="pb-4 space-y-1 text-xs text-white/70">
-                <li><Link href="/categorie/proteines/" className="min-h-[44px] flex items-center hover:text-[#F80404]">Protéines &amp; Whey</Link></li>
-                <li><Link href="/categorie/creatine/" className="min-h-[44px] flex items-center hover:text-[#F80404]">Créatines (Creapure®)</Link></li>
-                <li><Link href="/categorie/gainers-prise-de-masse/" className="min-h-[44px] flex items-center hover:text-[#F80404]">Gainers &amp; Prise de masse</Link></li>
-                <li><Link href="/categorie/bcaa-acides-amines/" className="min-h-[44px] flex items-center hover:text-[#F80404]">BCAA &amp; Acides aminés</Link></li>
-                <li><Link href="/marques/" className="min-h-[44px] flex items-center hover:text-[#F80404]">Toutes les Marques</Link></li>
-                <li><Link href="/boutique/" className="min-h-[44px] flex items-center font-bold text-[#F80404]">Voir toute la boutique →</Link></li>
-              </ul>
-            )}
+          {/* 2-Column Links Grid: all links fully visible without hiding */}
+          <div className="grid grid-cols-2 gap-5 pt-1">
+            {/* Column 1 */}
+            <div className="space-y-5">
+              {/* Boutique & Produits */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-wider text-[#F80404] mb-2.5 font-heading">
+                  Boutique
+                </h4>
+                <ul className="space-y-2 text-xs text-white/70">
+                  <li><Link href="/categorie/proteines/" className="hover:text-white transition-colors block py-0.5">Protéines &amp; Whey</Link></li>
+                  <li><Link href="/categorie/creatine/" className="hover:text-white transition-colors block py-0.5">Créatines (Creapure®)</Link></li>
+                  <li><Link href="/categorie/gainers-prise-de-masse/" className="hover:text-white transition-colors block py-0.5">Gainers &amp; Prise de masse</Link></li>
+                  <li><Link href="/categorie/bcaa-acides-amines/" className="hover:text-white transition-colors block py-0.5">BCAA &amp; Acides aminés</Link></li>
+                  <li><Link href="/marques/" className="hover:text-white transition-colors block py-0.5">Toutes les Marques</Link></li>
+                  <li><Link href="/boutique/" className="text-[#F80404] font-bold block py-0.5">Voir toute la boutique →</Link></li>
+                </ul>
+              </div>
+
+              {/* Conseils & Coaching */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-wider text-[#F80404] mb-2.5 font-heading">
+                  Conseils
+                </h4>
+                <ul className="space-y-2 text-xs text-white/70">
+                  <li><Link href="/coaching-nutritionnel-personnalise/" className="font-bold text-white hover:text-[#F80404] block py-0.5">✦ Coaching Personnalisé</Link></li>
+                  <li><Link href="/guide-des-complements-alimentaires/" className="font-bold text-[#95d600] hover:underline block py-0.5">✦ Guide Ebook (66p PDF)</Link></li>
+                  <li><Link href="/blog/" className="hover:text-white block py-0.5">Blog Scientifique (20 dossiers)</Link></li>
+                  <li><Link href="/quel-complement-choisir/" className="hover:text-white block py-0.5">Quel complément choisir ?</Link></li>
+                  <li><Link href="/faq/" className="hover:text-white block py-0.5">Centre d&apos;aide &amp; FAQ</Link></li>
+                </ul>
+              </div>
+            </div>
+
+            {/* Column 2 */}
+            <div className="space-y-5">
+              {/* Showroom & Services */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-wider text-[#F80404] mb-2.5 font-heading">
+                  Services
+                </h4>
+                <ul className="space-y-2 text-xs text-white/70">
+                  <li><Link href="/magasin-geneve/" className="hover:text-white block py-0.5">📍 Showroom Genève</Link></li>
+                  <li><Link href="/click-and-collect/" className="text-white font-bold hover:text-[#F80404] block py-0.5">⚡ Click &amp; Collect (2h)</Link></li>
+                  <li><Link href="/livraison/" className="hover:text-white block py-0.5">Livraison 24h La Poste</Link></li>
+                  <li><Link href="/paiement/" className="hover:text-white block py-0.5">Paiement TWINT &amp; Cartes</Link></li>
+                  <li><Link href="/retours/" className="hover:text-white block py-0.5">Retours 14 jours</Link></li>
+                  <li><Link href="/commande/" className="hover:text-white block py-0.5">Suivi de commande</Link></li>
+                </ul>
+              </div>
+
+              {/* Légal & Conformité */}
+              <div>
+                <h4 className="text-[11px] font-black uppercase tracking-wider text-[#F80404] mb-2.5 font-heading">
+                  Légal
+                </h4>
+                <ul className="space-y-2 text-xs text-white/70">
+                  <li><Link href="/mentions-legales/" className="hover:text-white block py-0.5">Mentions Légales</Link></li>
+                  <li><Link href="/cgv/" className="hover:text-white block py-0.5">Conditions Générales</Link></li>
+                  <li><Link href="/qualite-conservation/" className="hover:text-white block py-0.5">Qualité &amp; DDM</Link></li>
+                  <li><Link href="/cookies/" className="hover:text-white block py-0.5">Gestion des Cookies</Link></li>
+                  <li>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        if (typeof window !== 'undefined') {
+                          window.dispatchEvent(new CustomEvent('openCookieConsent'));
+                        }
+                      }}
+                      className="hover:text-[#F80404] transition-colors text-left text-white/50 text-[11px] pt-1"
+                    >
+                      Paramètres cookies
+                    </button>
+                  </li>
+                </ul>
+              </div>
+            </div>
           </div>
 
-          {/* Group 2: Informations & Services */}
-          <div className="border-b border-white/10">
-            <button
-              type="button"
-              onClick={() => toggleSection('services')}
-              className="w-full min-h-[48px] flex items-center justify-between text-xs font-black uppercase tracking-wider text-white py-3 text-left"
-            >
-              <span>Showroom &amp; Livraison</span>
-              <span className="text-sm font-bold text-white/60">{openSection === 'services' ? '−' : '+'}</span>
-            </button>
-            {openSection === 'services' && (
-              <ul className="pb-4 space-y-1 text-xs text-white/70">
-                <li><Link href="/magasin-geneve/" className="min-h-[44px] flex items-center hover:text-white">📍 Showroom Genève (Rue des Pâquis 34)</Link></li>
-                <li><Link href="/click-and-collect/" className="min-h-[44px] flex items-center text-white font-bold hover:text-[#F80404]">⚡ Click &amp; Collect gratuit (2h)</Link></li>
-                <li><Link href="/livraison/" className="min-h-[44px] flex items-center hover:text-white">Livraison 24h La Poste Suisse</Link></li>
-                <li><Link href="/paiement/" className="min-h-[44px] flex items-center hover:text-white">Paiement TWINT &amp; Cartes</Link></li>
-                <li><Link href="/retours/" className="min-h-[44px] flex items-center hover:text-white">Retours 14 jours</Link></li>
-                <li><Link href="/commande/" className="min-h-[44px] flex items-center hover:text-white">Suivi de commande</Link></li>
-              </ul>
-            )}
-          </div>
-
-          {/* Group 3: Conseils & Dossiers */}
-          <div className="border-b border-white/10">
-            <button
-              type="button"
-              onClick={() => toggleSection('conseils')}
-              className="w-full min-h-[48px] flex items-center justify-between text-xs font-black uppercase tracking-wider text-white py-3 text-left"
-            >
-              <span>Conseils &amp; Coaching</span>
-              <span className="text-sm font-bold text-white/60">{openSection === 'conseils' ? '−' : '+'}</span>
-            </button>
-            {openSection === 'conseils' && (
-              <ul className="pb-4 space-y-1 text-xs text-white/70">
-                <li><Link href="/coaching-nutritionnel-personnalise/" className="min-h-[44px] flex items-center text-white font-bold hover:text-[#F80404]">✦ Coaching Personnalisé</Link></li>
-                <li><Link href="/guide-des-complements-alimentaires/" className="min-h-[44px] flex items-center text-white font-bold hover:text-[#95d600]">✦ Guide Ebook (66 pages PDF)</Link></li>
-                <li><Link href="/blog/" className="min-h-[44px] flex items-center hover:text-white">Blog &amp; Guides Scientifiques (20 dossiers)</Link></li>
-                <li><Link href="/quel-complement-choisir/" className="min-h-[44px] flex items-center hover:text-white">Quel complément choisir ?</Link></li>
-                <li><Link href="/faq/" className="min-h-[44px] flex items-center hover:text-white">Centre d&apos;aide &amp; FAQ</Link></li>
-              </ul>
-            )}
-          </div>
-
-          {/* Group 4: Contact & Légal */}
-          <div className="border-b border-white/10">
-            <button
-              type="button"
-              onClick={() => toggleSection('legal')}
-              className="w-full min-h-[48px] flex items-center justify-between text-xs font-black uppercase tracking-wider text-white py-3 text-left"
-            >
-              <span>Contact &amp; Légal</span>
-              <span className="text-sm font-bold text-white/60">{openSection === 'legal' ? '−' : '+'}</span>
-            </button>
-            {openSection === 'legal' && (
-              <ul className="pb-4 space-y-1 text-xs text-white/70">
-                <li><a href={`tel:${COMPANY.contact.phone.replace(/\s+/g, '')}`} className="min-h-[44px] flex items-center hover:text-[#F80404]">📞 {COMPANY.contact.phoneFormatted}</a></li>
-                <li><a href={`mailto:${COMPANY.contact.email}`} className="min-h-[44px] flex items-center hover:text-[#F80404]">✉️ {COMPANY.contact.email}</a></li>
-                <li><Link href="/mentions-legales/" className="min-h-[44px] flex items-center hover:text-white">Mentions Légales &amp; Impressum</Link></li>
-                <li><Link href="/cgv/" className="min-h-[44px] flex items-center hover:text-white">Conditions Générales de Vente</Link></li>
-                <li><Link href="/cookies/" className="min-h-[44px] flex items-center hover:text-white">Gestion des Cookies</Link></li>
-              </ul>
-            )}
+          {/* Mobile Newsletter Club (-10%) */}
+          <div className="pt-2">
+            <div className="bg-white/5 border border-white/10 rounded-2xl p-4">
+              <h4 className="text-xs font-black uppercase tracking-wider text-white mb-1 font-heading">
+                Rejoignez le Club NutriFitness (-10%)
+              </h4>
+              <p className="text-[11px] text-white/60 mb-3">
+                Recevez votre code promo de 10% valable immédiatement sur votre première commande.
+              </p>
+              <form onSubmit={handleNewsletterSubmit} className="space-y-2">
+                <input 
+                  type="email" 
+                  required
+                  value={email}
+                  onChange={(e) => setEmail(e.target.value)}
+                  placeholder="Votre adresse e-mail"
+                  className="w-full h-11 px-3 text-xs bg-black/40 border border-white/15 rounded-xl text-white placeholder-white/40 focus:border-[#F80404] focus:outline-none transition-colors"
+                />
+                <button 
+                  type="submit"
+                  className="w-full h-11 px-4 text-xs font-black uppercase tracking-wider text-black bg-[#F80404] hover:bg-[#FF3D00] rounded-xl transition-all shadow-md active:scale-98 cursor-pointer"
+                >
+                  S&apos;inscrire au Club (-10%)
+                </button>
+              </form>
+            </div>
           </div>
         </div>
 
