@@ -92,7 +92,7 @@ export default function ProductCarousel({ title, subtitle, products, seeAllHref 
         {visibleProducts.map((product, idx) => (
           <div 
             key={product.id || idx} 
-            className="w-[calc((100vw-44px)/2.2)] min-w-[145px] max-w-[175px] sm:w-[280px] sm:min-w-0 sm:max-w-none lg:w-[290px] shrink-0 snap-start"
+            className="w-[calc((100vw-36px)/2.15)] min-w-[155px] max-w-[185px] sm:w-[280px] sm:min-w-0 sm:max-w-none lg:w-[290px] shrink-0 snap-start"
           >
             <ProductCard product={product} priority={idx < 2} />
           </div>
