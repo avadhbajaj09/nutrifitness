@@ -45,7 +45,7 @@ export default function LivraisonPage() {
     },
     {
       q: 'Puis-je modifier mon adresse de livraison après validation de la commande ?',
-      a: 'Contactez-nous le plus rapidement possible par téléphone au +41 79 250 35 64 ou par e-mail à support@nutrifitness.ch en mentionnant votre numéro de commande. Si le colis n\'a pas encore été pris en charge par le coursier, nous corrigerons immédiatement l\'étiquette.'
+      a: 'Contactez-nous le plus rapidement possible par téléphone au +41 79 250 35 64 ou par e-mail à info@nutrifitness.ch en mentionnant votre numéro de commande. Si le colis n\'a pas encore été pris en charge par le coursier, nous corrigerons immédiatement l\'étiquette.'
     },
     {
       q: 'Que se passe-t-il si je suis absent lors de la livraison ?',

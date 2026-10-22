@@ -183,7 +183,7 @@ export default function RetoursPage() {
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             <a 
-              href="mailto:support@nutrifitness.ch"
+              href="mailto:info@nutrifitness.ch"
               className="p-4 rounded-2xl bg-black/40 border border-white/5 hover:border-[#F80404]/50 transition-colors flex items-center gap-3 group"
             >
               <div className="w-10 h-10 rounded-xl bg-[#F80404]/10 text-[#F80404] flex items-center justify-center shrink-0">
@@ -191,8 +191,8 @@ export default function RetoursPage() {
               </div>
               <div>
                 <span className="text-[10px] text-white/50 font-bold uppercase block">Support E-mail</span>
-                <span className="text-sm font-black text-white group-hover:text-[#F80404] transition-colors">support@nutrifitness.ch</span>
-                <span className="text-[10px] text-white/40 block">ou info@nutrifitness.ch</span>
+                <span className="text-sm font-black text-white group-hover:text-[#F80404] transition-colors">info@nutrifitness.ch</span>
+                <span className="text-[10px] text-white/40 block">Réponse sous 24h ouvrées</span>
               </div>
             </a>
 

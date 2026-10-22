@@ -24,7 +24,7 @@ export async function sendResendEmail({
     return { success: true, id: 'stub-mode' };
   }
 
-  const defaultFrom = process.env.RESEND_FROM_EMAIL || 'NutriFitness <orders@nutrifitness.ch>';
+  const defaultFrom = process.env.RESEND_FROM_EMAIL || 'NutriFitness <info@nutrifitness.ch>';
   const fromAddress = from || defaultFrom;
   const toList = Array.isArray(to) ? to : [to];
 
@@ -395,7 +395,7 @@ export async function sendOrderConfirmationToCustomer(order: any) {
           <!-- Store Contact -->
           <div style="background-color: #161616; border: 1px solid #222; border-radius: 10px; padding: 14px 16px; font-size: 12px; color: #aaa; line-height: 1.6;">
             <strong>Une question sur votre commande ?</strong><br>
-            Notre équipe vous répond avec plaisir à la boutique de Genève ou par WhatsApp / téléphone au <strong>+41 79 250 35 64</strong> ou par email à <a href="mailto:orders@nutrifitness.ch" style="color: #38bdf8; text-decoration: none;">orders@nutrifitness.ch</a>.
+            Notre équipe vous répond avec plaisir à la boutique de Genève ou par WhatsApp / téléphone au <strong>+41 79 250 35 64</strong> ou par email à <a href="mailto:info@nutrifitness.ch" style="color: #38bdf8; text-decoration: none;">info@nutrifitness.ch</a>.
           </div>
 
         </div>
@@ -414,7 +414,7 @@ export async function sendOrderConfirmationToCustomer(order: any) {
     to: clientEmail,
     subject: `Votre commande NutriFitness #${orderNumber} est confirmée 🚀`,
     html,
-    replyTo: 'orders@nutrifitness.ch',
+    replyTo: 'info@nutrifitness.ch',
   });
 }
 

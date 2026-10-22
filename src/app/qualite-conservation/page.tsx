@@ -40,7 +40,7 @@ export default function QualiteConservationPage() {
     },
     {
       q: 'Que faire si un produit présente un aspect ou une odeur inhabituelle ?',
-      a: 'Ne le consommez pas par précaution. Prenez des photos du produit et de l\'étiquette mentionnant le numéro de lot, puis contactez immédiatement notre service client à support@nutrifitness.ch ou passez à la boutique des Pâquis. Nous vérifierons le lot et procéderons à un échange immédiat.'
+      a: 'Ne le consommez pas par précaution. Prenez des photos du produit et de l\'étiquette mentionnant le numéro de lot, puis contactez immédiatement notre service client à info@nutrifitness.ch ou passez à la boutique des Pâquis. Nous vérifierons le lot et procéderons à un échange immédiat.'
     },
     {
       q: 'Vos produits mentionnent-ils clairement les allergènes ?',

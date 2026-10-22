@@ -42,7 +42,7 @@ export default function ContactClient() {
   const faqs = [
     {
       q: 'Comment contacter Nutrifitness ?',
-      a: 'Vous pouvez nous joindre par téléphone au +41 79 250 35 64, par e-mail à info@nutrifitness.ch (ou support@nutrifitness.ch) ou en vous rendant directement à notre boutique officielle en Suisse. Pour toute demande relative à une commande, veillez à indiquer votre numéro de commande.'
+      a: 'Vous pouvez nous joindre par téléphone au +41 79 250 35 64, par e-mail à info@nutrifitness.ch ou en vous rendant directement à notre boutique officielle à Genève (Rue des Pâquis 34, 1201 Genève). Pour toute demande relative à une commande, veillez à indiquer votre numéro de commande.'
     },
     {
       q: 'Quels sont vos horaires de réponse téléphonique et e-mail ?',
@@ -50,7 +50,7 @@ export default function ContactClient() {
     },
     {
       q: 'Je souhaite modifier ou suivre ma commande : à qui m\'adresser ?',
-      a: 'Écrivez-nous directement à support@nutrifitness.ch en indiquant votre numéro de commande et l\'adresse e-mail utilisée lors de l\'achat. Vous pouvez également consulter le statut de votre colis en temps réel sur la page Suivi de commande avec votre numéro de suivi La Poste Suisse.'
+      a: 'Écrivez-nous directement à info@nutrifitness.ch en indiquant votre numéro de commande et l\'adresse e-mail utilisée lors de l\'achat. Vous pouvez également consulter le statut de votre colis en temps réel sur la page Suivi de commande avec votre numéro de suivi La Poste Suisse.'
     },
     {
       q: 'Puis-je obtenir un conseil nutritionnel ou produit personnalisé par message ?',
@@ -58,7 +58,7 @@ export default function ContactClient() {
     },
     {
       q: 'Comment signaler un problème sur un produit ou un colis endommagé ?',
-      a: 'Prenez 2 ou 3 photos nettes du carton et du produit concerné, puis envoyez-les avec votre numéro de commande à support@nutrifitness.ch dans un délai de 14 jours suivant la livraison. Nous traiterons votre demande en priorité pour un renvoi immédiat ou un remboursement.'
+      a: 'Prenez 2 ou 3 photos nettes du carton et du produit concerné, puis envoyez-les avec votre numéro de commande à info@nutrifitness.ch dans un délai de 14 jours suivant la livraison. Nous traiterons votre demande en priorité pour un renvoi immédiat ou un remboursement.'
     }
   ];
 
@@ -118,7 +118,7 @@ export default function ContactClient() {
               <div>
                 <span className="font-bold text-white block uppercase text-[10px] text-white/50">Courrier électronique</span>
                 <span className="text-sm font-black text-white group-hover:text-[#95d600] transition-colors">info@nutrifitness.ch</span>
-                <p className="text-[11px] text-white/50 mt-0.5">support@nutrifitness.ch (commandes)</p>
+                <p className="text-[11px] text-white/50 mt-0.5">Réponse garantie sous 24h ouvrées</p>
               </div>
             </a>
 
@@ -127,8 +127,8 @@ export default function ContactClient() {
                 <MapPin className="w-5 h-5" />
               </div>
               <div>
-                <span className="font-bold text-white block uppercase text-[10px] text-white/50">Boutique physique en Suisse</span>
-                <span className="text-sm font-bold text-white">Boutique Officielle NutriFitness Suisse</span>
+                <span className="font-bold text-white block uppercase text-[10px] text-white/50">Boutique physique à Genève</span>
+                <span className="text-sm font-bold text-white">Rue des Pâquis 34, 1201 Genève, Suisse</span>
                 <p className="text-[11px] text-white/50 mt-0.5">Retrait Click & Collect 2h et conseils experts en nutrition</p>
               </div>
             </div>

@@ -238,7 +238,7 @@ export default function CGVPage() {
           </p>
           <ol className="list-decimal pl-5 space-y-1 text-xs text-white/70">
             <li>Prendre des photos nettes du colis externe et des produits endommagés.</li>
-            <li>Notifier le service client sous <strong>14 jours</strong> à l&apos;adresse <strong>support@nutrifitness.ch</strong> en joignant le numéro de commande et les photographies.</li>
+            <li>Notifier le service client sous <strong>14 jours</strong> à l&apos;adresse <strong>info@nutrifitness.ch</strong> en joignant le numéro de commande et les photographies.</li>
           </ol>
           <p className="text-xs text-white/60">
             Après vérification, NutriFitness procédera soit à la réexpédition gratuite d&apos;un produit de remplacement neuf, soit à son remboursement complet.

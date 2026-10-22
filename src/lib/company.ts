@@ -10,8 +10,8 @@ export const COMPANY = {
   founder: 'Équipe NutriFitness Suisse',
   uid: 'CHE-177.751.159',
   address: {
-    street: 'Centre Logistique & Boutique Officielle',
-    postalCode: '1200',
+    street: 'Rue des Pâquis 34',
+    postalCode: '1201',
     city: 'Genève',
     country: 'Suisse',
     full: 'Rue des Pâquis 34, 1201 Genève, Suisse',
@@ -19,6 +19,6 @@ export const COMPANY = {
   contact: {
     phone: '+41 79 250 35 64',
     phoneFormatted: '+41 79 250 35 64',
-    email: 'hello@nutrifitness.ch',
+    email: 'info@nutrifitness.ch',
   },
 } as const;

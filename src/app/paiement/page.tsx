@@ -48,7 +48,7 @@ export default function PaiementPage() {
     },
     {
       q: 'Puis-je modifier ou annuler ma commande après paiement ?',
-      a: 'Si vous souhaitez modifier une adresse ou annuler un article, contactez-nous immédiatement par téléphone (+41 79 250 35 64) ou par e-mail (support@nutrifitness.ch). Dès lors que le colis n\'a pas encore été scellé et confié à La Poste Suisse, la modification est effectuée sans frais.'
+      a: 'Si vous souhaitez modifier une adresse ou annuler un article, contactez-nous immédiatement par téléphone (+41 79 250 35 64) ou par e-mail (info@nutrifitness.ch). Dès lors que le colis n\'a pas encore été scellé et confié à La Poste Suisse, la modification est effectuée sans frais.'
     },
     {
       q: 'Dois-je obligatoirement créer un compte pour commander ?',

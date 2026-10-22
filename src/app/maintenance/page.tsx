@@ -104,8 +104,8 @@ export default function MaintenancePage() {
               <Mail className="w-4 h-4 text-[#38bdf8] shrink-0 mt-0.5" />
               <div>
                 <strong className="block text-white font-bold">Email :</strong>
-                <a href="mailto:orders@nutrifitness.ch" className="hover:text-white transition-colors">
-                  orders@nutrifitness.ch
+                <a href="mailto:info@nutrifitness.ch" className="hover:text-white transition-colors">
+                  info@nutrifitness.ch
                 </a>
               </div>
             </div>
