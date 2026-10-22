@@ -15,6 +15,7 @@ interface ThankYouAnimationProps {
   deliveryCountry?: string;
   estimatedDeliveryDate?: string;
   products?: Array<{ gtin?: string }>;
+  items?: Array<any>;
 }
 
 export default function ThankYouAnimation({
@@ -26,6 +27,7 @@ export default function ThankYouAnimation({
   deliveryCountry,
   estimatedDeliveryDate,
   products,
+  items,
 }: ThankYouAnimationProps) {
   const { t, locale, currency } = useStore();
   const canvasRef = useRef<HTMLCanvasElement>(null);
@@ -324,6 +326,58 @@ export default function ThankYouAnimation({
             </div>
           )}
         </div>
+
+        {/* Confirmed Articles & Flavours Recap */}
+        {items && items.length > 0 && (
+          <div className="bg-[#181818] border border-white/10 rounded-2xl p-4 sm:p-5 mb-6 text-left">
+            <div className="flex items-center justify-between pb-3 border-b border-white/10 mb-3">
+              <span className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-2">
+                <span>📦</span> Articles & Saveurs Confirmées ({items.reduce((acc, it) => acc + (it.quantity || 1), 0)})
+              </span>
+              <span className="text-[10px] text-emerald-400 font-bold bg-emerald-500/10 border border-emerald-500/20 px-2 py-0.5 rounded-full">
+                ✓ Sélection validée
+              </span>
+            </div>
+            <div className="space-y-3 divide-y divide-white/5 max-h-60 overflow-y-auto pr-1">
+              {items.map((it: any, idx: number) => {
+                const flv = typeof it.flavor === 'object' && it.flavor !== null
+                  ? (it.flavor.fr || it.flavor[locale] || 'Standard')
+                  : String(it.flavor || 'Standard');
+                const isDistinct = flv && !['standard', 'neutre', 'format standard', 'default'].includes(flv.toLowerCase());
+                const img = it.image || '/images/placeholder.webp';
+
+                return (
+                  <div key={idx} className="flex items-center gap-3 pt-2.5 first:pt-0">
+                    <div className="w-11 h-11 rounded-lg bg-black/40 border border-white/10 shrink-0 overflow-hidden flex items-center justify-center p-1">
+                      <img src={img} alt={it.name} className="w-full h-full object-contain" />
+                    </div>
+                    <div className="flex-1 min-w-0">
+                      <div className="text-xs font-bold text-white truncate">{it.name}</div>
+                      <div className="flex items-center gap-2 mt-1 flex-wrap">
+                        <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-2 py-0.5 rounded ${
+                          isDistinct 
+                            ? 'bg-[#95d600]/20 text-[#95d600] border border-[#95d600]/30' 
+                            : 'bg-white/10 text-white/75 border border-white/15'
+                        }`}>
+                          <span>Saveur :</span> <strong>{flv}</strong>
+                        </span>
+                        {it.format && it.format !== 'Format standard' && (
+                          <span className="text-[10px] text-white/50">{it.format}</span>
+                        )}
+                        <span className="text-[10px] text-white/50">· Qté : {it.quantity || 1}</span>
+                      </div>
+                    </div>
+                    {it.price && (
+                      <div className="text-xs font-black text-white shrink-0">
+                        {(it.price * (it.quantity || 1)).toFixed(2)} CHF
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        )}
 
         {/* Origin and Trust Notice */}
         <div className="flex items-center justify-center gap-2 text-xs text-white/60 mb-6">

@@ -118,17 +118,27 @@ export async function POST(req: Request) {
       }
       const isValidHttpsImage = imgUrl.startsWith('https://') && !imgUrl.includes('placeholder.webp');
 
+      const descParts = [];
+      if (flavorStr) {
+        descParts.push(flavorStr.toLowerCase() === 'standard' ? 'Goût: Neutre / Standard' : `Saveur: ${flavorStr}`);
+      }
+      if (sizeStr && sizeStr !== 'Format standard') {
+        descParts.push(sizeStr);
+      }
+
       return {
         price_data: {
           currency: normalizedCurrency,
           unit_amount: unitAmount,
           product_data: {
             name: nameStr,
-            description: [flavorStr, sizeStr].filter(Boolean).join(' · ') || undefined,
+            description: descParts.join(' · ') || undefined,
             images: isValidHttpsImage ? [imgUrl] : undefined,
             metadata: {
               sku: item.sku || item.itemKey || '',
               product_id: item.id || '',
+              flavor: flavorStr || 'Standard',
+              format: sizeStr || 'Format standard',
             },
           },
         },

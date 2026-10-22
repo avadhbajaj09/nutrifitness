@@ -260,9 +260,35 @@ export default function CartPage() {
                       <h3 className="text-sm font-bold text-white line-clamp-1">
                         {typeof item.name === 'object' && item.name !== null ? ((item.name as any)[locale] || (item.name as any).fr || 'Produit') : String(item.name || 'Produit')}
                       </h3>
-                      <p className="text-xs text-white/50">
-                        {typeof item.flavor === 'object' && item.flavor !== null ? ((item.flavor as Record<string, string>)[locale] || (item.flavor as Record<string, string>).fr || 'Standard') : String(item.flavor || 'Standard')} · {typeof item.size === 'object' && item.size !== null ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard') : String(item.size || 'Format standard')}
-                      </p>
+                      {(() => {
+                        const flavorObj = item.flavor as unknown as Record<string, string> | null | undefined;
+                        const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
+                          ? (flavorObj?.[locale] || flavorObj?.fr || 'Standard')
+                          : String(item.flavor || 'Standard');
+                        const isDistinct = flavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(flavorStr.toLowerCase());
+                        const sizeStr = typeof item.size === 'object' && item.size !== null
+                          ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard')
+                          : String(item.size || 'Format standard');
+
+                        return (
+                          <div className="mt-1 flex flex-wrap items-center gap-1.5">
+                            <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md border ${
+                              isDistinct 
+                                ? 'bg-[#95d600]/15 border-[#95d600]/40 text-[#95d600]' 
+                                : 'bg-white/10 border-white/15 text-white/80'
+                            }`}>
+                              <span>{isDistinct ? '⚡' : '🏷️'}</span>
+                              <span className="text-white/60 text-[10px] uppercase font-semibold">Saveur :</span>
+                              <span className="font-black text-white">{flavorStr}</span>
+                            </span>
+                            {sizeStr && sizeStr !== 'Format standard' && (
+                              <span className="text-[10px] text-white/60 bg-white/5 border border-white/10 px-1.5 py-0.5 rounded">
+                                {sizeStr}
+                              </span>
+                            )}
+                          </div>
+                        );
+                      })()}
                       {item.isEbook ? (
                         <p className="text-[11px] text-[#95d600] font-bold mt-1">✓ Exemplaire unique (téléchargement immédiat)</p>
                       ) : (

@@ -524,7 +524,27 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   const addToCart = (product: any, options: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string } = {}) => {
     const isEbook = isEbookItem(product);
     const quantity = isEbook ? 1 : (options.quantity || 1);
-    const rawFlavor = options.flavor || product.flavor || 'Standard';
+    // Resolve flavor intelligently if product has variants
+    let resolvedFlavor = options.flavor || product.flavor;
+    if ((!resolvedFlavor || resolvedFlavor === 'Standard') && Array.isArray(product.variants) && product.variants.length > 0) {
+      const hasActualStandard = product.variants.some((v: any) => {
+        const fn = typeof v.flavorName === 'object' && v.flavorName !== null
+          ? (v.flavorName[locale] || v.flavorName.fr || v.flavorName.en)
+          : v.flavorName;
+        return fn === 'Standard' || fn === 'standard';
+      });
+      if (!hasActualStandard) {
+        const candidate = product.variants.find((v: any) => v.inStock && (v.stockGeneva > 0 || v.stockPortugal > 0)) || product.variants[0];
+        if (candidate?.flavorName) {
+          const fn = typeof candidate.flavorName === 'object' && candidate.flavorName !== null
+            ? (candidate.flavorName[locale] || candidate.flavorName.fr || candidate.flavorName.en)
+            : candidate.flavorName;
+          if (fn) resolvedFlavor = fn;
+        }
+      }
+    }
+
+    const rawFlavor = resolvedFlavor || 'Standard';
     const flavor = typeof rawFlavor === 'object' && rawFlavor !== null
       ? (rawFlavor[locale] || rawFlavor.fr || rawFlavor.en || 'Standard')
       : String(rawFlavor || 'Standard');

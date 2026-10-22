@@ -129,9 +129,33 @@ export default function CartDrawer() {
                       <h4 className="text-xs font-bold text-white line-clamp-1">
                         {typeof item.name === 'object' && item.name !== null ? ((item.name as any)[locale] || (item.name as any).fr || 'Produit') : String(item.name || 'Produit')}
                       </h4>
-                      <p className="text-[11px] text-white/50">
-                        {typeof item.flavor === 'object' && item.flavor !== null ? ((item.flavor as Record<string, string>)[locale] || (item.flavor as Record<string, string>).fr || 'Standard') : String(item.flavor || 'Standard')} · {typeof item.size === 'object' && item.size !== null ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard') : String(item.size || 'Format standard')}
-                      </p>
+                      {(() => {
+                        const flavorObj = item.flavor as unknown as Record<string, string> | null | undefined;
+                        const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
+                          ? (flavorObj?.[locale] || flavorObj?.fr || 'Standard')
+                          : String(item.flavor || 'Standard');
+                        const isDistinct = flavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(flavorStr.toLowerCase());
+                        const sizeStr = typeof item.size === 'object' && item.size !== null
+                          ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard')
+                          : String(item.size || 'Format standard');
+
+                        return (
+                          <div className="mt-1 flex flex-wrap items-center gap-1">
+                            <span className={`inline-flex items-center gap-1 text-[10px] font-bold px-1.5 py-0.5 rounded ${
+                              isDistinct 
+                                ? 'bg-[#95d600]/15 border border-[#95d600]/30 text-[#95d600]' 
+                                : 'bg-white/10 text-white/80'
+                            }`}>
+                              <span>{isDistinct ? '⚡' : '🏷️'}</span>
+                              <span className="text-white/60 uppercase">Goût:</span>
+                              <span className="font-black text-white">{flavorStr}</span>
+                            </span>
+                            {sizeStr && sizeStr !== 'Format standard' && (
+                              <span className="text-[10px] text-white/50">{sizeStr}</span>
+                            )}
+                          </div>
+                        );
+                      })()}
                       {item.isEbook && (
                         <p className="text-[10px] text-[#95d600] font-bold pt-0.5">
                           ✓ Exemplaire unique (téléchargement PDF)

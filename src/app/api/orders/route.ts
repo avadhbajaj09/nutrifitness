@@ -216,10 +216,30 @@ export async function POST(req: Request) {
 
     // Trigger transactional email notifications (Admin alert to Marco & Customer confirmation)
     try {
-      await Promise.allSettled([
-        sendOrderNotificationToAdmin(finalRecord),
-        sendOrderConfirmationToCustomer(finalRecord),
-      ]);
+      const alreadySent = finalRecord?.shipping_address?.emails_sent || finalRecord?.shipping_address?.emails_sent_at;
+      if (!alreadySent) {
+        await Promise.allSettled([
+          sendOrderNotificationToAdmin(finalRecord),
+          sendOrderConfirmationToCustomer(finalRecord),
+        ]);
+
+        if (isSupabaseOk && finalRecord.ticketNumber) {
+          try {
+            const supabase = getAdminSupabase();
+            const currentAddr = (finalRecord.shipping_address && typeof finalRecord.shipping_address === 'object') ? finalRecord.shipping_address : {};
+            await supabase
+              .from('orders')
+              .update({
+                shipping_address: {
+                  ...currentAddr,
+                  emails_sent: true,
+                  emails_sent_at: new Date().toISOString()
+                }
+              })
+              .eq('order_number', finalRecord.ticketNumber);
+          } catch {}
+        }
+      }
     } catch (emailErr) {
       console.error('[Orders API] Failed to dispatch email notifications:', emailErr);
     }

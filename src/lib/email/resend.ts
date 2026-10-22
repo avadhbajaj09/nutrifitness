@@ -82,10 +82,11 @@ export async function sendOrderNotificationToAdmin(order: any) {
   const clientName = client.name || order.customer_name || 'Client';
   const clientEmail = client.email || order.customer_email || 'Non renseigné';
   const clientPhone = client.phone || order.customer_phone || 'Non renseigné';
+  const cleanPhone = clientPhone.replace(/[^0-9+]/g, '');
   const clientAddress = [
-    client.address || order.shipping_address?.address || '',
+    client.address || client.street || order.shipping_address?.street || order.shipping_address?.address || '',
     `${client.postalCode || order.shipping_address?.postalCode || ''} ${client.city || order.shipping_address?.city || ''}`.trim(),
-    client.country || order.shipping_address?.country || 'CH',
+    client.country || order.shipping_address?.country || 'Suisse (CH)',
   ].filter(Boolean).join(', ');
 
   const shipping = order.shipping || order.shipping_address || {};
@@ -103,22 +104,55 @@ export async function sendOrderNotificationToAdmin(order: any) {
     cash_chf: 'Espèces CHF (Boutique)',
     cash_eur: 'Espèces EUR (Boutique)',
   };
-  const paymentMethodLabel = paymentLabels[order.paymentMethod] || order.paymentMethod || 'Paiement Web';
+  const rawPay = (order.paymentMethod || order.payment_method || 'twint').toLowerCase();
+  const paymentMethodLabel = paymentLabels[rawPay] || order.paymentMethod || order.payment_method || 'Paiement Sécurisé';
 
-  // Items table
+  // Items table with images and HIGH-VISIBILITY FLAVOUR BADGE for Marco
   const items: any[] = Array.isArray(order.items) ? order.items : [];
   const itemsHtml = items.map((it: any) => {
     const name = it.name || it.product_name || 'Article';
-    const variant = it.variant || it.flavor || it.taste ? ` <span style="color:#888;">(${it.variant || it.flavor || it.taste})</span>` : '';
+    const rawFlavor = it.flavor || it.variant || it.taste || it.variant_title;
+    const flavor = typeof rawFlavor === 'object' && rawFlavor !== null 
+      ? (rawFlavor.fr || rawFlavor.en || Object.values(rawFlavor)[0] || 'Standard') 
+      : (rawFlavor ? String(rawFlavor) : 'Standard');
+    const format = typeof it.format === 'object' && it.format !== null 
+      ? (it.format.fr || it.format.en || Object.values(it.format)[0] || '') 
+      : (it.format || it.size ? String(it.format || it.size) : '');
+
+    let imgUrl = it.image || it.image_url || '';
+    if (imgUrl && !imgUrl.startsWith('http') && !imgUrl.startsWith('//')) {
+      imgUrl = `https://nutrifitness.ch${imgUrl.startsWith('/') ? '' : '/'}${imgUrl}`;
+    }
+    const hasValidImg = imgUrl && imgUrl.startsWith('https://') && !imgUrl.includes('placeholder.webp');
+
     const qty = it.quantity || it.qty || 1;
     const price = it.price || it.unit_price || 0;
     const lineTotal = it.lineTotal || (price * qty);
+
     return `
-      <tr style="border-bottom: 1px solid #222;">
-        <td style="padding: 10px 8px; color: #fff; font-size: 13px;">${name}${variant}</td>
-        <td style="padding: 10px 8px; color: #ccc; font-size: 13px; text-align: center;">${qty}</td>
-        <td style="padding: 10px 8px; color: #ccc; font-size: 13px; text-align: right;">${formatCurrency(price, currency)}</td>
-        <td style="padding: 10px 8px; color: #fff; font-weight: bold; font-size: 13px; text-align: right;">${formatCurrency(lineTotal, currency)}</td>
+      <tr style="border-bottom: 1px solid #262626;">
+        <td style="padding: 12px 10px; width: 56px; vertical-align: top;">
+          ${hasValidImg ? `
+            <img src="${imgUrl}" alt="${name}" width="50" height="50" style="border-radius: 8px; border: 1px solid #333333; object-fit: contain; background: #000000; display: block;" />
+          ` : `
+            <div style="width: 50px; height: 50px; background: #222222; border-radius: 8px; text-align: center; line-height: 50px; font-size: 20px;">📦</div>
+          `}
+        </td>
+        <td style="padding: 12px 10px; vertical-align: top;">
+          <div style="color: #ffffff; font-weight: bold; font-size: 14px; line-height: 1.3;">${name}</div>
+          <div style="margin-top: 6px;">
+            <span style="display: inline-block; background-color: #facc15; color: #000000; font-weight: 900; font-size: 11px; padding: 4px 9px; border-radius: 5px; text-transform: uppercase; letter-spacing: 0.5px;">
+              👉 GOÛT : ${flavor}
+            </span>
+            ${format && format !== 'Format standard' ? `<span style="color: #aaaaaa; font-size: 11px; margin-left: 8px;">(${format})</span>` : ''}
+          </div>
+        </td>
+        <td style="padding: 12px 10px; color: #ffffff; font-weight: 900; font-size: 15px; text-align: center; vertical-align: middle;">
+          x${qty}
+        </td>
+        <td style="padding: 12px 10px; color: #f80404; font-weight: 900; font-size: 14px; text-align: right; vertical-align: middle;">
+          ${formatCurrency(lineTotal, currency)}
+        </td>
       </tr>
     `;
   }).join('');
@@ -134,41 +168,34 @@ export async function sendOrderNotificationToAdmin(order: any) {
       <meta charset="utf-8">
       <title>Nouvelle Commande #${orderNumber}</title>
     </head>
-    <body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff;">
-      <div style="max-width: 600px; margin: 20px auto; background-color: #141414; border: 1px solid #262626; border-radius: 16px; overflow: hidden;">
+    <body style="margin: 0; padding: 0; background-color: #080808; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff;">
+      <div style="max-width: 620px; margin: 20px auto; background-color: #121212; border: 1px solid #262626; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
         
-        <!-- Header -->
-        <div style="background-color: #0f0f0f; border-bottom: 2px solid #F80404; padding: 24px 28px; text-align: left;">
-          <table style="width: 100%;">
-            <tr>
-              <td>
-                <div style="font-size: 20px; font-weight: 900; letter-spacing: 1px; color: #ffffff; text-transform: uppercase;">
-                  NUTRI<span style="color: #F80404;">FITNESS</span>.CH
-                </div>
-                <div style="color: #888888; font-size: 11px; margin-top: 2px; text-transform: uppercase; letter-spacing: 0.5px;">
-                  Notification Administrateur · Boutique Genève
-                </div>
-              </td>
-              <td style="text-align: right;">
-                <span style="background-color: rgba(248, 4, 4, 0.15); border: 1px solid rgba(248, 4, 4, 0.4); color: #F80404; font-size: 11px; font-weight: bold; padding: 5px 10px; border-radius: 20px; text-transform: uppercase;">
-                  ⚡ Nouvelle Commande
-                </span>
-              </td>
-            </tr>
-          </table>
+        <!-- Header with Official Logo -->
+        <div style="background-color: #0c0c0c; border-bottom: 2px solid #F80404; padding: 24px 28px; text-align: center;">
+          <a href="https://nutrifitness.ch" target="_blank" style="text-decoration: none; display: inline-block;">
+            <img src="https://nutrifitness.ch/images/brand/logo.png" alt="NutriFitness Genève" width="180" style="display: block; margin: 0 auto; max-width: 180px; height: auto; border: 0;" />
+          </a>
+          <div style="color: #999999; font-size: 11px; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 700;">
+            🇨🇭 Notification Vente Boutique · Genève
+          </div>
         </div>
 
-        <!-- Order Highlight -->
-        <div style="padding: 24px 28px; background-color: #181818; border-bottom: 1px solid #222;">
+        <!-- Order Highlight Banner -->
+        <div style="padding: 22px 28px; background: linear-gradient(135deg, #1c1c1c 0%, #151515 100%); border-bottom: 1px solid #262626;">
           <table style="width: 100%;">
             <tr>
               <td>
-                <div style="font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Commande N°</div>
-                <div style="font-size: 20px; font-weight: bold; color: #fff; font-family: monospace; margin-top: 2px;">#${orderNumber}</div>
+                <span style="background-color: rgba(248, 4, 4, 0.2); border: 1px solid #F80404; color: #F80404; font-size: 11px; font-weight: 900; padding: 4px 10px; border-radius: 20px; text-transform: uppercase;">
+                  🎉 NOUVELLE VENTE EN LIGNE
+                </span>
+                <div style="font-size: 22px; font-weight: 900; color: #ffffff; font-family: monospace; margin-top: 8px;">
+                  #${orderNumber}
+                </div>
               </td>
-              <td style="text-align: right;">
-                <div style="font-size: 12px; color: #888; text-transform: uppercase; font-weight: bold;">Montant Total</div>
-                <div style="font-size: 22px; font-weight: 900; color: #F80404; margin-top: 2px;">${totalStr}</div>
+              <td style="text-align: right; vertical-align: middle;">
+                <div style="font-size: 11px; color: #888888; text-transform: uppercase; font-weight: bold;">Montant Total</div>
+                <div style="font-size: 26px; font-weight: 900; color: #F80404; margin-top: 2px;">${totalStr}</div>
               </td>
             </tr>
           </table>
@@ -177,61 +204,67 @@ export async function sendOrderNotificationToAdmin(order: any) {
         <!-- Content -->
         <div style="padding: 24px 28px;">
           
-          <!-- Client & Delivery Info -->
-          <div style="background-color: #1a1a1a; border: 1px solid #2a2a2a; border-radius: 12px; padding: 18px; margin-bottom: 24px;">
-            <div style="font-size: 12px; font-weight: bold; color: #F80404; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
-              👤 Coordonnées du Client
+          <!-- Client & Delivery Dossier -->
+          <div style="background-color: #181818; border: 1px solid #2c2c2c; border-radius: 14px; padding: 18px 20px; margin-bottom: 24px;">
+            <div style="font-size: 12px; font-weight: 900; color: #F80404; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+              👤 Coordonnées & Livraison
             </div>
-            <table style="width: 100%; font-size: 13px; line-height: 1.6;">
+            <table style="width: 100%; font-size: 13px; line-height: 1.7;">
               <tr>
-                <td style="color: #888; width: 110px;">Nom complet :</td>
+                <td style="color: #888; width: 110px;">Client :</td>
                 <td style="color: #fff; font-weight: bold;">${clientName}</td>
+              </tr>
+              <tr>
+                <td style="color: #888;">Téléphone :</td>
+                <td style="color: #fff;">
+                  <strong style="color: #fff;">${clientPhone}</strong>
+                  ${cleanPhone ? `
+                    <span style="margin-left: 10px;">
+                      <a href="https://wa.me/${cleanPhone.replace('+', '')}" target="_blank" style="background-color: #25D366; color: #000; font-size: 11px; font-weight: bold; text-decoration: none; padding: 2px 7px; border-radius: 4px;">💬 WhatsApp</a>
+                    </span>
+                  ` : ''}
+                </td>
               </tr>
               <tr>
                 <td style="color: #888;">Email :</td>
                 <td style="color: #fff;"><a href="mailto:${clientEmail}" style="color: #38bdf8; text-decoration: none;">${clientEmail}</a></td>
               </tr>
               <tr>
-                <td style="color: #888;">Téléphone :</td>
-                <td style="color: #fff;"><a href="tel:${clientPhone}" style="color: #fff; text-decoration: none;">${clientPhone}</a></td>
-              </tr>
-              <tr>
                 <td style="color: #888; vertical-align: top;">Adresse :</td>
-                <td style="color: #fff;">${clientAddress || 'Non renseignée'}</td>
+                <td style="color: #facc15; font-weight: 600;">${clientAddress || 'Non renseignée'}</td>
               </tr>
               <tr>
-                <td style="color: #888; padding-top: 6px;">Mode d'envoi :</td>
-                <td style="color: #10b981; font-weight: bold; padding-top: 6px;">${shippingMethodLabel}</td>
+                <td style="color: #888; padding-top: 4px;">Mode d'envoi :</td>
+                <td style="color: #10b981; font-weight: bold; padding-top: 4px;">${shippingMethodLabel}</td>
               </tr>
               <tr>
                 <td style="color: #888;">Paiement :</td>
-                <td style="color: #fff;">${paymentMethodLabel}</td>
+                <td style="color: #fff; font-weight: 600;">${paymentMethodLabel}</td>
               </tr>
             </table>
           </div>
 
-          <!-- Articles Table -->
+          <!-- Articles Picking List -->
           <div style="margin-bottom: 24px;">
-            <div style="font-size: 12px; font-weight: bold; color: #F80404; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
-              📦 Détail des Articles (${items.length})
+            <div style="font-size: 12px; font-weight: 900; color: #F80404; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px; display: flex; justify-content: space-between;">
+              <span>📦 Articles à Préparer (${items.length})</span>
             </div>
-            <table style="width: 100%; border-collapse: collapse;">
+            <table style="width: 100%; border-collapse: collapse; background-color: #161616; border-radius: 12px; overflow: hidden; border: 1px solid #262626;">
               <thead>
-                <tr style="border-bottom: 1px solid #333; text-align: left;">
-                  <th style="padding: 8px; color: #888; font-size: 11px; text-transform: uppercase;">Produit</th>
-                  <th style="padding: 8px; color: #888; font-size: 11px; text-transform: uppercase; text-align: center;">Qté</th>
-                  <th style="padding: 8px; color: #888; font-size: 11px; text-transform: uppercase; text-align: right;">Prix unit.</th>
-                  <th style="padding: 8px; color: #888; font-size: 11px; text-transform: uppercase; text-align: right;">Total</th>
+                <tr style="background-color: #1f1f1f; text-align: left;">
+                  <th style="padding: 10px; color: #888; font-size: 11px; text-transform: uppercase;" colspan="2">Produit & Saveur</th>
+                  <th style="padding: 10px; color: #888; font-size: 11px; text-transform: uppercase; text-align: center;">Qté</th>
+                  <th style="padding: 10px; color: #888; font-size: 11px; text-transform: uppercase; text-align: right;">Total</th>
                 </tr>
               </thead>
               <tbody>
-                ${itemsHtml || '<tr><td colspan="4" style="padding: 12px; color: #888; text-align: center;">Aucun article listé</td></tr>'}
+                ${itemsHtml || '<tr><td colspan="4" style="padding: 16px; color: #888; text-align: center;">Aucun article listé</td></tr>'}
               </tbody>
             </table>
           </div>
 
-          <!-- Summary calculation -->
-          <div style="background-color: #161616; border-radius: 10px; padding: 14px 18px; margin-bottom: 24px; font-size: 13px;">
+          <!-- Total Calculation -->
+          <div style="background-color: #171717; border: 1px solid #262626; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; font-size: 13px;">
             <table style="width: 100%; line-height: 1.8;">
               <tr>
                 <td style="color: #888;">Sous-total articles :</td>
@@ -239,32 +272,32 @@ export async function sendOrderNotificationToAdmin(order: any) {
               </tr>
               <tr>
                 <td style="color: #888;">Frais de livraison :</td>
-                <td style="text-align: right; color: #fff;">${Number(shippingCost) === 0 ? '<span style="color:#10b981;">Gratuit</span>' : formatCurrency(shippingCost, currency)}</td>
+                <td style="text-align: right; color: #fff;">${Number(shippingCost) === 0 ? '<span style="color:#10b981; font-weight:bold;">Gratuit</span>' : formatCurrency(shippingCost, currency)}</td>
               </tr>
               <tr>
                 <td style="color: #888;">TVA 2.6% (incluse) :</td>
                 <td style="text-align: right; color: #888;">${formatCurrency(vatAmount, currency)}</td>
               </tr>
-              <tr style="border-top: 1px solid #333;">
-                <td style="color: #fff; font-weight: bold; padding-top: 8px; font-size: 15px;">Total Réglé :</td>
-                <td style="text-align: right; color: #F80404; font-weight: 900; padding-top: 8px; font-size: 17px;">${totalStr}</td>
+              <tr style="border-top: 1px solid #333333;">
+                <td style="color: #fff; font-weight: bold; padding-top: 10px; font-size: 15px;">Total Réglé :</td>
+                <td style="text-align: right; color: #F80404; font-weight: 900; padding-top: 10px; font-size: 18px;">${totalStr}</td>
               </tr>
             </table>
           </div>
 
-          <!-- Button to admin -->
-          <div style="text-align: center; margin-top: 28px;">
+          <!-- Quick Actions Button -->
+          <div style="text-align: center; margin: 28px 0 10px;">
             <a href="https://nutrifitness.ch/wp-admin/" style="display: inline-block; background-color: #F80404; color: #000000; font-weight: 900; font-size: 13px; text-transform: uppercase; text-decoration: none; padding: 14px 28px; border-radius: 10px; letter-spacing: 0.5px;">
-              Gérer la commande dans l'Admin →
+              Accéder au Panneau d'Administration →
             </a>
           </div>
 
         </div>
 
         <!-- Footer -->
-        <div style="background-color: #0d0d0d; border-top: 1px solid #1f1f1f; padding: 18px 28px; text-align: center; color: #666; font-size: 11px;">
+        <div style="background-color: #0a0a0a; border-top: 1px solid #1f1f1f; padding: 20px 28px; text-align: center; color: #666666; font-size: 11px; line-height: 1.6;">
           NutriFitness Genève · Rue des Pâquis 34, 1201 Genève · Tél. +41 79 250 35 64<br>
-          Cet email de notification est envoyé automatiquement à <a href="mailto:${adminEmail}" style="color: #888; text-decoration: none;">${adminEmail}</a>.
+          Notification automatique envoyée à <strong>${adminEmail}</strong>.
         </div>
 
       </div>
@@ -274,7 +307,7 @@ export async function sendOrderNotificationToAdmin(order: any) {
 
   return sendResendEmail({
     to: adminEmail,
-    subject: `⚡ Nouvelle Commande #${orderNumber} (${totalStr}) · NutriFitness`,
+    subject: `⚡ Vente Web #${orderNumber} (${totalStr}) — ${clientName}`,
     html,
     replyTo: clientEmail.includes('@') ? clientEmail : undefined,
   });
@@ -298,22 +331,63 @@ export async function sendOrderConfirmationToCustomer(order: any) {
 
   const shipping = order.shipping || order.shipping_address || {};
   const isClickCollect = shipping.method === 'store_pickup' || shipping.method === 'clickcollect';
+  const clientAddress = [
+    client.address || client.street || order.shipping_address?.street || order.shipping_address?.address || '',
+    `${client.postalCode || order.shipping_address?.postalCode || ''} ${client.city || order.shipping_address?.city || ''}`.trim(),
+    client.country || order.shipping_address?.country || 'Suisse (CH)',
+  ].filter(Boolean).join(', ');
 
   const items: any[] = Array.isArray(order.items) ? order.items : [];
   const itemsHtml = items.map((it: any) => {
     const name = it.name || it.product_name || 'Article';
-    const variant = it.variant || it.flavor || it.taste ? ` <span style="color:#888;">(${it.variant || it.flavor || it.taste})</span>` : '';
+    const rawFlavor = it.flavor || it.variant || it.taste || it.variant_title;
+    const flavor = typeof rawFlavor === 'object' && rawFlavor !== null 
+      ? (rawFlavor.fr || rawFlavor.en || Object.values(rawFlavor)[0] || 'Standard') 
+      : (rawFlavor ? String(rawFlavor) : 'Standard');
+    const format = typeof it.format === 'object' && it.format !== null 
+      ? (it.format.fr || it.format.en || Object.values(it.format)[0] || '') 
+      : (it.format || it.size ? String(it.format || it.size) : '');
+
+    let imgUrl = it.image || it.image_url || '';
+    if (imgUrl && !imgUrl.startsWith('http') && !imgUrl.startsWith('//')) {
+      imgUrl = `https://nutrifitness.ch${imgUrl.startsWith('/') ? '' : '/'}${imgUrl}`;
+    }
+    const hasValidImg = imgUrl && imgUrl.startsWith('https://') && !imgUrl.includes('placeholder.webp');
+
     const qty = it.quantity || it.qty || 1;
     const price = it.price || it.unit_price || 0;
     const lineTotal = it.lineTotal || (price * qty);
+
     return `
-      <tr style="border-bottom: 1px solid #222;">
-        <td style="padding: 10px 8px; color: #fff; font-size: 13px;">${name}${variant}</td>
-        <td style="padding: 10px 8px; color: #ccc; font-size: 13px; text-align: center;">${qty}</td>
-        <td style="padding: 10px 8px; color: #fff; font-weight: bold; font-size: 13px; text-align: right;">${formatCurrency(lineTotal, currency)}</td>
+      <tr style="border-bottom: 1px solid #222222;">
+        <td style="padding: 12px 8px; width: 54px; vertical-align: top;">
+          ${hasValidImg ? `
+            <img src="${imgUrl}" alt="${name}" width="48" height="48" style="border-radius: 8px; border: 1px solid #333333; object-fit: contain; background: #000000; display: block;" />
+          ` : `
+            <div style="width: 48px; height: 48px; background: #222222; border-radius: 8px; text-align: center; line-height: 48px; font-size: 18px;">⚡</div>
+          `}
+        </td>
+        <td style="padding: 12px 10px; vertical-align: top;">
+          <div style="color: #ffffff; font-weight: bold; font-size: 13px; line-height: 1.4;">${name}</div>
+          <div style="margin-top: 5px;">
+            <span style="display: inline-block; background-color: rgba(16, 185, 129, 0.15); border: 1px solid #10b981; color: #34d399; font-weight: 700; font-size: 11px; padding: 2px 8px; border-radius: 5px;">
+              ⚡ Saveur : <strong>${flavor}</strong>
+            </span>
+            ${format && format !== 'Format standard' ? `<span style="color: #888888; font-size: 11px; margin-left: 6px;">(${format})</span>` : ''}
+          </div>
+        </td>
+        <td style="padding: 12px 8px; color: #cccccc; font-size: 13px; text-align: center; vertical-align: middle;">
+          ${qty}
+        </td>
+        <td style="padding: 12px 8px; color: #ffffff; font-weight: bold; font-size: 13px; text-align: right; vertical-align: middle;">
+          ${formatCurrency(lineTotal, currency)}
+        </td>
       </tr>
     `;
   }).join('');
+
+  const subtotal = order.subtotal !== undefined ? order.subtotal : (order.total || 0);
+  const shippingCost = shipping.cost !== undefined ? shipping.cost : 0;
 
   const html = `
     <!DOCTYPE html>
@@ -322,58 +396,63 @@ export async function sendOrderConfirmationToCustomer(order: any) {
       <meta charset="utf-8">
       <title>Confirmation de commande #${orderNumber}</title>
     </head>
-    <body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff;">
-      <div style="max-width: 600px; margin: 20px auto; background-color: #141414; border: 1px solid #262626; border-radius: 16px; overflow: hidden;">
+    <body style="margin: 0; padding: 0; background-color: #080808; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff;">
+      <div style="max-width: 620px; margin: 20px auto; background-color: #121212; border: 1px solid #262626; border-radius: 18px; overflow: hidden; box-shadow: 0 10px 40px rgba(0,0,0,0.6);">
         
-        <!-- Header -->
-        <div style="background-color: #0f0f0f; border-bottom: 2px solid #F80404; padding: 24px 28px; text-align: center;">
-          <div style="font-size: 22px; font-weight: 900; letter-spacing: 1px; color: #ffffff; text-transform: uppercase;">
-            NUTRI<span style="color: #F80404;">FITNESS</span>.CH
-          </div>
-          <div style="color: #888888; font-size: 11px; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.5px;">
-            Nutrition Sportive & Protéines à Genève · Suisse
+        <!-- Header with Official Logo -->
+        <div style="background-color: #0c0c0c; border-bottom: 2px solid #F80404; padding: 26px 28px; text-align: center;">
+          <a href="https://nutrifitness.ch" target="_blank" style="text-decoration: none; display: inline-block;">
+            <img src="https://nutrifitness.ch/images/brand/logo.png" alt="NutriFitness Genève" width="180" style="display: block; margin: 0 auto; max-width: 180px; height: auto; border: 0;" />
+          </a>
+          <div style="color: #888888; font-size: 11px; margin-top: 8px; text-transform: uppercase; letter-spacing: 1px; font-weight: 600;">
+            🇨🇭 Nutrition Sportive Officielle · Boutique Genève
           </div>
         </div>
 
         <!-- Success Banner -->
-        <div style="padding: 24px 28px; text-align: center; background-color: #181818; border-bottom: 1px solid #222;">
-          <div style="display: inline-block; width: 44px; height: 44px; line-height: 44px; border-radius: 50%; background-color: rgba(16, 185, 129, 0.15); border: 2px solid #10b981; color: #10b981; font-size: 20px; font-weight: bold; margin-bottom: 12px;">
+        <div style="padding: 28px 28px 24px; text-align: center; background-color: #161616; border-bottom: 1px solid #242424;">
+          <div style="display: inline-block; width: 48px; height: 48px; line-height: 48px; border-radius: 50%; background-color: rgba(16, 185, 129, 0.15); border: 2px solid #10b981; color: #10b981; font-size: 24px; font-weight: bold; margin-bottom: 12px;">
             ✓
           </div>
-          <h1 style="font-size: 20px; margin: 0 0 6px 0; color: #ffffff; text-transform: uppercase;">
-            Merci pour votre commande, ${clientName} !
+          <h1 style="font-size: 21px; margin: 0 0 8px 0; color: #ffffff; text-transform: uppercase; font-weight: 900; letter-spacing: 0.5px;">
+            Merci pour votre commande, ${clientName} ! 🎉
           </h1>
-          <p style="font-size: 13px; color: #aaaaaa; margin: 0; line-height: 1.5;">
-            Votre commande <strong>#${orderNumber}</strong> est validée et en cours de préparation dans notre stock physique à Genève.
+          <p style="font-size: 13px; color: #bbbbbb; margin: 0 auto; max-width: 480px; line-height: 1.6;">
+            Votre commande <strong>#${orderNumber}</strong> est validée avec succès et prise en charge dans notre boutique physique à Genève. Nos préparateurs s'assurent de la conformité de vos saveurs !
           </p>
         </div>
 
         <div style="padding: 24px 28px;">
           
           <!-- Delivery instructions -->
-          <div style="background-color: #1c1c1c; border-left: 3px solid ${isClickCollect ? '#38bdf8' : '#10b981'}; border-radius: 8px; padding: 14px 16px; margin-bottom: 22px;">
-            <div style="font-weight: bold; font-size: 13px; color: #ffffff; margin-bottom: 4px;">
-              ${isClickCollect ? '📍 Retrait en boutique Click & Collect' : '⚡ Expédition La Poste Suisse (PostPac Priority)'}
+          <div style="background-color: #1a1a1a; border-left: 4px solid ${isClickCollect ? '#38bdf8' : '#10b981'}; border-radius: 10px; padding: 16px 18px; margin-bottom: 24px;">
+            <div style="font-weight: bold; font-size: 13px; color: #ffffff; margin-bottom: 6px;">
+              ${isClickCollect ? '📍 Retrait en boutique Click & Collect' : '⚡ Expédition Express La Poste Suisse (PostPac Priority 24h)'}
             </div>
-            <div style="font-size: 12px; color: #bbbbbb; line-height: 1.5;">
+            <div style="font-size: 12px; color: #cccccc; line-height: 1.6;">
               ${isClickCollect
-                ? 'Votre commande sera disponible sous <strong>2 heures ouvrables</strong> au <strong>Rue des Pâquis 34, 1201 Genève</strong>. Munissez-vous simplement de votre numéro de commande.'
-                : 'Votre colis sera expédié sous 24h ouvrées depuis notre dépôt de Genève. Vous recevrez un numéro de suivi dès la prise en charge par La Poste Suisse.'
+                ? 'Votre colis sera prêt sous <strong>2 heures ouvrables</strong> au <strong>Rue des Pâquis 34, 1201 Genève</strong>. Munissez-vous simplement de votre numéro de commande.'
+                : 'Votre colis est en cours de conditionnement dans notre stock de Genève. Vous recevrez un numéro de suivi dès son expédition par La Poste Suisse.'
               }
             </div>
+            ${clientAddress ? `
+              <div style="margin-top: 10px; padding-top: 10px; border-top: 1px solid #2a2a2a; font-size: 12px; color: #aaaaaa;">
+                📍 <strong>Adresse de livraison :</strong> ${clientAddress}
+              </div>
+            ` : ''}
           </div>
 
-          <!-- Items -->
-          <div style="margin-bottom: 22px;">
-            <div style="font-size: 12px; font-weight: bold; color: #F80404; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px;">
-              Récapitulatif de vos articles
+          <!-- Items Recap with FLAVOR PROMINENCE -->
+          <div style="margin-bottom: 24px;">
+            <div style="font-size: 12px; font-weight: 900; color: #F80404; text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 12px;">
+              📦 Vos Articles & Saveurs Sélectionnées
             </div>
-            <table style="width: 100%; border-collapse: collapse;">
+            <table style="width: 100%; border-collapse: collapse; background-color: #161616; border-radius: 12px; overflow: hidden; border: 1px solid #242424;">
               <thead>
-                <tr style="border-bottom: 1px solid #333; text-align: left;">
-                  <th style="padding: 8px; color: #888; font-size: 11px; text-transform: uppercase;">Article</th>
-                  <th style="padding: 8px; color: #888; font-size: 11px; text-transform: uppercase; text-align: center;">Qté</th>
-                  <th style="padding: 8px; color: #888; font-size: 11px; text-transform: uppercase; text-align: right;">Total</th>
+                <tr style="background-color: #1f1f1f; text-align: left;">
+                  <th style="padding: 10px; color: #888; font-size: 11px; text-transform: uppercase;" colspan="2">Article & Saveur</th>
+                  <th style="padding: 10px; color: #888; font-size: 11px; text-transform: uppercase; text-align: center;">Qté</th>
+                  <th style="padding: 10px; color: #888; font-size: 11px; text-transform: uppercase; text-align: right;">Total</th>
                 </tr>
               </thead>
               <tbody>
@@ -382,27 +461,50 @@ export async function sendOrderConfirmationToCustomer(order: any) {
             </table>
           </div>
 
-          <!-- Total -->
-          <div style="background-color: #161616; border-radius: 10px; padding: 14px 18px; margin-bottom: 24px; font-size: 13px;">
+          <!-- Total Calculation -->
+          <div style="background-color: #171717; border: 1px solid #262626; border-radius: 12px; padding: 16px 20px; margin-bottom: 24px; font-size: 13px;">
             <table style="width: 100%; line-height: 1.8;">
-              <tr style="border-top: 1px solid #333;">
-                <td style="color: #fff; font-weight: bold; font-size: 14px;">Total payé :</td>
-                <td style="text-align: right; color: #F80404; font-weight: 900; font-size: 16px;">${totalStr}</td>
+              <tr>
+                <td style="color: #888;">Sous-total :</td>
+                <td style="text-align: right; color: #fff;">${formatCurrency(subtotal, currency)}</td>
+              </tr>
+              <tr>
+                <td style="color: #888;">Livraison :</td>
+                <td style="text-align: right; color: #fff;">${Number(shippingCost) === 0 ? '<span style="color:#10b981; font-weight:bold;">Gratuit (Offert)</span>' : formatCurrency(shippingCost, currency)}</td>
+              </tr>
+              <tr style="border-top: 1px solid #333333;">
+                <td style="color: #fff; font-weight: bold; font-size: 15px; padding-top: 10px;">Total Réglé :</td>
+                <td style="text-align: right; color: #F80404; font-weight: 900; font-size: 18px; padding-top: 10px;">${totalStr}</td>
               </tr>
             </table>
           </div>
 
-          <!-- Store Contact -->
-          <div style="background-color: #161616; border: 1px solid #222; border-radius: 10px; padding: 14px 16px; font-size: 12px; color: #aaa; line-height: 1.6;">
-            <strong>Une question sur votre commande ?</strong><br>
-            Notre équipe vous répond avec plaisir à la boutique de Genève ou par WhatsApp / téléphone au <strong>+41 79 250 35 64</strong> ou par email à <a href="mailto:info@nutrifitness.ch" style="color: #38bdf8; text-decoration: none;">info@nutrifitness.ch</a>.
+          <!-- Customer Service Contact Card -->
+          <div style="background-color: #171717; border: 1px solid #262626; border-radius: 12px; padding: 18px 20px; font-size: 12px; color: #aaaaaa; line-height: 1.6;">
+            <table style="width: 100%;">
+              <tr>
+                <td style="vertical-align: middle;">
+                  <strong style="color: #ffffff; font-size: 13px;">Une question sur votre commande ?</strong><br>
+                  Notre équipe vous répond avec grand plaisir :<br>
+                  📞 Tél / WhatsApp : <strong style="color: #fff;">+41 79 250 35 64</strong><br>
+                  ✉️ Email : <a href="mailto:info@nutrifitness.ch" style="color: #38bdf8; text-decoration: none;">info@nutrifitness.ch</a><br>
+                  📍 Boutique : Rue des Pâquis 34, 1201 Genève
+                </td>
+                <td style="text-align: right; vertical-align: middle; width: 140px;">
+                  <a href="https://wa.me/41792503564" target="_blank" style="display: inline-block; background-color: #25D366; color: #ffffff; font-weight: 900; font-size: 12px; text-decoration: none; padding: 10px 14px; border-radius: 8px; text-align: center;">
+                    WhatsApp Direct →
+                  </a>
+                </td>
+              </tr>
+            </table>
           </div>
 
         </div>
 
         <!-- Footer -->
-        <div style="background-color: #0d0d0d; border-top: 1px solid #1f1f1f; padding: 18px 28px; text-align: center; color: #666; font-size: 11px;">
-          NutriFitness.ch · Rue des Pâquis 34, 1201 Genève, Suisse · IDE CHE-177.751.159
+        <div style="background-color: #0a0a0a; border-top: 1px solid #1f1f1f; padding: 20px 28px; text-align: center; color: #666666; font-size: 11px; line-height: 1.6;">
+          NutriFitness.ch · Rue des Pâquis 34, 1201 Genève, Suisse · IDE CHE-177.751.159<br>
+          Merci d'avoir choisi NutriFitness pour vos objectifs sportifs !
         </div>
 
       </div>
@@ -412,7 +514,7 @@ export async function sendOrderConfirmationToCustomer(order: any) {
 
   return sendResendEmail({
     to: clientEmail,
-    subject: `Votre commande NutriFitness #${orderNumber} est confirmée 🚀`,
+    subject: `Merci pour votre commande #${orderNumber} ! 🇨🇭 NutriFitness Genève`,
     html,
     replyTo: 'info@nutrifitness.ch',
   });

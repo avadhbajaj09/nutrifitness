@@ -103,6 +103,7 @@ export default function CheckoutPage() {
   const [confirmedCountry, setConfirmedCountry] = useState('CH');
   const [confirmedDeliveryDate, setConfirmedDeliveryDate] = useState('');
   const [confirmedProducts, setConfirmedProducts] = useState<Array<{ gtin?: string }>>([]);
+  const [confirmedItems, setConfirmedItems] = useState<any[]>([]);
   const [submitAttempted, setSubmitAttempted] = useState(false);
   const [countryAutoSwitchedNotice, setCountryAutoSwitchedNotice] = useState<string | null>(null);
   const [isRedirectingToStripe, setIsRedirectingToStripe] = useState(false);
@@ -335,6 +336,7 @@ export default function CheckoutPage() {
               items: purchaseItems,
             });
 
+            setConfirmedItems(paidOrderPayload.items || []);
             clearCart();
             setIsSuccess(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -877,6 +879,7 @@ export default function CheckoutPage() {
         deliveryCountry={confirmedCountry}
         estimatedDeliveryDate={confirmedDeliveryDate}
         products={confirmedProducts}
+        items={confirmedItems.length > 0 ? confirmedItems : (cart && cart.length > 0 ? cart : undefined)}
       />
     );
   }
@@ -1634,8 +1637,8 @@ export default function CheckoutPage() {
             </span>
           </h2>
 
-          {/* Cart items list with Origin Badges */}
-          <div className="space-y-3 max-h-64 overflow-y-auto pr-1 divide-y divide-white/5">
+          {/* Cart items list with Origin Badges & Prominent Flavours */}
+          <div className="space-y-3.5 max-h-72 overflow-y-auto pr-1 divide-y divide-white/10">
             {cart.map(item => {
               const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
               const isPt = (item.shippingOrigin === 'portugal' && !isCommon) || (!customerCountry.includes('CH') && isCommon);
@@ -1643,29 +1646,59 @@ export default function CheckoutPage() {
               const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
                 ? (flavorObj?.[locale] || flavorObj?.fr || 'Standard')
                 : String(item.flavor || 'Standard');
+              const isDistinctFlavor = flavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(flavorStr.toLowerCase());
 
               return (
-                <div key={item.itemKey} className="flex items-center gap-3 pt-2">
-                  <div className="relative w-12 h-12 bg-black/40 rounded-lg p-1 shrink-0 border border-white/10 flex items-center justify-center">
-                    <Image src={item.image} alt={item.name} fill className="object-contain p-1" />
+                <div key={item.itemKey} className="flex items-start gap-3 pt-3 first:pt-1">
+                  <div className="relative w-14 h-14 bg-black/40 rounded-xl p-1.5 shrink-0 border border-white/10 flex items-center justify-center">
+                    <Image src={item.image || '/images/placeholder.webp'} alt={item.name} fill className="object-contain p-1" />
                   </div>
                   <div className="flex-1 min-w-0">
-                    {isMixedCart && (
-                      <div className="flex items-center gap-1.5">
+                    <div className="flex items-center gap-1.5 flex-wrap">
+                      {isMixedCart && (
                         <span className="text-[9px] font-black px-1.5 py-0.5 rounded uppercase tracking-wider bg-white/10 text-white/80">
                           {isPt ? 'Colis 2' : 'Colis 1'}
                         </span>
-                      </div>
-                    )}
-                    <h4 className="text-xs font-bold text-white truncate mt-0.5">{item.name}</h4>
-                    <p className="text-[10px] text-white/50">{flavorStr} · Qte: {item.quantity}</p>
+                      )}
+                      <span className="text-[9px] font-bold text-white/40 uppercase tracking-wider">
+                        {item.brand || 'NutriFitness'}
+                      </span>
+                    </div>
+                    <h4 className="text-xs font-bold text-white leading-snug mt-0.5 line-clamp-2">
+                      {item.name}
+                    </h4>
+                    
+                    {/* Clear High-Visibility Flavour Badge */}
+                    <div className="mt-1.5 flex flex-wrap items-center gap-1.5">
+                      <span className={`inline-flex items-center gap-1 text-[11px] font-bold px-2 py-0.5 rounded-md border ${
+                        isDistinctFlavor 
+                          ? 'bg-[#95d600]/15 border-[#95d600]/40 text-[#95d600]' 
+                          : 'bg-white/10 border-white/15 text-white/85'
+                      }`}>
+                        <span>{isDistinctFlavor ? '⚡' : '🏷️'}</span>
+                        <span className="text-white/60 text-[10px] uppercase font-semibold">Saveur :</span>
+                        <span className="font-black text-white">{flavorStr}</span>
+                      </span>
+                      {item.size && item.size !== 'Format standard' && (
+                        <span className="text-[10px] text-white/60 bg-white/5 border border-white/10 px-1.5 py-0.5 rounded">
+                          {item.size}
+                        </span>
+                      )}
+                      <span className="text-[11px] text-white/50 font-medium">· Qté : {item.quantity}</span>
+                    </div>
                   </div>
-                  <span className="text-xs font-black text-white font-heading">
+                  <span className="text-xs font-black text-white font-heading shrink-0 pt-0.5">
                     {formatPrice(item.price * item.quantity)}
                   </span>
                 </div>
               );
             })}
+          </div>
+
+          {/* Flavor Guarantee Notice */}
+          <div className="mt-2.5 p-2.5 rounded-xl bg-emerald-950/40 border border-emerald-500/30 flex items-center gap-2 text-[11px] text-emerald-300">
+            <span className="text-sm font-bold">✓</span>
+            <span className="leading-snug"><strong>Saveurs confirmées :</strong> Vous recevrez exactement les parfums et options sélectionnés ci-dessus.</span>
           </div>
 
           {/* Coupon / Promo Code Section */}

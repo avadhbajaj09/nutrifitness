@@ -3,6 +3,7 @@ import crypto from 'crypto';
 import { stripe } from '@/lib/stripe';
 import { sendMetaConversionEvent } from '@/lib/meta-capi';
 import { getAdminSupabase } from '@/lib/supabase';
+import { sendOrderNotificationToAdmin, sendOrderConfirmationToCustomer } from '@/lib/email/resend';
 
 function verifyStripeSignature(rawBody: string, sigHeader: string, secret: string): boolean {
   try {
@@ -128,7 +129,7 @@ export async function POST(req: Request) {
 
         const { data: existing, error: fetchErr } = await supabase
           .from('orders')
-          .select('id, status, items, shipping_address')
+          .select('id, status, items, shipping_address, total_amount')
           .eq('order_number', orderNum)
           .maybeSingle();
 
@@ -158,15 +159,15 @@ export async function POST(req: Request) {
             }
             const img = Array.isArray(product?.images) && product.images.length > 0 ? product.images[0] : '';
             const meta = product?.metadata || {};
-            const descParts = (product?.description || '').split('·').map((s: string) => s.trim());
+            const descParts = (product?.description || '').split('·').map((s: string) => s.trim().replace(/^(Saveur|Goût)\s*:\s*/i, ''));
             const unitPrice = item.amount_total && item.quantity ? (item.amount_total / item.quantity) / 100 : ((item.price?.unit_amount || 0) / 100);
 
             sessionItems.push({
               id: meta.product_id || product?.id || `item-${item.id}`,
               name: product?.name || desc || 'Produit',
               sku: meta.sku || item.price?.id || '',
-              flavor: descParts[0] || 'Standard',
-              format: descParts[1] || 'Standard',
+              flavor: meta.flavor || descParts[0] || 'Standard',
+              format: meta.format || descParts[1] || 'Format standard',
               price: unitPrice,
               quantity: item.quantity || 1,
               image: img || '/images/placeholder.webp',
@@ -196,6 +197,9 @@ export async function POST(req: Request) {
           };
 
           // If existing order was created with empty items, fill with sessionItems
+          const finalOrderItems = (existing.items && Array.isArray(existing.items) && existing.items.length > 0)
+            ? existing.items
+            : sessionItems;
           if ((!existing.items || (Array.isArray(existing.items) && existing.items.length === 0)) && sessionItems.length > 0) {
             updatePayload.items = sessionItems;
           }
@@ -209,8 +213,73 @@ export async function POST(req: Request) {
             console.error(`[Stripe Webhook] Failed to update order ${orderNum}:`, updateErr);
             return NextResponse.json({ error: 'Failed to update order' }, { status: 500 });
           }
+
+          // Dispatch confirmation emails to Marco and Customer if not already dispatched
+          const alreadySent = currentAddress.emails_sent || currentAddress.emails_sent_at;
+          if (!alreadySent) {
+            try {
+              const emailPayload = {
+                ticketNumber: orderNum,
+                order_number: orderNum,
+                id: existing.id || orderNum,
+                total: value || existing.total_amount || 0,
+                total_amount: value || existing.total_amount || 0,
+                currency,
+                paymentMethod: paymentMethod.toLowerCase(),
+                client: {
+                  name: customerName,
+                  email: email || currentAddress.email || '',
+                  phone: phone || currentAddress.phone || session.metadata?.customer_phone || '',
+                  address: currentAddress.address || currentAddress.street || session.metadata?.shipping_street || '',
+                  city: currentAddress.city || session.metadata?.shipping_city || '',
+                  postalCode: currentAddress.postalCode || session.metadata?.shipping_postal_code || '',
+                  country: currentAddress.country || session.metadata?.shipping_country || 'Suisse',
+                },
+                shipping: {
+                  method: 'post_priority',
+                  label: currentAddress.shippingLabel || 'PostPac Priority (La Poste Suisse 24h)',
+                  cost: currentAddress.shippingCost || 0,
+                },
+                items: finalOrderItems,
+              };
+
+              await Promise.allSettled([
+                sendOrderNotificationToAdmin(emailPayload),
+                sendOrderConfirmationToCustomer(emailPayload),
+              ]);
+
+              await supabase.from('orders').update({
+                shipping_address: {
+                  ...currentAddress,
+                  stripeSessionId: session.id,
+                  confirmedByWebhook: true,
+                  webhookConfirmedAt: new Date().toISOString(),
+                  emails_sent: true,
+                  emails_sent_at: new Date().toISOString(),
+                }
+              }).eq('order_number', orderNum);
+            } catch (mailErr) {
+              console.error('[Stripe Webhook] Failed to dispatch order emails:', mailErr);
+            }
+          }
         } else {
           // Insert verified paid order directly from Stripe session
+          const newAddress = {
+            name: customerName,
+            email: email || '',
+            phone: phone || session.metadata?.customer_phone || '',
+            street: session.metadata?.shipping_street || '',
+            address: session.metadata?.shipping_street || '',
+            city: session.metadata?.shipping_city || '',
+            postalCode: session.metadata?.shipping_postal_code || '',
+            country: session.metadata?.shipping_country || 'Suisse',
+            stripeSessionId: session.id,
+            confirmedByWebhook: true,
+            webhookConfirmedAt: new Date().toISOString(),
+            emails_sent: true,
+            emails_sent_at: new Date().toISOString(),
+          };
+
           const { error: insertErr } = await supabase.from('orders').insert({
             order_number: orderNum,
             customer_name: customerName,
@@ -220,24 +289,48 @@ export async function POST(req: Request) {
             currency: currency || 'CHF',
             payment_method: paymentMethod,
             status: 'in_processing',
-            shipping_address: {
-              name: customerName,
-              email: email || '',
-              phone: phone || session.metadata?.customer_phone || '',
-              street: session.metadata?.shipping_street || '',
-              city: session.metadata?.shipping_city || '',
-              postalCode: session.metadata?.shipping_postal_code || '',
-              country: session.metadata?.shipping_country || 'CH',
-              stripeSessionId: session.id,
-              confirmedByWebhook: true,
-              webhookConfirmedAt: new Date().toISOString(),
-            },
+            shipping_address: newAddress,
             items: sessionItems,
           });
 
           if (insertErr) {
             console.error(`[Stripe Webhook] Failed to insert order ${orderNum}:`, insertErr);
             return NextResponse.json({ error: 'Failed to record order' }, { status: 500 });
+          }
+
+          // Dispatch confirmation emails
+          try {
+            const emailPayload = {
+              ticketNumber: orderNum,
+              order_number: orderNum,
+              id: orderNum,
+              total: value || 0,
+              total_amount: value || 0,
+              currency,
+              paymentMethod: paymentMethod.toLowerCase(),
+              client: {
+                name: customerName,
+                email: email || '',
+                phone: phone || session.metadata?.customer_phone || '',
+                address: session.metadata?.shipping_street || '',
+                city: session.metadata?.shipping_city || '',
+                postalCode: session.metadata?.shipping_postal_code || '',
+                country: session.metadata?.shipping_country || 'Suisse',
+              },
+              shipping: {
+                method: 'post_priority',
+                label: 'PostPac Priority (La Poste Suisse 24h)',
+                cost: 0,
+              },
+              items: sessionItems,
+            };
+
+            await Promise.allSettled([
+              sendOrderNotificationToAdmin(emailPayload),
+              sendOrderConfirmationToCustomer(emailPayload),
+            ]);
+          } catch (mailErr) {
+            console.error('[Stripe Webhook] Failed to dispatch emails for inserted order:', mailErr);
           }
         }
       }
