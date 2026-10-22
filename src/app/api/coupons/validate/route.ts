@@ -134,6 +134,37 @@ export async function POST(req: Request) {
       });
     }
 
+    // 4. Personalized client loyalty codes ending in 10 (e.g. MARCO10, SAMUEL10, AVADH10)
+    if (/^[A-Z0-9]{3,20}10$/.test(cleanCode)) {
+      // Ensure coupon exists in Stripe so checkout applies it smoothly
+      if (stripe) {
+        try {
+          const existingCoupon = await stripe.coupons.retrieve(cleanCode).catch(() => null);
+          if (!existingCoupon || !existingCoupon.valid) {
+            await stripe.coupons.create({
+              id: cleanCode,
+              name: `Remise Fidélité 10% ${cleanCode}`,
+              percent_off: 10,
+              duration: 'once',
+              redeem_by: Math.floor(Date.now() / 1000) + (45 * 24 * 60 * 60)
+            }).catch(err => console.warn(`[Stripe Coupon] Auto-create notice: ${err.message}`));
+          }
+        } catch (stripeErr) {
+          console.warn('[Stripe Coupon Auto-create error]', stripeErr);
+        }
+      }
+
+      return NextResponse.json({
+        valid: true,
+        code: cleanCode,
+        rate: 0.10,
+        percentOff: 10,
+        discountType: 'percent',
+        description: '-10% Cadeau Fidélité (Valable 45 jours)',
+        stripeCouponId: cleanCode,
+      });
+    }
+
     return NextResponse.json(
       {
         valid: false,
