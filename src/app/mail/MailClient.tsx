@@ -12,6 +12,7 @@ import {
   Reply,
   Star,
   CheckCircle,
+  CheckCheck,
   AlertCircle,
   X,
   FileText,
@@ -190,33 +191,30 @@ export default function MailClient() {
 
   // Select an email and load full details
   const handleSelectEmail = async (email: EmailItem) => {
-    setSelectedEmail(email);
+    const wasUnread = !email.is_read;
+    const initialSelected = wasUnread ? { ...email, is_read: true } : email;
+    setSelectedEmail(initialSelected);
     setMobileView('detail');
 
-    if (!email.is_read) {
+    if (wasUnread) {
       // Optimistic update
       setEmails(prev => prev.map(e => e.id === email.id ? { ...e, is_read: true } : e));
-      setCounts(prev => ({ ...prev, inboxUnread: Math.max(0, prev.inboxUnread - 1) }));
+      if (email.folder === 'inbox') {
+        setCounts(prev => ({ ...prev, inboxUnread: Math.max(0, prev.inboxUnread - 1) }));
+      }
+    }
 
-      try {
-        const res = await fetch(`/api/mail/${email.id}`);
-        const data = await res.json();
-        if (data.email) {
-          setSelectedEmail(data.email);
-        }
-      } catch (err) {
-        console.error('Fetch detail error:', err);
+    try {
+      const res = await fetch(`/api/mail/${email.id}`);
+      const data = await res.json();
+      if (data.email) {
+        setSelectedEmail(data.email);
       }
-    } else {
-      try {
-        const res = await fetch(`/api/mail/${email.id}`);
-        const data = await res.json();
-        if (data.email) {
-          setSelectedEmail(data.email);
-        }
-      } catch (err) {
-        console.error('Fetch detail error:', err);
+      if (data.counts) {
+        setCounts(data.counts);
       }
+    } catch (err) {
+      console.error('Fetch detail error:', err);
     }
   };
 
@@ -247,19 +245,42 @@ export default function MailClient() {
     if (selectedEmail?.id === email.id) {
       setSelectedEmail(prev => prev ? { ...prev, is_read: newRead } : null);
     }
-    setCounts(prev => ({
-      ...prev,
-      inboxUnread: newRead ? Math.max(0, prev.inboxUnread - 1) : prev.inboxUnread + 1,
-    }));
+    if (email.folder === 'inbox') {
+      setCounts(prev => ({
+        ...prev,
+        inboxUnread: newRead ? Math.max(0, prev.inboxUnread - 1) : prev.inboxUnread + 1,
+      }));
+    }
 
     try {
-      await fetch(`/api/mail/${email.id}`, {
+      const res = await fetch(`/api/mail/${email.id}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ is_read: newRead }),
       });
+      const data = await res.json();
+      if (data.counts) {
+        setCounts(data.counts);
+      }
     } catch (err) {
       console.error('Toggle read error:', err);
+    }
+  };
+
+  // Mark all inbox messages as read
+  const handleMarkAllAsRead = async () => {
+    setEmails(prev => prev.map(e => ({ ...e, is_read: true })));
+    setSelectedEmail(prev => prev ? { ...prev, is_read: true } : null);
+    setCounts(prev => ({ ...prev, inboxUnread: 0 }));
+
+    try {
+      const res = await fetch('/api/mail/mark-all-read', { method: 'POST' });
+      const data = await res.json();
+      if (data.counts) {
+        setCounts(data.counts);
+      }
+    } catch (err) {
+      console.error('Mark all read error:', err);
     }
   };
 
@@ -280,10 +301,16 @@ export default function MailClient() {
     }
 
     try {
-      await fetch(`/api/mail/${email.id}`, { method: 'DELETE' });
-      fetchEmails();
+      const res = await fetch(`/api/mail/${email.id}`, { method: 'DELETE' });
+      const data = await res.json();
+      if (data.counts) {
+        setCounts(data.counts);
+      } else {
+        fetchEmails();
+      }
     } catch (err) {
       console.error('Delete error:', err);
+      fetchEmails();
     }
   };
 
@@ -584,9 +611,9 @@ export default function MailClient() {
             <nav className="space-y-1 text-xs font-medium">
               <button
                 onClick={() => { setActiveFolder('inbox'); setSelectedEmail(null); }}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors ${
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
                   activeFolder === 'inbox'
-                    ? 'bg-red-50 text-red-700 font-bold'
+                    ? 'bg-red-50 text-red-700 font-bold shadow-xs'
                     : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900'
                 }`}
               >
@@ -594,20 +621,26 @@ export default function MailClient() {
                   <Inbox className="w-4 h-4" />
                   <span>Boîte de réception</span>
                 </div>
-                {counts.inboxUnread > 0 ? (
-                  <span className="px-2 py-0.5 rounded-full bg-red-600 text-white text-[10px] font-bold">
-                    {counts.inboxUnread}
-                  </span>
-                ) : (
-                  <span className="text-[11px] text-slate-400">{counts.inbox}</span>
-                )}
+                <div className="flex items-center gap-1.5">
+                  {counts.inboxUnread > 0 ? (
+                    <span className="px-2 py-0.5 rounded-full bg-red-600 text-white text-[10px] font-bold shadow-xs">
+                      {counts.inboxUnread} non lu{counts.inboxUnread > 1 ? 's' : ''}
+                    </span>
+                  ) : (
+                    <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-[10px] font-bold flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500" />
+                      0 à lire
+                    </span>
+                  )}
+                  <span className="text-[11px] text-slate-400 font-normal">({counts.inbox})</span>
+                </div>
               </button>
 
               <button
                 onClick={() => { setActiveFolder('sent'); setSelectedEmail(null); }}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors ${
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
                   activeFolder === 'sent'
-                    ? 'bg-red-50 text-red-700 font-bold'
+                    ? 'bg-red-50 text-red-700 font-bold shadow-xs'
                     : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900'
                 }`}
               >
@@ -620,9 +653,9 @@ export default function MailClient() {
 
               <button
                 onClick={() => { setActiveFolder('trash'); setSelectedEmail(null); }}
-                className={`w-full flex items-center justify-between px-3 py-2 rounded-lg transition-colors ${
+                className={`w-full flex items-center justify-between px-3 py-2.5 rounded-xl transition-colors ${
                   activeFolder === 'trash'
-                    ? 'bg-red-50 text-red-700 font-bold'
+                    ? 'bg-red-50 text-red-700 font-bold shadow-xs'
                     : 'text-slate-600 hover:bg-slate-200/50 hover:text-slate-900'
                 }`}
               >
@@ -659,15 +692,47 @@ export default function MailClient() {
           mobileView === 'detail' ? 'hidden md:flex' : 'flex'
         }`}>
           {/* Header of List */}
-          <div className="p-3 border-b border-slate-100 flex items-center justify-between bg-slate-50/40">
-            <div className="font-bold text-xs uppercase tracking-wider text-slate-700">
-              {activeFolder === 'inbox' && 'Boîte de réception'}
-              {activeFolder === 'sent' && 'Messages envoyés'}
-              {activeFolder === 'trash' && 'Corbeille'}
+          <div className="p-3 border-b border-slate-200 flex flex-col gap-2 bg-slate-50/60">
+            <div className="flex items-center justify-between">
+              <div className="font-bold text-xs uppercase tracking-wider text-slate-800 flex items-center gap-2">
+                <span>
+                  {activeFolder === 'inbox' && 'Boîte de réception'}
+                  {activeFolder === 'sent' && 'Messages envoyés'}
+                  {activeFolder === 'trash' && 'Corbeille'}
+                </span>
+                <span className="text-[10px] px-1.5 py-0.5 rounded-full bg-slate-200/80 text-slate-600 font-semibold">
+                  {emails.length}
+                </span>
+              </div>
+              {activeFolder === 'inbox' && counts.inboxUnread > 0 && (
+                <button
+                  type="button"
+                  onClick={handleMarkAllAsRead}
+                  className="text-[11px] font-semibold text-red-600 hover:text-red-700 hover:underline inline-flex items-center gap-1 cursor-pointer"
+                  title="Marquer tous les messages comme lus"
+                >
+                  <CheckCheck className="w-3.5 h-3.5" />
+                  Tout marquer lu
+                </button>
+              )}
             </div>
-            <div className="text-[11px] text-slate-400 font-medium">
-              {emails.length} message{emails.length > 1 ? 's' : ''}
-            </div>
+
+            {activeFolder === 'inbox' && (
+              <div className="flex items-center justify-between text-[11px]">
+                {counts.inboxUnread === 0 ? (
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-emerald-50 text-emerald-700 border border-emerald-200/80 font-medium">
+                    <CheckCheck className="w-3.5 h-3.5 text-emerald-600 shrink-0" />
+                    <span>0 message restant à lire (Tous lus)</span>
+                  </span>
+                ) : (
+                  <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-md bg-red-50 text-red-700 border border-red-200/80 font-semibold">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse shrink-0" />
+                    <span>{counts.inboxUnread} message{counts.inboxUnread > 1 ? 's' : ''} restant{counts.inboxUnread > 1 ? 's' : ''} à lire</span>
+                  </span>
+                )}
+                <span className="text-[11px] text-slate-400">Total : {counts.inbox}</span>
+              </div>
+            )}
           </div>
 
           {/* Email Items Scrollable */}
@@ -796,14 +861,36 @@ export default function MailClient() {
                   </button>
                 </div>
 
-                <div className="text-[11px] text-slate-400">
-                  {new Date(selectedEmail.created_at).toLocaleString('fr-CH', {
-                    day: 'numeric',
-                    month: 'long',
-                    year: 'numeric',
-                    hour: '2-digit',
-                    minute: '2-digit',
-                  })}
+                <div className="flex items-center gap-3">
+                  {selectedEmail.folder === 'inbox' && (
+                    <span className={`text-[11px] px-2.5 py-1 rounded-full font-medium inline-flex items-center gap-1.5 ${
+                      counts.inboxUnread === 0
+                        ? 'bg-emerald-50 text-emerald-700 border border-emerald-200'
+                        : 'bg-red-50 text-red-700 border border-red-200 font-semibold'
+                    }`}>
+                      {counts.inboxUnread === 0 ? (
+                        <>
+                          <CheckCheck className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>0 message restant à lire</span>
+                        </>
+                      ) : (
+                        <>
+                          <span className="w-1.5 h-1.5 rounded-full bg-red-600 animate-pulse" />
+                          <span>{counts.inboxUnread} restant{counts.inboxUnread > 1 ? 's' : ''} à lire</span>
+                        </>
+                      )}
+                    </span>
+                  )}
+
+                  <div className="text-[11px] text-slate-400">
+                    {new Date(selectedEmail.created_at).toLocaleString('fr-CH', {
+                      day: 'numeric',
+                      month: 'long',
+                      year: 'numeric',
+                      hour: '2-digit',
+                      minute: '2-digit',
+                    })}
+                  </div>
                 </div>
               </div>
 
@@ -907,9 +994,24 @@ export default function MailClient() {
               <h3 className="text-sm font-bold text-slate-700 mb-1">
                 Aucun e-mail sélectionné
               </h3>
-              <p className="text-xs text-slate-500 max-w-xs">
+              <p className="text-xs text-slate-500 max-w-xs mb-3">
                 Sélectionnez un e-mail dans la liste de gauche pour afficher son contenu ou cliquez sur &quot;Nouveau message&quot; pour écrire.
               </p>
+              {activeFolder === 'inbox' && (
+                <div className="mt-1">
+                  {counts.inboxUnread === 0 ? (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 text-xs font-medium">
+                      <CheckCheck className="w-3.5 h-3.5 text-emerald-600" />
+                      0 message restant à lire (Tous lus)
+                    </span>
+                  ) : (
+                    <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-red-50 text-red-700 border border-red-200 text-xs font-semibold">
+                      <span className="w-2 h-2 rounded-full bg-red-600 animate-pulse" />
+                      {counts.inboxUnread} message{counts.inboxUnread > 1 ? 's' : ''} restant{counts.inboxUnread > 1 ? 's' : ''} à lire
+                    </span>
+                  )}
+                </div>
+              )}
             </div>
           )}
         </main>

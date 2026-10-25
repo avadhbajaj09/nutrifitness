@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
+import { getMailCounts } from '@/lib/email/mail-db';
 
 export const dynamic = 'force-dynamic';
 
@@ -30,7 +31,8 @@ export async function GET(
       email.is_read = true;
     }
 
-    return NextResponse.json({ email });
+    const counts = await getMailCounts(supabase);
+    return NextResponse.json({ email, counts });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
@@ -77,7 +79,8 @@ export async function PATCH(
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    return NextResponse.json({ success: true, email: data });
+    const counts = await getMailCounts(supabase);
+    return NextResponse.json({ success: true, email: data, counts });
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });
   }
@@ -106,7 +109,8 @@ export async function DELETE(
       // Hard delete from database
       const { error } = await supabase.from('emails').delete().eq('id', id);
       if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-      return NextResponse.json({ success: true, action: 'permanently_deleted' });
+      const counts = await getMailCounts(supabase);
+      return NextResponse.json({ success: true, action: 'permanently_deleted', counts });
     } else {
       // Soft delete: move to trash
       const { error } = await supabase
@@ -119,7 +123,8 @@ export async function DELETE(
         })
         .eq('id', id);
       if (error) return NextResponse.json({ error: error.message }, { status: 500 });
-      return NextResponse.json({ success: true, action: 'moved_to_trash' });
+      const counts = await getMailCounts(supabase);
+      return NextResponse.json({ success: true, action: 'moved_to_trash', counts });
     }
   } catch (err: any) {
     return NextResponse.json({ error: err.message }, { status: 500 });

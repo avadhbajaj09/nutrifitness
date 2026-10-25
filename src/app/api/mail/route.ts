@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
+import { getMailCounts } from '@/lib/email/mail-db';
 
 export const dynamic = 'force-dynamic';
 
@@ -37,23 +38,12 @@ export async function GET(req: Request) {
       return NextResponse.json({ error: error.message }, { status: 500 });
     }
 
-    // Counts for sidebar badges
-    const [inboxTotal, inboxUnread, sentTotal, trashTotal] = await Promise.all([
-      supabase.from('emails').select('*', { count: 'exact', head: true }).eq('folder', 'inbox').eq('is_deleted', false),
-      supabase.from('emails').select('*', { count: 'exact', head: true }).eq('folder', 'inbox').eq('is_deleted', false).eq('is_read', false),
-      supabase.from('emails').select('*', { count: 'exact', head: true }).eq('folder', 'sent').eq('is_deleted', false),
-      supabase.from('emails').select('*', { count: 'exact', head: true }).or('folder.eq.trash,is_deleted.eq.true'),
-    ]);
+    const counts = await getMailCounts(supabase);
 
     return NextResponse.json({
       emails: emails || [],
       total: count || 0,
-      counts: {
-        inbox: inboxTotal.count || 0,
-        inboxUnread: inboxUnread.count || 0,
-        sent: sentTotal.count || 0,
-        trash: trashTotal.count || 0,
-      },
+      counts,
     });
   } catch (err: any) {
     console.error('[Mail API] Server error:', err);
@@ -182,10 +172,13 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: insertError.message }, { status: 500 });
     }
 
+    const counts = await getMailCounts(supabase);
+
     return NextResponse.json({
       success: true,
       email: inserted,
       resendId,
+      counts,
     });
   } catch (err: any) {
     console.error('[Mail Send Error]', err);
