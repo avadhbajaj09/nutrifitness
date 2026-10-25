@@ -15,11 +15,16 @@ import MobileBottomTabBar from '@/components/MobileBottomTabBar';
 
 export default function AppShell({ children }: { children: React.ReactNode }) {
   const pathname = usePathname();
-  const isAdmin = pathname?.startsWith('/wp-admin') || pathname?.startsWith('/admin') || pathname?.startsWith('/teamomar');
+  const isMail = pathname?.startsWith('/mail');
+  const isAdmin = pathname?.startsWith('/wp-admin') || pathname?.startsWith('/admin') || pathname?.startsWith('/teamomar') || isMail;
   const isMaintenance = pathname?.startsWith('/maintenance');
 
   useEffect(() => {
-    if (isAdmin) {
+    if (isMail) {
+      document.documentElement.classList.remove('dark');
+      document.body.style.backgroundColor = '#ffffff';
+      document.body.style.color = '#0f172a';
+    } else if (isAdmin) {
       document.documentElement.classList.remove('dark');
       document.body.style.backgroundColor = '#f8fafc';
       document.body.style.color = '#0f172a';
@@ -28,7 +33,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
       document.body.style.backgroundColor = '#0A0A0A';
       document.body.style.color = '#F3F4F6';
     }
-  }, [isAdmin]);
+  }, [isAdmin, isMail]);
 
   if (isAdmin || isMaintenance) {
     return (

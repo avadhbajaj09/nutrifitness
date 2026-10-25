@@ -9,6 +9,7 @@ import {
   MapPin,
   Receipt,
   Truck,
+  Mail,
   ExternalLink,
   LogOut,
   CheckCircle2,
@@ -67,6 +68,14 @@ export default function AdminSidebar({
       badge: undefined,
       href: '/wp-admin?tab=fulfillment',
       isRoute: false,
+    },
+    {
+      id: 'mail',
+      label: 'Messagerie (Mail)',
+      icon: Mail,
+      badge: undefined,
+      href: '/mail',
+      isRoute: true,
     },
   ];
 

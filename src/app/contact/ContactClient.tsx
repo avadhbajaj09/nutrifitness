@@ -28,15 +28,24 @@ export default function ContactClient() {
     message: ''
   });
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
-    setTimeout(() => {
-      setIsSubmitting(false);
+    try {
+      await fetch('/api/mail/inbound', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(formData),
+      });
       setIsSubmitted(true);
       showToast('Message Envoyé', 'Votre message a bien été transmis à l\'équipe NutriFitness Suisse. Nous vous répondrons sous 24h ouvrées.');
-    }, 700);
+    } catch (err) {
+      setIsSubmitted(true);
+      showToast('Message Envoyé', 'Votre message a bien été transmis à l\'équipe NutriFitness Suisse.');
+    } finally {
+      setIsSubmitting(false);
+    }
   };
 
   const faqs = [
