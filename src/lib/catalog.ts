@@ -2032,16 +2032,16 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 27,
+        "inventoryQuantity": 25,
         "inStock": true,
-        "stockGeneva": 27,
+        "stockGeneva": 0,
         "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
-    "stockGeneva": 27,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
     "stockPortugal": 25,
     "inStock": true
   },
@@ -6273,17 +6273,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 35,
-        "inventoryQuantity": 10,
+        "inventoryQuantity": 25,
         "inStock": true,
-        "stockGeneva": 10,
+        "stockGeneva": 0,
         "stockPortugal": 25,
         "gtin13": "634240078408"
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
-    "stockGeneva": 10,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
     "stockPortugal": 25,
     "inStock": true,
     "gtin13": "634240078408"
@@ -8304,11 +8304,11 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 45,
-        "inventoryQuantity": 20,
-        "inStock": true,
+        "inventoryQuantity": 0,
+        "inStock": false,
         "gtin13": "8050507510153",
         "stockPortugal": 0,
-        "stockGeneva": 25
+        "stockGeneva": 0
       }
     ],
     "isSwissOrigin": false,
@@ -8316,7 +8316,8 @@ export const PRODUCTS: ProductItem[] = [
     "gtin13": "8050507510153",
     "locationType": "GENEVA_ONLY",
     "stockPortugal": 0,
-    "stockGeneva": 25
+    "stockGeneva": 0,
+    "inStock": false
   },
   {
     "id": "prod-18598",
@@ -10840,17 +10841,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 40,
-        "inventoryQuantity": 2,
-        "inStock": true,
-        "stockGeneva": 2,
+        "inventoryQuantity": 0,
+        "inStock": false,
+        "stockGeneva": 0,
         "gtin13": "8436609600730",
         "stockPortugal": 0
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "switzerland",
-    "stockGeneva": 2,
-    "inStock": true,
+    "stockGeneva": 0,
+    "inStock": false,
     "gtin13": "8436609600730",
     "locationType": "GENEVA_ONLY",
     "stockPortugal": 0
@@ -16762,17 +16763,17 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "300g (100 doses)",
         "priceChf": 25,
-        "inventoryQuantity": 50,
+        "inventoryQuantity": 25,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-14-1.png",
-        "stockGeneva": 25,
+        "stockGeneva": 0,
         "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
-    "stockGeneva": 25,
+    "shippingOrigin": "portugal",
+    "locationType": "PORTUGAL_ONLY",
+    "stockGeneva": 0,
     "stockPortugal": 25
   },
   {
@@ -18166,7 +18167,7 @@ export const PRODUCTS: ProductItem[] = [
         },
         "format": "1 unité",
         "priceChf": 25,
-        "inventoryQuantity": 53,
+        "inventoryQuantity": 50,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/75.png",
         "stockGeneva": 0,
