@@ -1,9 +1,19 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
+import crypto from 'crypto';
 import fs from 'fs';
 import path from 'path';
 
 export const runtime = 'nodejs';
+export const dynamic = 'force-dynamic';
+
+function toUuid(idStr: string): string {
+  if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(idStr)) {
+    return idStr;
+  }
+  const hash = crypto.createHash('md5').update(idStr).digest('hex');
+  return `${hash.substring(0, 8)}-${hash.substring(8, 12)}-${hash.substring(12, 16)}-${hash.substring(16, 20)}-${hash.substring(20, 32)}`;
+}
 
 // GET: Fetch all saved GTIN13 / barcodes from Supabase
 export async function GET() {
@@ -38,8 +48,17 @@ export async function GET() {
       if (p.gtin13 && p.gtin13.trim()) {
         const val = p.gtin13.trim();
         productBarcodes[p.id] = val;
-        if (p.slug) productBarcodes[p.slug] = val;
-        if (p.sku) productBarcodes[p.sku] = val;
+        productBarcodes[p.id.toLowerCase()] = val;
+        if (p.slug) {
+          const s = p.slug.trim().toLowerCase();
+          productBarcodes[p.slug] = val;
+          productBarcodes[s] = val;
+          productBarcodes[`prod-${s}`] = val;
+        }
+        if (p.sku) {
+          productBarcodes[p.sku] = val;
+          productBarcodes[p.sku.toLowerCase()] = val;
+        }
         if (p.woo_id) {
           productBarcodes[p.woo_id] = val;
           productBarcodes[`prod-${p.woo_id}`] = val;
@@ -51,7 +70,11 @@ export async function GET() {
       if (v.gtin13 && v.gtin13.trim()) {
         const val = v.gtin13.trim();
         variantBarcodes[v.id] = val;
-        if (v.sku) variantBarcodes[v.sku] = val;
+        variantBarcodes[v.id.toLowerCase()] = val;
+        if (v.sku) {
+          variantBarcodes[v.sku] = val;
+          variantBarcodes[v.sku.toLowerCase()] = val;
+        }
         if (v.woo_id) {
           variantBarcodes[v.woo_id] = val;
           variantBarcodes[`var-${v.woo_id}`] = val;
@@ -61,7 +84,10 @@ export async function GET() {
           variantBarcodes[`${v.product_id}_${cleanAttr}`] = val;
           const parent = productMap.get(v.product_id);
           if (parent) {
-            if (parent.slug) variantBarcodes[`${parent.slug}_${cleanAttr}`] = val;
+            if (parent.slug) {
+              variantBarcodes[`${parent.slug}_${cleanAttr}`] = val;
+              variantBarcodes[`${parent.slug.toLowerCase()}_${cleanAttr}`] = val;
+            }
             if (parent.woo_id) {
               variantBarcodes[`${parent.woo_id}_${cleanAttr}`] = val;
               variantBarcodes[`prod-${parent.woo_id}_${cleanAttr}`] = val;
@@ -86,70 +112,115 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const body = await req.json();
-    const { productId, gtin13, variants } = body;
+    const { productId, slug, name, brand, gtin13, variants } = body;
 
-    if (!productId) {
-      return NextResponse.json({ error: 'Missing productId' }, { status: 400 });
+    if (!productId && !slug) {
+      return NextResponse.json({ error: 'Missing productId or slug' }, { status: 400 });
     }
 
     const supabase = getAdminSupabase();
     const now = new Date().toISOString();
     const mainBarcode = typeof gtin13 === 'string' ? gtin13.trim() : null;
 
-    // 1. Resolve product in DB (by id, slug, woo_id, or sku safely without UUID cast error)
-    const cleanId = String(productId).replace(/^prod-/, '');
+    const cleanId = String(productId || '').replace(/^prod-/, '');
+    const targetSlug = String(slug || cleanId).toLowerCase().trim();
     const isUuid = (str: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(str);
 
-    let prodQuery = supabase.from('products').select('id, slug, sku, woo_id');
-    if (isUuid(productId)) {
-      prodQuery = prodQuery.eq('id', productId);
-    } else {
-      prodQuery = prodQuery.or(`slug.eq.${productId},slug.eq.${cleanId},woo_id.eq.${cleanId},sku.eq.${productId}`);
+    // 1. Resolve product in DB using multiple flexible strategies
+    let dbProd: any = null;
+
+    if (productId && isUuid(productId)) {
+      const { data } = await supabase.from('products').select('id, slug, sku, woo_id').eq('id', productId).maybeSingle();
+      if (data) dbProd = data;
     }
-    const { data: dbProd } = await prodQuery.maybeSingle();
+
+    if (!dbProd && targetSlug) {
+      const { data } = await supabase.from('products').select('id, slug, sku, woo_id').eq('slug', targetSlug).maybeSingle();
+      if (data) dbProd = data;
+    }
+
+    if (!dbProd && cleanId) {
+      const { data } = await supabase.from('products').select('id, slug, sku, woo_id').or(`slug.eq.${cleanId},woo_id.eq.${cleanId},sku.eq.${cleanId}`).maybeSingle();
+      if (data) dbProd = data;
+    }
+
+    if (!dbProd && name) {
+      const { data } = await supabase.from('products').select('id, slug, sku, woo_id').ilike('name', `%${name.slice(0, 30)}%`).maybeSingle();
+      if (data) dbProd = data;
+    }
+
+    let finalProdId = dbProd?.id;
 
     if (dbProd) {
-      // Update parent product in Supabase
-      if (mainBarcode !== null) {
-        await supabase
-          .from('products')
-          .update({ gtin13: mainBarcode || null, updated_at: now })
-          .eq('id', dbProd.id);
+      // Product exists: update GTIN13
+      const { error: updateErr } = await supabase
+        .from('products')
+        .update({ gtin13: mainBarcode || null, updated_at: now })
+        .eq('id', dbProd.id);
+      if (updateErr) {
+        console.error('[Admin Barcode API] Error updating products.gtin13:', updateErr);
       }
+    } else {
+      // Product not yet in Supabase table: Upsert using deterministic UUID
+      finalProdId = toUuid(productId || targetSlug);
+      const { error: insertErr } = await supabase.from('products').upsert({
+        id: finalProdId,
+        slug: targetSlug,
+        name: name || targetSlug,
+        brand: brand || 'NutriFitness',
+        gtin13: mainBarcode || null,
+        status: 'published',
+        updated_at: now
+      }, { onConflict: 'id' });
+      if (insertErr) {
+        console.error('[Admin Barcode API] Error upserting product:', insertErr);
+      }
+    }
 
-      // Update variants if provided
-      if (Array.isArray(variants) && variants.length > 0) {
-        const { data: dbVariants } = await supabase
-          .from('product_variants')
-          .select('id, woo_id, sku, attribute_value')
-          .eq('product_id', dbProd.id);
+    // 2. Update variants if provided
+    if (finalProdId && Array.isArray(variants) && variants.length > 0) {
+      const { data: dbVariants } = await supabase
+        .from('product_variants')
+        .select('id, woo_id, sku, attribute_value')
+        .eq('product_id', finalProdId);
 
-        for (const vItem of variants) {
-          const vBarcode = typeof vItem.gtin13 === 'string' ? vItem.gtin13.trim() : '';
-          const vItemIdClean = String(vItem.id || '').replace(/^var-/, '');
-          const target = (dbVariants || []).find(
-            dbV =>
-              dbV.id === vItem.id ||
-              (dbV.woo_id && (dbV.woo_id === vItem.id || dbV.woo_id === vItemIdClean)) ||
-              (vItem.sku && dbV.sku && dbV.sku.toLowerCase() === vItem.sku.toLowerCase()) ||
-              (vItem.flavor && dbV.attribute_value && (
-                dbV.attribute_value.toLowerCase() === vItem.flavor.toLowerCase() ||
-                dbV.attribute_value.toLowerCase().includes(vItem.flavor.toLowerCase()) ||
-                vItem.flavor.toLowerCase().includes(dbV.attribute_value.toLowerCase())
-              ))
-          );
+      for (const vItem of variants) {
+        const vBarcode = typeof vItem.gtin13 === 'string' ? vItem.gtin13.trim() : '';
+        const vItemIdClean = String(vItem.id || '').replace(/^var-/, '');
+        const target = (dbVariants || []).find(
+          dbV =>
+            dbV.id === vItem.id ||
+            (dbV.woo_id && (dbV.woo_id === vItem.id || dbV.woo_id === vItemIdClean)) ||
+            (vItem.sku && dbV.sku && dbV.sku.toLowerCase() === vItem.sku.toLowerCase()) ||
+            (vItem.flavor && dbV.attribute_value && (
+              dbV.attribute_value.toLowerCase() === vItem.flavor.toLowerCase() ||
+              dbV.attribute_value.toLowerCase().includes(vItem.flavor.toLowerCase()) ||
+              vItem.flavor.toLowerCase().includes(dbV.attribute_value.toLowerCase())
+            ))
+        );
 
-          if (target) {
-            await supabase
-              .from('product_variants')
-              .update({ gtin13: vBarcode || null, updated_at: now })
-              .eq('id', target.id);
-          }
+        if (target) {
+          await supabase
+            .from('product_variants')
+            .update({ gtin13: vBarcode || null, updated_at: now })
+            .eq('id', target.id);
+        } else if (vBarcode) {
+          // If variant does not exist yet, insert it
+          const varUuid = toUuid(`${finalProdId}_${vItem.sku || vItem.id || vItem.flavor}`);
+          await supabase.from('product_variants').upsert({
+            id: varUuid,
+            product_id: finalProdId,
+            sku: vItem.sku || null,
+            attribute_name: 'Saveur',
+            attribute_value: vItem.flavor || 'Standard',
+            gtin13: vBarcode,
+            updated_at: now
+          }, { onConflict: 'id' });
         }
       }
     }
 
-    // 2. Also sync to static src/lib/catalog.ts in-memory file if possible
+    // 3. Also sync to static src/lib/catalog.ts in-memory file if possible
     try {
       const catalogPath = path.resolve('src/lib/catalog.ts');
       if (fs.existsSync(catalogPath)) {
@@ -168,6 +239,7 @@ export async function POST(req: Request) {
             (p: any) =>
               p.id === productId ||
               p.id === cleanId ||
+              p.slug?.fr === targetSlug ||
               p.slug?.fr === productId ||
               p.slug?.fr === cleanId
           );
@@ -193,14 +265,14 @@ export async function POST(req: Request) {
         }
       }
     } catch (catErr) {
-      console.warn('[Admin Barcode API] catalog.ts local file sync warning (non-fatal):', catErr);
+      console.warn('[Admin Barcode API] catalog.ts local sync warning (non-fatal):', catErr);
     }
 
-    console.log(`[Admin Barcode API] Successfully saved barcode for product "${productId}" to Supabase.`);
+    console.log(`[Admin Barcode API] Successfully saved barcode for product "${targetSlug}" (${finalProdId}) to Supabase: ${mainBarcode}`);
     return NextResponse.json({
       success: true,
       message: 'Barcode saved permanently to Supabase',
-      productId,
+      productId: finalProdId,
       gtin13: mainBarcode,
     });
   } catch (error: any) {

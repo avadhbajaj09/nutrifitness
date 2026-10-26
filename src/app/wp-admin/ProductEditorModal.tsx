@@ -4,6 +4,7 @@ import React, { useState, useEffect, useMemo } from 'react';
 import Image from 'next/image';
 import { CATEGORIES } from '@/lib/catalog';
 import type { ProductItem, ProductVariant, SupportedLocale, TaxRateCategory } from '@/lib/types';
+import { unescapeText } from '@/lib/formatContent';
 import { 
   X, 
   Save, 
@@ -169,13 +170,13 @@ export default function ProductEditorModal({
         })) || [{ src: '/images/placeholder.webp', altText: product.name.fr }]
       );
 
-      setShortDescFr(product.shortDescription?.fr || '');
-      setLongDescFr(product.longDescription?.fr || '');
-      setDirectAnswerAeoFr(product.directAnswerAeo?.fr || '');
+      setShortDescFr(unescapeText(product.shortDescription?.fr || ''));
+      setLongDescFr(unescapeText(product.longDescription?.fr || ''));
+      setDirectAnswerAeoFr(unescapeText(product.directAnswerAeo?.fr || ''));
 
-      setIngredientsFr(product.ingredients?.fr || '');
-      setAllergensFr(product.allergens?.fr || '');
-      setUsageInstructionsFr(product.usageInstructions?.fr || '');
+      setIngredientsFr(unescapeText(product.ingredients?.fr || ''));
+      setAllergensFr(unescapeText(product.allergens?.fr || ''));
+      setUsageInstructionsFr(unescapeText(product.usageInstructions?.fr || ''));
 
       if (product.nutrition) {
         setServingSize(product.nutrition.servingSize || '30 g');

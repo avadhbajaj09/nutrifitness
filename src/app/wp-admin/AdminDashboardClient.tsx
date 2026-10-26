@@ -51,7 +51,8 @@ import {
   Split,
   Sliders,
   FileText,
-  CheckCircle2
+  CheckCircle2,
+  Loader2
 } from 'lucide-react';
 import ProductEditorModal from './ProductEditorModal';
 
@@ -748,39 +749,76 @@ export default function AdminDashboardClient() {
           };
         });
 
-        // 6. Fetch permanently saved barcodes from Supabase (/api/admin/products/barcode/)
+        // 6. Fetch permanently saved barcodes from Supabase (/api/admin/products/barcode/) + LocalStorage cache
+        let localBc: Record<string, string> = {};
+        try {
+          const rawLocalBc = localStorage.getItem('nutrifitness_product_barcodes');
+          if (rawLocalBc) localBc = JSON.parse(rawLocalBc);
+        } catch {}
+
         let finalProductsWithBarcodes = withStocks;
         try {
           const bRes = await fetch('/api/admin/products/barcode/', { cache: 'no-store' });
+          let pBarcodes: Record<string, string> = {};
+          let vBarcodes: Record<string, string> = {};
+
           if (bRes.ok) {
             const bData = await bRes.json();
             if (bData.success) {
-              const pBarcodes = bData.productBarcodes || {};
-              const vBarcodes = bData.variantBarcodes || {};
-
-              finalProductsWithBarcodes = withStocks.map(p => {
-                const pId = (p.id || '').toLowerCase().trim();
-                const cleanId = pId.replace(/^prod-/, '');
-                const slug = (p.slug?.fr || '').toLowerCase().trim();
-                const savedGtin = pBarcodes[p.id] || pBarcodes[cleanId] || pBarcodes[slug] || p.gtin13;
-
-                const updatedVariants = (p.variants || []).map(v => {
-                  const vKey = (v.id || v.sku || '').toLowerCase().trim();
-                  const vFlavorKey = `${p.id}_${(v.flavorName?.fr || '').toLowerCase().trim()}`;
-                  const vGtin = vBarcodes[v.id] || vBarcodes[v.sku] || vBarcodes[vKey] || vBarcodes[vFlavorKey] || v.gtin13;
-                  return vGtin ? { ...v, gtin13: vGtin } : v;
-                });
-
-                return {
-                  ...p,
-                  gtin13: savedGtin || p.gtin13,
-                  variants: updatedVariants
-                };
-              });
+              pBarcodes = bData.productBarcodes || {};
+              vBarcodes = bData.variantBarcodes || {};
             }
           }
+
+          finalProductsWithBarcodes = withStocks.map(p => {
+            const pId = (p.id || '').toLowerCase().trim();
+            const cleanId = pId.replace(/^prod-/, '');
+            const slug = (p.slug?.fr || '').toLowerCase().trim();
+            const savedGtin =
+              pBarcodes[p.id] ||
+              pBarcodes[pId] ||
+              pBarcodes[cleanId] ||
+              pBarcodes[slug] ||
+              pBarcodes[`prod-${slug}`] ||
+              localBc[p.id] ||
+              localBc[pId] ||
+              localBc[cleanId] ||
+              localBc[slug] ||
+              localBc[`prod-${slug}`] ||
+              p.gtin13;
+
+            const updatedVariants = (p.variants || []).map(v => {
+              const vKey = (v.id || v.sku || '').toLowerCase().trim();
+              const vFlavorKey = `${p.id}_${(v.flavorName?.fr || '').toLowerCase().trim()}`;
+              const vSlugFlavorKey = `${slug}_${(v.flavorName?.fr || '').toLowerCase().trim()}`;
+              const vGtin =
+                vBarcodes[v.id] ||
+                vBarcodes[v.sku] ||
+                vBarcodes[vKey] ||
+                vBarcodes[vFlavorKey] ||
+                vBarcodes[vSlugFlavorKey] ||
+                localBc[v.id] ||
+                localBc[v.sku] ||
+                v.gtin13;
+              return vGtin ? { ...v, gtin13: vGtin } : v;
+            });
+
+            return {
+              ...p,
+              gtin13: savedGtin || p.gtin13,
+              variants: updatedVariants
+            };
+          });
         } catch (bErr) {
           console.warn('[POS] Barcode fetch non-fatal error:', bErr);
+          // Fallback with localStorage even if fetch fails
+          finalProductsWithBarcodes = withStocks.map(p => {
+            const pId = (p.id || '').toLowerCase().trim();
+            const cleanId = pId.replace(/^prod-/, '');
+            const slug = (p.slug?.fr || '').toLowerCase().trim();
+            const localGtin = localBc[p.id] || localBc[pId] || localBc[cleanId] || localBc[slug] || localBc[`prod-${slug}`];
+            return localGtin ? { ...p, gtin13: localGtin } : p;
+          });
         }
 
         setAllProducts(finalProductsWithBarcodes);
@@ -1132,6 +1170,10 @@ export default function AdminDashboardClient() {
   // Quick Barcode / GTIN modal state (Feature 2)
   const [barcodeModalProduct, setBarcodeModalProduct] = useState<ProductItem | null>(null);
   const [barcodeModalValues, setBarcodeModalValues] = useState<Record<string, string>>({});
+  const [barcodeConfirmStep, setBarcodeConfirmStep] = useState<0 | 1 | 2>(0);
+  const [isSavingBarcode, setIsSavingBarcode] = useState<boolean>(false);
+  const [barcodeSaveSuccess, setBarcodeSaveSuccess] = useState<boolean>(false);
+  const [barcodeSaveError, setBarcodeSaveError] = useState<string | null>(null);
 
   // Helper to calculate total stock for a product (Geneva + Portugal)
   const getProductTotalStock = (p: ProductItem): number => {
@@ -1166,6 +1208,10 @@ export default function AdminDashboardClient() {
   // Open Barcode / GTIN modal
   const openBarcodeModal = (product: ProductItem) => {
     setBarcodeModalProduct(product);
+    setBarcodeConfirmStep(0);
+    setIsSavingBarcode(false);
+    setBarcodeSaveSuccess(false);
+    setBarcodeSaveError(null);
     const initial: Record<string, string> = {};
     if (product.variants && product.variants.length > 0) {
       product.variants.forEach(v => {
@@ -1181,11 +1227,25 @@ export default function AdminDashboardClient() {
     setBarcodeModalValues(initial);
   };
 
-  // Save Barcode changes to Supabase permanently
-  const handleSaveBarcodeModal = async () => {
+  // Step 1: Open GTIN confirmation popup
+  const handleOpenBarcodeConfirm = () => {
+    setBarcodeSaveError(null);
+    setBarcodeConfirmStep(1);
+  };
+
+  // Step 2: Final confirm save GTIN to Supabase permanently
+  const handleFinalSaveBarcodeModal = async () => {
     if (!barcodeModalProduct) return;
+    setIsSavingBarcode(true);
+    setBarcodeSaveError(null);
+
     const prodId = barcodeModalProduct.id;
-    const mainBarcode = (barcodeModalValues['def'] || barcodeModalValues[barcodeModalProduct.variants?.[0]?.id || barcodeModalProduct.variants?.[0]?.sku || ''] || barcodeModalProduct.gtin13 || '').trim();
+    const mainBarcode = (
+      barcodeModalValues['def'] ||
+      Object.values(barcodeModalValues).find(v => Boolean(v && v.trim())) ||
+      barcodeModalProduct.gtin13 ||
+      ''
+    ).trim();
 
     const variantsPayload = (barcodeModalProduct.variants || []).map(v => {
       const key = v.id || v.sku;
@@ -1197,74 +1257,106 @@ export default function AdminDashboardClient() {
       };
     });
 
-    // 1. Immediately persist to Supabase database
     try {
-      fetch('/api/admin/products/barcode/', {
+      // 1. Immediately persist to Supabase database
+      const res = await fetch('/api/admin/products/barcode/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
           productId: prodId,
+          slug: barcodeModalProduct.slug?.fr,
+          name: barcodeModalProduct.name?.fr,
+          brand: barcodeModalProduct.brand,
           gtin13: mainBarcode,
           variants: variantsPayload
         })
-      }).catch(err => console.error('[POS] Error saving barcode to Supabase:', err));
-    } catch (apiErr) {
-      console.error('[POS] Network error saving barcode:', apiErr);
-    }
-
-    // 2. Update in-memory and local state
-    setAllProducts(prev => {
-      const next = prev.map(p => {
-        if (p.id !== prodId) return p;
-        if (!p.variants || p.variants.length === 0) {
-          return {
-            ...p,
-            gtin13: mainBarcode,
-            variants: [{
-              id: 'def',
-              sku: p.id,
-              gtin13: mainBarcode,
-              flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
-              format: '1 unité',
-              priceChf: p.priceChf,
-              inventoryQuantity: 20,
-              inStock: true
-            }]
-          };
-        }
-        const updatedVars = p.variants.map(v => {
-          const key = v.id || v.sku;
-          const barcodeVal = (barcodeModalValues[key] || '').trim();
-          return {
-            ...v,
-            gtin13: barcodeVal || v.gtin13
-          };
-        });
-        return { ...p, gtin13: mainBarcode, variants: updatedVars };
       });
 
-      try {
-        const saved = localStorage.getItem('nutrifitness_custom_products');
-        let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
-        const changedProd = next.find(p => p.id === prodId);
-        if (changedProd) {
-          const idx = customItems.findIndex(p => p.id === prodId);
-          if (idx >= 0) customItems[idx] = changedProd;
-          else customItems = [changedProd, ...customItems];
-          localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
-        }
-      } catch (e) {
-        console.error(e);
+      if (!res.ok) {
+        const errData = await res.json().catch(() => ({}));
+        throw new Error(errData.error || `Erreur serveur (${res.status}) lors de l'enregistrement.`);
       }
-      return next;
-    });
 
-    setScanFeedback({
-      message: `Code-barres / GTIN enregistré dans Supabase pour "${barcodeModalProduct.name.fr}" !`,
-      type: 'success'
-    });
-    setTimeout(() => setScanFeedback(null), 3500);
-    setBarcodeModalProduct(null);
+      // 2. Update local state and in-memory products
+      setAllProducts(prev => {
+        const next = prev.map(p => {
+          if (p.id !== prodId && p.slug?.fr !== barcodeModalProduct.slug?.fr) return p;
+          if (!p.variants || p.variants.length === 0) {
+            return {
+              ...p,
+              gtin13: mainBarcode,
+              variants: [{
+                id: 'def',
+                sku: p.id,
+                gtin13: mainBarcode,
+                flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
+                format: '1 unité',
+                priceChf: p.priceChf,
+                inventoryQuantity: 20,
+                inStock: true
+              }]
+            };
+          }
+          const updatedVars = p.variants.map(v => {
+            const key = v.id || v.sku;
+            const barcodeVal = (barcodeModalValues[key] || '').trim();
+            return {
+              ...v,
+              gtin13: barcodeVal || v.gtin13
+            };
+          });
+          return { ...p, gtin13: mainBarcode, variants: updatedVars };
+        });
+
+        // 3. Cache in localStorage so it never disappears on refresh
+        try {
+          const savedBarcodes = localStorage.getItem('nutrifitness_product_barcodes');
+          const bcMap = savedBarcodes ? JSON.parse(savedBarcodes) : {};
+          bcMap[prodId] = mainBarcode;
+          if (barcodeModalProduct.slug?.fr) {
+            bcMap[barcodeModalProduct.slug.fr.toLowerCase().trim()] = mainBarcode;
+          }
+          localStorage.setItem('nutrifitness_product_barcodes', JSON.stringify(bcMap));
+
+          const saved = localStorage.getItem('nutrifitness_custom_products');
+          let customItems: ProductItem[] = saved ? JSON.parse(saved) : [];
+          const changedProd = next.find(p => p.id === prodId || p.slug?.fr === barcodeModalProduct.slug?.fr);
+          if (changedProd) {
+            const idx = customItems.findIndex(p => p.id === prodId || p.slug?.fr === barcodeModalProduct.slug?.fr);
+            if (idx >= 0) customItems[idx] = changedProd;
+            else customItems = [changedProd, ...customItems];
+            localStorage.setItem('nutrifitness_custom_products', JSON.stringify(customItems));
+          }
+        } catch (e) {
+          console.error(e);
+        }
+
+        return next;
+      });
+
+      // 4. Invalidate catalog overrides cache
+      try {
+        await fetch('/api/catalog/overrides', { cache: 'no-store' });
+      } catch {}
+
+      setBarcodeSaveSuccess(true);
+      setScanFeedback({
+        message: `Code-barres / GTIN enregistré dans Supabase pour "${barcodeModalProduct.name.fr}" !`,
+        type: 'success'
+      });
+      setTimeout(() => setScanFeedback(null), 3500);
+
+      setTimeout(() => {
+        setIsSavingBarcode(false);
+        setBarcodeSaveSuccess(false);
+        setBarcodeConfirmStep(0);
+        setBarcodeModalProduct(null);
+      }, 1200);
+    } catch (err: any) {
+      console.error('[POS] Error saving barcode to Supabase:', err);
+      setBarcodeSaveError(err.message || 'Erreur lors de la sauvegarde du code GTIN.');
+      setIsSavingBarcode(false);
+    }
   };
 
   // Inline stock adjustment directly inside variant modal
@@ -3797,126 +3889,325 @@ export default function AdminDashboardClient() {
               </button>
             </div>
 
-            {/* Visual Barcode Graphic Preview */}
-            <div className="my-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col items-center justify-center gap-2">
-              <div className="flex items-center justify-center gap-[3px] h-12 py-1 px-4 bg-white border border-slate-200 rounded-lg shadow-2xs">
-                {Array.from({ length: 36 }).map((_, i) => (
-                  <span
-                    key={i}
-                    className={`h-full inline-block ${
-                      i % 7 === 0 || i % 11 === 0 ? 'w-[3px] bg-slate-900' : i % 3 === 0 ? 'w-[2px] bg-slate-800' : 'w-[1px] bg-slate-700'
-                    }`}
-                  />
-                ))}
-              </div>
-              <span className="font-mono text-xs font-black tracking-widest text-slate-600 notranslate">
-                {barcodeModalValues['def'] || Object.values(barcodeModalValues)[0] || barcodeModalProduct.gtin13 || '7640123456789'}
-              </span>
-              <p className="text-[11px] text-slate-500 text-center max-w-sm">
-                Scannez au lecteur laser ou saisissez le code-barres officiel. Le préfixe suisse standard est <strong className="text-slate-800">764</strong>.
-              </p>
-            </div>
-
-            {/* Body */}
-            <div className="py-2 space-y-4 overflow-y-auto flex-1 pr-1">
-              {barcodeModalProduct.variants && barcodeModalProduct.variants.length > 0 ? (
-                <div className="space-y-3">
-                  <span className="text-xs font-bold text-slate-700 block">
-                    Codes-barres par variante de saveur :
+            {barcodeConfirmStep === 0 && (
+              <>
+                {/* Visual Barcode Graphic Preview */}
+                <div className="my-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl flex flex-col items-center justify-center gap-2">
+                  <div className="flex items-center justify-center gap-[3px] h-12 py-1 px-4 bg-white border border-slate-200 rounded-lg shadow-2xs">
+                    {Array.from({ length: 36 }).map((_, i) => (
+                      <span
+                        key={i}
+                        className={`h-full inline-block ${
+                          i % 7 === 0 || i % 11 === 0 ? 'w-[3px] bg-slate-900' : i % 3 === 0 ? 'w-[2px] bg-slate-800' : 'w-[1px] bg-slate-700'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                  <span className="font-mono text-xs font-black tracking-widest text-slate-600 notranslate">
+                    {barcodeModalValues['def'] || Object.values(barcodeModalValues)[0] || barcodeModalProduct.gtin13 || '7640123456789'}
                   </span>
+                  <p className="text-[11px] text-slate-500 text-center max-w-sm">
+                    Scannez au lecteur laser ou saisissez le code-barres officiel. Le préfixe suisse standard est <strong className="text-slate-800">764</strong>.
+                  </p>
+                </div>
 
-                  {barcodeModalProduct.variants.map((v) => {
-                    const key = v.id || v.sku;
-                    const curBarcode = barcodeModalValues[key] || '';
-                    const variantImg = v.image || barcodeModalProduct.images[0]?.src || '/images/placeholder.webp';
+                {/* Body */}
+                <div className="py-2 space-y-4 overflow-y-auto flex-1 pr-1">
+                  {barcodeModalProduct.variants && barcodeModalProduct.variants.length > 0 ? (
+                    <div className="space-y-3">
+                      <span className="text-xs font-bold text-slate-700 block">
+                        Codes-barres par variante de saveur :
+                      </span>
 
-                    return (
-                      <div key={key} className="p-3 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
-                        <div className="flex items-center justify-between">
-                          <div className="flex items-center gap-2.5 min-w-0">
-                            <div className="relative w-8 h-8 bg-white rounded-lg border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center">
-                              <Image
-                                src={variantImg}
-                                alt={v.flavorName.fr}
-                                fill
-                                sizes="32px"
-                                className="object-contain p-0.5"
+                      {barcodeModalProduct.variants.map((v) => {
+                        const key = v.id || v.sku;
+                        const curBarcode = barcodeModalValues[key] || '';
+                        const variantImg = v.image || barcodeModalProduct.images[0]?.src || '/images/placeholder.webp';
+
+                        return (
+                          <div key={key} className="p-3 bg-slate-50 rounded-2xl border border-slate-200 space-y-2">
+                            <div className="flex items-center justify-between">
+                              <div className="flex items-center gap-2.5 min-w-0">
+                                <div className="relative w-8 h-8 bg-white rounded-lg border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center">
+                                  <Image
+                                    src={variantImg}
+                                    alt={v.flavorName.fr}
+                                    fill
+                                    sizes="32px"
+                                    className="object-contain p-0.5"
+                                  />
+                                </div>
+                                <span className="font-bold text-xs text-slate-900 truncate">
+                                  {v.flavorName.fr} · {v.format}
+                                </span>
+                              </div>
+                              <button
+                                type="button"
+                                onClick={() => setBarcodeModalValues(prev => ({ ...prev, [key]: generateSwissEan13() }))}
+                                className="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-[10px] font-bold flex items-center gap-1 transition-colors"
+                                title="Générer un EAN-13 suisse aléatoire valide"
+                              >
+                                <Zap className="w-3 h-3 text-emerald-600" />
+                                <span>Générer EAN-13</span>
+                              </button>
+                            </div>
+
+                            <div className="flex items-center gap-2">
+                              <input
+                                type="text"
+                                value={curBarcode}
+                                onChange={(e) => setBarcodeModalValues(prev => ({ ...prev, [key]: e.target.value }))}
+                                placeholder={`Code GTIN-13 (ex: 764... ou SKU ${v.sku})`}
+                                className="flex-1 px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
                               />
                             </div>
-                            <span className="font-bold text-xs text-slate-900 truncate">
-                              {v.flavorName.fr} · {v.format}
-                            </span>
                           </div>
-                          <button
-                            type="button"
-                            onClick={() => setBarcodeModalValues(prev => ({ ...prev, [key]: generateSwissEan13() }))}
-                            className="px-2 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-[10px] font-bold flex items-center gap-1 transition-colors"
-                            title="Générer un EAN-13 suisse aléatoire valide"
-                          >
-                            <Zap className="w-3 h-3 text-emerald-600" />
-                            <span>Générer EAN-13</span>
-                          </button>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          <input
-                            type="text"
-                            value={curBarcode}
-                            onChange={(e) => setBarcodeModalValues(prev => ({ ...prev, [key]: e.target.value }))}
-                            placeholder={`Code GTIN-13 (ex: 764... ou SKU ${v.sku})`}
-                            className="flex-1 px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
-                          />
-                        </div>
+                        );
+                      })}
+                    </div>
+                  ) : (
+                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                      <div className="flex items-center justify-between">
+                        <label className="text-xs font-bold text-slate-700">
+                          Code GTIN / EAN-13 du produit :
+                        </label>
+                        <button
+                          type="button"
+                          onClick={() => setBarcodeModalValues(prev => ({ ...prev, def: generateSwissEan13() }))}
+                          className="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold flex items-center gap-1 transition-colors"
+                        >
+                          <Zap className="w-3.5 h-3.5 text-emerald-600" />
+                          <span>⚡ Générer EAN-13 Suisse (764...)</span>
+                        </button>
                       </div>
-                    );
-                  })}
+
+                      <input
+                        type="text"
+                        value={barcodeModalValues['def'] || ''}
+                        onChange={(e) => setBarcodeModalValues(prev => ({ ...prev, def: e.target.value }))}
+                        placeholder="Ex: 7640123456789"
+                        className="w-full px-4 py-2.5 text-sm bg-white border border-slate-300 rounded-xl font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
+                        autoFocus
+                      />
+                    </div>
+                  )}
                 </div>
-              ) : (
-                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-bold text-slate-700">
-                      Code GTIN / EAN-13 du produit :
-                    </label>
-                    <button
-                      type="button"
-                      onClick={() => setBarcodeModalValues(prev => ({ ...prev, def: generateSwissEan13() }))}
-                      className="px-2.5 py-1 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 border border-emerald-200 rounded-lg text-xs font-bold flex items-center gap-1 transition-colors"
-                    >
-                      <Zap className="w-3.5 h-3.5 text-emerald-600" />
-                      <span>⚡ Générer EAN-13 Suisse (764...)</span>
-                    </button>
+
+                {/* Footer Step 0 */}
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setBarcodeModalProduct(null)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs uppercase tracking-wider"
+                  >
+                    Annuler
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleOpenBarcodeConfirm}
+                    className="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs uppercase tracking-wider shadow-sm flex items-center gap-2 transition-all active:scale-95"
+                  >
+                    <span>Vérifier & Sauvegarder</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </>
+            )}
+
+            {/* DOUBLE CONFIRMATION POPUP STEP 1/2 */}
+            {barcodeConfirmStep === 1 && (
+              <div className="py-2 space-y-4 flex-1 flex flex-col justify-between overflow-y-auto">
+                <div className="space-y-4">
+                  <div className="p-3.5 bg-amber-50 border border-amber-200 rounded-2xl">
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-200 text-amber-900 inline-block mb-1">
+                      Étape 1 sur 2 · Vérification du GTIN
+                    </span>
+                    <h4 className="text-sm font-black text-slate-900">
+                      Vérifiez les codes-barres avant enregistrement
+                    </h4>
+                    <p className="text-xs text-amber-800 mt-0.5">
+                      Veuillez vous assurer que le code correspond bien à l'emballage physique du produit.
+                    </p>
                   </div>
 
-                  <input
-                    type="text"
-                    value={barcodeModalValues['def'] || ''}
-                    onChange={(e) => setBarcodeModalValues(prev => ({ ...prev, def: e.target.value }))}
-                    placeholder="Ex: 7640123456789"
-                    className="w-full px-4 py-2.5 text-sm bg-white border border-slate-300 rounded-xl font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
-                    autoFocus
-                  />
-                </div>
-              )}
-            </div>
+                  {/* Product preview */}
+                  <div className="p-3 bg-slate-50 rounded-2xl border border-slate-200 flex items-center gap-3">
+                    <div className="relative w-12 h-12 bg-white rounded-xl border border-slate-200 shrink-0 overflow-hidden flex items-center justify-center">
+                      <Image
+                        src={barcodeModalProduct.images[0]?.src || '/images/placeholder.webp'}
+                        alt={barcodeModalProduct.name.fr}
+                        fill
+                        sizes="48px"
+                        className="object-contain p-1"
+                      />
+                    </div>
+                    <div className="min-w-0 flex-1">
+                      <h5 className="text-xs font-black text-slate-900 truncate">{barcodeModalProduct.name.fr}</h5>
+                      <p className="text-[11px] text-slate-500">{barcodeModalProduct.brand} · ID: {barcodeModalProduct.id}</p>
+                    </div>
+                  </div>
 
-            {/* Footer */}
-            <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 shrink-0">
-              <button
-                type="button"
-                onClick={() => setBarcodeModalProduct(null)}
-                className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs uppercase tracking-wider"
-              >
-                Annuler
-              </button>
-              <button
-                type="button"
-                onClick={handleSaveBarcodeModal}
-                className="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs uppercase tracking-wider shadow-sm flex items-center gap-2 transition-all active:scale-95"
-              >
-                <Check className="w-4 h-4" />
-                <span>Enregistrer les Codes-Barres</span>
-              </button>
-            </div>
+                  {/* Comparison card */}
+                  <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                    <div className="text-xs font-bold text-slate-700">Comparaison des codes GTIN :</div>
+                    <div className="grid grid-cols-2 gap-3">
+                      <div className="p-3 bg-white rounded-xl border border-slate-200">
+                        <span className="text-[10px] text-slate-400 block font-bold uppercase tracking-wider">Ancien Code GTIN</span>
+                        <span className="font-mono text-xs font-bold text-slate-600 block mt-1 notranslate">
+                          {barcodeModalProduct.gtin13 || '(Aucun code)'}
+                        </span>
+                      </div>
+                      <div className="p-3 bg-emerald-50 rounded-xl border border-emerald-200">
+                        <span className="text-[10px] text-emerald-800 block font-bold uppercase tracking-wider">Nouveau Code GTIN</span>
+                        <span className="font-mono text-xs font-black text-emerald-950 block mt-1 notranslate">
+                          {(barcodeModalValues['def'] || Object.values(barcodeModalValues).find(v => Boolean(v && v.trim())) || barcodeModalProduct.gtin13 || '').trim() || '(Non renseigné)'}
+                        </span>
+                      </div>
+                    </div>
+
+                    {barcodeModalProduct.variants && barcodeModalProduct.variants.length > 0 && (
+                      <div className="pt-2 border-t border-slate-200 space-y-1.5">
+                        <span className="text-[11px] font-bold text-slate-600 block">Variantes de saveurs :</span>
+                        {barcodeModalProduct.variants.map(v => {
+                          const key = v.id || v.sku;
+                          const val = barcodeModalValues[key];
+                          return (
+                            <div key={key} className="flex items-center justify-between text-xs py-1.5 px-2.5 bg-white rounded-lg border border-slate-100">
+                              <span className="text-slate-700 truncate max-w-[200px] font-medium">{v.flavorName.fr}</span>
+                              <span className="font-mono font-bold text-slate-900 notranslate">{val || v.gtin13 || '-'}</span>
+                            </div>
+                          );
+                        })}
+                      </div>
+                    )}
+                  </div>
+                </div>
+
+                {/* Step 1 Actions */}
+                <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 shrink-0">
+                  <button
+                    type="button"
+                    onClick={() => setBarcodeConfirmStep(0)}
+                    className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs transition-colors"
+                  >
+                    ← Revenir et Corriger
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setBarcodeConfirmStep(2)}
+                    className="px-6 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white font-black text-xs uppercase tracking-wider shadow-sm flex items-center gap-2 transition-all active:scale-95"
+                  >
+                    <span>Continuer vers Confirmation Finale (Étape 2/2)</span>
+                    <ArrowRight className="w-4 h-4" />
+                  </button>
+                </div>
+              </div>
+            )}
+
+            {/* DOUBLE CONFIRMATION POPUP STEP 2/2 */}
+            {barcodeConfirmStep === 2 && (
+              <div className="py-2 space-y-4 flex-1 flex flex-col justify-between overflow-y-auto">
+                <div className="space-y-4">
+                  <div className="p-3.5 bg-amber-500/10 border border-amber-300 rounded-2xl">
+                    <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-amber-200 text-amber-900 inline-block mb-1">
+                      Étape 2 sur 2 · Confirmation Définitive
+                    </span>
+                    <h4 className="text-sm font-black text-slate-900 flex items-center gap-1.5">
+                      <span>⚠️</span>
+                      <span>Confirmer la Sauvegarde Permanente dans Supabase</span>
+                    </h4>
+                  </div>
+
+                  {barcodeSaveError && (
+                    <div className="p-3 bg-red-50 border border-red-200 rounded-xl text-xs text-red-800 font-bold flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                      <span>{barcodeSaveError}</span>
+                    </div>
+                  )}
+
+                  {barcodeSaveSuccess ? (
+                    <div className="p-6 bg-emerald-50 border border-emerald-300 rounded-2xl text-center space-y-2 animate-in zoom-in-95">
+                      <div className="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto text-xl font-black">
+                        ✓
+                      </div>
+                      <h4 className="font-black text-emerald-950 text-base">Code GTIN Enregistré et Synchronisé !</h4>
+                      <p className="text-xs text-emerald-800 font-medium">
+                        Le code GTIN a été enregistré dans Supabase et restera affiché en permanence après rafraîchissement.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-3">
+                      <div className="p-4 bg-amber-50/80 border border-amber-300 rounded-2xl text-amber-950 text-xs space-y-2">
+                        <p className="font-bold flex items-center gap-1.5 text-slate-900 text-sm">
+                          <span>📢</span>
+                          <span>Êtes-vous sûr de vouloir enregistrer ce GTIN définitivement ?</span>
+                        </p>
+                        <p className="text-amber-900">
+                          Cette action va immédiatement et définitivement :
+                        </p>
+                        <ul className="list-disc pl-5 space-y-1 text-slate-700 font-medium">
+                          <li>Mettre à jour la table <strong>products</strong> et <strong>product_variants</strong> dans Supabase.</li>
+                          <li>Sauvegarder dans le cache local persistant : <strong>le GTIN ne disparaîtra plus jamais au rafraîchissement</strong>.</li>
+                          <li>Activer la reconnaissance au lecteur de code-barres laser et le flux Google Merchant.</li>
+                        </ul>
+                      </div>
+
+                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs flex items-center justify-between">
+                        <span className="font-bold text-slate-700">Code à enregistrer :</span>
+                        <span className="font-mono font-black text-emerald-700 text-sm notranslate">
+                          {(barcodeModalValues['def'] || Object.values(barcodeModalValues).find(v => Boolean(v && v.trim())) || barcodeModalProduct.gtin13 || '').trim() || '(Aucun)'}
+                        </span>
+                      </div>
+                    </div>
+                  )}
+                </div>
+
+                {/* Step 2 Actions */}
+                {!barcodeSaveSuccess && (
+                  <div className="pt-4 border-t border-slate-100 flex items-center justify-between gap-3 shrink-0">
+                    <div className="flex items-center gap-2">
+                      <button
+                        type="button"
+                        disabled={isSavingBarcode}
+                        onClick={() => setBarcodeConfirmStep(1)}
+                        className="px-4 py-2.5 rounded-xl border border-slate-200 text-slate-600 hover:bg-slate-50 font-bold text-xs transition-colors disabled:opacity-40"
+                      >
+                        ← Étape 1
+                      </button>
+                      <button
+                        type="button"
+                        disabled={isSavingBarcode}
+                        onClick={() => {
+                          setBarcodeConfirmStep(0);
+                          setBarcodeModalProduct(null);
+                        }}
+                        className="px-3 py-2.5 text-xs text-slate-400 hover:text-slate-600 font-bold transition-colors disabled:opacity-40"
+                      >
+                        Annuler
+                      </button>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={isSavingBarcode}
+                      onClick={handleFinalSaveBarcodeModal}
+                      className="px-6 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-black text-xs uppercase tracking-wider shadow-md flex items-center gap-2 transition-all active:scale-95 disabled:opacity-50"
+                    >
+                      {isSavingBarcode ? (
+                        <>
+                          <Loader2 className="w-4 h-4 animate-spin" />
+                          <span>Enregistrement dans Supabase...</span>
+                        </>
+                      ) : (
+                        <>
+                          <Check className="w-4 h-4" />
+                          <span>OUI, ENREGISTRER DÉFINITIVEMENT</span>
+                        </>
+                      )}
+                    </button>
+                  </div>
+                )}
+              </div>
+            )}
 
           </div>
         </div>

@@ -1626,7 +1626,7 @@ export const CATEGORIES: CategoryItem[] = [
 ];
 
 export const PRODUCTS: ProductItem[] = [
-{
+  {
     "id": "prod-25678",
     "slug": {
       "fr": "sandwich-keto-bar",
@@ -1928,7 +1928,8 @@ export const PRODUCTS: ProductItem[] = [
     "stockGeneva": 12,
     "inStock": true,
     "locationType": "GENEVA_ONLY",
-    "stockPortugal": 0
+    "stockPortugal": 0,
+    "gtin13": "7640123456789"
   },
   {
     "id": "prod-25535",

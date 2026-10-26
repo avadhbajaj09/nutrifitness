@@ -12,6 +12,7 @@ import { getCategoryBySlug } from '@/lib/categories';
 
 import { formatProductMetaTitle, formatMetaDescription, getProductGtin } from '@/lib/seo';
 import { getProductOriginType } from '@/lib/translations';
+import { stripHtmlAndEscapes } from '@/lib/formatContent';
 
 export const dynamic = 'force-dynamic';
 export const revalidate = 0;
@@ -84,7 +85,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   const name = getLocalized(product.name);
-  const desc = getLocalized(product.shortDescription);
+  const desc = stripHtmlAndEscapes(getLocalized(product.shortDescription));
   const title = formatProductMetaTitle(name);
   const metaDesc = formatMetaDescription(desc);
   const image = product.images?.[0]?.src || 'https://nutrifitness.ch/images/brand/logo.png';
@@ -375,7 +376,7 @@ export default async function ProductDetailPage({ params }: Props) {
     {
       slug: params.slug,
       name: getLocalized(product.name),
-      description: getLocalized(product.shortDescription),
+      description: stripHtmlAndEscapes(getLocalized(product.shortDescription)),
       brand: product.brand,
       images: product.images?.map(img => img.src) || [],
       price: product.priceChf,

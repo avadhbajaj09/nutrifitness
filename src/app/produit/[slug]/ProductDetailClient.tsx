@@ -18,6 +18,7 @@ import { getProductGtin } from '@/lib/seo';
 import { trackViewItem, trackMetaViewContent } from '@/lib/analytics';
 import { getRelevantGuideForProduct } from '@/lib/blog';
 import { BookOpen, ArrowRight } from 'lucide-react';
+import { sanitizeProductHtml } from '@/lib/formatContent';
 
 interface Props {
   product: ProductItem;
@@ -267,19 +268,22 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
         <div className="lg:col-span-5 flex flex-col space-y-5">
           {/* Short Description - Right below image on mobile */}
           <div className="bg-white/[0.03] lg:bg-transparent p-3.5 lg:p-0 rounded-2xl border border-white/10 lg:border-0">
-            <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
-              {(() => {
-                const desc = getLocalized(product.shortDescription, locale);
-                if (isPortugal) {
-                  return desc
-                    .replace(/Stock direct 100% en Suisse[^\.]*\./gi, 'Expédié directement depuis notre plateforme logistique au Portugal – livraison suivie en 3 à 5 jours ouvrables.')
-                    .replace(/100% Schweizer Lagerware[^\.]*\./gi, 'Direktversand aus unserem Logistikzentrum in Portugal – Sendungsverfolgung in 3–5 Werktagen.')
-                    .replace(/Stock 100% svizzero[^\.]*\./gi, 'Spedito direttamente dal nostro polo logistico in Portogallo – consegna tracciata in 3–5 giorni lavorativi.')
-                    .replace(/100% Swiss stock[^\.]*\./gi, 'Dispatched directly from our logistics hub in Portugal – tracked delivery in 3–5 business days.');
-                }
-                return desc;
-              })()}
-            </p>
+            <div
+              className="text-xs sm:text-sm text-white/80 leading-relaxed space-y-1.5 [&>p]:mb-1.5 [&>strong]:text-white [&>strong]:font-bold [&>ul]:list-disc [&>ul]:pl-4"
+              dangerouslySetInnerHTML={{
+                __html: sanitizeProductHtml((() => {
+                  let desc = getLocalized(product.shortDescription, locale);
+                  if (isPortugal) {
+                    desc = desc
+                      .replace(/Stock direct 100% en Suisse[^\.]*\./gi, 'Expédié directement depuis notre plateforme logistique au Portugal – livraison suivie en 3 à 5 jours ouvrables.')
+                      .replace(/100% Schweizer Lagerware[^\.]*\./gi, 'Direktversand aus unserem Logistikzentrum in Portugal – Sendungsverfolgung in 3–5 Werktagen.')
+                      .replace(/Stock 100% svizzero[^\.]*\./gi, 'Spedito directement dal nostro polo logistico in Portogallo – consegna tracciata in 3–5 giorni lavorativi.')
+                      .replace(/100% Swiss stock[^\.]*\./gi, 'Dispatched directly from our logistics hub in Portugal – tracked delivery in 3–5 business days.');
+                  }
+                  return desc;
+                })())
+              }}
+            />
           </div>
 
           {/* Dynamic Delivery Date, Live Origin & Stock Pill */}
@@ -423,7 +427,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 <div className="p-4 pt-1 border-t border-white/5 space-y-3 animate-in fade-in duration-150">
                   <div 
                     className="text-xs text-white/70 leading-relaxed space-y-3 [&>h2]:text-xs [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-4 [&>h2]:mb-1 [&>h3]:text-xs [&>h3]:font-bold [&>h3]:text-white/90 [&>ul]:list-disc [&>ul]:pl-4 [&>ul]:space-y-1 [&>p]:mb-2 [&>strong]:text-white"
-                    dangerouslySetInnerHTML={{ __html: product.longDescription.fr }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.longDescription.fr) }}
                   />
                 </div>
               )}
@@ -443,9 +447,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               </button>
               {mobileOpenSection === 'usage' && (
                 <div className="p-4 pt-1 border-t border-white/5 space-y-3 animate-in fade-in duration-150">
-                  <p className="text-xs text-white/70 leading-relaxed">
-                    {product.usageInstructions.fr}
-                  </p>
+                  <div className="text-xs text-white/70 leading-relaxed space-y-2 [&>strong]:text-white" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.usageInstructions.fr) }} />
                   <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white/60">
                     💡 <strong>Conseil du Coach :</strong> Pour optimiser l&apos;assimilation, hydratez-vous avec au moins 500 ml d&apos;eau par prise.
                   </div>
@@ -507,8 +509,16 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   </div>
 
                   <div className="space-y-1.5 text-xs text-white/70">
-                    <p><strong>Ingrédients :</strong> {product.ingredients.fr}</p>
-                    <p className="text-red-400 font-bold">Allergènes : {product.allergens.fr}</p>
+                    <div>
+                      <strong className="text-white">Ingrédients : </strong>
+                      <span dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.ingredients.fr).replace(/^<p>|<\/p>$/g, '') }} />
+                    </div>
+                    {product.allergens.fr && (
+                      <div className="text-red-400 font-bold">
+                        <span>Allergènes : </span>
+                        <span dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.allergens.fr).replace(/^<p>|<\/p>$/g, '') }} />
+                      </div>
+                    )}
                   </div>
 
                   {currentGtin && (
@@ -601,7 +611,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 </h3>
                 <div 
                   className="text-xs sm:text-sm text-white/70 leading-relaxed space-y-4 [&>h2]:text-sm [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-6 [&>h2]:mb-2 [&>h3]:text-xs [&>h3]:font-bold [&>h3]:text-white/90 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1.5 [&>p]:mb-3 [&>strong]:text-white"
-                  dangerouslySetInnerHTML={{ __html: product.longDescription.fr }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.longDescription.fr) }}
                 />
               </div>
             )}
@@ -612,9 +622,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 <h3 className="text-base font-black uppercase text-white font-heading">
                   Conseils d&apos;Utilisation & Timing d&apos;Entraînement
                 </h3>
-                <p className="text-xs sm:text-sm text-white/70 leading-relaxed">
-                  {product.usageInstructions.fr}
-                </p>
+                <div className="text-xs sm:text-sm text-white/70 leading-relaxed space-y-2 [&>strong]:text-white" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.usageInstructions.fr) }} />
                 <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white/60">
                   💡 <strong>Conseil du Coach NutriFitness Suisse :</strong> Pour optimiser l&apos;assimilation, hydratez-vous avec au moins 500 ml d&apos;eau par prise.
                 </div>
@@ -670,8 +678,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
                 <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-2">
                   <h4 className="font-bold text-xs uppercase text-white font-heading">Ingrédients</h4>
-                  <p className="text-xs text-white/70 leading-relaxed">{product.ingredients.fr}</p>
-                  <p className="text-xs font-bold text-red-400 pt-2">Allergènes : {product.allergens.fr}</p>
+                  <div className="text-xs text-white/70 leading-relaxed" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.ingredients.fr) }} />
+                  {product.allergens.fr && (
+                    <div className="text-xs font-bold text-red-400 pt-2" dangerouslySetInnerHTML={{ __html: `Allergènes : ` + sanitizeProductHtml(product.allergens.fr).replace(/^<p>|<\/p>$/g, '') }} />
+                  )}
                 </div>
 
                 {currentGtin && (
