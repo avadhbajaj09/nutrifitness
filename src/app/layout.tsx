@@ -32,7 +32,6 @@ const robotoCondensed = Roboto_Condensed({
   display: 'swap',
   variable: '--font-roboto-condensed',
   weight: ['700', '900'],
-  style: ['normal', 'italic'],
 });
 
 const googleVerification = process.env.GOOGLE_SITE_VERIFICATION;
