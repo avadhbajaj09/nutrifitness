@@ -119,7 +119,7 @@ export default function BlogProductCards({ products, variant = 'in-article' }: B
                   <span className="text-sm font-black text-[#95d600] font-heading">
                     {formatPrice(price)}
                   </span>
-                  <span className="block text-[9px] text-white/40">TVA suisse incluse</span>
+                  <span className="block text-[9px] text-white/40 whitespace-nowrap">TVA suisse incluse</span>
                 </div>
 
                 <div className="flex items-center gap-1.5">

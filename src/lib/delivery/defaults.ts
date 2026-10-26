@@ -144,25 +144,21 @@ export function isProductDeliverableToCountry(
   stockGeneva?: number,
   stockPortugal?: number
 ): boolean {
-  const rawCode = (countryCode || 'CH').toUpperCase().trim();
-  // If browsing from an international IP outside Europe (e.g. testing from India, US),
-  // default to Swiss store browsing mode so products are never blocked on the storefront.
-  const code = isCountrySupported(rawCode) ? rawCode : 'CH';
+  const code = (countryCode || 'CH').toUpperCase().trim();
+
+  // If destination country is not in supported shipping zones, it cannot be delivered
+  if (!isCountrySupported(code)) {
+    return false;
+  }
 
   const isSwissDestination = code === 'CH' || code === 'LI';
 
-  // In Switzerland & Liechtenstein: ALL products from both Swiss shop and Portugal warehouse are deliverable!
+  // In Switzerland & Liechtenstein: ALL products are deliverable
   if (isSwissDestination) {
-    if (typeof stockGeneva === 'number' || typeof stockPortugal === 'number') {
-      const g = typeof stockGeneva === 'number' ? stockGeneva : 0;
-      const p = typeof stockPortugal === 'number' ? stockPortugal : 0;
-      return (g + p) > 0;
-    }
     return true;
   }
 
   // European destinations (EU, UK, NO, IS):
-  // Marvelous, Dirty Squads, and Portugal/common products ship throughout Europe!
   // Swiss boutique exclusive brands (Pronutrition, Applied Nutrition, Bigman, etc.) only ship to Switzerland.
   const isCommon = locationType === 'COMMON' || shippingOrigin === 'common';
   const isSwissOnly = (locationType === 'GENEVA_ONLY' || shippingOrigin === 'switzerland') && !isCommon;
@@ -171,9 +167,6 @@ export function isProductDeliverableToCountry(
     return false;
   }
 
-  if (typeof stockPortugal === 'number') {
-    return stockPortugal > 0;
-  }
   return true;
 }
 
