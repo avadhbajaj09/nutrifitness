@@ -26,7 +26,7 @@ interface ProductEditorModalProps {
   isOpen: boolean;
   onClose: () => void;
   product: ProductItem | null; // null means "Create new product"
-  onSave: (product: ProductItem) => void;
+  onSave: (product: ProductItem) => Promise<boolean | void> | void;
   onDelete?: (productId: string) => void;
   existingBrands: string[];
 }
@@ -63,6 +63,20 @@ export default function ProductEditorModal({
   const [taxCategory, setTaxCategory] = useState<TaxRateCategory>('food_reduced');
   const [shippingOrigin, setShippingOrigin] = useState<'switzerland' | 'portugal' | 'common'>('switzerland');
   const [isSwissOrigin, setIsSwissOrigin] = useState<boolean>(false);
+
+  // Barcode / GTIN-13
+  const [gtin13, setGtin13] = useState<string>('');
+
+  // Stock Geneva & Portugal
+  const [stockGeneva, setStockGeneva] = useState<number>(0);
+  const [stockPortugal, setStockPortugal] = useState<number>(0);
+
+  // Double confirmation modal states
+  const [confirmStep, setConfirmStep] = useState<0 | 1 | 2>(0);
+  const [pendingProduct, setPendingProduct] = useState<ProductItem | null>(null);
+  const [isSaving, setIsSaving] = useState<boolean>(false);
+  const [saveError, setSaveError] = useState<string | null>(null);
+  const [saveSuccess, setSaveSuccess] = useState<boolean>(false);
 
   // Images state
   const [images, setImages] = useState<{ src: string; altText: string }[]>([]);
@@ -112,6 +126,17 @@ export default function ProductEditorModal({
       setNameEn(product.name?.en || product.name?.fr || '');
       setSlug(product.slug?.fr || '');
       
+      setGtin13(product.gtin13 || (product.variants && product.variants[0]?.gtin13) || '');
+
+      const initGen = typeof product.stockGeneva === 'number'
+        ? product.stockGeneva
+        : (product.variants?.reduce((s, v) => s + (v.stockGeneva ?? 0), 0) ?? 0);
+      const initPt = typeof product.stockPortugal === 'number'
+        ? product.stockPortugal
+        : (product.variants?.reduce((s, v) => s + (v.stockPortugal ?? 0), 0) ?? 0);
+      setStockGeneva(initGen);
+      setStockPortugal(initPt);
+
       if (existingBrands.includes(product.brand)) {
         setBrand(product.brand);
         setCustomBrand('');
@@ -200,6 +225,10 @@ export default function ProductEditorModal({
       setShippingOrigin('switzerland'); // Default to Switzerland stock for new items in shop
       setIsSwissOrigin(false);
 
+      setGtin13('');
+      setStockGeneva(30);
+      setStockPortugal(0);
+
       setImages([{ src: '/images/placeholder.webp', altText: 'Nouveau produit' }]);
       setShortDescFr('Formule haute performance développée selon les normes de qualité suisses les plus exigeantes.');
       setLongDescFr(`<h2>Pourquoi choisir ce produit ?</h2>\n<p>Élaboré avec des ingrédients de qualité supérieure, ce complément alimentaire apporte une réponse ciblée à vos besoins sportifs et nutritionnels.</p>\n<h2>Conseils d'utilisation</h2>\n<p>Consommer selon les recommandations indiquées sur l'emballage.</p>`);
@@ -236,6 +265,11 @@ export default function ProductEditorModal({
 
     setActiveTab('info');
     setFormError(null);
+    setConfirmStep(0);
+    setPendingProduct(null);
+    setIsSaving(false);
+    setSaveError(null);
+    setSaveSuccess(false);
   }, [isOpen, product, existingBrands]);
 
   // Toggle multiple categories
@@ -273,8 +307,71 @@ export default function ProductEditorModal({
     return variants.reduce((sum, v) => sum + (Number(v.inventoryQuantity) || 0), 0);
   }, [variants]);
 
+  const handleStockGenevaChange = (val: number) => {
+    const qty = Math.max(0, val);
+    setStockGeneva(qty);
+    if (variants.length <= 1) {
+      setVariants(prev => prev.map(v => ({
+        ...v,
+        stockGeneva: qty,
+        inventoryQuantity: qty + (v.stockPortugal ?? stockPortugal),
+        inStock: (qty + (v.stockPortugal ?? stockPortugal)) > 0
+      })));
+    } else {
+      setVariants(prev => {
+        const perVar = Math.floor(qty / prev.length);
+        const rem = qty % prev.length;
+        return prev.map((v, i) => {
+          const vGen = perVar + (i === 0 ? rem : 0);
+          const vPt = v.stockPortugal ?? 0;
+          return {
+            ...v,
+            stockGeneva: vGen,
+            inventoryQuantity: vGen + vPt,
+            inStock: (vGen + vPt) > 0
+          };
+        });
+      });
+    }
+  };
+
+  const handleStockPortugalChange = (val: number) => {
+    const qty = Math.max(0, val);
+    setStockPortugal(qty);
+    if (variants.length <= 1) {
+      setVariants(prev => prev.map(v => ({
+        ...v,
+        stockPortugal: qty,
+        inventoryQuantity: (v.stockGeneva ?? stockGeneva) + qty,
+        inStock: ((v.stockGeneva ?? stockGeneva) + qty) > 0
+      })));
+    } else {
+      setVariants(prev => {
+        const perVar = Math.floor(qty / prev.length);
+        const rem = qty % prev.length;
+        return prev.map((v, i) => {
+          const vPt = perVar + (i === 0 ? rem : 0);
+          const vGen = v.stockGeneva ?? 0;
+          return {
+            ...v,
+            stockPortugal: vPt,
+            inventoryQuantity: vGen + vPt,
+            inStock: (vGen + vPt) > 0
+          };
+        });
+      });
+    }
+  };
+
   const handleGlobalStockChange = (newQty: number) => {
     const qty = Math.max(0, newQty);
+    if (shippingOrigin === 'portugal') {
+      setStockGeneva(0);
+      setStockPortugal(qty);
+    } else {
+      setStockGeneva(qty);
+      setStockPortugal(0);
+    }
     if (variants.length <= 1) {
       setVariants(prev => prev.map(v => ({
         ...v,
@@ -379,7 +476,7 @@ export default function ProductEditorModal({
     setVariants(prev => prev.filter((_, i) => i !== index));
   };
 
-  // Submit Handler
+  // Submit Handler: Triggers Confirmation Modal Step 1
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -410,8 +507,19 @@ export default function ProductEditorModal({
     const finalCompareAtEurEurope = compareAtPriceEurEurope.trim() ? parseFloat(compareAtPriceEurEurope) : undefined;
     const finalBcaa = bcaaG.trim() ? parseFloat(bcaaG) : undefined;
 
-    const savedProduct: ProductItem = {
+    const computedGenStock = variants.reduce((acc, v) => {
+      const qty = Number(v.inventoryQuantity) || 0;
+      return acc + (shippingOrigin === 'portugal' ? 0 : (typeof v.stockGeneva === 'number' ? v.stockGeneva : qty));
+    }, 0);
+
+    const computedPtStock = variants.reduce((acc, v) => {
+      const qty = Number(v.inventoryQuantity) || 0;
+      return acc + (shippingOrigin === 'switzerland' ? 0 : (typeof v.stockPortugal === 'number' ? v.stockPortugal : qty));
+    }, 0);
+
+    const preparedProduct: ProductItem = {
       id: id || `prod-${Date.now()}`,
+      gtin13: gtin13.trim() || undefined,
       slug: {
         fr: slug.trim(),
         de: slug.trim(),
@@ -440,14 +548,8 @@ export default function ProductEditorModal({
       shippingOrigin,
       locationType: shippingOrigin === 'common' ? 'COMMON' : shippingOrigin === 'portugal' ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY',
       mainLocation: shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA',
-      stockGeneva: variants.reduce((acc, v) => {
-        const qty = Number(v.inventoryQuantity) || 0;
-        return acc + (shippingOrigin === 'portugal' ? 0 : (typeof v.stockGeneva === 'number' ? v.stockGeneva : qty));
-      }, 0),
-      stockPortugal: variants.reduce((acc, v) => {
-        const qty = Number(v.inventoryQuantity) || 0;
-        return acc + (shippingOrigin === 'switzerland' ? 0 : (typeof v.stockPortugal === 'number' ? v.stockPortugal : qty));
-      }, 0),
+      stockGeneva: computedGenStock,
+      stockPortugal: computedPtStock,
       images: images.map(img => ({
         src: img.src,
         alt: {
@@ -515,6 +617,7 @@ export default function ProductEditorModal({
         const totalQty = genQty + ptQty;
         return {
           ...v,
+          gtin13: v.gtin13 || gtin13.trim() || undefined,
           priceChf: v.priceChf ? Number(v.priceChf) : finalPriceChf,
           compareAtPriceChf: v.compareAtPriceChf ?? finalCompareAtChf,
           priceEurSwiss: v.priceEurSwiss ?? finalPriceEurSwiss,
@@ -531,8 +634,32 @@ export default function ProductEditorModal({
       })
     };
 
-    onSave(savedProduct);
-    onClose();
+    setPendingProduct(preparedProduct);
+    setSaveError(null);
+    setConfirmStep(1); // Open Double Confirmation Modal Step 1!
+  };
+
+  // Final Confirmation: Sends to Supabase and updates the live website
+  const handleFinalConfirmSave = async () => {
+    if (!pendingProduct) return;
+    setIsSaving(true);
+    setSaveError(null);
+
+    try {
+      await onSave(pendingProduct);
+      setSaveSuccess(true);
+      setTimeout(() => {
+        setIsSaving(false);
+        setSaveSuccess(false);
+        setConfirmStep(0);
+        setPendingProduct(null);
+        onClose();
+      }, 1200);
+    } catch (err: any) {
+      console.error('Failed to save product:', err);
+      setSaveError(err.message || 'Une erreur est survenue lors de l\'enregistrement dans Supabase.');
+      setIsSaving(false);
+    }
   };
 
   if (!isOpen) return null;
@@ -971,6 +1098,83 @@ export default function ProductEditorModal({
                   </div>
                 </div>
 
+                {/* GTIN-13 / EAN Barcode */}
+                <div className="p-4 bg-white rounded-xl border border-slate-200">
+                  <div className="flex items-center justify-between mb-1.5">
+                    <label className="text-xs font-bold uppercase tracking-wider text-slate-800 flex items-center gap-1.5">
+                      <span>🏷️</span>
+                      <span>Code-barres EAN-13 / GTIN (Caisse & Fiches Produits)</span>
+                    </label>
+                    <span className="text-[10px] font-mono text-slate-400">13 chiffres</span>
+                  </div>
+                  <input
+                    type="text"
+                    value={gtin13}
+                    onChange={(e) => setGtin13(e.target.value)}
+                    placeholder="Ex: 7640123456789"
+                    maxLength={14}
+                    className="w-full px-3 py-2 bg-slate-50 border border-slate-300 rounded-xl text-xs font-mono font-bold text-slate-900 focus:outline-none focus:bg-white focus:ring-2 focus:ring-slate-900"
+                  />
+                  <p className="text-[10px] text-slate-400 mt-1">
+                    Scannable directement en caisse physique et reconnu automatiquement par Google Merchant Center & SEO.
+                  </p>
+                </div>
+
+                {/* Stock By Location (Genève & Portugal) */}
+                <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-black uppercase tracking-wider text-slate-900 font-heading flex items-center gap-1.5">
+                      <span>📦</span>
+                      <span>Gestion des Stocks par Dépôt</span>
+                    </label>
+                    <span className="text-[11px] font-black px-2 py-0.5 rounded-full bg-slate-200 text-slate-800">
+                      Cumul : {(stockGeneva || 0) + (stockPortugal || 0)} unités
+                    </span>
+                  </div>
+
+                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    {/* Stock Genève */}
+                    <div className="p-3 bg-emerald-50/70 border border-emerald-300 rounded-xl">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="text-xs font-bold uppercase text-emerald-950 flex items-center gap-1">
+                          <span>🇨🇭</span>
+                          <span>Stock Genève (Suisse)</span>
+                        </label>
+                        <span className="text-[10px] font-bold text-emerald-800 bg-white px-2 py-0.5 rounded border border-emerald-200">
+                          Livraison 24h · POS
+                        </span>
+                      </div>
+                      <input
+                        type="number"
+                        min="0"
+                        value={stockGeneva}
+                        onChange={(e) => handleStockGenevaChange(parseInt(e.target.value) || 0)}
+                        className="w-full px-3 py-2 bg-white border border-emerald-300 rounded-lg text-sm font-black text-emerald-900 focus:outline-none focus:ring-2 focus:ring-emerald-500"
+                      />
+                    </div>
+
+                    {/* Stock Portugal */}
+                    <div className="p-3 bg-blue-50/70 border border-blue-300 rounded-xl">
+                      <div className="flex items-center justify-between mb-1.5">
+                        <label className="text-xs font-bold uppercase text-blue-950 flex items-center gap-1">
+                          <span>🇵🇹</span>
+                          <span>Stock Portugal (Usine)</span>
+                        </label>
+                        <span className="text-[10px] font-bold text-blue-800 bg-white px-2 py-0.5 rounded border border-blue-200">
+                          Expédition Europe
+                        </span>
+                      </div>
+                      <input
+                        type="number"
+                        min="0"
+                        value={stockPortugal}
+                        onChange={(e) => handleStockPortugalChange(parseInt(e.target.value) || 0)}
+                        className="w-full px-3 py-2 bg-white border border-blue-300 rounded-lg text-sm font-black text-blue-900 focus:outline-none focus:ring-2 focus:ring-blue-500"
+                      />
+                    </div>
+                  </div>
+                </div>
+
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-1">
                   {/* Stock en Rayon Field with Live Color Indicator */}
                   <div>
@@ -1229,16 +1433,51 @@ export default function ProductEditorModal({
                         )}
                       </div>
 
-                      <input
-                        type="text"
-                        value={img.altText}
-                        onChange={(e) => {
-                          const val = e.target.value;
-                          setImages(prev => prev.map((item, i) => i === idx ? { ...item, altText: val } : item));
-                        }}
-                        placeholder="Texte alternatif (SEO)..."
-                        className="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[10px] text-slate-700 focus:outline-none mb-1.5"
-                      />
+                      {/* Direct URL Input */}
+                      <div className="w-full mb-1">
+                        <label className="block text-[9px] font-bold uppercase text-slate-400 mb-0.5">URL Directe Image</label>
+                        <input
+                          type="text"
+                          value={img.src}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setImages(prev => prev.map((item, i) => i === idx ? { ...item, src: val } : item));
+                          }}
+                          placeholder="https://..."
+                          className="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[10px] text-slate-800 font-mono focus:outline-none focus:bg-white focus:border-slate-400"
+                        />
+                      </div>
+
+                      {/* Alt text */}
+                      <div className="w-full mb-1.5">
+                        <label className="block text-[9px] font-bold uppercase text-slate-400 mb-0.5">Texte Alt / SEO</label>
+                        <input
+                          type="text"
+                          value={img.altText}
+                          onChange={(e) => {
+                            const val = e.target.value;
+                            setImages(prev => prev.map((item, i) => i === idx ? { ...item, altText: val } : item));
+                          }}
+                          placeholder="Texte alternatif (SEO)..."
+                          className="w-full px-2 py-1 bg-slate-50 border border-slate-200 rounded-lg text-[10px] text-slate-700 focus:outline-none"
+                        />
+                      </div>
+
+                      {idx !== 0 && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setImages(prev => {
+                              const item = prev[idx];
+                              const rest = prev.filter((_, i) => i !== idx);
+                              return [item, ...rest];
+                            });
+                          }}
+                          className="w-full py-1 text-slate-600 hover:text-emerald-700 hover:bg-emerald-50 rounded-lg text-[10px] font-bold transition-colors mb-1"
+                        >
+                          ⭐ Définir comme principale
+                        </button>
+                      )}
 
                       <button
                         type="button"
@@ -1694,6 +1933,264 @@ export default function ProductEditorModal({
           </div>
 
         </form>
+
+        {/* =========================================================
+            DOUBLE CONFIRMATION POPUP MODAL (STEP 1 & STEP 2)
+            ========================================================= */}
+        {confirmStep > 0 && pendingProduct && (
+          <div className="fixed inset-0 z-[70] bg-black/75 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-200">
+            <div className="bg-white rounded-3xl shadow-2xl border border-slate-200 max-w-2xl w-full max-h-[90vh] overflow-y-auto flex flex-col text-slate-900 animate-in zoom-in-95 duration-200">
+              
+              {/* POPUP STEP 1: SUMMARY & FIRST CONFIRMATION */}
+              {confirmStep === 1 && (
+                <div className="p-6 sm:p-8 space-y-6">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <div>
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-blue-100 text-blue-800 border border-blue-200">
+                        Étape 1 sur 2 · Vérification des Changements
+                      </span>
+                      <h3 className="text-xl font-black text-slate-900 font-heading mt-1">
+                        Vérifier les modifications avant enregistrement
+                      </h3>
+                    </div>
+                    <button
+                      type="button"
+                      onClick={() => setConfirmStep(0)}
+                      className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  <div className="space-y-4 text-xs">
+                    {/* Visual & Identity Summary */}
+                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 flex items-center gap-4">
+                      <div className="w-16 h-16 rounded-xl bg-white border border-slate-200 overflow-hidden shrink-0 relative flex items-center justify-center">
+                        <img
+                          src={pendingProduct.images[0]?.src || '/images/placeholder.webp'}
+                          alt=""
+                          className="w-full h-full object-contain p-1"
+                        />
+                      </div>
+                      <div className="flex-1 min-w-0">
+                        <h4 className="font-black text-sm text-slate-900 truncate">{pendingProduct.name.fr}</h4>
+                        <p className="text-slate-500 font-mono text-[11px] truncate">URL: /produit/{pendingProduct.slug.fr}</p>
+                        <div className="flex items-center gap-2 mt-1">
+                          <span className="font-bold text-slate-700">Marque : {pendingProduct.brand}</span>
+                          <span>·</span>
+                          <span className="text-emerald-700 font-black">{pendingProduct.images.length} photo(s)</span>
+                        </div>
+                      </div>
+                    </div>
+
+                    {/* Stock & Origin */}
+                    <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                      <div className="p-3 bg-emerald-50/70 border border-emerald-200 rounded-xl">
+                        <span className="text-[10px] font-black uppercase text-emerald-800 block">🇨🇭 Stock Genève</span>
+                        <span className="text-base font-black text-emerald-900">{pendingProduct.stockGeneva ?? 0} unités</span>
+                        <span className="text-[10px] text-emerald-700 block mt-0.5">Livraison 24h Suisse (POS)</span>
+                      </div>
+                      <div className="p-3 bg-blue-50/70 border border-blue-200 rounded-xl">
+                        <span className="text-[10px] font-black uppercase text-blue-800 block">🇵🇹 Stock Portugal</span>
+                        <span className="text-base font-black text-blue-900">{pendingProduct.stockPortugal ?? 0} unités</span>
+                        <span className="text-[10px] text-blue-700 block mt-0.5">Expédition 3-5j Europe</span>
+                      </div>
+                      <div className="p-3 bg-slate-100 border border-slate-200 rounded-xl">
+                        <span className="text-[10px] font-black uppercase text-slate-600 block">📦 Stock Total Cumulé</span>
+                        <span className="text-base font-black text-slate-900">
+                          {(pendingProduct.stockGeneva ?? 0) + (pendingProduct.stockPortugal ?? 0)} unités
+                        </span>
+                        <span className="text-[10px] text-slate-500 block mt-0.5">{pendingProduct.variants.length} variante(s)</span>
+                      </div>
+                    </div>
+
+                    {/* Pricing & GTIN */}
+                    <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 grid grid-cols-2 sm:grid-cols-3 gap-3">
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 block uppercase">Prix Public (CHF)</span>
+                        <span className="text-sm font-black text-slate-900">{pendingProduct.priceChf.toFixed(2)} CHF</span>
+                        {pendingProduct.compareAtPriceChf && (
+                          <span className="text-[10px] text-slate-400 line-through block">Barré: {pendingProduct.compareAtPriceChf.toFixed(2)} CHF</span>
+                        )}
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 block uppercase">Code GTIN / EAN-13</span>
+                        <span className="text-xs font-mono font-bold text-slate-800">{pendingProduct.gtin13 || 'Non renseigné'}</span>
+                      </div>
+                      <div>
+                        <span className="text-[10px] font-bold text-slate-400 block uppercase">Emplacement Principal</span>
+                        <span className="text-xs font-bold text-slate-800">{pendingProduct.mainLocation}</span>
+                      </div>
+                    </div>
+
+                    {/* Nutrition Facts */}
+                    {pendingProduct.nutrition && (
+                      <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 block mb-2">
+                          🥗 Valeurs Nutritionnelles (Portion : {pendingProduct.nutrition.servingSize || '30g'})
+                        </span>
+                        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center">
+                          <div className="bg-white p-2 rounded-lg border border-slate-200">
+                            <span className="text-[9px] text-slate-400 block">Énergie</span>
+                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.energyKcal} kcal</span>
+                          </div>
+                          <div className="bg-white p-2 rounded-lg border border-emerald-200">
+                            <span className="text-[9px] text-emerald-600 font-bold block">Protéines</span>
+                            <span className="font-black text-emerald-700">{pendingProduct.nutrition.proteinG} g</span>
+                          </div>
+                          <div className="bg-white p-2 rounded-lg border border-slate-200">
+                            <span className="text-[9px] text-slate-400 block">Glucides</span>
+                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.carbsG} g</span>
+                          </div>
+                          <div className="bg-white p-2 rounded-lg border border-slate-200">
+                            <span className="text-[9px] text-slate-400 block">Dont Sucres</span>
+                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.sugarsG} g</span>
+                          </div>
+                          <div className="bg-white p-2 rounded-lg border border-slate-200">
+                            <span className="text-[9px] text-slate-400 block">Lipides</span>
+                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.fatG} g</span>
+                          </div>
+                          <div className="bg-white p-2 rounded-lg border border-slate-200">
+                            <span className="text-[9px] text-slate-400 block">Sel</span>
+                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.saltG} g</span>
+                          </div>
+                        </div>
+                      </div>
+                    )}
+                  </div>
+
+                  {/* Step 1 Actions */}
+                  <div className="flex items-center justify-between pt-4 border-t border-slate-100 gap-3">
+                    <button
+                      type="button"
+                      onClick={() => setConfirmStep(0)}
+                      className="px-5 py-2.5 text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors"
+                    >
+                      ← Revenir et Corriger
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setConfirmStep(2)}
+                      className="px-6 py-2.5 text-xs font-black uppercase tracking-wider text-white bg-slate-900 hover:bg-black rounded-xl transition-all shadow-md flex items-center gap-1.5"
+                    >
+                      <span>Continuer vers la Confirmation Finale (Étape 2/2)</span>
+                      <span>→</span>
+                    </button>
+                  </div>
+                </div>
+              )}
+
+              {/* POPUP STEP 2: FINAL CONFIRMATION & DEPLOYMENT */}
+              {confirmStep === 2 && (
+                <div className="p-6 sm:p-8 space-y-6">
+                  <div className="flex items-center justify-between border-b border-slate-100 pb-4">
+                    <div>
+                      <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-amber-100 text-amber-900 border border-amber-200">
+                        Étape 2 sur 2 · Confirmation Définitive
+                      </span>
+                      <h3 className="text-xl font-black text-slate-900 font-heading mt-1 flex items-center gap-2">
+                        <span>⚠️</span>
+                        <span>Confirmer la Publication Immédiate</span>
+                      </h3>
+                    </div>
+                    <button
+                      type="button"
+                      disabled={isSaving}
+                      onClick={() => setConfirmStep(0)}
+                      className="p-1.5 text-slate-400 hover:text-slate-700 rounded-lg hover:bg-slate-100 disabled:opacity-30"
+                    >
+                      <X className="w-5 h-5" />
+                    </button>
+                  </div>
+
+                  {saveError && (
+                    <div className="p-4 rounded-xl bg-red-50 border border-red-200 text-red-800 text-xs font-bold flex items-center gap-2">
+                      <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
+                      <span>{saveError}</span>
+                    </div>
+                  )}
+
+                  {saveSuccess ? (
+                    <div className="p-6 rounded-2xl bg-emerald-50 border border-emerald-300 text-center space-y-2 animate-in zoom-in-95">
+                      <div className="w-12 h-12 bg-emerald-600 text-white rounded-full flex items-center justify-center mx-auto text-xl font-black">
+                        ✓
+                      </div>
+                      <h4 className="font-black text-emerald-950 text-base">Modifications Enregistrées et Publiées !</h4>
+                      <p className="text-xs text-emerald-800 font-medium">
+                        La base de données Supabase a été mise à jour et les données sont désormais en direct sur le site.
+                      </p>
+                    </div>
+                  ) : (
+                    <div className="space-y-4">
+                      <div className="p-4 rounded-2xl bg-amber-50/80 border border-amber-300 text-amber-950 text-xs space-y-2">
+                        <p className="font-black text-sm flex items-center gap-1.5">
+                          <span>📢</span>
+                          <span>Êtes-vous absolument sûr de vouloir publier ces modifications ?</span>
+                        </p>
+                        <p className="text-amber-900 leading-relaxed">
+                          Cette action va immédiatement et définitivement :
+                        </p>
+                        <ul className="list-disc pl-5 space-y-1 text-amber-900 font-medium">
+                          <li>Enregistrer les nouvelles données dans la table <strong>products</strong> de Supabase.</li>
+                          <li>Mettre à jour les stocks de Genève (<strong>{pendingProduct.stockGeneva ?? 0}</strong>) et du Portugal (<strong>{pendingProduct.stockPortugal ?? 0}</strong>).</li>
+                          <li>Mettre à jour l'image, les valeurs nutritionnelles, le code-barres GTIN et les textes sur tout le site public (boutique, fiches produits et panier).</li>
+                        </ul>
+                      </div>
+
+                      <div className="p-3 bg-slate-50 rounded-xl border border-slate-200 text-xs text-slate-700">
+                        <span className="font-bold text-slate-900">Produit concerné :</span> {pendingProduct.name.fr} ({pendingProduct.id})
+                      </div>
+                    </div>
+                  )}
+
+                  {/* Step 2 Actions */}
+                  {!saveSuccess && (
+                    <div className="flex items-center justify-between pt-4 border-t border-slate-100 gap-3">
+                      <div className="flex items-center gap-2">
+                        <button
+                          type="button"
+                          disabled={isSaving}
+                          onClick={() => setConfirmStep(1)}
+                          className="px-4 py-2.5 text-xs font-bold text-slate-600 hover:text-slate-900 bg-slate-100 hover:bg-slate-200 rounded-xl transition-colors disabled:opacity-30"
+                        >
+                          ← Étape 1
+                        </button>
+                        <button
+                          type="button"
+                          disabled={isSaving}
+                          onClick={() => setConfirmStep(0)}
+                          className="px-4 py-2.5 text-xs font-bold text-slate-500 hover:text-slate-700 transition-colors disabled:opacity-30"
+                        >
+                          Annuler
+                        </button>
+                      </div>
+
+                      <button
+                        type="button"
+                        disabled={isSaving}
+                        onClick={handleFinalConfirmSave}
+                        className="px-6 py-3 text-xs font-black uppercase tracking-wider text-white bg-emerald-600 hover:bg-emerald-700 rounded-xl transition-all shadow-lg active:scale-98 flex items-center gap-2 disabled:opacity-50"
+                      >
+                        {isSaving ? (
+                          <>
+                            <Loader2 className="w-4 h-4 animate-spin" />
+                            <span>Sauvegarde dans Supabase...</span>
+                          </>
+                        ) : (
+                          <>
+                            <Check className="w-4 h-4" />
+                            <span>OUI, CONFIRMER ET PUBLIER DÉFINITIVEMENT</span>
+                          </>
+                        )}
+                      </button>
+                    </div>
+                  )}
+                </div>
+              )}
+
+            </div>
+          </div>
+        )}
 
       </div>
     </div>

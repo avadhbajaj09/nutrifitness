@@ -792,7 +792,74 @@ export default function AdminDashboardClient() {
     loadProducts();
   }, []);
 
-  const handleSaveProduct = (savedProduct: ProductItem) => {
+  const handleSaveProduct = async (savedProduct: ProductItem): Promise<boolean> => {
+    // 1. Calculate stocks
+    const targetOrigin = savedProduct.shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA';
+    const parentStockFallback = (savedProduct.variants && savedProduct.variants.length > 0)
+      ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0)), 0)
+      : ((savedProduct.stockGeneva || 0) + (savedProduct.stockPortugal || 0));
+
+    const totalGen = (savedProduct.variants && savedProduct.variants.length > 0)
+      ? savedProduct.variants.reduce((s, v) => s + (v.stockGeneva ?? 0), 0)
+      : (savedProduct.stockGeneva ?? (targetOrigin === 'GENEVA' ? parentStockFallback : 0));
+    const totalPt = (savedProduct.variants && savedProduct.variants.length > 0)
+      ? savedProduct.variants.reduce((s, v) => s + (v.stockPortugal ?? 0), 0)
+      : (savedProduct.stockPortugal ?? (targetOrigin === 'PORTUGAL' ? parentStockFallback : 0));
+
+    // 2. Persist to Supabase Database via /api/admin/products
+    try {
+      const payload = {
+        id: savedProduct.id,
+        name: savedProduct.name?.fr || '',
+        slug: savedProduct.slug?.fr || '',
+        brand: savedProduct.brand,
+        base_price: savedProduct.priceChf,
+        compare_at_price: savedProduct.compareAtPriceChf || null,
+        main_location: targetOrigin,
+        status: savedProduct.status || 'published',
+        images: (savedProduct.images || []).map(img => ({
+          src: typeof img === 'string' ? img : img.src,
+          alt: typeof img === 'string' ? savedProduct.name.fr : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || savedProduct.name.fr))
+        })),
+        gtin13: savedProduct.gtin13 || null,
+        short_description: savedProduct.shortDescription?.fr || null,
+        description: savedProduct.longDescription?.fr || null,
+        ingredients: savedProduct.ingredients?.fr || null,
+        allergens: savedProduct.allergens?.fr || null,
+        usage_instructions: savedProduct.usageInstructions?.fr || null,
+        nutrition: savedProduct.nutrition || null,
+        stock_geneva: totalGen,
+        stock_portugal: totalPt,
+        variants: (savedProduct.variants || []).map(v => ({
+          id: v.id,
+          sku: v.sku,
+          flavor: v.flavorName?.fr || 'Standard',
+          format: v.format || '1 unité',
+          price: v.priceChf || savedProduct.priceChf,
+          stock_geneva: typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'GENEVA' ? (v.inventoryQuantity ?? 0) : 0),
+          stock_portugal: typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'PORTUGAL' ? (v.inventoryQuantity ?? 0) : 0),
+          in_stock: v.inStock,
+          image: v.image || null,
+          gtin13: v.gtin13 || savedProduct.gtin13 || null
+        }))
+      };
+
+      const res = await fetch('/api/admin/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      });
+
+      if (!res.ok) {
+        const errJson = await res.json().catch(() => ({}));
+        throw new Error(errJson.error || `Erreur serveur (${res.status}) lors de l'enregistrement dans la base de données.`);
+      }
+    } catch (err: any) {
+      console.error('[handleSaveProduct] Error saving product to DB:', err);
+      throw err;
+    }
+
+    // 3. Update localStorage and local state
     setAllProducts(prev => {
       const exists = prev.some(p => p.id === savedProduct.id);
       let nextList: ProductItem[];
@@ -820,19 +887,18 @@ export default function AdminDashboardClient() {
       try {
         const prodId = savedProduct.id;
         const cleanId = prodId.replace(/^prod-/, '');
-        const targetOrigin = savedProduct.shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA';
-        const totalStock = (savedProduct.variants && savedProduct.variants.length > 0)
-          ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0)), 0)
-          : ((savedProduct.stockGeneva || 0) + (savedProduct.stockPortugal || 0));
+        const totalStock = totalGen + totalPt;
 
         const savedStock = localStorage.getItem('nutrifitness_stock_overrides');
         const stockMap = savedStock ? JSON.parse(savedStock) : {};
         const variantEntries: [string, any][] = [];
         (savedProduct.variants || []).forEach(v => {
-          const vQty = typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0);
+          const vGen = typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'GENEVA' ? (v.inventoryQuantity ?? 0) : 0);
+          const vPt = typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'PORTUGAL' ? (v.inventoryQuantity ?? 0) : 0);
+          const vQty = vGen + vPt;
           const vData = {
-            geneva: typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'PORTUGAL' ? 0 : vQty),
-            portugal: typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'PORTUGAL' ? vQty : 0),
+            geneva: vGen,
+            portugal: vPt,
             total: vQty,
             inStock: vQty > 0
           };
@@ -842,8 +908,8 @@ export default function AdminDashboardClient() {
         });
 
         const entry = {
-          geneva: targetOrigin === 'PORTUGAL' ? 0 : totalStock,
-          portugal: targetOrigin === 'PORTUGAL' ? totalStock : (savedProduct.stockPortugal || 0),
+          geneva: totalGen,
+          portugal: totalPt,
           total: totalStock,
           inStock: totalStock > 0,
           variants: Object.fromEntries(variantEntries)
@@ -859,96 +925,13 @@ export default function AdminDashboardClient() {
         console.error('Error saving stock override', err);
       }
 
-      // Sync to Supabase Database
-      try {
-        const targetOrigin = savedProduct.shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA';
-        const parentStockFallback = (savedProduct.variants && savedProduct.variants.length > 0)
-          ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0)), 0)
-          : ((savedProduct.stockGeneva || 0) + (savedProduct.stockPortugal || 0));
-
-        const totalGen = (savedProduct.variants && savedProduct.variants.length > 0)
-          ? savedProduct.variants.reduce((s, v) => s + (v.stockGeneva ?? 0), 0)
-          : (savedProduct.stockGeneva ?? (targetOrigin === 'GENEVA' ? parentStockFallback : 0));
-        const totalPt = (savedProduct.variants && savedProduct.variants.length > 0)
-          ? savedProduct.variants.reduce((s, v) => s + (v.stockPortugal ?? 0), 0)
-          : (savedProduct.stockPortugal ?? (targetOrigin === 'PORTUGAL' ? parentStockFallback : 0));
-
-        fetch('/api/admin/stock/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            productId: savedProduct.id,
-            quantity: totalGen,
-            origin: 'GENEVA'
-          })
-        }).catch(() => {});
-
-        fetch('/api/admin/stock/', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            productId: savedProduct.id,
-            quantity: totalPt,
-            origin: 'PORTUGAL'
-          })
-        }).catch(() => {});
-
-        if (savedProduct.variants && savedProduct.variants.length > 0) {
-          for (const v of savedProduct.variants) {
-            const vGen = typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'GENEVA' ? (v.inventoryQuantity ?? 0) : 0);
-            const vPt = typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'PORTUGAL' ? (v.inventoryQuantity ?? 0) : 0);
-
-            fetch('/api/admin/stock/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                productId: savedProduct.id,
-                variantId: v.id,
-                variantSku: v.sku,
-                flavor: v.flavorName?.fr,
-                quantity: vGen,
-                origin: 'GENEVA'
-              })
-            }).catch(() => {});
-
-            fetch('/api/admin/stock/', {
-              method: 'POST',
-              headers: { 'Content-Type': 'application/json' },
-              body: JSON.stringify({
-                productId: savedProduct.id,
-                variantId: v.id,
-                variantSku: v.sku,
-                flavor: v.flavorName?.fr,
-                quantity: vPt,
-                origin: 'PORTUGAL'
-              })
-            }).catch(() => {});
-          }
-        }
-
-        // Persist product details (images, name, price, brand, location) to Supabase Database
-        fetch('/api/admin/products', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            id: savedProduct.id,
-            name: savedProduct.name?.fr || '',
-            slug: savedProduct.slug?.fr || '',
-            brand: savedProduct.brand,
-            base_price: savedProduct.priceChf,
-            compare_at_price: savedProduct.compareAtPriceChf || null,
-            main_location: targetOrigin,
-            status: savedProduct.status || 'published',
-            images: (savedProduct.images || []).map(img => ({
-              src: typeof img === 'string' ? img : img.src,
-              alt: typeof img === 'string' ? savedProduct.name.fr : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || savedProduct.name.fr))
-            }))
-          })
-        }).catch(err => console.error('[handleSaveProduct] Error saving product to DB:', err));
-      } catch {}
-
       return nextList;
     });
+
+    // 4. Invalidate and re-fetch overrides cache
+    try {
+      await fetch('/api/catalog/overrides', { cache: 'no-store' });
+    } catch {}
 
     setScanFeedback({
       message: `Fiche et stock mis à jour pour "${savedProduct.name.fr}" !`,
@@ -960,8 +943,7 @@ export default function AdminDashboardClient() {
       setInspectingProduct(savedProduct);
     }
 
-    setIsEditorOpen(false);
-    setEditingProduct(null);
+    return true;
   };
 
   const handleDeleteProduct = (productId: string, skipConfirm: boolean = false) => {

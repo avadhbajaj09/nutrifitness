@@ -88,6 +88,9 @@ interface StoreContextType {
   stockMap: Record<string, any>;
   getProductStock: (itemOrSlug: any, variantKey?: string) => { inStock: boolean; total: number; geneva: number; portugal: number } | null;
   refreshStock: () => Promise<void>;
+  catalogOverrides: Record<string, any>;
+  getCatalogOverride: (itemOrSlug: any) => any;
+  refreshCatalogOverrides: () => Promise<void>;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -273,9 +276,37 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     return entry;
   };
 
+  const [catalogOverrides, setCatalogOverrides] = useState<Record<string, any>>({});
+
+  const refreshCatalogOverrides = async () => {
+    try {
+      const res = await fetch('/api/catalog/overrides', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.overrides) setCatalogOverrides(data.overrides);
+      }
+    } catch {}
+  };
+
+  const getCatalogOverride = (itemOrSlug: any): any => {
+    if (!itemOrSlug) return null;
+    let s = '';
+    let pid = '';
+    if (typeof itemOrSlug === 'string') {
+      s = itemOrSlug.toLowerCase().trim();
+      pid = s;
+    } else {
+      s = (itemOrSlug.slug?.fr || itemOrSlug.slug || '').toLowerCase().trim();
+      pid = (itemOrSlug.id || '').toLowerCase().trim();
+    }
+    const cleanId = pid.replace(/^prod-/, '');
+    return catalogOverrides[pid] || catalogOverrides[cleanId] || catalogOverrides[`prod-${cleanId}`] || (s ? catalogOverrides[s] : null) || null;
+  };
+
   useEffect(() => {
     refreshHiddenProducts();
     refreshStock();
+    refreshCatalogOverrides();
   }, []);
 
   const isProductDeliverable = (itemOrSlug: any, targetCountry: string = countryCode): boolean => {
@@ -829,7 +860,10 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         refreshHiddenProducts,
         stockMap,
         getProductStock,
-        refreshStock
+        refreshStock,
+        catalogOverrides,
+        getCatalogOverride,
+        refreshCatalogOverrides
       }}
     >
       {children}

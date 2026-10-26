@@ -13,6 +13,10 @@ import { getCategoryBySlug } from '@/lib/categories';
 import { formatProductMetaTitle, formatMetaDescription, getProductGtin } from '@/lib/seo';
 import { getProductOriginType } from '@/lib/translations';
 
+export const dynamic = 'force-dynamic';
+export const revalidate = 0;
+export const dynamicParams = true;
+
 interface Props {
   params: { slug: string };
 }
@@ -34,8 +38,42 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
     };
   }
 
-  const product = getProductBySlug(params.slug, 'fr');
-  if (!product) return {};
+  let product = getProductBySlug(params.slug, 'fr');
+  if (!product) {
+    try {
+      const supabase = getAdminSupabase();
+      const { data: dbItem } = await supabase
+        .from('products')
+        .select('id, name, short_description, images')
+        .eq('slug', params.slug)
+        .maybeSingle();
+
+      if (dbItem) {
+        const title = formatProductMetaTitle(dbItem.name || params.slug);
+        const metaDesc = formatMetaDescription(dbItem.short_description || dbItem.name || '');
+        const image = dbItem.images?.[0]?.src || 'https://nutrifitness.ch/images/brand/logo.png';
+        return {
+          title,
+          description: metaDesc,
+          alternates: {
+            canonical: `https://nutrifitness.ch/produit/${params.slug}/`,
+          },
+          openGraph: {
+            title,
+            description: metaDesc,
+            images: [image],
+          },
+          twitter: {
+            card: 'summary_large_image',
+            title,
+            description: metaDesc,
+            images: [image],
+          },
+        };
+      }
+    } catch {}
+    return {};
+  }
 
   const prodId = (product.id || '').toLowerCase().trim();
   const cleanId = prodId.replace(/^prod-/, '');
@@ -81,119 +119,216 @@ export default async function ProductDetailPage({ params }: Props) {
   }
 
   const rawProduct = getProductBySlug(params.slug, 'fr');
+  const supabase = getAdminSupabase();
 
-  if (!rawProduct) {
-    notFound();
-  }
-
-  let product = { ...rawProduct };
-  try {
-    const supabase = getAdminSupabase();
-    const cleanId = (product.id || '').replace(/^prod-/, '');
+  const conditions: string[] = [`slug.eq.${params.slug}`];
+  if (rawProduct?.id) {
     const isUuid = (val: string) => /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(val);
     const isNumeric = (val: string) => /^\d+$/.test(val);
-    const conditions: string[] = [`slug.eq.${params.slug}`];
-    if (product.id && isUuid(product.id)) {
-      conditions.push(`id.eq.${product.id}`);
-    }
-    if (cleanId && isNumeric(cleanId)) {
-      conditions.push(`woo_id.eq.${cleanId}`);
-    }
+    const cleanId = rawProduct.id.replace(/^prod-/, '');
+    if (isUuid(rawProduct.id)) conditions.push(`id.eq.${rawProduct.id}`);
+    if (cleanId && isNumeric(cleanId)) conditions.push(`woo_id.eq.${cleanId}`);
+  }
 
-    const { data: dbProduct } = await supabase
+  let dbProduct: any = null;
+  try {
+    const { data } = await supabase
       .from('products')
       .select(`
-        id, main_location, images,
+        id, woo_id, sku, name, slug, brand, base_price, compare_at_price,
+        short_description, description, images, gtin13,
+        nutrition, ingredients, allergens, usage_instructions,
+        main_location, stock_geneva, stock_portugal, status, deleted_at,
         product_variants (
-          id, woo_id, sku, attribute_name, attribute_value, price,
-          image_url, stock_geneva, stock_portugal
+          id, woo_id, sku, attribute_name, attribute_value, price, compare_at_price,
+          image_url, stock_geneva, stock_portugal, gtin13
         )
       `)
       .or(conditions.join(','))
       .maybeSingle();
+    dbProduct = data;
+  } catch (dbErr) {
+    console.warn('[ProductDetailPage] Supabase product query warning:', dbErr);
+  }
 
-    if (dbProduct) {
-      if (Array.isArray(dbProduct.images) && dbProduct.images.length > 0) {
-        product.images = dbProduct.images.map((img: any) => {
-          const src = typeof img === 'string' ? img : img.src;
-          const altText = typeof img === 'string' ? (product.name?.fr || '') : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || product.name?.fr || ''));
-          return {
-            src,
-            alt: { fr: altText, de: altText, it: altText, en: altText },
-            width: 800,
-            height: 800
-          };
-        });
-      }
+  if (!rawProduct && !dbProduct) {
+    notFound();
+  }
 
-      const loc = dbProduct.main_location as 'GENEVA' | 'PORTUGAL' | 'COMMON' | undefined;
-      if (loc === 'PORTUGAL') {
-        product.shippingOrigin = 'portugal';
-        product.locationType = 'PORTUGAL_ONLY';
-      } else if (loc === 'COMMON') {
-        product.shippingOrigin = 'common';
-        product.locationType = 'COMMON';
-      } else if (loc === 'GENEVA') {
-        product.shippingOrigin = 'switzerland';
-        product.locationType = 'GENEVA_ONLY';
-      }
+  if (dbProduct && (dbProduct.status === 'draft' || dbProduct.deleted_at)) {
+    notFound();
+  }
 
-      if (dbProduct.product_variants && dbProduct.product_variants.length > 0) {
-        const vars = dbProduct.product_variants.map((v: any) => {
-          let gen = Number(v.stock_geneva) || 0;
-          let pt = Number(v.stock_portugal) || 0;
-          if (loc === 'PORTUGAL') {
-            gen = 0;
-            if (pt <= 0) pt = 50;
-          } else if (loc === 'GENEVA') {
-            pt = 0;
-            if (gen <= 0) gen = 20;
-          }
-          const tot = gen + pt;
-          const flavor = v.attribute_value || 'Standard';
-          return {
-            id: v.id,
-            sku: v.sku || ('NF-' + (v.woo_id || v.id.slice(0, 8))),
-            flavorName: { fr: flavor, de: flavor, it: flavor, en: flavor },
-            format: v.attribute_name === 'poids' ? flavor : '1 unité',
-            priceChf: Number(v.price) || product.priceChf,
-            inventoryQuantity: tot,
-            inStock: tot > 0,
-            image: v.image_url || product.images?.[0]?.src || '/images/placeholder.webp',
-            stockGeneva: gen,
-            stockPortugal: pt
-          };
-        });
-        const totalGen = loc === 'PORTUGAL' ? 0 : vars.reduce((s: number, v: any) => s + (v.stockGeneva || 0), 0);
-        const totalPt = loc === 'GENEVA' ? 0 : vars.reduce((s: number, v: any) => s + (v.stockPortugal || 0), 0);
+  let product: any = rawProduct ? { ...rawProduct } : {
+    id: dbProduct.id,
+    sku: dbProduct.sku || dbProduct.id,
+    slug: { fr: dbProduct.slug, de: dbProduct.slug, it: dbProduct.slug, en: dbProduct.slug },
+    name: { fr: dbProduct.name, de: dbProduct.name, it: dbProduct.name, en: dbProduct.name },
+    brand: dbProduct.brand || 'NutriFitness',
+    categorySlug: 'proteines',
+    taxCategory: 'food_reduced',
+    priceChf: Number(dbProduct.base_price) || 29.9,
+    compareAtPriceChf: dbProduct.compare_at_price ? Number(dbProduct.compare_at_price) : undefined,
+    images: [],
+    variants: [],
+    inStock: true
+  };
 
-        product = {
-          ...product,
-          variants: vars,
-          stockGeneva: totalGen,
-          stockPortugal: totalPt
-        };
-      } else {
-        if (loc === 'PORTUGAL') {
-          product.stockGeneva = 0;
-          if (!product.stockPortugal || product.stockPortugal <= 0) product.stockPortugal = 50;
-        } else if (loc === 'GENEVA') {
-          product.stockPortugal = 0;
-          if (!product.stockGeneva || product.stockGeneva <= 0) product.stockGeneva = 20;
-        }
-      }
-
-      if (loc === 'PORTUGAL' && product.directAnswerAeo) {
-        const prodName = typeof product.name === 'string' ? product.name : (product.name?.fr || 'Ce produit');
-        product.directAnswerAeo = {
-          fr: `${prodName} est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.`,
-          en: `${prodName} is a premium sports nutrition supplement shipped directly from our warehouse in Portugal with tracked delivery in 3-5 business days.`,
-          de: `${prodName} ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.`,
-          it: `${prodName} è un integratore di référence spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi.`
-        };
-      }
+  if (dbProduct) {
+    if (dbProduct.name) {
+      product.name = {
+        fr: dbProduct.name,
+        de: dbProduct.name,
+        it: dbProduct.name,
+        en: dbProduct.name
+      };
     }
-  } catch {}
+
+    if (dbProduct.brand) {
+      product.brand = dbProduct.brand;
+    }
+
+    if (dbProduct.base_price !== null && dbProduct.base_price !== undefined) {
+      product.priceChf = Number(dbProduct.base_price);
+    }
+
+    if (dbProduct.compare_at_price !== null && dbProduct.compare_at_price !== undefined) {
+      product.compareAtPriceChf = Number(dbProduct.compare_at_price);
+    }
+
+    if (dbProduct.gtin13) {
+      product.gtin13 = dbProduct.gtin13;
+    }
+
+    if (dbProduct.short_description) {
+      product.shortDescription = {
+        fr: dbProduct.short_description,
+        de: dbProduct.short_description,
+        it: dbProduct.short_description,
+        en: dbProduct.short_description
+      };
+    }
+
+    if (dbProduct.description) {
+      product.longDescription = {
+        fr: dbProduct.description,
+        de: dbProduct.description,
+        it: dbProduct.description,
+        en: dbProduct.description
+      };
+    }
+
+    if (dbProduct.ingredients) {
+      product.ingredients = {
+        fr: dbProduct.ingredients,
+        de: dbProduct.ingredients,
+        it: dbProduct.ingredients,
+        en: dbProduct.ingredients
+      };
+    }
+
+    if (dbProduct.allergens) {
+      product.allergens = {
+        fr: dbProduct.allergens,
+        de: dbProduct.allergens,
+        it: dbProduct.allergens,
+        en: dbProduct.allergens
+      };
+    }
+
+    if (dbProduct.usage_instructions) {
+      product.usageInstructions = {
+        fr: dbProduct.usage_instructions,
+        de: dbProduct.usage_instructions,
+        it: dbProduct.usage_instructions,
+        en: dbProduct.usage_instructions
+      };
+    }
+
+    if (dbProduct.nutrition) {
+      product.nutrition = dbProduct.nutrition;
+    }
+
+    if (Array.isArray(dbProduct.images) && dbProduct.images.length > 0) {
+      product.images = dbProduct.images.map((img: any) => {
+        const src = typeof img === 'string' ? img : img.src;
+        const altText = typeof img === 'string' 
+          ? (dbProduct.name || product.name?.fr || '') 
+          : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || dbProduct.name || product.name?.fr || ''));
+        return {
+          src,
+          alt: { fr: altText, de: altText, it: altText, en: altText },
+          width: 800,
+          height: 800
+        };
+      });
+    }
+
+    const loc = dbProduct.main_location as 'GENEVA' | 'PORTUGAL' | 'COMMON' | undefined;
+    if (loc === 'PORTUGAL') {
+      product.shippingOrigin = 'portugal';
+      product.locationType = 'PORTUGAL_ONLY';
+    } else if (loc === 'COMMON') {
+      product.shippingOrigin = 'common';
+      product.locationType = 'COMMON';
+    } else if (loc === 'GENEVA') {
+      product.shippingOrigin = 'switzerland';
+      product.locationType = 'GENEVA_ONLY';
+    }
+
+    if (dbProduct.stock_geneva !== null && dbProduct.stock_geneva !== undefined) {
+      product.stockGeneva = Number(dbProduct.stock_geneva);
+    }
+    if (dbProduct.stock_portugal !== null && dbProduct.stock_portugal !== undefined) {
+      product.stockPortugal = Number(dbProduct.stock_portugal);
+    }
+
+    if (dbProduct.product_variants && dbProduct.product_variants.length > 0) {
+      const vars = dbProduct.product_variants.map((v: any) => {
+        const gen = Number(v.stock_geneva) || 0;
+        const pt = Number(v.stock_portugal) || 0;
+        const tot = gen + pt;
+        const flavor = v.attribute_value || 'Standard';
+        return {
+          id: v.id,
+          sku: v.sku || ('NF-' + (v.woo_id || v.id.slice(0, 8))),
+          flavorName: { fr: flavor, de: flavor, it: flavor, en: flavor },
+          format: v.attribute_name === 'poids' ? flavor : '1 unité',
+          priceChf: Number(v.price) || product.priceChf,
+          compareAtPriceChf: v.compare_at_price ? Number(v.compare_at_price) : undefined,
+          inventoryQuantity: tot,
+          inStock: tot > 0,
+          image: v.image_url || product.images?.[0]?.src || '/images/placeholder.webp',
+          stockGeneva: gen,
+          stockPortugal: pt,
+          gtin13: v.gtin13 || ''
+        };
+      });
+      const totalGen = vars.reduce((s: number, v: any) => s + (v.stockGeneva || 0), 0);
+      const totalPt = vars.reduce((s: number, v: any) => s + (v.stockPortugal || 0), 0);
+
+      product = {
+        ...product,
+        variants: vars,
+        stockGeneva: totalGen,
+        stockPortugal: totalPt,
+        inStock: (totalGen + totalPt) > 0
+      };
+    } else {
+      const tot = (product.stockGeneva || 0) + (product.stockPortugal || 0);
+      product.inStock = tot > 0;
+    }
+
+    if (loc === 'PORTUGAL' && product.directAnswerAeo) {
+      const prodName = typeof product.name === 'string' ? product.name : (product.name?.fr || 'Ce produit');
+      product.directAnswerAeo = {
+        fr: `${prodName} est un complément nutritionnel de référence expédié directement depuis nos entrepôts au Portugal avec livraison suivie en 3-5 jours ouvrables.`,
+        en: `${prodName} is a premium sports nutrition supplement shipped directly from our warehouse in Portugal with tracked delivery in 3-5 business days.`,
+        de: `${prodName} ist ein hochwertiges Nahrungsergänzungsmittel, direkt aus unserem Lager in Portugal mit Sendungsverfolgung in 3-5 Werktagen geliefert.`,
+        it: `${prodName} è un integratore di référence spedito direttamente dal nostro magazzino in Portogallo con spedizione tracciata in 3-5 giorni lavorativi.`
+      };
+    }
+  }
 
   const prodId = (product.id || '').toLowerCase().trim();
   const cleanId = prodId.replace(/^prod-/, '');

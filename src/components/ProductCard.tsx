@@ -16,7 +16,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const { addToCart, closeCart, openQuickView, getProductPricing, locale, countryCode, t } = useStore();
+  const { addToCart, closeCart, openQuickView, getProductPricing, locale, countryCode, t, getCatalogOverride, getProductStock } = useStore();
 
   const [mounted, setMounted] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(false);
@@ -31,31 +31,54 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
     return () => mql.removeEventListener('change', handler);
   }, []);
 
+  const override = getCatalogOverride ? getCatalogOverride(product) : null;
+
   // First client render matches server HTML (CH) to prevent hydration mismatch
   const effectiveCountry = mounted ? (countryCode || 'CH') : 'CH';
+  const stockCheck = getProductStock ? getProductStock(product) : null;
+  const effectiveGen = override?.stockGeneva ?? (stockCheck ? stockCheck.geneva : product.stockGeneva);
+  const effectivePt = override?.stockPortugal ?? (stockCheck ? stockCheck.portugal : product.stockPortugal);
+
+  const locType = override?.mainLocation 
+    ? (override.mainLocation === 'COMMON' ? 'COMMON' : override.mainLocation === 'PORTUGAL' ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY') 
+    : product.locationType;
+  const shipOrigin = override?.mainLocation 
+    ? (override.mainLocation === 'COMMON' ? 'common' : override.mainLocation === 'PORTUGAL' ? 'portugal' : 'switzerland') 
+    : product.shippingOrigin;
+
   const isDeliverable = isProductDeliverableToCountry(
     effectiveCountry,
-    product.locationType,
-    product.shippingOrigin,
-    product.stockGeneva,
-    product.stockPortugal
+    locType,
+    shipOrigin,
+    effectiveGen,
+    effectivePt
   );
 
-  const originType = getProductOriginType(product);
+  const originType = getProductOriginType({
+    shippingOrigin: shipOrigin,
+    locationType: locType
+  });
 
   const slug = getLocalized(product.slug, locale);
-  const name = getLocalized(product.name, locale);
-  const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
+  const name = override?.name || getLocalized(product.name, locale);
+  const primaryImg = override?.images?.[0]?.src || product.images?.[0]?.src || '/images/placeholder.webp';
   const [imgSrc, setImgSrc] = React.useState<string>(primaryImg);
 
   React.useEffect(() => {
-    setImgSrc(product.images?.[0]?.src || '/images/placeholder.webp');
-  }, [product.images]);
+    const activeOverride = getCatalogOverride ? getCatalogOverride(product) : null;
+    setImgSrc(activeOverride?.images?.[0]?.src || product.images?.[0]?.src || '/images/placeholder.webp');
+  }, [product.images, getCatalogOverride, product]);
 
-  const pricing = getProductPricing(product);
+  const effectiveProductForPricing = override?.priceChf ? {
+    ...product,
+    priceChf: override.priceChf,
+    compareAtPriceChf: override.compareAtPriceChf
+  } : product;
+
+  const pricing = getProductPricing(effectiveProductForPricing);
   const compareAtPrice = pricing.compareAt;
   const discountPercent = compareAtPrice && compareAtPrice > pricing.price ? Math.round(((compareAtPrice - pricing.price) / compareAtPrice) * 100) : 0;
-  const hasStock = product.variants?.some(v => v.inStock) ?? true;
+  const hasStock = ((effectiveGen ?? 0) + (effectivePt ?? 0)) > 0;
   const vat = calculateVat(pricing.price, product.taxCategory);
 
   // Mobile text transform for Pronutrition.it -> Pronutrition
