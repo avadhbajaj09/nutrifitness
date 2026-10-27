@@ -44,33 +44,64 @@ export default function MentionsLegalesPage() {
         <section className="p-6 sm:p-8 rounded-3xl bg-[#141414] border border-white/10 space-y-4">
           <div className="flex items-center gap-3 pb-3 border-b border-white/10 text-white font-heading font-black text-lg uppercase">
             <Building className="w-5 h-5 text-[#F80404]" />
-            <h2>1. Présentation de l&apos;Entreprise & Exploitant</h2>
+            <h2>1. Identification Légale de l&apos;Entreprise &amp; Exploitant</h2>
           </div>
           <p>
-            Le site internet <strong>nutrifitness.ch</strong> est la propriété exclusive et est exploité par l&apos;entreprise individuelle <strong>{COMPANY.displayName}</strong>.
+            Le site marchand <strong>nutrifitness.ch</strong> est la propriété exclusive et est exploité par l&apos;entreprise individuelle suisse <strong>{COMPANY.legalName}</strong> (exerçant sous l&apos;enseigne commerciale <strong>{COMPANY.tradingName}</strong>), immatriculée au Registre du Commerce de Genève et strictement conforme aux réglementations fédérales suisses et aux exigences d&apos;acceptation des paiements <strong>TWINT</strong>.
           </p>
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-2">
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
-              <span className="text-[11px] font-bold text-white/50 uppercase block">Raison de commerce :</span>
-              <p className="text-sm font-bold text-white">{COMPANY.displayName}</p>
+              <span className="text-[11px] font-bold text-white/50 uppercase block">Raison de commerce officielle (Company Name) :</span>
+              <p className="text-sm font-black text-white">{COMPANY.legalName}</p>
             </div>
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
-              <span className="text-[11px] font-bold text-white/50 uppercase block">Forme juridique :</span>
-              <p className="text-sm font-bold text-white">{COMPANY.legalForm}</p>
+              <span className="text-[11px] font-bold text-white/50 uppercase block">Forme juridique (Legal Form) :</span>
+              <p className="text-sm font-bold text-[#95d600]">{COMPANY.legalForm} <span className="text-white/60 font-normal">({COMPANY.legalFormEn})</span></p>
+            </div>
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-[11px] font-bold text-white/50 uppercase block">Titulaire &amp; Propriétaire (Business Owner) :</span>
+              <p className="text-sm font-black text-white">{COMPANY.ownerFullName}</p>
             </div>
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
               <span className="text-[11px] font-bold text-white/50 uppercase block">Numéro d&apos;identification des entreprises (IDE / UID) :</span>
-              <p className="text-sm font-bold text-white">{COMPANY.uid}</p>
+              <p className="text-sm font-mono font-bold text-white">{COMPANY.uid}</p>
             </div>
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
-              <span className="text-[11px] font-bold text-white/50 uppercase block">Fondateur & Gérant :</span>
-              <p className="text-sm font-bold text-white">{COMPANY.founder}</p>
+              <span className="text-[11px] font-bold text-white/50 uppercase block">Registre du Commerce :</span>
+              <p className="text-sm font-bold text-white">{COMPANY.rcRegistry}</p>
+              <p className="text-[11px] text-white/50 font-mono">N° fédéral : {COMPANY.rcNumber}</p>
+            </div>
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1">
+              <span className="text-[11px] font-bold text-white/50 uppercase block">Numéro de TVA suisse :</span>
+              <p className="text-sm font-mono font-bold text-white">{COMPANY.tvaNumber}</p>
             </div>
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1 sm:col-span-2">
-              <span className="text-[11px] font-bold text-white/50 uppercase block">Boutique physique & Siège social :</span>
+              <span className="text-[11px] font-bold text-white/50 uppercase block">Siège social &amp; Magasin physique à Genève (Full Business Address) :</span>
               <p className="text-sm font-bold text-white flex items-center gap-1.5">
                 <MapPin className="w-4 h-4 text-[#F80404] shrink-0" />
                 <span>{COMPANY.address.full}</span>
+              </p>
+            </div>
+          </div>
+        </section>
+
+        {/* Section 1bis: Conformité TWINT & Expédition en Suisse */}
+        <section className="p-6 sm:p-8 rounded-3xl bg-[#141414] border border-white/10 space-y-4">
+          <div className="flex items-center gap-3 pb-3 border-b border-white/10 text-white font-heading font-black text-lg uppercase">
+            <Scale className="w-5 h-5 text-[#95d600]" />
+            <h2>Conformité TWINT &amp; Expédition en Suisse</h2>
+          </div>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
+              <span className="text-[11px] font-bold text-[#95d600] uppercase block">Paiements TWINT en Francs Suisses (CHF) :</span>
+              <p className="text-xs text-white/80 leading-relaxed">
+                Le moyen de paiement mobile suisse <strong>TWINT</strong> est pleinement intégré pour tous nos clients via la passerelle certifiée Stripe. Tous les prix sur nutrifitness.ch sont affichés et facturés en <strong>Francs Suisses (CHF)</strong> toutes taxes comprises (TTC / TVA suisse incluse).
+              </p>
+            </div>
+            <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
+              <span className="text-[11px] font-bold text-[#F80404] uppercase block">Livraison Directe en Suisse :</span>
+              <p className="text-xs text-white/80 leading-relaxed">
+                La <strong>Suisse</strong> est notre destination de livraison principale. L&apos;ensemble des marchandises physiques est dédouané, stocké en Suisse et expédié sous 24h par <strong>PostPac Priority</strong> (La Poste Suisse) avec suivi ou disponible en retrait <strong>Click &amp; Collect</strong> à notre magasin de Genève ({COMPANY.address.street}).
               </p>
             </div>
           </div>

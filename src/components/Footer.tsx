@@ -41,9 +41,11 @@ export default function Footer() {
             <div className="text-xs text-white/70 space-y-1.5 bg-white/5 border border-white/10 p-3 rounded-xl">
               <p className="font-bold text-white flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#F80404] inline-block" />
-                Showroom physique à Genève :
+                Showroom physique &amp; Siège :
               </p>
-              <p className="text-white/80">{COMPANY.address.street}, {COMPANY.address.postalCode} Genève</p>
+              <p className="text-white/80">{COMPANY.address.street}, {COMPANY.address.postalCode} {COMPANY.address.city}, Suisse</p>
+              <p className="text-white/80"><strong className="text-white">{COMPANY.legalName}</strong> ({COMPANY.legalForm})</p>
+              <p className="text-white/80">Titulaire : <strong className="text-white">{COMPANY.ownerFullName}</strong></p>
               <div className="pt-1 flex flex-wrap gap-x-4 gap-y-1">
                 <a href={`tel:${COMPANY.contact.phone.replace(/\s+/g, '')}`} className="text-white hover:text-[#F80404] font-medium flex items-center gap-1">
                   📞 {COMPANY.contact.phoneFormatted}
@@ -52,7 +54,7 @@ export default function Footer() {
                   ✉️ {COMPANY.contact.email}
                 </a>
               </div>
-              <p className="text-[10px] text-white/40 pt-0.5">IDE / UID : {COMPANY.uid}</p>
+              <p className="text-[10px] text-white/40 pt-0.5">IDE : {COMPANY.uid} | TVA : {COMPANY.tvaNumber}</p>
             </div>
           </div>
 
@@ -185,13 +187,14 @@ export default function Footer() {
             <address className="not-italic text-xs text-white/70 space-y-1.5">
               <p className="font-bold text-white flex items-center gap-1.5">
                 <span className="w-2 h-2 rounded-full bg-[#F80404] inline-block" />
-                Boutique physique en Suisse :
+                Boutique physique &amp; Siège :
               </p>
-              <p>{COMPANY.address.street}, {COMPANY.address.postalCode} Suisse</p>
-              <p className="text-white/80">Service Client : <span className="font-bold text-white">Équipe NutriFitness Suisse</span></p>
+              <p>{COMPANY.address.street}, {COMPANY.address.postalCode} {COMPANY.address.city}, Suisse</p>
+              <p className="text-white/80"><strong className="text-white">{COMPANY.legalName}</strong> ({COMPANY.legalForm})</p>
+              <p className="text-white/80">Titulaire : <strong className="text-white">{COMPANY.ownerFullName}</strong></p>
               <p>Tél : <a href={`tel:${COMPANY.contact.phone.replace(/\s+/g, '')}`} className="hover:text-[#F80404] transition-colors">{COMPANY.contact.phoneFormatted}</a></p>
               <p>E-mail : <a href={`mailto:${COMPANY.contact.email}`} className="hover:text-[#F80404] transition-colors">{COMPANY.contact.email}</a></p>
-              <p className="text-[11px] text-white/40 pt-1">IDE / UID : {COMPANY.uid}</p>
+              <p className="text-[11px] text-white/40 pt-1">IDE : {COMPANY.uid} | TVA : {COMPANY.tvaNumber}</p>
             </address>
           </div>
 
