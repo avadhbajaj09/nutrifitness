@@ -3957,6 +3957,12 @@ export default function AdminDashboardClient() {
                                 type="text"
                                 value={curBarcode}
                                 onChange={(e) => setBarcodeModalValues(prev => ({ ...prev, [key]: e.target.value }))}
+                                onKeyDown={(e) => {
+                                  if (e.key === 'Enter') {
+                                    e.preventDefault();
+                                    handleOpenBarcodeConfirm();
+                                  }
+                                }}
                                 placeholder={`Code GTIN-13 (ex: 764... ou SKU ${v.sku})`}
                                 className="flex-1 px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
                               />
@@ -3985,6 +3991,12 @@ export default function AdminDashboardClient() {
                         type="text"
                         value={barcodeModalValues['def'] || ''}
                         onChange={(e) => setBarcodeModalValues(prev => ({ ...prev, def: e.target.value }))}
+                        onKeyDown={(e) => {
+                          if (e.key === 'Enter') {
+                            e.preventDefault();
+                            handleOpenBarcodeConfirm();
+                          }
+                        }}
                         placeholder="Ex: 7640123456789"
                         className="w-full px-4 py-2.5 text-sm bg-white border border-slate-300 rounded-xl font-mono text-slate-900 focus:outline-none focus:ring-2 focus:ring-emerald-500 notranslate"
                         autoFocus

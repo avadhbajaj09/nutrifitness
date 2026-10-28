@@ -159,6 +159,7 @@ export async function POST(req: Request) {
         .eq('id', dbProd.id);
       if (updateErr) {
         console.error('[Admin Barcode API] Error updating products.gtin13:', updateErr);
+        return NextResponse.json({ error: updateErr.message || 'Erreur lors de la mise à jour Supabase.' }, { status: 500 });
       }
     } else {
       // Product not yet in Supabase table: Upsert using deterministic UUID
@@ -174,6 +175,7 @@ export async function POST(req: Request) {
       }, { onConflict: 'id' });
       if (insertErr) {
         console.error('[Admin Barcode API] Error upserting product:', insertErr);
+        return NextResponse.json({ error: insertErr.message || 'Erreur lors de l insertion Supabase.' }, { status: 500 });
       }
     }
 
