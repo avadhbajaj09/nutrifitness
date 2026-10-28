@@ -45,6 +45,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
   const slug = getLocalized(product.slug, locale);
   const name = getLocalized(product.name, locale);
+  const localizedLongDesc = getLocalized(product.longDescription, locale) || product.longDescription?.fr || '';
+  const localizedUsage = getLocalized(product.usageInstructions, locale) || product.usageInstructions?.fr || '';
+  const localizedIngredients = getLocalized(product.ingredients, locale) || product.ingredients?.fr || '';
+  const localizedAllergens = getLocalized(product.allergens, locale) || product.allergens?.fr || '';
   const vat = calculateVat(product.priceChf, product.taxCategory);
   const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
 
@@ -299,7 +303,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {(product.variants.length > 1 || (product.variants.length === 1 && product.variants[0]?.flavorName?.fr !== 'Standard')) && (
             <div>
               <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2 font-heading">
-                Option / Parfum :
+                {locale === 'de' ? 'Option / Geschmack :' : locale === 'it' ? 'Opzione / Gusto :' : locale === 'en' ? 'Option / Flavor :' : 'Option / Parfum :'}
               </label>
               <div className="flex flex-wrap gap-2">
                 {product.variants.map((v, i) => {
@@ -327,7 +331,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                       <span>{flv}</span>
                       {isOutOfStock && (
                         <span className="text-[10px] text-red-400 font-normal">
-                          (Épuisé)
+                          {locale === 'de' ? '(Ausverkauft)' : locale === 'it' ? '(Esaurito)' : locale === 'en' ? '(Out of stock)' : '(Épuisé)'}
                         </span>
                       )}
                     </button>
@@ -418,7 +422,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 onClick={() => setMobileOpenSection(mobileOpenSection === 'desc' ? null : 'desc')}
                 className="w-full min-h-[48px] px-4 py-3 flex items-center justify-between text-left text-xs font-black uppercase tracking-wider text-white font-heading active:bg-white/5"
               >
-                <span>1. Description &amp; Bénéfices</span>
+                <span>{locale === 'de' ? '1. Beschreibung & Vorteile' : locale === 'it' ? '1. Descrizione & Benefici' : locale === 'en' ? '1. Description & Benefits' : '1. Description & Bénéfices'}</span>
                 <span className="text-[#F80404] text-base font-bold ml-2">
                   {mobileOpenSection === 'desc' ? '−' : '+'}
                 </span>
@@ -427,7 +431,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 <div className="p-4 pt-1 border-t border-white/5 space-y-3 animate-in fade-in duration-150">
                   <div 
                     className="text-xs text-white/70 leading-relaxed space-y-3 [&>h2]:text-xs [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-4 [&>h2]:mb-1 [&>h3]:text-xs [&>h3]:font-bold [&>h3]:text-white/90 [&>ul]:list-disc [&>ul]:pl-4 [&>ul]:space-y-1 [&>p]:mb-2 [&>strong]:text-white"
-                    dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.longDescription.fr) }}
+                    dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedLongDesc) }}
                   />
                 </div>
               )}
@@ -440,16 +444,16 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 onClick={() => setMobileOpenSection(mobileOpenSection === 'usage' ? null : 'usage')}
                 className="w-full min-h-[48px] px-4 py-3 flex items-center justify-between text-left text-xs font-black uppercase tracking-wider text-white font-heading active:bg-white/5"
               >
-                <span>2. Posologie &amp; Timing</span>
+                <span>{locale === 'de' ? '2. Dosierung & Timing' : locale === 'it' ? '2. Posologia & Assunzione' : locale === 'en' ? '2. Usage & Timing' : '2. Posologie & Timing'}</span>
                 <span className="text-[#F80404] text-base font-bold ml-2">
                   {mobileOpenSection === 'usage' ? '−' : '+'}
                 </span>
               </button>
               {mobileOpenSection === 'usage' && (
                 <div className="p-4 pt-1 border-t border-white/5 space-y-3 animate-in fade-in duration-150">
-                  <div className="text-xs text-white/70 leading-relaxed space-y-2 [&>strong]:text-white" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.usageInstructions.fr) }} />
+                  <div className="text-xs text-white/70 leading-relaxed space-y-2 [&>strong]:text-white" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedUsage) }} />
                   <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white/60">
-                    💡 <strong>Conseil du Coach :</strong> Pour optimiser l&apos;assimilation, hydratez-vous avec au moins 500 ml d&apos;eau par prise.
+                    💡 <strong>{locale === 'de' ? 'Tipp vom Coach :' : locale === 'it' ? 'Consiglio del Coach :' : locale === 'en' ? 'Coach Tip :' : 'Conseil du Coach :'}</strong> {locale === 'de' ? 'Für eine optimale Aufnahme mit mindestens 500 ml Wasser pro Einnahme trinken.' : locale === 'it' ? 'Per ottimizzare l\'assimilazione, assumere con almeno 500 ml d\'acqua per dose.' : locale === 'en' ? 'To optimize absorption, drink with at least 500 ml of water per serving.' : "Pour optimiser l'assimilation, hydratez-vous avec au moins 500 ml d'eau par prise."}
                   </div>
                 </div>
               )}
@@ -462,7 +466,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 onClick={() => setMobileOpenSection(mobileOpenSection === 'nutrition' ? null : 'nutrition')}
                 className="w-full min-h-[48px] px-4 py-3 flex items-center justify-between text-left text-xs font-black uppercase tracking-wider text-white font-heading active:bg-white/5"
               >
-                <span>3. Tableau Nutritionnel (DFI/LGV)</span>
+                <span>{locale === 'de' ? '3. Nährwerttabelle (EDI/LKV)' : locale === 'it' ? '3. Tabella Nutrizionale (DFI/LGAL)' : locale === 'en' ? '3. Nutrition Facts (Swiss Standard)' : '3. Tableau Nutritionnel (DFI/LGV)'}</span>
                 <span className="text-[#F80404] text-base font-bold ml-2">
                   {mobileOpenSection === 'nutrition' ? '−' : '+'}
                 </span>
@@ -510,13 +514,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
                   <div className="space-y-1.5 text-xs text-white/70">
                     <div>
-                      <strong className="text-white">Ingrédients : </strong>
-                      <span dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.ingredients.fr).replace(/^<p>|<\/p>$/g, '') }} />
+                      <strong className="text-white">{locale === 'de' ? 'Inhaltsstoffe : ' : locale === 'it' ? 'Ingredienti : ' : locale === 'en' ? 'Ingredients : ' : 'Ingrédients : '}</strong>
+                      <span dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedIngredients).replace(/^<p>|<\/p>$/g, '') }} />
                     </div>
-                    {product.allergens.fr && (
+                    {localizedAllergens && (
                       <div className="text-red-400 font-bold">
-                        <span>Allergènes : </span>
-                        <span dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.allergens.fr).replace(/^<p>|<\/p>$/g, '') }} />
+                        <span>{locale === 'de' ? 'Allergene : ' : locale === 'it' ? 'Allergeni : ' : locale === 'en' ? 'Allergens : ' : 'Allergènes : '}</span>
+                        <span dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedAllergens).replace(/^<p>|<\/p>$/g, '') }} />
                       </div>
                     )}
                   </div>
@@ -572,7 +576,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   activeTab === 'desc' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
                 }`}
               >
-                1. Description & Bénéfices
+                {locale === 'de' ? '1. Beschreibung & Vorteile' : locale === 'it' ? '1. Descrizione & Benefici' : locale === 'en' ? '1. Description & Benefits' : '1. Description & Bénéfices'}
               </button>
               <button 
                 type="button"
@@ -581,7 +585,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   activeTab === 'usage' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
                 }`}
               >
-                2. Posologie & Timing
+                {locale === 'de' ? '2. Dosierung & Timing' : locale === 'it' ? '2. Posologia & Assunzione' : locale === 'en' ? '2. Usage & Timing' : '2. Posologie & Timing'}
               </button>
               <button 
                 type="button"
@@ -590,7 +594,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   activeTab === 'nutrition' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
                 }`}
               >
-                3. Tableau Nutritionnel (DFI/LGV)
+                {locale === 'de' ? '3. Nährwerttabelle (EDI/LKV)' : locale === 'it' ? '3. Tabella Nutrizionale (DFI/LGAL)' : locale === 'en' ? '3. Nutrition Facts (Swiss Standard)' : '3. Tableau Nutritionnel (DFI/LGV)'}
               </button>
               <button 
                 type="button"
@@ -599,7 +603,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                   activeTab === 'faq' ? 'bg-[#F80404] text-black' : 'bg-white/5 hover:bg-white/10 text-white/70'
                 }`}
               >
-                4. Questions Fréquentes ({productFaqs.length})
+                {locale === 'de' ? `4. Häufige Fragen (${productFaqs.length})` : locale === 'it' ? `4. Domande Frequenti (${productFaqs.length})` : locale === 'en' ? `4. FAQ (${productFaqs.length})` : `4. Questions Fréquentes (${productFaqs.length})`}
               </button>
             </div>
 
@@ -607,11 +611,11 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             {activeTab === 'desc' && (
               <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-3 animate-in fade-in duration-150">
                 <h3 className="text-base font-black uppercase text-white font-heading">
-                  Présentation Détaillée du Produit
+                  {locale === 'de' ? 'Detaillierte Produktübersicht' : locale === 'it' ? 'Presentazione Dettagliata del Prodotto' : locale === 'en' ? 'Detailed Product Overview' : 'Présentation Détaillée du Produit'}
                 </h3>
                 <div 
                   className="text-xs sm:text-sm text-white/70 leading-relaxed space-y-4 [&>h2]:text-sm [&>h2]:font-bold [&>h2]:text-white [&>h2]:mt-6 [&>h2]:mb-2 [&>h3]:text-xs [&>h3]:font-bold [&>h3]:text-white/90 [&>ul]:list-disc [&>ul]:pl-5 [&>ul]:space-y-1.5 [&>p]:mb-3 [&>strong]:text-white"
-                  dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.longDescription.fr) }}
+                  dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedLongDesc) }}
                 />
               </div>
             )}
@@ -620,11 +624,11 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             {activeTab === 'usage' && (
               <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-3 animate-in fade-in duration-150">
                 <h3 className="text-base font-black uppercase text-white font-heading">
-                  Conseils d&apos;Utilisation & Timing d&apos;Entraînement
+                  {locale === 'de' ? 'Einnahmeempfehlung & Trainings-Timing' : locale === 'it' ? 'Consigli d\'Uso & Timing di Assunzione' : locale === 'en' ? 'Directions & Workout Timing' : 'Conseils d\'Utilisation & Timing d\'Entraînement'}
                 </h3>
-                <div className="text-xs sm:text-sm text-white/70 leading-relaxed space-y-2 [&>strong]:text-white" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.usageInstructions.fr) }} />
+                <div className="text-xs sm:text-sm text-white/70 leading-relaxed space-y-2 [&>strong]:text-white" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedUsage) }} />
                 <div className="p-3 bg-white/5 rounded-xl border border-white/10 text-xs text-white/60">
-                  💡 <strong>Conseil du Coach NutriFitness Suisse :</strong> Pour optimiser l&apos;assimilation, hydratez-vous avec au moins 500 ml d&apos;eau par prise.
+                  💡 <strong>{locale === 'de' ? 'Tipp vom Coach :' : locale === 'it' ? 'Consiglio del Coach :' : locale === 'en' ? 'Coach Tip :' : 'Conseil du Coach :'}</strong> {locale === 'de' ? 'Für eine optimale Aufnahme mit mindestens 500 ml Wasser pro Einnahme trinken.' : locale === 'it' ? 'Per ottimizzare l\'assimilazione, assumere con almeno 500 ml d\'acqua per dose.' : locale === 'en' ? 'To optimize absorption, drink with at least 500 ml of water per serving.' : "Pour optimiser l'assimilation, hydratez-vous avec au moins 500 ml d'eau par prise."}
                 </div>
               </div>
             )}
@@ -677,10 +681,10 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 </div>
 
                 <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-2">
-                  <h4 className="font-bold text-xs uppercase text-white font-heading">Ingrédients</h4>
-                  <div className="text-xs text-white/70 leading-relaxed" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(product.ingredients.fr) }} />
-                  {product.allergens.fr && (
-                    <div className="text-xs font-bold text-red-400 pt-2" dangerouslySetInnerHTML={{ __html: `Allergènes : ` + sanitizeProductHtml(product.allergens.fr).replace(/^<p>|<\/p>$/g, '') }} />
+                  <h4 className="font-bold text-xs uppercase text-white font-heading">{locale === 'de' ? 'Inhaltsstoffe' : locale === 'it' ? 'Ingredienti' : locale === 'en' ? 'Ingredients' : 'Ingrédients'}</h4>
+                  <div className="text-xs text-white/70 leading-relaxed" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedIngredients) }} />
+                  {localizedAllergens && (
+                    <div className="text-xs font-bold text-red-400 pt-2" dangerouslySetInnerHTML={{ __html: (locale === 'de' ? 'Allergene : ' : locale === 'it' ? 'Allergeni : ' : locale === 'en' ? 'Allergens : ' : 'Allergènes : ') + sanitizeProductHtml(localizedAllergens).replace(/^<p>|<\/p>$/g, '') }} />
                   )}
                 </div>
 

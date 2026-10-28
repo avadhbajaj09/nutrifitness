@@ -204,45 +204,45 @@ export default async function ProductDetailPage({ params }: Props) {
     if (dbProduct.short_description) {
       product.shortDescription = {
         fr: dbProduct.short_description,
-        de: dbProduct.short_description,
-        it: dbProduct.short_description,
-        en: dbProduct.short_description
+        de: rawProduct?.shortDescription?.de || dbProduct.short_description,
+        it: rawProduct?.shortDescription?.it || dbProduct.short_description,
+        en: rawProduct?.shortDescription?.en || dbProduct.short_description
       };
     }
 
     if (dbProduct.description) {
       product.longDescription = {
         fr: dbProduct.description,
-        de: dbProduct.description,
-        it: dbProduct.description,
-        en: dbProduct.description
+        de: rawProduct?.longDescription?.de || dbProduct.description,
+        it: rawProduct?.longDescription?.it || dbProduct.description,
+        en: rawProduct?.longDescription?.en || dbProduct.description
       };
     }
 
     if (dbProduct.ingredients) {
       product.ingredients = {
         fr: dbProduct.ingredients,
-        de: dbProduct.ingredients,
-        it: dbProduct.ingredients,
-        en: dbProduct.ingredients
+        de: rawProduct?.ingredients?.de || dbProduct.ingredients,
+        it: rawProduct?.ingredients?.it || dbProduct.ingredients,
+        en: rawProduct?.ingredients?.en || dbProduct.ingredients
       };
     }
 
     if (dbProduct.allergens) {
       product.allergens = {
         fr: dbProduct.allergens,
-        de: dbProduct.allergens,
-        it: dbProduct.allergens,
-        en: dbProduct.allergens
+        de: rawProduct?.allergens?.de || dbProduct.allergens,
+        it: rawProduct?.allergens?.it || dbProduct.allergens,
+        en: rawProduct?.allergens?.en || dbProduct.allergens
       };
     }
 
     if (dbProduct.usage_instructions) {
       product.usageInstructions = {
         fr: dbProduct.usage_instructions,
-        de: dbProduct.usage_instructions,
-        it: dbProduct.usage_instructions,
-        en: dbProduct.usage_instructions
+        de: rawProduct?.usageInstructions?.de || dbProduct.usage_instructions,
+        it: rawProduct?.usageInstructions?.it || dbProduct.usage_instructions,
+        en: rawProduct?.usageInstructions?.en || dbProduct.usage_instructions
       };
     }
 
