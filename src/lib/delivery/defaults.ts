@@ -12,9 +12,9 @@ export const DEFAULT_COUNTRY_GROUPS: CountryGroup[] = [
 ];
 
 export const DEFAULT_DELIVERY_RULES: DeliveryRule[] = [
-  // GENEVA Origin (Handling 0, cutoff 14:00 Zurich) - 6 working days (Mon-Sat), CH max 3 days
-  { origin: 'GENEVA', country_code: 'CH', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 1, transit_max_days: 3, requires_customs: false, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
-  { origin: 'GENEVA', country_code: 'LI', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 1, transit_max_days: 3, requires_customs: false, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
+  // GENEVA Origin (Handling 0, cutoff 14:00 Zurich) - 6 working days (Mon-Sat), CH max 2 days
+  { origin: 'GENEVA', country_code: 'CH', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 1, transit_max_days: 2, requires_customs: false, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
+  { origin: 'GENEVA', country_code: 'LI', shipping_method: null, is_allowed: true, handling_days: 0, cutoff_time: '14:00', transit_min_days: 1, transit_max_days: 2, requires_customs: false, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
   { origin: 'GENEVA', country_code: 'FR', shipping_method: null, is_allowed: false, handling_days: 0, cutoff_time: '14:00', transit_min_days: 2, transit_max_days: 4, requires_customs: true, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
   { origin: 'GENEVA', country_code: 'DE', shipping_method: null, is_allowed: false, handling_days: 0, cutoff_time: '14:00', transit_min_days: 2, transit_max_days: 4, requires_customs: true, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },
   { origin: 'GENEVA', country_code: 'IT', shipping_method: null, is_allowed: false, handling_days: 0, cutoff_time: '14:00', transit_min_days: 2, transit_max_days: 4, requires_customs: true, customs_buffer_days: 0, delivers_saturday: true, is_active: true, needs_verification: false },

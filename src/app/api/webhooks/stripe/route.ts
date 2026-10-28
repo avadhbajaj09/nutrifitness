@@ -237,7 +237,7 @@ export async function POST(req: Request) {
                 },
                 shipping: {
                   method: 'post_priority',
-                  label: currentAddress.shippingLabel || 'PostPac Priority (La Poste Suisse 24h)',
+                  label: currentAddress.shippingLabel || 'PostPac Priority (La Poste Suisse 1-2 jours)',
                   cost: currentAddress.shippingCost || 0,
                 },
                 items: finalOrderItems,
@@ -319,7 +319,7 @@ export async function POST(req: Request) {
               },
               shipping: {
                 method: 'post_priority',
-                label: 'PostPac Priority (La Poste Suisse 24h)',
+                label: 'PostPac Priority (La Poste Suisse 1-2 jours)',
                 cost: 0,
               },
               items: sessionItems,

@@ -17,8 +17,8 @@ export default function BoutiqueFAQ() {
       a: 'Analysez trois critères fondamentaux : la quantité réelle de principe actif par portion (ex : 24g de protéine par scoop), le nombre total de portions par pot et le coût de revient par portion journalière. Consultez également l\'aminogramme complet et l\'absence de sucres ajoutés ou de charges inutiles.'
     },
     {
-      q: 'Les prix affichés incluent-ils la TVA suisse ?',
-      a: 'Oui, tous nos prix sont indiqués en Francs Suisses (CHF) toutes taxes comprises (TTC), avec application stricte du taux réduit de TVA suisse de 2.6 % pour les compléments alimentaires et denrées alimentaires, et 8.1 % pour les accessoires et shakers. Aucun frais de douane supplémentaire n\'est facturé.'
+      q: 'Les prix affichés comportent-ils des frais supplémentaires ?',
+      a: 'Non, tous nos prix sont indiqués en Francs Suisses (CHF). Aucun frais de douane caché ni taxe d\'importation supplémentaire n\'est facturé.'
     },
     {
       q: 'Comment savoir si un produit est en stock ?',

@@ -14,7 +14,7 @@ export default function HomeFAQ() {
     },
     {
       q: 'Nutrifitness livre-t-il dans toute la Suisse ?',
-      a: 'Oui, notre boutique en ligne expédie dans l\'ensemble des cantons suisses et au Liechtenstein via La Poste Suisse (service PostPac Priority en 24h ouvrées). La livraison est 100 % gratuite dès CHF 75.– d\'achats (forfait de CHF 7.90 en dessous). Zéro frais de douane ni taxe cachée.'
+      a: 'Oui, notre boutique en ligne expédie dans l\'ensemble des cantons suisses et au Liechtenstein via La Poste Suisse (service PostPac Priority en 1 à 2 jours ouvrables). La livraison est 100 % gratuite dès CHF 75.– d\'achats (forfait de CHF 7.90 en dessous). Zéro frais de douane ni taxe cachée.'
     },
     {
       q: 'Quels types de produits trouve-t-on chez Nutrifitness ?',

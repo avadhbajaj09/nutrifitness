@@ -5,7 +5,6 @@ import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
 import { ProductItem, getLocalized } from '@/lib/types';
-import { calculateVat } from '@/lib/tax';
 import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
 import { getProductOriginType } from '@/lib/translations';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
@@ -79,7 +78,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
   const compareAtPrice = pricing.compareAt;
   const discountPercent = compareAtPrice && compareAtPrice > pricing.price ? Math.round(((compareAtPrice - pricing.price) / compareAtPrice) * 100) : 0;
   const hasStock = ((effectiveGen ?? 0) + (effectivePt ?? 0)) > 0;
-  const vat = calculateVat(pricing.price, product.taxCategory);
 
   // Mobile text transform for Pronutrition.it -> Pronutrition
   const displayBrand = React.useMemo(() => {
@@ -275,11 +273,6 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
               )}
             </div>
           </div>
-
-          {/* Clean VAT Line: Full width available, guaranteed single line, never wraps into multiple lines */}
-          <p className="text-[9.5px] sm:text-[10px] text-white/40 whitespace-nowrap tracking-tight leading-none block overflow-hidden text-ellipsis">
-            {t.common.vatIncluded} ({vat.ratePercentage})
-          </p>
         </div>
       </div>
     </article>

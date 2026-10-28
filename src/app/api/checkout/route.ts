@@ -83,7 +83,7 @@ export async function POST(req: Request) {
           country: shippingAddress?.country || 'Suisse',
           shippingCost: Number(shippingCost) || 0,
           shippingMethod: 'post_priority',
-          shippingLabel: 'PostPac Priority (La Poste Suisse 24h)',
+          shippingLabel: 'PostPac Priority (La Poste Suisse 1-2 jours)',
           subtotal: subtotalVal,
           couponCode: couponCode || ''
         }

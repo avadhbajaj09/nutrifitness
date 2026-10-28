@@ -316,7 +316,7 @@ export default function ChatBot() {
         const botMsg: ChatMessage = {
           id: `bot-${Date.now() + 1}`,
           sender: 'bot',
-          text: '🇨🇭 **Livraison & Expédition en Suisse :**\n\n• **Délais :** 24h ouvrées par PostPac Priority (La Poste Suisse).\n• **Frais de port :** Offerts dès 75 CHF d\'achat (sinon 8.90 CHF).\n• **Click & Collect :** Retrait gratuit en 2h à notre boutique en Suisse (34 Rue des Pâquis).\n• **Douane & TVA :** Stock 100% physique en Suisse, TVA 2.6% incluse, **aucun frais de douane** !',
+          text: '🇨🇭 **Livraison & Expédition en Suisse :**\n\n• **Délais :** 1 à 2 jours ouvrables par PostPac Priority (La Poste Suisse).\n• **Frais de port :** Offerts dès 75 CHF d\'achat (sinon 8.90 CHF).\n• **Click & Collect :** Retrait gratuit en 2h à notre boutique en Suisse (34 Rue des Pâquis).\n• **Douane :** Stock 100% physique en Suisse, **aucun frais de douane** !',
           timestamp: 'À l\'instant',
           options: [
             { label: '🛍️ Découvrir les compléments', action: 'timing_workout' },
@@ -425,7 +425,7 @@ export default function ChatBot() {
           {
             id: `bot-${Date.now()}`,
             sender: 'bot',
-            text: '📦 **Livraison 24h en Suisse :**\nToutes les commandes passées avant 14h sont expédiées le jour même via La Poste Suisse (PostPac Priority). Les frais de port sont offerts dès 75 CHF d\'achat (sinon 8.90 CHF). Aucun frais de douane ni taxe cachée.',
+            text: '📦 **Livraison 1-2 jours en Suisse :**\nToutes les commandes passées avant 14h sont expédiées le jour même via La Poste Suisse (PostPac Priority). Les frais de port sont offerts dès 75 CHF d\'achat (sinon 8.90 CHF). Aucun frais de douane ni taxe cachée.',
             timestamp: 'À l\'instant',
             options: [
               { label: '🛍️ Découvrir les compléments', action: 'timing_workout' },
@@ -887,7 +887,7 @@ export default function ChatBot() {
               <span className="w-1.5 h-1.5 rounded-full bg-[#95d600]" />
               Stock physique en Suisse
             </span>
-            <span>🇨🇭 Expédition 24h</span>
+            <span>🇨🇭 Livraison 1-2 jours</span>
           </div>
 
           {/* Text Input Bar */}

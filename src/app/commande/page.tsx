@@ -285,7 +285,7 @@ export default function CheckoutPage() {
               },
               shipping: pendingOrder?.shipping || {
                 method: 'post_priority',
-                label: 'PostPac Priority (La Poste Suisse 24h)',
+                label: 'PostPac Priority (La Poste Suisse 1-2 jours)',
                 cost: 0
               },
               status: 'in_processing'
@@ -712,9 +712,9 @@ export default function CheckoutPage() {
     const clientFullName = `${firstName} ${lastName}`.trim() || 'Client NutriFitness';
 
     const shippingLabel = isMixedCart
-      ? `Expédition Combinée (Colis 1: ${genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'PostPac Priority 24h'} + Colis 2: Livraison Directe Partenaire)`
+      ? `Expédition Combinée (Colis 1: ${genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'PostPac Priority 1-2 jours'} + Colis 2: Livraison Directe Partenaire)`
       : genevaItems.length > 0
-      ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique)' : 'PostPac Priority Suisse (24h)')
+      ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique)' : 'PostPac Priority Suisse (1-2 jours)')
       : 'Livraison Suivie (3-5j)';
 
     const newOrder = {
@@ -1756,11 +1756,6 @@ export default function CheckoutPage() {
                 </span>
               </div>
             )}
-
-            <div className="flex justify-between text-white/40 text-[11px]">
-              <span>{t.common.vatIncluded} (2.6% / 8.1%) :</span>
-              <span>{formatPrice(vatEst)}</span>
-            </div>
 
             <div className="pt-3 border-t border-white/10 flex justify-between items-baseline text-white">
               <span className="text-sm font-black uppercase font-heading">{t.common.total} ({currency}) :</span>

@@ -315,9 +315,9 @@ export async function resolveBatchEstimates(
           de: 'Lieferung in 3–5 Werktagen'
         }
       : {
-          fr: formatDeliveryPromise(estimate.displayDate, 'fr'),
-          en: formatDeliveryPromise(estimate.displayDate, 'en'),
-          de: formatDeliveryPromise(estimate.displayDate, 'de')
+          fr: 'Livraison en 1–2 jours ouvrables',
+          en: 'Delivery in 1–2 business days',
+          de: 'Lieferung in 1–2 Werktagen'
         };
 
     results.push({

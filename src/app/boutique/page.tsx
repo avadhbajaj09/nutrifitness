@@ -35,8 +35,8 @@ export async function generateMetadata({ searchParams }: BoutiquePageProps): Pro
   );
   const description = formatMetaDescription(
     matchedBrand
-      ? `Tous les produits ${matchedBrand.displayName} en stock en Suisse chez NutriFitness Genève. Livraison 24h ou retrait Rue des Pâquis.`
-      : 'Tous nos compléments alimentaires et protéines en stock en Suisse. Whey isolate, créatine, pré-workouts. Livraison 24h ou retrait Genève.'
+      ? `Tous les produits ${matchedBrand.displayName} en stock en Suisse chez NutriFitness Genève. Livraison 1-2 jours ou retrait Rue des Pâquis.`
+      : 'Tous nos compléments alimentaires et protéines en stock en Suisse. Whey isolate, créatine, pré-workouts. Livraison 1-2 jours ou retrait Genève.'
   );
 
   return {

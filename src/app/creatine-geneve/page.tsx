@@ -21,13 +21,13 @@ import {
 
 export const metadata: Metadata = {
   title: formatMetaTitle('Créatine en Suisse : Creapure® & Monohydrate | NutriFitness'),
-  description: formatMetaDescription('Créatine monohydrate pure et label Creapure® en Suisse. Stock physique en Suisse, conseils d\'experts, retrait 2h et livraison 24h.'),
+  description: formatMetaDescription('Créatine monohydrate pure et label Creapure® en Suisse. Stock physique en Suisse, conseils d\'experts, retrait 2h et livraison 1-2 jours.'),
   alternates: {
     canonical: 'https://nutrifitness.ch/creatine-geneve/',
   },
   openGraph: {
     title: 'Créatine en Suisse : Creapure® & Monohydrate | NutriFitness',
-    description: 'Créatines monohydrates micronisées 200 mesh et Creapure® allemande en stock en Suisse. Retrait 2h ou livraison 24h en Suisse.',
+    description: 'Créatines monohydrates micronisées 200 mesh et Creapure® allemande en stock en Suisse. Retrait 2h ou livraison 1-2 jours en Suisse.',
     url: 'https://nutrifitness.ch/creatine-geneve/',
     siteName: 'NutriFitness.ch',
     locale: 'fr_CH',
@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Créatine à Genève : Creapure® & Monohydrate | NutriFitness',
-    description: 'Créatine en poudre et gélules disponible en boutique à Genève. Stock suisse, retrait 2h et livraison 24h.',
+    description: 'Créatine en poudre et gélules disponible en boutique à Genève. Stock suisse, retrait 2h et livraison 1-2 jours.',
   },
 };
 
@@ -145,7 +145,7 @@ export default async function CreatineGenevePage() {
           </h1>
 
           <p className="text-xs sm:text-sm text-white/80 leading-relaxed pt-2">
-            Décuplez votre force explosive, vos séries de répétitions et votre volumisation cellulaire grâce à notre sélection de créatines monohydrates de haute pureté. Situé en Suisse, notre magasin officiel dispose de stocks physiques permanents avec retrait gratuit en 2h ou expédition suisse 24h.
+            Décuplez votre force explosive, vos séries de répétitions et votre volumisation cellulaire grâce à notre sélection de créatines monohydrates de haute pureté. Situé en Suisse, notre magasin officiel dispose de stocks physiques permanents avec retrait gratuit en 2h ou expédition suisse 1-2 jours.
           </p>
         </div>
       </header>
@@ -222,7 +222,7 @@ export default async function CreatineGenevePage() {
           <div className="p-5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
             <h4 className="text-xs font-bold text-white flex items-center gap-2">
               <Truck className="w-4 h-4 text-[#95d600]" />
-              Livraison Suisse 24h par La Poste
+              Livraison Suisse 1-2 jours par La Poste
             </h4>
             <p className="text-xs text-white/70 leading-relaxed">
               Expédition quotidienne PostPac Priority. Votre colis arrive le lendemain chez vous, avec livraison offerte dès 75 CHF.

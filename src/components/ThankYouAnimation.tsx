@@ -241,7 +241,7 @@ export default function ThankYouAnimation({
               {t.checkout.estimatedDelivery}
             </span>
             <span className="text-[10px] bg-emerald-500/20 text-emerald-400 font-bold px-2.5 py-0.5 rounded-full">
-              PostPac Priority 24h
+              PostPac Priority (1-2 jours)
             </span>
           </div>
 
@@ -284,7 +284,7 @@ export default function ThankYouAnimation({
                 <Home className="w-4 h-4" />
               </div>
               <span className="text-[10px] font-bold text-white/50 mt-1.5 leading-tight">{t.checkout.stepDelivered}</span>
-              <span className="text-[9px] text-white/30 font-medium">Sous 24h</span>
+              <span className="text-[9px] text-white/30 font-medium">1-2 jours</span>
             </div>
           </div>
         </div>
@@ -315,7 +315,7 @@ export default function ThankYouAnimation({
           <div className="flex justify-between items-center">
             <span className="text-white/60">Mode d'expédition :</span>
             <span className="font-bold text-white">
-              {shippingMethod === 'clickcollect' ? '📍 Retrait Boutique Suisse (Pâquis)' : '⚡ PostPac Priority 24h (La Poste Suisse)'}
+              {shippingMethod === 'clickcollect' ? '📍 Retrait Boutique Suisse (Pâquis)' : '⚡ PostPac Priority (1-2 jours)'}
             </span>
           </div>
 

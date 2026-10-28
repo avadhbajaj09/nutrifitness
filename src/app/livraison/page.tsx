@@ -14,8 +14,8 @@ import {
 } from 'lucide-react';
 
 export const metadata: Metadata = {
-  title: 'Livraison 24h & Expédition Suisse | NutriFitness.ch',
-  description: 'Conditions de livraison en Suisse et Liechtenstein par La Poste Suisse (PostPac Priority). Livraison gratuite dès 75 CHF d\'achats, envoi sous 24h ouvrées.',
+  title: 'Livraison 1-2 Jours & Expédition Suisse | NutriFitness.ch',
+  description: 'Conditions de livraison en Suisse et Liechtenstein par La Poste Suisse (PostPac Priority). Livraison gratuite dès 75 CHF d\'achats, envoi en 1 à 2 jours ouvrables.',
   alternates: {
     canonical: 'https://nutrifitness.ch/livraison/',
   }
@@ -97,7 +97,7 @@ export default function LivraisonPage() {
       <header className="mb-10 pb-6 border-b border-white/10">
         <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#F80404]/15 border border-[#F80404]/30 text-[#F80404] text-xs font-black uppercase tracking-wider mb-3 font-heading">
           <Truck className="w-3.5 h-3.5" />
-          La Poste Suisse · PostPac Priority 24h
+          La Poste Suisse · PostPac Priority 1-2 jours
         </div>
         <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black uppercase text-white font-heading tracking-tight leading-tight">
           Livraison & <span className="text-[#F80404]">Expédition en Suisse</span>
@@ -114,8 +114,8 @@ export default function LivraisonPage() {
             <Clock className="w-5 h-5" />
           </div>
           <span className="text-[11px] font-bold text-white/50 uppercase">Délai Rapide</span>
-          <h3 className="text-base font-black text-white font-heading mt-0.5">24h Ouvrées</h3>
-          <p className="text-xs text-white/60 mt-1">Commandez avant 14h00, recevez le lendemain matin partout en Suisse.</p>
+          <h3 className="text-base font-black text-white font-heading mt-0.5">1 à 2 Jours Ouvrables</h3>
+          <p className="text-xs text-white/60 mt-1">Expédition prioritaire, livraison rapide partout en Suisse.</p>
         </div>
 
         <div className="p-5 rounded-3xl bg-[#141414] border border-white/10 flex flex-col justify-between">
@@ -156,7 +156,7 @@ export default function LivraisonPage() {
             <tbody className="divide-y divide-white/5 text-white/80">
               <tr className="bg-black/20">
                 <td className="p-3 font-bold text-white">PostPac Priority (La Poste Suisse)</td>
-                <td className="p-3">24h ouvrées (J+1)</td>
+                <td className="p-3">1 à 2 jours ouvrables</td>
                 <td className="p-3">CHF 7.90</td>
                 <td className="p-3 font-bold text-[#95d600]">GRATUIT (0.00 CHF)</td>
               </tr>

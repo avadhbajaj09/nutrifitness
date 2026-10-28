@@ -226,7 +226,7 @@ export function DeliveryEstimate({
             <div className="flex justify-between text-[11px]">
               <span className="text-white/50">{currentLocale === 'en' ? 'Transit lead time:' : 'Délai d\'acheminement :'}</span>
               <span className="font-semibold text-white">
-                {rawEst ? `${rawEst.transitMinDays}–${rawEst.transitMaxDays} ${currentLocale === 'en' ? 'working days' : 'jours ouvrables'}` : (resolvedOrigin === 'GENEVA' ? '1–3 jours ouvrables' : '3–5 jours ouvrables')}
+                {rawEst ? `${rawEst.transitMinDays}–${rawEst.transitMaxDays} ${currentLocale === 'en' ? 'working days' : 'jours ouvrables'}` : (resolvedOrigin === 'GENEVA' ? '1–2 jours ouvrables' : '3–5 jours ouvrables')}
               </span>
             </div>
 

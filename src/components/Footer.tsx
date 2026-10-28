@@ -102,7 +102,7 @@ export default function Footer() {
                 <ul className="space-y-2 text-xs text-white/70">
                   <li><Link href="/magasin-geneve/" className="hover:text-white block py-0.5">📍 Showroom Genève</Link></li>
                   <li><Link href="/click-and-collect/" className="text-white font-bold hover:text-[#F80404] block py-0.5">⚡ Click &amp; Collect (2h)</Link></li>
-                  <li><Link href="/livraison/" className="hover:text-white block py-0.5">Livraison 24h La Poste</Link></li>
+                  <li><Link href="/livraison/" className="hover:text-white block py-0.5">Livraison 1-2 jours La Poste</Link></li>
                   <li><Link href="/paiement/" className="hover:text-white block py-0.5">Paiement TWINT &amp; Cartes</Link></li>
                   <li><Link href="/retours/" className="hover:text-white block py-0.5">Retours 14 jours</Link></li>
                   <li><Link href="/commande/" className="hover:text-white block py-0.5">Suivi de commande</Link></li>
@@ -218,7 +218,7 @@ export default function Footer() {
             <ul className="space-y-2 text-xs text-white/70">
               <li><Link href="/magasin-geneve/" className="hover:text-white transition-colors font-bold text-white">📍 Boutique en Suisse & Horaires</Link></li>
               <li><Link href="/click-and-collect/" className="hover:text-[#F80404] transition-colors font-bold text-white">⚡ Click & Collect Gratuit (2h)</Link></li>
-              <li><Link href="/livraison/" className="hover:text-white transition-colors">Livraison Express 24h & Tarifs</Link></li>
+              <li><Link href="/livraison/" className="hover:text-white transition-colors">Livraison Express 1-2 jours & Tarifs</Link></li>
               <li><Link href="/paiement/" className="hover:text-white transition-colors">Paiement Sécurisé (TWINT, Cartes)</Link></li>
               <li><Link href="/retours/" className="hover:text-white transition-colors">Politique de Retours (14 Jours)</Link></li>
               <li><Link href="/contact/" className="hover:text-white transition-colors">Contactez Notre Équipe</Link></li>
@@ -281,7 +281,7 @@ export default function Footer() {
           </div>
 
           <div className="text-xs text-white/50 text-center md:text-right space-y-1">
-            <p>🇨🇭 Expédition PostPac Priority (24h) par La Poste Suisse</p>
+            <p>🇨🇭 Expédition PostPac Priority (1-2 jours) par La Poste Suisse</p>
             <p className="text-[11px] text-white/40 flex flex-wrap items-center justify-center md:justify-end gap-1.5">
               <span>© {currentYear} NutriFitness.ch 🇨🇭 Tous droits réservés.</span>
               <span className="hidden sm:inline">•</span>

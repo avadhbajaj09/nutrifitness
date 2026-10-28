@@ -223,7 +223,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
               </span>
               <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white/5 border border-white/10 text-white/70 text-[11px]">
                 <Truck className="w-3.5 h-3.5" />
-                Stock à Genève · 24h
+                Stock à Genève · 1-2 jours
               </span>
             </div>
 
@@ -250,7 +250,7 @@ export default async function BrandPage({ params }: BrandPageProps) {
             </h2>
           </div>
           <span className="text-xs text-white/50 hidden sm:inline">
-            TVA suisse 2.6% incluse · Zéro frais de douane
+            Zéro frais de douane
           </span>
         </div>
 

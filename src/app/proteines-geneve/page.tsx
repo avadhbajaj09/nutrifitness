@@ -22,13 +22,13 @@ import {
 
 export const metadata: Metadata = {
   title: formatMetaTitle('Protéines Whey en Suisse : Boutique & Retrait 2h | NutriFitness'),
-  description: formatMetaDescription('Achetez vos protéines whey, isolate CFM et végétales en Suisse. Stock physique en Suisse, retrait Click & Collect en 2h ou livraison 24h.'),
+  description: formatMetaDescription('Achetez vos protéines whey, isolate CFM et végétales en Suisse. Stock physique en Suisse, retrait Click & Collect en 2h ou livraison 1-2 jours.'),
   alternates: {
     canonical: 'https://nutrifitness.ch/proteines-geneve/',
   },
   openGraph: {
     title: 'Protéines Whey en Suisse : Boutique & Retrait 2h | NutriFitness',
-    description: 'Protéines whey concentrées, isolates CFM et végétales en stock en Suisse. Conseil d\'experts et livraison 24h suisse.',
+    description: 'Protéines whey concentrées, isolates CFM et végétales en stock en Suisse. Conseil d\'experts et livraison 1-2 jours suisse.',
     url: 'https://nutrifitness.ch/proteines-geneve/',
     siteName: 'NutriFitness.ch',
     locale: 'fr_CH',
@@ -37,7 +37,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Protéines Whey en Suisse : Boutique & Retrait 2h | NutriFitness',
-    description: 'Whey isolate, concentré et végétales en stock en Suisse. Retrait gratuit en 2h ou livraison suisse 24h.',
+    description: 'Whey isolate, concentré et végétales en stock en Suisse. Retrait gratuit en 2h ou livraison suisse 1-2 jours.',
   },
 };
 
@@ -146,7 +146,7 @@ export default async function ProteinesGenevePage() {
           </h1>
 
           <p className="text-xs sm:text-sm text-white/80 leading-relaxed pt-2">
-            Que vous recherchiez une whey isolate microfiltrée CFM pour optimiser votre sèche, un concentré onctueux pour votre récupération quotidienne ou une protéine végétale biologique sans lactose, notre magasin situé en Suisse stocke les meilleures marques certifiées. Retrait express au comptoir en 2 heures ou livraison suisse 24h par La Poste.
+            Que vous recherchiez une whey isolate microfiltrée CFM pour optimiser votre sèche, un concentré onctueux pour votre récupération quotidienne ou une protéine végétale biologique sans lactose, notre magasin situé en Suisse stocke les meilleures marques certifiées. Retrait express au comptoir en 2 heures ou livraison suisse 1-2 jours par La Poste.
           </p>
         </div>
       </header>
@@ -223,7 +223,7 @@ export default async function ProteinesGenevePage() {
           <div className="p-5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
             <h4 className="text-xs font-bold text-white flex items-center gap-2">
               <Truck className="w-4 h-4 text-[#95d600]" />
-              Option 2 : Livraison Suisse Express 24h
+              Option 2 : Livraison Suisse Express 1-2 jours
             </h4>
             <p className="text-xs text-white/70 leading-relaxed">
               Expédition quotidienne par La Poste Suisse (PostPac Priority). Livraison à domicile le lendemain matin, offerte dès 75 CHF d&apos;achat sans surprise douanière.

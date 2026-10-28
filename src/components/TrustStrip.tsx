@@ -4,7 +4,7 @@ import { Truck, ShieldCheck, Smartphone, MapPin } from 'lucide-react';
 const TRUST_ITEMS = [
   {
     icon: Truck,
-    title: 'Livraison 24h',
+    title: 'Livraison 1-2 jours',
     subtitle: 'Poste Suisse',
   },
   {
@@ -91,7 +91,7 @@ export default function TrustStrip() {
           </div>
           <div>
             <h3 className="text-sm font-black text-white uppercase font-heading group-hover:text-[#F80404] transition-colors mb-1">
-              Livraison Express 24h
+              Livraison Express 1-2 jours
             </h3>
             <p className="text-xs text-white/60 leading-relaxed">
               PostPac Priority par la Poste Suisse. Frais de port offerts dès 75 CHF d'achat.

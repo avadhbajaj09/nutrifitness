@@ -115,7 +115,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
   let genevaLink = {
     href: '/complements-alimentaires-geneve/',
     anchor: 'compléments alimentaires à Genève',
-    text: 'Vous cherchez des compléments de qualité à Genève ? Retirez vos produits en 2h au 34 Rue des Pâquis ou faites-vous livrer en 24h partout en Suisse.',
+    text: 'Vous cherchez des compléments de qualité à Genève ? Retirez vos produits en 2h au 34 Rue des Pâquis ou faites-vous livrer en 1-2 jours partout en Suisse.',
     title: 'Disponibilité physique à Genève & Click & Collect 2h'
   };
 
@@ -123,14 +123,14 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
     genevaLink = {
       href: '/proteines-geneve/',
       anchor: 'protéines et whey à Genève',
-      text: 'Besoin de votre isolat ou whey sans attendre ? Retrouvez notre stock disponible immédiatement à Genève en Click & Collect 2h ou livraison 24h.',
+      text: 'Besoin de votre isolat ou whey sans attendre ? Retrouvez notre stock disponible immédiatement à Genève en Click & Collect 2h ou livraison 1-2 jours.',
       title: 'Stock Protéines & Whey à Genève (Pâquis)'
     };
   } else if (post.categorySlug === 'creatine') {
     genevaLink = {
       href: '/creatine-geneve/',
       anchor: 'créatine monohydrate et Creapure® à Genève',
-      text: 'Vous habitez Genève ou ses environs ? Retirez votre créatine Creapure® en 2h à notre boutique des Pâquis ou commandez en livraison 24h sans frais de douane.',
+      text: 'Vous habitez Genève ou ses environs ? Retirez votre créatine Creapure® en 2h à notre boutique des Pâquis ou commandez en livraison 1-2 jours sans frais de douane.',
       title: 'Créatine disponible à Genève en magasin physique'
     };
   }
@@ -471,7 +471,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
               </div>
               <span className="hidden sm:inline-flex items-center gap-1.5 text-xs font-bold text-[#95d600] bg-[#95d600]/10 px-3 py-1 rounded-full border border-[#95d600]/20">
                 <span>🇨🇭</span>
-                <span>En stock à Genève · 24h</span>
+                <span>En stock à Genève · 1-2 jours</span>
               </span>
             </div>
 
@@ -733,7 +733,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#95d600] shrink-0" />
-                  <span>Expédition 24h PostPac Priority</span>
+                  <span>Expédition PostPac Priority (1-2 jours)</span>
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#95d600] shrink-0" />
@@ -741,7 +741,7 @@ export default function BlogPostPage({ params }: BlogPostPageProps) {
                 </li>
                 <li className="flex items-center gap-2">
                   <span className="w-1.5 h-1.5 rounded-full bg-[#95d600] shrink-0" />
-                  <span>TVA 2.6% incluse · Zéro douane</span>
+                  <span>Zéro frais de douane</span>
                 </li>
               </ul>
               <div className="pt-2 border-t border-white/5">

@@ -204,7 +204,7 @@ export default function DynamicPricingBox({
             );
           }
 
-          let label = 'En stock';
+          let label = locale === 'en' ? '🇨🇭 In stock in Switzerland (1–2d)' : locale === 'de' ? '🇨🇭 Auf Lager in der Schweiz (1–2T)' : locale === 'it' ? '🇨🇭 Disponibile in Svizzera (1-2g)' : '🇨🇭 En stock en Suisse (1–2j)';
           if (product.shippingOrigin === 'portugal') {
             label = '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
           } else if (isCommon && !isSwiss) {

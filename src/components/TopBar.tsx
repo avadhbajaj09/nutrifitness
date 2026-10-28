@@ -5,7 +5,7 @@ import { useStore } from '@/context/StoreContext';
 
 const MOBILE_MESSAGES = [
   'Livraison offerte dès 75 CHF',
-  'Livraison 24h Poste Suisse',
+  'Livraison 1-2 jours Poste Suisse',
   'Paiement TWINT'
 ];
 

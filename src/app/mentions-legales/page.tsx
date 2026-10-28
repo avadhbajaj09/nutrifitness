@@ -95,13 +95,13 @@ export default function MentionsLegalesPage() {
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
               <span className="text-[11px] font-bold text-[#95d600] uppercase block">Paiements TWINT en Francs Suisses (CHF) :</span>
               <p className="text-xs text-white/80 leading-relaxed">
-                Le moyen de paiement mobile suisse <strong>TWINT</strong> est pleinement intégré pour tous nos clients via la passerelle certifiée Stripe. Tous les prix sur nutrifitness.ch sont affichés et facturés en <strong>Francs Suisses (CHF)</strong> toutes taxes comprises (TTC / TVA suisse incluse).
+                Le moyen de paiement mobile suisse <strong>TWINT</strong> est pleinement intégré pour tous nos clients via la passerelle certifiée Stripe. Tous les prix sur nutrifitness.ch sont affichés et facturés en <strong>Francs Suisses (CHF)</strong> toutes taxes comprises (TTC).
               </p>
             </div>
             <div className="p-4 rounded-2xl bg-black/40 border border-white/5 space-y-1.5">
               <span className="text-[11px] font-bold text-[#F80404] uppercase block">Livraison Directe en Suisse :</span>
               <p className="text-xs text-white/80 leading-relaxed">
-                La <strong>Suisse</strong> est notre destination de livraison principale. L&apos;ensemble des marchandises physiques est dédouané, stocké en Suisse et expédié sous 24h par <strong>PostPac Priority</strong> (La Poste Suisse) avec suivi ou disponible en retrait <strong>Click &amp; Collect</strong> à notre magasin de Genève ({COMPANY.address.street}).
+                La <strong>Suisse</strong> est notre destination de livraison principale. L&apos;ensemble des marchandises physiques est dédouané, stocké en Suisse et expédié en 1 à 2 jours par <strong>PostPac Priority</strong> (La Poste Suisse) avec suivi ou disponible en retrait <strong>Click &amp; Collect</strong> à notre magasin de Genève ({COMPANY.address.street}).
               </p>
             </div>
           </div>

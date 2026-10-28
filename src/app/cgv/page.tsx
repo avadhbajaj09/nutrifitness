@@ -17,7 +17,7 @@ import { COMPANY } from '@/lib/company';
 
 export const metadata: Metadata = {
   title: 'Conditions Générales de Vente (CGV) | NutriFitness.ch',
-  description: 'Conditions générales de vente de NutriFitness. Règles de commande, livraison 24h en Suisse, paiement TWINT, droit de rétractation 14 jours.',
+  description: 'Conditions générales de vente de NutriFitness. Règles de commande, livraison 1 à 2 jours en Suisse, paiement TWINT, droit de rétractation 14 jours.',
   alternates: {
     canonical: 'https://nutrifitness.ch/cgv/',
   }
@@ -167,7 +167,7 @@ export default function CGVPage() {
           </div>
         </section>
 
-        {/* Article 6: Expédition & Livraison 24h */}
+        {/* Article 6: Expédition & Livraison 1-2 jours */}
         <section className="p-6 sm:p-8 rounded-3xl bg-[#141414] border border-white/10 space-y-4">
           <div className="flex items-center gap-3 pb-3 border-b border-white/10 text-white font-heading font-black text-lg uppercase">
             <Truck className="w-5 h-5 text-[#F80404]" />

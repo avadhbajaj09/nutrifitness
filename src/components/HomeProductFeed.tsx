@@ -77,9 +77,6 @@ export function HomePerformanceSection({ products }: Props) {
           <h2 className="text-lg sm:text-2xl lg:text-3xl font-black text-white uppercase font-heading leading-tight">
             Collection Performance Suisse
           </h2>
-          <span className="sm:hidden text-[10px] text-white/40 block mt-0.5">
-            *Prix en CHF, TVA suisse incluse
-          </span>
         </div>
         <Link 
           href="/boutique/?cat=pre-workout" 

@@ -119,7 +119,6 @@ export default function BlogProductCards({ products, variant = 'in-article' }: B
                   <span className="text-sm font-black text-[#95d600] font-heading">
                     {formatPrice(price)}
                   </span>
-                  <span className="block text-[9px] text-white/40 whitespace-nowrap">TVA suisse incluse</span>
                 </div>
 
                 <div className="flex items-center gap-1.5">
@@ -242,7 +241,7 @@ export default function BlogProductCards({ products, variant = 'in-article' }: B
                     </span>
                   )}
                 </div>
-                <span className="text-[10px] text-white/50">Expédié sous 24h</span>
+                <span className="text-[10px] text-white/50">Livraison 1-2 jours</span>
               </div>
 
               <div className="grid grid-cols-2 gap-2">

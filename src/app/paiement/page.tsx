@@ -31,8 +31,8 @@ export default function PaiementPage() {
       a: 'Oui. Toutes les transactions sont chiffrées selon les normes bancaires SSL/TLS 256 bits les plus rigoureuses et traitées par des prestataires de paiement certifiés PCI-DSS de niveau 1. Nous ne stockons jamais vos coordonnées bancaires ou numéros de carte sur nos serveurs.'
     },
     {
-      q: 'Dans quelle devise sont indiqués les prix et la TVA est-elle incluse ?',
-      a: 'Tous les prix sont affichés en Francs Suisses (CHF) toutes taxes comprises (TTC). Ils incluent le taux de TVA suisse applicable (2.6 % sur les compléments et denrées alimentaires, 8.1 % sur les accessoires et shakers). Aucun frais caché ni taxe d\'importation n\'est appliqué.'
+      q: 'Dans quelle devise sont indiqués les prix sur la boutique ?',
+      a: 'Tous les prix sont affichés en Francs Suisses (CHF). Aucun frais caché ni taxe d\'importation n\'est appliqué pour les résidents suisses.'
     },
     {
       q: 'Puis-je payer directement lors du retrait en boutique en Suisse ?',

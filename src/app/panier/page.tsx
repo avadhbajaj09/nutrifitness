@@ -232,7 +232,7 @@ export default function CartPage() {
               </div>
               <h3 className="text-base font-black uppercase text-white font-heading">{t.nav.cart} est vide</h3>
               <p className="text-xs text-white/50 max-w-sm mx-auto">
-                Explorez nos protéines whey, créatines Creapure® et pré-workouts expédiés sous 24h en Suisse.
+                Explorez nos protéines whey, créatines Creapure® et pré-workouts expédiés en 1 à 2 jours en Suisse.
               </p>
               <Link 
                 href="/boutique/"
@@ -327,7 +327,6 @@ export default function CartPage() {
                       <span className="text-base font-black text-white font-heading">
                         {formatPrice((Number(item.price) || 0) * (Number(item.quantity) || 1))}
                       </span>
-                      <p className="text-[10px] text-white/40">{t.common.vatIncluded}</p>
                     </div>
 
                     <button 
@@ -437,11 +436,6 @@ export default function CartPage() {
               </span>
             </div>
 
-            <div className="flex justify-between text-white/40 text-[11px]">
-              <span>{t.common.vatIncluded} :</span>
-              <span>{formatPrice(estimatedVat)}</span>
-            </div>
-
             <div className="pt-3 border-t border-white/10 flex justify-between items-baseline text-white">
               <span className="text-sm font-black uppercase font-heading">{t.common.total} :</span>
               <span className="text-2xl font-black text-white font-heading">{formatPrice(totalCost)}</span>
@@ -497,7 +491,7 @@ export default function CartPage() {
               <span>🇨🇭</span> <strong>Stock physique en Suisse :</strong> aucun frais de douane.
             </p>
             <p className="flex items-center gap-2">
-              <span>⚡</span> <strong>PostPac Priority 24h :</strong> suivi en ligne Poste Suisse.
+              <span>⚡</span> <strong>PostPac Priority (1-2 jours) :</strong> suivi en ligne Poste Suisse.
             </p>
             <p className="flex items-center gap-2">
               <span>💳</span> <strong>Paiements acceptés :</strong> TWINT, PostFinance, Cartes & Facture QR ({currency}).

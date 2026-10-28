@@ -107,7 +107,7 @@ function ShopContent() {
       <div className="py-6 mb-6 border-b border-white/10 flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <span className="inline-block px-3 py-1 bg-[#F80404]/10 border border-[#F80404]/30 text-[#F80404] text-[10px] font-black uppercase tracking-wider rounded-full mb-2">
-            🇨🇭 100% Stock en Suisse · Expédié sous 24h
+            🇨🇭 100% Stock en Suisse · Livraison 1-2 jours
           </span>
           <h1 className="text-3xl sm:text-4xl font-black text-white uppercase font-heading">
             Boutique Nutrition Sportive
@@ -268,7 +268,7 @@ function ShopContent() {
           {/* Trust box */}
           <div className="pt-4 border-t border-white/10 bg-white/5 rounded-xl p-3 text-[11px] text-white/60 space-y-1">
             <p className="font-bold text-white">🇨🇭 Expédition directe</p>
-            <p>PostPac Priority 24h ou retrait Click & Collect 2h à Genève.</p>
+            <p>PostPac Priority (1-2 jours) ou retrait Click & Collect 2h à Genève.</p>
           </div>
         </aside>
 

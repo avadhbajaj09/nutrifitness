@@ -214,7 +214,6 @@ export default function CartDrawer() {
                           </span>
                         );
                       })()}
-                      <span className="text-[10px] text-white/40 block">{t.common.vatIncluded}</span>
                     </div>
                   </div>
                 </div>
@@ -262,7 +261,7 @@ export default function CartDrawer() {
                 <span className="text-xl font-black text-white font-heading">{formatPrice(cartSubtotal)}</span>
               </div>
               <p className="text-[10px] text-white/40">
-                {t.common.vatIncluded} · Frais de port calculés à l'étape suivante ({currency}).
+                Frais de port calculés à l'étape suivante ({currency}).
               </p>
             </div>
 

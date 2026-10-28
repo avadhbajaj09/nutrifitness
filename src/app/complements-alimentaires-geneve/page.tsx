@@ -36,7 +36,7 @@ export const metadata: Metadata = {
   twitter: {
     card: 'summary_large_image',
     title: 'Compléments Alimentaires à Genève : Magasin & Conseils | NutriFitness',
-    description: 'Magasin physique au 34 Rue des Pâquis à Genève. Protéines, vitamines et créatines certifiées. Retrait 2h ou livraison 24h.',
+    description: 'Magasin physique au 34 Rue des Pâquis à Genève. Protéines, vitamines et créatines certifiées. Retrait 2h ou livraison 1-2 jours.',
   },
 };
 
@@ -225,7 +225,7 @@ export default async function ComplementsAlimentairesGenevePage() {
           <div className="p-5 rounded-2xl bg-black/40 border border-white/5 space-y-2">
             <h4 className="text-xs font-bold text-white flex items-center gap-2">
               <Truck className="w-4 h-4 text-[#95d600]" />
-              Expédition Poste Suisse 24h Prioritaire
+              Expédition Poste Suisse 1-2 jours Prioritaire
             </h4>
             <p className="text-xs text-white/70 leading-relaxed">
               Livraison rapide dans tout le canton de Genève et partout en Suisse. Frais de port offerts dès 75 CHF d&apos;achat.

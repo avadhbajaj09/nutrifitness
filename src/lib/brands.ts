@@ -31,8 +31,8 @@ export const ALL_BRANDS: BrandInfo[] = [
     indexable: true,
     h1: 'Marvelous Nutrition en Suisse | NutriFitness',
     metaTitle: 'Marvelous Nutrition Suisse : Protéines, Créatine & Pré-Workout',
-    metaDescription: 'Achetez Marvelous Nutrition en Suisse chez NutriFitness Genève. Whey isolate, créatine 200 mesh, pré-workout et vitamines. Stock suisse, livraison 24h & Click & Collect.',
-    intro: "Marvelous Nutrition est l'une des marques phares distribuées chez NutriFitness en Suisse, reconnue pour ses formulations pures destinées aux athlètes de force et de fitness. Dans notre boutique à Genève et sur notre catalogue en ligne, nous proposons un éventail complet de ses créations de haute technicité : protéines whey isolate, poudres de créatine micronisée 200 mesh, complexes pré-workout explosifs, acides aminés glutamine et citrulline, ainsi que des vitamines D3 K2 et minéraux bisglycinates de qualité pharmaceutique. Chaque produit répond strictement aux exigences sanitaires suisses de l'OSAV. Avec des dizaines de références disponibles, Marvelous incarne l'alliance de la traçabilité et de la performance. Tous les lots sont stockés directement dans nos locaux genevois au 34 Rue des Pâquis pour un retrait immédiat en Click & Collect ou une livraison express en 24 heures partout en Suisse.",
+    metaDescription: 'Achetez Marvelous Nutrition en Suisse chez NutriFitness Genève. Whey isolate, créatine 200 mesh, pré-workout et vitamines. Stock suisse, livraison 1-2 jours & Click & Collect.',
+    intro: "Marvelous Nutrition est l'une des marques phares distribuées chez NutriFitness en Suisse, reconnue pour ses formulations pures destinées aux athlètes de force et de fitness. Dans notre boutique à Genève et sur notre catalogue en ligne, nous proposons un éventail complet de ses créations de haute technicité : protéines whey isolate, poudres de créatine micronisée 200 mesh, complexes pré-workout explosifs, acides aminés glutamine et citrulline, ainsi que des vitamines D3 K2 et minéraux bisglycinates de qualité pharmaceutique. Chaque produit répond strictement aux exigences sanitaires suisses de l'OSAV. Avec des dizaines de références disponibles, Marvelous incarne l'alliance de la traçabilité et de la performance. Tous les lots sont stockés directement dans nos locaux genevois au 34 Rue des Pâquis pour un retrait immédiat en Click & Collect ou une livraison express en 1 à 2 jours partout en Suisse.",
     relevantCategories: [
       { name: 'Protéines & Whey', href: '/categorie/proteines/' },
       { name: 'Créatine Monohydrate', href: '/categorie/creatine/' },
@@ -47,7 +47,7 @@ export const ALL_BRANDS: BrandInfo[] = [
     faqs: [
       {
         q: 'Où acheter les produits Marvelous Nutrition en Suisse ?',
-        a: 'Vous pouvez acheter l\'ensemble de la gamme Marvelous Nutrition directement chez NutriFitness, soit dans notre magasin physique au 34 Rue des Pâquis à 1201 Genève, soit sur notre boutique en ligne avec livraison en 24h.'
+        a: 'Vous pouvez acheter l\'ensemble de la gamme Marvelous Nutrition directement chez NutriFitness, soit dans notre magasin physique au 34 Rue des Pâquis à 1201 Genève, soit sur notre boutique en ligne avec livraison en 1 à 2 jours.'
       },
       {
         q: 'Les compléments Marvelous sont-ils conformes aux normes suisses ?',
@@ -69,8 +69,8 @@ export const ALL_BRANDS: BrandInfo[] = [
     indexable: true,
     h1: 'Pronutrition en Suisse | NutriFitness',
     metaTitle: 'Pronutrition Suisse : Farines d\'avoine, Snacks Keto & Diététique',
-    metaDescription: 'Découvrez la gamme Pronutrition en Suisse chez NutriFitness Genève. Farines d\'avoine aromatisées, alimentation keto et snacks diététiques. Expédition 24h.',
-    intro: "Pronutrition est la référence italienne de la nutrition sportive et de l'alimentation diététique fonctionnelle, distribuée à Genève par NutriFitness. Réputée pour ses farines d'avoine aromatisées aux saveurs authentiques, sa gamme exclusive de snacks keto faibles en glucides, ses crèmes de riz et ses stimulants précis comme la caféine pure, Pronutrition séduit les athlètes exigeants sur la composition nutritionnelle et le goût. Notre boutique référence plus de 20 produits de la marque, garantissant une alternative saine et gourmande pour vos collations et petits-déjeuners sportifs. Toutes les références importées sont vérifiées conformes aux réglementations suisses du DFI. Retrouvez la gamme Pronutrition dans notre magasin physique des Pâquis à Genève ou commandez en ligne avec une expédition prioritaire sous 24h ouvrées sur l'ensemble du territoire helvétique.",
+    metaDescription: 'Découvrez la gamme Pronutrition en Suisse chez NutriFitness Genève. Farines d\'avoine aromatisées, alimentation keto et snacks diététiques. Expédition 1-2 jours.',
+    intro: "Pronutrition est la référence italienne de la nutrition sportive et de l'alimentation diététique fonctionnelle, distribuée à Genève par NutriFitness. Réputée pour ses farines d'avoine aromatisées aux saveurs authentiques, sa gamme exclusive de snacks keto faibles en glucides, ses crèmes de riz et ses stimulants précis comme la caféine pure, Pronutrition séduit les athlètes exigeants sur la composition nutritionnelle et le goût. Notre boutique référence plus de 20 produits de la marque, garantissant une alternative saine et gourmande pour vos collations et petits-déjeuners sportifs. Toutes les références importées sont vérifiées conformes aux réglementations suisses du DFI. Retrouvez la gamme Pronutrition dans notre magasin physique des Pâquis à Genève ou commandez en ligne avec une expédition prioritaire en 1 à 2 jours ouvrables sur l'ensemble du territoire helvétique.",
     relevantCategories: [
       { name: 'Snacks & Diététique', href: '/categorie/snacks-healthy-food/' },
       { name: 'Gainers & Masse', href: '/categorie/gainers-prise-de-masse/' },
@@ -92,7 +92,7 @@ export const ALL_BRANDS: BrandInfo[] = [
       },
       {
         q: 'Les produits Pronutrition sont-ils en stock à Genève ?',
-        a: 'Oui, l\'intégralité des produits présentés sur le site est disponible dans notre boutique au 34 Rue des Pâquis à Genève ou livrable en 24h en Suisse.'
+        a: 'Oui, l\'intégralité des produits présentés sur le site est disponible dans notre boutique au 34 Rue des Pâquis à Genève ou livrable en 1 à 2 jours en Suisse.'
       }
     ]
   },
@@ -106,8 +106,8 @@ export const ALL_BRANDS: BrandInfo[] = [
     indexable: true,
     h1: 'BigMan Nutrition en Suisse | NutriFitness',
     metaTitle: 'BigMan Nutrition Suisse : Whey, Creapure® & Acides Aminés',
-    metaDescription: 'Retrouvez BigMan Nutrition en Suisse chez NutriFitness Genève. Ultimate Whey, créatine Creapure, gainers et ashwagandha. Stock physique à Genève, livraison 24h.',
-    intro: "BigMan Nutrition est une marque européenne de référence réputée pour ses formules accessibles et généreuses adaptées à la musculation et aux sports d'endurance, distribuée à Genève par NutriFitness. Notre boutique référence une sélection rigoureuse de ses meilleures créations : poudres de protéines Ultimate Whey, créatine sous label haute pureté Creapure®, acides aminés EAA et BCAA fermentés, ainsi que des extraits adaptogènes comme l'Ashwagandha KSM-66®. Ces compléments respectent scrupuleusement les ordonnances fédérales de l'OSAV et offrent une assimilation digestive optimale. Avec plus de 14 produits disponibles, BigMan Nutrition permet à chaque pratiquant de construire un protocole de supplémentation complet et cohérent. Disponibles immédiatement en Click & Collect gratuit au 34 Rue des Pâquis ou en expédition rapide en 24h par La Poste Suisse.",
+    metaDescription: 'Retrouvez BigMan Nutrition en Suisse chez NutriFitness Genève. Ultimate Whey, créatine Creapure, gainers et ashwagandha. Stock physique à Genève, livraison 1-2 jours.',
+    intro: "BigMan Nutrition est une marque européenne de référence réputée pour ses formules accessibles et généreuses adaptées à la musculation et aux sports d'endurance, distribuée à Genève par NutriFitness. Notre boutique référence une sélection rigoureuse de ses meilleures créations : poudres de protéines Ultimate Whey, créatine sous label haute pureté Creapure®, acides aminés EAA et BCAA fermentés, ainsi que des extraits adaptogènes comme l'Ashwagandha KSM-66®. Ces compléments respectent scrupuleusement les ordonnances fédérales de l'OSAV et offrent une assimilation digestive optimale. Avec plus de 14 produits disponibles, BigMan Nutrition permet à chaque pratiquant de construire un protocole de supplémentation complet et cohérent. Disponibles immédiatement en Click & Collect gratuit au 34 Rue des Pâquis ou en expédition rapide en 1 à 2 jours par La Poste Suisse.",
     relevantCategories: [
       { name: 'Protéines & Whey', href: '/categorie/proteines/' },
       { name: 'Créatine Monohydrate', href: '/categorie/creatine/' },
@@ -130,7 +130,7 @@ export const ALL_BRANDS: BrandInfo[] = [
       },
       {
         q: 'Quel est le délai de livraison des compléments BigMan en Suisse ?',
-        a: 'Les commandes validées avant 14h sont expédiées le jour même via La Poste Suisse (PostPac Priority) pour une livraison sous 24 heures sans frais de douane.'
+        a: 'Les commandes validées avant 14h sont expédiées le jour même via La Poste Suisse (PostPac Priority) pour une livraison en 1 à 2 jours sans frais de douane.'
       }
     ]
   },
@@ -144,8 +144,8 @@ export const ALL_BRANDS: BrandInfo[] = [
     indexable: true,
     h1: 'Dirty Squads en Suisse | NutriFitness',
     metaTitle: 'Dirty Squads Suisse : Iso 90X CFM, Cluster Dextrin & Force',
-    metaDescription: 'Achetez Dirty Squads en Suisse chez NutriFitness Genève. Iso 90X CFM, Cluster Dex, Creapure et acides aminés pour athlètes. Retrait 2h ou livraison 24h.',
-    intro: "Dirty Squads est une marque résolument tournée vers la nutrition sportive de haute intensité et le bodybuilding exigeant, distribuée à Genève par NutriFitness. Conçue pour répondre aux attentes des athlètes recherchant des concentrations maximales en principes actifs, elle se distingue notamment par son isolate de pointe Iso 90X CFM microfiltrée à froid, sa créatine Creapure®, ses glucides techniques en grappes hautement ramifiées Dirty Cluster Dex et ses complexes thermogéniques pour la sèche. Dans notre boutique des Pâquis et sur notre shop en ligne, nous stockons 16 références de la marque, toutes conformes aux normes suisses et exemptes de substances prohibées. Profitez de conseils personnalisés sur la gamme Dirty Squads directement à Genève ou commandez en ligne pour une livraison sécurisée en 24 heures sans frais de douane.",
+    metaDescription: 'Achetez Dirty Squads en Suisse chez NutriFitness Genève. Iso 90X CFM, Cluster Dex, Creapure et acides aminés pour athlètes. Retrait 2h ou livraison 1-2 jours.',
+    intro: "Dirty Squads est une marque résolument tournée vers la nutrition sportive de haute intensité et le bodybuilding exigeant, distribuée à Genève par NutriFitness. Conçue pour répondre aux attentes des athlètes recherchant des concentrations maximales en principes actifs, elle se distingue notamment par son isolate de pointe Iso 90X CFM microfiltrée à froid, sa créatine Creapure®, ses glucides techniques en grappes hautement ramifiées Dirty Cluster Dex et ses complexes thermogéniques pour la sèche. Dans notre boutique des Pâquis et sur notre shop en ligne, nous stockons 16 références de la marque, toutes conformes aux normes suisses et exemptes de substances prohibées. Profitez de conseils personnalisés sur la gamme Dirty Squads directement à Genève ou commandez en ligne pour une livraison sécurisée en 1 à 2 jours sans frais de douane.",
     relevantCategories: [
       { name: 'Protéines & Whey', href: '/categorie/proteines/' },
       { name: 'Pendant l\'Effort & Hydratation', href: '/categorie/pendant-effort-hydratation/' },
@@ -181,7 +181,7 @@ export const ALL_BRANDS: BrandInfo[] = [
     indexable: true,
     h1: 'Applied Nutrition en Suisse | NutriFitness',
     metaTitle: 'Applied Nutrition Suisse : ABE Pre-Workout & Créatine Pure',
-    metaDescription: 'Applied Nutrition chez NutriFitness Genève. Booster ABE All Black Everything, créatine monohydrate micronisée et zinc chélaté. Stock suisse, envoi 24h.',
+    metaDescription: 'Applied Nutrition chez NutriFitness Genève. Booster ABE All Black Everything, créatine monohydrate micronisée et zinc chélaté. Stock suisse, envoi 1-2 jours.',
     intro: "Originaire du Royaume-Uni et adoptée par les athlètes d'élite à travers l'Europe, Applied Nutrition formule des compléments certifiés d'une rigueur exemplaire, distribués à Genève par NutriFitness. Dans notre magasin suisse, nous mettons à l'honneur leurs produits phares : le pré-workout mythique ABE (All Black Everything) reconnu pour son focus mental incomparable, leur créatine monohydrate micronisée pure et leur zinc bisglycinate hautement biodisponible. Chaque formule bénéficie de contrôles de fabrication rigoureux conformes aux standards de l'OSAV et du DFI en Suisse. Disponibles en retrait 2 heures à notre boutique physique de la Rue des Pâquis ou en expédition express dans toute la Suisse via PostPac Priority, les compléments Applied Nutrition garantissent une efficacité sans compromis pour vos entraînements les plus rudes.",
     relevantCategories: [
       { name: 'Pré-Workout & Énergie', href: '/categorie/pre-workout-energie/' },
@@ -218,8 +218,8 @@ export const ALL_BRANDS: BrandInfo[] = [
     indexable: true,
     h1: 'NutriFitness Lab en Suisse | NutriFitness',
     metaTitle: 'NutriFitness Lab Genève : Gallon 2.2L & Gourde Sport Officiels',
-    metaDescription: 'Découvrez les accessoires officiels NutriFitness Lab : gourde sport ergonomique 600ml et gallon d\'hydratation 2.2L sans BPA. Retrait à Genève & envoi 24h.',
-    intro: "NutriFitness Lab est notre propre marque officielle d'équipements sportifs, conçue à Genève pour accompagner au quotidien les passionnés de musculation et de fitness. Retrouvez notre gourde ergonomique 600 ml avec paille sans BPA et notre gallon d'hydratation grand format 2.2 litres directement au 34 Rue des Pâquis à Genève ou commandez-les en ligne avec livraison suisse express en 24 heures.",
+    metaDescription: 'Découvrez les accessoires officiels NutriFitness Lab : gourde sport ergonomique 600ml et gallon d\'hydratation 2.2L sans BPA. Retrait à Genève & envoi 1-2 jours.',
+    intro: "NutriFitness Lab est notre propre marque officielle d'équipements sportifs, conçue à Genève pour accompagner au quotidien les passionnés de musculation et de fitness. Retrouvez notre gourde ergonomique 600 ml avec paille sans BPA et notre gallon d'hydratation grand format 2.2 litres directement au 34 Rue des Pâquis à Genève ou commandez-les en ligne avec livraison suisse express en 1 à 2 jours.",
     relevantCategories: [
       { name: 'Accessoires & Shakers', href: '/categorie/accessoires/' }
     ],
@@ -253,7 +253,7 @@ export const ALL_BRANDS: BrandInfo[] = [
     h1: 'Body Attack en Suisse | NutriFitness',
     metaTitle: 'Body Attack Suisse : Beurre de Cacahuète Pur & Nutrition Sportive',
     metaDescription: 'Achetez la marque allemande Body Attack en Suisse chez NutriFitness Genève. Beurre de cacahuète 100% pur, protéines et nutrition saine. Stock en Suisse.',
-    intro: "Marque historique de la nutrition sportive allemande, Body Attack est reconnue pour sa maîtrise des procédés de fabrication et la qualité irréprochable de ses ingrédients, distribuée à Genève par NutriFitness. Nous avons sélectionné pour notre communauté helvétique ses références les plus plébiscitées, notamment son beurre de cacahuète 100% pur sans huile de palme ni sucres ajoutés, idéal pour enrichir les collations en bons lipides et protéines végétales. Répondant aux standards de pureté les plus stricts et conformes aux réglementations suisses de l'OSAV, les produits Body Attack allient plaisir gustatif et valeurs nutritionnelles optimales. Venez les découvrir au magasin physique de Genève ou commandez-les en ligne avec expédition 24h par La Poste Suisse.",
+    intro: "Marque historique de la nutrition sportive allemande, Body Attack est reconnue pour sa maîtrise des procédés de fabrication et la qualité irréprochable de ses ingrédients, distribuée à Genève par NutriFitness. Nous avons sélectionné pour notre communauté helvétique ses références les plus plébiscitées, notamment son beurre de cacahuète 100% pur sans huile de palme ni sucres ajoutés, idéal pour enrichir les collations en bons lipides et protéines végétales. Répondant aux standards de pureté les plus stricts et conformes aux réglementations suisses de l'OSAV, les produits Body Attack allient plaisir gustatif et valeurs nutritionnelles optimales. Venez les découvrir au magasin physique de Genève ou commandez-les en ligne avec expédition 1-2 jours par La Poste Suisse.",
     relevantCategories: [
       { name: 'Snacks & Diététique', href: '/categorie/snacks-healthy-food/' },
       { name: 'Protéines & Whey', href: '/categorie/proteines/' }
@@ -287,8 +287,8 @@ export const ALL_BRANDS: BrandInfo[] = [
     indexable: true,
     h1: 'Optimum Nutrition en Suisse | NutriFitness',
     metaTitle: 'Optimum Nutrition Suisse : Gold Standard 100% Whey à Genève',
-    metaDescription: 'Achetez Optimum Nutrition Gold Standard 100% Whey en Suisse chez NutriFitness Genève. Référence mondiale de la protéine. Stock à Genève, livraison 24h.',
-    intro: "Véritable pionnier mondial de la nutrition pour sportifs, Optimum Nutrition (ON) est le créateur de la célèbre Gold Standard 100% Whey, la protéine la plus vendue et récompensée à l'international, distribuée à Genève par NutriFitness. Reconnue pour sa miscibilité instantanée, son profil en acides aminés exceptionnel riche en BCAA naturels et sa digestibilité sans faille, la formule Gold Standard constitue une référence absolue pour la récupération musculaire après l'effort. Chez NutriFitness, nous garantissons l'authenticité et la traçabilité suisse de ce classique incontournable, conforme aux ordonnances fédérales de l'OSAV. Disponible en stock physique dans notre boutique genevoise des Pâquis pour un retrait en Click & Collect en 2h ou en livraison 24h dans toute la Suisse.",
+    metaDescription: 'Achetez Optimum Nutrition Gold Standard 100% Whey en Suisse chez NutriFitness Genève. Référence mondiale de la protéine. Stock à Genève, livraison 1-2 jours.',
+    intro: "Véritable pionnier mondial de la nutrition pour sportifs, Optimum Nutrition (ON) est le créateur de la célèbre Gold Standard 100% Whey, la protéine la plus vendue et récompensée à l'international, distribuée à Genève par NutriFitness. Reconnue pour sa miscibilité instantanée, son profil en acides aminés exceptionnel riche en BCAA naturels et sa digestibilité sans faille, la formule Gold Standard constitue une référence absolue pour la récupération musculaire après l'effort. Chez NutriFitness, nous garantissons l'authenticité et la traçabilité suisse de ce classique incontournable, conforme aux ordonnances fédérales de l'OSAV. Disponible en stock physique dans notre boutique genevoise des Pâquis pour un retrait en Click & Collect en 2h ou en livraison 1-2 jours dans toute la Suisse.",
     relevantCategories: [
       { name: 'Protéines & Whey', href: '/categorie/proteines/' }
     ],
@@ -323,7 +323,7 @@ export const ALL_BRANDS: BrandInfo[] = [
     h1: 'Ghost Lifestyle en Suisse | NutriFitness',
     metaTitle: 'Ghost Lifestyle Suisse : Whey & Nutrition Sportive Transparente',
     metaDescription: 'Achetez Ghost Lifestyle en Suisse chez NutriFitness Genève. Formules 100% transparentes, goût inimitable et qualité premium. Stock physique à Genève.',
-    intro: "Ghost Lifestyle a révolutionné l'industrie de la nutrition sportive avec son engagement total de transparence (formules 100% ouvertes sans complexes propriétaires) et ses arômes légendaires, distribuée à Genève par NutriFitness. Réputée pour ses protéines whey combinant isolate et concentré de haute qualité ainsi que pour ses packagings modernes, Ghost s'adresse aux sportifs qui exigent à la fois le plaisir et des ingrédients documentés. Dans notre shop de Genève, nous sélectionnons leurs meilleures références certifiées conformes aux exigences sanitaires suisses. Venez échanger avec notre équipe au 34 Rue des Pâquis ou commandez directement sur nutrifitness.ch pour bénéficier de notre livraison express en 24h ouvrées partout en Suisse.",
+    intro: "Ghost Lifestyle a révolutionné l'industrie de la nutrition sportive avec son engagement total de transparence (formules 100% ouvertes sans complexes propriétaires) et ses arômes légendaires, distribuée à Genève par NutriFitness. Réputée pour ses protéines whey combinant isolate et concentré de haute qualité ainsi que pour ses packagings modernes, Ghost s'adresse aux sportifs qui exigent à la fois le plaisir et des ingrédients documentés. Dans notre shop de Genève, nous sélectionnons leurs meilleures références certifiées conformes aux exigences sanitaires suisses. Venez échanger avec notre équipe au 34 Rue des Pâquis ou commandez directement sur nutrifitness.ch pour bénéficier de notre livraison express en 1 à 2 jours ouvrables partout en Suisse.",
     relevantCategories: [
       { name: 'Protéines & Whey', href: '/categorie/proteines/' },
       { name: 'Pré-Workout & Énergie', href: '/categorie/pre-workout-energie/' }
@@ -358,7 +358,7 @@ export const ALL_BRANDS: BrandInfo[] = [
     h1: 'Bio Pour Tous en Suisse | NutriFitness',
     metaTitle: 'Bio Pour Tous en Suisse | NutriFitness Genève',
     metaDescription: 'Découvrez Bio Pour Tous chez NutriFitness Genève. Produits de nutrition biologique distribués à Genève.',
-    intro: "Bio Pour Tous offre des produits d'alimentation saine et biologique de haute qualité, distribués à Genève par NutriFitness. Disponibles en boutique aux Pâquis ou livrés sous 24h en Suisse.",
+    intro: "Bio Pour Tous offre des produits d'alimentation saine et biologique de haute qualité, distribués à Genève par NutriFitness. Disponibles en boutique aux Pâquis ou livrés en 1 à 2 jours en Suisse.",
     relevantCategories: [{ name: 'Snacks & Diététique', href: '/categorie/snacks-healthy-food/' }],
     relevantGuides: [{ title: 'Petit-déjeuner et collations riches en protéines', href: '/blog/petit-dejeuner-collation-riche-en-proteines/' }],
     faqs: [

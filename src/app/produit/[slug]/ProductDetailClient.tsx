@@ -7,7 +7,6 @@ import { useStore } from '@/context/StoreContext';
 import ProductCarousel from '@/components/ProductCarousel';
 import DynamicPricingBox from '@/components/DynamicPricingBox';
 import { ProductItem, getLocalized } from '@/lib/types';
-import { calculateVat } from '@/lib/tax';
 import { getProductFaqs } from '@/lib/productFaq';
 import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
@@ -49,7 +48,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const localizedUsage = getLocalized(product.usageInstructions, locale) || product.usageInstructions?.fr || '';
   const localizedIngredients = getLocalized(product.ingredients, locale) || product.ingredients?.fr || '';
   const localizedAllergens = getLocalized(product.allergens, locale) || product.allergens?.fr || '';
-  const vat = calculateVat(product.priceChf, product.taxCategory);
   const primaryImg = product.images?.[0]?.src || '/images/placeholder.webp';
 
   const category = getCategoryBySlug(product.categorySlug);
@@ -252,7 +250,9 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             ) : (
               <>
                 <div className="p-2">
-                  <p className="font-bold text-white text-sm mb-0.5">Expédition 24h</p>
+                  <p className="font-bold text-white text-sm mb-0.5">
+                    {locale === 'en' ? '1–2 Days Delivery' : locale === 'de' ? '1–2 Tage Lieferung' : locale === 'it' ? 'Consegna 1-2 giorni' : 'Livraison 1 à 2 jours'}
+                  </p>
                   <p className="text-[11px]">La Poste Suisse Priority</p>
                 </div>
                 <div className="p-2 border-x border-white/10">

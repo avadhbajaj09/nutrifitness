@@ -219,7 +219,7 @@ export default function SearchOverlay() {
                         <h4 className="text-xs font-bold text-white truncate group-hover:text-[#F80404] transition-colors">{name}</h4>
                         <div className="flex items-center justify-between mt-1">
                           <span className="text-xs font-black text-white">{formatChf(item.priceChf)}</span>
-                          <span className="text-[10px] text-emerald-400 font-bold">En stock 24h</span>
+                          <span className="text-[10px] text-emerald-400 font-bold">En stock (1-2j)</span>
                         </div>
                       </div>
                     </Link>

@@ -81,7 +81,7 @@ function supabaseRowToSaleRecord(row: any): any {
     },
     shipping: {
       method: addr.shippingMethod || (isPos ? 'store_pickup' : 'post_priority'),
-      label: addr.shippingLabel || (isPos ? 'Retrait Boutique Genève' : 'PostPac Priority (La Poste Suisse 24h)'),
+      label: addr.shippingLabel || (isPos ? 'Retrait Boutique Genève' : 'PostPac Priority (La Poste Suisse 1-2 jours)'),
       cost: Number(addr.shippingCost) || 0,
       trackingNumber: addr.trackingNumber || undefined,
       carrier: addr.carrier || undefined,
@@ -118,7 +118,7 @@ function saleRecordToSupabaseRow(payload: any): any {
       postalCode: clientObj.postalCode || '1201',
       country: 'Suisse',
       shippingMethod: shippingObj.method || 'post_priority',
-      shippingLabel: shippingObj.label || 'PostPac Priority (La Poste Suisse 24h)',
+      shippingLabel: shippingObj.label || 'PostPac Priority (La Poste Suisse 1-2 jours)',
       shippingCost: Number(shippingObj.cost) || 0,
       notes: paymentDetails.notes || '',
       reference: paymentDetails.reference || '',

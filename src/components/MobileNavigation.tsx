@@ -327,7 +327,7 @@ export default function MobileNavigation({ isOpen, onClose, initialTab = null }:
             >
               <div className="flex items-center gap-2.5">
                 <Truck className="w-4 h-4 text-white/60" />
-                <span>Livraison 24h & Tarifs</span>
+                <span>Livraison 1-2 jours & Tarifs</span>
               </div>
             </Link>
 
@@ -390,7 +390,7 @@ export default function MobileNavigation({ isOpen, onClose, initialTab = null }:
               <span>100% Stock en Suisse · Zéro frais de douane</span>
             </div>
             <p className="text-[10px] text-white/40">
-              Paiement sécurisé TWINT, Cartes & PostFinance · Expédition Poste 24h
+              Paiement sécurisé TWINT, Cartes & PostFinance · Livraison Poste 1-2 jours
             </p>
           </div>
 

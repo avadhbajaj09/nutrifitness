@@ -1026,8 +1026,8 @@ export const BLOG_POSTS: BlogPost[] = [
         title: 'Pourquoi commander en Suisse chez NutriFitness ?',
         content: [
           'Stock 100% physique dans notre entrepôt et boutique de Genève (34 Rue des Pâquis).',
-          'Aucun frais de douane sorpresa ni blocage aux frontières (TVA suisse 2.6% incluse).',
-          'Expédition prioritaire 24h par La Poste Suisse (PostPac Priority).'
+          'Aucun frais de douane ni blocage aux frontières.',
+          'Expédition prioritaire 1-2 jours par La Poste Suisse (PostPac Priority).'
         ]
       }
     ],

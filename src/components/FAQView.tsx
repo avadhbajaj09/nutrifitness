@@ -69,7 +69,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'store',
     categoryLabel: 'Livraison & Boutique en Suisse',
     question: 'Quels sont les délais et frais de livraison pour la Suisse et le Liechtenstein ?',
-    answer: 'Toutes les commandes validées du lundi au vendredi avant 14h00 sont préparées et confiées à La Poste Suisse le jour même. La livraison s\'effectue par PostPac Priority en 24h ouvrées directement à votre domicile ou en point relais PickPost. La livraison est GRATUITE dès CHF 75.– d\'achats. Pour les commandes inférieures à 75 CHF, une participation forfaitaire de CHF 7.90 est appliquée. Nos stocks étant basés en Suisse, aucun frais de douane ni taxe imprévue ne s\'applique.',
+    answer: 'Toutes les commandes validées du lundi au vendredi avant 14h00 sont préparées et confiées à La Poste Suisse le jour même. La livraison s\'effectue par PostPac Priority en 1 à 2 jours ouvrables directement à votre domicile ou en point relais PickPost. La livraison est GRATUITE dès CHF 75.– d\'achats. Pour les commandes inférieures à 75 CHF, une participation forfaitaire de CHF 7.90 est appliquée. Nos stocks étant basés en Suisse, aucun frais de douane ni taxe imprévue ne s\'applique.',
     keywords: ['livraison', 'poste suisse', 'delai', 'frais', 'postpac', 'priority', '24h', 'gratuit']
   },
   {
@@ -103,7 +103,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'health',
     categoryLabel: 'Santé, Articulations & Bien-être',
     question: 'Vos compléments alimentaires sont-ils conformes à la législation suisse ?',
-    answer: 'Oui, à 100 %. Tous les compléments alimentaires vendus par NutriFitness répondent scrupuleusement aux ordonnances du Département fédéral de l\'intérieur (DFI) et aux contrôles de l\'Office fédéral de la sécurité alimentaire et des affaires vétérinaires (OSAV). Nos formules sont exemptes de substances interdites, métaux lourds et agents dopants, et appliquent le taux de TVA suisse réduit de 2.6 % réservé aux denrées alimentaires.',
+    answer: 'Oui, à 100 %. Tous les compléments alimentaires vendus par NutriFitness répondent scrupuleusement aux ordonnances du Département fédéral de l\'intérieur (DFI) et aux contrôles de l\'Office fédéral de la sécurité alimentaire et des affaires vétérinaires (OSAV). Nos formules sont exemptes de substances interdites, métaux lourds et agents dopants.',
     keywords: ['suisse', 'osav', 'dfi', 'legislation', 'qualite', 'securite', 'dopage']
   },
   {
@@ -247,7 +247,7 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
           Questions Fréquentes <span className="text-[#F80404]">& FAQ</span>
         </h1>
         <p className="text-xs sm:text-sm text-white/60 mt-2 max-w-2xl">
-          Compléments alimentaires, protéines whey, créatine Creapure, livraison en 24h par La Poste Suisse et retrait Click & Collect à notre boutique en Suisse.
+          Compléments alimentaires, protéines whey, créatine Creapure, livraison en 1 à 2 jours par La Poste Suisse et retrait Click & Collect à notre boutique en Suisse.
         </p>
       </header>
 
@@ -355,7 +355,7 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
           <Link href="/livraison/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
-            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">📦 Livraison 24h</p>
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">📦 Livraison 1-2 jours</p>
             <p className="text-[11px] text-white/60 mt-1">PostPac Priority, tarifs et seuil franco dès 75 CHF.</p>
           </Link>
           <Link href="/paiement/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
