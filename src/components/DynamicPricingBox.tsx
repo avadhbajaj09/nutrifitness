@@ -204,11 +204,11 @@ export default function DynamicPricingBox({
             );
           }
 
-          let label = locale === 'en' ? '🇨🇭 In stock in Switzerland (1–2d)' : locale === 'de' ? '🇨🇭 Auf Lager in der Schweiz (1–2T)' : locale === 'it' ? '🇨🇭 Disponibile in Svizzera (1-2g)' : '🇨🇭 En stock en Suisse (1–2j)';
+          let label = locale === 'en' ? '🇨🇭 In stock in Switzerland (Geneva)' : locale === 'de' ? '🇨🇭 Auf Lager in der Schweiz (Genf)' : locale === 'it' ? '🇨🇭 Disponibile in Svizzera (Ginevra)' : '🇨🇭 En stock en Suisse (Genève)';
           if (product.shippingOrigin === 'portugal') {
-            label = '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
+            label = '🇵🇹 Expédié depuis le Portugal · En stock';
           } else if (isCommon && !isSwiss) {
-            label = '🇵🇹 Expédié depuis le Portugal (3–5j) · En stock';
+            label = '🇵🇹 Expédié depuis le Portugal · En stock';
           }
           return (
             <div className="flex items-center gap-1.5 text-xs font-bold text-[#95d600]">

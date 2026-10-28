@@ -251,7 +251,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               <>
                 <div className="p-2">
                   <p className="font-bold text-white text-sm mb-0.5">
-                    {locale === 'en' ? '1–2 Days Delivery' : locale === 'de' ? '1–2 Tage Lieferung' : locale === 'it' ? 'Consegna 1-2 giorni' : 'Livraison 1 à 2 jours'}
+                    {locale === 'en' ? 'Priority Dispatch' : locale === 'de' ? 'Priority Versand' : locale === 'it' ? 'Spedizione Priority' : 'Expédition Prioritaire'}
                   </p>
                   <p className="text-[11px]">La Poste Suisse Priority</p>
                 </div>

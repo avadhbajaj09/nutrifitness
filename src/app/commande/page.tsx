@@ -23,6 +23,7 @@ import {
   Loader2
 } from 'lucide-react';
 import { FlagIcon } from '@/components/delivery/FlagIcon';
+import { ShippingTimeline } from '@/components/delivery/ShippingTimeline';
 import { useDeliveryEstimates } from '@/hooks/useDeliveryEstimate';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 import { 
@@ -552,13 +553,11 @@ export default function CheckoutPage() {
     }
   }, [isGenevaAddress, genevaShippingMethod]);
 
-  // Address completeness
+  // Address completeness (unlocked as soon as street, zip, and city are entered)
   const isAddressCompleted = Boolean(
     customerAddress.trim().length >= 3 &&
-    customerPostalCode.trim().length >= 3 &&
+    customerPostalCode.trim().length >= 2 &&
     customerCity.trim().length >= 2 &&
-    firstName.trim().length >= 1 &&
-    lastName.trim().length >= 1 &&
     postalValidation.isValid
   );
 
@@ -1272,24 +1271,38 @@ export default function CheckoutPage() {
 
             {/* If address is not complete, show prompt */}
             {!isAddressCompleted ? (
-              <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-white/60 text-xs flex items-center gap-3">
-                <HelpCircle className="w-5 h-5 text-white/40 shrink-0" />
-                <p>
-                  Veuillez renseigner votre adresse de livraison complète ci-dessus pour calculer les options et tarifs d&apos;expédition exacts selon votre destination.
-                </p>
+              <div className="p-4 rounded-xl bg-white/5 border border-white/10 text-white/70 text-xs flex items-center gap-3">
+                <Truck className="w-5 h-5 text-[#F80404] shrink-0" />
+                <div>
+                  <p className="font-bold text-white mb-0.5">Calendrier d&apos;acheminement &amp; Délais de livraison en direct</p>
+                  <p className="text-white/60">
+                    Veuillez saisir votre adresse complète à l&apos;Étape 2 ci-dessus pour afficher le calendrier d&apos;expédition interactif et les dates précises de réception de vos colis.
+                  </p>
+                </div>
               </div>
             ) : (
               <div className="space-y-4">
 
                 {/* MIXED CART: 2 SEPARATE SHIPMENTS */}
                 {isMixedCart ? (
-                  <div className="space-y-4">
+                  <div className="space-y-5">
+                    {/* Multi-origin Alert Banner */}
+                    <div className="p-3.5 rounded-xl bg-purple-950/20 border border-purple-500/30 text-purple-200 text-xs flex items-start gap-2.5">
+                      <Package className="w-4 h-4 text-purple-400 shrink-0 mt-0.5" />
+                      <div>
+                        <p className="font-bold text-white mb-0.5">Commande multi-origines (2 expéditions distinctes)</p>
+                        <p className="text-white/70">
+                          Votre commande regroupe des articles expédiés depuis notre entrepôt suisse à Genève et notre centre logistique européen au Portugal. Deux colis séparés vous seront livrés avec leurs délais d&apos;acheminement respectifs ci-dessous :
+                        </p>
+                      </div>
+                    </div>
+
                     {/* Shipment 1: Geneva */}
                     <div className="rounded-xl border border-emerald-500/30 bg-emerald-950/10 p-4 space-y-3">
                       <div className="flex items-center justify-between border-b border-emerald-500/20 pb-2">
                         <div className="flex items-center gap-2">
                           <span className="text-base">🇨🇭</span>
-                          <span className="font-bold text-white text-xs">Colis 1 — Expédition Prioritaire Suisse</span>
+                          <span className="font-bold text-white text-xs">Colis 1 — Expédié depuis Genève (Suisse)</span>
                           <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold">
                             {genevaItems.length} article{genevaItems.length > 1 ? 's' : ''}
                           </span>
@@ -1302,6 +1315,14 @@ export default function CheckoutPage() {
                       <div className="text-[11px] text-white/60">
                         {genevaItems.map(it => it.name).join(', ')}
                       </div>
+
+                      {/* Visual Timeline matching reference */}
+                      <ShippingTimeline
+                        origin="GENEVA"
+                        destinationCountry={customerCountry}
+                        isClickCollect={genevaShippingMethod === 'clickcollect'}
+                        locale={locale}
+                      />
 
                       {/* Options for Geneva shipment */}
                       <div className="space-y-2 pt-1">
@@ -1322,10 +1343,6 @@ export default function CheckoutPage() {
                               <span className="flex items-center gap-1.5">
                                 <Truck className="w-3.5 h-3.5 text-[#F80404]" />
                                 <span>PostPac Priority (La Poste Suisse)</span>
-                                <span className="text-[10px] text-emerald-400 font-bold flex items-center gap-1">
-                                  <FlagIcon countryCode="CH" className="w-3 h-3" />
-                                  <span>{genevaPromiseFormatted}</span>
-                                </span>
                               </span>
                               <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(7.90)}</span>
                             </div>
@@ -1350,12 +1367,12 @@ export default function CheckoutPage() {
                             <div className="flex-1 text-xs">
                               <div className="flex justify-between font-bold text-white">
                                 <span className="flex items-center gap-1.5">
-                                  <span>📍 Click &amp; Collect Boutique</span>
+                                  <span>📍 Click &amp; Collect Boutique Genève</span>
                                   <span className="text-[10px] text-[#F80404] font-bold">Prêt en 2h</span>
                                 </span>
                                 <span className="text-emerald-400 font-bold">{t.common.free}</span>
                               </div>
-                              <p className="text-[11px] text-white/50 mt-0.5">Retrait gratuit en Suisse (Lun-Ven 12h30-19h / Sam 12h-17h).</p>
+                              <p className="text-[11px] text-white/50 mt-0.5">Retrait gratuit en Suisse (Lun-Ven 12h30-19h / Sam 12h-17h au 34 Rue des Pâquis).</p>
                             </div>
                           </label>
                         )}
@@ -1367,7 +1384,7 @@ export default function CheckoutPage() {
                       <div className="flex items-center justify-between border-b border-blue-500/20 pb-2">
                         <div className="flex items-center gap-2">
                           <FlagIcon countryCode="PT" className="w-4 h-4 shrink-0" />
-                          <span className="font-bold text-white text-xs">Colis 2 — Expédition Directe Partenaire</span>
+                          <span className="font-bold text-white text-xs">Colis 2 — Expédié depuis le Portugal (Hub Europe)</span>
                           <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold">
                             {portugalItems.length} article{portugalItems.length > 1 ? 's' : ''}
                           </span>
@@ -1381,30 +1398,41 @@ export default function CheckoutPage() {
                         {portugalItems.map(it => it.name).join(', ')}
                       </div>
 
+                      {/* Visual Timeline matching reference */}
+                      <ShippingTimeline
+                        origin="PORTUGAL"
+                        destinationCountry={customerCountry}
+                        locale={locale}
+                      />
+
                       <div className="p-3 rounded-lg border border-white/10 bg-black/40 text-xs">
                         <div className="flex justify-between font-bold text-white">
                           <span className="flex items-center gap-1.5">
                             <Truck className="w-3.5 h-3.5 text-blue-400" />
-                            <span>Livraison Suivie Express</span>
-                            <span className="text-[10px] text-blue-400 font-bold flex items-center gap-1">
-                              <FlagIcon countryCode="PT" className="w-3 h-3" />
-                              <span>{ptPromiseFormatted}</span>
-                            </span>
+                            <span>Transporteur Express International Suivi (DPD / DHL / CTT)</span>
                           </span>
                           <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
                         </div>
                         <p className="text-[11px] text-white/50 mt-0.5">
-                          Expédition directe avec suivi complet par e-mail.
+                          Expédition directe avec suivi complet par e-mail et SMS.
                         </p>
                       </div>
                     </div>
                   </div>
                 ) : (
                   /* SINGLE ORIGIN SHIPMENT */
-                  <div className="space-y-3">
+                  <div className="space-y-4">
                     {/* Geneva only items */}
                     {genevaItems.length > 0 && (
-                      <>
+                      <div className="space-y-3">
+                        {/* Visual Timeline matching reference */}
+                        <ShippingTimeline
+                          origin="GENEVA"
+                          destinationCountry={customerCountry}
+                          isClickCollect={genevaShippingMethod === 'clickcollect'}
+                          locale={locale}
+                        />
+
                         <label 
                           className={`flex items-start gap-3.5 p-4 rounded-xl border cursor-pointer transition-all ${
                             genevaShippingMethod === 'postpac' ? 'border-[#F80404] bg-[#F80404]/10' : 'border-white/15 bg-white/5'
@@ -1422,10 +1450,6 @@ export default function CheckoutPage() {
                               <span className="flex items-center gap-2">
                                 <Truck className="w-4 h-4 text-[#F80404]" />
                                 <span>PostPac Priority (La Poste Suisse)</span>
-                                <span className="text-[10px] bg-emerald-500/20 text-emerald-400 px-2 py-0.5 rounded font-bold flex items-center gap-1">
-                                  <FlagIcon countryCode="CH" className="w-3 h-3" />
-                                  <span>{genevaPromiseFormatted}</span>
-                                </span>
                               </span>
                               <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(7.90)}</span>
                             </div>
@@ -1450,35 +1474,40 @@ export default function CheckoutPage() {
                             <div className="flex-1 text-xs">
                               <div className="flex justify-between font-bold text-white mb-0.5">
                                 <span className="flex items-center gap-2">
-                                  <span>📍 Click &amp; Collect Boutique</span>
+                                  <span>📍 Click &amp; Collect Boutique Genève</span>
                                   <span className="text-[10px] bg-[#F80404]/20 text-[#F80404] px-2 py-0.5 rounded font-bold">Disponible en 2h</span>
                                 </span>
                                 <span className="text-emerald-400 font-bold">{t.common.free}</span>
                               </div>
-                              <p className="text-white/50">Retrait gratuit en Suisse (Lun-Ven 12h30-19h / Sam 12h-17h).</p>
+                              <p className="text-white/50">Retrait gratuit en Suisse (Lun-Ven 12h30-19h / Sam 12h-17h au 34 Rue des Pâquis).</p>
                             </div>
                           </label>
                         )}
-                      </>
+                      </div>
                     )}
 
                     {/* Portugal only items */}
                     {portugalItems.length > 0 && genevaItems.length === 0 && (
-                      <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-950/10 text-xs space-y-1">
-                        <div className="flex justify-between font-bold text-white">
-                          <span className="flex items-center gap-2">
-                            <Truck className="w-4 h-4 text-blue-400" />
-                            <span>Livraison Suivie Express</span>
-                            <span className="text-[10px] bg-blue-500/20 text-blue-400 px-2 py-0.5 rounded font-bold flex items-center gap-1">
-                              <FlagIcon countryCode="PT" className="w-3 h-3" />
-                              <span>{ptPromiseFormatted}</span>
+                      <div className="space-y-3">
+                        {/* Visual Timeline matching reference */}
+                        <ShippingTimeline
+                          origin="PORTUGAL"
+                          destinationCountry={customerCountry}
+                          locale={locale}
+                        />
+
+                        <div className="p-4 rounded-xl border border-blue-500/30 bg-blue-950/10 text-xs space-y-1">
+                          <div className="flex justify-between font-bold text-white">
+                            <span className="flex items-center gap-2">
+                              <Truck className="w-4 h-4 text-blue-400" />
+                              <span>Transporteur Express International Suivi (DPD / DHL / CTT)</span>
                             </span>
-                          </span>
-                          <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
+                            <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
+                          </div>
+                          <p className="text-white/50">
+                            Colis expédié avec numéro de suivi en ligne direct.
+                          </p>
                         </div>
-                        <p className="text-white/50">
-                          Colis expédié avec numéro de suivi en ligne direct.
-                        </p>
                       </div>
                     )}
                   </div>

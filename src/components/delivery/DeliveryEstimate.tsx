@@ -123,16 +123,15 @@ export function DeliveryEstimate({
   if (mode === 'card') {
     return (
       <div className={`space-y-1 text-left text-xs ${className}`}>
-        {/* 1. Primary, bold: Truck icon + Delivery Promise Date */}
-        <div className="flex items-center gap-1.5 font-bold text-white leading-tight">
-          <Truck className="w-3.5 h-3.5 text-emerald-400 shrink-0" />
-          <span className="font-semibold text-white/95 text-[11px] sm:text-xs">
-            {displayPromise}
+        <div className="flex items-center gap-1.5 flex-wrap">
+          <span className="inline-flex items-center gap-1 text-[10px] font-bold text-white/80">
+            <FlagIcon countryCode={originCountry} className="w-3 h-3 shrink-0" />
+            <span>
+              {resolvedOrigin === 'GENEVA' 
+                ? (currentLocale === 'en' ? 'Swiss stock' : currentLocale === 'de' ? 'Schweizer Lager' : 'Stock Suisse') 
+                : (currentLocale === 'en' ? 'EU stock' : currentLocale === 'de' ? 'EU Lager' : 'Stock Europe')}
+            </span>
           </span>
-        </div>
-
-        {/* 3. Stock pill on its own */}
-        <div className="pt-0.5">
           <span
             className={`inline-block text-[10px] font-black px-2 py-0.5 rounded-md tracking-wider uppercase ${
               isOutOfStock
@@ -149,22 +148,21 @@ export function DeliveryEstimate({
     );
   }
 
-  // 2. PRODUCT DETAIL PAGE MODE (With Expander)
+  // 2. PRODUCT DETAIL PAGE MODE (With Clean Notice)
   if (mode === 'detail') {
     const rawEst = estimate?.estimate;
-    const earliestStr = rawEst?.earliestDate;
-    const latestStr = rawEst?.latestDate;
     const orderByTime = rawEst?.orderByTime;
-    const requiresCustoms = rawEst?.requiresCustoms;
 
     return (
       <div className={`space-y-3 bg-[#171717] border border-white/10 rounded-2xl p-4 text-xs ${className}`}>
-        {/* Primary Line */}
+        {/* Primary Line: Origin & Stock */}
         <div className="flex flex-wrap items-center justify-between gap-2">
           <div className="flex items-center gap-2">
             <FlagIcon countryCode={originCountry} className="w-4 h-4 shrink-0" />
             <span className="font-bold text-white text-sm">
-              {displayPromise}
+              {resolvedOrigin === 'GENEVA' 
+                ? (currentLocale === 'en' ? 'Dispatched from Geneva, Switzerland' : currentLocale === 'de' ? 'Versand aus Genf, Schweiz' : 'Expédié depuis Genève, Suisse') 
+                : (currentLocale === 'en' ? 'Dispatched from European Hub (Portugal)' : currentLocale === 'de' ? 'Versand aus EU-Hub (Portugal)' : 'Expédié depuis le Hub Europe (Portugal)')}
             </span>
           </div>
 
@@ -181,26 +179,22 @@ export function DeliveryEstimate({
           </span>
         </div>
 
-        {/* Secondary: Ships from */}
-        <div className="flex items-center justify-between text-xs text-white/60">
+        {/* Secondary: Notice that exact delivery dates are calculated at checkout */}
+        <div className="flex items-center justify-between text-xs text-white/70 bg-white/5 p-2.5 rounded-xl border border-white/5">
           <span className="flex items-center gap-1.5">
             <Truck className="w-3.5 h-3.5 text-[#F80404]" />
-            <span>{shipsFrom}</span>
+            <span>
+              {currentLocale === 'en'
+                ? 'Exact delivery dates & carrier timeline calculated at checkout'
+                : currentLocale === 'de'
+                ? 'Genaue Lieferzeiten werden beim Checkout berechnet'
+                : 'Délais exacts et calendrier de livraison calculés à la commande'}
+            </span>
           </span>
-
-          {/* Toggle details */}
-          <button
-            type="button"
-            onClick={() => setDetailsOpen(prev => !prev)}
-            className="text-[11px] font-bold text-white/80 hover:text-white flex items-center gap-1 transition-colors underline"
-          >
-            <span>{currentLocale === 'en' ? 'Delivery details' : 'Détails de livraison'}</span>
-            {detailsOpen ? <ChevronUp className="w-3 h-3" /> : <ChevronDown className="w-3 h-3" />}
-          </button>
         </div>
 
         {/* Order-by hint if available today */}
-        {orderByTime && (
+        {orderByTime && resolvedOrigin === 'GENEVA' && (
           <div className="flex items-center gap-2 text-xs text-emerald-400 bg-emerald-950/20 border border-emerald-800/30 px-3 py-1.5 rounded-xl">
             <Clock className="w-3.5 h-3.5 shrink-0" />
             <span>
@@ -208,52 +202,6 @@ export function DeliveryEstimate({
                 ? `Order within ${orderByTime.formatted} for dispatch today`
                 : `Commandez d'ici ${orderByTime.formatted} pour une expédition aujourd'hui`}
             </span>
-          </div>
-        )}
-
-        {/* Expander Content */}
-        {detailsOpen && (
-          <div className="space-y-2 pt-2 border-t border-white/10 text-xs text-white/70 animate-in fade-in duration-150">
-            {resolvedOrigin !== 'PORTUGAL' && earliestStr && latestStr && (
-              <div className="flex justify-between text-[11px]">
-                <span className="text-white/50">{currentLocale === 'en' ? 'Estimated delivery window:' : 'Fenêtre estimée de livraison :'}</span>
-                <span className="font-bold text-white">
-                  {earliestStr} → {latestStr}
-                </span>
-              </div>
-            )}
-
-            <div className="flex justify-between text-[11px]">
-              <span className="text-white/50">{currentLocale === 'en' ? 'Transit lead time:' : 'Délai d\'acheminement :'}</span>
-              <span className="font-semibold text-white">
-                {rawEst ? `${rawEst.transitMinDays}–${rawEst.transitMaxDays} ${currentLocale === 'en' ? 'working days' : 'jours ouvrables'}` : (resolvedOrigin === 'GENEVA' ? '1–2 jours ouvrables' : '3–5 jours ouvrables')}
-              </span>
-            </div>
-
-            <div className="flex justify-between text-[11px]">
-              <span className="text-white/50">{currentLocale === 'en' ? 'Handling time:' : 'Préparation en entrepôt :'}</span>
-              <span className="font-semibold text-white">
-                {rawEst ? `${rawEst.handlingDays} ${currentLocale === 'en' ? 'day' : 'jour'}` : '0 jour'}
-              </span>
-            </div>
-
-            <div className="flex justify-between text-[11px]">
-              <span className="text-white/50">{currentLocale === 'en' ? 'Order cutoff time:' : 'Heure limite quotidienne :'}</span>
-              <span className="font-semibold text-white">
-                {resolvedOrigin === 'GENEVA' ? '14:00 (Suisse)' : '12:00 (Lisbonne)'}
-              </span>
-            </div>
-
-            {requiresCustoms && (
-              <div className="p-2.5 rounded-xl bg-amber-500/10 border border-amber-500/20 text-amber-300 text-[11px] flex items-start gap-2">
-                <ShieldAlert className="w-3.5 h-3.5 shrink-0 mt-0.5" />
-                <p>
-                  {currentLocale === 'en'
-                    ? `Customs clearance required for ${rawEst?.destinationCountry || countryCode || 'destination'}. Handled automatically.`
-                    : `Dédouanement et formalités requis pour ${rawEst?.destinationCountry || countryCode || 'cette destination'}. Déclaration incluse.`}
-                </p>
-              </div>
-            )}
           </div>
         )}
       </div>
