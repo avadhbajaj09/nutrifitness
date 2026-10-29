@@ -71,8 +71,18 @@ export async function GET() {
         const vGenStock = vStocks.find(s => s.origin_id === 'GENEVA');
         const vPtStock = vStocks.find(s => s.origin_id === 'PORTUGAL');
 
-        const vGen = vGenStock ? Number(vGenStock.quantity) || 0 : (Number(v.stock_geneva) || 0);
-        const vPt = vPtStock ? Number(vPtStock.quantity) || 0 : (Number(v.stock_portugal) || 0);
+        const vGenFromStock = vGenStock ? Number(vGenStock.quantity) : undefined;
+        const vGenFromVariant = (v.stock_geneva !== null && v.stock_geneva !== undefined) ? Number(v.stock_geneva) : undefined;
+        const vGen = (vGenFromVariant !== undefined && vGenFromVariant > 0)
+          ? vGenFromVariant
+          : (vGenFromStock !== undefined ? vGenFromStock : (vGenFromVariant || 0));
+
+        const vPtFromStock = vPtStock ? Number(vPtStock.quantity) : undefined;
+        const vPtFromVariant = (v.stock_portugal !== null && v.stock_portugal !== undefined) ? Number(v.stock_portugal) : undefined;
+        const vPt = (vPtFromVariant !== undefined && vPtFromVariant > 0)
+          ? vPtFromVariant
+          : (vPtFromStock !== undefined ? vPtFromStock : (vPtFromVariant || 0));
+
         const vTot = vGen + vPt;
 
         const info = {
@@ -84,7 +94,40 @@ export async function GET() {
 
         if (v.id) variantStockMap[v.id] = info;
         if (v.sku) variantStockMap[v.sku.toLowerCase().trim()] = info;
-        if (v.attribute_value) variantStockMap[v.attribute_value.toLowerCase().trim()] = info;
+        if (v.attribute_value) {
+          const rawFlv = v.attribute_value.toLowerCase().trim();
+          variantStockMap[rawFlv] = info;
+          const norm = rawFlv.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+          if (norm) variantStockMap[norm] = info;
+
+          const synonyms: Record<string, string[]> = {
+            vanille: ['vanilla'],
+            vanilla: ['vanille'],
+            fraise: ['strawberry', 'strawberries'],
+            fraises: ['strawberry', 'strawberries'],
+            strawberry: ['fraise', 'fraises'],
+            strawberries: ['fraise', 'fraises'],
+            chocolat: ['chocolate'],
+            chocolate: ['chocolat'],
+            ananas: ['pineapple'],
+            pineapple: ['ananas'],
+            banane: ['banana'],
+            banana: ['banane'],
+            citron: ['lemon'],
+            lemon: ['citron'],
+            peche: ['peach'],
+            peach: ['peche'],
+            pasteque: ['watermelon'],
+            watermelon: ['pasteque'],
+            fruitpunch: ['fruitspunch'],
+            fruitspunch: ['fruitpunch'],
+          };
+
+          const syns = synonyms[norm] || [];
+          for (const s of syns) {
+            variantStockMap[s] = info;
+          }
+        }
       }
 
       // If parent has variants and parent stock is 0, sum up variants

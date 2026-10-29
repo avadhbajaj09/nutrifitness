@@ -62,7 +62,7 @@ interface StoreContextType {
   };
   formatPrice: (amountChfOrProduct: any, amountEur?: number) => string;
   convertPrice: (amountChfOrProduct: any, amountEur?: number) => number;
-  addToCart: (product: any, options?: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string }) => void;
+  addToCart: (product: any, options?: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string; stockGeneva?: number; stockPortugal?: number }) => void;
   removeFromCart: (itemKey: string) => void;
   updateQuantity: (itemKey: string, delta: number) => void;
   clearCart: () => void;
@@ -271,7 +271,8 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
     if (variantKey && entry.variants) {
       const vK = variantKey.toLowerCase().trim();
-      const vStock = entry.variants[vK];
+      const norm = vK.normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+      const vStock = entry.variants[vK] || (norm ? entry.variants[norm] : null);
       if (vStock) return vStock;
     }
 
@@ -554,7 +555,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     }, 3200);
   };
 
-  const addToCart = (product: any, options: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string } = {}) => {
+  const addToCart = (product: any, options: { quantity?: number; flavor?: string; size?: string; price?: number; image?: string; stockGeneva?: number; stockPortugal?: number } = {}) => {
     const isEbook = isEbookItem(product);
     const quantity = isEbook ? 1 : (options.quantity || 1);
     // Resolve flavor intelligently if product has variants
@@ -619,8 +620,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
 
     const stockCheck = !isEbook ? getProductStock(product, flavor) : null;
-    const effectiveStockGeneva = stockCheck ? stockCheck.geneva : product.stockGeneva;
-    const effectiveStockPortugal = stockCheck ? stockCheck.portugal : product.stockPortugal;
+    const effectiveStockGeneva = typeof options.stockGeneva === 'number'
+      ? options.stockGeneva
+      : (stockCheck ? stockCheck.geneva : product.stockGeneva);
+    const effectiveStockPortugal = typeof options.stockPortugal === 'number'
+      ? options.stockPortugal
+      : (stockCheck ? stockCheck.portugal : product.stockPortugal);
 
     const isSwissDest = (countryCode || 'CH').toUpperCase() === 'CH' || (countryCode || 'CH').toUpperCase() === 'LI';
 

@@ -55,7 +55,23 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const categoryHref = category ? `/categorie/${category.slug}/` : '/boutique/';
   const relevantGuide = getRelevantGuideForProduct(product.categorySlug, name);
 
-  const selectedVariant = product.variants?.find(
+  const selectedVariant = product.variants?.find(v => {
+    if (!v.flavorName) return false;
+    const sNorm = (selectedFlavor || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    const fnEn = (v.flavorName.en || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    const fnFr = (v.flavorName.fr || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    const fnLoc = (v.flavorName[locale] || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    if (sNorm && (sNorm === fnEn || sNorm === fnFr || sNorm === fnLoc)) return true;
+
+    // Common synonyms
+    if ((sNorm === 'vanilla' && fnFr === 'vanille') || (sNorm === 'vanille' && fnEn === 'vanilla')) return true;
+    if ((sNorm.includes('strawberry') && fnFr.includes('fraise')) || (sNorm.includes('fraise') && fnEn.includes('strawberry'))) return true;
+    if ((sNorm.includes('chocolate') && fnFr.includes('chocolat')) || (sNorm.includes('chocolat') && fnEn.includes('chocolate'))) return true;
+    if ((sNorm.includes('pineapple') && fnFr.includes('ananas')) || (sNorm.includes('ananas') && fnEn.includes('pineapple'))) return true;
+    if ((sNorm === 'fruitpunch' && fnFr === 'fruitspunch') || (sNorm === 'fruitspunch' && fnEn === 'fruitpunch')) return true;
+
+    return false;
+  }) || product.variants?.find(
     v => (v.flavorName && (v.flavorName[locale] === selectedFlavor || v.flavorName.fr === selectedFlavor))
   );
   const currentGtin = getProductGtin(product, selectedVariant);
@@ -296,7 +312,16 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             variantSku={selectedVariant?.sku}
             shippingOriginHint={selectedVariant ? (
               isSwissDestination
-                ? ((selectedVariant.stockGeneva ?? 0) > 0 ? 'switzerland' : ((selectedVariant.stockPortugal ?? 0) > 0 ? 'portugal' : product.shippingOrigin))
+                ? (() => {
+                    const selStock = (selectedVariant.id ? getProductStock(product, selectedVariant.id) : null)
+                      || (selectedVariant.sku ? getProductStock(product, selectedVariant.sku) : null)
+                      || (selectedFlavor ? getProductStock(product, selectedFlavor) : null);
+                    const sGen = (selStock && typeof selStock.geneva === 'number') ? selStock.geneva : (selectedVariant.stockGeneva ?? 0);
+                    const sPt = (selStock && typeof selStock.portugal === 'number') ? selStock.portugal : (selectedVariant.stockPortugal ?? 0);
+                    if (sGen > 0) return 'switzerland';
+                    if (sPt > 0 && product.shippingOrigin !== 'switzerland' && product.locationType !== 'GENEVA_ONLY') return 'portugal';
+                    return product.shippingOrigin;
+                  })()
                 : 'portugal'
             ) : product.shippingOrigin}
             mode="detail"
@@ -312,9 +337,11 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               <div className="flex flex-wrap gap-2">
                 {product.variants.map((v, i) => {
                   const flv = v.flavorName?.fr || 'Standard';
-                  const isSelected = selectedFlavor === flv;
+                  const isSelected = selectedFlavor === flv || (selectedVariant && selectedVariant.id === v.id);
                   const isSwissDest = effectiveCountry === 'CH' || effectiveCountry === 'LI';
-                  const vStock = getProductStock(product, flv);
+                  const vStock = (v.id ? getProductStock(product, v.id) : null)
+                    || (v.sku ? getProductStock(product, v.sku) : null)
+                    || getProductStock(product, flv);
 
                   const vGen = (vStock && typeof vStock.geneva === 'number')
                     ? vStock.geneva

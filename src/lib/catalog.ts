@@ -4788,8 +4788,8 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
     "stockGeneva": 1,
     "stockPortugal": 200,
     "gtin13": "682683504800"
@@ -10060,8 +10060,8 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
     "stockGeneva": 14,
     "stockPortugal": 250,
     "inStock": true
@@ -13465,8 +13465,8 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "switzerland",
-    "locationType": "GENEVA_ONLY",
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
     "stockGeneva": 6,
     "stockPortugal": 100,
     "inStock": true,

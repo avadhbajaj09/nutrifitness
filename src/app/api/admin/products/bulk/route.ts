@@ -38,14 +38,14 @@ export async function POST(request: Request) {
           origin_id: 'GENEVA',
           is_active: true,
           updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' });
         await supabase.from('product_stock').upsert({
           product_id: id,
           variant_id: null,
           origin_id: 'PORTUGAL',
           is_active: false,
           updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' });
         await supabase.from('products').update({ main_location: 'GENEVA' }).eq('id', id);
       } else if (action === 'set_location_portugal') {
         await supabase.from('product_stock').upsert({
@@ -54,14 +54,14 @@ export async function POST(request: Request) {
           origin_id: 'PORTUGAL',
           is_active: true,
           updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' });
         await supabase.from('product_stock').upsert({
           product_id: id,
           variant_id: null,
           origin_id: 'GENEVA',
           is_active: false,
           updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' });
         await supabase.from('products').update({ main_location: 'PORTUGAL' }).eq('id', id);
       } else if (action === 'set_location_both') {
         await supabase.from('product_stock').upsert({
@@ -70,14 +70,14 @@ export async function POST(request: Request) {
           origin_id: 'GENEVA',
           is_active: true,
           updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' });
         await supabase.from('product_stock').upsert({
           product_id: id,
           variant_id: null,
           origin_id: 'PORTUGAL',
           is_active: true,
           updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' });
       }
 
       // Log in audit log

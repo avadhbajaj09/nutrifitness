@@ -185,7 +185,7 @@ export async function PATCH(request: Request) {
         quantity: newQty,
         is_active: newActive,
         updated_at: new Date().toISOString(),
-      }, { onConflict: 'product_id,origin_id' });
+      }, { onConflict: 'product_id,variant_id,origin_id' });
 
       // Sync fulfillment_stock
       await supabase.from('fulfillment_stock').upsert({

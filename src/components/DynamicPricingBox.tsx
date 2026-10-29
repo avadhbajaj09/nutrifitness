@@ -36,27 +36,45 @@ export default function DynamicPricingBox({
     product.stockPortugal
   );
 
-  const selectedVariant = product.variants?.find(
+  const selectedVariant = product.variants?.find(v => {
+    if (!v.flavorName) return false;
+    const sNorm = (selectedFlavor || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    const fnEn = (v.flavorName.en || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    const fnFr = (v.flavorName.fr || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    const fnLoc = (v.flavorName[locale] || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+    if (sNorm && (sNorm === fnEn || sNorm === fnFr || sNorm === fnLoc)) return true;
+
+    // Common synonyms
+    if ((sNorm === 'vanilla' && fnFr === 'vanille') || (sNorm === 'vanille' && fnEn === 'vanilla')) return true;
+    if ((sNorm.includes('strawberry') && fnFr.includes('fraise')) || (sNorm.includes('fraise') && fnEn.includes('strawberry'))) return true;
+    if ((sNorm.includes('chocolate') && fnFr.includes('chocolat')) || (sNorm.includes('chocolat') && fnEn.includes('chocolate'))) return true;
+    if ((sNorm.includes('pineapple') && fnFr.includes('ananas')) || (sNorm.includes('ananas') && fnEn.includes('pineapple'))) return true;
+    if ((sNorm === 'fruitpunch' && fnFr === 'fruitspunch') || (sNorm === 'fruitspunch' && fnEn === 'fruitpunch')) return true;
+
+    return false;
+  }) || product.variants?.find(
     v => (v.flavorName && (v.flavorName[locale] === selectedFlavor || v.flavorName.fr === selectedFlavor))
   );
 
   const isSwissDest = effectiveCountry === 'CH' || effectiveCountry === 'LI';
-  const vStock = selectedFlavor ? getProductStock(product, selectedFlavor) : null;
+  const vStock = (selectedVariant?.id ? getProductStock(product, selectedVariant.id) : null)
+    || (selectedVariant?.sku ? getProductStock(product, selectedVariant.sku) : null)
+    || (selectedFlavor ? getProductStock(product, selectedFlavor) : null);
+
+  const vGen = (vStock && typeof vStock.geneva === 'number')
+    ? vStock.geneva
+    : (selectedVariant && typeof selectedVariant.stockGeneva === 'number')
+    ? selectedVariant.stockGeneva
+    : (product.stockGeneva ?? 0);
+
+  const vPt = (vStock && typeof vStock.portugal === 'number')
+    ? vStock.portugal
+    : (selectedVariant && typeof selectedVariant.stockPortugal === 'number')
+    ? selectedVariant.stockPortugal
+    : (product.stockPortugal ?? 0);
 
   // Maximum purchasable stock for this destination and variant (Swiss priority: Switzerland first, then Portugal; EU: Portugal only)
   const maxAvailableStock = React.useMemo(() => {
-    const vGen = (vStock && typeof vStock.geneva === 'number')
-      ? vStock.geneva
-      : (selectedVariant && typeof selectedVariant.stockGeneva === 'number')
-      ? selectedVariant.stockGeneva
-      : (product.stockGeneva ?? 0);
-
-    const vPt = (vStock && typeof vStock.portugal === 'number')
-      ? vStock.portugal
-      : (selectedVariant && typeof selectedVariant.stockPortugal === 'number')
-      ? selectedVariant.stockPortugal
-      : (product.stockPortugal ?? 0);
-
     if (isSwissDest) {
       if (vGen > 0) return vGen;
       if (vPt > 0 && product.shippingOrigin !== 'switzerland' && product.locationType !== 'GENEVA_ONLY') return vPt;
@@ -66,7 +84,7 @@ export default function DynamicPricingBox({
       if (product.shippingOrigin === 'switzerland' || product.locationType === 'GENEVA_ONLY') return 0;
       return Math.max(0, vPt);
     }
-  }, [isSwissDest, vStock, selectedVariant, product.stockGeneva, product.stockPortugal, product.shippingOrigin, product.locationType]);
+  }, [isSwissDest, vGen, vPt, product.shippingOrigin, product.locationType]);
 
   const isSelectedVariantOutOfStock = maxAvailableStock <= 0;
 
@@ -139,6 +157,8 @@ export default function DynamicPricingBox({
       flavor: selectedFlavor,
       price: activeUnitPrice,
       image: selectedVariant?.image,
+      stockGeneva: vGen,
+      stockPortugal: vPt,
     });
     if (onAddToCartSuccess) onAddToCartSuccess();
   };
@@ -220,18 +240,6 @@ export default function DynamicPricingBox({
         </div>
         {(() => {
           const isSwiss = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
-          const vGen = (vStock && typeof vStock.geneva === 'number')
-            ? vStock.geneva
-            : (selectedVariant && typeof selectedVariant.stockGeneva === 'number')
-            ? selectedVariant.stockGeneva
-            : (product.stockGeneva ?? 0);
-
-          const vPt = (vStock && typeof vStock.portugal === 'number')
-            ? vStock.portugal
-            : (selectedVariant && typeof selectedVariant.stockPortugal === 'number')
-            ? selectedVariant.stockPortugal
-            : (product.stockPortugal ?? 0);
-
           const isDeliverable = isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin, vGen, vPt);
 
           if (!isDeliverable || isSelectedVariantOutOfStock) {
