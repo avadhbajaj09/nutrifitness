@@ -12,7 +12,7 @@ export async function GET(request: Request) {
   const locationFilter = searchParams.get('location') || 'all'; // 'all' | 'GENEVA' | 'PORTUGAL' | 'COMMON'
   const statusFilter = searchParams.get('status') || 'published'; // 'all' | 'published' | 'draft' | 'deleted'
   const page = Math.max(1, parseInt(searchParams.get('page') || '1', 10));
-  const limit = Math.max(1, Math.min(100, parseInt(searchParams.get('limit') || '25', 10)));
+  const limit = Math.max(1, Math.min(1000, parseInt(searchParams.get('limit') || '25', 10)));
   const offset = (page - 1) * limit;
 
   try {
@@ -325,6 +325,10 @@ export async function PATCH(request: Request) {
         const vUpdates: Record<string, any> = { updated_at: new Date().toISOString() };
         if (v.stock_geneva !== undefined) vUpdates.stock_geneva = Math.max(0, parseInt(v.stock_geneva, 10));
         if (v.stock_portugal !== undefined) vUpdates.stock_portugal = Math.max(0, parseInt(v.stock_portugal, 10));
+        if (v.price !== undefined) vUpdates.price = Number(v.price) || 0;
+        if (v.compare_at_price !== undefined) vUpdates.compare_at_price = v.compare_at_price ? Number(v.compare_at_price) : null;
+        if (v.attribute_value !== undefined) vUpdates.attribute_value = v.attribute_value;
+        if (v.gtin13 !== undefined) vUpdates.gtin13 = v.gtin13;
 
         await supabase.from('product_variants').update(vUpdates).eq('id', v.id);
 
@@ -348,6 +352,57 @@ export async function PATCH(request: Request) {
             updated_at: new Date().toISOString()
           }, { onConflict: 'product_id,variant_id,origin_id' });
         }
+      }
+    }
+
+    // Delete variant if requested
+    if (body.delete_variant_id) {
+      await supabase.from('product_stock').delete().eq('variant_id', body.delete_variant_id);
+      await supabase.from('product_variants').delete().eq('id', body.delete_variant_id);
+    }
+
+    // Add new variant/taste if requested
+    if (body.add_variant) {
+      const av = body.add_variant;
+      const cleanFlavor = (av.flavor || av.attribute_value || 'Nouvelle saveur').trim();
+      const newVarId = toUuid(`${realDbId}-${av.sku || Date.now()}-${cleanFlavor}`);
+      const vPrice = Number(av.price) || Number(existingProduct.base_price) || 29.9;
+      const vGen = Math.max(0, parseInt(av.stock_geneva || 0, 10));
+      const vPt = Math.max(0, parseInt(av.stock_portugal || 0, 10));
+
+      await supabase.from('product_variants').insert({
+        id: newVarId,
+        product_id: realDbId,
+        sku: av.sku || `NF-${String(Date.now()).slice(-6)}`,
+        attribute_name: 'saveur',
+        attribute_value: cleanFlavor,
+        price: vPrice,
+        stock_geneva: vGen,
+        stock_portugal: vPt,
+        gtin13: av.gtin13 || null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      });
+
+      if (vGen > 0) {
+        await supabase.from('product_stock').upsert({
+          product_id: realDbId,
+          variant_id: newVarId,
+          origin_id: 'GENEVA',
+          quantity: vGen,
+          is_active: true,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,variant_id,origin_id' });
+      }
+      if (vPt > 0) {
+        await supabase.from('product_stock').upsert({
+          product_id: realDbId,
+          variant_id: newVarId,
+          origin_id: 'PORTUGAL',
+          quantity: vPt,
+          is_active: true,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,variant_id,origin_id' });
       }
     }
 
@@ -550,6 +605,7 @@ export async function POST(request: Request) {
 
     // Upsert variants
     if (Array.isArray(variants) && variants.length > 0) {
+      const keptVariantIds: string[] = [];
       for (const v of variants) {
         if (!v) continue;
         const vGen = Math.max(0, parseInt(v.stock_geneva ?? (v.stockGeneva ?? 0), 10));
@@ -625,6 +681,7 @@ export async function POST(request: Request) {
         }
 
         if (vDbId) {
+          keptVariantIds.push(vDbId);
           await supabase.from('product_stock').upsert({
             product_id: targetId,
             variant_id: vDbId,
@@ -643,6 +700,66 @@ export async function POST(request: Request) {
             updated_at: now
           }, { onConflict: 'product_id,variant_id,origin_id' });
         }
+      }
+
+      if (keptVariantIds.length > 0) {
+        const { data: dbVars } = await supabase.from('product_variants').select('id').eq('product_id', targetId);
+        const toDelete = (dbVars || []).map(v => v.id).filter(id => !keptVariantIds.includes(id));
+        for (const delId of toDelete) {
+          await supabase.from('product_stock').delete().eq('variant_id', delId);
+          await supabase.from('product_variants').delete().eq('id', delId);
+        }
+      }
+    }
+
+    // Delete variant if requested
+    if (body.delete_variant_id) {
+      await supabase.from('product_stock').delete().eq('variant_id', body.delete_variant_id);
+      await supabase.from('product_variants').delete().eq('id', body.delete_variant_id);
+    }
+
+    // Add new variant/taste if requested
+    if (body.add_variant) {
+      const av = body.add_variant;
+      const cleanFlavor = (av.flavor || av.attribute_value || 'Nouvelle saveur').trim();
+      const newVarId = toUuid(`${targetId}-${av.sku || Date.now()}-${cleanFlavor}`);
+      const vPrice = Number(av.price) || Number(parsedBasePrice) || 29.9;
+      const vGen = Math.max(0, parseInt(av.stock_geneva || 0, 10));
+      const vPt = Math.max(0, parseInt(av.stock_portugal || 0, 10));
+
+      await supabase.from('product_variants').insert({
+        id: newVarId,
+        product_id: targetId,
+        sku: av.sku || `NF-${String(Date.now()).slice(-6)}`,
+        attribute_name: 'saveur',
+        attribute_value: cleanFlavor,
+        price: vPrice,
+        stock_geneva: vGen,
+        stock_portugal: vPt,
+        gtin13: av.gtin13 || null,
+        created_at: new Date().toISOString(),
+        updated_at: new Date().toISOString()
+      });
+
+      if (vGen > 0) {
+        await supabase.from('product_stock').upsert({
+          product_id: targetId,
+          variant_id: newVarId,
+          origin_id: 'GENEVA',
+          quantity: vGen,
+          is_active: true,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,variant_id,origin_id' });
+      }
+      if (vPt > 0) {
+        await supabase.from('product_stock').upsert({
+          product_id: targetId,
+          variant_id: newVarId,
+          origin_id: 'PORTUGAL',
+          quantity: vPt,
+          is_active: true,
+          updated_at: new Date().toISOString()
+        }, { onConflict: 'product_id,variant_id,origin_id' });
       }
     }
 

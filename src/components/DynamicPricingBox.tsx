@@ -17,7 +17,7 @@ export default function DynamicPricingBox({
   selectedFlavor = 'Standard',
   onAddToCartSuccess,
 }: DynamicPricingBoxProps) {
-  const { getProductPricing, addToCart, locale, countryCode, t } = useStore();
+  const { getProductPricing, addToCart, locale, countryCode, t, getProductStock } = useStore();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -39,6 +39,37 @@ export default function DynamicPricingBox({
   const selectedVariant = product.variants?.find(
     v => (v.flavorName && (v.flavorName[locale] === selectedFlavor || v.flavorName.fr === selectedFlavor))
   );
+
+  const isSwissDest = effectiveCountry === 'CH' || effectiveCountry === 'LI';
+  const vStock = selectedFlavor ? getProductStock(product, selectedFlavor) : null;
+
+  // Maximum purchasable stock for this destination and variant (Swiss priority: Switzerland first, then Portugal; EU: Portugal only)
+  const maxAvailableStock = React.useMemo(() => {
+    const vGen = (vStock && typeof vStock.geneva === 'number')
+      ? vStock.geneva
+      : (selectedVariant && typeof selectedVariant.stockGeneva === 'number')
+      ? selectedVariant.stockGeneva
+      : (product.stockGeneva ?? 0);
+
+    const vPt = (vStock && typeof vStock.portugal === 'number')
+      ? vStock.portugal
+      : (selectedVariant && typeof selectedVariant.stockPortugal === 'number')
+      ? selectedVariant.stockPortugal
+      : (product.stockPortugal ?? 0);
+
+    if (isSwissDest) {
+      if (vGen > 0) return vGen;
+      if (vPt > 0 && product.shippingOrigin !== 'switzerland' && product.locationType !== 'GENEVA_ONLY') return vPt;
+      return 0;
+    } else {
+      // Outside Switzerland: European Hub only
+      if (product.shippingOrigin === 'switzerland' || product.locationType === 'GENEVA_ONLY') return 0;
+      return Math.max(0, vPt);
+    }
+  }, [isSwissDest, vStock, selectedVariant, product.stockGeneva, product.stockPortugal, product.shippingOrigin, product.locationType]);
+
+  const isSelectedVariantOutOfStock = maxAvailableStock <= 0;
+
   const pricingInfo = getProductPricing(product, selectedVariant);
   const basePrice = pricingInfo.price;
   const name = getLocalized(product.name, locale);
@@ -77,16 +108,17 @@ export default function DynamicPricingBox({
     if (tier === 1) {
       setQuantity(1);
     } else if (tier === 2) {
-      setQuantity(2);
+      setQuantity(Math.min(2, Math.max(1, maxAvailableStock)));
     } else if (tier === 3) {
-      setQuantity(prev => (prev >= 3 ? prev : 3));
+      setQuantity(Math.min(3, Math.max(1, maxAvailableStock)));
     }
   };
 
   // Handle Stepper
   const handleQuantityChange = (newQty: number) => {
     const parsed = Number(newQty);
-    const qty = Number.isFinite(parsed) ? Math.max(1, Math.floor(parsed)) : 1;
+    const maxStock = Math.max(1, maxAvailableStock);
+    const qty = Number.isFinite(parsed) ? Math.max(1, Math.min(Math.floor(parsed), maxStock)) : 1;
     setQuantity(qty);
     if (qty === 1) {
       setSelectedTier(1);
@@ -98,8 +130,12 @@ export default function DynamicPricingBox({
   };
 
   const handleAddToCart = () => {
+    if (quantity > maxAvailableStock) {
+      setQuantity(Math.max(1, maxAvailableStock));
+      return;
+    }
     addToCart(product, {
-      quantity: Math.max(1, quantity || 1),
+      quantity: Math.max(1, Math.min(quantity || 1, maxAvailableStock)),
       flavor: selectedFlavor,
       price: activeUnitPrice,
       image: selectedVariant?.image,
@@ -183,33 +219,47 @@ export default function DynamicPricingBox({
           )}
         </div>
         {(() => {
-          const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
           const isSwiss = (countryCode || 'CH') === 'CH' || countryCode === 'LI';
-          const isDeliverable = isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal);
+          const vGen = (vStock && typeof vStock.geneva === 'number')
+            ? vStock.geneva
+            : (selectedVariant && typeof selectedVariant.stockGeneva === 'number')
+            ? selectedVariant.stockGeneva
+            : (product.stockGeneva ?? 0);
 
-          if (!isDeliverable) {
+          const vPt = (vStock && typeof vStock.portugal === 'number')
+            ? vStock.portugal
+            : (selectedVariant && typeof selectedVariant.stockPortugal === 'number')
+            ? selectedVariant.stockPortugal
+            : (product.stockPortugal ?? 0);
+
+          const isDeliverable = isProductDeliverableToCountry(countryCode || 'CH', product.locationType, product.shippingOrigin, vGen, vPt);
+
+          if (!isDeliverable || isSelectedVariantOutOfStock) {
             return (
               <div className="flex items-center gap-1.5 text-xs font-bold text-red-400">
                 <AlertCircle className="w-3.5 h-3.5" />
                 <span>
-                  {locale === 'en'
-                    ? 'Not available in your country'
-                    : locale === 'de'
-                    ? 'In Ihrem Land nicht verfügbar'
-                    : locale === 'it'
-                    ? 'Non disponibile nel tuo paese'
-                    : 'Non disponible dans votre pays'}
+                  {!isDeliverable
+                    ? (locale === 'en' ? 'Not available in your country' : locale === 'de' ? 'In Ihrem Land nicht verfügbar' : locale === 'it' ? 'Non disponibile nel tuo paese' : 'Non disponible dans votre pays')
+                    : (locale === 'en' ? 'Out of stock' : locale === 'de' ? 'Nicht vorrätig' : locale === 'it' ? 'Esaurito' : 'Rupture de stock')}
                 </span>
               </div>
             );
           }
 
-          let label = locale === 'en' ? '🇨🇭 In stock in Switzerland (Geneva)' : locale === 'de' ? '🇨🇭 Auf Lager in der Schweiz (Genf)' : locale === 'it' ? '🇨🇭 Disponibile in Svizzera (Ginevra)' : '🇨🇭 En stock en Suisse (Genève)';
-          if (product.shippingOrigin === 'portugal') {
-            label = '🇵🇹 Expédié depuis le Portugal · En stock';
-          } else if (isCommon && !isSwiss) {
-            label = '🇵🇹 Expédié depuis le Portugal · En stock';
+          let label = '';
+          if (isSwiss) {
+            if (vGen > 0) {
+              label = locale === 'en' ? '🇨🇭 In stock in Switzerland' : locale === 'de' ? '🇨🇭 Auf Lager in der Schweiz' : locale === 'it' ? '🇨🇭 Disponibile in Svizzera' : '🇨🇭 En stock en Suisse';
+            } else if (vPt > 0) {
+              label = locale === 'en' ? '🇵🇹 Dispatched from European Hub (Portugal) · In stock' : locale === 'de' ? '🇵🇹 Versand aus EU-Hub (Portugal) · Auf Lager' : locale === 'it' ? '🇵🇹 Spedito dal Hub Europa (Portogallo) · Disponibile' : '🇵🇹 Expédié depuis le Hub Europe (Portugal) · En stock';
+            }
+          } else {
+            if (vPt > 0) {
+              label = locale === 'en' ? '🇵🇹 European Stock · In stock' : locale === 'de' ? '🇵🇹 EU-Lager · Auf Lager' : locale === 'it' ? '🇵🇹 Magazzino UE · Disponibile' : '🇵🇹 Stock Europe · En stock';
+            }
           }
+
           return (
             <div className="flex items-center gap-1.5 text-xs font-bold text-[#95d600]">
               <span className="w-2 h-2 rounded-full bg-[#95d600] animate-pulse" />
@@ -306,14 +356,15 @@ export default function DynamicPricingBox({
           <button
             type="button"
             onClick={() => handleQuantityChange(quantity + 1)}
-            className="w-10 h-full flex items-center justify-center text-white/70 hover:text-white font-bold text-lg transition-colors"
+            disabled={quantity >= maxAvailableStock || isSelectedVariantOutOfStock}
+            className="w-10 h-full flex items-center justify-center text-white/70 hover:text-white font-bold text-lg transition-colors disabled:opacity-20 disabled:cursor-not-allowed"
             aria-label="Augmenter la quantité"
           >
             +
           </button>
         </div>
 
-        {/* Add to Cart Button (or disabled if non-deliverable) */}
+        {/* Add to Cart Button (or disabled if non-deliverable or out of stock) */}
         {!isDeliverable ? (
           <button
             type="button"
@@ -329,6 +380,19 @@ export default function DynamicPricingBox({
                 : locale === 'it'
                 ? 'Non disponibile nel tuo paese'
                 : 'Non disponible dans votre pays')}
+            </span>
+          </button>
+        ) : isSelectedVariantOutOfStock ? (
+          <button
+            type="button"
+            disabled
+            className="flex-1 h-12 px-4 bg-red-950/40 text-red-300 font-black uppercase tracking-wider text-[11px] sm:text-xs rounded-xl border border-red-800/50 opacity-80 cursor-not-allowed flex items-center justify-center gap-2"
+          >
+            <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
+            <span>
+              {isSwissDest
+                ? (locale === 'de' ? 'In der Schweiz nicht vorrätig' : locale === 'en' ? 'Out of stock in Switzerland' : 'Rupture de stock en Suisse')
+                : (locale === 'de' ? 'Dieser Geschmack ist ausverkauft' : locale === 'en' ? 'This flavor is out of stock' : 'Cette saveur est en rupture de stock')}
             </span>
           </button>
         ) : (

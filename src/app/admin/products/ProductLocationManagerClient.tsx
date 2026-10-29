@@ -21,7 +21,8 @@ import {
   Layers,
   MapPin,
   RefreshCw,
-  Package
+  Package,
+  Plus
 } from 'lucide-react';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
@@ -95,6 +96,13 @@ export default function ProductLocationManagerClient() {
   const [deleteConfirmId, setDeleteConfirmId] = useState<string | null>(null);
   const [deleteConfirmProduct, setDeleteConfirmProduct] = useState<ProductRow | null>(null);
   const [bulkDeleteConfirmOpen, setBulkDeleteConfirmOpen] = useState<boolean>(false);
+
+  // Add flavor / variant inline state
+  const [addingVariantForId, setAddingVariantForId] = useState<string | null>(null);
+  const [newFlavorName, setNewFlavorName] = useState<string>('');
+  const [newFlavorPrice, setNewFlavorPrice] = useState<string>('');
+  const [newFlavorGenStock, setNewFlavorGenStock] = useState<string>('0');
+  const [newFlavorPtStock, setNewFlavorPtStock] = useState<string>('0');
 
   // Check auth
   useEffect(() => {
@@ -305,6 +313,112 @@ export default function ProductLocationManagerClient() {
       showToast(`Stock variante mis à jour (${validQty})`);
     } catch {
       fetchProducts();
+    }
+  };
+
+  // Update Product Base Price
+  const handleUpdateBasePrice = async (product: ProductRow, price: number) => {
+    const validPrice = Math.max(0, price);
+    setProducts(prev => prev.map(p => p.id === product.id ? { ...p, base_price: validPrice } : p));
+    try {
+      await fetch('/api/admin/products', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ id: product.id, base_price: validPrice })
+      });
+      showToast(`Prix mis à jour : CHF ${validPrice.toFixed(2)}`);
+    } catch {
+      fetchProducts();
+    }
+  };
+
+  // Update Variant Price
+  const handleUpdateVariantPrice = async (product: ProductRow, variantId: string, price: number) => {
+    const validPrice = Math.max(0, price);
+    setProducts(prev => prev.map(p => {
+      if (p.id !== product.id) return p;
+      return {
+        ...p,
+        variants: p.variants.map(v => v.id === variantId ? { ...v, price: validPrice } : v)
+      };
+    }));
+    try {
+      await fetch('/api/admin/products', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: product.id,
+          variants: [{ id: variantId, price: validPrice }]
+        })
+      });
+      showToast(`Prix de la variante mis à jour : CHF ${validPrice.toFixed(2)}`);
+    } catch {
+      fetchProducts();
+    }
+  };
+
+  // Delete Taste / Variant
+  const handleDeleteVariant = async (product: ProductRow, variantId: string) => {
+    if (!confirm('Supprimer cette saveur / option définitivement de Supabase ?')) return;
+    setProducts(prev => prev.map(p => {
+      if (p.id !== product.id) return p;
+      return {
+        ...p,
+        variants: p.variants.filter(v => v.id !== variantId)
+      };
+    }));
+    try {
+      await fetch('/api/admin/products', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: product.id,
+          delete_variant_id: variantId
+        })
+      });
+      showToast('Saveur supprimée avec succès');
+    } catch {
+      fetchProducts();
+    }
+  };
+
+  // Add Taste / Variant
+  const handleAddNewVariant = async (product: ProductRow) => {
+    if (!newFlavorName.trim()) {
+      alert('Veuillez entrer un nom de saveur / option.');
+      return;
+    }
+    const priceVal = parseFloat(newFlavorPrice) || product.base_price || 29.90;
+    const genVal = parseInt(newFlavorGenStock, 10) || 0;
+    const ptVal = parseInt(newFlavorPtStock, 10) || 0;
+
+    try {
+      const res = await fetch('/api/admin/products', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          id: product.id,
+          add_variant: {
+            flavor: newFlavorName.trim(),
+            price: priceVal,
+            stock_geneva: genVal,
+            stock_portugal: ptVal
+          }
+        })
+      });
+      if (res.ok) {
+        showToast(`Saveur "${newFlavorName.trim()}" ajoutée avec succès !`);
+        setAddingVariantForId(null);
+        setNewFlavorName('');
+        setNewFlavorPrice('');
+        setNewFlavorGenStock('0');
+        setNewFlavorPtStock('0');
+        fetchProducts();
+      } else {
+        alert('Erreur lors de l\'enregistrement de la nouvelle saveur.');
+      }
+    } catch {
+      alert('Erreur serveur lors de l\'ajout.');
     }
   };
 
@@ -649,6 +763,7 @@ export default function ProductLocationManagerClient() {
                   <th className="p-3">Product &amp; SKU</th>
                   <th className="p-3 text-center">Active Origins</th>
                   <th className="p-3 text-center">Routing Type</th>
+                  <th className="p-3 text-center">Prix (CHF)</th>
                   <th className="p-3 text-center">🇨🇭 Geneva Stock</th>
                   <th className="p-3 text-center">🇵🇹 Portugal Stock</th>
                   <th className="p-3 text-right">Actions</th>
@@ -657,13 +772,13 @@ export default function ProductLocationManagerClient() {
               <tbody className="divide-y divide-slate-100">
                 {loading ? (
                   <tr>
-                    <td colSpan={7} className="p-12 text-center text-slate-400">
+                    <td colSpan={8} className="p-12 text-center text-slate-400">
                       Loading products...
                     </td>
                   </tr>
                 ) : products.length === 0 ? (
                   <tr>
-                    <td colSpan={7} className="p-12 text-center text-slate-400">
+                    <td colSpan={8} className="p-12 text-center text-slate-400">
                       No products found.
                     </td>
                   </tr>
@@ -772,6 +887,21 @@ export default function ProductLocationManagerClient() {
                             )}
                           </td>
 
+                          {/* Price (CHF) Inline Input */}
+                          <td className="p-3 text-center">
+                            <div className="inline-flex items-center gap-1 justify-center">
+                              <span className="text-[10px] text-slate-400 font-bold">CHF</span>
+                              <input
+                                type="number"
+                                step="0.05"
+                                min={0}
+                                value={product.base_price}
+                                onChange={e => handleUpdateBasePrice(product, parseFloat(e.target.value) || 0)}
+                                className="w-16 text-center font-bold text-xs py-1 px-1 rounded-lg border border-slate-200 bg-slate-50 text-slate-900 focus:bg-white focus:border-[#F80404]"
+                              />
+                            </div>
+                          </td>
+
                           {/* Stock Genève (Inline Input) */}
                           <td className="p-3 text-center">
                             <input
@@ -856,13 +986,30 @@ export default function ProductLocationManagerClient() {
                         </tr>
 
                         {/* Expanded Variants Row */}
-                        {isExpanded && product.variants.length > 0 && (
+                        {isExpanded && (
                           <tr className="bg-slate-50/50">
-                            <td colSpan={7} className="p-4 pl-14">
+                            <td colSpan={8} className="p-4 pl-14">
                               <div className="bg-white rounded-xl border border-slate-200 p-4 space-y-3">
-                                <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
-                                  Variants &amp; Options ({product.variants.length}):
-                                </h4>
+                                <div className="flex items-center justify-between">
+                                  <h4 className="text-xs font-bold text-slate-700 uppercase tracking-wider">
+                                    Saveurs &amp; Options ({product.variants.length}) :
+                                  </h4>
+                                  <button
+                                    type="button"
+                                    onClick={() => {
+                                      setAddingVariantForId(addingVariantForId === product.id ? null : product.id);
+                                      setNewFlavorName('');
+                                      setNewFlavorPrice(String(product.base_price || 29.90));
+                                      setNewFlavorGenStock('0');
+                                      setNewFlavorPtStock('0');
+                                    }}
+                                    className="inline-flex items-center gap-1.5 px-3 py-1 bg-[#F80404] hover:bg-[#d60303] text-white rounded-lg text-xs font-bold transition-colors shadow-xs"
+                                  >
+                                    <Plus className="w-3.5 h-3.5" />
+                                    <span>+ Ajouter une saveur / option</span>
+                                  </button>
+                                </div>
+
                                 <div className="divide-y divide-slate-100">
                                   {product.variants.map(variant => (
                                     <div key={variant.id} className="py-2 flex items-center justify-between gap-4 text-xs">
@@ -883,8 +1030,8 @@ export default function ProductLocationManagerClient() {
                                         </div>
                                       </div>
 
-                                      <div className="flex items-center gap-6">
-                                        <div className="flex items-center gap-2">
+                                      <div className="flex items-center gap-4">
+                                        <div className="flex items-center gap-1.5">
                                           <span className="text-[11px] text-slate-500">🇨🇭 Geneva:</span>
                                           <input
                                             type="number"
@@ -895,7 +1042,7 @@ export default function ProductLocationManagerClient() {
                                           />
                                         </div>
 
-                                        <div className="flex items-center gap-2">
+                                        <div className="flex items-center gap-1.5">
                                           <span className="text-[11px] text-slate-500">🇵🇹 Portugal:</span>
                                           <input
                                             type="number"
@@ -906,13 +1053,92 @@ export default function ProductLocationManagerClient() {
                                           />
                                         </div>
 
-                                        <span className="text-slate-600 font-bold min-w-[60px] text-right">
-                                          CHF {variant.price.toFixed(2)}
-                                        </span>
+                                        <div className="flex items-center gap-1">
+                                          <span className="text-[11px] text-slate-500 font-bold">CHF:</span>
+                                          <input
+                                            type="number"
+                                            step="0.05"
+                                            min={0}
+                                            value={variant.price}
+                                            onChange={e => handleUpdateVariantPrice(product, variant.id, parseFloat(e.target.value) || 0)}
+                                            className="w-16 text-center font-bold text-xs py-1 px-1 rounded-lg border border-slate-200 bg-slate-50 focus:bg-white focus:border-[#F80404]"
+                                          />
+                                        </div>
+
+                                        <button
+                                          type="button"
+                                          onClick={() => handleDeleteVariant(product, variant.id)}
+                                          className="p-1.5 text-slate-400 hover:text-red-600 rounded-lg hover:bg-red-50 transition-colors"
+                                          title="Supprimer cette saveur"
+                                        >
+                                          <Trash2 className="w-4 h-4" />
+                                        </button>
                                       </div>
                                     </div>
                                   ))}
                                 </div>
+
+                                {addingVariantForId === product.id && (
+                                  <div className="mt-3 p-3 bg-red-50/50 rounded-xl border border-red-200/80 space-y-2">
+                                    <p className="text-xs font-bold text-slate-800">Ajouter une nouvelle saveur à ce produit :</p>
+                                    <div className="flex flex-wrap items-center gap-3 text-xs">
+                                      <input
+                                        type="text"
+                                        placeholder="Nom de la saveur (ex: Chocolat Belge)"
+                                        value={newFlavorName}
+                                        onChange={e => setNewFlavorName(e.target.value)}
+                                        className="flex-1 min-w-[200px] px-3 py-1.5 rounded-lg border border-slate-300 bg-white font-medium"
+                                      />
+                                      <div className="flex items-center gap-1">
+                                        <span className="text-slate-500 font-bold">CHF:</span>
+                                        <input
+                                          type="number"
+                                          step="0.05"
+                                          placeholder="Prix"
+                                          value={newFlavorPrice}
+                                          onChange={e => setNewFlavorPrice(e.target.value)}
+                                          className="w-18 px-2 py-1.5 rounded-lg border border-slate-300 bg-white text-center font-bold"
+                                        />
+                                      </div>
+                                      <div className="flex items-center gap-1">
+                                        <span className="text-slate-500">🇨🇭 GE:</span>
+                                        <input
+                                          type="number"
+                                          min={0}
+                                          placeholder="0"
+                                          value={newFlavorGenStock}
+                                          onChange={e => setNewFlavorGenStock(e.target.value)}
+                                          className="w-16 px-2 py-1.5 rounded-lg border border-slate-300 bg-white text-center font-bold"
+                                        />
+                                      </div>
+                                      <div className="flex items-center gap-1">
+                                        <span className="text-slate-500">🇵🇹 PT:</span>
+                                        <input
+                                          type="number"
+                                          min={0}
+                                          placeholder="0"
+                                          value={newFlavorPtStock}
+                                          onChange={e => setNewFlavorPtStock(e.target.value)}
+                                          className="w-16 px-2 py-1.5 rounded-lg border border-slate-300 bg-white text-center font-bold"
+                                        />
+                                      </div>
+                                      <button
+                                        type="button"
+                                        onClick={() => handleAddNewVariant(product)}
+                                        className="px-4 py-1.5 bg-[#95d600] hover:bg-[#85c000] text-black font-black rounded-lg transition-colors"
+                                      >
+                                        Enregistrer
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => setAddingVariantForId(null)}
+                                        className="px-3 py-1.5 bg-slate-200 hover:bg-slate-300 text-slate-700 font-bold rounded-lg transition-colors"
+                                      >
+                                        Annuler
+                                      </button>
+                                    </div>
+                                  </div>
+                                )}
                               </div>
                             </td>
                           </tr>

@@ -172,7 +172,7 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
         {/* Dynamic Delivery Date, Ships From & Live Stock Pill */}
         <DeliveryEstimate
           productId={product.id}
-          shippingOriginHint={product.shippingOrigin}
+          shippingOriginHint={shipOrigin}
           mode="card"
           className="mb-2 sm:mb-3.5"
         />

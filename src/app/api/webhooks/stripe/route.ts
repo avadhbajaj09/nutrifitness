@@ -47,6 +47,84 @@ function verifyStripeSignature(rawBody: string, sigHeader: string, secret: strin
   }
 }
 
+async function deductOrderStock(supabase: any, items: any[], isSwiss: boolean) {
+  if (!Array.isArray(items) || items.length === 0) return;
+  for (const it of items) {
+    try {
+      const rawId = String(it.id || it.productId || '').trim();
+      const cleanId = rawId.replace(/^prod-/, '');
+      const qty = Math.max(1, Number(it.quantity || 1));
+      const flavorStr = typeof it.flavor === 'object' && it.flavor !== null
+        ? ((it.flavor as any).fr || '')
+        : (it.flavor ? String(it.flavor) : '');
+
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cleanId) ||
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(rawId);
+      const isNumeric = /^\d+$/.test(cleanId);
+      const orParts: string[] = [];
+      if (isUuid) orParts.push(`id.eq.${isUuid ? (cleanId.length === 36 ? cleanId : rawId) : rawId}`);
+      if (isNumeric) orParts.push(`woo_id.eq.${cleanId}`);
+      if (it.slug) orParts.push(`slug.eq.${it.slug}`);
+
+      if (orParts.length === 0) continue;
+
+      const { data: dbP } = await supabase
+        .from('products')
+        .select(`
+          id, stock_geneva, stock_portugal,
+          product_variants (id, sku, attribute_value, stock_geneva, stock_portugal)
+        `)
+        .or(orParts.join(','))
+        .maybeSingle();
+
+      if (!dbP) continue;
+
+      const origin = isSwiss ? 'GENEVA' : 'PORTUGAL';
+      const pCol = isSwiss ? 'stock_geneva' : 'stock_portugal';
+      const currentStock = Number(dbP[pCol]) || 0;
+      const newParentStock = Math.max(0, currentStock - qty);
+
+      await supabase.from('products').update({
+        [pCol]: newParentStock,
+        updated_at: new Date().toISOString()
+      }).eq('id', dbP.id);
+
+      if (flavorStr && Array.isArray(dbP.product_variants) && dbP.product_variants.length > 0) {
+        const matchedV = dbP.product_variants.find((v: any) =>
+          (v.attribute_value && v.attribute_value.toLowerCase().trim() === flavorStr.toLowerCase().trim()) ||
+          (v.sku && v.sku.toLowerCase().trim() === (it.sku || '').toLowerCase().trim())
+        );
+        if (matchedV) {
+          const vCurrent = Number(matchedV[pCol]) || 0;
+          const newVarStock = Math.max(0, vCurrent - qty);
+          await supabase.from('product_variants').update({
+            [pCol]: newVarStock,
+            updated_at: new Date().toISOString()
+          }).eq('id', matchedV.id);
+        }
+      }
+
+      // Update fulfillment_stock
+      const { data: fsRow } = await supabase
+        .from('fulfillment_stock')
+        .select('id, quantity')
+        .eq('product_id', dbP.id)
+        .eq('origin_id', origin)
+        .is('variant_sku', null)
+        .maybeSingle();
+
+      if (fsRow) {
+        await supabase.from('fulfillment_stock').update({
+          quantity: Math.max(0, (Number(fsRow.quantity) || 0) - qty),
+          updated_at: new Date().toISOString()
+        }).eq('id', fsRow.id);
+      }
+    } catch (e) {
+      console.warn('[Stripe Webhook] Error deducting stock for item:', it, e);
+    }
+  }
+}
+
 export async function POST(req: Request) {
   try {
     const webhookSecret = process.env.STRIPE_WEBHOOK_SECRET;
@@ -214,6 +292,17 @@ export async function POST(req: Request) {
             return NextResponse.json({ error: 'Failed to update order' }, { status: 500 });
           }
 
+          // Deduct purchased inventory from authoritative warehouse
+          try {
+            const isSwissOrder = String(currentAddress.country || 'Suisse').toLowerCase().includes('suisse') ||
+              String(currentAddress.country || '').toUpperCase() === 'CH' ||
+              String(currentAddress.country || '').toUpperCase() === 'LI' ||
+              currency === 'CHF';
+            await deductOrderStock(supabase, finalOrderItems, isSwissOrder);
+          } catch (deductErr) {
+            console.warn('[Stripe Webhook] Stock deduction warning:', deductErr);
+          }
+
           // Dispatch confirmation emails to Marco and Customer if not already dispatched
           const alreadySent = currentAddress.emails_sent || currentAddress.emails_sent_at;
           if (!alreadySent) {
@@ -296,6 +385,17 @@ export async function POST(req: Request) {
           if (insertErr) {
             console.error(`[Stripe Webhook] Failed to insert order ${orderNum}:`, insertErr);
             return NextResponse.json({ error: 'Failed to record order' }, { status: 500 });
+          }
+
+          // Deduct purchased inventory from authoritative warehouse
+          try {
+            const isSwissOrder = String(newAddress.country || 'Suisse').toLowerCase().includes('suisse') ||
+              String(newAddress.country || '').toUpperCase() === 'CH' ||
+              String(newAddress.country || '').toUpperCase() === 'LI' ||
+              currency === 'CHF';
+            await deductOrderStock(supabase, sessionItems, isSwissOrder);
+          } catch (deductErr) {
+            console.warn('[Stripe Webhook] Stock deduction warning:', deductErr);
           }
 
           // Dispatch confirmation emails

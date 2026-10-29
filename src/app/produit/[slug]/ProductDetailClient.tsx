@@ -294,7 +294,11 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           <DeliveryEstimate
             productId={product.id}
             variantSku={selectedVariant?.sku}
-            shippingOriginHint={product.shippingOrigin}
+            shippingOriginHint={selectedVariant ? (
+              isSwissDestination
+                ? ((selectedVariant.stockGeneva ?? 0) > 0 ? 'switzerland' : ((selectedVariant.stockPortugal ?? 0) > 0 ? 'portugal' : product.shippingOrigin))
+                : 'portugal'
+            ) : product.shippingOrigin}
             mode="detail"
           />
 
@@ -309,8 +313,22 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                 {product.variants.map((v, i) => {
                   const flv = v.flavorName?.fr || 'Standard';
                   const isSelected = selectedFlavor === flv;
+                  const isSwissDest = effectiveCountry === 'CH' || effectiveCountry === 'LI';
                   const vStock = getProductStock(product, flv);
-                  const isOutOfStock = vStock ? (!vStock.inStock || vStock.total <= 0) : !v.inStock;
+
+                  const vGen = (vStock && typeof vStock.geneva === 'number')
+                    ? vStock.geneva
+                    : (typeof v.stockGeneva === 'number' ? v.stockGeneva : 0);
+                  const vPt = (vStock && typeof vStock.portugal === 'number')
+                    ? vStock.portugal
+                    : (typeof v.stockPortugal === 'number' ? v.stockPortugal : 0);
+
+                  const isAvailableInSwiss = vGen > 0;
+                  const isAvailableInPt = vPt > 0 && product.shippingOrigin !== 'switzerland' && product.locationType !== 'GENEVA_ONLY';
+
+                  const isOutOfStock = isSwissDest
+                    ? (!isAvailableInSwiss && !isAvailableInPt)
+                    : !isAvailableInPt;
 
                   return (
                     <button 
@@ -322,17 +340,37 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                           setSelectedImage(v.image);
                         }
                       }}
-                      className={`min-h-[44px] px-4 py-2 text-xs font-bold rounded-xl border transition-all flex items-center gap-1.5 ${
+                      className={`min-h-[44px] px-3.5 py-2 text-xs font-bold rounded-xl border transition-all flex items-center justify-between gap-2 ${
                         isSelected 
                           ? 'border-[#95d600] bg-[#95d600]/20 text-white ring-1 ring-[#95d600]' 
                           : 'border-white/15 bg-white/5 text-white/80 hover:border-white'
                       }`}
                     >
                       <span>{flv}</span>
-                      {isOutOfStock && (
-                        <span className="text-[10px] text-red-400 font-normal">
-                          {locale === 'de' ? '(Ausverkauft)' : locale === 'it' ? '(Esaurito)' : locale === 'en' ? '(Out of stock)' : '(Épuisé)'}
-                        </span>
+                      {isSwissDest ? (
+                        isAvailableInSwiss ? (
+                          <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 whitespace-nowrap">
+                            🇨🇭 Suisse
+                          </span>
+                        ) : isAvailableInPt ? (
+                          <span className="text-[10px] font-semibold text-blue-300 bg-blue-500/10 px-1.5 py-0.5 rounded border border-blue-500/20 whitespace-nowrap">
+                            🇵🇹 Hub Europe
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-red-400 font-normal whitespace-nowrap">
+                            {locale === 'de' ? '(Ausverkauft)' : locale === 'it' ? '(Esaurito)' : locale === 'en' ? '(Out of stock)' : '(Épuisé)'}
+                          </span>
+                        )
+                      ) : (
+                        isAvailableInPt ? (
+                          <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 whitespace-nowrap">
+                            🇵🇹 En stock
+                          </span>
+                        ) : (
+                          <span className="text-[10px] text-red-400 font-normal whitespace-nowrap">
+                            {locale === 'de' ? '(Ausverkauft)' : locale === 'it' ? '(Esaurito)' : locale === 'en' ? '(Out of stock)' : '(Épuisé)'}
+                          </span>
+                        )
                       )}
                     </button>
                   );

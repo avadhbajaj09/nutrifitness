@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useStore, CartItem } from '@/context/StoreContext';
@@ -67,6 +67,7 @@ const SUPPORTED_COUNTRIES: SupportedCountry[] = [
 export default function CheckoutPage() {
   const { 
     cart, 
+    addToCart,
     cartCount, 
     cartSubtotal, 
     clearCart, 
@@ -96,6 +97,12 @@ export default function CheckoutPage() {
 
   // Step 4: Payment
   const [paymentMethod, setPaymentMethod] = useState<'card' | 'twint' | 'postfinance'>('card');
+
+  // Abandoned Lead Tracking & Cart Restoration
+  const [restoredNotice, setRestoredNotice] = useState<string | null>(null);
+  const checkoutLeadIdRef = useRef<string>('');
+  const lastSavedPayloadRef = useRef<string>('');
+  const isSavingLeadRef = useRef(false);
 
   // Submission & Success state
   const [isSuccess, setIsSuccess] = useState(false);
@@ -349,6 +356,45 @@ export default function CheckoutPage() {
           setIsProcessingStripe(false);
           setStripeError('Erreur de validation de la transaction Stripe.');
         });
+    }
+
+    // Initialize or restore session lead ID
+    const existingLead = sessionStorage.getItem('nf_checkout_lead_id');
+    if (existingLead) {
+      checkoutLeadIdRef.current = existingLead;
+    } else {
+      const newLead = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
+      sessionStorage.setItem('nf_checkout_lead_id', newLead);
+      checkoutLeadIdRef.current = newLead;
+    }
+
+    // Check for 1-click cart restoration parameter: ?restore=WEB-...
+    const restoreParam = urlParams.get('restore');
+    if (restoreParam) {
+      fetch(`/api/checkout/abandoned?orderNumber=${encodeURIComponent(restoreParam)}`)
+        .then(res => res.json())
+        .then(data => {
+          if (data.success && data.lead) {
+            const lead = data.lead;
+            const ship = lead.shipping_address || {};
+            if (lead.customer_email) setCustomerEmail(lead.customer_email);
+            if (lead.customer_phone) setCustomerPhone(lead.customer_phone);
+            if (lead.customer_name) {
+              const parts = lead.customer_name.split(' ');
+              setFirstName(parts[0] || '');
+              setLastName(parts.slice(1).join(' ') || '');
+            }
+            if (ship.street || ship.address) setCustomerAddress(ship.street || ship.address);
+            if (ship.postalCode) setCustomerPostalCode(ship.postalCode);
+            if (ship.city) setCustomerCity(ship.city);
+            if (ship.country) {
+              setCustomerCountry(ship.country);
+              setCountryCode(ship.country);
+            }
+            setRestoredNotice('Votre panier et vos coordonnées ont été restaurés avec succès. Vous pouvez finaliser votre commande en un clic.');
+          }
+        })
+        .catch(err => console.warn('[Checkout] Restore error:', err));
     }
   }, []);
 
@@ -689,6 +735,90 @@ export default function CheckoutPage() {
     }
   }, [currency, grandTotal, paymentMethod]);
 
+  // Real-time Abandoned Cart Auto-Capture & Alert
+  const saveAbandonedLead = useCallback(async (overrides?: Record<string, any>) => {
+    if (isSuccess || isRedirectingToStripe || isProcessingStripe) return;
+    if (!cart || cart.length === 0) return;
+
+    const emailVal = (overrides?.customerEmail ?? customerEmail).trim();
+    const phoneVal = (overrides?.customerPhone ?? customerPhone).trim();
+    const fNameVal = (overrides?.firstName ?? firstName).trim();
+    const lNameVal = (overrides?.lastName ?? lastName).trim();
+    const addrVal = (overrides?.customerAddress ?? customerAddress).trim();
+    const cityVal = (overrides?.customerCity ?? customerCity).trim();
+    const postalVal = (overrides?.customerPostalCode ?? customerPostalCode).trim();
+    const fullName = [fNameVal, lNameVal].filter(Boolean).join(' ') || (emailVal ? emailVal.split('@')[0] : 'Client Intéressé');
+
+    const hasValidEmail = emailVal.includes('@') && emailVal.includes('.');
+    const hasValidPhone = phoneVal.replace(/[^0-9]/g, '').length >= 7;
+
+    // Only record lead once we have at least an email address or valid phone
+    if (!hasValidEmail && !hasValidPhone) return;
+
+    const payloadKey = `${emailVal}|${phoneVal}|${fNameVal}|${lNameVal}|${addrVal}|${cityVal}|${postalVal}|${cart.length}|${grandTotal}`;
+    if (lastSavedPayloadRef.current === payloadKey || isSavingLeadRef.current) return;
+    
+    lastSavedPayloadRef.current = payloadKey;
+    isSavingLeadRef.current = true;
+
+    try {
+      const leadId = checkoutLeadIdRef.current || `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
+      checkoutLeadIdRef.current = leadId;
+
+      await fetch('/api/checkout/abandoned', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        keepalive: true,
+        body: JSON.stringify({
+          leadId,
+          orderNumber: leadId,
+          customerEmail: emailVal,
+          customerName: fullName,
+          customerPhone: phoneVal,
+          shippingAddress: {
+            street: addrVal,
+            postalCode: postalVal,
+            city: cityVal,
+            country: customerCountry || 'CH'
+          },
+          items: cart.map(it => ({
+            id: it.id,
+            name: it.name,
+            flavor: it.flavor || 'Standard',
+            format: (it as any).format || (it as any).size || 'Standard',
+            price: it.price,
+            quantity: it.quantity,
+            image: it.image
+          })),
+          totalAmount: grandTotal,
+          currency: currency || 'CHF',
+          paymentMethod: paymentMethod || 'NONE'
+        })
+      });
+    } catch (e) {
+      console.warn('[Checkout] Auto-save abandoned lead failed:', e);
+    } finally {
+      isSavingLeadRef.current = false;
+    }
+  }, [cart, customerEmail, customerPhone, firstName, lastName, customerAddress, customerPostalCode, customerCity, customerCountry, grandTotal, currency, paymentMethod, isSuccess, isRedirectingToStripe, isProcessingStripe]);
+
+  // Debounced auto-sync when user types in checkout fields
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      saveAbandonedLead();
+    }, 2500);
+    return () => clearTimeout(timer);
+  }, [customerEmail, customerPhone, firstName, lastName, customerAddress, customerPostalCode, customerCity, saveAbandonedLead]);
+
+  // Capture on beforeunload or tab close
+  useEffect(() => {
+    const handleBeforeUnload = () => {
+      saveAbandonedLead();
+    };
+    window.addEventListener('beforeunload', handleBeforeUnload);
+    return () => window.removeEventListener('beforeunload', handleBeforeUnload);
+  }, [saveAbandonedLead]);
+
   // Form submission handler
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -704,7 +834,7 @@ export default function CheckoutPage() {
       return;
     }
 
-    const generatedOrderNum = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
+    const generatedOrderNum = checkoutLeadIdRef.current || `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
     setOrderNumber(generatedOrderNum);
     setFinalTotalFormatted(formatPrice(grandTotal));
 
@@ -844,7 +974,7 @@ export default function CheckoutPage() {
 
       const data = await res.json();
       if (!res.ok || !data.url) {
-        throw new Error(data.error || 'Erreur lors de l\'initialisation du terminal de paiement.');
+        throw new Error(data.message || data.error || 'Erreur lors de l\'initialisation du terminal de paiement.');
       }
 
       // Redirect user to Stripe secure hosted checkout
@@ -1079,6 +1209,23 @@ export default function CheckoutPage() {
           </div>
         )}
 
+        {/* Restored Cart Notice */}
+        {restoredNotice && (
+          <div className="lg:col-span-12 p-4 rounded-2xl border border-emerald-500/40 bg-emerald-950/60 text-emerald-200 text-xs flex items-center justify-between shadow-lg">
+            <div className="flex items-center gap-2.5">
+              <Sparkles className="w-4 h-4 text-emerald-400 shrink-0" />
+              <span className="font-semibold text-white">{restoredNotice}</span>
+            </div>
+            <button 
+              type="button" 
+              onClick={() => setRestoredNotice(null)} 
+              className="text-emerald-400 hover:text-white text-xs px-2 py-1 rounded-md"
+            >
+              ✕
+            </button>
+          </div>
+        )}
+
         {/* Left Form (7 cols) */}
         <div className="lg:col-span-7 space-y-6">
           
@@ -1096,6 +1243,7 @@ export default function CheckoutPage() {
                   required 
                   value={customerEmail}
                   onChange={(e) => setCustomerEmail(e.target.value)}
+                  onBlur={() => saveAbandonedLead()}
                   placeholder="nom@exemple.ch" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
@@ -1107,6 +1255,7 @@ export default function CheckoutPage() {
                   required 
                   value={customerPhone}
                   onChange={(e) => setCustomerPhone(e.target.value)}
+                  onBlur={() => saveAbandonedLead()}
                   placeholder="+41 79 123 45 67" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
@@ -1151,6 +1300,7 @@ export default function CheckoutPage() {
                   required 
                   value={firstName}
                   onChange={(e) => setFirstName(e.target.value)}
+                  onBlur={() => saveAbandonedLead()}
                   placeholder="Prénom" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
@@ -1162,6 +1312,7 @@ export default function CheckoutPage() {
                   required 
                   value={lastName}
                   onChange={(e) => setLastName(e.target.value)}
+                  onBlur={() => saveAbandonedLead()}
                   placeholder="Nom" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
@@ -1174,6 +1325,7 @@ export default function CheckoutPage() {
                   required 
                   value={customerAddress}
                   onChange={(e) => setCustomerAddress(e.target.value)}
+                  onBlur={() => saveAbandonedLead()}
                   placeholder="Rue du Rhône 42" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />
@@ -1188,6 +1340,7 @@ export default function CheckoutPage() {
                   required 
                   value={customerPostalCode}
                   onChange={(e) => setCustomerPostalCode(e.target.value)}
+                  onBlur={() => saveAbandonedLead()}
                   placeholder={customerCountry === 'CH' ? '1204 (4 chiffres)' : 'Code postal'} 
                   className={`w-full min-h-[44px] px-3.5 text-xs bg-black/60 border rounded-xl text-white focus:outline-none ${
                     customerPostalCode.trim() && !postalValidation.isValid
@@ -1204,6 +1357,7 @@ export default function CheckoutPage() {
                   required 
                   value={customerCity}
                   onChange={(e) => setCustomerCity(e.target.value)}
+                  onBlur={() => saveAbandonedLead()}
                   placeholder="Ville" 
                   className="w-full min-h-[44px] px-3.5 text-xs bg-black/60 border border-white/15 rounded-xl text-white focus:border-[#F80404] focus:outline-none" 
                 />

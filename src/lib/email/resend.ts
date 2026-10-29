@@ -668,3 +668,273 @@ export async function sendShipmentUpdate(email: string, shipmentData: any) {
 export async function sendDeliveryConfirmation(email: string, deliveryData: any) {
   return sendShipmentUpdate(email, deliveryData);
 }
+
+/**
+ * Instant Alert to Marco (Admin ONLY) when a visitor abandons checkout
+ */
+export async function sendAbandonedCartAlertToMarco(lead: any) {
+  const marcoEmail = process.env.MARCO_EMAIL || process.env.ADMIN_NOTIFICATION_EMAIL || 'marco.scarpantoni@hotmail.com';
+  
+  const customerName = lead.customerName || lead.customer_name || 'Client Web';
+  const customerEmail = lead.customerEmail || lead.customer_email || 'Non renseigné';
+  const customerPhone = lead.customerPhone || lead.customer_phone || '';
+  const orderNumber = lead.orderNumber || lead.order_number || `LEAD-${Date.now()}`;
+  const totalAmount = Number(lead.totalAmount || lead.total_amount || 0);
+  const currency = lead.currency || 'CHF';
+  const items: any[] = Array.isArray(lead.items) ? lead.items : [];
+  
+  const shipping = lead.shippingAddress || lead.shipping_address || {};
+  const city = shipping.city || '';
+  const street = shipping.street || shipping.address || '';
+  const postalCode = shipping.postalCode || '';
+  const country = shipping.country || 'Suisse (CH)';
+  const addressFormatted = [street, `${postalCode} ${city}`.trim(), country].filter(Boolean).join(', ') || 'Adresse non renseignée';
+
+  // Format phone for WhatsApp
+  let cleanPhone = customerPhone.replace(/[^0-9+]/g, '');
+  let waNumber = cleanPhone;
+  if (waNumber.startsWith('+')) waNumber = waNumber.slice(1);
+  if (waNumber.startsWith('0')) waNumber = '41' + waNumber.slice(1);
+  
+  const firstProductName = items[0]?.name ? String(items[0].name).slice(0, 35) : '';
+  const waMessage = encodeURIComponent(
+    `Bonjour ${customerName}, c'est NutriFitness Genève. Nous avons remarqué que vous n'avez pas finalisé votre panier${firstProductName ? ` (${firstProductName})` : ''} sur nutrifitness.ch. Avez-vous besoin d'un conseil ou d'aide pour finaliser ?`
+  );
+  const waLink = waNumber ? `https://wa.me/${waNumber}?text=${waMessage}` : null;
+  const restoreUrl = `https://nutrifitness.ch/commande?restore=${orderNumber}`;
+
+  const itemsHtml = items.map((it: any) => {
+    const name = it.name || it.product_name || 'Article';
+    const flavor = it.flavor || it.taste || 'Standard';
+    const qty = it.quantity || it.qty || 1;
+    const price = Number(it.price || 0);
+    const lineTotal = (price * qty).toFixed(2);
+
+    return `
+      <tr style="border-bottom: 1px solid #262626;">
+        <td style="padding: 10px 8px; vertical-align: top; color: #ffffff; font-size: 13px;">
+          <div style="font-weight: 700; color: #ffffff;">${name}</div>
+          ${flavor && flavor !== 'Standard' ? `<span style="display: inline-block; background-color: #222222; color: #fbbf24; font-size: 11px; padding: 2px 6px; border-radius: 4px; margin-top: 4px; border: 1px solid #333333;">Saveur: ${flavor}</span>` : ''}
+        </td>
+        <td style="padding: 10px 8px; text-align: center; color: #dddddd; font-size: 13px; font-weight: 700; width: 45px;">
+          x${qty}
+        </td>
+        <td style="padding: 10px 8px; text-align: right; color: #ffffff; font-size: 13px; font-weight: 800; width: 85px;">
+          ${lineTotal} CHF
+        </td>
+      </tr>
+    `;
+  }).join('');
+
+  const html = `
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+      <meta charset="utf-8">
+      <title>🚨 Nouveau Panier Abandonné</title>
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #050505; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff;">
+      <div style="max-width: 620px; margin: 15px auto; background-color: #111111; border: 1px solid #333333; border-radius: 16px; overflow: hidden; box-shadow: 0 10px 30px rgba(0,0,0,0.8);">
+        
+        <!-- Header -->
+        <div style="background: linear-gradient(135deg, #7f1d1d 0%, #111111 100%); padding: 20px 24px; border-bottom: 1px solid #dc2626;">
+          <div style="display: flex; justify-content: space-between; align-items: center;">
+            <div style="font-size: 18px; font-weight: 900; letter-spacing: 1px; color: #ffffff; text-transform: uppercase;">
+              NUTRI<span style="color: #ef4444;">FITNESS</span>.CH
+            </div>
+            <div style="background-color: #ef4444; color: #ffffff; font-size: 11px; font-weight: 900; text-transform: uppercase; padding: 4px 10px; border-radius: 6px; letter-spacing: 0.5px;">
+              🚨 PANIER ABANDONNÉ
+            </div>
+          </div>
+          <h1 style="margin: 12px 0 4px 0; font-size: 22px; color: #ffffff; font-weight: 900;">
+            ${customerName} a quitté le paiement
+          </h1>
+          <p style="margin: 0; font-size: 13px; color: #fca5a5;">
+            Montant du panier : <strong style="color: #ffffff; font-size: 15px;">${totalAmount.toFixed(2)} ${currency}</strong> — À relancer rapidement !
+          </p>
+        </div>
+
+        <!-- Quick Action Bar -->
+        <div style="background-color: #1a1a1a; padding: 16px 24px; border-bottom: 1px solid #262626; text-align: center;">
+          ${waLink ? `
+            <a href="${waLink}" style="display: inline-block; background-color: #25D366; color: #000000; font-weight: 900; font-size: 14px; text-decoration: none; padding: 12px 22px; border-radius: 10px; margin: 4px 6px;">
+              📲 Ouvrir WhatsApp avec ${customerName} →
+            </a>
+          ` : ''}
+          ${customerEmail && customerEmail.includes('@') ? `
+            <a href="mailto:${customerEmail}?subject=${encodeURIComponent('Votre panier NutriFitness Genève')}" style="display: inline-block; background-color: #3b82f6; color: #ffffff; font-weight: 800; font-size: 13px; text-decoration: none; padding: 12px 18px; border-radius: 10px; margin: 4px 6px;">
+              ✉️ Envoyer un Email
+            </a>
+          ` : ''}
+        </div>
+
+        <div style="padding: 24px;">
+          <!-- Customer Details Box -->
+          <div style="background-color: #161616; border: 1px solid #262626; border-radius: 12px; padding: 16px; margin-bottom: 20px;">
+            <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: #888888; margin-bottom: 8px; letter-spacing: 0.5px;">
+              Coordonnées du Client
+            </div>
+            <div style="font-size: 14px; line-height: 1.6; color: #ffffff;">
+              <div><strong>Nom :</strong> ${customerName}</div>
+              <div><strong>Téléphone :</strong> <a href="tel:${cleanPhone}" style="color: #60a5fa; text-decoration: none;">${customerPhone || 'Non renseigné'}</a></div>
+              <div><strong>Email :</strong> <a href="mailto:${customerEmail}" style="color: #60a5fa; text-decoration: none;">${customerEmail}</a></div>
+              <div><strong>Adresse :</strong> ${addressFormatted}</div>
+              <div style="margin-top: 6px; font-size: 12px; color: #888888;">Identifiant Référence : <code>${orderNumber}</code></div>
+            </div>
+          </div>
+
+          <!-- Items Table -->
+          <div style="font-size: 12px; font-weight: 800; text-transform: uppercase; color: #888888; margin-bottom: 8px; letter-spacing: 0.5px;">
+            Articles laissés dans le panier (${items.length})
+          </div>
+          <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; background-color: #161616; border-radius: 12px; overflow: hidden; border: 1px solid #262626;">
+            <thead>
+              <tr style="border-bottom: 1px solid #333333; background-color: #1f1f1f; color: #888888; font-size: 11px; text-transform: uppercase;">
+                <th style="padding: 8px 10px; text-align: left;">Article</th>
+                <th style="padding: 8px 10px; text-align: center;">Qté</th>
+                <th style="padding: 8px 10px; text-align: right;">Total</th>
+              </tr>
+            </thead>
+            <tbody>
+              ${itemsHtml || '<tr><td colspan="3" style="padding: 12px; color: #888;">Aucun article détaillé</td></tr>'}
+            </tbody>
+            <tfoot>
+              <tr style="background-color: #1f1f1f; font-weight: 900;">
+                <td colspan="2" style="padding: 12px 10px; text-align: right; color: #aaaaaa; text-transform: uppercase; font-size: 12px;">Total Panier :</td>
+                <td style="padding: 12px 10px; text-align: right; color: #ffffff; font-size: 15px;">${totalAmount.toFixed(2)} ${currency}</td>
+              </tr>
+            </tfoot>
+          </table>
+
+          <!-- Admin Link -->
+          <div style="text-align: center; margin-top: 24px;">
+            <a href="https://nutrifitness.ch/wp-admin" style="display: inline-block; background-color: #27272a; border: 1px solid #3f3f46; color: #ffffff; font-size: 12px; font-weight: 700; text-decoration: none; padding: 10px 20px; border-radius: 8px;">
+              Voir dans le Panneau d'Administration NutriFitness →
+            </a>
+          </div>
+        </div>
+
+        <div style="background-color: #0d0d0d; padding: 14px; text-align: center; font-size: 11px; color: #666666; border-top: 1px solid #222222;">
+          Notification envoyée exclusivement à Marco (NutriFitness Genève) • nutrifitness.ch
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  return sendResendEmail({
+    to: marcoEmail,
+    from: 'NutriFitness Alertes <orders@nutrifitness.ch>',
+    subject: `🚨 Panier abandonné : ${customerName} (${totalAmount.toFixed(2)} ${currency})`,
+    html,
+  });
+}
+
+/**
+ * High-Converting Automated Recovery Email sent to Customer after 1 hour
+ */
+export async function sendCustomerCartRecoveryEmail(lead: any) {
+  const customerEmail = lead.customerEmail || lead.customer_email;
+  if (!customerEmail || !customerEmail.includes('@')) return { success: false, error: 'Invalid customer email' };
+
+  const customerName = lead.customerName || lead.customer_name || '';
+  const firstName = customerName.split(' ')[0] || 'Bonjour';
+  const orderNumber = lead.orderNumber || lead.order_number || '';
+  const totalAmount = Number(lead.totalAmount || lead.total_amount || 0);
+  const currency = lead.currency || 'CHF';
+  const items: any[] = Array.isArray(lead.items) ? lead.items : [];
+  
+  const restoreUrl = `https://nutrifitness.ch/commande?restore=${orderNumber}`;
+
+  const itemsHtml = items.map((it: any) => {
+    const name = it.name || it.product_name || 'Article';
+    const flavor = it.flavor || it.taste || '';
+    const qty = it.quantity || it.qty || 1;
+    const price = Number(it.price || 0);
+
+    return `
+      <div style="display: flex; justify-content: space-between; align-items: center; padding: 10px 0; border-bottom: 1px solid #222222;">
+        <div>
+          <div style="font-weight: 700; color: #ffffff; font-size: 13px;">${name}</div>
+          ${flavor && flavor !== 'Standard' ? `<span style="font-size: 11px; color: #fbbf24;">Saveur : ${flavor}</span> • ` : ''}
+          <span style="font-size: 12px; color: #888888;">Quantité : ${qty}</span>
+        </div>
+        <div style="font-weight: 800; color: #ffffff; font-size: 14px;">
+          ${(price * qty).toFixed(2)} CHF
+        </div>
+      </div>
+    `;
+  }).join('');
+
+  const html = `
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+      <meta charset="utf-8">
+      <title>Votre panier vous attend chez NutriFitness</title>
+    </head>
+    <body style="margin: 0; padding: 0; background-color: #0a0a0a; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; color: #ffffff;">
+      <div style="max-width: 580px; margin: 20px auto; background-color: #141414; border: 1px solid #262626; border-radius: 16px; overflow: hidden; padding: 32px 28px;">
+        
+        <div style="text-align: center; margin-bottom: 24px;">
+          <div style="font-size: 20px; font-weight: 900; letter-spacing: 1.5px; color: #ffffff; text-transform: uppercase;">
+            NUTRI<span style="color: #ef4444;">FITNESS</span>.CH
+          </div>
+          <div style="font-size: 11px; text-transform: uppercase; color: #888888; letter-spacing: 1px; margin-top: 4px;">
+            Boutique Officielle Genève • Nutrition Sportive & Bien-être
+          </div>
+        </div>
+
+        <h1 style="font-size: 22px; color: #ffffff; text-align: center; margin: 0 0 12px 0; font-weight: 900;">
+          Avez-vous oublié vos compléments ? ⚡
+        </h1>
+
+        <p style="font-size: 14px; color: #cccccc; line-height: 1.6; text-align: center; margin-bottom: 24px;">
+          Bonjour ${firstName}, nous avons mis vos articles de côté pour que vous puissiez finaliser votre commande en toute sérénité. Nos stocks en Suisse partent vite !
+        </p>
+
+        <!-- Cart Items Box -->
+        <div style="background-color: #1c1c1c; border-radius: 12px; padding: 18px; margin-bottom: 24px; border: 1px solid #2d2d2d;">
+          <div style="font-size: 11px; font-weight: 800; text-transform: uppercase; color: #888888; margin-bottom: 8px;">
+            Vos articles réservés
+          </div>
+          ${itemsHtml}
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-top: 12px; padding-top: 10px; border-top: 1px solid #333333; font-weight: 900; font-size: 15px;">
+            <span>Total :</span>
+            <span style="color: #ffffff;">${totalAmount.toFixed(2)} ${currency}</span>
+          </div>
+        </div>
+
+        <!-- 1-Click CTA Button -->
+        <div style="text-align: center; margin-bottom: 28px;">
+          <a href="${restoreUrl}" style="display: inline-block; background-color: #ef4444; color: #ffffff; font-weight: 900; font-size: 15px; text-transform: uppercase; text-decoration: none; padding: 16px 36px; border-radius: 12px; letter-spacing: 0.5px; box-shadow: 0 8px 24px rgba(239, 68, 68, 0.4);">
+            Finaliser ma commande en 1 clic →
+          </a>
+          <div style="font-size: 11px; color: #888888; margin-top: 8px;">
+            Vos coordonnées et votre panier sont automatiquement pré-remplis.
+          </div>
+        </div>
+
+        <!-- Guarantees -->
+        <div style="background-color: #181818; border-radius: 10px; padding: 16px; font-size: 12px; color: #aaaaaa; line-height: 1.7; border: 1px solid #222222;">
+          <div>📦 <strong>Livraison Express 1-2 jours</strong> par La Poste Suisse Priority</div>
+          <div>🛡️ <strong>Paiement 100% sécurisé</strong> (TWINT, Carte Bancaire, Apple Pay)</div>
+          <div>📍 <strong>Boutique à Genève :</strong> Rue des Pâquis 34 (Retrait gratuit Click & Collect)</div>
+        </div>
+
+        <div style="text-align: center; margin-top: 24px; font-size: 11px; color: #555555;">
+          Une question ? Répondez directement à cet email ou appelez-nous au magasin.<br>
+          NutriFitness Suisse • Rue des Pâquis 34, 1201 Genève
+        </div>
+      </div>
+    </body>
+    </html>
+  `;
+
+  return sendResendEmail({
+    to: customerEmail,
+    from: 'NutriFitness Genève <info@nutrifitness.ch>',
+    subject: `${firstName}, vos compléments NutriFitness vous attendent ⚡`,
+    html,
+  });
+}

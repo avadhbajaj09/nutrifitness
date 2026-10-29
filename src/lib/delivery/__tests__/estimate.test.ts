@@ -28,8 +28,8 @@ const ex1 = estimateDelivery({
 assert(ex1.isAllowed === true, 'Example 1 is allowed');
 assert(ex1.dispatchDate === '2026-10-09', `Example 1 dispatchDate is Fri 9 Oct (got ${ex1.dispatchDate})`);
 assert(ex1.earliestDate === '2026-10-10', `Example 1 earliestDate is Sat 10 Oct (got ${ex1.earliestDate})`);
-assert(ex1.latestDate === '2026-10-13', `Example 1 latestDate is Tue 13 Oct (got ${ex1.latestDate})`);
-assert(ex1.displayDate === '2026-10-13', `Example 1 displayDate is Tue 13 Oct (got ${ex1.displayDate})`);
+assert(ex1.latestDate === '2026-10-12', `Example 1 latestDate is Mon 12 Oct (got ${ex1.latestDate})`);
+assert(ex1.displayDate === '2026-10-12', `Example 1 displayDate is Mon 12 Oct (got ${ex1.displayDate})`);
 assert(ex1.cutoffPassed === false, 'Example 1 cutoff not passed');
 assert(ex1.orderByTime !== null && ex1.orderByTime?.hours === 4, `Example 1 order within 4h (got ${ex1.orderByTime?.hours})`);
 
@@ -50,8 +50,8 @@ assert(ex2.isAllowed === true, 'Example 2 is allowed');
 assert(ex2.cutoffPassed === true, 'Example 2 cutoff passed');
 assert(ex2.dispatchDate === '2026-10-10', `Example 2 dispatchDate is Sat 10 Oct (got ${ex2.dispatchDate})`);
 assert(ex2.earliestDate === '2026-10-12', `Example 2 earliestDate is Mon 12 Oct (got ${ex2.earliestDate})`);
-assert(ex2.latestDate === '2026-10-14', `Example 2 latestDate is Wed 14 Oct (got ${ex2.latestDate})`);
-assert(ex2.displayDate === '2026-10-14', `Example 2 displayDate is Wed 14 Oct (got ${ex2.displayDate})`);
+assert(ex2.latestDate === '2026-10-13', `Example 2 latestDate is Tue 13 Oct (got ${ex2.latestDate})`);
+assert(ex2.displayDate === '2026-10-13', `Example 2 displayDate is Tue 13 Oct (got ${ex2.displayDate})`);
 
 // 3. Worked Example 3: PORTUGAL -> FR (transit 3-4, handling 1), Fri 9 Oct 2026 at 10:00 Lisbon
 // Lisbon is UTC+1 in October (WEST)
@@ -97,12 +97,12 @@ const ex4 = estimateDelivery({
   rules: DEFAULT_DELIVERY_RULES,
   holidays: [
     ...DEFAULT_HOLIDAYS,
-    { calendar: 'CH', date: '2026-10-13', name: 'Test Swiss Holiday' }
+    { calendar: 'CH', date: '2026-10-12', name: 'Test Swiss Holiday' }
   ],
   countryGroups: DEFAULT_COUNTRY_GROUPS
 });
-// Dispatch Fri 9 Oct. Transit 1 = Mon 12 Oct. Tue 13 Oct is Holiday! Transit 2 = Wed 14 Oct!
-assert(ex4.latestDate === '2026-10-14', `Holiday inside transit shifts latestDate to Wed 14 Oct (got ${ex4.latestDate})`);
+// Dispatch Fri 9 Oct. Transit 1 = Sat 10 Oct. Mon 12 Oct is Holiday! Transit 2 = Tue 13 Oct!
+assert(ex4.latestDate === '2026-10-13', `Holiday inside transit shifts latestDate to Tue 13 Oct (got ${ex4.latestDate})`);
 
 // 5. Test Extra delay days (e.g. peak season strikes +2 days)
 const ex5 = estimateDelivery({
@@ -114,8 +114,8 @@ const ex5 = estimateDelivery({
   settings: { extra_delay_days: 2 }
 });
 // Transit 1-2 + 2 extra days = 3 to 4 working days!
-// Mon 12 (1), Tue 13 (2), Wed 14 (3), Thu 15 (4)
-assert(ex5.latestDate === '2026-10-15', `Extra delay +2 days yields Thu 15 Oct (got ${ex5.latestDate})`);
+// Sat 10 (1), Mon 12 (2), Tue 13 (3), Wed 14 (4)
+assert(ex5.latestDate === '2026-10-14', `Extra delay +2 days yields Wed 14 Oct (got ${ex5.latestDate})`);
 
 // 6. Test Blocked / unsupported destination
 const ex6 = estimateDelivery({

@@ -2035,15 +2035,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 25,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 25
+        "stockGeneva": 24,
+        "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 25,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 24,
+    "stockPortugal": 50,
     "inStock": true
   },
   {
@@ -4747,7 +4747,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 0,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-FRAISES.webp",
-        "stockGeneva": 25,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "gtin13": "682683504794"
       },
@@ -4765,7 +4765,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 0,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-COOKIECREAM.webp",
-        "stockGeneva": 25,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "gtin13": "682683504787"
       },
@@ -4783,15 +4783,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 0,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2025/11/ISO-80X-GRASS-FED-CHOCOLATE.webp",
-        "stockGeneva": 25,
+        "stockGeneva": 0,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
     "stockGeneva": 1,
-    "stockPortugal": 50,
+    "stockPortugal": 200,
     "gtin13": "682683504800"
   },
   {
@@ -6276,16 +6276,16 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 25,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 25,
+        "stockGeneva": 15,
+        "stockPortugal": 50,
         "gtin13": "634240078408"
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 25,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 15,
+    "stockPortugal": 50,
     "inStock": true,
     "gtin13": "634240078408"
   },
@@ -9987,7 +9987,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 0,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-2KG.png",
-        "stockGeneva": 25,
+        "stockGeneva": 0,
         "stockPortugal": 50
       },
       {
@@ -10004,7 +10004,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 13,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-COOKIE-2KG.webp",
-        "stockGeneva": 13,
+        "stockGeneva": 8,
         "stockPortugal": 50
       },
       {
@@ -10021,7 +10021,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 7,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/iso-bulk-choco.webp",
-        "stockGeneva": 7,
+        "stockGeneva": 4,
         "stockPortugal": 50
       },
       {
@@ -10038,7 +10038,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/iso-bulk-choco.webp",
-        "stockGeneva": 5,
+        "stockGeneva": 0,
         "stockPortugal": 50
       },
       {
@@ -10055,15 +10055,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 5,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/ISO-BULK-2KG-FRAISES.webp",
-        "stockGeneva": 5,
+        "stockGeneva": 2,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
-    "stockGeneva": 30,
-    "stockPortugal": 50,
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
+    "stockGeneva": 14,
+    "stockPortugal": 250,
     "inStock": true
   },
   {
@@ -12533,7 +12533,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 20,
         "inStock": true,
-        "stockGeneva": 25,
+        "stockGeneva": 15,
         "stockPortugal": 25,
         "gtin13": "634240278938"
       }
@@ -12541,7 +12541,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
+    "stockGeneva": 15,
     "stockPortugal": 25,
     "gtin13": "634240278938"
   },
@@ -13312,7 +13312,7 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 35,
         "inventoryQuantity": 49,
         "inStock": true,
-        "stockGeneva": 49,
+        "stockGeneva": 15,
         "stockPortugal": 25,
         "gtin13": "634240231230"
       }
@@ -13320,7 +13320,7 @@ export const PRODUCTS: ProductItem[] = [
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 49,
+    "stockGeneva": 15,
     "stockPortugal": 25,
     "inStock": true,
     "gtin13": "634240231230"
@@ -13441,7 +13441,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 6,
         "inStock": true,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/02/SAVIOR-950G.png",
-        "stockGeneva": 6,
+        "stockGeneva": 0,
         "stockPortugal": 50,
         "gtin13": "634240129636"
       },
@@ -13465,10 +13465,10 @@ export const PRODUCTS: ProductItem[] = [
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "common",
-    "locationType": "COMMON",
+    "shippingOrigin": "switzerland",
+    "locationType": "GENEVA_ONLY",
     "stockGeneva": 6,
-    "stockPortugal": 50,
+    "stockPortugal": 100,
     "inStock": true,
     "gtin13": "634240129636"
   },
@@ -14371,7 +14371,7 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg",
-        "stockGeneva": 25,
+        "stockGeneva": 8,
         "stockPortugal": 25
       },
       {
@@ -14388,15 +14388,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/50.jpg",
-        "stockGeneva": 25,
+        "stockGeneva": 8,
         "stockPortugal": 25
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 15,
+    "stockPortugal": 50
   },
   {
     "id": "prod-mv-5640",
@@ -18379,15 +18379,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 60,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-8-1.png",
-        "stockGeneva": 0,
+        "stockGeneva": 15,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
+    "shippingOrigin": "common",
+    "stockGeneva": 15,
     "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY"
+    "locationType": "COMMON"
   },
   {
     "id": "prod-mv-5878",
@@ -19023,16 +19023,16 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 6,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/nad-mockup.png",
-        "stockGeneva": 0,
+        "stockGeneva": 12,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
+    "shippingOrigin": "common",
+    "stockGeneva": 12,
     "stockPortugal": 50,
     "inStock": true,
-    "locationType": "PORTUGAL_ONLY"
+    "locationType": "COMMON"
   },
   {
     "id": "prod-mv-6670",
@@ -19051,7 +19051,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines",
     "taxCategory": "food_reduced",
-    "priceChf": 20,
+    "priceChf": 29,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-Sep-30-2026-09_25_14-PM.png",
@@ -19146,11 +19146,11 @@ export const PRODUCTS: ProductItem[] = [
           "en": "lemon mint"
         },
         "format": "1 unité",
-        "priceChf": 20,
+        "priceChf": 29,
         "inventoryQuantity": 60,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-lemon-mint.png",
-        "stockGeneva": 0,
+        "stockGeneva": 10,
         "stockPortugal": 50
       },
       {
@@ -19163,20 +19163,20 @@ export const PRODUCTS: ProductItem[] = [
           "en": "coconut water"
         },
         "format": "1 unité",
-        "priceChf": 20,
+        "priceChf": 29,
         "inventoryQuantity": 82,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydralytes-cocnut-water.png",
-        "stockGeneva": 0,
+        "stockGeneva": 10,
         "stockPortugal": 50
       }
     ],
     "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
+    "shippingOrigin": "common",
+    "stockGeneva": 20,
     "stockPortugal": 100,
     "inStock": false,
-    "locationType": "PORTUGAL_ONLY"
+    "locationType": "COMMON"
   },
   {
     "id": "prod-ds-198",
@@ -19316,8 +19316,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/lemon-stim-x.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "stockGeneva": 5,
+        "stockPortugal": 35
       },
       {
         "id": "var-ds-285",
@@ -19333,8 +19333,8 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/red-cola-stim-x.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "stockGeneva": 5,
+        "stockPortugal": 35
       },
       {
         "id": "var-ds-286",
@@ -19350,15 +19350,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 50,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/tutti-fruity-stimx.jpg",
-        "stockGeneva": 25,
-        "stockPortugal": 25
+        "stockGeneva": 5,
+        "stockPortugal": 35
       }
     ],
     "isSwissOrigin": false,
     "shippingOrigin": "common",
     "locationType": "COMMON",
-    "stockGeneva": 25,
-    "stockPortugal": 25
+    "stockGeneva": 15,
+    "stockPortugal": 100
   },
   {
     "id": "prod-ds-200",
@@ -21048,8 +21048,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 51,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 8,
+        "stockPortugal": 25,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/infected-fruit-punch-500g.png"
       },
       {
@@ -21065,14 +21065,14 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 40,
         "inventoryQuantity": 54,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 8,
+        "stockPortugal": 25,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/infected-watermelone-500g.png"
       }
     ],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 15,
     "stockPortugal": 50,
     "inventoryQuantity": 25,
     "inStock": true,
@@ -21451,8 +21451,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 55,
         "inventoryQuantity": 59,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 5,
+        "stockPortugal": 35,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/STIMX-LEMON.webp"
       },
       {
@@ -21468,8 +21468,8 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 55,
         "inventoryQuantity": 56,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 5,
+        "stockPortugal": 35,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/STIMX-T-F.webp"
       },
       {
@@ -21485,15 +21485,15 @@ export const PRODUCTS: ProductItem[] = [
         "priceChf": 55,
         "inventoryQuantity": 51,
         "inStock": true,
-        "stockGeneva": 0,
-        "stockPortugal": 50,
+        "stockGeneva": 5,
+        "stockPortugal": 35,
         "image": "https://nutrifitness.ch/wp-content/uploads/2026/06/STIMX-COLA.webp"
       }
     ],
-    "shippingOrigin": "portugal",
-    "locationType": "PORTUGAL_ONLY",
-    "stockGeneva": 0,
-    "stockPortugal": 50,
+    "shippingOrigin": "common",
+    "locationType": "COMMON",
+    "stockGeneva": 15,
+    "stockPortugal": 100,
     "inventoryQuantity": 25,
     "inStock": true,
     "status": "published"

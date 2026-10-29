@@ -71,7 +71,7 @@ export interface ProductItem {
   isSwissOrigin?: boolean;
   shippingOrigin?: 'switzerland' | 'portugal' | 'common';
   locationType?: 'COMMON' | 'GENEVA_ONLY' | 'PORTUGAL_ONLY';
-  mainLocation?: 'GENEVA' | 'PORTUGAL';
+  mainLocation?: 'GENEVA' | 'PORTUGAL' | 'COMMON';
   stockGeneva?: number;
   stockPortugal?: number;
   inventoryQuantity?: number;

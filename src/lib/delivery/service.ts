@@ -140,28 +140,62 @@ export async function resolveBatchEstimates(
       if (orClauses.length > 0) {
         const { data: dbProducts } = await supabase
           .from('products')
-          .select('id, woo_id, slug, main_location')
+          .select(`
+            id, woo_id, slug, main_location, stock_geneva, stock_portugal,
+            product_variants (id, sku, attribute_value, stock_geneva, stock_portugal)
+          `)
           .or(orClauses.join(','));
 
         if (dbProducts) {
           for (const p of dbProducts) {
-            if (p.main_location) {
-              if (p.id) locationMap.set(p.id, p.main_location);
+            const loc = p.main_location;
+            if (loc) {
+              if (p.id) locationMap.set(p.id, loc);
               if (p.woo_id) {
-                locationMap.set(p.woo_id, p.main_location);
-                locationMap.set(`prod-${p.woo_id}`, p.main_location);
+                locationMap.set(p.woo_id, loc);
+                locationMap.set(`prod-${p.woo_id}`, loc);
               }
-              if (p.slug) locationMap.set(p.slug, p.main_location);
+              if (p.slug) locationMap.set(p.slug, loc);
+            }
+
+            const gQty = Number(p.stock_geneva) || 0;
+            const ptQty = Number(p.stock_portugal) || 0;
+            const baseStock = { genevaQty: gQty, portugalQty: ptQty };
+            if (p.id) stockMap.set(p.id, { ...baseStock });
+            if (p.woo_id) {
+              stockMap.set(p.woo_id, { ...baseStock });
+              stockMap.set(`prod-${p.woo_id}`, { ...baseStock });
+            }
+            if (p.slug) stockMap.set(p.slug, { ...baseStock });
+
+            if (Array.isArray(p.product_variants)) {
+              for (const v of p.product_variants) {
+                const vGQty = Number(v.stock_geneva) || 0;
+                const vPtQty = Number(v.stock_portugal) || 0;
+                const vStock = { genevaQty: vGQty, portugalQty: vPtQty };
+                const vIdentifiers = [v.sku, v.attribute_value, v.id].filter(Boolean);
+                const pIdentifiers = [p.id, p.woo_id, `prod-${p.woo_id}`, p.slug].filter(Boolean);
+                for (const pId of pIdentifiers) {
+                  for (const vId of vIdentifiers) {
+                    stockMap.set(`${pId}:${String(vId).toLowerCase().trim()}`, vStock);
+                  }
+                }
+              }
             }
           }
         }
       }
 
-      // 2. Fetch fulfillment_stock
+      // 2. Fetch fulfillment_stock to overlay any warehouse overrides
+      const allDbUuids = Array.from(new Set([
+        ...productIds.filter(isUuid),
+        ...Array.from(locationMap.keys()).filter(isUuid)
+      ]));
+
       const { data: stockRows } = await supabase
         .from('fulfillment_stock')
         .select('product_id, variant_sku, origin_id, quantity, reserved_quantity')
-        .in('product_id', productIds);
+        .in('product_id', allDbUuids.length > 0 ? allDbUuids : productIds);
 
       if (stockRows && stockRows.length > 0) {
         for (const row of stockRows) {
@@ -170,8 +204,8 @@ export async function resolveBatchEstimates(
 
           // Base product stock
           const curr = stockMap.get(pid) || { genevaQty: 0, portugalQty: 0 };
-          if (row.origin_id === 'GENEVA') curr.genevaQty += avail;
-          if (row.origin_id === 'PORTUGAL') curr.portugalQty += avail;
+          if (row.origin_id === 'GENEVA') curr.genevaQty = Math.max(curr.genevaQty, avail);
+          if (row.origin_id === 'PORTUGAL') curr.portugalQty = Math.max(curr.portugalQty, avail);
           stockMap.set(pid, curr);
 
           // Variant specific stock
@@ -197,29 +231,33 @@ export async function resolveBatchEstimates(
     const stockInfo = (vKey ? stockMap.get(vKey) : null) || stockMap.get(item.productId);
     const mainLoc = locationMap.get(item.productId);
 
-    let genevaQty = 20;
-    let portugalQty = 0;
+    // Authoritative location: DB main_location always takes precedence over client hints
+    const effectiveLoc = mainLoc || (
+      item.shippingOriginHint === 'portugal' ? 'PORTUGAL' :
+      item.shippingOriginHint === 'common' ? 'COMMON' :
+      item.shippingOriginHint === 'switzerland' ? 'GENEVA' : undefined
+    );
 
-    if (mainLoc === 'PORTUGAL' || item.shippingOriginHint === 'portugal') {
+    let genevaQty = stockInfo ? stockInfo.genevaQty : 0;
+    let portugalQty = stockInfo ? stockInfo.portugalQty : 0;
+
+    if (effectiveLoc === 'PORTUGAL') {
       genevaQty = 0;
-      portugalQty = stockInfo ? Math.max(stockInfo.portugalQty, 25) : 25;
-    } else if (mainLoc === 'COMMON' || item.shippingOriginHint === 'common') {
-      genevaQty = stockInfo ? Math.max(stockInfo.genevaQty, 20) : 20;
-      portugalQty = stockInfo ? Math.max(stockInfo.portugalQty, 25) : 25;
-    } else if (mainLoc === 'GENEVA') {
-      genevaQty = stockInfo ? Math.max(stockInfo.genevaQty, 20) : 20;
+      portugalQty = stockInfo ? stockInfo.portugalQty : 25;
+    } else if (effectiveLoc === 'COMMON') {
+      genevaQty = stockInfo ? stockInfo.genevaQty : 20;
+      portugalQty = stockInfo ? stockInfo.portugalQty : 25;
+    } else if (effectiveLoc === 'GENEVA') {
+      genevaQty = stockInfo ? stockInfo.genevaQty : 20;
       portugalQty = 0;
-    } else if (stockInfo) {
-      genevaQty = stockInfo.genevaQty;
-      portugalQty = stockInfo.portugalQty;
-    } else {
+    } else if (!stockInfo) {
       genevaQty = 20;
       portugalQty = 0;
     }
 
-    const isCommon = genevaQty > 0 && portugalQty > 0;
-    const isGenevaOnly = genevaQty > 0 && portugalQty <= 0;
-    const isPortugalOnly = portugalQty > 0 && genevaQty <= 0;
+    const isCommon = effectiveLoc === 'COMMON' || (genevaQty > 0 && portugalQty > 0);
+    const isGenevaOnly = effectiveLoc === 'GENEVA' || (genevaQty > 0 && portugalQty <= 0);
+    const isPortugalOnly = effectiveLoc === 'PORTUGAL' || (portugalQty > 0 && genevaQty <= 0);
     const isBothOOS = genevaQty <= 0 && portugalQty <= 0;
 
     // Resolve Origin per Part 1 rules
@@ -227,12 +265,17 @@ export async function resolveBatchEstimates(
     let availableStock = 0;
 
     if (isBothOOS) {
-      resolvedOrigin = 'GENEVA';
+      resolvedOrigin = isSwissOrLi ? 'GENEVA' : 'PORTUGAL';
       availableStock = 0;
     } else if (isCommon) {
       if (isSwissOrLi) {
-        resolvedOrigin = 'GENEVA';
-        availableStock = genevaQty;
+        if (genevaQty > 0) {
+          resolvedOrigin = 'GENEVA';
+          availableStock = genevaQty;
+        } else {
+          resolvedOrigin = 'PORTUGAL';
+          availableStock = portugalQty;
+        }
       } else {
         resolvedOrigin = 'PORTUGAL';
         availableStock = portugalQty;

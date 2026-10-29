@@ -52,7 +52,8 @@ export function DeliveryEstimate({
     countryCode || 'CH'
   );
 
-  const estimate: DeliveryEstimateItemResult | undefined = preloadedEstimate || estimates.get(productId);
+  const itemKey = variantSku ? `${productId}:${variantSku}` : productId;
+  const estimate: DeliveryEstimateItemResult | undefined = preloadedEstimate || estimates.get(itemKey) || estimates.get(productId);
   const currentLocale = (locale === 'de' ? 'de' : locale === 'en' ? 'en' : 'fr') as 'fr' | 'en' | 'de';
 
   // Loading skeleton
@@ -100,7 +101,9 @@ export function DeliveryEstimate({
     );
   }
 
-  const resolvedOrigin: OriginId = estimate?.resolvedOrigin || (shippingOriginHint === 'portugal' ? 'PORTUGAL' : 'GENEVA');
+  const isSwissDest = (countryCode || 'CH').toUpperCase() === 'CH' || (countryCode || 'CH').toUpperCase() === 'LI';
+  const defaultOrigin: OriginId = (shippingOriginHint === 'portugal' || (!isSwissDest && shippingOriginHint === 'common')) ? 'PORTUGAL' : 'GENEVA';
+  const resolvedOrigin: OriginId = estimate?.resolvedOrigin || defaultOrigin;
   const originCountry = resolvedOrigin === 'GENEVA' ? 'CH' : 'PT';
   const displayPromise = estimate?.displayDates?.[currentLocale] || (
     currentLocale === 'en' ? 'Fast tracked delivery' : 'Livraison express suivie'
@@ -161,7 +164,7 @@ export function DeliveryEstimate({
             <FlagIcon countryCode={originCountry} className="w-4 h-4 shrink-0" />
             <span className="font-bold text-white text-sm">
               {resolvedOrigin === 'GENEVA' 
-                ? (currentLocale === 'en' ? 'Dispatched from Geneva, Switzerland' : currentLocale === 'de' ? 'Versand aus Genf, Schweiz' : 'Expédié depuis Genève, Suisse') 
+                ? (currentLocale === 'en' ? 'Dispatched from Switzerland' : currentLocale === 'de' ? 'Versand aus der Schweiz' : 'Expédié depuis la Suisse') 
                 : (currentLocale === 'en' ? 'Dispatched from European Hub (Portugal)' : currentLocale === 'de' ? 'Versand aus EU-Hub (Portugal)' : 'Expédié depuis le Hub Europe (Portugal)')}
             </span>
           </div>

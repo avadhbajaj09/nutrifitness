@@ -39,6 +39,8 @@ export function useDeliveryEstimates(
       const cacheKey = `${country}:${it.productId}:${it.variantSku || ''}`;
       const cached = estimatesCache.get(cacheKey);
       if (cached && (now - cached.timestamp < CACHE_TTL)) {
+        const itemKey = it.variantSku ? `${it.productId}:${it.variantSku}` : it.productId;
+        resultMap.set(itemKey, cached.data);
         resultMap.set(it.productId, cached.data);
       } else {
         missingItems.push(it);
@@ -78,7 +80,11 @@ export function useDeliveryEstimates(
             if (!itemResult || !itemResult.productId) continue;
             const cacheKey = `${country}:${itemResult.productId}:${itemResult.variantSku || ''}`;
             estimatesCache.set(cacheKey, { data: itemResult, timestamp: Date.now() });
-            resultMap.set(itemResult.productId, itemResult);
+            const itemKey = itemResult.variantSku ? `${itemResult.productId}:${itemResult.variantSku}` : itemResult.productId;
+            resultMap.set(itemKey, itemResult);
+            if (!resultMap.has(itemResult.productId) || !itemResult.variantSku) {
+              resultMap.set(itemResult.productId, itemResult);
+            }
           }
           if (data.overallLatestDate) {
             setOverallLatestDate(data.overallLatestDate);

@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useMemo, useRef } from 'react';
+import React, { useState, useEffect, useMemo, useRef, useCallback } from 'react';
 import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
@@ -52,7 +52,8 @@ import {
   Sliders,
   FileText,
   CheckCircle2,
-  Loader2
+  Loader2,
+  ShoppingCart
 } from 'lucide-react';
 import ProductEditorModal from './ProductEditorModal';
 
@@ -525,13 +526,57 @@ export default function AdminDashboardClient() {
   // 2. DASHBOARD NAVIGATION & TIME
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'sales' | 'fulfillment'>('pos');
+  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'sales' | 'fulfillment' | 'abandoned'>('pos');
 
   useEffect(() => {
-    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'sales' || tabParam === 'fulfillment') {
+    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'sales' || tabParam === 'fulfillment' || tabParam === 'abandoned') {
       setActiveTab(tabParam);
     }
   }, [tabParam]);
+
+  // Abandoned carts state & recovery
+  const [abandonedCarts, setAbandonedCarts] = useState<any[]>([]);
+  const [isLoadingAbandoned, setIsLoadingAbandoned] = useState(false);
+  const [recoverySendingId, setRecoverySendingId] = useState<string | null>(null);
+  const [recoveryFeedback, setRecoveryFeedback] = useState<{ id: string; msg: string; ok: boolean } | null>(null);
+
+  const fetchAbandonedCarts = useCallback(async () => {
+    setIsLoadingAbandoned(true);
+    try {
+      const res = await fetch('/api/checkout/abandoned?action=list');
+      const data = await res.json();
+      if (data.success && Array.isArray(data.abandonedCarts)) {
+        setAbandonedCarts(data.abandonedCarts);
+      }
+    } catch (e) {
+      console.warn('Failed to fetch abandoned carts:', e);
+    } finally {
+      setIsLoadingAbandoned(false);
+    }
+  }, []);
+
+  useEffect(() => {
+    fetchAbandonedCarts();
+  }, [fetchAbandonedCarts]);
+
+  const handleSendRecoveryEmail = async (orderNum: string) => {
+    setRecoverySendingId(orderNum);
+    setRecoveryFeedback(null);
+    try {
+      const res = await fetch(`/api/checkout/abandoned?action=send_recovery&target=${encodeURIComponent(orderNum)}`);
+      const data = await res.json();
+      if (data.success) {
+        setRecoveryFeedback({ id: orderNum, msg: 'Email de relance envoyé au client avec succès !', ok: true });
+        fetchAbandonedCarts();
+      } else {
+        setRecoveryFeedback({ id: orderNum, msg: data.error || 'Erreur lors de l’envoi.', ok: false });
+      }
+    } catch {
+      setRecoveryFeedback({ id: orderNum, msg: 'Erreur réseau.', ok: false });
+    } finally {
+      setRecoverySendingId(null);
+    }
+  };
   const [fulfillmentSubTab, setFulfillmentSubTab] = useState<'stocks' | 'queue_geneva' | 'queue_portugal' | 'alerts'>('stocks');
   const [currentTime, setCurrentTime] = useState<string>('');
 
@@ -641,9 +686,9 @@ export default function AdminDashboardClient() {
           }
         }
 
-        // 3b. Fetch products from Supabase DB to pick up new images and location updates
+        // 3b. Fetch products from Supabase DB to pick up live database pricing, variants, stocks, and locations
         try {
-          const dbRes = await fetch('/api/admin/products?limit=100&status=all', { cache: 'no-store' });
+          const dbRes = await fetch('/api/admin/products?limit=500&status=all', { cache: 'no-store' });
           if (dbRes.ok) {
             const dbData = await dbRes.json();
             if (Array.isArray(dbData.products)) {
@@ -656,18 +701,52 @@ export default function AdminDashboardClient() {
                   return pSlug === s || pClean === cleanId;
                 });
                 if (matchedIndex >= 0) {
-                  if (Array.isArray(dbP.images) && dbP.images.length > 0) {
-                    merged[matchedIndex] = {
-                      ...merged[matchedIndex],
-                      images: dbP.images.map((img: any) => ({
+                  const existingP = merged[matchedIndex];
+                  const locType = dbP.main_location === 'COMMON' ? 'COMMON' : dbP.main_location === 'PORTUGAL' ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY';
+                  const shipOrig = dbP.main_location === 'COMMON' ? 'common' : dbP.main_location === 'PORTUGAL' ? 'portugal' : 'switzerland';
+                  const pImages = (Array.isArray(dbP.images) && dbP.images.length > 0)
+                    ? dbP.images.map((img: any) => ({
                         src: typeof img === 'string' ? img : img.src,
-                        alt: typeof img === 'string' ? { fr: merged[matchedIndex].name.fr, de: merged[matchedIndex].name.de || merged[matchedIndex].name.fr, it: merged[matchedIndex].name.it || merged[matchedIndex].name.fr, en: merged[matchedIndex].name.en || merged[matchedIndex].name.fr } : (typeof img.alt === 'string' ? { fr: img.alt, de: img.alt, it: img.alt, en: img.alt } : img.alt),
+                        alt: typeof img === 'string' ? { fr: existingP.name.fr, de: existingP.name.de || existingP.name.fr, it: existingP.name.it || existingP.name.fr, en: existingP.name.en || existingP.name.fr } : (typeof img.alt === 'string' ? { fr: img.alt, de: img.alt, it: img.alt, en: img.alt } : img.alt),
                         width: 800,
                         height: 800
-                      })),
-                      mainLocation: dbP.main_location || merged[matchedIndex].mainLocation
-                    };
+                      }))
+                    : existingP.images;
+
+                  // Parse Supabase variants if available
+                  let pVariants = existingP.variants;
+                  if (Array.isArray(dbP.variants) && dbP.variants.length > 0) {
+                    pVariants = dbP.variants.map((v: any) => {
+                      const vFlav = v.attribute_value || 'Standard';
+                      const vGen = Number(v.stock_geneva) || 0;
+                      const vPt = Number(v.stock_portugal) || 0;
+                      return {
+                        id: v.id,
+                        sku: v.sku || `SKU-${Date.now()}`,
+                        flavorName: { fr: vFlav, de: vFlav, it: vFlav, en: vFlav },
+                        format: '1 unité',
+                        priceChf: Number(v.price) || Number(dbP.base_price) || existingP.priceChf,
+                        inventoryQuantity: vGen + vPt,
+                        stockGeneva: vGen,
+                        stockPortugal: vPt,
+                        inStock: (vGen + vPt) > 0,
+                        image: v.image_url || existingP.images?.[0]?.src
+                      };
+                    });
                   }
+
+                  merged[matchedIndex] = {
+                    ...existingP,
+                    priceChf: (dbP.base_price !== null && dbP.base_price !== undefined) ? Number(dbP.base_price) : existingP.priceChf,
+                    compareAtPriceChf: dbP.compare_at_price ? Number(dbP.compare_at_price) : existingP.compareAtPriceChf,
+                    stockGeneva: Number(dbP.stock_geneva) || 0,
+                    stockPortugal: Number(dbP.stock_portugal) || 0,
+                    locationType: locType,
+                    shippingOrigin: shipOrig,
+                    mainLocation: dbP.main_location || existingP.mainLocation,
+                    images: pImages,
+                    variants: pVariants
+                  };
                 }
               }
             }
@@ -832,17 +911,21 @@ export default function AdminDashboardClient() {
 
   const handleSaveProduct = async (savedProduct: ProductItem): Promise<boolean> => {
     // 1. Calculate stocks
-    const targetOrigin = savedProduct.shippingOrigin === 'portugal' ? 'PORTUGAL' : 'GENEVA';
+    const targetOrigin = savedProduct.shippingOrigin === 'common' 
+      ? 'COMMON' 
+      : savedProduct.shippingOrigin === 'portugal' 
+      ? 'PORTUGAL' 
+      : 'GENEVA';
     const parentStockFallback = (savedProduct.variants && savedProduct.variants.length > 0)
       ? savedProduct.variants.reduce((s, v) => s + (typeof v.inventoryQuantity === 'number' ? v.inventoryQuantity : (v.stockGeneva || 0) + (v.stockPortugal || 0)), 0)
       : ((savedProduct.stockGeneva || 0) + (savedProduct.stockPortugal || 0));
 
     const totalGen = (savedProduct.variants && savedProduct.variants.length > 0)
       ? savedProduct.variants.reduce((s, v) => s + (v.stockGeneva ?? 0), 0)
-      : (savedProduct.stockGeneva ?? (targetOrigin === 'GENEVA' ? parentStockFallback : 0));
+      : (savedProduct.stockGeneva ?? (targetOrigin === 'PORTUGAL' ? 0 : parentStockFallback));
     const totalPt = (savedProduct.variants && savedProduct.variants.length > 0)
       ? savedProduct.variants.reduce((s, v) => s + (v.stockPortugal ?? 0), 0)
-      : (savedProduct.stockPortugal ?? (targetOrigin === 'PORTUGAL' ? parentStockFallback : 0));
+      : (savedProduct.stockPortugal ?? (targetOrigin === 'GENEVA' ? 0 : parentStockFallback));
 
     // 2. Persist to Supabase Database via /api/admin/products
     try {
@@ -874,8 +957,8 @@ export default function AdminDashboardClient() {
           flavor: v.flavorName?.fr || 'Standard',
           format: v.format || '1 unité',
           price: v.priceChf || savedProduct.priceChf,
-          stock_geneva: typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'GENEVA' ? (v.inventoryQuantity ?? 0) : 0),
-          stock_portugal: typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'PORTUGAL' ? (v.inventoryQuantity ?? 0) : 0),
+          stock_geneva: typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'PORTUGAL' ? 0 : (v.inventoryQuantity ?? 0)),
+          stock_portugal: typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'GENEVA' ? 0 : (v.inventoryQuantity ?? 0)),
           in_stock: v.inStock,
           image: v.image || null,
           gtin13: v.gtin13 || savedProduct.gtin13 || null
@@ -2442,6 +2525,7 @@ export default function AdminDashboardClient() {
         posCount={posProducts.length}
         catalogCount={allProducts.length}
         salesCount={salesHistory.length}
+        abandonedCount={abandonedCarts.length}
       />
       <div className="flex-1 min-w-0 flex flex-col pb-20">
         {/* Top Header */}
@@ -2452,6 +2536,7 @@ export default function AdminDashboardClient() {
                 {activeTab === 'pos' && (adminLang === 'fr' ? 'Caisse POS (Magasin Genève)' : 'Point of Sale (POS Register)')}
                 {activeTab === 'catalog' && (adminLang === 'fr' ? 'Catalogue Général' : 'Global Products Catalog')}
                 {activeTab === 'sales' && (adminLang === 'fr' ? 'Journal des Commandes & Ventes' : 'Orders & Sales Journal')}
+                {activeTab === 'abandoned' && (adminLang === 'fr' ? 'Paniers Abandonnés & Relances Clients' : 'Abandoned Carts & Customer Recovery')}
                 {activeTab === 'fulfillment' && (adminLang === 'fr' ? 'Expédition & Stocks' : 'Fulfillment & Shipping Queue')}
               </h1>
               <span className="text-slate-300">/</span>
@@ -3746,6 +3831,255 @@ export default function AdminDashboardClient() {
                         <Receipt className="w-8 h-8 mx-auto text-slate-300 mb-2" />
                         <p className="font-bold text-xs">Aucune vente enregistrée pour le moment.</p>
                         <p className="text-[11px] mt-0.5">Les encaissements POS apparaîtront automatiquement ici avec tous les détails du client.</p>
+                      </td>
+                    </tr>
+                  )}
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* =========================================================
+          ABANDONED CARTS & RECOVERY TAB
+          ========================================================= */}
+      {activeTab === 'abandoned' && (
+        <div className="w-full p-4 sm:p-6 space-y-6">
+          
+          {/* Metrics summary */}
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Paniers Non Finalisés</span>
+              <p className="text-2xl font-black text-rose-600 font-heading mt-1">
+                {abandonedCarts.length}
+              </p>
+              <p className="text-xs text-slate-500 mt-1">Clients ayant initié le paiement</p>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Valeur Totale Perdue</span>
+              <p className="text-2xl font-black text-slate-900 font-heading mt-1">
+                CHF {abandonedCarts.reduce((sum, c) => sum + (Number(c.total_amount) || 0), 0).toFixed(2)}
+              </p>
+              <p className="text-xs text-slate-500 mt-1">À récupérer en relance</p>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Prêts pour WhatsApp</span>
+              <p className="text-2xl font-black text-emerald-600 font-heading mt-1">
+                {abandonedCarts.filter(c => c.customer_phone).length}
+              </p>
+              <p className="text-xs text-slate-500 mt-1">Téléphone mobile renseigné</p>
+            </div>
+
+            <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
+              <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Alerte Email Marco</span>
+              <p className="text-xs font-black text-emerald-700 font-heading mt-2 flex items-center gap-1.5 truncate">
+                <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse shrink-0" />
+                <span className="truncate">marco.scarpantoni@...</span>
+              </p>
+              <p className="text-[11px] text-slate-500 mt-1">Alerte envoyée à chaque panier</p>
+            </div>
+          </div>
+
+          {/* Feedback banner */}
+          {recoveryFeedback && (
+            <div className={`p-4 rounded-xl border flex items-center justify-between text-xs font-semibold ${
+              recoveryFeedback.ok 
+                ? 'bg-emerald-50 border-emerald-300 text-emerald-800' 
+                : 'bg-rose-50 border-rose-300 text-rose-800'
+            }`}>
+              <div className="flex items-center gap-2">
+                {recoveryFeedback.ok ? <CheckCircle2 className="w-4 h-4 text-emerald-600" /> : <AlertCircle className="w-4 h-4 text-rose-600" />}
+                <span>{recoveryFeedback.msg}</span>
+              </div>
+              <button type="button" onClick={() => setRecoveryFeedback(null)} className="text-slate-400 hover:text-slate-700">✕</button>
+            </div>
+          )}
+
+          {/* Abandoned Carts Table */}
+          <div className="bg-white rounded-3xl border border-slate-200 shadow-xs p-6 space-y-4">
+            <div className="flex flex-col md:flex-row md:items-center justify-between gap-4">
+              <div>
+                <div className="flex items-center gap-2.5 flex-wrap">
+                  <h3 className="text-lg font-black text-slate-900 font-heading flex items-center gap-2">
+                    <ShoppingCart className="w-5 h-5 text-rose-600" />
+                    Paniers Abandonnés & Relances Directes
+                  </h3>
+                  <span className="px-2.5 py-0.5 rounded-full text-[10px] font-black border bg-rose-50 text-rose-800 border-rose-200">
+                    {abandonedCarts.length} paniers en attente
+                  </span>
+                </div>
+                <p className="text-xs text-slate-500 mt-0.5">
+                  Visiteurs ayant renseigné leurs coordonnées ou leur panier sans finaliser le paiement. Contactez-les en 1 clic par WhatsApp ou Email.
+                </p>
+              </div>
+
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => fetchAbandonedCarts()}
+                  disabled={isLoadingAbandoned}
+                  className="px-3.5 py-2 text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 rounded-xl transition-all flex items-center gap-2 shadow-2xs"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${isLoadingAbandoned ? 'animate-spin' : ''}`} />
+                  Actualiser
+                </button>
+              </div>
+            </div>
+
+            <div className="overflow-x-auto border border-slate-200 rounded-2xl">
+              <table className="w-full text-left text-xs border-collapse">
+                <thead>
+                  <tr className="bg-slate-50/80 border-b border-slate-200 text-slate-500 font-bold uppercase text-[10px] tracking-wider">
+                    <th className="py-3 px-4">Date / Réf</th>
+                    <th className="py-3 px-4">Client</th>
+                    <th className="py-3 px-4">Ville / Adresse</th>
+                    <th className="py-3 px-4">Articles Laissés</th>
+                    <th className="py-3 px-4">Montant</th>
+                    <th className="py-3 px-4">Méthode Tentée</th>
+                    <th className="py-3 px-4 text-center">Actions de Relance</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-slate-100">
+                  {abandonedCarts.map((order) => {
+                    const cleanPhone = (order.customer_phone || '').replace(/[^0-9+]/g, '');
+                    let waNumber = cleanPhone;
+                    if (waNumber.startsWith('+')) waNumber = waNumber.slice(1);
+                    if (waNumber.startsWith('0')) waNumber = '41' + waNumber.slice(1);
+
+                    const items: any[] = Array.isArray(order.items) ? order.items : [];
+                    const firstProd = items[0]?.name ? String(items[0].name).slice(0, 30) : '';
+                    const clientName = order.customer_name || 'Bonjour';
+                    const waText = encodeURIComponent(
+                      `Bonjour ${clientName}, c'est NutriFitness Genève. Nous avons remarqué que vous n'avez pas finalisé votre commande${firstProd ? ` (${firstProd})` : ''} sur nutrifitness.ch. Avez-vous besoin d'aide ou d'un conseil nutritionnel ? Voici votre lien direct : https://nutrifitness.ch/commande?restore=${order.order_number}`
+                    );
+                    const waUrl = waNumber ? `https://wa.me/${waNumber}?text=${waText}` : null;
+                    const dateFormatted = order.created_at ? new Date(order.created_at).toLocaleString('fr-CH', {
+                      day: '2-digit', month: '2-digit', year: 'numeric', hour: '2-digit', minute: '2-digit'
+                    }) : '-';
+
+                    const ship = order.shipping_address || {};
+                    const isRecoverySending = recoverySendingId === order.order_number;
+                    const recoverySent = !!ship.customer_recovery_sent_at;
+
+                    return (
+                      <tr key={order.id || order.order_number} className="hover:bg-slate-50/60 transition-colors">
+                        <td className="py-3.5 px-4 font-mono font-bold text-slate-900">
+                          <div>{order.order_number}</div>
+                          <div className="text-[10px] text-slate-400 font-normal">{dateFormatted}</div>
+                        </td>
+
+                        <td className="py-3.5 px-4">
+                          <div className="font-bold text-slate-900">{order.customer_name || 'Client'}</div>
+                          {order.customer_phone && (
+                            <a href={`tel:${cleanPhone}`} className="text-[11px] text-blue-600 hover:underline block font-mono">
+                              📞 {order.customer_phone}
+                            </a>
+                          )}
+                          {order.customer_email && (
+                            <a href={`mailto:${order.customer_email}`} className="text-[11px] text-slate-500 hover:text-slate-800 block truncate max-w-[180px]">
+                              ✉️ {order.customer_email}
+                            </a>
+                          )}
+                        </td>
+
+                        <td className="py-3.5 px-4 text-slate-600">
+                          <div className="font-semibold text-slate-800">{ship.city || 'Suisse'}</div>
+                          <div className="text-[11px] text-slate-400">{ship.street || ship.address || ''} {ship.postalCode || ''}</div>
+                        </td>
+
+                        <td className="py-3.5 px-4 max-w-[260px]">
+                          <div className="space-y-1">
+                            {items.map((it: any, idx: number) => (
+                              <div key={idx} className="text-[11px] text-slate-700 truncate">
+                                <span className="font-bold text-slate-900">x{it.quantity || 1}</span> {it.name}
+                                {it.flavor && it.flavor !== 'Standard' && (
+                                  <span className="ml-1 px-1.5 py-0.2 rounded bg-amber-50 text-amber-800 text-[10px] font-semibold">
+                                    {it.flavor}
+                                  </span>
+                                )}
+                              </div>
+                            ))}
+                            {items.length === 0 && <span className="text-slate-400 text-[11px]">Panier standard</span>}
+                          </div>
+                        </td>
+
+                        <td className="py-3.5 px-4 font-black font-heading text-slate-900 text-sm whitespace-nowrap">
+                          CHF {Number(order.total_amount || 0).toFixed(2)}
+                        </td>
+
+                        <td className="py-3.5 px-4">
+                          <span className="px-2 py-0.5 rounded-md text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200 uppercase">
+                            {order.payment_method || 'Non choisi'}
+                          </span>
+                        </td>
+
+                        <td className="py-3.5 px-4">
+                          <div className="flex items-center justify-center gap-1.5 flex-wrap">
+                            {/* WhatsApp Button */}
+                            {waUrl ? (
+                              <a
+                                href={waUrl}
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="px-2.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg font-bold text-[11px] flex items-center gap-1 shadow-2xs transition-all"
+                                title="Ouvrir WhatsApp avec message pré-rempli"
+                              >
+                                <span>📲</span>
+                                WhatsApp
+                              </a>
+                            ) : null}
+
+                            {/* Direct Email Button */}
+                            {order.customer_email ? (
+                              <a
+                                href={`mailto:${order.customer_email}?subject=${encodeURIComponent('Votre commande NutriFitness Genève')}&body=${encodeURIComponent(`Bonjour ${clientName},\n\nNous avons mis de côté vos articles sur nutrifitness.ch.\nLien direct vers votre panier : https://nutrifitness.ch/commande?restore=${order.order_number}\n\nNutriFitness Genève`)}`}
+                                className="px-2 py-1.5 bg-blue-50 hover:bg-blue-100 text-blue-700 border border-blue-200 rounded-lg font-bold text-[11px] flex items-center gap-1 transition-all"
+                                title="Écrire un email directement"
+                              >
+                                ✉️ Email
+                              </a>
+                            ) : null}
+
+                            {/* Automated 1-Click Recovery Email */}
+                            {order.customer_email ? (
+                              <button
+                                type="button"
+                                onClick={() => handleSendRecoveryEmail(order.order_number)}
+                                disabled={isRecoverySending}
+                                className={`px-2.5 py-1.5 rounded-lg font-bold text-[11px] flex items-center gap-1 transition-all ${
+                                  recoverySent
+                                    ? 'bg-slate-100 text-slate-500 border border-slate-200'
+                                    : 'bg-rose-600 hover:bg-rose-700 text-white shadow-2xs'
+                                }`}
+                                title={recoverySent ? 'Relance déjà envoyée' : 'Envoyer un email de relance officiel avec lien panier'}
+                              >
+                                {isRecoverySending ? (
+                                  <Loader2 className="w-3 h-3 animate-spin" />
+                                ) : (
+                                  <span>⚡ Relancer</span>
+                                )}
+                              </button>
+                            ) : null}
+                          </div>
+                          {recoverySent && (
+                            <div className="text-[9px] text-emerald-600 font-semibold text-center mt-1">
+                              ✓ Relance envoyée
+                            </div>
+                          )}
+                        </td>
+                      </tr>
+                    );
+                  })}
+
+                  {abandonedCarts.length === 0 && (
+                    <tr>
+                      <td colSpan={7} className="py-12 text-center text-slate-400">
+                        <ShoppingCart className="w-8 h-8 mx-auto text-slate-300 mb-2" />
+                        <p className="font-bold text-xs">Aucun panier abandonné pour le moment.</p>
+                        <p className="text-[11px] mt-0.5">Dès qu'un visiteur quitte la commande, ses coordonnées apparaîtront ici et un email d'alerte sera envoyé instantanément à Marco.</p>
                       </td>
                     </tr>
                   )}

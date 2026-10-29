@@ -13,15 +13,17 @@ import {
   ExternalLink,
   LogOut,
   CheckCircle2,
-  Lock
+  Lock,
+  ShoppingCart
 } from 'lucide-react';
 
 interface AdminSidebarProps {
-  activeTab?: 'pos' | 'catalog' | 'sales' | 'fulfillment' | 'locations';
-  onSelectTab?: (tab: 'pos' | 'catalog' | 'sales' | 'fulfillment') => void;
+  activeTab?: 'pos' | 'catalog' | 'sales' | 'fulfillment' | 'locations' | 'abandoned';
+  onSelectTab?: (tab: 'pos' | 'catalog' | 'sales' | 'fulfillment' | 'abandoned') => void;
   posCount?: number;
   catalogCount?: number;
   salesCount?: number;
+  abandonedCount?: number;
 }
 
 export default function AdminSidebar({
@@ -30,6 +32,7 @@ export default function AdminSidebar({
   posCount,
   catalogCount,
   salesCount,
+  abandonedCount,
 }: AdminSidebarProps) {
   const pathname = usePathname();
   const router = useRouter();
@@ -62,6 +65,14 @@ export default function AdminSidebar({
       isRoute: false,
     },
     {
+      id: 'abandoned',
+      label: 'Paniers Abandonnés',
+      icon: ShoppingCart,
+      badge: abandonedCount,
+      href: '/wp-admin?tab=abandoned',
+      isRoute: false,
+    },
+    {
       id: 'fulfillment',
       label: 'Fulfillment Queue',
       icon: Truck,
@@ -84,7 +95,7 @@ export default function AdminSidebar({
       router.push(item.href);
     } else {
       if (pathname?.startsWith('/wp-admin') && onSelectTab) {
-        onSelectTab(item.id as 'pos' | 'catalog' | 'sales' | 'fulfillment');
+        onSelectTab(item.id as 'pos' | 'catalog' | 'sales' | 'fulfillment' | 'abandoned');
       } else {
         router.push(item.href);
       }

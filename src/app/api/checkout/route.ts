@@ -30,9 +30,84 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Cart is empty.' }, { status: 400 });
     }
 
+    const supabase = getAdminSupabase();
+
+    // 1. Authoritative Server-Side Inventory Check
+    const destCountryStr = String(shippingAddress?.country || '').toLowerCase().trim();
+    const isSwissDest = destCountryStr.includes('suisse') ||
+      destCountryStr.includes('switzerland') ||
+      destCountryStr === 'ch' ||
+      destCountryStr === 'li' ||
+      (currency || 'CHF').toUpperCase() === 'CHF';
+
+    for (const item of items) {
+      if (item.isEbook || (item.categorySlug && item.categorySlug === 'guides-ebooks')) continue;
+      const rawId = String(item.id || item.productId || '').trim();
+      const cleanId = rawId.replace(/^prod-/, '');
+      const reqQty = Math.max(1, Number(item.quantity || 1));
+      const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
+        ? ((item.flavor as any).fr || '')
+        : (item.flavor ? String(item.flavor) : '');
+
+      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(rawId) ||
+        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cleanId);
+      const isNumeric = /^\d+$/.test(cleanId);
+
+      const orParts: string[] = [];
+      if (isUuid) {
+        orParts.push(`id.eq.${isUuid ? (cleanId.length === 36 ? cleanId : rawId) : rawId}`);
+      }
+      if (isNumeric) orParts.push(`woo_id.eq.${cleanId}`);
+      if (item.slug) orParts.push(`slug.eq.${item.slug}`);
+
+      let dbProduct: any = null;
+      if (orParts.length > 0) {
+        try {
+          const { data } = await supabase
+            .from('products')
+            .select(`
+              id, name, main_location, stock_geneva, stock_portugal,
+              product_variants (id, sku, attribute_value, stock_geneva, stock_portugal)
+            `)
+            .or(orParts.join(','))
+            .maybeSingle();
+          dbProduct = data;
+        } catch {}
+      }
+
+      if (dbProduct) {
+        let maxStock = 0;
+        if (flavorStr && Array.isArray(dbProduct.product_variants) && dbProduct.product_variants.length > 0) {
+          const matchedVariant = dbProduct.product_variants.find((v: any) =>
+            (v.attribute_value && v.attribute_value.toLowerCase().trim() === flavorStr.toLowerCase().trim()) ||
+            (v.sku && v.sku.toLowerCase().trim() === (item.sku || '').toLowerCase().trim())
+          );
+          if (matchedVariant) {
+            maxStock = isSwissDest ? Number(matchedVariant.stock_geneva || 0) : Number(matchedVariant.stock_portugal || 0);
+          } else {
+            maxStock = isSwissDest ? Number(dbProduct.stock_geneva || 0) : Number(dbProduct.stock_portugal || 0);
+          }
+        } else {
+          maxStock = isSwissDest ? Number(dbProduct.stock_geneva || 0) : Number(dbProduct.stock_portugal || 0);
+        }
+
+        if (reqQty > maxStock) {
+          const prodName = typeof item.name === 'object' && item.name !== null
+            ? ((item.name as any).fr || Object.values(item.name)[0] || 'Produit')
+            : (item.name || dbProduct.name || 'Produit');
+          const locName = isSwissDest ? 'en Suisse' : 'dans l\'entrepôt Europe';
+          return NextResponse.json({
+            error: 'INSUFFICIENT_STOCK',
+            message: `Stock insuffisant pour "${prodName}${flavorStr && flavorStr !== 'Standard' ? ` - ${flavorStr}` : ''}". Quantité disponible ${locName} : ${maxStock} unité(s).`,
+            item_id: item.id,
+            available_stock: maxStock
+          }, { status: 400 });
+        }
+      }
+    }
+
     // Pre-record pending order with full cart items into Supabase
     try {
-      const supabase = getAdminSupabase();
       const orderNum = String(orderNumber || `NF-${Date.now()}`);
       const cleanItems = items.map((item: any) => {
         const nameStr = typeof item.name === 'object' && item.name !== null 

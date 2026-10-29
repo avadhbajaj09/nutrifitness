@@ -44,6 +44,8 @@ export async function GET() {
         stockGeneva: Number(p.stock_geneva) || 0,
         stockPortugal: Number(p.stock_portugal) || 0,
         mainLocation: p.main_location,
+        shippingOrigin: p.main_location === 'COMMON' ? 'common' : p.main_location === 'PORTUGAL' ? 'portugal' : 'switzerland',
+        locationType: p.main_location === 'COMMON' ? 'COMMON' : p.main_location === 'PORTUGAL' ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY',
         nutrition: p.nutrition,
         shortDescription: p.short_description,
         description: p.description,

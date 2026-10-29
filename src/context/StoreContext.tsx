@@ -27,6 +27,8 @@ export interface CartItem {
   vatRate: number;
   isEbook?: boolean;
   isPortugal?: boolean;
+  stockGeneva?: number;
+  stockPortugal?: number;
   shippingOrigin?: 'switzerland' | 'portugal' | 'common';
   locationType?: 'COMMON' | 'GENEVA_ONLY' | 'PORTUGAL_ONLY';
 }
@@ -469,7 +471,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const getProductPricing = (product: any, variant?: any) => {
     const isSwiss = countryCode === 'CH' || countryCode === 'LI';
-    const rawChf = variant?.priceChf ?? product?.priceChf ?? 29.90;
+    const rawChf = variant?.priceChf ?? variant?.price ?? product?.priceChf ?? product?.base_price ?? 29.90;
     const baseChf = Number.isFinite(Number(rawChf)) ? Number(rawChf) : 29.90;
 
     const rawCompareChf = variant?.compareAtPriceChf ?? product?.compareAtPriceChf;
@@ -615,22 +617,54 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
     const itemKey = `${product.id || slug}-${flavor}-${size}`;
     const isCommon = product.locationType === 'COMMON' || product.shippingOrigin === 'common';
-    const isPortugal = Boolean(product.shippingOrigin === 'portugal' || (options as any).isPortugal || (product.locationType === 'PORTUGAL_ONLY' && !isCommon));
-    const shippingOrigin = product.shippingOrigin || (isCommon ? 'common' : isPortugal ? 'portugal' : 'switzerland');
-    const locationType = product.locationType || (isCommon ? 'COMMON' : isPortugal ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY');
 
     const stockCheck = !isEbook ? getProductStock(product, flavor) : null;
     const effectiveStockGeneva = stockCheck ? stockCheck.geneva : product.stockGeneva;
     const effectiveStockPortugal = stockCheck ? stockCheck.portugal : product.stockPortugal;
 
-    // Hard stock check: block out of stock items
-    if (!isEbook && stockCheck && stockCheck.total <= 0) {
-      showToast(
-        'Rupture de stock',
-        `Cet article (${name}${flavor && flavor !== 'Standard' ? ` - ${flavor}` : ''}) est actuellement en rupture de stock.`
-      );
-      return;
+    const isSwissDest = (countryCode || 'CH').toUpperCase() === 'CH' || (countryCode || 'CH').toUpperCase() === 'LI';
+
+    // Authoritative origin & max purchasable stock for this item and destination
+    let resolvedItemOrigin: 'switzerland' | 'portugal' = 'switzerland';
+    let availableStock = 999;
+    if (!isEbook) {
+      const genStock = typeof effectiveStockGeneva === 'number' ? Math.max(0, effectiveStockGeneva) : (product.stockGeneva ?? 0);
+      const ptStock = typeof effectiveStockPortugal === 'number' ? Math.max(0, effectiveStockPortugal) : (product.stockPortugal ?? 0);
+
+      if (isSwissDest) {
+        if (genStock > 0) {
+          // Swiss stock comes 1st!
+          resolvedItemOrigin = 'switzerland';
+          availableStock = genStock;
+        } else if (ptStock > 0 && product.shippingOrigin !== 'switzerland' && product.locationType !== 'GENEVA_ONLY') {
+          // Fulfill from European Hub when Swiss stock is 0
+          resolvedItemOrigin = 'portugal';
+          availableStock = ptStock;
+        } else {
+          availableStock = 0;
+        }
+      } else {
+        // Outside Switzerland: European Hub only
+        if (product.shippingOrigin === 'switzerland' || product.locationType === 'GENEVA_ONLY') {
+          availableStock = 0;
+        } else {
+          resolvedItemOrigin = 'portugal';
+          availableStock = ptStock;
+        }
+      }
+
+      if (availableStock <= 0) {
+        showToast(
+          'Rupture de stock',
+          `Cet article (${name}${flavor && flavor !== 'Standard' ? ` - ${flavor}` : ''}) est actuellement en rupture de stock.`
+        );
+        return;
+      }
     }
+
+    const isPortugal = resolvedItemOrigin === 'portugal';
+    const shippingOrigin = resolvedItemOrigin;
+    const locationType = isCommon ? 'COMMON' : (isPortugal ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY');
 
     // Hard deliverability check: block non-deliverable items for selected country
     if (!isEbook && !isProductDeliverableToCountry(countryCode || 'CH', locationType, shippingOrigin, effectiveStockGeneva, effectiveStockPortugal)) {
@@ -658,10 +692,22 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           blockedDuplicateEbook = true;
           return prev;
         }
+        const currentInCart = prev[index].quantity || 0;
+        const newTotalQty = currentInCart + quantity;
+        if (newTotalQty > availableStock) {
+          showToast(
+            'Stock limité',
+            `Quantité maximale disponible atteinte (${availableStock} unité(s)).`
+          );
+          const next = [...prev];
+          next[index] = { ...next[index], quantity: availableStock };
+          return next;
+        }
         const next = [...prev];
-        next[index] = { ...next[index], quantity: next[index].quantity + quantity };
+        next[index] = { ...next[index], quantity: newTotalQty };
         return next;
       } else {
+        const safeQty = Math.min(quantity, availableStock);
         return [
           ...prev,
           {
@@ -678,10 +724,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             priceEur: product.priceEurEurope || product.priceEur,
             flavor,
             size,
-            quantity,
+            quantity: safeQty,
             vatRate: product.vatRate || 2.6,
             isEbook,
             isPortugal,
+            stockGeneva: typeof effectiveStockGeneva === 'number' ? effectiveStockGeneva : product.stockGeneva,
+            stockPortugal: typeof effectiveStockPortugal === 'number' ? effectiveStockPortugal : product.stockPortugal,
             shippingOrigin,
             locationType
           }
@@ -767,7 +815,24 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
               ? Math.floor(Number(item.quantity))
               : 1;
             const nextQty = currentQty + numDelta;
-            return nextQty > 0 ? { ...item, quantity: nextQty } : null;
+            if (nextQty <= 0) return null;
+
+            if (numDelta > 0 && !item.isEbook) {
+              const isSwissDest = (countryCode || 'CH').toUpperCase() === 'CH' || (countryCode || 'CH').toUpperCase() === 'LI';
+              const stockCheck = getProductStock(item, item.flavor);
+              const genStock = stockCheck && typeof stockCheck.geneva === 'number' ? stockCheck.geneva : (item.stockGeneva ?? 0);
+              const ptStock = stockCheck && typeof stockCheck.portugal === 'number' ? stockCheck.portugal : (item.stockPortugal ?? 0);
+              const maxStock = isSwissDest
+                ? (item.shippingOrigin === 'portugal' ? ptStock : (genStock > 0 ? genStock : ptStock))
+                : ptStock;
+
+              if (nextQty > maxStock) {
+                showToast('Stock limité', `Quantité maximale disponible atteinte (${maxStock} unité(s)).`);
+                return { ...item, quantity: maxStock };
+              }
+            }
+
+            return { ...item, quantity: nextQty };
           }
           return item;
         })
