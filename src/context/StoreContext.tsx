@@ -241,14 +241,12 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         const data = await res.json();
         if (data.stocks) mergedStocks = data.stocks;
       }
-      try {
-        const localStock = localStorage.getItem('nutrifitness_stock_overrides');
-        if (localStock) {
-          const parsed = JSON.parse(localStock);
-          mergedStocks = { ...mergedStocks, ...parsed };
-        }
-      } catch {}
+      // Supabase /api/admin/stock is the authoritative single source of truth
       setStockMap(mergedStocks);
+      // Clean up legacy mock local overrides to prevent stale browser cache desync
+      try {
+        localStorage.removeItem('nutrifitness_stock_overrides');
+      } catch {}
     } catch {}
   };
 

@@ -34,6 +34,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'faq'>('desc');
   const [mobileOpenSection, setMobileOpenSection] = useState<string | null>('desc');
   const [selectedFlavor, setSelectedFlavor] = useState<string>(
+    product.variants?.find(v => (v.stockGeneva || 0) > 0)?.flavorName?.fr ||
     product.variants?.find(v => v.inStock)?.flavorName?.fr ||
     getLocalized(product.variants?.[0]?.flavorName, locale) ||
     'Standard'
