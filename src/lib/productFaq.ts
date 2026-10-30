@@ -5,7 +5,9 @@ export function getProductFaqs(product: ProductItem): FaqItem[] {
   const name = getLocalized(product.name, 'fr');
   const brand = product.brand;
   const servingSize = product.nutrition.servingSize || '30 g';
-  const servings = product.nutrition.servingsPerContainer || 30;
+  const servings = typeof product.nutrition.servingsPerContainer === 'number'
+    ? product.nutrition.servingsPerContainer
+    : (parseInt(String(product.nutrition.servingsPerContainer), 10) || 30);
   const proteinPerServing = product.nutrition.proteinG || 0;
   const caloriesPerServing = product.nutrition.energyKcal || 0;
   const ingredients = product.ingredients.fr || 'Ingrédients de haute qualité selon l\'étiquette officielle.';

@@ -180,7 +180,7 @@ export default function ProductEditorModal({
 
       if (product.nutrition) {
         setServingSize(product.nutrition.servingSize || '30 g');
-        setServingsPerContainer(product.nutrition.servingsPerContainer || 30);
+        setServingsPerContainer(Number(product.nutrition.servingsPerContainer) || 30);
         setEnergyKcal(product.nutrition.energyKcal || 0);
         setEnergyKj(product.nutrition.energyKj || 0);
         setProteinG(product.nutrition.proteinG || 0);
@@ -599,6 +599,7 @@ export default function ProductEditorModal({
         en: (product && product.allergens?.en) || allergensFr
       },
       nutrition: {
+        ...(product?.nutrition || {}),
         servingSize,
         servingsPerContainer: Number(servingsPerContainer),
         energyKcal: Number(energyKcal),
@@ -1909,6 +1910,34 @@ export default function ProductEditorModal({
                     />
                   </div>
                 </div>
+
+                {product?.nutrition?.activeIngredients && product.nutrition.activeIngredients.length > 0 && (
+                  <div className="mt-4 pt-4 border-t border-slate-200">
+                    <span className="text-[11px] font-black uppercase tracking-wider text-slate-700 block mb-2">
+                      ⚡ Principes Actifs & Dosage ({product.nutrition.activeIngredients.length} composants vérifiés)
+                    </span>
+                    <div className="overflow-x-auto bg-white rounded-xl border border-slate-200">
+                      <table className="w-full text-left text-xs text-slate-800">
+                        <thead className="bg-slate-100 text-[10px] uppercase text-slate-600 font-bold border-b border-slate-200">
+                          <tr>
+                            <th className="py-2 px-3">Composant</th>
+                            <th className="py-2 px-3">Dosage / Portion</th>
+                            <th className="py-2 px-3">% VNR</th>
+                          </tr>
+                        </thead>
+                        <tbody className="divide-y divide-slate-100">
+                          {product.nutrition.activeIngredients.map((item, idx) => (
+                            <tr key={idx}>
+                              <td className="py-2 px-3 font-semibold">{item.name}</td>
+                              <td className="py-2 px-3 font-mono font-bold text-red-600">{item.amount}</td>
+                              <td className="py-2 px-3 text-slate-500 font-mono">{item.nrv || '–'}</td>
+                            </tr>
+                          ))}
+                        </tbody>
+                      </table>
+                    </div>
+                  </div>
+                )}
               </div>
 
             </div>

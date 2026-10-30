@@ -108,6 +108,172 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
     trackMetaViewContent({ item: itemData, currency: activeCurr });
   }, [product.id, currency, selectedVariant?.sku, currentPrice, name, product.brand, product.categorySlug]);
 
+  const renderNutritionContent = () => {
+    if (!product.nutrition) {
+      return (
+        <div className="p-6 bg-[#141414] rounded-2xl border border-white/10 text-xs text-white/60 text-center">
+          {locale === 'en' ? 'Nutrition facts updating soon for this product.' : 'Informations nutritionnelles en cours de mise à jour pour ce produit.'}
+        </div>
+      );
+    }
+
+    const nut = product.nutrition;
+    const activeList = Array.isArray(nut.activeIngredients) ? nut.activeIngredients : [];
+    const hasMacros = (nut.energyKcal ?? 0) > 0 || (nut.proteinG ?? 0) > 0 || (nut.carbsG ?? 0) > 0 || (nut.fatG ?? 0) > 0;
+
+    const matchGrams = (nut.servingSize || '').match(/(\d+(?:\.\d+)?)\s*g\b/i);
+    const portionGrams = matchGrams ? parseFloat(matchGrams[1]) : null;
+    const multiplier100g = portionGrams && portionGrams > 0 ? (100 / portionGrams) : null;
+
+    const per100gKcal = multiplier100g ? Math.round(nut.energyKcal * multiplier100g) : nut.energyKcal;
+    const per100gKj = multiplier100g ? Math.round(nut.energyKj * multiplier100g) : (nut.energyKj || Math.round(per100gKcal * 4.184));
+    const per100gFat = multiplier100g ? (nut.fatG * multiplier100g) : nut.fatG;
+    const per100gCarbs = multiplier100g ? (nut.carbsG * multiplier100g) : nut.carbsG;
+    const per100gProtein = multiplier100g ? (nut.proteinG * multiplier100g) : nut.proteinG;
+    const per100gSalt = multiplier100g ? (nut.saltG * multiplier100g) : nut.saltG;
+
+    return (
+      <div className="space-y-6 animate-in fade-in duration-150">
+        {/* 1. Active Ingredients & Matrix Table */}
+        {activeList.length > 0 && (
+          <div className="space-y-2">
+            <div className="flex items-center justify-between flex-wrap gap-2">
+              <h4 className="text-xs sm:text-sm font-black uppercase text-white font-heading flex items-center gap-2">
+                <span className="w-2 h-2 rounded-full bg-[#F80404]" />
+                <span>
+                  {locale === 'de' ? `Wirkstoffe & Dosierung (Portion: ${nut.servingSize})` :
+                   locale === 'it' ? `Principi Attivi & Dosaggi (Porzione: ${nut.servingSize})` :
+                   locale === 'en' ? `Active Ingredients & Matrix (Per serving: ${nut.servingSize})` :
+                   `Principes Actifs & Matrice Nutritionnelle (Portion : ${nut.servingSize})`}
+                </span>
+              </h4>
+              {nut.servingsPerContainer && (
+                <span className="text-[11px] font-bold text-white/50 bg-white/5 px-2.5 py-1 rounded-lg border border-white/10">
+                  {locale === 'en' ? `${nut.servingsPerContainer} servings / container` : `${nut.servingsPerContainer} portions par boîte`}
+                </span>
+              )}
+            </div>
+
+            <div className="overflow-x-auto bg-[#141414] rounded-2xl border border-white/10">
+              <table className="w-full text-left text-xs sm:text-sm text-white">
+                <thead className="bg-white/5 border-b border-white/10 text-[10px] sm:text-xs uppercase text-white/60 font-heading">
+                  <tr>
+                    <th className="py-3 px-4">{locale === 'de' ? 'Inhaltsstoff' : locale === 'it' ? 'Ingrediente Attivo' : locale === 'en' ? 'Active Ingredient' : 'Composant Actif'}</th>
+                    <th className="py-3 px-4">{locale === 'de' ? 'Menge / Portion' : locale === 'it' ? 'Dosaggio / Porzione' : locale === 'en' ? 'Amount / Serving' : 'Dosage / Portion'}</th>
+                    <th className="py-3 px-4">{locale === 'de' ? '% NRV*' : locale === 'it' ? '% VNR*' : locale === 'en' ? '% NRV*' : '% VNR*'}</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 text-xs sm:text-sm text-white/80">
+                  {activeList.map((item, idx) => (
+                    <tr key={idx} className="hover:bg-white/5 transition-colors">
+                      <td className="py-2.5 px-4 font-semibold text-white">{item.name}</td>
+                      <td className="py-2.5 px-4 font-bold text-[#F80404] font-mono">{item.amount}</td>
+                      <td className="py-2.5 px-4 text-white/60 font-mono">{item.nrv || '–'}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <p className="text-[10px] text-white/40 italic px-1">
+              *{locale === 'de' ? 'NRV = Nährstoffbezugswerte gemäss EDI' : locale === 'it' ? 'VNR = Valori Nutritivi di Riferimento DFI' : locale === 'en' ? 'NRV = Nutrient Reference Value according to Swiss Food Law (EDI/DFI)' : 'VNR = Valeurs Nutritionnelles de Référence (Norme DFI / LGV Suisse)'}
+            </p>
+          </div>
+        )}
+
+        {/* 2. Macronutrient Table */}
+        {hasMacros ? (
+          <div className="space-y-2">
+            <h4 className="text-xs sm:text-sm font-black uppercase text-white font-heading">
+              {locale === 'de' ? 'Nährwertdeklaration (Schweizer Standard)' :
+               locale === 'it' ? 'Valori Nutrizionali Medi (Norma Svizzera)' :
+               locale === 'en' ? 'Nutritional Information (Swiss Compliance)' :
+               'Informations Nutritionnelles (Norme DFI / LGV Suisse)'}
+            </h4>
+            <div className="overflow-x-auto bg-[#141414] rounded-2xl border border-white/10">
+              <table className="w-full text-left text-xs sm:text-sm text-white">
+                <thead className="bg-white/5 border-b border-white/10 text-[10px] sm:text-xs uppercase text-white/60 font-heading">
+                  <tr>
+                    <th className="py-3 px-4">Valeurs Moyennes</th>
+                    <th className="py-3 px-4">Pour 100 g</th>
+                    <th className="py-3 px-4">Par portion ({nut.servingSize})</th>
+                  </tr>
+                </thead>
+                <tbody className="divide-y divide-white/5 text-xs sm:text-sm text-white/80">
+                  <tr>
+                    <td className="py-2.5 px-4 font-medium text-white">Énergie (kJ / kcal)</td>
+                    <td className="py-2.5 px-4">{per100gKj} kJ / {per100gKcal} kcal</td>
+                    <td className="py-2.5 px-4 font-bold text-white">{nut.energyKj || Math.round(nut.energyKcal * 4.184)} kJ / {nut.energyKcal} kcal</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2.5 px-4 font-medium text-white">Matières grasses</td>
+                    <td className="py-2.5 px-4">{per100gFat.toFixed(1)} g</td>
+                    <td className="py-2.5 px-4">{nut.fatG.toFixed(1)} g</td>
+                  </tr>
+                  {nut.saturatedFatG !== undefined && (
+                    <tr className="text-white/60 text-xs">
+                      <td className="py-1.5 px-4 pl-8">dont acides gras saturés</td>
+                      <td className="py-1.5 px-4">{multiplier100g ? (nut.saturatedFatG * multiplier100g).toFixed(1) : nut.saturatedFatG.toFixed(1)} g</td>
+                      <td className="py-1.5 px-4">{nut.saturatedFatG.toFixed(1)} g</td>
+                    </tr>
+                  )}
+                  <tr>
+                    <td className="py-2.5 px-4 font-medium text-white">Glucides</td>
+                    <td className="py-2.5 px-4">{per100gCarbs.toFixed(1)} g</td>
+                    <td className="py-2.5 px-4">{nut.carbsG.toFixed(1)} g</td>
+                  </tr>
+                  {nut.sugarsG !== undefined && (
+                    <tr className="text-white/60 text-xs">
+                      <td className="py-1.5 px-4 pl-8">dont sucres</td>
+                      <td className="py-1.5 px-4">{multiplier100g ? (nut.sugarsG * multiplier100g).toFixed(1) : nut.sugarsG.toFixed(1)} g</td>
+                      <td className="py-1.5 px-4">{nut.sugarsG.toFixed(1)} g</td>
+                    </tr>
+                  )}
+                  <tr className="bg-[#F80404]/10 font-bold text-[#F80404]">
+                    <td className="py-2.5 px-4 font-heading">Protéines</td>
+                    <td className="py-2.5 px-4 font-heading">{per100gProtein.toFixed(1)} g</td>
+                    <td className="py-2.5 px-4 font-heading font-black">{nut.proteinG.toFixed(1)} g</td>
+                  </tr>
+                  <tr>
+                    <td className="py-2.5 px-4 font-medium text-white">Sel</td>
+                    <td className="py-2.5 px-4">{per100gSalt.toFixed(2)} g</td>
+                    <td className="py-2.5 px-4">{nut.saltG.toFixed(2)} g</td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        ) : activeList.length > 0 ? (
+          <div className="p-3 bg-white/5 rounded-xl border border-white/10 flex items-center gap-2 text-xs text-white/70">
+            <span className="text-[#95d600]">⚡</span>
+            <span>
+              {locale === 'en' ? 'Micro-dosed formulation without significant caloric or macronutrient intake (0 kcal · 0g Carbs · 0g Fat · 0g Protein).' :
+               locale === 'de' ? 'Mikrodosierte Formel ohne nennenswerte Kalorien- oder Makronährstoffzufuhr (0 kcal · 0g Kohlenhydrate · 0g Fett · 0g Protein).' :
+               locale === 'it' ? 'Formula microdosata senza apporto calorico o macronutrienti significativo (0 kcal · 0g carboidrati · 0g grassi · 0g proteine).' :
+               'Formule ultra-pure sans apport calorique significatif (0 kcal · 0g glucides · 0g lipides · 0g protéines).'}
+            </span>
+          </div>
+        ) : null}
+
+        {/* 3. Ingrédients & Allergènes */}
+        <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-2">
+          <h4 className="font-bold text-xs uppercase text-white font-heading">{locale === 'de' ? 'Inhaltsstoffe' : locale === 'it' ? 'Ingredienti' : locale === 'en' ? 'Ingredients' : 'Ingrédients'}</h4>
+          <div className="text-xs text-white/70 leading-relaxed" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedIngredients) }} />
+          {localizedAllergens && (
+            <div className="text-xs font-bold text-red-400 pt-2" dangerouslySetInnerHTML={{ __html: (locale === 'de' ? 'Allergene : ' : locale === 'it' ? 'Allergeni : ' : locale === 'en' ? 'Allergens : ' : 'Allergènes : ') + sanitizeProductHtml(localizedAllergens).replace(/^<p>|<\/p>$/g, '') }} />
+          )}
+        </div>
+
+        {/* 4. Code GTIN / EAN */}
+        {currentGtin && (
+          <div className="bg-[#141414] rounded-2xl border border-white/10 p-4 flex items-center justify-between text-xs">
+            <span className="font-bold text-white/60 uppercase font-heading">Code GTIN / EAN :</span>
+            <span className="font-mono text-white tracking-wider font-semibold">{currentGtin}</span>
+          </div>
+        )}
+      </div>
+    );
+  };
+
   return (
     <div>
       {/* Breadcrumbs (Accueil > Catégorie > Produit) */}
@@ -539,64 +705,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
               </button>
               {mobileOpenSection === 'nutrition' && (
                 <div className="p-4 pt-1 border-t border-white/5 space-y-4 animate-in fade-in duration-150">
-                  <div className="overflow-x-auto rounded-xl border border-white/10 bg-black/40">
-                    <table className="w-full text-left text-xs text-white">
-                      <thead className="bg-white/5 border-b border-white/10 text-[10px] uppercase text-white/60 font-heading">
-                        <tr>
-                          <th className="py-2.5 px-3">Valeurs</th>
-                          <th className="py-2.5 px-3">100g</th>
-                          <th className="py-2.5 px-3">Portion</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5 text-xs text-white/80">
-                        <tr>
-                          <td className="py-2 px-3 font-medium text-white">Énergie</td>
-                          <td className="py-2 px-3">{product.nutrition.energyKcal} kcal</td>
-                          <td className="py-2 px-3">{Math.round(product.nutrition.energyKcal * 0.3)} kcal</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 px-3 font-medium text-white">Matières grasses</td>
-                          <td className="py-2 px-3">{product.nutrition.fatG.toFixed(1)} g</td>
-                          <td className="py-2 px-3">{(product.nutrition.fatG * 0.3).toFixed(1)} g</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 px-3 font-medium text-white">Glucides</td>
-                          <td className="py-2 px-3">{product.nutrition.carbsG.toFixed(1)} g</td>
-                          <td className="py-2 px-3">{(product.nutrition.carbsG * 0.3).toFixed(1)} g</td>
-                        </tr>
-                        <tr className="bg-[#F80404]/10 font-bold text-[#F80404]">
-                          <td className="py-2 px-3 font-heading">Protéines</td>
-                          <td className="py-2 px-3 font-heading">{product.nutrition.proteinG.toFixed(1)} g</td>
-                          <td className="py-2 px-3 font-heading">{(product.nutrition.proteinG * 0.3).toFixed(1)} g</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2 px-3 font-medium text-white">Sel</td>
-                          <td className="py-2 px-3">{product.nutrition.saltG.toFixed(2)} g</td>
-                          <td className="py-2 px-3">{(product.nutrition.saltG * 0.3).toFixed(2)} g</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-
-                  <div className="space-y-1.5 text-xs text-white/70">
-                    <div>
-                      <strong className="text-white">{locale === 'de' ? 'Inhaltsstoffe : ' : locale === 'it' ? 'Ingredienti : ' : locale === 'en' ? 'Ingredients : ' : 'Ingrédients : '}</strong>
-                      <span dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedIngredients).replace(/^<p>|<\/p>$/g, '') }} />
-                    </div>
-                    {localizedAllergens && (
-                      <div className="text-red-400 font-bold">
-                        <span>{locale === 'de' ? 'Allergene : ' : locale === 'it' ? 'Allergeni : ' : locale === 'en' ? 'Allergens : ' : 'Allergènes : '}</span>
-                        <span dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedAllergens).replace(/^<p>|<\/p>$/g, '') }} />
-                      </div>
-                    )}
-                  </div>
-
-                  {currentGtin && (
-                    <div className="p-3 bg-black/40 rounded-xl border border-white/10 flex items-center justify-between text-xs">
-                      <span className="font-bold text-white/60 uppercase font-heading">GTIN/EAN :</span>
-                      <span className="font-mono text-white tracking-wider font-semibold">{currentGtin}</span>
-                    </div>
-                  )}
+                  {renderNutritionContent()}
                 </div>
               )}
             </div>
@@ -700,68 +809,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
             )}
 
             {/* Tab 3: Nutrition */}
-            {activeTab === 'nutrition' && (
-              <div className="space-y-6 animate-in fade-in duration-150">
-                <div>
-                  <h3 className="text-base font-black uppercase text-white font-heading mb-3">
-                    Informations Nutritionnelles (Norme DFI / LGV Suisse)
-                  </h3>
-                  <div className="overflow-x-auto bg-[#141414] rounded-2xl border border-white/10">
-                    <table className="w-full text-left text-sm text-white">
-                      <thead className="bg-white/5 border-b border-white/10 text-xs uppercase text-white/60 font-heading">
-                        <tr>
-                          <th className="py-3 px-4">Valeurs Moyennes</th>
-                          <th className="py-3 px-4">Pour 100 g</th>
-                          <th className="py-3 px-4">Par portion ({product.nutrition.servingSize})</th>
-                        </tr>
-                      </thead>
-                      <tbody className="divide-y divide-white/5 text-xs sm:text-sm text-white/80">
-                        <tr>
-                          <td className="py-2.5 px-4 font-medium text-white">Énergie (kJ / kcal)</td>
-                          <td className="py-2.5 px-4">{product.nutrition.energyKj} kJ / {product.nutrition.energyKcal} kcal</td>
-                          <td className="py-2.5 px-4">{Math.round(product.nutrition.energyKj * 0.3)} kJ / {Math.round(product.nutrition.energyKcal * 0.3)} kcal</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2.5 px-4 font-medium text-white">Matières grasses</td>
-                          <td className="py-2.5 px-4">{product.nutrition.fatG.toFixed(1)} g</td>
-                          <td className="py-2.5 px-4">{(product.nutrition.fatG * 0.3).toFixed(1)} g</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2.5 px-4 font-medium text-white">Glucides</td>
-                          <td className="py-2.5 px-4">{product.nutrition.carbsG.toFixed(1)} g</td>
-                          <td className="py-2.5 px-4">{(product.nutrition.carbsG * 0.3).toFixed(1)} g</td>
-                        </tr>
-                        <tr className="bg-[#F80404]/10 font-bold text-[#F80404]">
-                          <td className="py-2.5 px-4 font-heading">Protéines</td>
-                          <td className="py-2.5 px-4 font-heading">{product.nutrition.proteinG.toFixed(1)} g</td>
-                          <td className="py-2.5 px-4 font-heading">{(product.nutrition.proteinG * 0.3).toFixed(1)} g</td>
-                        </tr>
-                        <tr>
-                          <td className="py-2.5 px-4 font-medium text-white">Sel</td>
-                          <td className="py-2.5 px-4">{product.nutrition.saltG.toFixed(2)} g</td>
-                          <td className="py-2.5 px-4">{(product.nutrition.saltG * 0.3).toFixed(2)} g</td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-
-                <div className="bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-2">
-                  <h4 className="font-bold text-xs uppercase text-white font-heading">{locale === 'de' ? 'Inhaltsstoffe' : locale === 'it' ? 'Ingredienti' : locale === 'en' ? 'Ingredients' : 'Ingrédients'}</h4>
-                  <div className="text-xs text-white/70 leading-relaxed" dangerouslySetInnerHTML={{ __html: sanitizeProductHtml(localizedIngredients) }} />
-                  {localizedAllergens && (
-                    <div className="text-xs font-bold text-red-400 pt-2" dangerouslySetInnerHTML={{ __html: (locale === 'de' ? 'Allergene : ' : locale === 'it' ? 'Allergeni : ' : locale === 'en' ? 'Allergens : ' : 'Allergènes : ') + sanitizeProductHtml(localizedAllergens).replace(/^<p>|<\/p>$/g, '') }} />
-                  )}
-                </div>
-
-                {currentGtin && (
-                  <div className="bg-[#141414] rounded-2xl border border-white/10 p-4 flex items-center justify-between text-xs">
-                    <span className="font-bold text-white/60 uppercase font-heading">Code GTIN / EAN :</span>
-                    <span className="font-mono text-white tracking-wider font-semibold">{currentGtin}</span>
-                  </div>
-                )}
-              </div>
-            )}
+            {activeTab === 'nutrition' && renderNutritionContent()}
 
             {/* Tab 4: FAQ & Conseils */}
             {activeTab === 'faq' && (

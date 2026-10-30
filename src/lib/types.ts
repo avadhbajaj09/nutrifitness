@@ -2,9 +2,15 @@ export type SupportedLocale = 'fr' | 'de' | 'it' | 'en';
 
 export type TaxRateCategory = 'food_reduced' | 'standard';
 
+export interface ActiveIngredient {
+  name: string;
+  amount: string;
+  nrv?: string;
+}
+
 export interface ProductNutrition {
   servingSize: string;
-  servingsPerContainer: number;
+  servingsPerContainer: number | string;
   energyKj: number;
   energyKcal: number;
   fatG: number;
@@ -13,7 +19,9 @@ export interface ProductNutrition {
   sugarsG: number;
   proteinG: number;
   saltG: number;
+  fiberG?: number;
   bcaaG?: number;
+  activeIngredients?: ActiveIngredient[];
 }
 
 export interface ProductVariant {
