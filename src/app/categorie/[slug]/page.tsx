@@ -29,6 +29,9 @@ import {
 
 import { formatMetaTitle, formatMetaDescription } from '@/lib/seo';
 
+export const revalidate = 60;
+export const dynamicParams = true;
+
 interface CategoryPageProps {
   params: {
     slug: string;

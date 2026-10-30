@@ -4,6 +4,8 @@ import BoutiqueClient from './BoutiqueClient';
 import { formatMetaTitle, formatMetaDescription } from '@/lib/seo';
 import { ALL_BRANDS } from '@/lib/brands';
 
+export const revalidate = 60;
+
 interface BoutiquePageProps {
   searchParams?: {
     brand?: string;

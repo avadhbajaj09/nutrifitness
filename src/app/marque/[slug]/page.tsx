@@ -19,6 +19,9 @@ import {
   FolderOpen
 } from 'lucide-react';
 
+export const revalidate = 60;
+export const dynamicParams = true;
+
 interface BrandPageProps {
   params: {
     slug: string;

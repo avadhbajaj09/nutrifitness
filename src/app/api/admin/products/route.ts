@@ -423,9 +423,14 @@ export async function PATCH(request: Request) {
 
     // On-Demand Revalidation
     try {
+      clearHiddenProductsCache();
+      revalidatePath('/', 'layout');
       revalidatePath('/');
       revalidatePath('/boutique');
-      revalidatePath('/categorie');
+      revalidatePath('/categorie/[slug]', 'page');
+      revalidatePath('/marque/[slug]', 'page');
+      revalidatePath('/admin/products');
+      revalidatePath('/wp-admin');
       if (existingProduct.slug) {
         revalidatePath(`/produit/${existingProduct.slug}`);
       }
@@ -456,346 +461,58 @@ function toUuid(str: string): string {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const {
-      id,
-      name,
-      slug,
-      brand = 'NutriFitness',
-      base_price = 0,
-      compare_at_price = null,
-      main_location = 'GENEVA',
-      status = 'published',
-      images = [],
-      gtin13,
-      short_description,
-      description,
-      ingredients,
-      allergens,
-      usage_instructions,
-      nutrition,
-      stock_geneva,
-      stock_portugal,
-      variants,
-      user = 'admin'
-    } = body;
+    const { name } = body;
 
-    if (!name) {
+    if (!name || !String(name).trim()) {
       return NextResponse.json({ error: 'Name is required' }, { status: 400 });
     }
 
     const supabase = getAdminSupabase();
-    let existingProduct = id ? await findProduct(supabase, id) : null;
-    if (!existingProduct && slug) {
-      existingProduct = await findProduct(supabase, slug);
+
+    // Call atomic PostgreSQL stored procedure for unified transaction
+    const { data, error } = await supabase.rpc('save_admin_product_full', {
+      payload: body
+    });
+
+    if (error) {
+      console.error('[Admin Products POST Error via RPC]:', error);
+      return NextResponse.json({ error: error.message }, { status: 400 });
     }
 
-    const now = new Date().toISOString();
-    const formattedImages = Array.isArray(images) ? images.map((img: any) => ({
-      src: typeof img === 'string' ? img : img.src,
-      alt: typeof img === 'string' ? name : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || name))
-    })) : [];
+    const resultId = data?.id || body.id;
+    const resultSlug = data?.slug || body.slug;
+    const resultStatus = data?.status || body.status || 'published';
 
-    const parsedBasePrice = Number(base_price) || 0;
-    const parsedComparePrice = compare_at_price ? Number(compare_at_price) : null;
-    const parsedStockGen = stock_geneva !== undefined ? Math.max(0, parseInt(stock_geneva, 10)) : 0;
-    const parsedStockPt = stock_portugal !== undefined ? Math.max(0, parseInt(stock_portugal, 10)) : 0;
-    const cleanGtin = gtin13 ? String(gtin13).trim() : null;
-
-    const shortDescText = typeof short_description === 'object' && short_description !== null 
-      ? (short_description.fr || short_description.en || '') 
-      : String(short_description || '');
-    const longDescText = typeof description === 'object' && description !== null 
-      ? (description.fr || description.en || '') 
-      : String(description || '');
-    const ingredientsText = typeof ingredients === 'object' && ingredients !== null 
-      ? (ingredients.fr || ingredients.en || '') 
-      : String(ingredients || '');
-    const allergensText = typeof allergens === 'object' && allergens !== null 
-      ? (allergens.fr || allergens.en || '') 
-      : String(allergens || '');
-    const usageText = typeof usage_instructions === 'object' && usage_instructions !== null 
-      ? (usage_instructions.fr || usage_instructions.en || '') 
-      : String(usage_instructions || '');
-
-    let targetId = existingProduct?.id;
-
-    if (existingProduct) {
-      targetId = existingProduct.id;
-      const updates: Record<string, any> = {
-        name,
-        normalized_name: name.toLowerCase().trim(),
-        brand,
-        base_price: parsedBasePrice,
-        compare_at_price: parsedComparePrice,
-        main_location,
-        status,
-        images: formattedImages,
-        gtin13: cleanGtin,
-        short_description: shortDescText,
-        description: longDescText,
-        ingredients: ingredientsText,
-        allergens: allergensText,
-        usage_instructions: usageText,
-        nutrition: nutrition || null,
-        stock_geneva: parsedStockGen,
-        stock_portugal: parsedStockPt,
-        updated_at: now
-      };
-      if (slug) updates.slug = slug;
-      await supabase.from('products').update(updates).eq('id', targetId);
-    } else {
-      const cleanId = String(id || slug || name).replace(/^prod-/, '');
-      targetId = isUUID(id || '') ? id : toUuid(id || slug || name);
-
-      await supabase.from('products').insert({
-        id: targetId,
-        woo_id: cleanId,
-        sku: id || `NF-${cleanId}`,
-        name,
-        normalized_name: name.toLowerCase().trim(),
-        slug: slug || name.toLowerCase().replace(/[^a-z0-9]+/g, '-'),
-        type: Array.isArray(variants) && variants.length > 1 ? 'variable' : 'simple',
-        brand,
-        base_price: parsedBasePrice,
-        compare_at_price: parsedComparePrice,
-        main_location,
-        status,
-        images: formattedImages,
-        gtin13: cleanGtin,
-        short_description: shortDescText,
-        description: longDescText,
-        ingredients: ingredientsText,
-        allergens: allergensText,
-        usage_instructions: usageText,
-        nutrition: nutrition || null,
-        stock_geneva: parsedStockGen,
-        stock_portugal: parsedStockPt,
-        is_featured: false,
-        created_at: now,
-        updated_at: now
-      });
-    }
-
-    // Upsert parent product_stock
-    await supabase.from('product_stock').upsert({
-      product_id: targetId,
-      variant_id: null,
-      origin_id: 'GENEVA',
-      quantity: parsedStockGen,
-      is_active: parsedStockGen > 0 || main_location !== 'PORTUGAL',
-      updated_at: now
-    }, { onConflict: 'product_id,variant_id,origin_id' });
-
-    await supabase.from('product_stock').upsert({
-      product_id: targetId,
-      variant_id: null,
-      origin_id: 'PORTUGAL',
-      quantity: parsedStockPt,
-      is_active: parsedStockPt > 0 || main_location !== 'GENEVA',
-      updated_at: now
-    }, { onConflict: 'product_id,variant_id,origin_id' });
-
-    // Update fulfillment_stock for parent product
-    const cleanId = String(id || '').replace(/^prod-/, '');
-    const fulfillIds = Array.from(new Set([targetId, id, `prod-${cleanId}`, cleanId].filter(Boolean)));
-    for (const fId of fulfillIds) {
-      await supabase.from('fulfillment_stock').update({ quantity: parsedStockGen, updated_at: now }).eq('origin_id', 'GENEVA').eq('product_id', fId);
-      await supabase.from('fulfillment_stock').update({ quantity: parsedStockPt, updated_at: now }).eq('origin_id', 'PORTUGAL').eq('product_id', fId);
-    }
-
-    // Upsert variants
-    if (Array.isArray(variants) && variants.length > 0) {
-      const keptVariantIds: string[] = [];
-      for (const v of variants) {
-        if (!v) continue;
-        const vGen = Math.max(0, parseInt(v.stock_geneva ?? (v.stockGeneva ?? 0), 10));
-        const vPt = Math.max(0, parseInt(v.stock_portugal ?? (v.stockPortugal ?? 0), 10));
-        const vPrice = Number(v.price ?? v.priceChf ?? parsedBasePrice) || 0;
-        const vCompare = v.compare_at_price ?? v.compareAtPriceChf ? Number(v.compare_at_price ?? v.compareAtPriceChf) : null;
-        const vFlavor = v.attribute_value || v.flavor || (typeof v.flavorName === 'object' ? v.flavorName?.fr : v.flavorName) || 'Standard';
-        const vSku = v.sku || `NF-${String(v.id || Date.now()).slice(-6)}`;
-        const vGtin = v.gtin13 || v.gtin || null;
-        const vImg = v.image_url || v.image || (formattedImages[0]?.src || null);
-
-        let vDbId = isUUID(v.id || '') ? v.id : null;
-        if (vDbId) {
-          const { data: existingV } = await supabase.from('product_variants').select('id').eq('id', vDbId).maybeSingle();
-          if (existingV) {
-            await supabase.from('product_variants').update({
-              sku: vSku,
-              attribute_name: v.attribute_name || 'saveur',
-              attribute_value: vFlavor,
-              price: vPrice,
-              compare_at_price: vCompare,
-              image_url: vImg,
-              stock_geneva: vGen,
-              stock_portugal: vPt,
-              gtin13: vGtin,
-              updated_at: now
-            }).eq('id', vDbId);
-          } else {
-            vDbId = null;
-          }
-        }
-
-        if (!vDbId) {
-          const { data: matchedV } = await supabase.from('product_variants')
-            .select('id')
-            .eq('product_id', targetId)
-            .or(`sku.eq.${vSku},attribute_value.eq.${vFlavor}`)
-            .maybeSingle();
-
-          if (matchedV) {
-            vDbId = matchedV.id;
-            await supabase.from('product_variants').update({
-              sku: vSku,
-              attribute_name: v.attribute_name || 'saveur',
-              attribute_value: vFlavor,
-              price: vPrice,
-              compare_at_price: vCompare,
-              image_url: vImg,
-              stock_geneva: vGen,
-              stock_portugal: vPt,
-              gtin13: vGtin,
-              updated_at: now
-            }).eq('id', vDbId);
-          } else {
-            const newVarUuid = toUuid(`${targetId}-${vSku}-${vFlavor}`);
-            const { data: insertedV } = await supabase.from('product_variants').insert({
-              id: newVarUuid,
-              product_id: targetId,
-              sku: vSku,
-              attribute_name: v.attribute_name || 'saveur',
-              attribute_value: vFlavor,
-              price: vPrice,
-              compare_at_price: vCompare,
-              image_url: vImg,
-              stock_geneva: vGen,
-              stock_portugal: vPt,
-              gtin13: vGtin,
-              created_at: now,
-              updated_at: now
-            }).select('id').maybeSingle();
-            vDbId = insertedV?.id || newVarUuid;
-          }
-        }
-
-        if (vDbId) {
-          keptVariantIds.push(vDbId);
-          await supabase.from('product_stock').upsert({
-            product_id: targetId,
-            variant_id: vDbId,
-            origin_id: 'GENEVA',
-            quantity: vGen,
-            is_active: vGen > 0 || main_location !== 'PORTUGAL',
-            updated_at: now
-          }, { onConflict: 'product_id,variant_id,origin_id' });
-
-          await supabase.from('product_stock').upsert({
-            product_id: targetId,
-            variant_id: vDbId,
-            origin_id: 'PORTUGAL',
-            quantity: vPt,
-            is_active: vPt > 0 || main_location !== 'GENEVA',
-            updated_at: now
-          }, { onConflict: 'product_id,variant_id,origin_id' });
-        }
-      }
-
-      if (keptVariantIds.length > 0) {
-        const { data: dbVars } = await supabase.from('product_variants').select('id').eq('product_id', targetId);
-        const toDelete = (dbVars || []).map(v => v.id).filter(id => !keptVariantIds.includes(id));
-        for (const delId of toDelete) {
-          await supabase.from('product_stock').delete().eq('variant_id', delId);
-          await supabase.from('product_variants').delete().eq('id', delId);
-        }
-      }
-    }
-
-    // Delete variant if requested
-    if (body.delete_variant_id) {
-      await supabase.from('product_stock').delete().eq('variant_id', body.delete_variant_id);
-      await supabase.from('product_variants').delete().eq('id', body.delete_variant_id);
-    }
-
-    // Add new variant/taste if requested
-    if (body.add_variant) {
-      const av = body.add_variant;
-      const cleanFlavor = (av.flavor || av.attribute_value || 'Nouvelle saveur').trim();
-      const newVarId = toUuid(`${targetId}-${av.sku || Date.now()}-${cleanFlavor}`);
-      const vPrice = Number(av.price) || Number(parsedBasePrice) || 29.9;
-      const vGen = Math.max(0, parseInt(av.stock_geneva || 0, 10));
-      const vPt = Math.max(0, parseInt(av.stock_portugal || 0, 10));
-
-      await supabase.from('product_variants').insert({
-        id: newVarId,
-        product_id: targetId,
-        sku: av.sku || `NF-${String(Date.now()).slice(-6)}`,
-        attribute_name: 'saveur',
-        attribute_value: cleanFlavor,
-        price: vPrice,
-        stock_geneva: vGen,
-        stock_portugal: vPt,
-        gtin13: av.gtin13 || null,
-        created_at: new Date().toISOString(),
-        updated_at: new Date().toISOString()
-      });
-
-      if (vGen > 0) {
-        await supabase.from('product_stock').upsert({
-          product_id: targetId,
-          variant_id: newVarId,
-          origin_id: 'GENEVA',
-          quantity: vGen,
-          is_active: true,
-          updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
-      }
-      if (vPt > 0) {
-        await supabase.from('product_stock').upsert({
-          product_id: targetId,
-          variant_id: newVarId,
-          origin_id: 'PORTUGAL',
-          quantity: vPt,
-          is_active: true,
-          updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
-      }
-    }
-
-    // Insert Audit Log
-    try {
-      await supabase.from('product_audit_log').insert({
-        product_id: targetId,
-        user_id: user,
-        action: existingProduct ? 'update_product_full' : 'create_product_full',
-        old_values: existingProduct ? {
-          name: existingProduct.name,
-          base_price: existingProduct.base_price,
-          stock_geneva: existingProduct.stock_geneva,
-          stock_portugal: existingProduct.stock_portugal,
-          gtin13: existingProduct.gtin13,
-          images: existingProduct.images
-        } : null,
-        new_values: body
-      });
-    } catch {}
-
-    // On-Demand Revalidation
+    // On-Demand Revalidation across all affected storefront pages
     try {
       clearHiddenProductsCache();
       revalidatePath('/', 'layout');
       revalidatePath('/');
       revalidatePath('/boutique');
-      revalidatePath('/categorie');
+      revalidatePath('/categorie/[slug]', 'page');
+      revalidatePath('/marque/[slug]', 'page');
       revalidatePath('/admin/products');
       revalidatePath('/wp-admin');
-      if (slug) revalidatePath(`/produit/${slug}`);
+      if (resultSlug) {
+        revalidatePath(`/produit/${resultSlug}`);
+      }
+      if (body.slug && body.slug !== resultSlug) {
+        revalidatePath(`/produit/${body.slug}`);
+      }
       revalidateTag('products');
-      revalidateTag(`product:${targetId}`);
-    } catch {}
+      if (resultId) {
+        revalidateTag(`product:${resultId}`);
+      }
+    } catch (revalErr) {
+      console.warn('[Admin Products API] Revalidation notice:', revalErr);
+    }
 
-    return NextResponse.json({ success: true, id: targetId });
+    return NextResponse.json({ 
+      success: true, 
+      id: resultId, 
+      slug: resultSlug, 
+      status: resultStatus 
+    });
   } catch (err: any) {
     console.error('[Admin Products POST Error]:', err);
     return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });

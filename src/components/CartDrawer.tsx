@@ -21,7 +21,8 @@ export default function CartDrawer() {
     t,
     currency,
     countryCode,
-    locale
+    locale,
+    getProductStock
   } = useStore();
 
   if (!isCartOpen) return null;
@@ -178,44 +179,60 @@ export default function CartDrawer() {
                       </svg>
                     </button>
                   </div>
-                  <div className="flex justify-between items-center mt-3 pt-2 border-t border-white/5">
-                    <div className="flex items-center border border-white/20 rounded-lg bg-black/40">
-                      <button 
-                        type="button" 
-                        onClick={() => updateQuantity(item.itemKey, -1)}
-                        className="w-7 h-7 flex items-center justify-center text-white/70 hover:text-white font-bold"
-                        title="Diminuer ou retirer"
-                      >-</button>
-                      <span className="w-7 text-center text-xs font-bold text-white">
-                        {Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1}
-                      </span>
-                      <button 
-                        type="button" 
-                        disabled={item.isEbook}
-                        onClick={() => updateQuantity(item.itemKey, 1)}
-                        className={`w-7 h-7 flex items-center justify-center font-bold ${
-                          item.isEbook 
-                            ? 'opacity-20 cursor-not-allowed text-white/30' 
-                            : 'text-white/70 hover:text-white'
-                        }`}
-                        title={item.isEbook ? 'Format numérique : limité à 1 exemplaire par commande' : 'Augmenter la quantité'}
-                      >+</button>
-                    </div>
-                    <div className="text-right">
-                      {(() => {
-                        const rawPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
-                          ? getProductPricing(item).price
-                          : item.price;
-                        const itemUnitPrice = Number.isFinite(Number(rawPrice)) ? Number(rawPrice) : 29.90;
-                        const itemQty = Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1;
-                        return (
+                  {(() => {
+                    const isSwissDest = (countryCode || 'CH').toUpperCase() === 'CH' || (countryCode || 'CH').toUpperCase() === 'LI';
+                    const stockCheck = getProductStock ? getProductStock(item, item.flavor) : null;
+                    const genStock = stockCheck && typeof stockCheck.geneva === 'number' ? stockCheck.geneva : (item.stockGeneva ?? 0);
+                    const ptStock = stockCheck && typeof stockCheck.portugal === 'number' ? stockCheck.portugal : (item.stockPortugal ?? 0);
+                    const itemMaxStock = isSwissDest
+                      ? (item.shippingOrigin === 'portugal' ? ptStock : (genStock > 0 ? genStock : ptStock))
+                      : ptStock;
+                    const itemQty = Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1;
+                    const isMaxStockReached = !item.isEbook && itemMaxStock > 0 && itemQty >= itemMaxStock;
+
+                    const rawPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
+                      ? getProductPricing(item).price
+                      : item.price;
+                    const itemUnitPrice = Number.isFinite(Number(rawPrice)) ? Number(rawPrice) : 29.90;
+
+                    return (
+                      <div className="flex justify-between items-center mt-3 pt-2 border-t border-white/5">
+                        <div className="flex items-center border border-white/20 rounded-lg bg-black/40">
+                          <button 
+                            type="button" 
+                            onClick={() => updateQuantity(item.itemKey, -1)}
+                            className="w-7 h-7 flex items-center justify-center text-white/70 hover:text-white font-bold"
+                            title="Diminuer ou retirer"
+                          >-</button>
+                          <span className="w-7 text-center text-xs font-bold text-white">
+                            {itemQty}
+                          </span>
+                          <button 
+                            type="button" 
+                            disabled={item.isEbook || isMaxStockReached}
+                            onClick={() => updateQuantity(item.itemKey, 1)}
+                            className={`w-7 h-7 flex items-center justify-center font-bold ${
+                              item.isEbook || isMaxStockReached
+                                ? 'opacity-20 cursor-not-allowed text-white/30' 
+                                : 'text-white/70 hover:text-white'
+                            }`}
+                            title={
+                              item.isEbook 
+                                ? 'Format numérique : limité à 1 exemplaire par commande' 
+                                : isMaxStockReached 
+                                ? `Stock maximal atteint (${itemMaxStock} unité(s))` 
+                                : 'Augmenter la quantité'
+                            }
+                          >+</button>
+                        </div>
+                        <div className="text-right">
                           <span className="text-xs font-black text-white font-heading">
                             {formatPrice(itemUnitPrice * itemQty)}
                           </span>
-                        );
-                      })()}
-                    </div>
-                  </div>
+                        </div>
+                      </div>
+                    );
+                  })()}
                 </div>
               </div>
             ))

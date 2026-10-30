@@ -13,7 +13,7 @@ import { searchProducts, normalizeSearchString } from '@/lib/search';
 
 function ShopContent() {
   const searchParams = useSearchParams();
-  const { countryCode, isProductVisible, currency, getProductPricing, locale } = useStore();
+  const { countryCode, isProductVisible, currency, getProductPricing, locale, getCatalogOverride } = useStore();
   const [selectedCategory, setSelectedCategory] = useState<string>('all');
   const [selectedBrand, setSelectedBrand] = useState<string>('all');
   const [searchQuery, setSearchQuery] = useState<string>('');
@@ -62,12 +62,17 @@ function ShopContent() {
       baseList = searchProducts(baseList, searchQuery, locale || 'fr');
     }
 
-    if (sortBy === 'price-asc') return [...baseList].sort((a, b) => a.priceChf - b.priceChf);
-    if (sortBy === 'price-desc') return [...baseList].sort((a, b) => b.priceChf - a.priceChf);
+    const getEffectivePrice = (p: any) => {
+      const ovr = getCatalogOverride ? getCatalogOverride(p) : null;
+      return typeof ovr?.priceChf === 'number' ? ovr.priceChf : (p.priceChf ?? 0);
+    };
+
+    if (sortBy === 'price-asc') return [...baseList].sort((a, b) => getEffectivePrice(a) - getEffectivePrice(b));
+    if (sortBy === 'price-desc') return [...baseList].sort((a, b) => getEffectivePrice(b) - getEffectivePrice(a));
     if (sortBy === 'name-asc') return [...baseList].sort((a, b) => (a.name?.fr || '').localeCompare(b.name?.fr || ''));
 
     return baseList;
-  }, [selectedCategory, selectedBrand, searchQuery, swissOnly, deliverableOnly, sortBy, isProductVisible, locale]);
+  }, [selectedCategory, selectedBrand, searchQuery, swissOnly, deliverableOnly, sortBy, isProductVisible, locale, getCatalogOverride]);
 
   const clearFilters = () => {
     setSelectedCategory('all');
