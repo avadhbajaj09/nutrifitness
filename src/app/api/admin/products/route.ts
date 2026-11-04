@@ -43,7 +43,33 @@ export async function GET(request: Request) {
     } // 'all' leaves it unconstrained
 
     if (search) {
-      query = query.or(`name.ilike.%${search}%,sku.ilike.%${search}%,woo_id.ilike.%${search}%`);
+      const cleanSearch = search
+        .replace(/https?:\/\/[^\/]+\/produit\//i, '')
+        .replace(/https?:\/\/[^\/]+\//i, '')
+        .replace(/\/+$/, '')
+        .trim();
+
+      const searchTerms = new Set<string>();
+      if (cleanSearch) {
+        searchTerms.add(cleanSearch);
+        if (cleanSearch.includes('creatine')) searchTerms.add(cleanSearch.replace(/creatine/g, 'créatine'));
+        if (cleanSearch.includes('créatine')) searchTerms.add(cleanSearch.replace(/créatine/g, 'creatine'));
+        if (cleanSearch.includes('proteine')) searchTerms.add(cleanSearch.replace(/proteine/g, 'protéine'));
+        if (cleanSearch.includes('protéine')) searchTerms.add(cleanSearch.replace(/protéine/g, 'proteine'));
+        if (cleanSearch.includes('beta')) searchTerms.add(cleanSearch.replace(/beta/g, 'bêta'));
+        if (cleanSearch.includes('bêta')) searchTerms.add(cleanSearch.replace(/bêta/g, 'beta'));
+      }
+
+      const orConditions = Array.from(searchTerms).flatMap(term => [
+        `name.ilike.%${term}%`,
+        `slug.ilike.%${term}%`,
+        `sku.ilike.%${term}%`,
+        `woo_id.ilike.%${term}%`
+      ]);
+
+      if (orConditions.length > 0) {
+        query = query.or(orConditions.join(','));
+      }
     }
 
     query = query.order('created_at', { ascending: false });

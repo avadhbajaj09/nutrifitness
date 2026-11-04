@@ -1252,6 +1252,36 @@ export default function AdminDashboardClient() {
   };
 
   const [catalogSearch, setCatalogSearch] = useState<string>('');
+  const searchParam = searchParams.get('search') || searchParams.get('q');
+  const editParam = searchParams.get('edit') || searchParams.get('product');
+
+  useEffect(() => {
+    if (searchParam) {
+      setActiveTab('catalog');
+      setCatalogSearch(searchParam);
+    }
+  }, [searchParam]);
+
+  useEffect(() => {
+    if (editParam && allProducts.length > 0) {
+      const cleanEdit = editParam
+        .replace(/https?:\/\/[^\/]+\/produit\//i, '')
+        .replace(/https?:\/\/[^\/]+\//i, '')
+        .replace(/\/+$/, '')
+        .toLowerCase()
+        .trim();
+      const target = allProducts.find(p => 
+        (p.id && p.id.toLowerCase() === cleanEdit) ||
+        (p.id && p.id.replace(/^prod-/, '').toLowerCase() === cleanEdit) ||
+        (p.slug?.fr && p.slug.fr.toLowerCase() === cleanEdit)
+      );
+      if (target) {
+        setActiveTab('catalog');
+        setEditingProduct(target);
+        setIsEditorOpen(true);
+      }
+    }
+  }, [editParam, allProducts]);
   const [catalogOriginFilter, setCatalogOriginFilter] = useState<'all' | 'geneva' | 'portugal'>('all');
   const [catalogCategoryFilter, setCatalogCategoryFilter] = useState<string>('all');
   const [catalogBrandFilter, setCatalogBrandFilter] = useState<string>('all');

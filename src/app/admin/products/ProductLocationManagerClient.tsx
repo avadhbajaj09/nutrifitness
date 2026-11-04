@@ -150,8 +150,13 @@ export default function ProductLocationManagerClient() {
   const fetchProducts = async () => {
     setLoading(true);
     try {
+      const cleanSearch = search
+        .replace(/https?:\/\/[^\/]+\/produit\//i, '')
+        .replace(/https?:\/\/[^\/]+\//i, '')
+        .replace(/\/+$/, '')
+        .trim();
       const params = new URLSearchParams({
-        search,
+        search: cleanSearch,
         location: locationFilter,
         status: statusTab,
         page: page.toString(),
