@@ -45,7 +45,6 @@ export default function Footer() {
               </p>
               <p className="text-white/80">{COMPANY.address.street}, {COMPANY.address.postalCode} {COMPANY.address.city}, Suisse</p>
               <p className="text-white/80"><strong className="text-white">{COMPANY.legalName}</strong> ({COMPANY.legalForm})</p>
-              <p className="text-white/80">Titulaire : <strong className="text-white">{COMPANY.ownerFullName}</strong></p>
               <div className="pt-1 flex flex-wrap gap-x-4 gap-y-1">
                 <a href={`tel:${COMPANY.contact.phone.replace(/\s+/g, '')}`} className="text-white hover:text-[#F80404] font-medium flex items-center gap-1">
                   📞 {COMPANY.contact.phoneFormatted}
@@ -191,7 +190,6 @@ export default function Footer() {
               </p>
               <p>{COMPANY.address.street}, {COMPANY.address.postalCode} {COMPANY.address.city}, Suisse</p>
               <p className="text-white/80"><strong className="text-white">{COMPANY.legalName}</strong> ({COMPANY.legalForm})</p>
-              <p className="text-white/80">Titulaire : <strong className="text-white">{COMPANY.ownerFullName}</strong></p>
               <p>Tél : <a href={`tel:${COMPANY.contact.phone.replace(/\s+/g, '')}`} className="hover:text-[#F80404] transition-colors">{COMPANY.contact.phoneFormatted}</a></p>
               <p>E-mail : <a href={`mailto:${COMPANY.contact.email}`} className="hover:text-[#F80404] transition-colors">{COMPANY.contact.email}</a></p>
               <p className="text-[11px] text-white/40 pt-1">IDE : {COMPANY.uid} | TVA : {COMPANY.tvaNumber}</p>
