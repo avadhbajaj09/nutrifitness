@@ -59,6 +59,14 @@ import ProductEditorModal from './ProductEditorModal';
 
 const ADMIN_PASSWORD = 'Geneva@03564';
 
+function normalizeSearchText(str: string | undefined | null): string {
+  return (str || '')
+    .normalize('NFD')
+    .replace(/[\u0300-\u036f]/g, '')
+    .toLowerCase()
+    .trim();
+}
+
 export type OrderStatus = 'pending' | 'in_processing' | 'packed' | 'shipped' | 'delivered' | 'cancelled';
 
 export const ORDER_STATUS_LABELS: Record<OrderStatus, { label: string; icon: string; bg: string; text: string; border: string }> = {
@@ -752,6 +760,81 @@ export default function AdminDashboardClient() {
                     images: pImages,
                     variants: pVariants
                   };
+                } else if (dbP.status !== 'archived') {
+                  const locType = dbP.main_location === 'COMMON' ? 'COMMON' : dbP.main_location === 'PORTUGAL' ? 'PORTUGAL_ONLY' : 'GENEVA_ONLY';
+                  const shipOrig = dbP.main_location === 'COMMON' ? 'common' : dbP.main_location === 'PORTUGAL' ? 'portugal' : 'switzerland';
+                  const pImages = (Array.isArray(dbP.images) && dbP.images.length > 0)
+                    ? dbP.images.map((img: any) => ({
+                        src: typeof img === 'string' ? img : img.src,
+                        alt: typeof img === 'string' ? { fr: dbP.name, de: dbP.name, it: dbP.name, en: dbP.name } : (typeof img.alt === 'string' ? { fr: img.alt, de: img.alt, it: img.alt, en: img.alt } : img.alt),
+                        width: 800,
+                        height: 800
+                      }))
+                    : [{ src: '/images/placeholder.webp', alt: { fr: dbP.name, de: dbP.name, it: dbP.name, en: dbP.name }, width: 800, height: 800 }];
+
+                  const pVariants = (Array.isArray(dbP.variants) && dbP.variants.length > 0)
+                    ? dbP.variants.map((v: any, vIdx: number) => ({
+                        id: v.id,
+                        sku: v.sku || `NF-${cleanId}-${vIdx + 1}`,
+                        flavorName: { fr: v.attribute_value || 'Standard', de: v.attribute_value || 'Standard', it: v.attribute_value || 'Standard', en: v.attribute_value || 'Standard' },
+                        format: '1 unité',
+                        priceChf: Number(v.price) || Number(dbP.base_price) || 0,
+                        inventoryQuantity: (Number(v.stock_geneva) || 0) + (Number(v.stock_portugal) || 0),
+                        stockGeneva: Number(v.stock_geneva) || 0,
+                        stockPortugal: Number(v.stock_portugal) || 0,
+                        inStock: ((Number(v.stock_geneva) || 0) + (Number(v.stock_portugal) || 0)) > 0,
+                        image: v.image_url || pImages[0]?.src
+                      }))
+                    : [{
+                        id: `var-${dbP.id}-1`,
+                        sku: dbP.sku || `NF-${cleanId}-1`,
+                        flavorName: { fr: 'Standard', de: 'Standard', it: 'Standard', en: 'Standard' },
+                        format: '1 unité',
+                        priceChf: Number(dbP.base_price) || 0,
+                        inventoryQuantity: (Number(dbP.stock_geneva) || 0) + (Number(dbP.stock_portugal) || 0),
+                        stockGeneva: Number(dbP.stock_geneva) || 0,
+                        stockPortugal: Number(dbP.stock_portugal) || 0,
+                        inStock: ((Number(dbP.stock_geneva) || 0) + (Number(dbP.stock_portugal) || 0)) > 0,
+                        image: pImages[0]?.src
+                      }];
+
+                  merged.push({
+                    id: dbP.woo_id ? `prod-${dbP.woo_id}` : (dbP.sku || dbP.id),
+                    slug: { fr: dbP.slug, de: dbP.slug, it: dbP.slug, en: dbP.slug },
+                    name: { fr: dbP.name, de: dbP.name, it: dbP.name, en: dbP.name },
+                    brand: dbP.brand || 'NutriFitness',
+                    categorySlug: 'creatine',
+                    taxCategory: 'food_reduced',
+                    priceChf: Number(dbP.base_price) || 0,
+                    compareAtPriceChf: dbP.compare_at_price ? Number(dbP.compare_at_price) : undefined,
+                    stockGeneva: Number(dbP.stock_geneva) || 0,
+                    stockPortugal: Number(dbP.stock_portugal) || 0,
+                    locationType: locType,
+                    shippingOrigin: shipOrig,
+                    mainLocation: dbP.main_location,
+                    images: pImages,
+                    variants: pVariants,
+                    gtin13: dbP.gtin13,
+                    shortDescription: { fr: dbP.short_description || '', de: dbP.short_description || '', it: dbP.short_description || '', en: dbP.short_description || '' },
+                    longDescription: { fr: dbP.description || '', de: dbP.description || '', it: dbP.description || '', en: dbP.description || '' },
+                    usageInstructions: { fr: dbP.usage_instructions || '', de: dbP.usage_instructions || '', it: dbP.usage_instructions || '', en: dbP.usage_instructions || '' },
+                    ingredients: { fr: dbP.ingredients || '', de: dbP.ingredients || '', it: dbP.ingredients || '', en: dbP.ingredients || '' },
+                    allergens: { fr: dbP.allergens || '', de: dbP.allergens || '', it: dbP.allergens || '', en: dbP.allergens || '' },
+                    directAnswerAeo: { fr: dbP.name || '', de: dbP.name || '', it: dbP.name || '', en: dbP.name || '' },
+                    nutrition: dbP.nutrition || {
+                      servingSize: '1 portion',
+                      servingsPerContainer: 30,
+                      energyKj: 0,
+                      energyKcal: 0,
+                      fatG: 0,
+                      saturatedFatG: 0,
+                      carbsG: 0,
+                      sugarsG: 0,
+                      proteinG: 0,
+                      saltG: 0
+                    },
+                    isSwissOrigin: locType === 'GENEVA_ONLY'
+                  });
                 }
               }
             }
@@ -1205,12 +1288,29 @@ export default function AdminDashboardClient() {
 
       // Search
       if (catalogSearch.trim()) {
-        const q = catalogSearch.toLowerCase();
-        const inName = p.name.fr?.toLowerCase().includes(q) || p.name.en?.toLowerCase().includes(q);
-        const inBrand = p.brand.toLowerCase().includes(q);
-        const inSku = p.variants?.some(v => v.sku.toLowerCase().includes(q));
-        const inSlug = p.slug.fr?.toLowerCase().includes(q);
-        if (!inName && !inBrand && !inSku && !inSlug) return false;
+        const rawQ = catalogSearch.trim().toLowerCase();
+        const qClean = rawQ
+          .replace(/https?:\/\/[^\/]+\/produit\//, '')
+          .replace(/https?:\/\/[^\/]+\//, '')
+          .replace(/\/+$/, '')
+          .trim();
+        const qNorm = normalizeSearchText(qClean);
+
+        const nameFrNorm = normalizeSearchText(p.name?.fr);
+        const nameEnNorm = normalizeSearchText(p.name?.en);
+        const brandNorm = normalizeSearchText(p.brand);
+        const slugNorm = normalizeSearchText(p.slug?.fr);
+        const idNorm = (p.id || '').toLowerCase();
+        const cleanIdNorm = idNorm.replace(/^prod-/, '');
+
+        const inName = nameFrNorm.includes(qNorm) || nameEnNorm.includes(qNorm);
+        const inBrand = brandNorm.includes(qNorm);
+        const inSku = p.variants?.some(v => normalizeSearchText(v.sku).includes(qNorm) || (v.sku || '').toLowerCase().includes(rawQ));
+        const inSlug = slugNorm.includes(qNorm) || (qNorm.length > 3 && qNorm.includes(slugNorm));
+        const inId = idNorm.includes(qClean) || idNorm.includes(rawQ) || cleanIdNorm.includes(qClean);
+        const inGtin = (p.gtin13 || '').includes(rawQ) || p.variants?.some(v => (v.gtin13 || '').includes(rawQ));
+
+        if (!inName && !inBrand && !inSku && !inSlug && !inId && !inGtin) return false;
       }
 
       return true;
@@ -1541,12 +1641,28 @@ export default function AdminDashboardClient() {
       }
       if (posBrandFilter !== 'all' && p.brand !== posBrandFilter) return false;
       if (posSearch.trim()) {
-        const q = posSearch.toLowerCase();
-        const inName = p.name.fr?.toLowerCase().includes(q);
-        const inBrand = p.brand.toLowerCase().includes(q);
-        const inSku = p.variants?.some(v => v.sku.toLowerCase().includes(q) || v.gtin13?.toLowerCase().includes(q));
-        const inGtin = p.gtin13?.toLowerCase().includes(q);
-        if (!inName && !inBrand && !inSku && !inGtin) return false;
+        const rawQ = posSearch.trim().toLowerCase();
+        const qClean = rawQ
+          .replace(/https?:\/\/[^\/]+\/produit\//, '')
+          .replace(/https?:\/\/[^\/]+\//, '')
+          .replace(/\/+$/, '')
+          .trim();
+        const qNorm = normalizeSearchText(qClean);
+
+        const nameFrNorm = normalizeSearchText(p.name?.fr);
+        const brandNorm = normalizeSearchText(p.brand);
+        const slugNorm = normalizeSearchText(p.slug?.fr);
+        const idNorm = (p.id || '').toLowerCase();
+        const cleanIdNorm = idNorm.replace(/^prod-/, '');
+
+        const inName = nameFrNorm.includes(qNorm);
+        const inBrand = brandNorm.includes(qNorm);
+        const inSku = p.variants?.some(v => normalizeSearchText(v.sku).includes(qNorm) || (v.sku || '').toLowerCase().includes(rawQ) || (v.gtin13 || '').includes(rawQ));
+        const inSlug = slugNorm.includes(qNorm) || (qNorm.length > 3 && qNorm.includes(slugNorm));
+        const inId = idNorm.includes(qClean) || idNorm.includes(rawQ) || cleanIdNorm.includes(qClean);
+        const inGtin = (p.gtin13 || '').includes(rawQ);
+
+        if (!inName && !inBrand && !inSku && !inSlug && !inId && !inGtin) return false;
       }
       return true;
     });
