@@ -431,6 +431,68 @@ export async function sendOrderConfirmationToCustomer(order: any) {
     `;
   }).join('');
 
+  const ebookOrderItem = items.find((it: any) => 
+    it.isEbook ||
+    it.id === 'prod-25430' ||
+    it.productId === 'prod-25430' ||
+    (it.name && it.name.toLowerCase().includes('guide ultime')) ||
+    (it.categorySlug && it.categorySlug === 'guides-ebooks')
+  );
+
+  let ebookDownloadSection = '';
+  if (ebookOrderItem) {
+    const rawFlv = String(ebookOrderItem.flavor || '').toLowerCase();
+    const rawSku = String(ebookOrderItem.sku || '').toUpperCase();
+    let ebookLang = 'fr';
+    let langTitle = 'Édition Française (PDF)';
+    if (rawSku.includes('-EN') || rawFlv.includes('english') || rawFlv.includes('anglais')) {
+      ebookLang = 'en';
+      langTitle = 'English Edition (PDF)';
+    } else if (rawSku.includes('-DE') || rawFlv.includes('deutsch') || rawFlv.includes('allemand')) {
+      ebookLang = 'de';
+      langTitle = 'Deutsche Ausgabe (PDF)';
+    } else if (rawSku.includes('-IT') || rawFlv.includes('italiano') || rawFlv.includes('italien')) {
+      ebookLang = 'it';
+      langTitle = 'Edizione Italiana (PDF)';
+    }
+
+    const downloadUrl = `https://nutrifitness.ch/api/downloads/ebook?lang=${ebookLang}`;
+
+    ebookDownloadSection = `
+    <!-- EBOOK DIGITAL DOWNLOAD SECTION -->
+    <tr>
+      <td class="px" bgcolor="#141416" style="background:#141416;padding:12px 40px 16px;">
+        <table role="presentation" width="100%" cellpadding="0" cellspacing="0" border="0" style="background:linear-gradient(135deg, #182808 0%, #0d1604 100%);border:2px solid #8bd02f;border-radius:16px;text-align:center;">
+          <tr>
+            <td style="padding:24px 20px;font-family:Arial,Helvetica,sans-serif;">
+              <div style="display:inline-block;background:#8bd02f;color:#000000;font-weight:900;font-size:10px;text-transform:uppercase;letter-spacing:1px;padding:3px 10px;border-radius:20px;margin-bottom:10px;">
+                ✦ Accès Immédiat ✦
+              </div>
+              <div style="font-size:18px;font-weight:900;color:#ffffff;text-transform:uppercase;margin-bottom:6px;">
+                Votre Guide Numérique est Prêt
+              </div>
+              <div style="font-size:13px;color:#8bd02f;font-weight:bold;margin-bottom:12px;">
+                ${langTitle}
+              </div>
+              <div style="font-size:13px;color:#d6d6db;line-height:20px;max-width:440px;margin:0 auto 20px;">
+                Cliquez sur le bouton ci-dessous pour télécharger directement votre exemplaire complet de 66 pages au format PDF :
+              </div>
+              <div>
+                <a href="${downloadUrl}" target="_blank" style="display:inline-block;background:#8bd02f;color:#000000;font-family:Arial Black,Arial,Helvetica,sans-serif;font-weight:900;font-size:14px;line-height:20px;text-transform:uppercase;letter-spacing:.5px;padding:14px 28px;border-radius:12px;text-decoration:none;box-shadow:0 4px 14px rgba(139,208,47,0.35);">
+                  📥 Télécharger le Guide (PDF)
+                </a>
+              </div>
+              <div style="font-size:11px;color:#8f8f98;margin-top:14px;">
+                Document haute résolution lisible à vie sur smartphone, tablette et ordinateur.
+              </div>
+            </td>
+          </tr>
+        </table>
+      </td>
+    </tr>
+    `;
+  }
+
   const html = `
 <!DOCTYPE html>
 <html lang="fr" xmlns="http://www.w3.org/1999/xhtml">
@@ -501,6 +563,8 @@ export async function sendOrderConfirmationToCustomer(order: any) {
         </p>
       </td>
     </tr>
+
+    ${ebookDownloadSection}
 
     <!-- DÉTAILS DE LA COMMANDE -->
     <tr>

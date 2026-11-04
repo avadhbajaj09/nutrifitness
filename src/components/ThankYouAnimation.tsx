@@ -3,7 +3,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import Link from 'next/link';
 import { useStore } from '@/context/StoreContext';
-import { Check, Package, Truck, Home, Sparkles, Printer, ArrowRight, ShieldCheck, Clock } from 'lucide-react';
+import { Check, Package, Truck, Home, Sparkles, Printer, ArrowRight, ShieldCheck, Clock, Download, BookOpen } from 'lucide-react';
 import GoogleCustomerReviewsOptIn from '@/components/GoogleCustomerReviewsOptIn';
 
 interface ThankYouAnimationProps {
@@ -32,6 +32,32 @@ export default function ThankYouAnimation({
   const { t, locale, currency } = useStore();
   const canvasRef = useRef<HTMLCanvasElement>(null);
   const [particlesActive, setParticlesActive] = useState(true);
+
+  // Detect if this order contains the digital ebook
+  const ebookItem = (items || []).find((it: any) => 
+    it.isEbook || 
+    it.id === 'prod-25430' || 
+    it.productId === 'prod-25430' || 
+    it.categorySlug === 'guides-ebooks' ||
+    (it.name && it.name.toLowerCase().includes('guide ultime'))
+  );
+
+  let ebookLang = 'fr';
+  let ebookLangLabel = '🇫🇷 Édition Française (PDF)';
+  if (ebookItem) {
+    const flv = String(ebookItem.flavor || '').toLowerCase();
+    const sku = String(ebookItem.sku || '').toUpperCase();
+    if (sku.includes('-EN') || flv.includes('english') || flv.includes('anglais')) {
+      ebookLang = 'en';
+      ebookLangLabel = '🇬🇧 English Edition (PDF)';
+    } else if (sku.includes('-DE') || flv.includes('deutsch') || flv.includes('allemand')) {
+      ebookLang = 'de';
+      ebookLangLabel = '🇩🇪 Deutsche Ausgabe (PDF)';
+    } else if (sku.includes('-IT') || flv.includes('italiano') || flv.includes('italien')) {
+      ebookLang = 'it';
+      ebookLangLabel = '🇮🇹 Edizione Italiana (PDF)';
+    }
+  }
 
   // Confetti Particle Simulation
   useEffect(() => {
@@ -232,6 +258,53 @@ export default function ThankYouAnimation({
         <p className="text-xs sm:text-sm text-white/70 max-w-lg mx-auto mb-6 leading-relaxed">
           {t.checkout.thankYouMessage}
         </p>
+
+        {/* Instant Digital Product Download Card (If Ebook in Order) */}
+        {ebookItem && (
+          <div className="bg-gradient-to-r from-[#95d600]/25 via-[#95d600]/15 to-black/60 border-2 border-[#95d600] rounded-3xl p-6 mb-6 text-left shadow-2xl shadow-[#95d600]/20 relative overflow-hidden">
+            <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-5">
+              <div className="flex items-start sm:items-center gap-4">
+                <div className="w-14 h-14 rounded-2xl bg-[#95d600] text-black flex items-center justify-center shrink-0 shadow-lg shadow-[#95d600]/30">
+                  <Download className="w-7 h-7 stroke-[2.5]" />
+                </div>
+                <div>
+                  <div className="flex items-center gap-2 mb-1">
+                    <span className="text-[10px] font-black uppercase text-black bg-[#95d600] px-2.5 py-0.5 rounded-full font-heading">
+                      Accès Immédiat
+                    </span>
+                    <span className="text-xs font-bold text-[#95d600]">
+                      {ebookLangLabel}
+                    </span>
+                  </div>
+                  <h3 className="text-base sm:text-lg font-black text-white font-heading">
+                    Le Guide Ultime des Compléments Alimentaires (PDF)
+                  </h3>
+                  <p className="text-xs text-white/70 mt-1">
+                    Votre exemplaire numérique de 66 pages est prêt au téléchargement. Lisible sur smartphone, tablette et PC :
+                  </p>
+                </div>
+              </div>
+
+              <a
+                href={`/api/downloads/ebook?lang=${ebookLang}`}
+                download
+                className="w-full sm:w-auto px-6 py-3.5 bg-[#95d600] hover:bg-[#85c000] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl hover:shadow-[#95d600]/30 flex items-center justify-center gap-2 shrink-0 active:scale-95"
+              >
+                <Download className="w-4 h-4" />
+                <span>Télécharger (PDF)</span>
+              </a>
+            </div>
+            <div className="mt-4 pt-3 border-t border-[#95d600]/30 flex items-center justify-between text-[11px] text-white/60">
+              <span className="flex items-center gap-1.5">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#95d600]" />
+                Téléchargement sécurisé et garanti sans limite de temps
+              </span>
+              <span className="text-[#95d600] font-bold">
+                {ebookLang.toUpperCase()}
+              </span>
+            </div>
+          </div>
+        )}
 
         {/* Interactive Delivery Tracker Timeline */}
         <div className="bg-[#1C1C1C] border border-white/10 rounded-2xl p-5 mb-6 text-left">

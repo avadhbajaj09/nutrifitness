@@ -8,7 +8,6 @@ import {
   Package,
   MapPin,
   Receipt,
-  Truck,
   Mail,
   ExternalLink,
   LogOut,
@@ -19,8 +18,8 @@ import {
 } from 'lucide-react';
 
 interface AdminSidebarProps {
-  activeTab?: 'pos' | 'catalog' | 'banners' | 'sales' | 'fulfillment' | 'locations' | 'abandoned';
-  onSelectTab?: (tab: 'pos' | 'catalog' | 'banners' | 'sales' | 'fulfillment' | 'abandoned') => void;
+  activeTab?: 'pos' | 'catalog' | 'banners' | 'sales' | 'locations' | 'abandoned';
+  onSelectTab?: (tab: 'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned') => void;
   posCount?: number;
   catalogCount?: number;
   bannersCount?: number;
@@ -84,14 +83,6 @@ export default function AdminSidebar({
       isRoute: false,
     },
     {
-      id: 'fulfillment',
-      label: 'Fulfillment Queue',
-      icon: Truck,
-      badge: undefined,
-      href: '/wp-admin?tab=fulfillment',
-      isRoute: false,
-    },
-    {
       id: 'mail',
       label: 'Messagerie (Mail)',
       icon: Mail,
@@ -106,7 +97,7 @@ export default function AdminSidebar({
       router.push(item.href);
     } else {
       if (pathname?.startsWith('/wp-admin') && onSelectTab) {
-        onSelectTab(item.id as 'pos' | 'catalog' | 'banners' | 'sales' | 'fulfillment' | 'abandoned');
+        onSelectTab(item.id as 'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned');
       } else {
         router.push(item.href);
       }

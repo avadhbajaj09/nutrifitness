@@ -2129,36 +2129,70 @@ export const PRODUCTS: ProductItem[] = [
     "variants": [
       {
         "id": "6fc58613-ee6a-4f52-9b4f-e60d89fbd57b",
-        "sku": "NF-25431",
+        "sku": "NF-EBOOK-FR",
         "flavorName": {
           "fr": "Français",
-          "de": "Français",
-          "it": "Français",
-          "en": "Français"
+          "de": "Französisch",
+          "it": "Francese",
+          "en": "French"
         },
-        "format": "1 unité",
-        "priceChf": 100,
-        "inventoryQuantity": 0,
+        "format": "Ebook PDF",
+        "priceChf": 29.9,
+        "inventoryQuantity": 9999,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp",
-        "stockGeneva": 25,
+        "stockGeneva": 999,
         "stockPortugal": 0
       },
       {
         "id": "16bc9666-ca00-49c0-9dd8-e0cd0ef8c30b",
-        "sku": "NF-25432",
+        "sku": "NF-EBOOK-EN",
         "flavorName": {
           "fr": "English",
-          "de": "English",
-          "it": "English",
+          "de": "Englisch",
+          "it": "Inglese",
           "en": "English"
         },
-        "format": "1 unité",
-        "priceChf": 100,
-        "inventoryQuantity": 0,
+        "format": "Ebook PDF",
+        "priceChf": 29.9,
+        "inventoryQuantity": 9999,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp",
-        "stockGeneva": 25,
+        "stockGeneva": 999,
+        "stockPortugal": 0
+      },
+      {
+        "id": "27cd8777-db11-4fe9-8cc9-f1de1ff9d41c",
+        "sku": "NF-EBOOK-DE",
+        "flavorName": {
+          "fr": "Allemand (Deutsch)",
+          "de": "Deutsch",
+          "it": "Tedesco",
+          "en": "German"
+        },
+        "format": "Ebook PDF",
+        "priceChf": 29.9,
+        "inventoryQuantity": 9999,
+        "inStock": true,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp",
+        "stockGeneva": 999,
+        "stockPortugal": 0
+      },
+      {
+        "id": "38de9888-ec22-4ff0-9dd0-a2ef2aa0e52d",
+        "sku": "NF-EBOOK-IT",
+        "flavorName": {
+          "fr": "Italien (Italiano)",
+          "de": "Italienisch",
+          "it": "Italiano",
+          "en": "Italian"
+        },
+        "format": "Ebook PDF",
+        "priceChf": 29.9,
+        "inventoryQuantity": 9999,
+        "inStock": true,
+        "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2026/07/livre.webp",
+        "stockGeneva": 999,
         "stockPortugal": 0
       }
     ],

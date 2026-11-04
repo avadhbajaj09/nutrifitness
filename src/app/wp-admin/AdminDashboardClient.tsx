@@ -243,247 +243,6 @@ function playScannerBeep() {
   }
 }
 
-
-// ─── Fulfillment sub-components ───────────────────────────────────────────────
-
-function FulfillmentStocksTab() {
-  const [stocks, setStocks] = useState<Record<string, unknown>[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [editingRow, setEditingRow] = useState<string | null>(null);
-  const [editVal, setEditVal] = useState<{ geneva: number; portugal: number }>({ geneva: 0, portugal: 0 });
-
-  useEffect(() => {
-    void fetch('/api/fulfillment/stock/')
-      .then((r) => r.json())
-      .then((d) => { setStocks(d.stock ?? []); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, []);
-
-  // Group stocks by product_id
-  const byProduct = useMemo(() => {
-    const map = new Map<string, { productId: string; productSku: string; genevaQty: number; ptQty: number }>();
-    for (const row of stocks) {
-      const pid = row.product_id as string;
-      const sk = row.product_sku as string;
-      if (!map.has(pid)) map.set(pid, { productId: pid, productSku: sk, genevaQty: 0, ptQty: 0 });
-      const entry = map.get(pid)!;
-      if (row.origin_id === 'GENEVA') entry.genevaQty += row.quantity as number;
-      else entry.ptQty += row.quantity as number;
-    }
-    return [...map.values()];
-  }, [stocks]);
-
-  async function handleSave(productId: string, productSku: string) {
-    try {
-      for (const [originId, quantity] of [['GENEVA', editVal.geneva], ['PORTUGAL', editVal.portugal]] as const) {
-        await fetch('/api/fulfillment/stock/', {
-          method: 'PATCH',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ productId, productSku, originId, quantity }),
-        });
-      }
-      setEditingRow(null);
-      const res = await fetch('/api/fulfillment/stock/');
-      if (res.ok) {
-        const d = await res.json();
-        setStocks(d.stock ?? []);
-      }
-    } catch (e) {
-      console.error('[FulfillmentStocksTab save error]:', e);
-    }
-  }
-
-  if (loading) return <div className="text-center py-12 text-slate-400">Chargement des stocks...</div>;
-
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="font-bold text-slate-800">Inventaire par entrepôt</h3>
-        <span className="text-xs text-slate-400">{byProduct.length} produit(s) avec stock configuré</span>
-      </div>
-      {byProduct.length === 0 && (
-        <div className="text-center py-12 text-slate-400">
-          <p className="text-sm">Aucun stock configuré dans la base de données.</p>
-          <p className="text-xs mt-1">Utilisez les boutons Modifier pour ajouter du stock par entrepôt.</p>
-        </div>
-      )}
-      <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm border-collapse">
-          <thead>
-            <tr className="bg-slate-50 border-b">
-              <th className="p-3 text-slate-600">Produit ID</th>
-              <th className="p-3 text-slate-600">SKU</th>
-              <th className="p-3 text-slate-600">🇨🇭 Genève</th>
-              <th className="p-3 text-slate-600">🇵🇹 Portugal</th>
-              <th className="p-3 text-slate-600">Type</th>
-              <th className="p-3"></th>
-            </tr>
-          </thead>
-          <tbody>
-            {byProduct.map((row) => {
-              const type = row.genevaQty > 0 && row.ptQty > 0 ? 'COMMON' : row.genevaQty > 0 ? 'GENÈVE' : 'PORTUGAL';
-              const typeColor = type === 'COMMON' ? 'bg-blue-100 text-blue-800' : type === 'GENÈVE' ? 'bg-emerald-100 text-emerald-800' : 'bg-orange-100 text-orange-800';
-              const isEditing = editingRow === row.productId;
-              return (
-                <tr key={row.productId} className="border-b hover:bg-slate-50">
-                  <td className="p-3 font-mono text-xs text-slate-600">{row.productId}</td>
-                  <td className="p-3 text-slate-500 text-xs">{row.productSku}</td>
-                  <td className="p-3">
-                    {isEditing
-                      ? <input type="number" min={0} value={editVal.geneva} onChange={(e) => setEditVal((v) => ({ ...v, geneva: Number(e.target.value) }))} className="w-20 border rounded px-2 py-1 text-xs" />
-                      : <span className={`font-bold ${row.genevaQty < 5 ? 'text-red-600' : row.genevaQty < 10 ? 'text-amber-600' : 'text-emerald-700'}`}>{row.genevaQty}</span>
-                    }
-                  </td>
-                  <td className="p-3">
-                    {isEditing
-                      ? <input type="number" min={0} value={editVal.portugal} onChange={(e) => setEditVal((v) => ({ ...v, portugal: Number(e.target.value) }))} className="w-20 border rounded px-2 py-1 text-xs" />
-                      : <span className={`font-bold ${row.ptQty < 5 ? 'text-red-600' : row.ptQty < 10 ? 'text-amber-600' : 'text-emerald-700'}`}>{row.ptQty}</span>
-                    }
-                  </td>
-                  <td className="p-3"><span className={`px-2 py-0.5 rounded text-xs font-bold ${typeColor}`}>{type}</span></td>
-                  <td className="p-3">
-                    {isEditing ? (
-                      <div className="flex gap-1">
-                        <button onClick={() => void handleSave(row.productId, row.productSku)} className="px-2 py-1 text-xs bg-emerald-600 text-white rounded">Sauver</button>
-                        <button onClick={() => setEditingRow(null)} className="px-2 py-1 text-xs border rounded text-slate-600">Annuler</button>
-                      </div>
-                    ) : (
-                      <button onClick={() => { setEditingRow(row.productId); setEditVal({ geneva: row.genevaQty, portugal: row.ptQty }); }} className="px-2 py-1 text-xs border rounded text-slate-600 hover:bg-slate-100">Modifier</button>
-                    )}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
-}
-
-function FulfillmentQueueTab({ origin }: { origin: 'GENEVA' | 'PORTUGAL' }) {
-  const [shipments, setShipments] = useState<Record<string, unknown>[]>([]);
-  const [loading, setLoading] = useState(true);
-  const [updating, setUpdating] = useState<string | null>(null);
-
-  const load = () => {
-    setLoading(true);
-    void fetch(`/api/fulfillment/shipments/?origin=${origin}&status=pending`)
-      .then((r) => r.json())
-      .then((d) => { setShipments(d.shipments ?? []); setLoading(false); })
-      .catch(() => setLoading(false));
-  };
-
-  useEffect(() => { load(); }, [origin]);
-
-  async function markShipped(id: string) {
-    setUpdating(id);
-    await fetch('/api/fulfillment/shipments/', {
-      method: 'PATCH',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ id, status: 'in_transit' }),
-    });
-    setUpdating(null);
-    load();
-  }
-
-  if (loading) return <div className="text-center py-12 text-slate-400">Chargement...</div>;
-
-  const label = origin === 'GENEVA' ? '🇨🇭 Genève' : '🇵🇹 Portugal';
-
-  return (
-    <div className="space-y-4">
-      <div className="flex items-center justify-between">
-        <h3 className="font-bold text-slate-800">File d&apos;expédition {label}</h3>
-        <button onClick={load} className="text-xs text-slate-400 hover:text-slate-700 flex items-center gap-1">
-          <RefreshCw className="w-3 h-3" /> Actualiser
-        </button>
-      </div>
-      {shipments.length === 0 ? (
-        <div className="text-center py-12 text-slate-400">
-          <Truck className="w-8 h-8 mx-auto mb-2 opacity-30" />
-          <p className="text-sm">Aucune expédition en attente depuis {label}.</p>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {shipments.map((s) => {
-            const items = s.items as { name?: string; quantity?: number }[];
-            return (
-              <div key={s.id as string} className="p-4 border rounded-xl flex justify-between items-start bg-slate-50">
-                <div>
-                  <p className="font-bold text-sm text-slate-800">Commande #{s.order_id as string}</p>
-                  <p className="text-xs text-slate-500 mt-0.5">
-                    {items.map((it, i) => `${it.quantity ?? 1}× ${it.name ?? 'Article'}`).join(', ')}
-                  </p>
-                  {s.tracking_number && <p className="text-xs text-blue-600 mt-1">📦 {s.tracking_number as string}</p>}
-                  {s.requires_customs && <span className="inline-block mt-1 text-xs bg-amber-100 text-amber-800 px-2 py-0.5 rounded">🛃 Documents douane requis</span>}
-                </div>
-                <div className="flex gap-2 shrink-0 ml-3">
-                  {s.label_url && (
-                    <a href={s.label_url as string} target="_blank" rel="noopener noreferrer" className="px-3 py-1.5 text-xs font-bold border rounded bg-white text-slate-700 hover:bg-slate-100">
-                      🖨️ Étiquette
-                    </a>
-                  )}
-                  <button
-                    onClick={() => void markShipped(s.id as string)}
-                    disabled={updating === s.id}
-                    className="px-3 py-1.5 text-xs font-bold border border-emerald-600 bg-emerald-600 text-white rounded disabled:opacity-50"
-                  >
-                    {updating === s.id ? '...' : '✓ Expédié'}
-                  </button>
-                </div>
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
-  );
-}
-
-function FulfillmentAlertsTab() {
-  const [shipments, setShipments] = useState<Record<string, unknown>[]>([]);
-  const [loading, setLoading] = useState(true);
-
-  useEffect(() => {
-    void fetch('/api/fulfillment/shipments/?needs_attention=true')
-      .then((r) => r.json())
-      .then((d) => { setShipments(d.shipments ?? []); setLoading(false); })
-      .catch(() => setLoading(false));
-  }, []);
-
-  if (loading) return <div className="text-center py-12 text-slate-400">Chargement...</div>;
-
-  return (
-    <div className="space-y-4">
-      <h3 className="font-bold text-slate-800">Alertes &amp; Blocages</h3>
-      {shipments.length === 0 ? (
-        <div className="text-center py-12 text-emerald-600">
-          <CheckCircle2 className="w-8 h-8 mx-auto mb-2" />
-          <p className="text-sm font-medium">Aucune alerte. Tout est en ordre ✓</p>
-        </div>
-      ) : (
-        <div className="space-y-3">
-          {shipments.map((s) => (
-            <div key={s.id as string} className="p-4 border border-red-200 rounded-xl bg-red-50">
-              <div className="flex items-start justify-between">
-                <div>
-                  <p className="font-bold text-sm text-red-800">⚠️ Commande #{s.order_id as string}</p>
-                  <p className="text-xs text-red-600 mt-0.5">{s.attention_reason as string || 'Problème d\'expédition détecté'}</p>
-                  <p className="text-xs text-slate-500 mt-1">Origine: {s.origin_id as string} · Statut: {s.status as string}</p>
-                </div>
-                <button className="px-3 py-1.5 text-xs font-bold bg-red-600 text-white rounded hover:bg-red-700">
-                  Re-router
-                </button>
-              </div>
-            </div>
-          ))}
-        </div>
-      )}
-    </div>
-  );
-}
-
 export default function AdminDashboardClient() {
   // -------------------------------------------------------------
   // 1. AUTHENTICATION STATE
@@ -535,11 +294,11 @@ export default function AdminDashboardClient() {
   // 2. DASHBOARD NAVIGATION & TIME
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'banners' | 'sales' | 'fulfillment' | 'abandoned'>('pos');
+  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned'>('pos');
   const [heroBannersCount, setHeroBannersCount] = useState<number>(5);
 
   useEffect(() => {
-    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'banners' || tabParam === 'sales' || tabParam === 'fulfillment' || tabParam === 'abandoned') {
+    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'banners' || tabParam === 'sales' || tabParam === 'abandoned') {
       setActiveTab(tabParam);
     }
   }, [tabParam]);
@@ -587,7 +346,6 @@ export default function AdminDashboardClient() {
       setRecoverySendingId(null);
     }
   };
-  const [fulfillmentSubTab, setFulfillmentSubTab] = useState<'stocks' | 'queue_geneva' | 'queue_portugal' | 'alerts'>('stocks');
   const [currentTime, setCurrentTime] = useState<string>('');
 
   useEffect(() => {
@@ -2737,7 +2495,6 @@ export default function AdminDashboardClient() {
                 {activeTab === 'banners' && (adminLang === 'fr' ? 'Gestion des Bannières de la Page d’Accueil' : 'Homepage Hero Banners Management')}
                 {activeTab === 'sales' && (adminLang === 'fr' ? 'Journal des Commandes & Ventes' : 'Orders & Sales Journal')}
                 {activeTab === 'abandoned' && (adminLang === 'fr' ? 'Paniers Abandonnés & Relances Clients' : 'Abandoned Carts & Customer Recovery')}
-                {activeTab === 'fulfillment' && (adminLang === 'fr' ? 'Expédition & Stocks' : 'Fulfillment & Shipping Queue')}
               </h1>
               <span className="text-slate-300">/</span>
               <span className="text-xs text-slate-500 font-medium truncate flex items-center gap-1.5">
@@ -4296,104 +4053,6 @@ export default function AdminDashboardClient() {
                 </tbody>
               </table>
             </div>
-          </div>
-        </div>
-      )}
-
-      {/* =========================================================
-          FULFILLMENT TAB
-          ========================================================= */}
-      {activeTab === 'fulfillment' && (
-        <div className="w-full p-4 sm:p-6 space-y-6">
-          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-            <div>
-              <h2 className="text-xl sm:text-2xl font-black text-slate-900 uppercase font-heading tracking-tight flex items-center gap-2">
-                <span className="text-purple-600">🚚</span> 
-                {adminLang === 'fr' ? 'Gestion Expéditions & Stocks' : 'Fulfillment Management'}
-              </h2>
-              <p className="text-xs text-slate-500 font-medium">Multi-origine (Genève & Portugal)</p>
-            </div>
-            
-            <div className="flex gap-2 bg-slate-100 p-1 rounded-lg">
-              {(['stocks', 'queue_geneva', 'queue_portugal', 'alerts'] as const).map(tab => (
-                <button
-                  key={tab}
-                  onClick={() => setFulfillmentSubTab(tab)}
-                  className={`px-4 py-2 rounded-md text-xs font-bold transition-all ${
-                    fulfillmentSubTab === tab 
-                      ? 'bg-white shadow-sm text-purple-700' 
-                      : 'text-slate-500 hover:text-slate-700'
-                  }`}
-                >
-                  {tab === 'stocks' && 'Inventaire'}
-                  {tab === 'queue_geneva' && '🇨🇭 File Genève'}
-                  {tab === 'queue_portugal' && '🇵🇹 File Portugal'}
-                  {tab === 'alerts' && '⚠️ Alertes'}
-                </button>
-              ))}
-            </div>
-          </div>
-
-          <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-sm min-h-[400px]">
-            {fulfillmentSubTab === 'stocks' && <FulfillmentStocksTab />}
-            {fulfillmentSubTab === 'queue_geneva' && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-slate-800">Commandes à expédier depuis Genève (PostPac Priority)</h3>
-                  <span className="text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full font-bold">🇨🇭 Entrepôt Genève</span>
-                </div>
-                <div className="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl">
-                  <Package className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                  <p className="font-bold text-slate-700 text-sm">Aucun colis en attente d&apos;étiquette pour Genève</p>
-                  <p className="text-xs text-slate-400 mt-1">Les nouvelles commandes payées apparaîtront ici automatiquement avec génération d&apos;étiquette d&apos;envoi.</p>
-                </div>
-              </div>
-            )}
-            {fulfillmentSubTab === 'queue_portugal' && (
-              <div className="space-y-4">
-                <div className="flex items-center justify-between">
-                  <h3 className="font-bold text-slate-800">Commandes à expédier depuis le Portugal (Express Usine)</h3>
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs bg-emerald-50 text-emerald-800 border border-emerald-200 px-2.5 py-1 rounded-full font-bold flex items-center gap-1">
-                      <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-                      Packlink PRO Actif
-                    </span>
-                    <span className="text-xs bg-blue-50 text-blue-800 border border-blue-200 px-2.5 py-1 rounded-full font-bold">🇵🇹 Usine Portugal</span>
-                  </div>
-                </div>
-
-                <div className="bg-slate-50 border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 text-xs">
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-xl bg-purple-100 border border-purple-200 text-purple-700 flex items-center justify-center font-black">
-                      📦
-                    </div>
-                    <div>
-                      <p className="font-bold text-slate-900">Passerelle Transport Packlink PRO</p>
-                      <p className="text-slate-500">Compte : <span className="font-mono text-slate-700">marco.scarpantoni@hotmail.com</span> · Clé API validée</p>
-                    </div>
-                  </div>
-                  <span className="px-3 py-1 bg-white border border-slate-200 rounded-lg font-bold text-emerald-600 shadow-xs">
-                    ✓ Prêt pour l&apos;expédition européenne
-                  </span>
-                </div>
-
-                <div className="p-8 text-center bg-slate-50 border border-slate-200 rounded-2xl">
-                  <Truck className="w-8 h-8 text-slate-300 mx-auto mb-2" />
-                  <p className="font-bold text-slate-700 text-sm">Toutes les expéditions du Portugal sont à jour</p>
-                  <p className="text-xs text-slate-400 mt-1">Synchronisé en temps réel avec Packlink PRO et l&apos;usine BigMan Nutrition.</p>
-                </div>
-              </div>
-            )}
-            {fulfillmentSubTab === 'alerts' && (
-              <div className="space-y-4">
-                <h3 className="font-bold text-slate-800">Alertes logistiques et blocages</h3>
-                <div className="p-6 text-center bg-emerald-50/50 border border-emerald-200 rounded-2xl">
-                  <CheckCircle2 className="w-8 h-8 text-emerald-500 mx-auto mb-2" />
-                  <p className="font-bold text-emerald-900 text-sm">Aucune anomalie ni alerte d&apos;expédition en cours</p>
-                  <p className="text-xs text-emerald-700 mt-1">Tous les flux de livraison Genève et Portugal fonctionnent normalement.</p>
-                </div>
-              </div>
-            )}
           </div>
         </div>
       )}

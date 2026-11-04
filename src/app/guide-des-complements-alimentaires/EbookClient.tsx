@@ -21,24 +21,37 @@ import {
   ChevronUp,
   HelpCircle,
   AlertTriangle,
-  ArrowRight
+  ArrowRight,
+  Globe,
+  Check
 } from 'lucide-react';
 import { formatChf } from '@/lib/tax';
-import { EBOOK_ITEM as ebookItem } from '@/lib/ebook';
+import { EBOOK_ITEM as ebookItem, EBOOK_LANGUAGES, type EbookLanguage, getEbookItemForLanguage } from '@/lib/ebook';
 
 export default function EbookClient() {
   const router = useRouter();
   const { addToCart, openCart, formatPrice } = useStore();
 
   const [openFaqIndex, setOpenFaqIndex] = useState<number | null>(0);
+  const [selectedLang, setSelectedLang] = useState<EbookLanguage>('fr');
+
+  const selectedLangOption = EBOOK_LANGUAGES[selectedLang] || EBOOK_LANGUAGES.fr;
 
   const handleInstantBuy = () => {
-    addToCart(ebookItem, { quantity: 1, flavor: 'Format PDF Téléchargeable' });
+    const itemToAdd = getEbookItemForLanguage(selectedLang);
+    addToCart(itemToAdd, { 
+      quantity: 1, 
+      flavor: `${selectedLangOption.nativeName} (PDF 66p)`
+    });
     openCart();
   };
 
   const handleDirectCheckout = () => {
-    addToCart(ebookItem, { quantity: 1, flavor: 'Format PDF Téléchargeable' });
+    const itemToAdd = getEbookItemForLanguage(selectedLang);
+    addToCart(itemToAdd, { 
+      quantity: 1, 
+      flavor: `${selectedLangOption.nativeName} (PDF 66p)`
+    });
     router.push('/commande/');
   };
 
@@ -135,14 +148,54 @@ export default function EbookClient() {
                 </span>
               </div>
 
-              <div className="flex flex-col sm:flex-row gap-3">
+              {/* Language Selector (4 Variations) */}
+              <div className="space-y-2 pt-2 border-t border-white/10">
+                <div className="flex items-center justify-between">
+                  <label className="text-xs font-black uppercase tracking-wider text-white flex items-center gap-1.5 font-heading">
+                    <Globe className="w-3.5 h-3.5 text-[#95d600]" />
+                    <span>Choisir la Langue / Select Language :</span>
+                  </label>
+                  <span className="text-[11px] font-bold text-[#95d600] flex items-center gap-1">
+                    <span>{selectedLangOption.flag}</span>
+                    <span>{selectedLangOption.nativeName}</span>
+                  </span>
+                </div>
+
+                <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+                  {(['fr', 'en', 'de', 'it'] as const).map(code => {
+                    const opt = EBOOK_LANGUAGES[code];
+                    const isSelected = selectedLang === code;
+                    return (
+                      <button
+                        key={code}
+                        type="button"
+                        onClick={() => setSelectedLang(code)}
+                        className={`p-2.5 rounded-xl border text-left transition-all flex items-center gap-2 ${
+                          isSelected
+                            ? 'bg-[#95d600]/20 border-[#95d600] text-white shadow-md shadow-[#95d600]/15'
+                            : 'bg-black/40 border-white/10 text-white/70 hover:border-white/30 hover:text-white'
+                        }`}
+                      >
+                        <span className="text-lg shrink-0">{opt.flag}</span>
+                        <div className="min-w-0 flex-1">
+                          <span className="text-xs font-bold block truncate">{opt.nativeName}</span>
+                          <span className="text-[9px] text-white/50 block truncate">PDF 66p</span>
+                        </div>
+                        {isSelected && <Check className="w-3.5 h-3.5 text-[#95d600] shrink-0" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              </div>
+
+              <div className="flex flex-col sm:flex-row gap-3 pt-1">
                 <button
                   type="button"
                   onClick={handleDirectCheckout}
                   className="flex-1 py-4 px-6 bg-[#95d600] hover:bg-[#85c000] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-xl hover:shadow-[#95d600]/25 flex items-center justify-center gap-2 active:scale-98"
                 >
                   <Download className="w-4 h-4" />
-                  <span>Télécharger le guide maintenant (PDF)</span>
+                  <span>{selectedLangOption.buttonText}</span>
                 </button>
                 <button
                   type="button"
