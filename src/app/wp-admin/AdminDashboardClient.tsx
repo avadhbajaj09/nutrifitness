@@ -716,13 +716,18 @@ export default function AdminDashboardClient() {
                   // Parse Supabase variants if available
                   let pVariants = existingP.variants;
                   if (Array.isArray(dbP.variants) && dbP.variants.length > 0) {
-                    pVariants = dbP.variants.map((v: any) => {
+                    pVariants = dbP.variants.map((v: any, vIdx: number) => {
                       const vFlav = v.attribute_value || 'Standard';
                       const vGen = Number(v.stock_geneva) || 0;
                       const vPt = Number(v.stock_portugal) || 0;
+                      const existingVar = existingP.variants?.find((ev: any) => 
+                        (ev.id && ev.id === v.id) || 
+                        (ev.flavorName?.fr && ev.flavorName.fr.toLowerCase() === vFlav.toLowerCase())
+                      );
+                      const fallbackSku = existingVar?.sku || `NF-${cleanId}-${vIdx + 1}`;
                       return {
                         id: v.id,
-                        sku: v.sku || `SKU-${Date.now()}`,
+                        sku: v.sku || fallbackSku,
                         flavorName: { fr: vFlav, de: vFlav, it: vFlav, en: vFlav },
                         format: '1 unité',
                         priceChf: Number(v.price) || Number(dbP.base_price) || existingP.priceChf,
@@ -951,18 +956,34 @@ export default function AdminDashboardClient() {
         nutrition: savedProduct.nutrition || null,
         stock_geneva: totalGen,
         stock_portugal: totalPt,
-        variants: (savedProduct.variants || []).map(v => ({
-          id: v.id,
-          sku: v.sku,
-          flavor: v.flavorName?.fr || 'Standard',
-          format: v.format || '1 unité',
-          price: v.priceChf || savedProduct.priceChf,
-          stock_geneva: typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'PORTUGAL' ? 0 : (v.inventoryQuantity ?? 0)),
-          stock_portugal: typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'GENEVA' ? 0 : (v.inventoryQuantity ?? 0)),
-          in_stock: v.inStock,
-          image: v.image || null,
-          gtin13: v.gtin13 || savedProduct.gtin13 || null
-        }))
+        variants: (() => {
+          const seenSkus = new Set<string>();
+          const cleanProdId = (savedProduct.id || 'NF').replace(/^prod-/, '');
+          return (savedProduct.variants || []).map((v, vIdx) => {
+            let variantSku = (v.sku || '').trim();
+            if (!variantSku || seenSkus.has(variantSku)) {
+              variantSku = `NF-${cleanProdId}-${vIdx + 1}`;
+            }
+            let disambiguator = 1;
+            while (seenSkus.has(variantSku)) {
+              variantSku = `NF-${cleanProdId}-${vIdx + 1}-${disambiguator++}`;
+            }
+            seenSkus.add(variantSku);
+
+            return {
+              id: v.id,
+              sku: variantSku,
+              flavor: v.flavorName?.fr || 'Standard',
+              format: v.format || '1 unité',
+              price: v.priceChf || savedProduct.priceChf,
+              stock_geneva: typeof v.stockGeneva === 'number' ? v.stockGeneva : (targetOrigin === 'PORTUGAL' ? 0 : (v.inventoryQuantity ?? 0)),
+              stock_portugal: typeof v.stockPortugal === 'number' ? v.stockPortugal : (targetOrigin === 'GENEVA' ? 0 : (v.inventoryQuantity ?? 0)),
+              in_stock: v.inStock,
+              image: v.image || null,
+              gtin13: v.gtin13 || savedProduct.gtin13 || null
+            };
+          });
+        })()
       };
 
       const res = await fetch('/api/admin/products', {

@@ -467,6 +467,27 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Name is required' }, { status: 400 });
     }
 
+    // Ensure variants have unique, deterministic non-empty SKUs to prevent DB unique constraint violations
+    if (Array.isArray(body.variants) && body.variants.length > 0) {
+      const seenVariantSkus = new Set<string>();
+      const baseCleanId = String(body.id || 'NF').replace(/^prod-/, '');
+      body.variants = body.variants.map((v: any, vIdx: number) => {
+        let vSku = typeof v.sku === 'string' ? v.sku.trim() : '';
+        if (!vSku || seenVariantSkus.has(vSku)) {
+          vSku = `NF-${baseCleanId}-${vIdx + 1}`;
+        }
+        let counter = 1;
+        while (seenVariantSkus.has(vSku)) {
+          vSku = `NF-${baseCleanId}-${vIdx + 1}-${counter++}`;
+        }
+        seenVariantSkus.add(vSku);
+        return {
+          ...v,
+          sku: vSku
+        };
+      });
+    }
+
     const supabase = getAdminSupabase();
 
     // Call atomic PostgreSQL stored procedure for unified transaction

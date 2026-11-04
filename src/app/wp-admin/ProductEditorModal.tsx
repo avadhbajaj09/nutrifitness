@@ -446,8 +446,10 @@ export default function ProductEditorModal({
 
   // Add variant
   const handleAddVariant = () => {
-    const newVarId = `var-${Date.now()}-${Math.floor(Math.random() * 100)}`;
-    const randomSku = `SKU-${Date.now().toString().slice(-5)}`;
+    const nextIdx = variants.length + 1;
+    const cleanProdId = (id || 'custom').replace(/^prod-/, '');
+    const newVarId = `var-${Date.now()}-${Math.floor(Math.random() * 1000)}`;
+    const randomSku = `NF-${cleanProdId}-${nextIdx}-${Date.now().toString().slice(-4)}`;
     setVariants(prev => [
       ...prev,
       {
@@ -612,28 +614,43 @@ export default function ProductEditorModal({
         saltG: Number(saltG),
         bcaaG: finalBcaa
       },
-      variants: variants.map(v => {
-        const qty = Number(v.inventoryQuantity) || 0;
-        const genQty = shippingOrigin === 'portugal' ? 0 : (typeof v.stockGeneva === 'number' ? v.stockGeneva : qty);
-        const ptQty = shippingOrigin === 'switzerland' ? 0 : (typeof v.stockPortugal === 'number' ? v.stockPortugal : qty);
-        const totalQty = genQty + ptQty;
-        return {
-          ...v,
-          gtin13: v.gtin13 || gtin13.trim() || undefined,
-          priceChf: finalPriceChf,
-          compareAtPriceChf: finalCompareAtChf,
-          priceEurSwiss: finalPriceEurSwiss,
-          compareAtPriceEurSwiss: finalCompareAtEurSwiss,
-          priceEurEurope: finalPriceEurEurope,
-          compareAtPriceEurEurope: finalCompareAtEurEurope,
-          priceEur: finalPriceEurEurope,
-          compareAtPriceEur: finalCompareAtEurEurope,
-          inventoryQuantity: shippingOrigin === 'common' ? totalQty : qty,
-          stockGeneva: genQty,
-          stockPortugal: ptQty,
-          inStock: (shippingOrigin === 'common' ? totalQty : qty) > 0
-        };
-      })
+      variants: (() => {
+        const seenSkus = new Set<string>();
+        const cleanProdId = (id || 'custom').replace(/^prod-/, '');
+        return variants.map((v, vIdx) => {
+          let variantSku = (v.sku || '').trim();
+          if (!variantSku || seenSkus.has(variantSku)) {
+            variantSku = `NF-${cleanProdId}-${vIdx + 1}`;
+          }
+          let disambig = 1;
+          while (seenSkus.has(variantSku)) {
+            variantSku = `NF-${cleanProdId}-${vIdx + 1}-${disambig++}`;
+          }
+          seenSkus.add(variantSku);
+
+          const qty = Number(v.inventoryQuantity) || 0;
+          const genQty = shippingOrigin === 'portugal' ? 0 : (typeof v.stockGeneva === 'number' ? v.stockGeneva : qty);
+          const ptQty = shippingOrigin === 'switzerland' ? 0 : (typeof v.stockPortugal === 'number' ? v.stockPortugal : qty);
+          const totalQty = genQty + ptQty;
+          return {
+            ...v,
+            sku: variantSku,
+            gtin13: v.gtin13 || gtin13.trim() || undefined,
+            priceChf: finalPriceChf,
+            compareAtPriceChf: finalCompareAtChf,
+            priceEurSwiss: finalPriceEurSwiss,
+            compareAtPriceEurSwiss: finalCompareAtEurSwiss,
+            priceEurEurope: finalPriceEurEurope,
+            compareAtPriceEurEurope: finalCompareAtEurEurope,
+            priceEur: finalPriceEurEurope,
+            compareAtPriceEur: finalCompareAtEurEurope,
+            inventoryQuantity: shippingOrigin === 'common' ? totalQty : qty,
+            stockGeneva: genQty,
+            stockPortugal: ptQty,
+            inStock: (shippingOrigin === 'common' ? totalQty : qty) > 0
+          };
+        });
+      })()
     };
 
     setPendingProduct(preparedProduct);
