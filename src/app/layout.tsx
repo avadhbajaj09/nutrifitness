@@ -1,5 +1,4 @@
 import type { Metadata, Viewport } from 'next';
-import { Inter, Unbounded, Roboto_Condensed } from 'next/font/google';
 import './globals.css';
 import { StoreProvider } from '@/context/StoreContext';
 import AppShell from '@/components/AppShell';
@@ -12,27 +11,6 @@ export const viewport: Viewport = {
   initialScale: 1,
   viewportFit: 'cover',
 };
-
-const inter = Inter({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-inter',
-  weight: ['400', '500', '600', '700', '800'],
-});
-
-const unbounded = Unbounded({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-unbounded',
-  weight: ['400', '700', '800', '900'],
-});
-
-const robotoCondensed = Roboto_Condensed({
-  subsets: ['latin'],
-  display: 'swap',
-  variable: '--font-roboto-condensed',
-  weight: ['700', '900'],
-});
 
 const googleVerification = process.env.GOOGLE_SITE_VERIFICATION;
 const bingVerification = process.env.BING_SITE_VERIFICATION;
@@ -84,9 +62,15 @@ export default function RootLayout({
   const webSchema = website();
 
   return (
-    <html lang="fr-CH" className={`dark ${inter.variable} ${unbounded.variable} ${robotoCondensed.variable}`}>
+    <html lang="fr-CH" className="dark">
       <head>
         <meta name="google" content="notranslate" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Roboto+Condensed:wght@700;900&family=Unbounded:wght@400;700;800;900&display=swap"
+          rel="stylesheet"
+        />
         <script
           type="application/ld+json"
           dangerouslySetInnerHTML={{

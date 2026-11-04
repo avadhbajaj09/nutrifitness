@@ -3,6 +3,12 @@
 @tailwind utilities;
 
 @layer base {
+  :root {
+    --font-inter: 'Inter', system-ui, -apple-system, sans-serif;
+    --font-unbounded: 'Unbounded', sans-serif;
+    --font-roboto-condensed: 'Roboto Condensed', sans-serif;
+  }
+
   body {
     background-color: #0A0A0A;
     color: #F3F4F6;
