@@ -733,7 +733,7 @@ export default function ProductEditorModal({
               { id: 'images', label: '2. Photos & Galerie', icon: ImageIcon },
               { id: 'descriptions', label: '3. Descriptions & SEO', icon: FileText },
               { id: 'variants', label: '4. Saveurs & SKUs', icon: Sparkles },
-              { id: 'nutrition', label: '5. Nutrition & Ingrédients', icon: HelpCircle }
+              { id: 'nutrition', label: '5. Ingrédients & Posologie', icon: HelpCircle }
             ].map(tab => {
               const Icon = tab.icon;
               return (
@@ -1817,129 +1817,6 @@ export default function ProductEditorModal({
                 />
               </div>
 
-              {/* Nutrition Facts Inputs */}
-              <div className="p-5 bg-slate-50 rounded-2xl border border-slate-200 space-y-4">
-                <span className="text-xs font-black uppercase tracking-wider text-slate-900 font-heading block">
-                  Tableau des Valeurs Nutritionnelles
-                </span>
-
-                <div className="grid grid-cols-2 sm:grid-cols-4 gap-3 text-xs">
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Taille Portion</label>
-                    <input
-                      type="text"
-                      value={servingSize}
-                      onChange={(e) => setServingSize(e.target.value)}
-                      placeholder="Ex: 30 g"
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-900"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Portions / Pot</label>
-                    <input
-                      type="number"
-                      value={servingsPerContainer}
-                      onChange={(e) => setServingsPerContainer(parseInt(e.target.value) || 0)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-900"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Énergie (kcal)</label>
-                    <input
-                      type="number"
-                      value={energyKcal}
-                      onChange={(e) => setEnergyKcal(parseFloat(e.target.value) || 0)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-900 font-bold"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Protéines (g)</label>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={proteinG}
-                      onChange={(e) => setProteinG(parseFloat(e.target.value) || 0)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-emerald-700 font-black"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Glucides (g)</label>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={carbsG}
-                      onChange={(e) => setCarbsG(parseFloat(e.target.value) || 0)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-900"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Dont Sucres (g)</label>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={sugarsG}
-                      onChange={(e) => setSugarsG(parseFloat(e.target.value) || 0)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-900"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Lipides (g)</label>
-                    <input
-                      type="number"
-                      step="0.1"
-                      value={fatG}
-                      onChange={(e) => setFatG(parseFloat(e.target.value) || 0)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-900"
-                    />
-                  </div>
-
-                  <div>
-                    <label className="block text-[11px] font-bold text-slate-500 mb-1">Sel (g)</label>
-                    <input
-                      type="number"
-                      step="0.01"
-                      value={saltG}
-                      onChange={(e) => setSaltG(parseFloat(e.target.value) || 0)}
-                      className="w-full px-2.5 py-1.5 bg-white border border-slate-300 rounded-lg text-slate-900"
-                    />
-                  </div>
-                </div>
-
-                {product?.nutrition?.activeIngredients && product.nutrition.activeIngredients.length > 0 && (
-                  <div className="mt-4 pt-4 border-t border-slate-200">
-                    <span className="text-[11px] font-black uppercase tracking-wider text-slate-700 block mb-2">
-                      ⚡ Principes Actifs & Dosage ({product.nutrition.activeIngredients.length} composants vérifiés)
-                    </span>
-                    <div className="overflow-x-auto bg-white rounded-xl border border-slate-200">
-                      <table className="w-full text-left text-xs text-slate-800">
-                        <thead className="bg-slate-100 text-[10px] uppercase text-slate-600 font-bold border-b border-slate-200">
-                          <tr>
-                            <th className="py-2 px-3">Composant</th>
-                            <th className="py-2 px-3">Dosage / Portion</th>
-                            <th className="py-2 px-3">% VNR</th>
-                          </tr>
-                        </thead>
-                        <tbody className="divide-y divide-slate-100">
-                          {product.nutrition.activeIngredients.map((item, idx) => (
-                            <tr key={idx}>
-                              <td className="py-2 px-3 font-semibold">{item.name}</td>
-                              <td className="py-2 px-3 font-mono font-bold text-red-600">{item.amount}</td>
-                              <td className="py-2 px-3 text-slate-500 font-mono">{item.nrv || '–'}</td>
-                            </tr>
-                          ))}
-                        </tbody>
-                      </table>
-                    </div>
-                  </div>
-                )}
-              </div>
-
             </div>
           )}
 
@@ -2052,41 +1929,6 @@ export default function ProductEditorModal({
                         <span className="text-xs font-bold text-slate-800">{pendingProduct.mainLocation}</span>
                       </div>
                     </div>
-
-                    {/* Nutrition Facts */}
-                    {pendingProduct.nutrition && (
-                      <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200">
-                        <span className="text-[10px] font-black uppercase tracking-wider text-slate-600 block mb-2">
-                          🥗 Valeurs Nutritionnelles (Portion : {pendingProduct.nutrition.servingSize || '30g'})
-                        </span>
-                        <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center">
-                          <div className="bg-white p-2 rounded-lg border border-slate-200">
-                            <span className="text-[9px] text-slate-400 block">Énergie</span>
-                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.energyKcal} kcal</span>
-                          </div>
-                          <div className="bg-white p-2 rounded-lg border border-emerald-200">
-                            <span className="text-[9px] text-emerald-600 font-bold block">Protéines</span>
-                            <span className="font-black text-emerald-700">{pendingProduct.nutrition.proteinG} g</span>
-                          </div>
-                          <div className="bg-white p-2 rounded-lg border border-slate-200">
-                            <span className="text-[9px] text-slate-400 block">Glucides</span>
-                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.carbsG} g</span>
-                          </div>
-                          <div className="bg-white p-2 rounded-lg border border-slate-200">
-                            <span className="text-[9px] text-slate-400 block">Dont Sucres</span>
-                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.sugarsG} g</span>
-                          </div>
-                          <div className="bg-white p-2 rounded-lg border border-slate-200">
-                            <span className="text-[9px] text-slate-400 block">Lipides</span>
-                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.fatG} g</span>
-                          </div>
-                          <div className="bg-white p-2 rounded-lg border border-slate-200">
-                            <span className="text-[9px] text-slate-400 block">Sel</span>
-                            <span className="font-bold text-slate-900">{pendingProduct.nutrition.saltG} g</span>
-                          </div>
-                        </div>
-                      </div>
-                    )}
                   </div>
 
                   {/* Step 1 Actions */}

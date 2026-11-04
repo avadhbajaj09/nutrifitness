@@ -6068,50 +6068,7 @@ export default function AdminDashboardClient() {
               </div>
             </div>
 
-            {/* Nutrition Facts Table */}
-            {inspectingProduct.nutrition && (
-              <div className="p-4 bg-slate-50 rounded-2xl border border-slate-200 space-y-3">
-                <div className="flex justify-between items-center">
-                  <span className="text-xs font-black uppercase text-slate-900 font-heading">
-                    Tableau des Valeurs Nutritionnelles
-                  </span>
-                  <span className="text-xs text-slate-500">
-                    Portion : {inspectingProduct.nutrition.servingSize}
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-3 sm:grid-cols-6 gap-2 text-center text-xs">
-                  <div className="bg-white p-2 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 block">Énergie</span>
-                    <span className="font-black text-slate-900">{inspectingProduct.nutrition.energyKcal} kcal</span>
-                  </div>
-                  <div className="bg-white p-2 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 block">Protéines</span>
-                    <span className="font-black text-emerald-700">{inspectingProduct.nutrition.proteinG} g</span>
-                  </div>
-                  <div className="bg-white p-2 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 block">Glucides</span>
-                    <span className="font-black text-slate-900">{inspectingProduct.nutrition.carbsG} g</span>
-                  </div>
-                  <div className="bg-white p-2 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 block">Dont sucres</span>
-                    <span className="font-black text-slate-900">{inspectingProduct.nutrition.sugarsG} g</span>
-                  </div>
-                  <div className="bg-white p-2 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 block">Lipides</span>
-                    <span className="font-black text-slate-900">{inspectingProduct.nutrition.fatG} g</span>
-                  </div>
-                  <div className="bg-white p-2 rounded-xl border border-slate-200">
-                    <span className="text-[10px] text-slate-400 block">Sel</span>
-                    <span className="font-black text-slate-900">{inspectingProduct.nutrition.saltG} g</span>
-                  </div>
-                </div>
-              </div>
-            )}
-
-
-
-          </div>
+                      </div>
         </div>
       )}
 
