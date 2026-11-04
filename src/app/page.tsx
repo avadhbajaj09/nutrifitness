@@ -14,6 +14,7 @@ import StoreMap from '@/components/StoreMap';
 import HomeFAQ from '@/components/HomeFAQ';
 import { PRODUCTS } from '@/lib/catalog';
 import { getHiddenProductSlugs } from '@/lib/hiddenProducts';
+import { getActiveHeroBanners } from '@/lib/banners';
 import { 
   HomeMarqueeSection, 
   HomeBestsellersSection, 
@@ -30,7 +31,10 @@ export const metadata: Metadata = {
 };
 
 export default async function HomePage() {
-  const hiddenSlugs = await getHiddenProductSlugs();
+  const [hiddenSlugs, heroBanners] = await Promise.all([
+    getHiddenProductSlugs(),
+    getActiveHeroBanners()
+  ]);
   const physicalProducts = PRODUCTS.filter(p => {
     const slug = (p.slug?.fr || '').toLowerCase().trim();
     const id = (p.id || '').toLowerCase().trim();
@@ -49,7 +53,7 @@ export default async function HomePage() {
       </div>
 
       {/* 1. HERO SLIDER */}
-      <HeroSlider />
+      <HeroSlider initialBanners={heroBanners} />
 
       {/* MOBILE TRUST STRIP (< 768px: compact horizontal strip under Hero) */}
       <MobileTrustStrip />

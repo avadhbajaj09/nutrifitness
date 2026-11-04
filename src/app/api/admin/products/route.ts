@@ -43,7 +43,10 @@ export async function GET(request: Request) {
     } // 'all' leaves it unconstrained
 
     if (search) {
-      const cleanSearch = search
+      let raw = search.trim();
+      const editMatch = raw.match(/[?&]edit=([^&#]+)/i);
+      if (editMatch) raw = editMatch[1];
+      const cleanSearch = raw
         .replace(/https?:\/\/[^\/]+\/produit\//i, '')
         .replace(/https?:\/\/[^\/]+\//i, '')
         .replace(/\/+$/, '')
@@ -52,12 +55,16 @@ export async function GET(request: Request) {
       const searchTerms = new Set<string>();
       if (cleanSearch) {
         searchTerms.add(cleanSearch);
-        if (cleanSearch.includes('creatine')) searchTerms.add(cleanSearch.replace(/creatine/g, 'créatine'));
-        if (cleanSearch.includes('créatine')) searchTerms.add(cleanSearch.replace(/créatine/g, 'creatine'));
-        if (cleanSearch.includes('proteine')) searchTerms.add(cleanSearch.replace(/proteine/g, 'protéine'));
-        if (cleanSearch.includes('protéine')) searchTerms.add(cleanSearch.replace(/protéine/g, 'proteine'));
-        if (cleanSearch.includes('beta')) searchTerms.add(cleanSearch.replace(/beta/g, 'bêta'));
-        if (cleanSearch.includes('bêta')) searchTerms.add(cleanSearch.replace(/bêta/g, 'beta'));
+        const words = cleanSearch.split(/[\s\-_\/]+/).filter(w => w.length >= 3);
+        words.forEach(w => searchTerms.add(w));
+        for (const term of Array.from(searchTerms)) {
+          if (term.includes('creatine')) searchTerms.add(term.replace(/creatine/g, 'créatine'));
+          if (term.includes('créatine')) searchTerms.add(term.replace(/créatine/g, 'creatine'));
+          if (term.includes('proteine')) searchTerms.add(term.replace(/proteine/g, 'protéine'));
+          if (term.includes('protéine')) searchTerms.add(term.replace(/protéine/g, 'proteine'));
+          if (term.includes('beta')) searchTerms.add(term.replace(/beta/g, 'bêta'));
+          if (term.includes('bêta')) searchTerms.add(term.replace(/bêta/g, 'beta'));
+        }
       }
 
       const orConditions = Array.from(searchTerms).flatMap(term => [

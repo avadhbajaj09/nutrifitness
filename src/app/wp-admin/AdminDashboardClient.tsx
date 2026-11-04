@@ -5,6 +5,7 @@ import Image from 'next/image';
 import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import AdminSidebar from '@/components/admin/AdminSidebar';
+import HeroBannersManager from '@/components/admin/HeroBannersManager';
 import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
 import { TWINT_CONFIG } from '@/lib/twint';
 import type { ProductItem, ProductVariant, SupportedLocale } from '@/lib/types';
@@ -534,10 +535,11 @@ export default function AdminDashboardClient() {
   // 2. DASHBOARD NAVIGATION & TIME
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'sales' | 'fulfillment' | 'abandoned'>('pos');
+  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'banners' | 'sales' | 'fulfillment' | 'abandoned'>('pos');
+  const [heroBannersCount, setHeroBannersCount] = useState<number>(5);
 
   useEffect(() => {
-    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'sales' || tabParam === 'fulfillment' || tabParam === 'abandoned') {
+    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'banners' || tabParam === 'sales' || tabParam === 'fulfillment' || tabParam === 'abandoned') {
       setActiveTab(tabParam);
     }
   }, [tabParam]);
@@ -1303,7 +1305,48 @@ export default function AdminDashboardClient() {
 
   const filteredCatalog = useMemo(() => {
     return allProducts.filter(p => {
-      // Origin filter
+      // 1. Search Query: If provided, match across name, brand, slug, SKU, GTIN, ID & tokens
+      if (catalogSearch.trim()) {
+        let rawQ = catalogSearch.trim().toLowerCase();
+        const editMatch = rawQ.match(/[?&]edit=([^&#]+)/i);
+        if (editMatch) rawQ = editMatch[1];
+        const qClean = rawQ
+          .replace(/https?:\/\/[^\/]+\/produit\//i, '')
+          .replace(/https?:\/\/[^\/]+\//i, '')
+          .replace(/\/+$/, '')
+          .trim();
+        const qNorm = normalizeSearchText(qClean);
+        const tokens = qNorm.split(/[\s\-_\/]+/).filter(t => t.length > 0);
+
+        const pText = [
+          normalizeSearchText(p.name?.fr),
+          normalizeSearchText(p.name?.en),
+          normalizeSearchText(p.name?.de),
+          normalizeSearchText(p.name?.it),
+          normalizeSearchText(p.brand),
+          normalizeSearchText(p.slug?.fr),
+          (p.id || '').toLowerCase(),
+          (p.id || '').toLowerCase().replace(/^prod-/, ''),
+          (p.gtin13 || ''),
+          ...(p.variants || []).flatMap(v => [
+            normalizeSearchText(v.sku),
+            (v.sku || '').toLowerCase(),
+            (v.gtin13 || ''),
+            normalizeSearchText(v.flavorName?.fr)
+          ])
+        ].join(' ');
+
+        const directMatch = (p.id || '').toLowerCase().includes(qNorm) ||
+                            (p.slug?.fr || '').toLowerCase().includes(qNorm) ||
+                            (qNorm.length > 3 && qNorm.includes((p.slug?.fr || '').toLowerCase()));
+        const tokensMatch = tokens.length > 0 && tokens.every(token => pText.includes(token));
+
+        if (!directMatch && !tokensMatch) return false;
+        // Direct search match bypasses category & origin filter so search is never suppressed
+        return true;
+      }
+
+      // Origin filter (active when no direct search query)
       if (catalogOriginFilter === 'geneva' && p.shippingOrigin === 'portugal') return false;
       if (catalogOriginFilter === 'portugal' && p.shippingOrigin !== 'portugal') return false;
 
@@ -1315,33 +1358,6 @@ export default function AdminDashboardClient() {
 
       // Brand filter
       if (catalogBrandFilter !== 'all' && p.brand !== catalogBrandFilter) return false;
-
-      // Search
-      if (catalogSearch.trim()) {
-        const rawQ = catalogSearch.trim().toLowerCase();
-        const qClean = rawQ
-          .replace(/https?:\/\/[^\/]+\/produit\//, '')
-          .replace(/https?:\/\/[^\/]+\//, '')
-          .replace(/\/+$/, '')
-          .trim();
-        const qNorm = normalizeSearchText(qClean);
-
-        const nameFrNorm = normalizeSearchText(p.name?.fr);
-        const nameEnNorm = normalizeSearchText(p.name?.en);
-        const brandNorm = normalizeSearchText(p.brand);
-        const slugNorm = normalizeSearchText(p.slug?.fr);
-        const idNorm = (p.id || '').toLowerCase();
-        const cleanIdNorm = idNorm.replace(/^prod-/, '');
-
-        const inName = nameFrNorm.includes(qNorm) || nameEnNorm.includes(qNorm);
-        const inBrand = brandNorm.includes(qNorm);
-        const inSku = p.variants?.some(v => normalizeSearchText(v.sku).includes(qNorm) || (v.sku || '').toLowerCase().includes(rawQ));
-        const inSlug = slugNorm.includes(qNorm) || (qNorm.length > 3 && qNorm.includes(slugNorm));
-        const inId = idNorm.includes(qClean) || idNorm.includes(rawQ) || cleanIdNorm.includes(qClean);
-        const inGtin = (p.gtin13 || '').includes(rawQ) || p.variants?.some(v => (v.gtin13 || '').includes(rawQ));
-
-        if (!inName && !inBrand && !inSku && !inSlug && !inId && !inGtin) return false;
-      }
 
       return true;
     }).sort((a, b) => {
@@ -1665,35 +1681,50 @@ export default function AdminDashboardClient() {
 
   const filteredPosProducts = useMemo(() => {
     return posProducts.filter(p => {
+      if (posSearch.trim()) {
+        let rawQ = posSearch.trim().toLowerCase();
+        const editMatch = rawQ.match(/[?&]edit=([^&#]+)/i);
+        if (editMatch) rawQ = editMatch[1];
+        const qClean = rawQ
+          .replace(/https?:\/\/[^\/]+\/produit\//i, '')
+          .replace(/https?:\/\/[^\/]+\//i, '')
+          .replace(/\/+$/, '')
+          .trim();
+        const qNorm = normalizeSearchText(qClean);
+        const tokens = qNorm.split(/[\s\-_\/]+/).filter(t => t.length > 0);
+
+        const pText = [
+          normalizeSearchText(p.name?.fr),
+          normalizeSearchText(p.name?.en),
+          normalizeSearchText(p.name?.de),
+          normalizeSearchText(p.name?.it),
+          normalizeSearchText(p.brand),
+          normalizeSearchText(p.slug?.fr),
+          (p.id || '').toLowerCase(),
+          (p.id || '').toLowerCase().replace(/^prod-/, ''),
+          (p.gtin13 || ''),
+          ...(p.variants || []).flatMap(v => [
+            normalizeSearchText(v.sku),
+            (v.sku || '').toLowerCase(),
+            (v.gtin13 || ''),
+            normalizeSearchText(v.flavorName?.fr)
+          ])
+        ].join(' ');
+
+        const directMatch = (p.id || '').toLowerCase().includes(qNorm) ||
+                            (p.slug?.fr || '').toLowerCase().includes(qNorm) ||
+                            (qNorm.length > 3 && qNorm.includes((p.slug?.fr || '').toLowerCase()));
+        const tokensMatch = tokens.length > 0 && tokens.every(token => pText.includes(token));
+
+        if (!directMatch && !tokensMatch) return false;
+        return true;
+      }
+
       if (posCategoryFilter !== 'all') {
         const matchesCat = p.categorySlug === posCategoryFilter || (p.categorySlugs && p.categorySlugs.includes(posCategoryFilter));
         if (!matchesCat) return false;
       }
       if (posBrandFilter !== 'all' && p.brand !== posBrandFilter) return false;
-      if (posSearch.trim()) {
-        const rawQ = posSearch.trim().toLowerCase();
-        const qClean = rawQ
-          .replace(/https?:\/\/[^\/]+\/produit\//, '')
-          .replace(/https?:\/\/[^\/]+\//, '')
-          .replace(/\/+$/, '')
-          .trim();
-        const qNorm = normalizeSearchText(qClean);
-
-        const nameFrNorm = normalizeSearchText(p.name?.fr);
-        const brandNorm = normalizeSearchText(p.brand);
-        const slugNorm = normalizeSearchText(p.slug?.fr);
-        const idNorm = (p.id || '').toLowerCase();
-        const cleanIdNorm = idNorm.replace(/^prod-/, '');
-
-        const inName = nameFrNorm.includes(qNorm);
-        const inBrand = brandNorm.includes(qNorm);
-        const inSku = p.variants?.some(v => normalizeSearchText(v.sku).includes(qNorm) || (v.sku || '').toLowerCase().includes(rawQ) || (v.gtin13 || '').includes(rawQ));
-        const inSlug = slugNorm.includes(qNorm) || (qNorm.length > 3 && qNorm.includes(slugNorm));
-        const inId = idNorm.includes(qClean) || idNorm.includes(rawQ) || cleanIdNorm.includes(qClean);
-        const inGtin = (p.gtin13 || '').includes(rawQ);
-
-        if (!inName && !inBrand && !inSku && !inSlug && !inId && !inGtin) return false;
-      }
       return true;
     });
   }, [posProducts, posCategoryFilter, posBrandFilter, posSearch]);
@@ -2691,6 +2722,7 @@ export default function AdminDashboardClient() {
         onSelectTab={setActiveTab}
         posCount={posProducts.length}
         catalogCount={allProducts.length}
+        bannersCount={heroBannersCount}
         salesCount={salesHistory.length}
         abandonedCount={abandonedCarts.length}
       />
@@ -2702,6 +2734,7 @@ export default function AdminDashboardClient() {
               <h1 className="text-base font-bold text-slate-900 tracking-tight truncate">
                 {activeTab === 'pos' && (adminLang === 'fr' ? 'Caisse POS (Magasin Genève)' : 'Point of Sale (POS Register)')}
                 {activeTab === 'catalog' && (adminLang === 'fr' ? 'Catalogue Général' : 'Global Products Catalog')}
+                {activeTab === 'banners' && (adminLang === 'fr' ? 'Gestion des Bannières de la Page d’Accueil' : 'Homepage Hero Banners Management')}
                 {activeTab === 'sales' && (adminLang === 'fr' ? 'Journal des Commandes & Ventes' : 'Orders & Sales Journal')}
                 {activeTab === 'abandoned' && (adminLang === 'fr' ? 'Paniers Abandonnés & Relances Clients' : 'Abandoned Carts & Customer Recovery')}
                 {activeTab === 'fulfillment' && (adminLang === 'fr' ? 'Expédition & Stocks' : 'Fulfillment & Shipping Queue')}
@@ -3659,6 +3692,16 @@ export default function AdminDashboardClient() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* =========================================================
+          MAIN BODY: TAB 2B — HOMEPAGE HERO BANNERS MANAGEMENT
+          ========================================================= */}
+      {activeTab === 'banners' && (
+        <HeroBannersManager
+          allProducts={allProducts}
+          onBannerCountChange={(count) => setHeroBannersCount(count)}
+        />
       )}
 
       {/* =========================================================

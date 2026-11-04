@@ -14,14 +14,16 @@ import {
   LogOut,
   CheckCircle2,
   Lock,
-  ShoppingCart
+  ShoppingCart,
+  Image as ImageIcon
 } from 'lucide-react';
 
 interface AdminSidebarProps {
-  activeTab?: 'pos' | 'catalog' | 'sales' | 'fulfillment' | 'locations' | 'abandoned';
-  onSelectTab?: (tab: 'pos' | 'catalog' | 'sales' | 'fulfillment' | 'abandoned') => void;
+  activeTab?: 'pos' | 'catalog' | 'banners' | 'sales' | 'fulfillment' | 'locations' | 'abandoned';
+  onSelectTab?: (tab: 'pos' | 'catalog' | 'banners' | 'sales' | 'fulfillment' | 'abandoned') => void;
   posCount?: number;
   catalogCount?: number;
+  bannersCount?: number;
   salesCount?: number;
   abandonedCount?: number;
 }
@@ -31,6 +33,7 @@ export default function AdminSidebar({
   onSelectTab,
   posCount,
   catalogCount,
+  bannersCount,
   salesCount,
   abandonedCount,
 }: AdminSidebarProps) {
@@ -54,6 +57,14 @@ export default function AdminSidebar({
       icon: Package,
       badge: catalogCount,
       href: '/wp-admin?tab=catalog',
+      isRoute: false,
+    },
+    {
+      id: 'banners',
+      label: 'Bannières Accueil',
+      icon: ImageIcon,
+      badge: bannersCount,
+      href: '/wp-admin?tab=banners',
       isRoute: false,
     },
     {
@@ -95,7 +106,7 @@ export default function AdminSidebar({
       router.push(item.href);
     } else {
       if (pathname?.startsWith('/wp-admin') && onSelectTab) {
-        onSelectTab(item.id as 'pos' | 'catalog' | 'sales' | 'fulfillment' | 'abandoned');
+        onSelectTab(item.id as 'pos' | 'catalog' | 'banners' | 'sales' | 'fulfillment' | 'abandoned');
       } else {
         router.push(item.href);
       }

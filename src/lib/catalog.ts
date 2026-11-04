@@ -17154,6 +17154,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "creatine",
     "taxCategory": "food_reduced",
+    "gtin13": "634240231230",
     "priceChf": 35,
     "images": [
       {
@@ -17231,15 +17232,15 @@ export const PRODUCTS: ProductItem[] = [
         "inventoryQuantity": 99,
         "inStock": true,
         "image": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/creatine.png",
-        "stockGeneva": 0,
+        "stockGeneva": 50,
         "stockPortugal": 50
       }
     ],
-    "isSwissOrigin": false,
-    "shippingOrigin": "portugal",
-    "stockGeneva": 0,
+    "isSwissOrigin": true,
+    "shippingOrigin": "common",
+    "stockGeneva": 50,
     "stockPortugal": 50,
-    "locationType": "PORTUGAL_ONLY"
+    "locationType": "COMMON"
   },
   {
     "id": "prod-mv-5757",

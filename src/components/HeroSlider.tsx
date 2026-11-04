@@ -3,96 +3,63 @@
 import React, { useState, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
-import { ChevronLeft, ChevronRight, ArrowRight, ShieldCheck, Zap, Sparkles } from 'lucide-react';
+import { ChevronLeft, ChevronRight, ArrowRight } from 'lucide-react';
+import { DEFAULT_HERO_BANNERS, type HeroBanner } from '@/lib/banners';
 
-interface BannerSlide {
-  id: number;
-  productName: string;
-  brand: string;
-  tag: string;
-  badge: string;
-  wideImage: string;
-  mobileImage: string;
-  link: string;
-  ctaText: string;
+interface HeroSliderProps {
+  initialBanners?: HeroBanner[];
 }
 
-const slides: BannerSlide[] = [
-  {
-    id: 1,
-    productName: 'BULK Isolat de Whey CFM 100% – Chocolate Fudge',
-    brand: 'Marvelous Nutrition',
-    tag: '⚡ 52g Protéines · 12g BCAA Naturels',
-    badge: 'Isolat CFM Haute Pureté',
-    wideImage: '/images/banners/wide/nutriftiness-banner3.jpg',
-    mobileImage: '/images/banners/mobile/imgi_84_nutrifitness-banner18-819x1024.jpg',
-    link: '/produit/iso-bulk-whey-biologique/',
-    ctaText: 'Commander la Whey CFM'
-  },
-  {
-    id: 2,
-    productName: 'Créatine Monohydrate 100% Micronisée 300g',
-    brand: 'Marvelous Nutrition',
-    tag: '💪 Force · Puissance Explosive · Récupération',
-    badge: '100% Pure Micronised',
-    wideImage: '/images/banners/wide/nutriftiness-banner4.jpg',
-    mobileImage: '/images/banners/mobile/imgi_12_nutrifitness-banner17.jpg',
-    link: '/produit/creatine-en-poudre-300g/',
-    ctaText: 'Découvrir la Créatine'
-  },
-  {
-    id: 3,
-    productName: 'Magnésium Bisglycinate Chélaté 90 Gélules',
-    brand: 'Marvelous Nutrition',
-    tag: '🌙 Sommeil Réparateur · Anti-Stress · Système Nerveux',
-    badge: 'Haute Biodisponibilité',
-    wideImage: '/images/banners/wide/nutriftiness-banner1.jpg',
-    mobileImage: '/images/banners/mobile/imgi_14_nutrifitness-banner-a1-1.jpg',
-    link: '/produit/magnesium-bisglycinate-90-caps/',
-    ctaText: 'Voir le Magnésium'
-  },
-  {
-    id: 4,
-    productName: 'Le Guide Ultime des Compléments Alimentaires (PDF)',
-    brand: 'NutriFitness Suisse',
-    tag: '📖 11 Ans d\'Expérience · Conseils Honnêtes Sans Marketing',
-    badge: 'Ebook Téléchargeable Immédiat',
-    wideImage: '/images/banners/wide/nutriftiness-banner2.jpg',
-    mobileImage: '/images/banners/mobile/imgi_10_guidebook.jpg',
-    link: '/guide-des-complements-alimentaires/',
-    ctaText: 'Découvrir le Guide (PDF)'
-  },
-  {
-    id: 5,
-    productName: 'Pronutrition Ashwagandha Forte 60 Gélules',
-    brand: 'Pronutrition',
-    tag: '🌿 Équilibre · Énergie & Résilience · Gestion du Stress',
-    badge: 'Adaptogène Naturel',
-    wideImage: '/images/banners/wide/nutriftiness-banner5.jpg',
-    mobileImage: '/images/banners/mobile/imgi_9_nutrifitness-banner-a2-1.jpg',
-    link: '/produit/ashwagandha-60-caps/',
-    ctaText: "Découvrir l'Ashwagandha Forte"
-  }
-];
-
-export default function HeroSlider() {
+export default function HeroSlider({ initialBanners }: HeroSliderProps) {
+  const [slides, setSlides] = useState<HeroBanner[]>(() => {
+    return (initialBanners && initialBanners.length > 0) ? initialBanners : DEFAULT_HERO_BANNERS;
+  });
   const [current, setCurrent] = useState(0);
   const [isPaused, setIsPaused] = useState(false);
   const [mobileSlide, setMobileSlide] = useState(0);
   const mobileTrackRef = useRef<HTMLDivElement>(null);
 
+  // Client-side fetch to ensure live updates without hard reload
+  useEffect(() => {
+    let isMounted = true;
+    const fetchBanners = async () => {
+      try {
+        const res = await fetch('/api/banners', { cache: 'no-store' });
+        if (res.ok) {
+          const data = await res.json();
+          if (isMounted && Array.isArray(data.banners) && data.banners.length > 0) {
+            setSlides(data.banners);
+          }
+        }
+      } catch (e) {
+        // Fallback slides already in state
+      }
+    };
+    fetchBanners();
+    return () => {
+      isMounted = false;
+    };
+  }, []);
+
+  // Ensure current index is within bounds when slides change
+  useEffect(() => {
+    if (slides.length > 0 && current >= slides.length) {
+      setCurrent(0);
+    }
+  }, [slides.length, current]);
+
   // Desktop autoplay
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || slides.length <= 1) return;
     const timer = setInterval(() => {
       setCurrent(prev => (prev + 1) % slides.length);
     }, 5500);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, slides.length]);
 
   // Mobile auto-slide timer
   useEffect(() => {
-    if (isPaused) return;
+    if (isPaused || slides.length <= 1) return;
     const timer = setInterval(() => {
       setMobileSlide(prev => {
         const next = (prev + 1) % slides.length;
@@ -109,35 +76,25 @@ export default function HeroSlider() {
       });
     }, 4500);
     return () => clearInterval(timer);
-  }, [isPaused]);
+  }, [isPaused, slides.length]);
 
-  // Handle mobile scroll snap index detection (guarded)
+  // Handle mobile scroll snap index detection
   const handleMobileScroll = () => {
-    if (!mobileTrackRef.current) return;
+    if (!mobileTrackRef.current || slides.length === 0) return;
     const scrollLeft = mobileTrackRef.current.scrollLeft;
     const width = mobileTrackRef.current.clientWidth;
     if (width > 0) {
-      const idx = Math.round(scrollLeft / width);
+      const idx = Math.min(slides.length - 1, Math.max(0, Math.round(scrollLeft / width)));
       setMobileSlide(idx);
     }
   };
 
-  const scrollToMobileSlide = (index: number) => {
-    if (!mobileTrackRef.current) return;
-    const width = mobileTrackRef.current.clientWidth;
-    mobileTrackRef.current.scrollTo({
-      left: index * width,
-      behavior: 'smooth'
-    });
-    setMobileSlide(index);
-  };
-
-  const slide = slides[current];
+  const slide = slides[current] || slides[0] || DEFAULT_HERO_BANNERS[0];
 
   return (
     <>
       {/* ============================================================
-          DESKTOP HERO SLIDER (Untouched >= 768px, identical render)
+          DESKTOP HERO SLIDER (>= 768px)
          ============================================================ */}
       <section 
         className="hidden md:block relative rounded-3xl overflow-hidden bg-[#0A0A0A] border border-white/10 mb-10 shadow-2xl group/slider select-none"
@@ -170,9 +127,16 @@ export default function HeroSlider() {
                 <span className="text-[10px] font-black uppercase text-[#F80404] tracking-wider truncate">
                   {slide.brand}
                 </span>
-                <span className="hidden sm:inline-block text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
-                  100% Stock Suisse
-                </span>
+                {slide.badge && (
+                  <span className="hidden sm:inline-block text-[10px] text-emerald-400 font-bold px-2 py-0.5 rounded-full bg-emerald-500/10 border border-emerald-500/20">
+                    {slide.badge}
+                  </span>
+                )}
+                {slide.tag && (
+                  <span className="hidden lg:inline-block text-[10px] text-slate-300 font-medium truncate">
+                    {slide.tag}
+                  </span>
+                )}
               </div>
               <h3 className="text-xs sm:text-sm font-bold text-white truncate font-heading">
                 {slide.productName}
@@ -189,30 +153,32 @@ export default function HeroSlider() {
               <ArrowRight className="w-3.5 h-3.5" />
             </Link>
 
-            <div className="flex items-center gap-1 border-l border-white/10 pl-3">
-              <button
-                type="button"
-                onClick={() => setCurrent(prev => (prev - 1 + slides.length) % slides.length)}
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 hover:text-white flex items-center justify-center transition-colors border border-white/10"
-                aria-label="Bannière précédente"
-              >
-                <ChevronLeft className="w-4 h-4" />
-              </button>
-              <button
-                type="button"
-                onClick={() => setCurrent(prev => (prev + 1) % slides.length)}
-                className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 hover:text-white flex items-center justify-center transition-colors border border-white/10"
-                aria-label="Bannière suivante"
-              >
-                <ChevronRight className="w-4 h-4" />
-              </button>
-            </div>
+            {slides.length > 1 && (
+              <div className="flex items-center gap-1 border-l border-white/10 pl-3">
+                <button
+                  type="button"
+                  onClick={() => setCurrent(prev => (prev - 1 + slides.length) % slides.length)}
+                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 hover:text-white flex items-center justify-center transition-colors border border-white/10"
+                  aria-label="Bannière précédente"
+                >
+                  <ChevronLeft className="w-4 h-4" />
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setCurrent(prev => (prev + 1) % slides.length)}
+                  className="w-8 h-8 rounded-lg bg-white/5 hover:bg-white/15 text-white/80 hover:text-white flex items-center justify-center transition-colors border border-white/10"
+                  aria-label="Bannière suivante"
+                >
+                  <ChevronRight className="w-4 h-4" />
+                </button>
+              </div>
+            )}
           </div>
         </div>
       </section>
 
       {/* ============================================================
-          MOBILE HERO SLIDER (< 768px only, same horizontal wide images as desktop, auto-slide & swipe)
+          MOBILE HERO SLIDER (< 768px, horizontal wide images, auto-slide & swipe)
          ============================================================ */}
       <section 
         className="block md:hidden relative rounded-2xl overflow-hidden bg-[#0A0A0A] border border-white/10 mb-6 shadow-xl select-none"
@@ -227,11 +193,11 @@ export default function HeroSlider() {
           style={{ scrollbarWidth: 'none', msOverflowStyle: 'none' }}
         >
           {slides.map((s, idx) => (
-            <div key={s.id} className="w-full shrink-0 snap-center relative flex flex-col">
-              {/* Horizontal Wide Banner Image (Identical to Desktop) */}
+            <div key={s.id || idx} className="w-full shrink-0 snap-center relative flex flex-col">
+              {/* Horizontal Wide Banner Image */}
               <Link href={s.link} className="relative w-full aspect-[1600/670] block overflow-hidden bg-black" aria-label={`Voir ${s.productName}`}>
                 <Image
-                  src={s.wideImage}
+                  src={s.mobileImage || s.wideImage}
                   alt={s.productName}
                   fill
                   priority={idx === 0}
@@ -247,9 +213,11 @@ export default function HeroSlider() {
                     <span className="text-[9px] font-black uppercase text-[#F80404] tracking-wider truncate">
                       {s.brand}
                     </span>
-                    <span className="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 truncate">
-                      100% Stock Suisse
-                    </span>
+                    {s.badge && (
+                      <span className="text-[9px] text-emerald-400 font-bold px-1.5 py-0.5 rounded bg-emerald-500/10 border border-emerald-500/20 truncate">
+                        {s.badge}
+                      </span>
+                    )}
                   </div>
                   <h3 className="text-xs font-bold text-white truncate font-heading">
                     {s.productName}
