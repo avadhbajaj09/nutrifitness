@@ -704,7 +704,10 @@ export function getAllCategories(): CategoryData[] {
 
 export function getCategoryBySlug(slug: string): CategoryData | undefined {
   const cleanSlug = slug.toLowerCase().replace(/^\/categorie\//, '').replace(/\/$/, '');
-  return CATEGORIES_DATA.find(c => c.slug === cleanSlug || c.id === cleanSlug);
+  const directMatch = CATEGORIES_DATA.find(c => c.slug === cleanSlug || c.id === cleanSlug);
+  if (directMatch) return directMatch;
+  const canonical = getCanonicalCategorySlug(cleanSlug);
+  return CATEGORIES_DATA.find(c => c.slug === canonical || c.id === canonical);
 }
 
 /**
@@ -721,17 +724,17 @@ export function getCanonicalCategorySlug(slug?: string, productName?: string): s
   if (!slug) return 'proteines';
   const s = slug.toLowerCase();
 
-  if (s === 'proteines' || s === 'proteines-gainers') return 'proteines';
-  if (s === 'prise-de-masse' || s.includes('gainer')) return 'gainers-prise-de-masse';
-  if (s.includes('creatine')) return 'creatine';
-  if (s === 'bcaa' || s === 'apres-sport' || s === 'recuperation-acides-amines') return 'acides-amines-recuperation';
-  if (s.includes('pre-workout') || s.includes('avant-sport') || s.includes('performance')) return 'pre-workout-energie';
-  if (s.includes('pendant') || s === 'glucides') return 'pendant-effort-hydratation';
-  if (s.includes('vitamines') || s.includes('antioxydants') || s.includes('peau-et-articulations')) return 'vitamines-mineraux';
-  if (s.includes('sommeil') || s.includes('sante-bien-etre') || s.includes('energie-et-recuperation') || s.includes('digestion')) return 'bien-etre-sommeil-digestion';
-  if (s.includes('perte-de-poids') || s.includes('minceur')) return 'perte-de-poids';
-  if (s.includes('snack') || s.includes('beurre') || s.includes('healthy-food')) return 'snacks-healthy-food';
-  if (s.includes('accessoire') || s.includes('shaker')) return 'accessoires';
+  if (s === 'proteines' || s === 'proteines-gainers' || s === 'whey') return 'proteines';
+  if (s === 'prise-de-masse' || s === 'prendre-du-muscle' || s.includes('gainer') || s.includes('masse')) return 'gainers-prise-de-masse';
+  if (s.includes('creatine') || s.includes('creapure')) return 'creatine';
+  if (s === 'bcaa' || s === 'apres-sport' || s === 'recuperation-acides-amines' || s.includes('acide') || s.includes('amino') || s.includes('bcaa') || s.includes('glutamine')) return 'acides-amines-recuperation';
+  if (s.includes('pre-workout') || s.includes('avant-sport') || s.includes('performance') || s.includes('booster')) return 'pre-workout-energie';
+  if (s.includes('pendant') || s === 'glucides' || s.includes('hydratation') || s.includes('electrolyte')) return 'pendant-effort-hydratation';
+  if (s.includes('vitamines') || s.includes('antioxydants') || s.includes('peau-et-articulations') || s.includes('mineraux') || s.includes('magnesium') || s.includes('zinc')) return 'vitamines-mineraux';
+  if (s.includes('sommeil') || s.includes('sante-bien-etre') || s.includes('energie-et-recuperation') || s.includes('digestion') || s.includes('bien-etre') || s.includes('ashwagandha')) return 'bien-etre-sommeil-digestion';
+  if (s.includes('perte-de-poids') || s.includes('minceur') || s.includes('seche') || s.includes('bruleur') || s.includes('carnitine')) return 'perte-de-poids';
+  if (s.includes('snack') || s.includes('beurre') || s.includes('healthy-food') || s.includes('barre') || s.includes('cookie') || s.includes('keto')) return 'snacks-healthy-food';
+  if (s.includes('accessoire') || s.includes('shaker') || s.includes('gourde')) return 'accessoires';
   if (s.includes('guide') || s.includes('ebook')) return 'guides-ebooks';
 
   return 'proteines';

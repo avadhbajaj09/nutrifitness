@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { ALL_BRANDS } from '@/lib/brands';
@@ -22,7 +22,10 @@ import {
   Phone, 
   Package, 
   Dumbbell,
-  Download
+  Download,
+  Zap,
+  HelpCircle,
+  CreditCard
 } from 'lucide-react';
 
 interface MobileNavigationProps {
@@ -33,28 +36,36 @@ interface MobileNavigationProps {
 
 const CATEGORY_ITEMS = [
   { name: 'Protéines Whey & Isolate', href: '/categorie/proteines/', badge: 'Bestseller' },
-  { name: 'Prise de masse / Gainers', href: '/categorie/prise-de-masse/' },
+  { name: 'Gainers & Prise de Masse', href: '/categorie/gainers-prise-de-masse/' },
   { name: 'Créatine Monohydrate & Creapure®', href: '/categorie/creatine/' },
-  { name: 'Pré-Workouts & Boosters', href: '/categorie/pre-workout/' },
-  { name: 'Acides Aminés BCAA & EAA', href: '/categorie/acides-amines/' },
+  { name: 'Pré-Workouts & Énergie', href: '/categorie/pre-workout-energie/' },
+  { name: 'Acides Aminés BCAA & EAA', href: '/categorie/acides-amines-recuperation/' },
   { name: 'Sèche, Minceur & Brûleurs', href: '/categorie/perte-de-poids/' },
-  { name: 'Vitamines, Minéraux & Santé', href: '/categorie/vitamines/' },
-  { name: 'Barres & Snacks Protéinés', href: '/categorie/snacks/' },
+  { name: 'Vitamines, Minéraux & Santé', href: '/categorie/vitamines-mineraux/' },
+  { name: 'Bien-Être & Sommeil', href: '/categorie/bien-etre-sommeil-digestion/' },
+  { name: 'Pendant l’Effort & Hydratation', href: '/categorie/pendant-effort-hydratation/' },
+  { name: 'Barres & Snacks Protéinés', href: '/categorie/snacks-healthy-food/' },
   { name: 'Accessoires, Gourdes & Shakers', href: '/categorie/accessoires/' },
 ];
 
 const GOAL_ITEMS = [
-  { name: 'Prise de Masse & Volume', desc: 'Gainers, Whey Isolate & Glucides', href: '/boutique/?goal=masse' },
-  { name: 'Sèche & Définition', desc: 'Fat Burners, L-Carnitine & CLA', href: '/boutique/?goal=seche' },
-  { name: 'Force Pure & Explosivité', desc: 'Creapure® 99.9% & Créatines pures', href: '/boutique/?goal=force' },
-  { name: 'Énergie & Pré-Workout', desc: 'L-Citrulline Malate & Boosters', href: '/boutique/?goal=energie' },
-  { name: 'Santé & Vitalité', desc: 'Ashwagandha KSM-66 & Minéraux', href: '/boutique/?goal=sante' },
-  { name: 'Snacks & Keto', desc: 'Barres protéinées & Purées bio', href: '/boutique/?goal=snacks' },
+  { name: 'Prise de Masse & Volume', desc: 'Gainers, Whey Isolate & Glucides', href: '/categorie/gainers-prise-de-masse/' },
+  { name: 'Sèche & Définition', desc: 'Fat Burners, L-Carnitine & CLA', href: '/categorie/perte-de-poids/' },
+  { name: 'Force Pure & Explosivité', desc: 'Creapure® 99.9% & Créatines pures', href: '/categorie/creatine/' },
+  { name: 'Énergie & Pré-Workout', desc: 'L-Citrulline Malate & Boosters', href: '/categorie/pre-workout-energie/' },
+  { name: 'Santé & Vitalité', desc: 'Ashwagandha KSM-66 & Minéraux', href: '/categorie/vitamines-mineraux/' },
+  { name: 'Snacks & Keto', desc: 'Barres protéinées & Purées bio', href: '/categorie/snacks-healthy-food/' },
 ];
 
 export default function MobileNavigation({ isOpen, onClose, initialTab = null }: MobileNavigationProps) {
   const { t } = useStore();
   const [openSection, setOpenSection] = useState<'categories' | 'goals' | 'brands' | null>(initialTab || 'categories');
+
+  useEffect(() => {
+    if (isOpen && initialTab) {
+      setOpenSection(initialTab);
+    }
+  }, [isOpen, initialTab]);
 
   if (!isOpen) return null;
 
@@ -211,7 +222,7 @@ export default function MobileNavigation({ isOpen, onClose, initialTab = null }:
                 {ALL_BRANDS.map(brand => (
                   <Link
                     key={brand.slug}
-                    href={`/boutique/?brand=${encodeURIComponent(brand.name)}`}
+                    href={`/marque/${brand.slug}/`}
                     onClick={onClose}
                     className="flex items-center justify-between py-2 px-2 rounded-lg text-xs font-medium text-white/80 hover:text-white hover:bg-white/5 transition-colors min-h-[40px]"
                   >
@@ -321,13 +332,35 @@ export default function MobileNavigation({ isOpen, onClose, initialTab = null }:
             </Link>
 
             <Link 
+              href="/click-and-collect/" 
+              onClick={onClose} 
+              className="flex items-center justify-between px-2.5 py-2 rounded-lg text-xs text-white/80 hover:text-white hover:bg-white/5 transition-colors min-h-[40px]"
+            >
+              <div className="flex items-center gap-2.5">
+                <Zap className="w-4 h-4 text-amber-400" />
+                <span>Click &amp; Collect 2h (Gratuit)</span>
+              </div>
+            </Link>
+
+            <Link 
               href="/livraison/" 
               onClick={onClose} 
               className="flex items-center justify-between px-2.5 py-2 rounded-lg text-xs text-white/80 hover:text-white hover:bg-white/5 transition-colors min-h-[40px]"
             >
               <div className="flex items-center gap-2.5">
                 <Truck className="w-4 h-4 text-white/60" />
-                <span>Livraison 1-2 jours & Tarifs</span>
+                <span>Livraison 1-2 jours &amp; Tarifs</span>
+              </div>
+            </Link>
+
+            <Link 
+              href="/paiement/" 
+              onClick={onClose} 
+              className="flex items-center justify-between px-2.5 py-2 rounded-lg text-xs text-white/80 hover:text-white hover:bg-white/5 transition-colors min-h-[40px]"
+            >
+              <div className="flex items-center gap-2.5">
+                <CreditCard className="w-4 h-4 text-white/60" />
+                <span>Paiements Sécurisés (TWINT, Cartes)</span>
               </div>
             </Link>
 
@@ -343,13 +376,24 @@ export default function MobileNavigation({ isOpen, onClose, initialTab = null }:
             </Link>
 
             <Link 
+              href="/faq/" 
+              onClick={onClose} 
+              className="flex items-center justify-between px-2.5 py-2 rounded-lg text-xs text-white/80 hover:text-white hover:bg-white/5 transition-colors min-h-[40px]"
+            >
+              <div className="flex items-center gap-2.5">
+                <HelpCircle className="w-4 h-4 text-white/60" />
+                <span>Centre d&apos;Aide &amp; FAQ</span>
+              </div>
+            </Link>
+
+            <Link 
               href="/contact/" 
               onClick={onClose} 
               className="flex items-center justify-between px-2.5 py-2 rounded-lg text-xs text-white/80 hover:text-white hover:bg-white/5 transition-colors min-h-[40px]"
             >
               <div className="flex items-center gap-2.5">
                 <Phone className="w-4 h-4 text-white/60" />
-                <span>Contact & Service Client</span>
+                <span>Contact &amp; Service Client</span>
               </div>
             </Link>
 

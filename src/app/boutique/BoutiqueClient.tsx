@@ -10,6 +10,7 @@ import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 import { trackViewItemList } from '@/lib/analytics';
 import { getLocalized } from '@/lib/types';
 import { searchProducts, normalizeSearchString } from '@/lib/search';
+import { getCanonicalCategorySlug } from '@/lib/categories';
 
 function ShopContent() {
   const searchParams = useSearchParams();
@@ -24,12 +25,26 @@ function ShopContent() {
   useEffect(() => {
     const brandParam = searchParams.get('brand');
     const catParam = searchParams.get('cat');
+    const goalParam = searchParams.get('goal');
     const qParam = searchParams.get('q');
     if (brandParam) {
       setSelectedBrand(brandParam);
     }
     if (catParam) {
-      setSelectedCategory(catParam);
+      const canonical = getCanonicalCategorySlug(catParam);
+      setSelectedCategory(canonical || catParam);
+    } else if (goalParam) {
+      const goalToCat: Record<string, string> = {
+        masse: 'gainers-prise-de-masse',
+        seche: 'perte-de-poids',
+        force: 'creatine',
+        energie: 'pre-workout-energie',
+        sante: 'vitamines-mineraux',
+        snacks: 'snacks-healthy-food',
+      };
+      if (goalToCat[goalParam]) {
+        setSelectedCategory(goalToCat[goalParam]);
+      }
     }
     if (qParam !== null) {
       setSearchQuery(qParam.trim());
@@ -46,7 +61,13 @@ function ShopContent() {
       if (!isProductVisible(p)) return false;
       // Ebook has its own dedicated landing page at /guide-des-complements-alimentaires/
       if (p.categorySlug === 'guides-ebooks' || p.id === 'prod-25430') return false;
-      if (selectedCategory !== 'all' && p.categorySlug !== selectedCategory) return false;
+      if (selectedCategory !== 'all') {
+        const pCatCanonical = getCanonicalCategorySlug(p.categorySlug, typeof p.name === 'object' ? p.name?.fr : p.name);
+        const selCatCanonical = getCanonicalCategorySlug(selectedCategory);
+        if (p.categorySlug !== selectedCategory && pCatCanonical !== selCatCanonical) {
+          return false;
+        }
+      }
       if (selectedBrand !== 'all') {
         const pBrand = normalizeSearchString(p.brand || '');
         const sBrand = normalizeSearchString(selectedBrand || '');

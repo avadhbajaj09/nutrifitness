@@ -30,7 +30,7 @@ export default function QuelComplementChoisirPage() {
       icon: <Dumbbell className="w-5 h-5 text-[#F80404]" />,
       title: 'Prise de Masse Musculaire',
       desc: 'Privilégiez la créatine monohydrate (Creapure®) et un apport régulier en protéines (whey concentrée ou gainer riche en glucides complexes) en complément d\'un léger surplus calorique.',
-      link: '/categorie/prendre-du-muscle/',
+      link: '/categorie/gainers-prise-de-masse/',
       linkText: 'Voir les compléments prise de masse'
     },
     {
@@ -44,7 +44,7 @@ export default function QuelComplementChoisirPage() {
       icon: <Zap className="w-5 h-5 text-yellow-400" />,
       title: 'Force & Puissance Explosive',
       desc: 'La créatine monohydrate 200 mesh (3g à 5g/jour) saturera vos réserves en ATP pour des barres plus lourdes, complétée par un booster pré-workout dosé en caféine et citrulline.',
-      link: '/categorie/creatine-premium/',
+      link: '/categorie/creatine/',
       linkText: 'Voir les créatines haute pureté'
     },
     {

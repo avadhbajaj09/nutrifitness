@@ -70,7 +70,7 @@ export default function Footer() {
                   <li><Link href="/categorie/proteines/" className="hover:text-white transition-colors block py-0.5">Protéines &amp; Whey</Link></li>
                   <li><Link href="/categorie/creatine/" className="hover:text-white transition-colors block py-0.5">Créatines (Creapure®)</Link></li>
                   <li><Link href="/categorie/gainers-prise-de-masse/" className="hover:text-white transition-colors block py-0.5">Gainers &amp; Prise de masse</Link></li>
-                  <li><Link href="/categorie/bcaa-acides-amines/" className="hover:text-white transition-colors block py-0.5">BCAA &amp; Acides aminés</Link></li>
+                  <li><Link href="/categorie/acides-amines-recuperation/" className="hover:text-white transition-colors block py-0.5">BCAA &amp; Acides aminés</Link></li>
                   <li><Link href="/marques/" className="hover:text-white transition-colors block py-0.5">Toutes les Marques</Link></li>
                   <li><Link href="/boutique/" className="text-[#F80404] font-bold block py-0.5">Voir toute la boutique →</Link></li>
                 </ul>
