@@ -7,24 +7,25 @@ import { DEFAULT_HERO_BANNERS, type HeroBanner } from '@/lib/banners';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const SYSTEM_PROMPT = `You are the NutriFitness AI Webmaster & Store Copilot.
+const SYSTEM_PROMPT = `You are the NutriFitness AI Store Copilot.
 You assist the owner of NutriFitness.ch (physical store at 34 Rue des Pâquis, 1201 Geneva, Switzerland).
 You have direct autonomous control over store operations via your available tools:
-1. Banners & Homepage Sliders: View, update, create hero banners.
-2. Products & Pricing: Search products, update base price and regular compare price, update Geneva & Portugal stock.
-3. Coupons: Create discount promo codes (e.g. 10%, 15%, 20 CHF off).
-4. Blog & SEO: Draft and publish expert SEO fitness articles.
+1. Banners & Homepage Sliders: View, update, or create hero banners.
+2. Products & Pricing: Search products, update selling prices (base_price), regular compare prices, and warehouse stock (Geneva & Portugal).
+3. Image Generation: When the user is using OpenAI, you can generate banner posters and product graphics using DALL-E 3!
+4. Coupons: Create discount promo codes (e.g. 10%, 15%, 20 CHF off).
 5. Store Announcements: Update top bar notifications.
 
 Store Facts:
 - Currency: Swiss Francs (CHF) and Euro (EUR).
 - Standard shipping: 9.90 CHF. Free shipping above 75 CHF.
-- Geneva store: Rue des Pâquis 34, 1201 Genève.
+- Geneva physical store: Rue des Pâquis 34, 1201 Genève.
 - Warehouses: GENEVA (store stock) and PORTUGAL (central stock).
 - Key brands: Marvelous Nutrition, BigMan, Applied Nutrition, ProNutrition, Creapure.
 
-Always respond in the same language as the user (French or English).
-When executing actions, be concise, professional, and clear about the exact changes made.`;
+Always respond in the same language as the user (English or French).
+Converse naturally and supportively with the store owner, answering their questions, discussing ideas, and confirming all actions taken.
+When executing actions, be concise, clear, and report the exact changes made.`;
 
 // Common Tool Definitions
 const TOOL_DEFINITIONS = [
@@ -49,11 +50,27 @@ const TOOL_DEFINITIONS = [
         wideImage: { type: 'string', description: 'Desktop wide banner image URL' },
         mobileImage: { type: 'string', description: 'Mobile banner image URL (defaults to wideImage)' },
         link: { type: 'string', description: 'Product destination URL or page link, e.g. /produit/marvelous-line-creatine-monohydrate-pure' },
-        ctaText: { type: 'string', description: 'Button text, e.g. "Acheter maintenant", "Découvrir"' },
+        ctaText: { type: 'string', description: 'Button text, e.g. "Shop Now", "Commander"' },
         sortOrder: { type: 'number', description: 'Order position in slider (0 is first)' },
         isActive: { type: 'boolean', description: 'Whether the banner is visible' },
       },
       required: ['productName', 'wideImage', 'link'],
+    },
+  },
+  {
+    name: 'generate_image',
+    description: 'Generate an advertising poster, hero banner visual, or product graphic using DALL-E 3 (OpenAI). Returns a high-resolution generated image URL.',
+    parameters: {
+      type: 'object',
+      properties: {
+        prompt: { type: 'string', description: 'Detailed visual description of the image to generate (in English for best DALL-E quality)' },
+        size: { 
+          type: 'string', 
+          enum: ['1792x1024', '1024x1024', '1024x1792'], 
+          description: 'Aspect ratio: "1792x1024" for wide hero banners, "1024x1024" for square product images, "1024x1792" for vertical mobile posters' 
+        },
+      },
+      required: ['prompt'],
     },
   },
   {
@@ -108,8 +125,12 @@ const TOOL_DEFINITIONS = [
   },
 ];
 
-// Helper: Execute a Tool Call directly against Supabase / Stripe
-async function executeTool(name: string, args: any): Promise<{ success: boolean; data?: any; error?: string; visualCard?: any }> {
+// Helper: Execute a Tool Call directly against Supabase / Stripe / OpenAI
+async function executeTool(
+  name: string,
+  args: any,
+  context?: { apiKey?: string; provider?: string }
+): Promise<{ success: boolean; data?: any; error?: string; visualCard?: any }> {
   const supabase = getAdminSupabase();
 
   try {
@@ -119,6 +140,51 @@ async function executeTool(name: string, args: any): Promise<{ success: boolean;
         return { success: true, data: DEFAULT_HERO_BANNERS };
       }
       return { success: true, data };
+    }
+
+    if (name === 'generate_image') {
+      const apiKey = context?.apiKey;
+      if (!apiKey) throw new Error('An OpenAI API Key is required to generate images with DALL-E 3.');
+
+      const prompt = String(args.prompt || '').trim();
+      const size = args.size || '1792x1024';
+
+      const imgRes = await fetch('https://api.openai.com/v1/images/generations', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${apiKey}`,
+        },
+        body: JSON.stringify({
+          model: 'dall-e-3',
+          prompt: prompt,
+          n: 1,
+          size: size,
+          quality: 'standard',
+        }),
+      });
+
+      if (!imgRes.ok) {
+        const errJson = await imgRes.json().catch(() => ({}));
+        throw new Error(errJson?.error?.message || `OpenAI DALL-E HTTP ${imgRes.status}`);
+      }
+
+      const imgData = await imgRes.json();
+      const generatedUrl = imgData.data?.[0]?.url;
+
+      if (!generatedUrl) throw new Error('No image URL returned by OpenAI DALL-E.');
+
+      return {
+        success: true,
+        data: { url: generatedUrl, prompt },
+        visualCard: {
+          type: 'banner',
+          title: 'DALL-E 3 Image Generated',
+          details: `Prompt: "${prompt.slice(0, 100)}..."`,
+          link: generatedUrl,
+          imageUrl: generatedUrl,
+        },
+      };
     }
 
     if (name === 'update_banner') {
@@ -157,7 +223,7 @@ async function executeTool(name: string, args: any): Promise<{ success: boolean;
         visualCard: {
           type: 'banner',
           title: payload.product_name,
-          details: `Bouton: "${payload.cta_text}" ➔ Lien: ${payload.link}`,
+          details: `Button: "${payload.cta_text}" ➔ Link: ${payload.link}`,
           link: payload.link,
           imageUrl: payload.wide_image,
         },
@@ -188,7 +254,7 @@ async function executeTool(name: string, args: any): Promise<{ success: boolean;
         .maybeSingle();
 
       if (findErr || !prod) {
-        throw new Error(`Produit introuvable pour "${cleanId}"`);
+        throw new Error(`Product not found for "${cleanId}"`);
       }
 
       const updatePayload: any = {
@@ -212,7 +278,7 @@ async function executeTool(name: string, args: any): Promise<{ success: boolean;
         visualCard: {
           type: 'price',
           title: prod.name,
-          details: `Prix mis à jour: ${prod.base_price} CHF ➔ ${base_price} CHF`,
+          details: `Price updated: ${prod.base_price} CHF ➔ ${base_price} CHF`,
           link: `/produit/${prod.slug}`,
         },
       };
@@ -228,7 +294,7 @@ async function executeTool(name: string, args: any): Promise<{ success: boolean;
         .or(`id.eq.${cleanId},slug.eq.${cleanId},sku.eq.${cleanId}`)
         .maybeSingle();
 
-      if (!prod) throw new Error(`Produit introuvable pour "${cleanId}"`);
+      if (!prod) throw new Error(`Product not found for "${cleanId}"`);
 
       if (typeof stock_geneva === 'number') {
         await supabase
@@ -250,7 +316,7 @@ async function executeTool(name: string, args: any): Promise<{ success: boolean;
         visualCard: {
           type: 'stock',
           title: prod.name,
-          details: `Stock Genève: ${stock_geneva ?? 'Inchangé'} | Stock Portugal: ${stock_portugal ?? 'Inchangé'}`,
+          details: `Geneva Stock: ${stock_geneva ?? 'Unchanged'} | Portugal Stock: ${stock_portugal ?? 'Unchanged'}`,
           link: `/produit/${prod.slug}`,
         },
       };
@@ -288,16 +354,16 @@ async function executeTool(name: string, args: any): Promise<{ success: boolean;
         data: { code: cleanCode, percentOff, days },
         visualCard: {
           type: 'coupon',
-          title: `Code Promo: ${cleanCode}`,
-          details: `-${percentOff}% de réduction immédiate (valide ${days} jours)`,
+          title: `Coupon Code: ${cleanCode}`,
+          details: `-${percentOff}% discount applied (valid for ${days} days)`,
         },
       };
     }
 
-    return { success: false, error: `Action inconnue: ${name}` };
+    return { success: false, error: `Unknown action: ${name}` };
   } catch (err: any) {
     console.error(`[AI Copilot Tool Error: ${name}]`, err);
-    return { success: false, error: err.message || 'Erreur lors de l’exécution' };
+    return { success: false, error: err.message || 'Error executing action' };
   }
 }
 
@@ -334,31 +400,31 @@ export async function POST(request: Request) {
       confirmedAction,
     } = body;
 
+    const trimmedKey = apiKey ? String(apiKey).trim() : '';
+
     // 1. If executing a confirmed preview action directly:
     if (confirmedAction && confirmedAction.tool) {
-      const toolResult = await executeTool(confirmedAction.tool, confirmedAction.args || {});
+      const toolResult = await executeTool(confirmedAction.tool, confirmedAction.args || {}, { apiKey: trimmedKey, provider });
       return NextResponse.json({
         success: toolResult.success,
         reply: toolResult.success 
-          ? `Action "${confirmedAction.tool}" exécutée avec succès sur NutriFitness !` 
-          : `Échec de l'action: ${toolResult.error}`,
+          ? `Action "${confirmedAction.tool}" executed successfully on NutriFitness!` 
+          : `Action failed: ${toolResult.error}`,
         visualCard: toolResult.visualCard,
         error: toolResult.error,
       });
     }
 
     // 2. Validate API Key
-    if (!apiKey || !apiKey.trim()) {
+    if (!trimmedKey) {
       return NextResponse.json({
         success: false,
-        error: 'Veuillez saisir votre clé API (OpenAI ou Anthropic Claude) dans les paramètres du copilote.',
+        error: 'Please enter your OpenAI or Anthropic Claude API key in API Settings.',
       }, { status: 400 });
     }
 
-    const trimmedKey = apiKey.trim();
-
     // -------------------------------------------------------------
-    // PROVIDER 1: OPENAI (ChatGPT)
+    // PROVIDER 1: OPENAI (ChatGPT + DALL-E 3)
     // -------------------------------------------------------------
     if (provider === 'openai') {
       const selectedModel = model || 'gpt-4o';
@@ -387,7 +453,7 @@ export async function POST(request: Request) {
 
       if (!res.ok) {
         const errJson = await res.json().catch(() => ({}));
-        const errMsg = errJson?.error?.message || `Erreur OpenAI HTTP ${res.status}`;
+        const errMsg = errJson?.error?.message || `OpenAI HTTP error ${res.status}`;
         return NextResponse.json({ success: false, error: errMsg }, { status: res.status });
       }
 
@@ -410,7 +476,7 @@ export async function POST(request: Request) {
         if (mode === 'preview' && toolName !== 'search_products' && toolName !== 'get_banners') {
           return NextResponse.json({
             success: true,
-            reply: `Je m'apprête à effectuer l'action **${toolName}**. Souhaitez-vous confirmer ?`,
+            reply: `I am ready to perform the action **${toolName}**. Would you like to confirm and apply these changes?`,
             pendingAction: {
               tool: toolName,
               args: toolArgs,
@@ -419,7 +485,7 @@ export async function POST(request: Request) {
         }
 
         // Mode INSTANT: Execute tool now
-        const execution = await executeTool(toolName, toolArgs);
+        const execution = await executeTool(toolName, toolArgs, { apiKey: trimmedKey, provider: 'openai' });
 
         // Feed tool result back to OpenAI to get human friendly confirmation
         const secondRes = await fetch('https://api.openai.com/v1/chat/completions', {
@@ -443,7 +509,7 @@ export async function POST(request: Request) {
           }),
         });
 
-        let finalReply = `Action ${toolName} effectuée avec succès !`;
+        let finalReply = `Action ${toolName} completed successfully!`;
         if (secondRes.ok) {
           const secondData = await secondRes.json();
           finalReply = secondData.choices?.[0]?.message?.content || finalReply;
@@ -457,10 +523,10 @@ export async function POST(request: Request) {
         });
       }
 
-      // No tool called, standard reply
+      // No tool called, standard conversational reply
       return NextResponse.json({
         success: true,
-        reply: message?.content || 'Aucune réponse générée.',
+        reply: message?.content || 'No response generated.',
       });
     }
 
@@ -493,7 +559,7 @@ export async function POST(request: Request) {
 
       if (!res.ok) {
         const errJson = await res.json().catch(() => ({}));
-        const errMsg = errJson?.error?.message || `Erreur Claude HTTP ${res.status}`;
+        const errMsg = errJson?.error?.message || `Claude HTTP error ${res.status}`;
         return NextResponse.json({ success: false, error: errMsg }, { status: res.status });
       }
 
@@ -508,7 +574,7 @@ export async function POST(request: Request) {
         if (mode === 'preview' && toolName !== 'search_products' && toolName !== 'get_banners') {
           return NextResponse.json({
             success: true,
-            reply: `Je m'apprête à exécuter l'action **${toolName}**. Confirmez-vous la modification ?`,
+            reply: `I am ready to perform the action **${toolName}**. Would you like to confirm and apply these changes?`,
             pendingAction: {
               tool: toolName,
               args: toolArgs,
@@ -517,7 +583,7 @@ export async function POST(request: Request) {
         }
 
         // Execute tool
-        const execution = await executeTool(toolName, toolArgs);
+        const execution = await executeTool(toolName, toolArgs, { apiKey: trimmedKey, provider: 'anthropic' });
 
         // Feed back to Claude
         const secondRes = await fetch('https://api.anthropic.com/v1/messages', {
@@ -549,7 +615,7 @@ export async function POST(request: Request) {
           }),
         });
 
-        let finalReply = `Action ${toolName} effectuée avec succès !`;
+        let finalReply = `Action ${toolName} completed successfully!`;
         if (secondRes.ok) {
           const secondData = await secondRes.json();
           const textBlock = secondData.content?.find((b: any) => b.type === 'text');
@@ -567,13 +633,13 @@ export async function POST(request: Request) {
       const textBlock = contentBlocks.find((b: any) => b.type === 'text');
       return NextResponse.json({
         success: true,
-        reply: textBlock?.text || 'Aucune réponse générée.',
+        reply: textBlock?.text || 'No response generated.',
       });
     }
 
-    return NextResponse.json({ success: false, error: 'Fournisseur non supporté.' }, { status: 400 });
+    return NextResponse.json({ success: false, error: 'Unsupported provider.' }, { status: 400 });
   } catch (err: any) {
     console.error('[AI Copilot Fatal Error]', err);
-    return NextResponse.json({ success: false, error: err.message || 'Erreur interne du serveur' }, { status: 500 });
+    return NextResponse.json({ success: false, error: err.message || 'Internal server error' }, { status: 500 });
   }
 }

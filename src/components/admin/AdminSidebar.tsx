@@ -69,9 +69,9 @@ export default function AdminSidebar({
     },
     {
       id: 'ai',
-      label: 'Copilote IA (Prompt)',
+      label: 'AI Copilot (Prompts)',
       icon: Sparkles,
-      badge: 'IA',
+      badge: 'AI',
       href: '/wp-admin?tab=ai',
       isRoute: false,
     },
