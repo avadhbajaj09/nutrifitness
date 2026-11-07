@@ -8,7 +8,7 @@ import { Globe, ChevronDown, Check } from 'lucide-react';
 import { applyLanguageTranslation } from './GoogleTranslate';
 
 interface LanguageCurrencySwitcherProps {
-  variant?: 'topbar' | 'header' | 'mobile';
+  variant?: 'topbar' | 'header' | 'mobile' | 'mobile-header';
 }
 
 export default function LanguageCurrencySwitcher({ variant = 'header' }: LanguageCurrencySwitcherProps) {
@@ -25,13 +25,17 @@ export default function LanguageCurrencySwitcher({ variant = 'header' }: Languag
   };
 
   useEffect(() => {
-    const handleClickOutside = (e: MouseEvent) => {
+    const handleClickOutside = (e: MouseEvent | TouchEvent) => {
       if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
         setIsLangOpen(false);
       }
     };
     document.addEventListener('mousedown', handleClickOutside);
-    return () => document.removeEventListener('mousedown', handleClickOutside);
+    document.addEventListener('touchstart', handleClickOutside);
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+      document.removeEventListener('touchstart', handleClickOutside);
+    };
   }, []);
 
   if (variant === 'mobile') {
@@ -91,6 +95,68 @@ export default function LanguageCurrencySwitcher({ variant = 'header' }: Languag
             );
           })}
         </div>
+      </div>
+    );
+  }
+
+  if (variant === 'mobile-header') {
+    return (
+      <div className="relative" ref={dropdownRef}>
+        <button
+          type="button"
+          onClick={() => setIsLangOpen(!isLangOpen)}
+          className="h-10 min-h-[44px] min-w-[44px] px-2.5 rounded-full bg-white/5 hover:bg-white/10 active:bg-white/20 text-white border border-white/10 text-xs font-bold flex items-center justify-center gap-1 transition-all shrink-0"
+          aria-label={`Changer de langue (actuelle: ${currentLang.label})`}
+          aria-expanded={isLangOpen}
+        >
+          <span className="text-sm leading-none">{currentLang.flag}</span>
+          <span className="uppercase tracking-wider text-[11px] font-black">{currentLang.shortName}</span>
+          <ChevronDown className={`w-2.5 h-2.5 text-white/50 transition-transform duration-200 ${isLangOpen ? 'rotate-180 text-white' : ''}`} />
+        </button>
+
+        {isLangOpen && (
+          <>
+            {/* Backdrop to dismiss on mobile touch */}
+            <div 
+              className="fixed inset-0 z-40 bg-black/30 backdrop-blur-[2px]" 
+              onClick={() => setIsLangOpen(false)} 
+              aria-hidden="true" 
+            />
+            <div className="absolute right-0 top-full mt-2 w-44 bg-[#141414] border border-white/15 rounded-2xl p-1.5 shadow-2xl z-50 animate-in fade-in zoom-in-95 duration-150">
+              <div className="px-2.5 py-1 text-[10px] font-bold text-white/40 uppercase tracking-wider">
+                Langue / Language
+              </div>
+              <div className="space-y-0.5">
+                {LANGUAGE_OPTIONS.map((item) => {
+                  const active = item.code === locale;
+                  return (
+                    <button
+                      key={item.code}
+                      type="button"
+                      onClick={() => handleLanguageSelect(item.code)}
+                      className={`w-full flex items-center justify-between px-2.5 py-2 min-h-[40px] rounded-xl text-xs font-bold transition-all ${
+                        active 
+                          ? 'bg-[#F80404] text-black font-black shadow-md' 
+                          : 'text-white/80 hover:bg-white/10 hover:text-white active:bg-white/15'
+                      }`}
+                    >
+                      <span className="flex items-center gap-2">
+                        <span className="text-base leading-none">{item.flag}</span>
+                        <span className="font-bold">{item.label}</span>
+                      </span>
+                      <div className="flex items-center gap-1.5">
+                        <span className={`text-[10px] uppercase font-black px-1.5 py-0.5 rounded ${active ? 'bg-black/20 text-black' : 'bg-white/10 text-white/60'}`}>
+                          {item.shortName}
+                        </span>
+                        {active && <Check className="w-3.5 h-3.5 stroke-[3] text-black shrink-0" />}
+                      </div>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          </>
+        )}
       </div>
     );
   }

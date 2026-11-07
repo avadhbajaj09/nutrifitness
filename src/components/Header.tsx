@@ -242,10 +242,15 @@ export default function Header() {
               <Search className="w-4 h-4 text-white/80" />
             </button>
 
-            {/* Account Icon (44px min touch target on mobile) */}
+            {/* Mobile Tiny Language Changer (Replaces Account on mobile screens, where Compte is in the bottom bar) */}
+            <div className="sm:hidden">
+              <LanguageCurrencySwitcher variant="mobile-header" />
+            </div>
+
+            {/* Account Icon (Desktop & Tablet only - on mobile it is in the persistent bottom navigation bar) */}
             <Link 
               href="/compte/"
-              className="flex items-center justify-center w-10 sm:w-11 h-10 sm:h-11 min-h-[44px] min-w-[44px] bg-white/5 hover:bg-white/10 text-white rounded-full border border-white/10 transition-colors shrink-0"
+              className="hidden sm:flex items-center justify-center w-10 sm:w-11 h-10 sm:h-11 min-h-[44px] min-w-[44px] bg-white/5 hover:bg-white/10 text-white rounded-full border border-white/10 transition-colors shrink-0"
               aria-label="Espace compte client"
               title={t.nav.account}
             >
