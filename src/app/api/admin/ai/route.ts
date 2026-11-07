@@ -398,9 +398,24 @@ export async function POST(request: Request) {
       messages = [],
       mode = 'instant', // 'instant' | 'preview'
       confirmedAction,
+      generateImageDirect,
     } = body;
 
     const trimmedKey = apiKey ? String(apiKey).trim() : '';
+
+    // 0. Direct Image Generation request:
+    if (generateImageDirect && generateImageDirect.prompt) {
+      if (!trimmedKey) {
+        return NextResponse.json({ success: false, error: 'OpenAI API Key is required to generate images with DALL-E 3.' }, { status: 400 });
+      }
+      const imgResult = await executeTool('generate_image', generateImageDirect, { apiKey: trimmedKey, provider: 'openai' });
+      return NextResponse.json({
+        success: imgResult.success,
+        reply: imgResult.success ? `Image generated successfully with DALL-E 3!` : `Failed to generate image: ${imgResult.error}`,
+        visualCard: imgResult.visualCard,
+        error: imgResult.error,
+      });
+    }
 
     // 1. If executing a confirmed preview action directly:
     if (confirmedAction && confirmedAction.tool) {

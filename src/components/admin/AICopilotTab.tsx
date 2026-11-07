@@ -3,10 +3,9 @@
 import React, { useState, useEffect, useRef } from 'react';
 import {
   Bot,
-  Send,
+  ArrowUp,
   Key,
-  CheckCircle2,
-  AlertCircle,
+  Palette,
   ExternalLink,
   Trash2,
   RefreshCw,
@@ -14,6 +13,15 @@ import {
   EyeOff,
   Zap,
   ShieldCheck,
+  CheckCircle2,
+  AlertCircle,
+  Plus,
+  Image as ImageIcon,
+  Sparkles,
+  ChevronDown,
+  Layers,
+  Settings2,
+  Download,
 } from 'lucide-react';
 
 interface ChatMessage {
@@ -47,7 +55,12 @@ export default function AICopilotTab() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
+  // Dedicated Image Mode toggle (DALL-E 3)
+  const [isImageMode, setIsImageMode] = useState(false);
+  const [imageSize, setImageSize] = useState<'1792x1024' | '1024x1024' | '1024x1792'>('1792x1024');
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
+  const textareaRef = useRef<HTMLTextAreaElement>(null);
 
   // Load saved credentials from localStorage
   useEffect(() => {
@@ -64,18 +77,6 @@ export default function AICopilotTab() {
       }
       if (storedModel) setModel(storedModel);
       if (storedMode) setMode(storedMode);
-
-      // Default welcome message in English
-      if (messages.length === 0) {
-        setMessages([
-          {
-            id: 'welcome',
-            role: 'assistant',
-            content: `Hello! I am your **NutriFitness AI Store Copilot**. 🇨🇭\n\nI can execute your instructions directly on the live website in real-time:\n- **Banners & Sliders**: Update images, buttons, product links, and titles on the homepage.\n- **Pricing & Products**: Lower or increase prices, update Geneva and Portugal warehouse stock.\n- **Promo Codes**: Create discount coupons immediately active at checkout.\n\n*To get started, make sure your OpenAI or Claude API key is configured in the settings above, then simply give me an instruction!*`,
-            timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-          },
-        ]);
-      }
     } catch (e) {
       console.warn('LocalStorage error:', e);
     }
@@ -84,6 +85,14 @@ export default function AICopilotTab() {
   useEffect(() => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   }, [messages, isLoading]);
+
+  // Auto-resize textarea
+  useEffect(() => {
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+      textareaRef.current.style.height = `${Math.min(textareaRef.current.scrollHeight, 180)}px`;
+    }
+  }, [inputPrompt]);
 
   const handleSaveSettings = () => {
     try {
@@ -109,12 +118,18 @@ export default function AICopilotTab() {
     }
   };
 
+  const handleNewChat = () => {
+    setMessages([]);
+    setInputPrompt('');
+    setErrorMsg(null);
+  };
+
   const handleSendMessage = async (textToSend?: string) => {
     const text = (textToSend || inputPrompt).trim();
     if (!text) return;
 
     if (!savedApiKey && !apiKey.trim()) {
-      setErrorMsg('Please enter your OpenAI or Claude API key in API Settings before sending an instruction.');
+      setErrorMsg('Please configure your OpenAI or Claude API key in API Settings first.');
       setIsSettingsOpen(true);
       return;
     }
@@ -124,7 +139,7 @@ export default function AICopilotTab() {
     const userMsg: ChatMessage = {
       id: String(Date.now()),
       role: 'user',
-      content: text,
+      content: isImageMode ? `🎨 [DALL-E 3 Image Request (${imageSize})]: ${text}` : text,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
@@ -133,9 +148,47 @@ export default function AICopilotTab() {
     setIsLoading(true);
     setErrorMsg(null);
 
+    // Reset textarea height
+    if (textareaRef.current) {
+      textareaRef.current.style.height = 'auto';
+    }
+
     try {
+      // If user is explicitly in Image Mode, call direct image generation
+      if (isImageMode) {
+        const res = await fetch('/api/admin/ai', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            provider: 'openai',
+            apiKey: currentKey,
+            generateImageDirect: {
+              prompt: text,
+              size: imageSize,
+            },
+          }),
+        });
+
+        const data = await res.json();
+        if (!res.ok || !data.success) {
+          throw new Error(data.error || 'Failed to generate image.');
+        }
+
+        const botMsg: ChatMessage = {
+          id: String(Date.now() + 1),
+          role: 'assistant',
+          content: data.reply || 'Your image has been generated successfully!',
+          timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+          visualCard: data.visualCard,
+        };
+
+        setMessages(prev => [...prev, botMsg]);
+        setIsImageMode(false); // return to normal chat
+        return;
+      }
+
+      // Standard Chat / Function Calling Flow
       const historyToSend = messages
-        .filter(m => m.id !== 'welcome')
         .concat(userMsg)
         .slice(-10)
         .map(m => ({ role: m.role, content: m.content }));
@@ -216,334 +269,533 @@ export default function AICopilotTab() {
     }
   };
 
+  const handleSetAsBanner = async (imageUrl: string, title?: string) => {
+    await handleSendMessage(`Update the homepage hero banner to use this image URL: "${imageUrl}" with title "${title || 'Marvelous Nutrition'}" and button "Shop Now" linking to "/boutique"`);
+  };
+
+  const STARTER_PROMPTS = [
+    {
+      title: 'Generate Hero Banner Image',
+      desc: 'Create an image with DALL-E 3',
+      prompt: 'Generate an energetic fitness hero banner image for Marvelous Nutrition Creatine with moody gym lighting, neon yellow accents, and dramatic atmosphere',
+      icon: Palette,
+      isImage: true,
+    },
+    {
+      title: 'Update Product Price',
+      desc: 'Change selling or compare price',
+      prompt: 'Change Marvelous Creatine price to 29.90 CHF with 34.90 CHF regular price',
+      icon: Zap,
+    },
+    {
+      title: 'Check Warehouse Inventory',
+      desc: 'Geneva store & Portugal warehouse',
+      prompt: 'Check the current stock of Whey Isolate in Geneva and Portugal',
+      icon: Layers,
+    },
+    {
+      title: 'Create Promo Coupon Code',
+      desc: 'Immediate discount code for checkout',
+      prompt: 'Create a 10% discount promo code SUMMER10 valid for 30 days',
+      icon: Sparkles,
+    },
+  ];
+
   return (
-    <div className="flex flex-col h-[calc(100vh-140px)] max-w-6xl mx-auto px-4 py-4 space-y-4">
-      {/* 1. Header & Credentials Bar */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-4 shadow-sm">
-        <div className="flex flex-wrap items-center justify-between gap-4">
-          <div className="flex items-center gap-3">
-            <div className="w-10 h-10 rounded-xl bg-gradient-to-tr from-[#F80404] to-red-600 flex items-center justify-center text-white shadow-md">
-              <Bot className="w-6 h-6" />
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <h2 className="text-base font-extrabold text-slate-900 tracking-tight">AI Store Copilot</h2>
-                <span className="px-2 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider bg-red-100 text-red-700 border border-red-200">
-                  Live Control
-                </span>
-              </div>
-              <p className="text-xs text-slate-500">
-                Manage banners, pricing, stock, and promotions using natural language prompts with your own API key
-              </p>
-            </div>
-          </div>
+    <div className="flex flex-col h-[calc(100vh-120px)] bg-white antialiased font-sans select-none">
+      {/* 1. ChatGPT Top Minimalist Bar */}
+      <div className="border-b border-slate-100 px-4 py-2.5 flex items-center justify-between gap-4 sticky top-0 bg-white/95 backdrop-blur-md z-20">
+        {/* Model Selector Pill */}
+        <div className="flex items-center gap-2">
+          <button
+            type="button"
+            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+            className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-slate-100 text-slate-800 text-xs font-bold transition-all border border-slate-200 shadow-2xs"
+          >
+            <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
+            <span>{provider === 'openai' ? 'ChatGPT (GPT-4o)' : 'Claude 3.5 Sonnet'}</span>
+            <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+          </button>
 
-          <div className="flex items-center gap-2.5">
-            {/* Status Indicator */}
-            <div className={`flex items-center gap-1.5 px-3 py-1.5 rounded-xl text-xs font-bold border ${
-              savedApiKey 
-                ? 'bg-emerald-50 text-emerald-800 border-emerald-200' 
-                : 'bg-amber-50 text-amber-800 border-amber-200'
-            }`}>
-              <span className={`w-2 h-2 rounded-full ${savedApiKey ? 'bg-emerald-500 animate-pulse' : 'bg-amber-500'}`} />
-              <span>{savedApiKey ? `${provider === 'openai' ? 'OpenAI' : 'Claude'} Ready` : 'API Key Missing'}</span>
-            </div>
-
-            <button
-              type="button"
-              onClick={() => setIsSettingsOpen(!isSettingsOpen)}
-              className="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl border border-slate-200 bg-slate-50 hover:bg-slate-100 text-slate-700 text-xs font-bold transition-all"
-            >
-              <Key className="w-3.5 h-3.5 text-slate-500" />
-              <span>{isSettingsOpen ? 'Close Settings' : 'API Settings'}</span>
-            </button>
-          </div>
+          {/* Quick status badge */}
+          <span className="hidden sm:inline-block text-[11px] font-semibold text-slate-400">
+            {savedApiKey ? 'Ready' : 'API Key required'}
+          </span>
         </div>
 
-        {/* Expandable Settings Drawer */}
-        {isSettingsOpen && (
-          <div className="mt-4 pt-4 border-t border-slate-100 grid grid-cols-1 md:grid-cols-3 gap-4 animate-in fade-in duration-150">
-            {/* Provider & Model */}
-            <div className="space-y-2">
-              <label className="text-xs font-bold text-slate-700 block">AI Provider</label>
-              <div className="grid grid-cols-2 gap-2">
-                <button
-                  type="button"
-                  onClick={() => {
-                    setProvider('openai');
-                    setModel('gpt-4o');
-                  }}
-                  className={`px-3 py-2 rounded-xl text-xs font-black border text-center transition-all ${
-                    provider === 'openai'
-                      ? 'bg-slate-900 text-white border-slate-900 shadow-sm'
-                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                  }`}
-                >
-                  OpenAI (ChatGPT)
-                </button>
-                <button
-                  type="button"
-                  onClick={() => {
-                    setProvider('anthropic');
-                    setModel('claude-3-5-sonnet-20241022');
-                  }}
-                  className={`px-3 py-2 rounded-xl text-xs font-black border text-center transition-all ${
-                    provider === 'anthropic'
-                      ? 'bg-amber-700 text-white border-amber-800 shadow-sm'
-                      : 'bg-slate-50 text-slate-700 border-slate-200 hover:bg-slate-100'
-                  }`}
-                >
-                  Anthropic (Claude)
-                </button>
-              </div>
+        {/* Action Controls */}
+        <div className="flex items-center gap-2">
+          {/* Create Image Toggle */}
+          <button
+            type="button"
+            onClick={() => {
+              setIsImageMode(!isImageMode);
+              if (!isImageMode && provider !== 'openai') {
+                setProvider('openai');
+              }
+            }}
+            className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-2xs ${
+              isImageMode
+                ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-sm ring-2 ring-rose-200'
+                : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
+            }`}
+          >
+            <Palette className="w-3.5 h-3.5" />
+            <span>{isImageMode ? 'Image Mode Active' : 'Create Image'}</span>
+          </button>
 
-              <div className="pt-1">
-                <label className="text-[11px] font-semibold text-slate-500 block mb-1">Model</label>
-                <select
-                  value={model}
-                  onChange={(e) => setModel(e.target.value)}
-                  className="w-full text-xs font-semibold px-2.5 py-1.5 bg-slate-50 border border-slate-200 rounded-lg text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500"
-                >
-                  {provider === 'openai' ? (
-                    <>
-                      <option value="gpt-4o">GPT-4o (Recommended - Fast & Powerful)</option>
-                      <option value="gpt-4o-mini">GPT-4o Mini (Cost-efficient)</option>
-                      <option value="o1-mini">o1 Mini (Advanced Reasoning)</option>
-                    </>
-                  ) : (
-                    <>
-                      <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet (Recommended)</option>
-                      <option value="claude-3-5-haiku-20241022">Claude 3.5 Haiku (Fast)</option>
-                    </>
-                  )}
-                </select>
+          {/* New Chat */}
+          {messages.length > 0 && (
+            <button
+              type="button"
+              onClick={handleNewChat}
+              className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors"
+              title="New Chat"
+            >
+              <Plus className="w-4 h-4" />
+            </button>
+          )}
+
+          {/* Settings Toggle */}
+          <button
+            type="button"
+            onClick={() => setIsSettingsOpen(!isSettingsOpen)}
+            className="p-1.5 rounded-full hover:bg-slate-100 text-slate-500 hover:text-slate-800 transition-colors"
+            title="Settings"
+          >
+            <Settings2 className="w-4 h-4" />
+          </button>
+        </div>
+      </div>
+
+      {/* 2. Slide-Down Settings Drawer */}
+      {isSettingsOpen && (
+        <div className="border-b border-slate-200 bg-slate-50/90 backdrop-blur-md px-6 py-4 animate-in slide-in-from-top-2 duration-150 shadow-sm z-20">
+          <div className="max-w-3xl mx-auto space-y-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center gap-2">
+                <Key className="w-4 h-4 text-slate-700" />
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">AI API Settings</h3>
               </div>
+              <button
+                type="button"
+                onClick={() => setIsSettingsOpen(false)}
+                className="text-xs text-slate-400 hover:text-slate-700 font-bold"
+              >
+                Close ✕
+              </button>
             </div>
 
-            {/* API Key Input */}
-            <div className="space-y-2 md:col-span-2">
-              <div className="flex items-center justify-between">
-                <label className="text-xs font-bold text-slate-700 block">
-                  {provider === 'openai' ? 'OpenAI API Key (sk-...)' : 'Anthropic Claude API Key (sk-ant-...)'}
-                </label>
-                {savedApiKey && (
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+              {/* Provider & Model */}
+              <div className="space-y-2">
+                <label className="text-[11px] font-bold text-slate-700 block">AI Provider</label>
+                <div className="grid grid-cols-2 gap-1.5">
                   <button
                     type="button"
-                    onClick={handleClearSettings}
-                    className="text-[11px] font-semibold text-red-600 hover:text-red-700 flex items-center gap-1"
-                  >
-                    <Trash2 className="w-3 h-3" />
-                    <span>Clear key</span>
-                  </button>
-                )}
-              </div>
-              <div className="relative">
-                <input
-                  type={showKey ? 'text' : 'password'}
-                  value={apiKey}
-                  onChange={(e) => setApiKey(e.target.value)}
-                  placeholder={provider === 'openai' ? 'sk-proj-...' : 'sk-ant-api03-...'}
-                  className="w-full px-3 py-2 pr-10 text-xs font-mono bg-slate-50 border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-2 focus:ring-red-500"
-                />
-                <button
-                  type="button"
-                  onClick={() => setShowKey(!showKey)}
-                  className="absolute right-3 top-2.5 text-slate-400 hover:text-slate-600"
-                  aria-label="Toggle API key visibility"
-                >
-                  {showKey ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </button>
-              </div>
-
-              {/* Mode & Save Button */}
-              <div className="flex flex-wrap items-center justify-between gap-2 pt-2">
-                <div className="flex items-center gap-2">
-                  <span className="text-xs font-semibold text-slate-600">Execution Mode:</span>
-                  <button
-                    type="button"
-                    onClick={() => setMode('instant')}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 ${
-                      mode === 'instant' ? 'bg-red-500 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    onClick={() => {
+                      setProvider('openai');
+                      setModel('gpt-4o');
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                      provider === 'openai'
+                        ? 'bg-slate-900 text-white border-slate-900'
+                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
                     }`}
                   >
-                    <Zap className="w-3 h-3" />
-                    <span>Instant Apply</span>
+                    OpenAI
                   </button>
                   <button
                     type="button"
-                    onClick={() => setMode('preview')}
-                    className={`px-2.5 py-1 rounded-lg text-xs font-bold flex items-center gap-1 ${
-                      mode === 'preview' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                    onClick={() => {
+                      setProvider('anthropic');
+                      setModel('claude-3-5-sonnet-20241022');
+                    }}
+                    className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
+                      provider === 'anthropic'
+                        ? 'bg-amber-700 text-white border-amber-800'
+                        : 'bg-white text-slate-700 border-slate-200 hover:bg-slate-100'
                     }`}
                   >
-                    <ShieldCheck className="w-3 h-3" />
-                    <span>Preview Before Applying</span>
+                    Claude
                   </button>
                 </div>
 
-                <button
-                  type="button"
-                  onClick={handleSaveSettings}
-                  className="px-4 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl shadow-sm transition-all"
-                >
-                  Save API Key
-                </button>
+                <div className="pt-1">
+                  <label className="text-[10px] font-semibold text-slate-500 block mb-1">Model</label>
+                  <select
+                    value={model}
+                    onChange={(e) => setModel(e.target.value)}
+                    className="w-full text-xs font-semibold px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none"
+                  >
+                    {provider === 'openai' ? (
+                      <>
+                        <option value="gpt-4o">GPT-4o (Recommended)</option>
+                        <option value="gpt-4o-mini">GPT-4o Mini</option>
+                        <option value="o1-mini">o1 Mini (Reasoning)</option>
+                      </>
+                    ) : (
+                      <>
+                        <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</option>
+                        <option value="claude-3-5-haiku-20241022">Claude 3.5 Haiku</option>
+                      </>
+                    )}
+                  </select>
+                </div>
+              </div>
+
+              {/* API Key */}
+              <div className="space-y-2 md:col-span-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-[11px] font-bold text-slate-700 block">
+                    {provider === 'openai' ? 'OpenAI API Key (sk-...)' : 'Anthropic API Key (sk-ant-...)'}
+                  </label>
+                  {savedApiKey && (
+                    <button
+                      type="button"
+                      onClick={handleClearSettings}
+                      className="text-[10px] font-semibold text-red-600 hover:text-red-700 flex items-center gap-1"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      <span>Clear Key</span>
+                    </button>
+                  )}
+                </div>
+                <div className="relative">
+                  <input
+                    type={showKey ? 'text' : 'password'}
+                    value={apiKey}
+                    onChange={(e) => setApiKey(e.target.value)}
+                    placeholder={provider === 'openai' ? 'sk-proj-...' : 'sk-ant-api03-...'}
+                    className="w-full px-3 py-1.5 pr-10 text-xs font-mono bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-400"
+                  />
+                  <button
+                    type="button"
+                    onClick={() => setShowKey(!showKey)}
+                    className="absolute right-3 top-2 text-slate-400 hover:text-slate-600"
+                  >
+                    {showKey ? <EyeOff className="w-3.5 h-3.5" /> : <Eye className="w-3.5 h-3.5" />}
+                  </button>
+                </div>
+
+                {/* Mode & Save */}
+                <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
+                  <div className="flex items-center gap-1.5">
+                    <span className="text-[11px] font-semibold text-slate-500">Mode:</span>
+                    <button
+                      type="button"
+                      onClick={() => setMode('instant')}
+                      className={`px-2 py-0.5 rounded-lg text-[11px] font-bold ${
+                        mode === 'instant' ? 'bg-black text-white' : 'bg-slate-200 text-slate-600'
+                      }`}
+                    >
+                      ⚡ Instant
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setMode('preview')}
+                      className={`px-2 py-0.5 rounded-lg text-[11px] font-bold ${
+                        mode === 'preview' ? 'bg-blue-600 text-white' : 'bg-slate-200 text-slate-600'
+                      }`}
+                    >
+                      🛡️ Preview First
+                    </button>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleSaveSettings}
+                    className="px-4 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl transition-all shadow-2xs"
+                  >
+                    Save API Key
+                  </button>
+                </div>
               </div>
             </div>
           </div>
-        )}
-      </div>
-
-      {/* 2. Error Notice */}
-      {errorMsg && (
-        <div className="bg-red-50 border border-red-200 text-red-800 px-4 py-2.5 rounded-xl text-xs flex items-center justify-between gap-2 animate-in fade-in duration-150">
-          <div className="flex items-center gap-2">
-            <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-            <span className="font-medium">{errorMsg}</span>
-          </div>
-          <button
-            type="button"
-            onClick={() => setErrorMsg(null)}
-            className="text-red-600 hover:text-red-900 font-bold"
-          >
-            ✕
-          </button>
         </div>
       )}
 
-      {/* 3. Messages Chat Area */}
-      <div className="flex-1 bg-white border border-slate-200 rounded-2xl p-4 sm:p-6 overflow-y-auto space-y-4 shadow-sm">
-        {messages.map((msg) => {
-          const isUser = msg.role === 'user';
-          return (
-            <div
-              key={msg.id}
-              className={`flex items-start gap-3 ${isUser ? 'flex-row-reverse' : 'flex-row'}`}
-            >
-              {/* Avatar */}
-              <div
-                className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 text-white text-xs font-bold ${
-                  isUser ? 'bg-slate-800' : 'bg-gradient-to-tr from-[#F80404] to-red-600'
-                }`}
-              >
-                {isUser ? 'YOU' : <Bot className="w-4 h-4" />}
+      {/* 3. Error Alert */}
+      {errorMsg && (
+        <div className="max-w-3xl mx-auto w-full px-4 pt-2">
+          <div className="bg-rose-50 border border-rose-200 text-rose-800 px-4 py-2.5 rounded-xl text-xs flex items-center justify-between gap-2">
+            <div className="flex items-center gap-2">
+              <AlertCircle className="w-4 h-4 text-rose-600 shrink-0" />
+              <span>{errorMsg}</span>
+            </div>
+            <button type="button" onClick={() => setErrorMsg(null)} className="text-rose-600 font-bold">
+              ✕
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* 4. Chat Feed (Centered ChatGPT Layout) */}
+      <div className="flex-1 overflow-y-auto px-4 py-6">
+        <div className="max-w-3xl mx-auto w-full space-y-6">
+          {/* Empty State / Welcome Screen */}
+          {messages.length === 0 && (
+            <div className="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-6 pt-8">
+              <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-black via-slate-800 to-red-600 flex items-center justify-center text-white shadow-md">
+                <Sparkles className="w-7 h-7" />
               </div>
 
-              {/* Message Bubble */}
-              <div
-                className={`max-w-[85%] sm:max-w-[75%] rounded-2xl px-4 py-3 text-xs leading-relaxed space-y-2 ${
-                  isUser
-                    ? 'bg-slate-900 text-white shadow-sm'
-                    : 'bg-slate-50 border border-slate-200/80 text-slate-800'
-                }`}
-              >
-                <div className="whitespace-pre-line font-normal">{msg.content}</div>
+              <div>
+                <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
+                  What can I help you change today?
+                </h1>
+                <p className="text-xs text-slate-500 mt-1">
+                  Autonomous AI Copilot connected live to NutriFitness.ch
+                </p>
+              </div>
 
-                {/* Visual Action Card (When AI changed something) */}
-                {msg.visualCard && (
-                  <div className="mt-3 p-3 bg-white border border-slate-200 rounded-xl shadow-xs space-y-1.5 text-slate-800">
-                    <div className="flex items-center justify-between">
-                      <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
-                        <CheckCircle2 className="w-3 h-3" />
-                        <span>Live Action Successful</span>
+              {/* ChatGPT-style starter prompt cards */}
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl pt-4">
+                {STARTER_PROMPTS.map((item, idx) => {
+                  const Icon = item.icon;
+                  return (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        if (item.isImage) {
+                          setIsImageMode(true);
+                          setInputPrompt(item.prompt);
+                        } else {
+                          handleSendMessage(item.prompt);
+                        }
+                      }}
+                      className="p-3.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-2xl text-left transition-all shadow-2xs group flex flex-col justify-between"
+                    >
+                      <div className="flex items-center gap-2 text-slate-800 font-bold text-xs mb-1">
+                        <Icon className="w-3.5 h-3.5 text-slate-600 group-hover:text-red-600 transition-colors" />
+                        <span>{item.title}</span>
+                      </div>
+                      <span className="text-[11px] text-slate-400 group-hover:text-slate-600 transition-colors line-clamp-1">
+                        {item.desc}
                       </span>
-                      {msg.visualCard.link && (
-                        <a
-                          href={msg.visualCard.link}
-                          target="_blank"
-                          rel="noreferrer"
-                          className="text-[11px] font-bold text-red-600 hover:text-red-700 flex items-center gap-1"
-                        >
-                          <span>View on website</span>
-                          <ExternalLink className="w-3 h-3" />
-                        </a>
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+          )}
+
+          {/* Active Message History */}
+          {messages.map((msg) => {
+            const isUser = msg.role === 'user';
+            return (
+              <div
+                key={msg.id}
+                className={`flex gap-3 ${isUser ? 'justify-end' : 'justify-start'}`}
+              >
+                {!isUser && (
+                  <div className="w-7 h-7 rounded-full bg-black text-white flex items-center justify-center shrink-0 text-xs shadow-2xs mt-0.5">
+                    <Sparkles className="w-3.5 h-3.5" />
+                  </div>
+                )}
+
+                <div
+                  className={`space-y-2 ${
+                    isUser
+                      ? 'bg-slate-100 text-slate-900 rounded-[22px] px-5 py-3 text-sm leading-relaxed max-w-[82%] shadow-2xs'
+                      : 'text-slate-900 text-sm leading-relaxed max-w-[90%] font-normal pt-1'
+                  }`}
+                >
+                  <div className="whitespace-pre-line select-text">{msg.content}</div>
+
+                  {/* Visual Card (Results / Image Display) */}
+                  {msg.visualCard && (
+                    <div className="mt-3 p-4 bg-slate-50 border border-slate-200 rounded-2xl shadow-xs space-y-2.5">
+                      <div className="flex items-center justify-between">
+                        <span className="text-[10px] font-black uppercase tracking-wider text-emerald-700 bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200 flex items-center gap-1">
+                          <CheckCircle2 className="w-3 h-3" />
+                          <span>Action Result</span>
+                        </span>
+                        {msg.visualCard.link && (
+                          <a
+                            href={msg.visualCard.link}
+                            target="_blank"
+                            rel="noreferrer"
+                            className="text-xs font-bold text-red-600 hover:text-red-700 flex items-center gap-1"
+                          >
+                            <span>Open Link</span>
+                            <ExternalLink className="w-3 h-3" />
+                          </a>
+                        )}
+                      </div>
+
+                      <div className="font-bold text-xs text-slate-900">{msg.visualCard.title}</div>
+                      <div className="text-xs text-slate-600">{msg.visualCard.details}</div>
+
+                      {/* Generated Image Preview & Controls */}
+                      {msg.visualCard.imageUrl && (
+                        <div className="mt-2 space-y-2">
+                          <div className="rounded-xl overflow-hidden border border-slate-200 bg-black/5 shadow-inner">
+                            <img
+                              src={msg.visualCard.imageUrl}
+                              alt="Generated Visual"
+                              className="w-full h-auto max-h-80 object-cover"
+                            />
+                          </div>
+                          <div className="flex flex-wrap items-center gap-2 pt-1">
+                            <a
+                              href={msg.visualCard.imageUrl}
+                              target="_blank"
+                              rel="noreferrer"
+                              download
+                              className="px-3 py-1.5 bg-white hover:bg-slate-100 text-slate-800 border border-slate-200 rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-2xs transition-all"
+                            >
+                              <Download className="w-3.5 h-3.5" />
+                              <span>Download High-Res</span>
+                            </a>
+                            <button
+                              type="button"
+                              onClick={() => handleSetAsBanner(msg.visualCard!.imageUrl!, msg.visualCard!.title)}
+                              className="px-3 py-1.5 bg-[#F80404] hover:bg-[#FF3D00] text-white rounded-xl text-xs font-bold flex items-center gap-1.5 shadow-xs transition-all"
+                            >
+                              <ImageIcon className="w-3.5 h-3.5" />
+                              <span>Set as Homepage Banner</span>
+                            </button>
+                          </div>
+                        </div>
                       )}
                     </div>
-                    <div className="font-bold text-xs text-slate-900">{msg.visualCard.title}</div>
-                    <div className="text-[11px] text-slate-600">{msg.visualCard.details}</div>
-                    {msg.visualCard.imageUrl && (
-                      <div className="mt-2 rounded-lg overflow-hidden border border-slate-200 max-h-32">
-                        <img
-                          src={msg.visualCard.imageUrl}
-                          alt="Banner preview"
-                          className="w-full h-auto object-cover"
-                        />
+                  )}
+
+                  {/* Pending Action Confirmation */}
+                  {msg.pendingAction && (
+                    <div className="mt-3 p-4 bg-amber-50/80 border border-amber-200 rounded-2xl text-slate-800 space-y-2.5">
+                      <div className="text-xs font-bold text-amber-900 flex items-center gap-1.5">
+                        <AlertCircle className="w-4 h-4 text-amber-600" />
+                        <span>Confirmation Required: {msg.pendingAction.tool}</span>
                       </div>
-                    )}
-                  </div>
-                )}
-
-                {/* Pending Action Confirmation (In Preview Mode) */}
-                {msg.pendingAction && (
-                  <div className="mt-3 p-3 bg-amber-50 border border-amber-200 rounded-xl text-slate-800 space-y-2">
-                    <div className="text-xs font-bold text-amber-900 flex items-center gap-1.5">
-                      <AlertCircle className="w-4 h-4 text-amber-600" />
-                      <span>Confirmation required for action: {msg.pendingAction.tool}</span>
+                      <pre className="text-[11px] bg-white p-2.5 rounded-xl border border-amber-200 overflow-x-auto text-slate-700 font-mono">
+                        {JSON.stringify(msg.pendingAction.args, null, 2)}
+                      </pre>
+                      <div className="flex items-center gap-2 pt-1">
+                        <button
+                          type="button"
+                          onClick={() => handleConfirmPendingAction(msg.id, msg.pendingAction!)}
+                          className="px-3.5 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
+                        >
+                          Apply Changes Now
+                        </button>
+                      </div>
                     </div>
-                    <pre className="text-[10px] bg-white p-2 rounded border border-amber-200 overflow-x-auto text-slate-700">
-                      {JSON.stringify(msg.pendingAction.args, null, 2)}
-                    </pre>
-                    <div className="flex items-center gap-2 pt-1">
-                      <button
-                        type="button"
-                        onClick={() => handleConfirmPendingAction(msg.id, msg.pendingAction!)}
-                        className="px-3 py-1.5 bg-emerald-600 hover:bg-emerald-700 text-white rounded-lg text-xs font-bold shadow-xs transition-colors"
-                      >
-                        Apply Changes Now
-                      </button>
-                    </div>
-                  </div>
-                )}
-
-                <div className={`text-[10px] ${isUser ? 'text-slate-400 text-right' : 'text-slate-400'}`}>
-                  {msg.timestamp}
+                  )}
                 </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
 
-        {isLoading && (
-          <div className="flex items-start gap-3">
-            <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-[#F80404] to-red-600 flex items-center justify-center text-white text-xs shrink-0">
-              <Bot className="w-4 h-4 animate-spin" />
+          {isLoading && (
+            <div className="flex items-center gap-3">
+              <div className="w-7 h-7 rounded-full bg-black text-white flex items-center justify-center text-xs">
+                <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+              </div>
+              <span className="text-xs text-slate-500 font-medium">
+                {isImageMode ? 'DALL-E 3 is creating your image...' : 'Copilot is thinking & executing actions...'}
+              </span>
             </div>
-            <div className="bg-slate-50 border border-slate-200 rounded-2xl px-4 py-3 text-xs text-slate-600 flex items-center gap-2">
-              <RefreshCw className="w-3.5 h-3.5 animate-spin text-red-600" />
-              <span>Copilot is analyzing your instruction and executing store tools...</span>
-            </div>
-          </div>
-        )}
+          )}
 
-        <div ref={messagesEndRef} />
+          <div ref={messagesEndRef} />
+        </div>
       </div>
 
-      {/* 4. Input Bar (Suggestions row removed as requested) */}
-      <div className="bg-white border border-slate-200 rounded-2xl p-2.5 shadow-sm flex items-end gap-2">
-        <textarea
-          value={inputPrompt}
-          onChange={(e) => setInputPrompt(e.target.value)}
-          onKeyDown={(e) => {
-            if (e.key === 'Enter' && !e.shiftKey) {
-              e.preventDefault();
-              handleSendMessage();
-            }
-          }}
-          placeholder="Type an instruction (e.g. 'Set Creatine price to 29.90 CHF' or 'Change the hero banner button...')..."
-          rows={1}
-          disabled={isLoading}
-          className="flex-1 resize-none bg-transparent px-3 py-2 text-xs text-slate-900 placeholder:text-slate-400 focus:outline-none min-h-[42px] max-h-28"
-        />
+      {/* 5. Signature ChatGPT Floating Input Capsule */}
+      <div className="px-4 pb-4 pt-2 bg-gradient-to-t from-white via-white to-transparent sticky bottom-0">
+        <div className="max-w-3xl mx-auto w-full">
+          {/* Active Image Mode Indicator Toolbar */}
+          {isImageMode && (
+            <div className="mb-2 px-3 py-1.5 bg-gradient-to-r from-amber-50 to-rose-50 border border-amber-200 rounded-2xl flex items-center justify-between text-xs animate-in fade-in duration-150">
+              <div className="flex items-center gap-2">
+                <Palette className="w-4 h-4 text-rose-600" />
+                <span className="font-bold text-slate-800">DALL-E 3 Image Mode Active</span>
+              </div>
+              <div className="flex items-center gap-2">
+                <span className="text-[11px] font-semibold text-slate-500">Aspect Ratio:</span>
+                <select
+                  value={imageSize}
+                  onChange={(e) => setImageSize(e.target.value as any)}
+                  className="bg-white border border-slate-200 rounded-lg text-xs font-bold px-2 py-1 text-slate-800"
+                >
+                  <option value="1792x1024">Wide Banner (16:9)</option>
+                  <option value="1024x1024">Square Product (1:1)</option>
+                  <option value="1024x1792">Vertical Mobile (9:16)</option>
+                </select>
+                <button
+                  type="button"
+                  onClick={() => setIsImageMode(false)}
+                  className="text-slate-400 hover:text-slate-700 font-bold ml-1"
+                >
+                  ✕
+                </button>
+              </div>
+            </div>
+          )}
 
-        <button
-          type="button"
-          onClick={() => handleSendMessage()}
-          disabled={isLoading || !inputPrompt.trim()}
-          className="h-10 px-4 bg-[#F80404] hover:bg-[#FF3D00] disabled:bg-slate-200 disabled:text-slate-400 text-white rounded-xl text-xs font-bold flex items-center justify-center gap-1.5 transition-all shadow-sm shrink-0 active:scale-95"
-        >
-          {isLoading ? <RefreshCw className="w-4 h-4 animate-spin" /> : <Send className="w-4 h-4" />}
-          <span className="hidden sm:inline">Send</span>
-        </button>
+          {/* Capsule Container */}
+          <div className="bg-white border border-slate-300 rounded-[28px] shadow-sm hover:shadow-md focus-within:shadow-md focus-within:border-slate-400 transition-all p-2 flex items-end gap-2">
+            {/* Create Image Trigger inside capsule */}
+            <button
+              type="button"
+              onClick={() => {
+                setIsImageMode(!isImageMode);
+                if (!isImageMode && provider !== 'openai') setProvider('openai');
+              }}
+              className={`p-2 rounded-full transition-all ${
+                isImageMode
+                  ? 'bg-rose-100 text-rose-700'
+                  : 'hover:bg-slate-100 text-slate-500 hover:text-slate-800'
+              }`}
+              title={isImageMode ? 'Cancel Image Mode' : 'Create Image with DALL-E 3'}
+            >
+              <Palette className="w-5 h-5" />
+            </button>
+
+            {/* Input Textarea */}
+            <textarea
+              ref={textareaRef}
+              value={inputPrompt}
+              onChange={(e) => setInputPrompt(e.target.value)}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' && !e.shiftKey) {
+                  e.preventDefault();
+                  handleSendMessage();
+                }
+              }}
+              placeholder={
+                isImageMode
+                  ? 'Describe the image you want to generate (e.g. "Modern fitness banner for Creatine with dark gym background")...'
+                  : 'Message NutriFitness Copilot or create an image...'
+              }
+              rows={1}
+              disabled={isLoading}
+              className="flex-1 resize-none bg-transparent px-2 py-2 text-sm text-slate-900 placeholder:text-slate-400 focus:outline-none min-h-[38px] max-h-36"
+            />
+
+            {/* ChatGPT Send Button (Circular with ArrowUp) */}
+            <button
+              type="button"
+              onClick={() => handleSendMessage()}
+              disabled={isLoading || !inputPrompt.trim()}
+              className="w-9 h-9 rounded-full bg-black text-white hover:bg-slate-800 disabled:bg-slate-200 disabled:text-slate-400 flex items-center justify-center transition-all shrink-0 active:scale-95 shadow-2xs"
+            >
+              {isLoading ? (
+                <RefreshCw className="w-4 h-4 animate-spin" />
+              ) : (
+                <ArrowUp className="w-4 h-4 stroke-[2.5]" />
+              )}
+            </button>
+          </div>
+
+          <div className="text-[11px] text-slate-400 text-center mt-2">
+            AI Copilot has direct access to store tools. Verify important price and banner updates.
+          </div>
+        </div>
       </div>
     </div>
   );
