@@ -292,10 +292,22 @@ export default function AICopilotTab() {
   };
 
   const QUICK_IMAGE_PRESETS = [
-    { label: '💥 Creatine Banner (16:9)', prompt: 'Marvelous Line Creatine Monohydrate Pure 300g bottle on dark stone podium, yellow energy crystals, moody black gym lighting, cinematic 8k banner' },
-    { label: '⚡ Whey Isolate Poster (16:9)', prompt: 'Marvelous Lean AF 100% CFM Whey Isolate 2kg tub with Swiss mountain backdrop, athletic fitness aesthetic, studio lighting' },
-    { label: '🌙 Magnesium Sleep Banner (16:9)', prompt: 'Marvelous Magnesium Bisglycinate 90 capsules on dark luxury black surface with soft gold aura, recovery and deep sleep mood' },
-    { label: '🔥 Pre-Workout Hardcore (16:9)', prompt: 'Marvelous POWER M.F Pre-Workout extreme powder explosion, glowing neon yellow energy streaks, dark high-adrenaline fitness atmosphere' },
+    { 
+      label: '⚡ Lean AF Whey Poster (16:9)', 
+      prompt: 'Commercial advertising poster for Marvelous Lean AF 100% CFM Whey Isolate 2kg black protein jar, gym weights, studio lighting, high resolution product advertisement' 
+    },
+    { 
+      label: '💥 Pure Creatine Poster (16:9)', 
+      prompt: 'High impact sports nutrition poster for Marvelous Line Pure Creatine Monohydrate 300g bottle on dark stone podium with neon yellow lighting, gym billboard' 
+    },
+    { 
+      label: '🌙 Magnesium Recovery (16:9)', 
+      prompt: 'Luxury health supplement advertisement for Marvelous Magnesium Bisglycinate 90 capsules bottle with gold recovery aura, Swiss wellness studio lighting' 
+    },
+    { 
+      label: '🔥 Hardcore Pre-Workout (16:9)', 
+      prompt: 'Extreme energy sports billboard for Marvelous POWER M.F Pre-Workout powder explosion, neon yellow energy streaks, dark adrenaline gym background' 
+    },
   ];
 
   const QUICK_STORE_ACTIONS = [

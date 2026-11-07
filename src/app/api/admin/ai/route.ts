@@ -40,6 +40,9 @@ STORE TOP PRODUCTS KNOWLEDGE BASE:
 - Applied Nutrition Créatine Monohydrate 250g (slug: "applied-creatine-monohydrate-250g", price: 29.9 CHF)
 
 CRITICAL INSTRUCTIONS FOR PRODUCT SEARCH & PRICING:
+- To check or verify stock of any product (e.g. "check stock of Lean AF Whey Isolate", "check stock of Marvelous Creatine"):
+  1. Call get_product_stock immediately with the product name or slug (e.g. "marvelous-lean-af-cfm-whey-isolat-2kg" or "Lean AF")!
+  2. Clearly report both Geneva store stock and Portugal warehouse stock (e.g. "Geneva store: X units, Portugal warehouse: Y units").
 - When a user asks to change a price (e.g. "change price of L-Glutamin to 42 chf 300g", "marveleous", or "update creatine price"):
   1. NEVER say you cannot find the product if a matching product exists! Handle typos seamlessly ("marveleous" = Marvelous, "L-Glutamin" = Marvelous L-Glutamine).
   2. For "L-Glutamin 300g" or "Marvelous Glutamine", it corresponds to slug "marvelous-glutamine-kyowa-300g".
@@ -49,6 +52,20 @@ CRITICAL INSTRUCTIONS FOR PRODUCT SEARCH & PRICING:
 
 // Common Tool Definitions
 const TOOL_DEFINITIONS = [
+  {
+    name: 'get_product_stock',
+    description: 'Get live inventory quantities in Geneva store and Portugal warehouse for any product.',
+    parameters: {
+      type: 'object',
+      properties: {
+        productIdOrSlug: { 
+          type: 'string', 
+          description: 'Product name, brand, or slug (e.g. "Lean AF", "marvelous-lean-af-cfm-whey-isolat-2kg", "creatine", "glutamine")' 
+        },
+      },
+      required: ['productIdOrSlug'],
+    },
+  },
   {
     name: 'update_product_price',
     description: 'Update the selling price (base_price) and optional regular price (compare_at_price) of a product in the store.',
@@ -157,13 +174,17 @@ function cleanTokens(raw: string): string[] {
     .replace(/marveleous|marvelus|marvellous/g, 'marvelous')
     .replace(/glutamin\b/g, 'glutamine')
     .replace(/creatin\b/g, 'creatine')
-    .replace(/protein\b/g, 'proteine');
+    .replace(/protein\b/g, 'proteine')
+    .replace(/isolate\b/g, 'isolat');
 
   const words = normalized.split(/[\s\-_\/,\.]+/).filter(w => w.length >= 2);
   const stopwords = new Set([
+    'check', 'stock', 'stocks', 'inventaire', 'inventory', 'quantity', 'quantite',
+    'geneva', 'geneve', 'portugal', 'and', 'et', 'avec', 'with', 'in', 'en',
+    'is', 'est', 'are', 'sont', 'how', 'much', 'many', 'combien',
     'change', 'price', 'prix', 'modifier', 'changer', 'set', 'update',
     'de', 'du', 'la', 'le', 'des', 'les', 'to', 'at', 'of', 'for', 'pour',
-    'chf', 'eur', 'frs', 'fr', 'in', 'en', 'our', 'notre', 'your', 'votre'
+    'chf', 'eur', 'frs', 'fr', 'our', 'notre', 'your', 'votre'
   ]);
   return words.filter(w => !stopwords.has(w));
 }
@@ -175,7 +196,7 @@ async function findMatchingProducts(supabase: any, rawQuery: string) {
   // 1. Direct match by exact slug, id, or sku
   const { data: direct } = await supabase
     .from('products')
-    .select('id, name, slug, sku, base_price, compare_at_price, product_stock(origin_id, quantity)')
+    .select('id, name, slug, sku, brand, base_price, compare_at_price, images, product_stock(origin_id, quantity)')
     .or(`id.eq.${cleanId},slug.eq.${cleanId},sku.eq.${cleanId}`)
     .maybeSingle();
 
@@ -192,9 +213,9 @@ async function findMatchingProducts(supabase: any, rawQuery: string) {
 
   const { data: list, error } = await supabase
     .from('products')
-    .select('id, name, slug, sku, base_price, compare_at_price, product_stock(origin_id, quantity)')
+    .select('id, name, slug, sku, brand, base_price, compare_at_price, images, product_stock(origin_id, quantity)')
     .or(orConds.join(','))
-    .limit(25);
+    .limit(50);
 
   if (error || !list) return [];
 
@@ -205,8 +226,10 @@ async function findMatchingProducts(supabase: any, rawQuery: string) {
     const slugLow = p.slug.toLowerCase();
 
     for (const token of tokens) {
-      if (nameLow.includes(token)) score += 10;
-      if (slugLow.includes(token)) score += 8;
+      if (nameLow.includes(token)) score += 15;
+      if (slugLow.includes(token)) score += 12;
+      if (token === 'lean' && (nameLow.includes('lean') || slugLow.includes('lean'))) score += 20;
+      if (token === 'af' && (nameLow.includes('af') || slugLow.includes('af'))) score += 20;
       if (token === 'marvelous' && (nameLow.includes('marvelous') || slugLow.includes('marvelous'))) score += 15;
       if (token === 'glutamine' && (nameLow.includes('glutamine') || slugLow.includes('glutamine'))) score += 15;
       if (token === 'creatine' && (nameLow.includes('creatine') || slugLow.includes('creatine'))) score += 15;
@@ -228,10 +251,32 @@ async function executeTool(
 
   try {
     if (name === 'generate_image') {
-      const prompt = String(args.prompt || '').trim();
+      let rawPrompt = String(args.prompt || '').trim();
       const size = args.size || '1792x1024';
       const targetModel = args.model || context?.imageModel || 'gpt-image-2.6-sunburst';
       const baseUrl = context?.baseUrl ? context.baseUrl.replace(/\/+$/, '') : 'https://api.openai.com/v1';
+
+      // 1. Sanitize prompt: Never allow "tub" to hallucinate a bathroom or bathtub
+      let cleanPrompt = rawPrompt
+        .replace(/\b(tub|tubs|bathtub|bath)\b/gi, 'supplement powder container jar with screw lid')
+        .replace(/\b(bathroom|washroom|restroom|toilet)\b/gi, 'gym');
+
+      // 2. Identify referenced product from our store to inject exact Swiss fitness brand styling
+      const lower = cleanPrompt.toLowerCase();
+      let productBranding = 'NutriFitness Switzerland sports nutrition supplement';
+      if (lower.includes('lean af') || lower.includes('whey')) {
+        productBranding = 'Marvelous Lean AF 100% CFM Whey Isolate 2kg black cylindrical supplement container jar with yellow and red graphics';
+      } else if (lower.includes('creatine')) {
+        productBranding = 'Marvelous Line Pure Creatine Monohydrate 300g supplement bottle on stone podium';
+      } else if (lower.includes('glutamin')) {
+        productBranding = 'Marvelous L-Glutamine Kyowa Quality 300g supplement container bottle';
+      } else if (lower.includes('magnesium')) {
+        productBranding = 'Marvelous Magnesium Bisglycinate 90 capsules black supplement bottle';
+      } else if (lower.includes('pre-workout') || lower.includes('power m.f')) {
+        productBranding = 'Marvelous POWER M.F Pre-Workout Extreme 300g powder container with glowing sparks';
+      }
+
+      const enhancedPrompt = `Commercial sports nutrition advertisement poster for ${productBranding}. ${cleanPrompt}. Bold high-impact advertising billboard design, athletic fitness aesthetic with dark gym background, neon accents, dramatic studio product photography, 8k resolution, crisp clean packaging. STRICT NEGATIVE: no bathtubs, no bathrooms, no bathroom sinks, no residential furniture.`;
 
       let [w, h] = [1792, 1024];
       if (size === '1024x1024') [w, h] = [1024, 1024];
@@ -251,7 +296,7 @@ async function executeTool(
             },
             body: JSON.stringify({
               model: targetModel,
-              prompt: prompt,
+              prompt: enhancedPrompt,
               n: 1,
               size: size,
               quality: 'standard',
@@ -271,7 +316,7 @@ async function executeTool(
                 },
                 body: JSON.stringify({
                   model: 'dall-e-3',
-                  prompt: prompt,
+                  prompt: enhancedPrompt,
                   n: 1,
                   size: size,
                   quality: 'standard',
@@ -290,20 +335,56 @@ async function executeTool(
 
       // 2. High-Resolution Flux.1 Fallback (Guaranteed to return a stunning 4K image with 0 errors)
       if (!generatedUrl) {
-        const enhancedPrompt = `${prompt}, commercial fitness advertising visual, dramatic studio gym lighting, neon accents, cinematic 8k, photorealistic, ultra detailed`;
         const encoded = encodeURIComponent(enhancedPrompt);
         generatedUrl = `https://image.pollinations.ai/prompt/${encoded}?width=${w}&height=${h}&model=flux&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
       }
 
       return {
         success: true,
-        data: { url: generatedUrl, prompt, model: targetModel },
+        data: { url: generatedUrl, prompt: rawPrompt, model: targetModel },
         visualCard: {
           type: 'banner',
           title: `AI Visual Generated (${targetModel})`,
-          details: `Prompt: "${prompt.slice(0, 100)}..."`,
+          details: `Prompt: "${rawPrompt.slice(0, 100)}..."`,
           link: generatedUrl,
           imageUrl: generatedUrl,
+        },
+      };
+    }
+
+    if (name === 'get_product_stock') {
+      const q = String(args.productIdOrSlug || args.query || '').trim();
+      const cleanId = q.replace(/^https?:\/\/[^\/]+\/produit\//, '').replace(/\/$/, '');
+      const matches = await findMatchingProducts(supabase, cleanId);
+      const prod = matches[0];
+
+      if (!prod) {
+        throw new Error(`Product not found for "${cleanId}". Please check the product name.`);
+      }
+
+      const genevaStock = prod.product_stock?.find((s: any) => s.origin_id === 'GENEVA')?.quantity ?? 0;
+      const portugalStock = prod.product_stock?.find((s: any) => s.origin_id === 'PORTUGAL')?.quantity ?? 0;
+      const totalStock = genevaStock + portugalStock;
+
+      const primaryImg = Array.isArray(prod.images) ? prod.images[0]?.src : undefined;
+
+      return {
+        success: true,
+        data: {
+          product: prod.name,
+          slug: prod.slug,
+          price: prod.base_price,
+          stock_geneva: genevaStock,
+          stock_portugal: portugalStock,
+          total_stock: totalStock,
+          image: primaryImg,
+        },
+        visualCard: {
+          type: 'stock',
+          title: prod.name,
+          details: `Geneva Store: ${genevaStock} in stock | Portugal Central Warehouse: ${portugalStock} in stock (Total: ${totalStock})`,
+          link: `/produit/${prod.slug}`,
+          imageUrl: primaryImg,
         },
       };
     }
@@ -335,6 +416,8 @@ async function executeTool(
       revalidatePath('/boutique');
       revalidatePath(`/produit/${prod.slug}`);
 
+      const primaryImg = Array.isArray(prod.images) ? prod.images[0]?.src : undefined;
+
       return {
         success: true,
         data: { product: prod.name, oldPrice: prod.base_price, newPrice: base_price, slug: prod.slug },
@@ -343,6 +426,7 @@ async function executeTool(
           title: prod.name,
           details: `Price updated: ${prod.base_price} CHF ➔ ${base_price} CHF`,
           link: `/produit/${prod.slug}`,
+          imageUrl: primaryImg,
         },
       };
     }
@@ -350,7 +434,24 @@ async function executeTool(
     if (name === 'search_products') {
       const q = String(args.query || '').trim();
       const matches = await findMatchingProducts(supabase, q);
-      return { success: true, data: matches.slice(0, 6) };
+      const formatted = matches.slice(0, 6).map((p: any) => {
+        const genevaStock = p.product_stock?.find((s: any) => s.origin_id === 'GENEVA')?.quantity ?? 0;
+        const portugalStock = p.product_stock?.find((s: any) => s.origin_id === 'PORTUGAL')?.quantity ?? 0;
+        const primaryImg = Array.isArray(p.images) ? p.images[0]?.src : undefined;
+        return {
+          id: p.id,
+          name: p.name,
+          slug: p.slug,
+          brand: p.brand,
+          base_price: p.base_price,
+          compare_at_price: p.compare_at_price,
+          stock_geneva: genevaStock,
+          stock_portugal: portugalStock,
+          total_stock: genevaStock + portugalStock,
+          image: primaryImg,
+        };
+      });
+      return { success: true, data: formatted };
     }
 
     if (name === 'update_product_stock') {
