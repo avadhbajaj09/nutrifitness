@@ -567,7 +567,8 @@ export async function POST(request: Request) {
     // -------------------------------------------------------------
     if (provider === 'openai') {
       const selectedModel = model || 'gpt-6.1-sol';
-      const isReasoningModel = selectedModel.startsWith('o1') || selectedModel.startsWith('o3') || selectedModel.includes('astra');
+      const isReasoningModel = selectedModel.startsWith('o1') || selectedModel.startsWith('o3');
+      const isGpt6 = selectedModel.startsWith('gpt-6');
 
       const openAiMessages = [
         { role: isReasoningModel ? 'developer' : 'system', content: SYSTEM_PROMPT },
@@ -584,7 +585,10 @@ export async function POST(request: Request) {
         tool_choice: 'auto',
       };
 
-      if (isReasoningModel) {
+      if (isGpt6) {
+        // As required by the gateway: when using function tools in /v1/chat/completions, set reasoning_effort to 'none'
+        requestBody.reasoning_effort = 'none';
+      } else if (isReasoningModel) {
         requestBody.reasoning_effort = 'high';
       } else {
         requestBody.temperature = 0.2;
@@ -599,12 +603,31 @@ export async function POST(request: Request) {
         body: JSON.stringify(requestBody),
       });
 
-      // If custom model returned 404 or model not found on standard OpenAI, gracefully fallback to gpt-4o
+      // Handle reasoning_effort gateway requirements and model fallbacks
       if (!res.ok) {
         const errJson = await res.json().catch(() => ({}));
-        const errMsg = errJson?.error?.message || `AI Gateway HTTP error ${res.status}`;
-        
-        if ((errMsg.toLowerCase().includes('model') || res.status === 404) && selectedModel !== 'gpt-4o') {
+        let errMsg = errJson?.error?.message || `AI Gateway HTTP error ${res.status}`;
+
+        // 1. If gateway complains about reasoning_effort with function tools, retry with 'none'
+        if (errMsg.toLowerCase().includes('reasoning_effort') || errMsg.toLowerCase().includes('none')) {
+          console.warn(`[Retrying with reasoning_effort: 'none']: ${errMsg}`);
+          const retryBody = {
+            ...requestBody,
+            reasoning_effort: 'none',
+          };
+          delete retryBody.temperature;
+          res = await fetch(`${resolvedBaseUrl}/chat/completions`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${trimmedKey}`,
+            },
+            body: JSON.stringify(retryBody),
+          });
+        }
+
+        // 2. If model not supported or 404, fallback to gpt-4o
+        if (!res.ok && selectedModel !== 'gpt-4o') {
           console.warn(`[Model fallback to gpt-4o]: ${selectedModel} failed with "${errMsg}"`);
           const fallbackBody = {
             ...requestBody,
@@ -623,7 +646,8 @@ export async function POST(request: Request) {
         }
 
         if (!res.ok) {
-          return NextResponse.json({ success: false, error: errMsg }, { status: res.status });
+          const finalErr = await res.json().catch(() => ({}));
+          return NextResponse.json({ success: false, error: finalErr?.error?.message || errMsg }, { status: res.status });
         }
       }
 
@@ -675,7 +699,9 @@ export async function POST(request: Request) {
             },
           ],
         };
-        if (!isReasoningModel) {
+        if (isGpt6) {
+          secondBody.reasoning_effort = 'none';
+        } else if (!isReasoningModel) {
           secondBody.temperature = 0.2;
         }
 
@@ -688,21 +714,42 @@ export async function POST(request: Request) {
           body: JSON.stringify(secondBody),
         });
 
-        if (!secondRes.ok && secondBody.model !== 'gpt-4o') {
-          const secondFallbackBody = {
-            ...secondBody,
-            model: 'gpt-4o',
-            temperature: 0.2,
-          };
-          delete secondFallbackBody.reasoning_effort;
-          secondRes = await fetch(`${resolvedBaseUrl}/chat/completions`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${trimmedKey}`,
-            },
-            body: JSON.stringify(secondFallbackBody),
-          });
+        if (!secondRes.ok) {
+          const secondErrJson = await secondRes.json().catch(() => ({}));
+          let secondErrMsg = secondErrJson?.error?.message || `AI Gateway HTTP error ${secondRes.status}`;
+
+          if (secondErrMsg.toLowerCase().includes('reasoning_effort') || secondErrMsg.toLowerCase().includes('none')) {
+            const secondRetryBody = {
+              ...secondBody,
+              reasoning_effort: 'none',
+            };
+            delete secondRetryBody.temperature;
+            secondRes = await fetch(`${resolvedBaseUrl}/chat/completions`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${trimmedKey}`,
+              },
+              body: JSON.stringify(secondRetryBody),
+            });
+          }
+
+          if (!secondRes.ok && secondBody.model !== 'gpt-4o') {
+            const secondFallbackBody = {
+              ...secondBody,
+              model: 'gpt-4o',
+              temperature: 0.2,
+            };
+            delete secondFallbackBody.reasoning_effort;
+            secondRes = await fetch(`${resolvedBaseUrl}/chat/completions`, {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${trimmedKey}`,
+              },
+              body: JSON.stringify(secondFallbackBody),
+            });
+          }
         }
 
         let finalReply = `Action ${toolName} completed successfully!`;
