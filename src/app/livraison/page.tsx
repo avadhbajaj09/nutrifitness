@@ -33,7 +33,7 @@ export default function LivraisonPage() {
     },
     {
       q: 'Quels sont les frais de livraison ?',
-      a: 'La livraison est 100 % GRATUITE pour toute commande égale ou supérieure à CHF 75.– d\'achats. Pour les commandes inférieures à ce montant, une participation forfaitaire de CHF 7.90 est appliquée pour l\'envoi prioritaire avec suivi.'
+      a: 'La livraison est 100 % GRATUITE pour toute commande égale ou supérieure à 75.– d\'achats (CHF ou EUR). Pour les commandes inférieures à ce montant, une participation forfaitaire de 9.90 CHF / 9.90 € est appliquée pour l\'envoi prioritaire avec suivi.'
     },
     {
       q: 'Quel transporteur utilisez-vous pour acheminer les colis ?',
@@ -124,7 +124,7 @@ export default function LivraisonPage() {
           </div>
           <span className="text-[11px] font-bold text-white/50 uppercase">Frais Offerts</span>
           <h3 className="text-base font-black text-white font-heading mt-0.5">Dès CHF 75.–</h3>
-          <p className="text-xs text-white/60 mt-1">Livraison prioritaire gratuite en Suisse dès 75 CHF (sinon CHF 7.90).</p>
+          <p className="text-xs text-white/60 mt-1">Livraison prioritaire gratuite en Suisse dès 75 CHF (sinon CHF 9.90).</p>
         </div>
 
         <div className="p-5 rounded-3xl bg-[#141414] border border-white/10 flex flex-col justify-between">
@@ -157,7 +157,7 @@ export default function LivraisonPage() {
               <tr className="bg-black/20">
                 <td className="p-3 font-bold text-white">PostPac Priority (La Poste Suisse)</td>
                 <td className="p-3">1 à 2 jours ouvrables</td>
-                <td className="p-3">CHF 7.90</td>
+                <td className="p-3">CHF 9.90</td>
                 <td className="p-3 font-bold text-[#95d600]">GRATUIT (0.00 CHF)</td>
               </tr>
               <tr>

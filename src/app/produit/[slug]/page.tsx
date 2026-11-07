@@ -386,7 +386,7 @@ export default async function ProductDetailPage({ params }: Props) {
       category: product.categorySlug,
     },
     {
-      cost: product.priceChf >= 75 ? 0 : 7.90,
+      cost: product.priceChf >= 75 ? 0 : 9.90,
       minDays: originType === 'PORTUGAL_ONLY' ? 3 : 1,
       maxDays: originType === 'PORTUGAL_ONLY' ? 5 : 2,
       destinations,

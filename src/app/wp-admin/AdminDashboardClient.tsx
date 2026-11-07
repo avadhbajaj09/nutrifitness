@@ -1822,7 +1822,7 @@ export default function AdminDashboardClient() {
     syncOrders();
   };
 
-  const shippingCost = shippingMethod === 'post_priority' ? 7.90 : shippingMethod === 'post_economy' ? 5.90 : shippingMethod === 'express_geneva' ? 12.00 : 0;
+  const shippingCost = shippingMethod === 'post_priority' ? 9.90 : shippingMethod === 'post_economy' ? 5.90 : shippingMethod === 'express_geneva' ? 12.00 : 0;
   const grandTotalToPay = (Number(totalToPay) || 0) + shippingCost;
 
   const cashNumeric = parseFloat(cashTendered) || 0;
@@ -5076,7 +5076,7 @@ export default function AdminDashboardClient() {
                       className="w-full px-3 py-2 text-xs bg-white border border-slate-300 rounded-xl text-slate-900 focus:outline-none font-medium"
                     >
                       <option value="store_pickup">{adminLang === 'fr' ? '🛍️ Retrait Magasin Genève (Gratuit)' : '🛍️ Geneva Store Pickup (Free)'}</option>
-                      <option value="post_priority">{adminLang === 'fr' ? '📦 Poste Suisse Prioritaire 24h (+CHF 7.90)' : '📦 Swiss Post Priority 24h (+CHF 7.90)'}</option>
+                      <option value="post_priority">{adminLang === 'fr' ? '📦 Poste Suisse Prioritaire 24h (+CHF 9.90)' : '📦 Swiss Post Priority 24h (+CHF 9.90)'}</option>
                       <option value="post_economy">{adminLang === 'fr' ? '📬 Poste Suisse Économique 48h (+CHF 5.90)' : '📬 Swiss Post Economy 48h (+CHF 5.90)'}</option>
                       <option value="express_geneva">{adminLang === 'fr' ? '⚡ Coursier Express Genève (+CHF 12.00)' : '⚡ Geneva Express Courier (+CHF 12.00)'}</option>
                     </select>

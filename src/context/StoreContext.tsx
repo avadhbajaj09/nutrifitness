@@ -102,7 +102,9 @@ const WISHLIST_KEY = 'nutrifitness_next_wishlist_v1';
 const LOCALE_KEY = 'nutrifitness_locale_v1';
 const CURRENCY_KEY = 'nutrifitness_currency_v1';
 const COUNTRY_KEY = 'nutrifitness_country_v1';
-const FREE_SHIPPING_THRESHOLD_CHF = 75.0; // CHF
+export const FREE_SHIPPING_THRESHOLD = 75.0; // 75 CHF or 75 EUR
+export const STANDARD_SHIPPING_COST = 9.90; // 9.90 CHF or 9.90 EUR
+const FREE_SHIPPING_THRESHOLD_CHF = FREE_SHIPPING_THRESHOLD;
 
 function sanitizeCartItem(raw: any, loc: string = 'fr'): CartItem | null {
   if (!raw || typeof raw !== 'object') return null;

@@ -69,7 +69,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'store',
     categoryLabel: 'Livraison & Boutique en Suisse',
     question: 'Quels sont les délais et frais de livraison pour la Suisse et le Liechtenstein ?',
-    answer: 'Toutes les commandes validées du lundi au vendredi avant 14h00 sont préparées et confiées à La Poste Suisse le jour même. La livraison s\'effectue par PostPac Priority en 1 à 2 jours ouvrables directement à votre domicile ou en point relais PickPost. La livraison est GRATUITE dès CHF 75.– d\'achats. Pour les commandes inférieures à 75 CHF, une participation forfaitaire de CHF 7.90 est appliquée. Nos stocks étant basés en Suisse, aucun frais de douane ni taxe imprévue ne s\'applique.',
+    answer: 'Toutes les commandes validées du lundi au vendredi avant 14h00 sont préparées et confiées à La Poste Suisse le jour même. La livraison s\'effectue par PostPac Priority en 1 à 2 jours ouvrables directement à votre domicile ou en point relais PickPost. La livraison est GRATUITE dès CHF 75.– d\'achats. Pour les commandes inférieures à 75 CHF, une participation forfaitaire de CHF 9.90 est appliquée. Nos stocks étant basés en Suisse, aucun frais de douane ni taxe imprévue ne s\'applique.',
     keywords: ['livraison', 'poste suisse', 'delai', 'frais', 'postpac', 'priority', '24h', 'gratuit']
   },
   {

@@ -181,7 +181,7 @@ export default function CGVPage() {
               <strong>PostPac Priority (La Poste Suisse) :</strong> Livraison en <strong>24 heures ouvrées</strong> pour toute commande validée avant 14h00 du lundi au vendredi.
             </li>
             <li>
-              <strong>Frais de port offerts :</strong> La livraison est <strong>GRATUITE en Suisse et Liechtenstein dès CHF 75.– d&apos;achats</strong>. Pour les commandes inférieures, une participation forfaitaire de CHF 7.90 est appliquée.
+              <strong>Frais de port offerts :</strong> La livraison est <strong>GRATUITE en Suisse et Liechtenstein dès CHF 75.– d&apos;achats (et dès 75 € en Europe)</strong>. Pour les commandes inférieures, une participation forfaitaire de CHF 9.90 (ou 9.90 €) est appliquée.
             </li>
             <li>
               <strong>Click & Collect 2h :</strong> Retrait gratuit à la boutique NutriFitness (34 Rue des Pâquis, 1201 Suisse) sous 2 heures pendant les horaires d&apos;ouverture.

@@ -142,7 +142,7 @@ export default function CartPage() {
   }, [cartSubtotal, appliedCoupon, discountRate]);
 
   const discountedSubtotal = Math.max(0, cartSubtotal - discountAmount);
-  const shippingCost = freeShippingProgress.isFree ? 0 : 7.90;
+  const shippingCost = freeShippingProgress.isFree ? 0 : 9.90;
   const estimatedVat = (discountedSubtotal * 0.026) / 1.026;
   const totalCost = discountedSubtotal + shippingCost;
 

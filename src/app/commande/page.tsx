@@ -688,23 +688,29 @@ export default function CheckoutPage() {
   }, [portugalItems]);
 
   // Calculate shipping cost per origin
-  // Geneva: PostPac Priority 7.90 CHF (Free >= 75 CHF) or Click & Collect (0 CHF)
+  // Geneva: PostPac Priority 9.90 CHF (Free >= 75 CHF) or Click & Collect (0 CHF)
   const genevaShippingCost = useMemo(() => {
     if (genevaItems.length === 0) return 0;
     if (genevaShippingMethod === 'clickcollect' && isGenevaAddress) return 0;
-    return genevaSubtotal >= 75 ? 0 : 7.90;
+    return genevaSubtotal >= 75 ? 0 : 9.90;
   }, [genevaItems.length, genevaShippingMethod, isGenevaAddress, genevaSubtotal]);
 
-  // Portugal: Express Carrier 9.90 CHF (Free >= 120 CHF)
+  // Portugal: Express Carrier 9.90 CHF/EUR (Free >= 75 CHF/EUR)
   const portugalShippingCost = useMemo(() => {
     if (portugalItems.length === 0) return 0;
-    return portugalSubtotal >= 120 ? 0 : 9.90;
+    return portugalSubtotal >= 75 ? 0 : 9.90;
   }, [portugalItems.length, portugalSubtotal]);
 
   // Total shipping fee
   const totalShippingCost = useMemo(() => {
+    if (cartSubtotal >= 75) {
+      return 0;
+    }
+    if (genevaShippingMethod === 'clickcollect' && isGenevaAddress && portugalItems.length === 0) {
+      return 0;
+    }
     if (isMixedCart) {
-      return genevaShippingCost + portugalShippingCost;
+      return Math.max(genevaShippingCost, portugalShippingCost) || 9.90;
     }
     if (genevaItems.length > 0) {
       return genevaShippingCost;
@@ -713,7 +719,7 @@ export default function CheckoutPage() {
       return portugalShippingCost;
     }
     return 0;
-  }, [isMixedCart, genevaShippingCost, portugalShippingCost, genevaItems.length, portugalItems.length]);
+  }, [cartSubtotal, genevaShippingMethod, isGenevaAddress, portugalItems.length, isMixedCart, genevaShippingCost, portugalShippingCost, genevaItems.length]);
 
   const discountAmount = useMemo(() => {
     if (!appliedCoupon && discountRate === 0) return 0;
@@ -1498,7 +1504,7 @@ export default function CheckoutPage() {
                                 <Truck className="w-3.5 h-3.5 text-[#F80404]" />
                                 <span>PostPac Priority (La Poste Suisse)</span>
                               </span>
-                              <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(7.90)}</span>
+                              <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(9.90)}</span>
                             </div>
                             <p className="text-[11px] text-white/50 mt-0.5">Livraison directe à votre domicile avec numéro de suivi SMS.</p>
                           </div>
@@ -1565,7 +1571,7 @@ export default function CheckoutPage() {
                             <Truck className="w-3.5 h-3.5 text-blue-400" />
                             <span>Transporteur Express International Suivi (DPD / DHL / CTT)</span>
                           </span>
-                          <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
+                          <span>{portugalSubtotal >= 75 ? t.common.free : formatPrice(9.90)}</span>
                         </div>
                         <p className="text-[11px] text-white/50 mt-0.5">
                           Expédition directe avec suivi complet par e-mail et SMS.
@@ -1605,7 +1611,7 @@ export default function CheckoutPage() {
                                 <Truck className="w-4 h-4 text-[#F80404]" />
                                 <span>PostPac Priority (La Poste Suisse)</span>
                               </span>
-                              <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(7.90)}</span>
+                              <span>{genevaSubtotal >= 75 ? t.common.free : formatPrice(9.90)}</span>
                             </div>
                             <p className="text-white/50">Remise avec suivi en ligne Poste Suisse par SMS &amp; e-mail.</p>
                           </div>
@@ -1656,7 +1662,7 @@ export default function CheckoutPage() {
                               <Truck className="w-4 h-4 text-blue-400" />
                               <span>Transporteur Express International Suivi (DPD / DHL / CTT)</span>
                             </span>
-                            <span>{portugalSubtotal >= 120 ? t.common.free : formatPrice(9.90)}</span>
+                            <span>{portugalSubtotal >= 75 ? t.common.free : formatPrice(9.90)}</span>
                           </div>
                           <p className="text-white/50">
                             Colis expédié avec numéro de suivi en ligne direct.

@@ -116,7 +116,7 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
             </div>
           </div>
           <span className="text-emerald-400 text-xs font-bold border border-emerald-500/30 bg-emerald-500/10 px-2.5 py-0.5 rounded-full">
-            {genevaSubtotal >= 75 ? 'Offert' : 'CHF 7.90'}
+            {genevaSubtotal >= 75 ? 'Offert' : 'CHF 9.90'}
           </span>
         </div>
 
@@ -151,7 +151,7 @@ export default function CartShipmentGroups({ cartItems, countryCode = 'CH' }: Ca
             </div>
           </div>
           <span className="text-blue-400 text-xs font-bold border border-blue-500/30 bg-blue-500/10 px-2.5 py-0.5 rounded-full">
-            {ptSubtotal >= 120 ? 'Offert' : 'CHF 9.90'}
+            {ptSubtotal >= 75 ? 'Offert' : 'CHF 9.90'}
           </span>
         </div>
 

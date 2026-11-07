@@ -78,14 +78,14 @@ let stubCounter = 1000;
 function stubRates(origin: 'GENEVA' | 'PORTUGAL'): SendcloudRate[] {
   if (origin === 'GENEVA') {
     return [
-      { id: 1, carrier: 'Swiss Post', carrier_code: 'swiss-post', name: 'PostPac Priority', price: 7.90, min_days: 1, max_days: 2 },
+      { id: 1, carrier: 'Swiss Post', carrier_code: 'swiss-post', name: 'PostPac Priority', price: 9.90, min_days: 1, max_days: 2 },
       { id: 2, carrier: 'DHL', carrier_code: 'dhl', name: 'DHL Express', price: 19.90, min_days: 1, max_days: 1 },
     ];
   }
   return [
     { id: 10, carrier: 'DHL', carrier_code: 'dhl', name: 'DHL Parcel International', price: 9.90, min_days: 3, max_days: 7 },
     { id: 11, carrier: 'GLS', carrier_code: 'gls', name: 'GLS EuroBusinessParcel', price: 8.50, min_days: 4, max_days: 8 },
-    { id: 12, carrier: 'CTT', carrier_code: 'ctt', name: 'CTT Expresso Internacional', price: 7.90, min_days: 5, max_days: 10 },
+    { id: 12, carrier: 'CTT', carrier_code: 'ctt', name: 'CTT Expresso Internacional', price: 9.90, min_days: 5, max_days: 10 },
   ];
 }
 

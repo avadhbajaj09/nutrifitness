@@ -116,7 +116,7 @@ export async function GET(request: NextRequest) {
         const priceVal = defaultVariant?.priceChf || product.priceChf;
         priceFormatted = `${priceVal.toFixed(2)} CHF`;
         const isFreeShipping = priceVal >= 75;
-        shippingCostFormatted = isFreeShipping ? '0.00 CHF' : '7.90 CHF';
+        shippingCostFormatted = isFreeShipping ? '0.00 CHF' : '9.90 CHF';
         shippingService = 'PostPac Priority (La Poste Suisse)';
       } else {
         const eurPriceVal =
@@ -126,7 +126,7 @@ export async function GET(request: NextRequest) {
           product.priceEur ||
           convertPrice(defaultVariant?.priceChf || product.priceChf, 'EUR');
         priceFormatted = `${eurPriceVal.toFixed(2)} EUR`;
-        const isFreeShipping = eurPriceVal >= 120;
+        const isFreeShipping = eurPriceVal >= 75;
         shippingCostFormatted = isFreeShipping ? '0.00 EUR' : '9.90 EUR';
         shippingService = 'Livraison Suivie Europe';
       }
