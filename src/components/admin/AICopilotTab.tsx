@@ -22,6 +22,7 @@ import {
   Layers,
   Settings2,
   Download,
+  Wand2,
 } from 'lucide-react';
 
 interface ChatMessage {
@@ -46,8 +47,10 @@ export default function AICopilotTab() {
   const [provider, setProvider] = useState<'openai' | 'anthropic'>('openai');
   const [apiKey, setApiKey] = useState('');
   const [savedApiKey, setSavedApiKey] = useState('');
+  const [baseUrl, setBaseUrl] = useState('');
   const [showKey, setShowKey] = useState(false);
-  const [model, setModel] = useState('gpt-4o');
+  const [model, setModel] = useState('gpt-6.1-sol');
+  const [imageModel, setImageModel] = useState('gpt-image-2.6-sunburst');
   const [mode, setMode] = useState<'instant' | 'preview'>('instant');
   const [messages, setMessages] = useState<ChatMessage[]>([]);
   const [inputPrompt, setInputPrompt] = useState('');
@@ -55,7 +58,7 @@ export default function AICopilotTab() {
   const [errorMsg, setErrorMsg] = useState<string | null>(null);
   const [isSettingsOpen, setIsSettingsOpen] = useState(false);
 
-  // Dedicated Image Mode toggle (DALL-E 3)
+  // Dedicated Image Mode toggle
   const [isImageMode, setIsImageMode] = useState(false);
   const [imageSize, setImageSize] = useState<'1792x1024' | '1024x1024' | '1024x1792'>('1792x1024');
 
@@ -67,7 +70,9 @@ export default function AICopilotTab() {
     try {
       const storedProvider = localStorage.getItem('nutri_ai_provider') as 'openai' | 'anthropic' | null;
       const storedKey = localStorage.getItem('nutri_ai_key');
+      const storedBaseUrl = localStorage.getItem('nutri_ai_base_url');
       const storedModel = localStorage.getItem('nutri_ai_model');
+      const storedImageModel = localStorage.getItem('nutri_ai_image_model');
       const storedMode = localStorage.getItem('nutri_ai_mode') as 'instant' | 'preview' | null;
 
       if (storedProvider) setProvider(storedProvider);
@@ -75,7 +80,9 @@ export default function AICopilotTab() {
         setApiKey(storedKey);
         setSavedApiKey(storedKey);
       }
+      if (storedBaseUrl) setBaseUrl(storedBaseUrl);
       if (storedModel) setModel(storedModel);
+      if (storedImageModel) setImageModel(storedImageModel);
       if (storedMode) setMode(storedMode);
     } catch (e) {
       console.warn('LocalStorage error:', e);
@@ -98,7 +105,9 @@ export default function AICopilotTab() {
     try {
       localStorage.setItem('nutri_ai_provider', provider);
       localStorage.setItem('nutri_ai_key', apiKey.trim());
+      localStorage.setItem('nutri_ai_base_url', baseUrl.trim());
       localStorage.setItem('nutri_ai_model', model);
+      localStorage.setItem('nutri_ai_image_model', imageModel);
       localStorage.setItem('nutri_ai_mode', mode);
       setSavedApiKey(apiKey.trim());
       setErrorMsg(null);
@@ -111,8 +120,10 @@ export default function AICopilotTab() {
   const handleClearSettings = () => {
     try {
       localStorage.removeItem('nutri_ai_key');
+      localStorage.removeItem('nutri_ai_base_url');
       setApiKey('');
       setSavedApiKey('');
+      setBaseUrl('');
     } catch (e) {
       console.warn(e);
     }
@@ -124,22 +135,23 @@ export default function AICopilotTab() {
     setErrorMsg(null);
   };
 
-  const handleSendMessage = async (textToSend?: string) => {
+  const handleSendMessage = async (textToSend?: string, forceImage = false) => {
     const text = (textToSend || inputPrompt).trim();
     if (!text) return;
 
-    if (!savedApiKey && !apiKey.trim()) {
+    if (!savedApiKey && !apiKey.trim() && !forceImage) {
       setErrorMsg('Please configure your OpenAI or Claude API key in API Settings first.');
       setIsSettingsOpen(true);
       return;
     }
 
     const currentKey = savedApiKey || apiKey.trim();
+    const shouldGenerateImage = forceImage || isImageMode || /\b(image|picture|photo|banner|dessine|creer une image|crée une image|create image|generate image)\b/i.test(text);
 
     const userMsg: ChatMessage = {
       id: String(Date.now()),
       role: 'user',
-      content: isImageMode ? `🎨 [DALL-E 3 Image Request (${imageSize})]: ${text}` : text,
+      content: shouldGenerateImage && !text.startsWith('🎨') ? `🎨 [Image Request]: ${text}` : text,
       timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
     };
 
@@ -148,23 +160,25 @@ export default function AICopilotTab() {
     setIsLoading(true);
     setErrorMsg(null);
 
-    // Reset textarea height
     if (textareaRef.current) {
       textareaRef.current.style.height = 'auto';
     }
 
     try {
-      // If user is explicitly in Image Mode, call direct image generation
-      if (isImageMode) {
+      // Direct Image Generation (GPT Image 2.6 / DALL-E 3 / Flux 4K)
+      if (shouldGenerateImage) {
         const res = await fetch('/api/admin/ai', {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({
-            provider: 'openai',
+            provider,
             apiKey: currentKey,
+            baseUrl: baseUrl.trim() || undefined,
+            imageModel,
             generateImageDirect: {
-              prompt: text,
+              prompt: text.replace(/^🎨\s*\[Image Request\]:\s*/i, ''),
               size: imageSize,
+              model: imageModel,
             },
           }),
         });
@@ -177,17 +191,17 @@ export default function AICopilotTab() {
         const botMsg: ChatMessage = {
           id: String(Date.now() + 1),
           role: 'assistant',
-          content: data.reply || 'Your image has been generated successfully!',
+          content: data.reply || 'Your image has been generated in high resolution!',
           timestamp: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
           visualCard: data.visualCard,
         };
 
         setMessages(prev => [...prev, botMsg]);
-        setIsImageMode(false); // return to normal chat
+        setIsImageMode(false);
         return;
       }
 
-      // Standard Chat / Function Calling Flow
+      // Standard Conversation & Autonomous Store Tools
       const historyToSend = messages
         .concat(userMsg)
         .slice(-10)
@@ -199,7 +213,9 @@ export default function AICopilotTab() {
         body: JSON.stringify({
           provider,
           apiKey: currentKey,
+          baseUrl: baseUrl.trim() || undefined,
           model,
+          imageModel,
           mode,
           messages: historyToSend,
         }),
@@ -239,6 +255,8 @@ export default function AICopilotTab() {
         body: JSON.stringify({
           provider,
           apiKey: savedApiKey || apiKey.trim(),
+          baseUrl: baseUrl.trim() || undefined,
+          imageModel,
           confirmedAction: pendingAction,
         }),
       });
@@ -273,33 +291,37 @@ export default function AICopilotTab() {
     await handleSendMessage(`Update the homepage hero banner to use this image URL: "${imageUrl}" with title "${title || 'Marvelous Nutrition'}" and button "Shop Now" linking to "/boutique"`);
   };
 
-  const STARTER_PROMPTS = [
-    {
-      title: 'Generate Hero Banner Image',
-      desc: 'Create an image with DALL-E 3',
-      prompt: 'Generate an energetic fitness hero banner image for Marvelous Nutrition Creatine with moody gym lighting, neon yellow accents, and dramatic atmosphere',
-      icon: Palette,
-      isImage: true,
-    },
-    {
-      title: 'Update Product Price',
-      desc: 'Change selling or compare price',
-      prompt: 'Change Marvelous Creatine price to 29.90 CHF with 34.90 CHF regular price',
-      icon: Zap,
-    },
-    {
-      title: 'Check Warehouse Inventory',
-      desc: 'Geneva store & Portugal warehouse',
-      prompt: 'Check the current stock of Whey Isolate in Geneva and Portugal',
-      icon: Layers,
-    },
-    {
-      title: 'Create Promo Coupon Code',
-      desc: 'Immediate discount code for checkout',
-      prompt: 'Create a 10% discount promo code SUMMER10 valid for 30 days',
-      icon: Sparkles,
-    },
+  const QUICK_IMAGE_PRESETS = [
+    { label: '💥 Creatine Banner (16:9)', prompt: 'Marvelous Line Creatine Monohydrate Pure 300g bottle on dark stone podium, yellow energy crystals, moody black gym lighting, cinematic 8k banner' },
+    { label: '⚡ Whey Isolate Poster (16:9)', prompt: 'Marvelous Lean AF 100% CFM Whey Isolate 2kg tub with Swiss mountain backdrop, athletic fitness aesthetic, studio lighting' },
+    { label: '🌙 Magnesium Sleep Banner (16:9)', prompt: 'Marvelous Magnesium Bisglycinate 90 capsules on dark luxury black surface with soft gold aura, recovery and deep sleep mood' },
+    { label: '🔥 Pre-Workout Hardcore (16:9)', prompt: 'Marvelous POWER M.F Pre-Workout extreme powder explosion, glowing neon yellow energy streaks, dark high-adrenaline fitness atmosphere' },
   ];
+
+  const QUICK_STORE_ACTIONS = [
+    { label: '💰 Set L-Glutamin to 42 CHF', prompt: 'change price of L-Glutamin to 42 chf 300g' },
+    { label: '🏷️ Set Pure Creatine to 35 CHF', prompt: 'change price of Marvelous Pure Creatine 300g to 35 CHF' },
+    { label: '📦 Check Whey Isolate Stock', prompt: 'check stock of Lean AF Whey Isolate in Geneva and Portugal' },
+    { label: '🎟️ Create 10% Discount Coupon', prompt: 'create promo code NUTRI10 with 10% discount for 30 days' },
+  ];
+
+  const getModelDisplayName = (m: string, p: string) => {
+    if (p === 'anthropic') {
+      if (m.includes('haiku')) return 'Claude 3.5 Haiku';
+      return 'Claude 3.5 Sonnet';
+    }
+    switch (m) {
+      case 'gpt-6.1-sol': return 'GPT-6.1 Sol';
+      case 'gpt-6-astra': return 'GPT-6 Astra';
+      case 'gpt-6.1-terra': return 'GPT-6.1 Terra';
+      case 'gpt-6-sol': return 'GPT-6 Sol';
+      case 'gpt-6-luna': return 'GPT-6 Luna';
+      case 'o3-mini': return 'o3-mini';
+      case 'o1': return 'o1';
+      case 'gpt-4o': return 'GPT-4o';
+      default: return m;
+    }
+  };
 
   return (
     <div className="flex flex-col h-[calc(100vh-120px)] bg-white antialiased font-sans select-none">
@@ -313,35 +335,29 @@ export default function AICopilotTab() {
             className="flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-slate-100 text-slate-800 text-xs font-bold transition-all border border-slate-200 shadow-2xs"
           >
             <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse" />
-            <span>{provider === 'openai' ? 'ChatGPT (GPT-4o)' : 'Claude 3.5 Sonnet'}</span>
+            <span>{getModelDisplayName(model, provider)}</span>
             <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
           </button>
 
-          {/* Quick status badge */}
           <span className="hidden sm:inline-block text-[11px] font-semibold text-slate-400">
-            {savedApiKey ? 'Ready' : 'API Key required'}
+            {savedApiKey ? 'Connected & Ready' : 'API Key required'}
           </span>
         </div>
 
         {/* Action Controls */}
         <div className="flex items-center gap-2">
-          {/* Create Image Toggle */}
+          {/* Quick Create Image Button */}
           <button
             type="button"
-            onClick={() => {
-              setIsImageMode(!isImageMode);
-              if (!isImageMode && provider !== 'openai') {
-                setProvider('openai');
-              }
-            }}
+            onClick={() => setIsImageMode(!isImageMode)}
             className={`flex items-center gap-1.5 px-3 py-1.5 rounded-full text-xs font-bold transition-all shadow-2xs ${
               isImageMode
                 ? 'bg-gradient-to-r from-amber-500 to-rose-500 text-white shadow-sm ring-2 ring-rose-200'
                 : 'bg-slate-50 hover:bg-slate-100 text-slate-700 border border-slate-200'
             }`}
           >
-            <Palette className="w-3.5 h-3.5" />
-            <span>{isImageMode ? 'Image Mode Active' : 'Create Image'}</span>
+            <Palette className="w-3.5 h-3.5 text-rose-500" />
+            <span>{isImageMode ? 'Image Mode Active' : '🎨 Create Image'}</span>
           </button>
 
           {/* New Chat */}
@@ -370,12 +386,12 @@ export default function AICopilotTab() {
 
       {/* 2. Slide-Down Settings Drawer */}
       {isSettingsOpen && (
-        <div className="border-b border-slate-200 bg-slate-50/90 backdrop-blur-md px-6 py-4 animate-in slide-in-from-top-2 duration-150 shadow-sm z-20">
+        <div className="border-b border-slate-200 bg-slate-50/95 backdrop-blur-md px-6 py-4 animate-in slide-in-from-top-2 duration-150 shadow-sm z-20">
           <div className="max-w-3xl mx-auto space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2">
                 <Key className="w-4 h-4 text-slate-700" />
-                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">AI API Settings</h3>
+                <h3 className="text-xs font-bold uppercase tracking-wider text-slate-900">AI Intelligence & Model Settings</h3>
               </div>
               <button
                 type="button"
@@ -387,7 +403,7 @@ export default function AICopilotTab() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
-              {/* Provider & Model */}
+              {/* Provider & Text Model */}
               <div className="space-y-2">
                 <label className="text-[11px] font-bold text-slate-700 block">AI Provider</label>
                 <div className="grid grid-cols-2 gap-1.5">
@@ -395,7 +411,7 @@ export default function AICopilotTab() {
                     type="button"
                     onClick={() => {
                       setProvider('openai');
-                      setModel('gpt-4o');
+                      setModel('gpt-6.1-sol');
                     }}
                     className={`px-3 py-1.5 rounded-xl text-xs font-bold border transition-all ${
                       provider === 'openai'
@@ -422,33 +438,63 @@ export default function AICopilotTab() {
                 </div>
 
                 <div className="pt-1">
-                  <label className="text-[10px] font-semibold text-slate-500 block mb-1">Model</label>
+                  <label className="text-[10px] font-semibold text-slate-500 block mb-1">Text & Reasoning Model</label>
                   <select
                     value={model}
                     onChange={(e) => setModel(e.target.value)}
-                    className="w-full text-xs font-semibold px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none"
+                    className="w-full text-xs font-bold px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none"
                   >
                     {provider === 'openai' ? (
                       <>
-                        <option value="gpt-4o">GPT-4o (Recommended)</option>
-                        <option value="gpt-4o-mini">GPT-4o Mini</option>
-                        <option value="o1-mini">o1 Mini (Reasoning)</option>
+                        <optgroup label="🌟 GPT-6 Models">
+                          <option value="gpt-6.1-sol">GPT-6.1 Sol (Advanced coding & automation - Recommended)</option>
+                          <option value="gpt-6-astra">GPT-6 Astra (Most demanding reasoning & coding)</option>
+                          <option value="gpt-6.1-terra">GPT-6.1 Terra (Fast reasoning & visual understanding)</option>
+                          <option value="gpt-6-sol">GPT-6 Sol (Complex coding & agent workflows)</option>
+                          <option value="gpt-6-luna">GPT-6 Luna (Affordable, high-volume AI)</option>
+                        </optgroup>
+                        <optgroup label="⚡ OpenAI Standard">
+                          <option value="gpt-4o">GPT-4o (Smart & Fast Multimodal)</option>
+                          <option value="o3-mini">o3-mini (High Reasoning Effort)</option>
+                          <option value="o1">o1 (Deep Flagship Reasoning)</option>
+                          <option value="gpt-4o-mini">GPT-4o Mini (Cost Efficient)</option>
+                        </optgroup>
                       </>
                     ) : (
                       <>
-                        <option value="claude-3-5-sonnet-20241022">Claude 3.5 Sonnet</option>
-                        <option value="claude-3-5-haiku-20241022">Claude 3.5 Haiku</option>
+                        <option value="claude-3-5-sonnet-20241022">🧠 Claude 3.5 Sonnet (Flagship Intelligence)</option>
+                        <option value="claude-3-5-haiku-20241022">🚀 Claude 3.5 Haiku (Fast)</option>
                       </>
                     )}
                   </select>
                 </div>
+
+                <div className="pt-1">
+                  <label className="text-[10px] font-semibold text-slate-500 block mb-1">Image Model</label>
+                  <select
+                    value={imageModel}
+                    onChange={(e) => setImageModel(e.target.value)}
+                    className="w-full text-xs font-bold px-2.5 py-1.5 bg-white border border-slate-200 rounded-lg text-slate-800 focus:outline-none"
+                  >
+                    <optgroup label="🎨 Posters, Ads & Designs">
+                      <option value="gpt-image-2.6-sunburst">GPT Image 2.6 Sunburst (Detailed image generation & editing)</option>
+                      <option value="gpt-image-2.6-flare">GPT Image 2.6 Flare (Fast image generation)</option>
+                      <option value="gpt-image-2.5-sunburst">GPT Image 2.5 Sunburst (High-quality image generation)</option>
+                      <option value="gpt-image-2.5-flare">GPT Image 2.5 Flare (Everyday image generation)</option>
+                      <option value="gpt-image-2">GPT Image 2 (Image generation & editing)</option>
+                    </optgroup>
+                    <optgroup label="✨ OpenAI Standard">
+                      <option value="dall-e-3">DALL-E 3 (OpenAI Standard)</option>
+                    </optgroup>
+                  </select>
+                </div>
               </div>
 
-              {/* API Key */}
+              {/* API Key & Gateway */}
               <div className="space-y-2 md:col-span-2">
                 <div className="flex items-center justify-between">
                   <label className="text-[11px] font-bold text-slate-700 block">
-                    {provider === 'openai' ? 'OpenAI API Key (sk-...)' : 'Anthropic API Key (sk-ant-...)'}
+                    {provider === 'openai' ? 'API Key (OpenAI / Gateway sk-...)' : 'Anthropic Claude API Key (sk-ant-...)'}
                   </label>
                   {savedApiKey && (
                     <button
@@ -466,7 +512,7 @@ export default function AICopilotTab() {
                     type={showKey ? 'text' : 'password'}
                     value={apiKey}
                     onChange={(e) => setApiKey(e.target.value)}
-                    placeholder={provider === 'openai' ? 'sk-proj-...' : 'sk-ant-api03-...'}
+                    placeholder={provider === 'openai' ? 'sk-proj-... or gateway key' : 'sk-ant-api03-...'}
                     className="w-full px-3 py-1.5 pr-10 text-xs font-mono bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-400"
                   />
                   <button
@@ -478,10 +524,24 @@ export default function AICopilotTab() {
                   </button>
                 </div>
 
+                {/* Optional Custom Base URL */}
+                <div className="pt-0.5">
+                  <label className="text-[10px] font-semibold text-slate-500 block mb-1">
+                    API Base URL / Gateway <span className="font-normal text-slate-400">(Optional: default is https://api.openai.com/v1)</span>
+                  </label>
+                  <input
+                    type="text"
+                    value={baseUrl}
+                    onChange={(e) => setBaseUrl(e.target.value)}
+                    placeholder="https://api.openai.com/v1"
+                    className="w-full px-3 py-1.5 text-xs font-mono bg-white border border-slate-200 rounded-xl text-slate-800 focus:outline-none focus:ring-1 focus:ring-slate-400"
+                  />
+                </div>
+
                 {/* Mode & Save */}
                 <div className="flex flex-wrap items-center justify-between gap-2 pt-1">
                   <div className="flex items-center gap-1.5">
-                    <span className="text-[11px] font-semibold text-slate-500">Mode:</span>
+                    <span className="text-[11px] font-semibold text-slate-500">Execution Mode:</span>
                     <button
                       type="button"
                       onClick={() => setMode('instant')}
@@ -489,7 +549,7 @@ export default function AICopilotTab() {
                         mode === 'instant' ? 'bg-black text-white' : 'bg-slate-200 text-slate-600'
                       }`}
                     >
-                      ⚡ Instant
+                      ⚡ Instant Apply
                     </button>
                     <button
                       type="button"
@@ -507,7 +567,7 @@ export default function AICopilotTab() {
                     onClick={handleSaveSettings}
                     className="px-4 py-1.5 bg-slate-900 hover:bg-black text-white text-xs font-bold rounded-xl transition-all shadow-2xs"
                   >
-                    Save API Key
+                    Save Settings
                   </button>
                 </div>
               </div>
@@ -536,7 +596,7 @@ export default function AICopilotTab() {
         <div className="max-w-3xl mx-auto w-full space-y-6">
           {/* Empty State / Welcome Screen */}
           {messages.length === 0 && (
-            <div className="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-6 pt-8">
+            <div className="flex flex-col items-center justify-center min-h-[50vh] text-center space-y-5 pt-6">
               <div className="w-14 h-14 rounded-full bg-gradient-to-tr from-black via-slate-800 to-red-600 flex items-center justify-center text-white shadow-md">
                 <Sparkles className="w-7 h-7" />
               </div>
@@ -546,38 +606,54 @@ export default function AICopilotTab() {
                   What can I help you change today?
                 </h1>
                 <p className="text-xs text-slate-500 mt-1">
-                  Autonomous AI Copilot connected live to NutriFitness.ch
+                  Autonomous AI Copilot connected live to NutriFitness.ch products & banners
                 </p>
               </div>
 
-              {/* ChatGPT-style starter prompt cards */}
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 w-full max-w-2xl pt-4">
-                {STARTER_PROMPTS.map((item, idx) => {
-                  const Icon = item.icon;
-                  return (
+              {/* Quick Image Creation Presets Banner */}
+              <div className="w-full max-w-2xl bg-gradient-to-r from-amber-50/70 via-rose-50/50 to-orange-50/70 border border-amber-200/80 rounded-2xl p-4 text-left shadow-2xs space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-slate-900 font-bold text-xs">
+                    <Palette className="w-4 h-4 text-rose-600" />
+                    <span>🎨 1-Click Banner Image Generator (16:9 Posters & Ads)</span>
+                  </div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">{imageModel}</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                  {QUICK_IMAGE_PRESETS.map((item, idx) => (
                     <button
                       key={idx}
                       type="button"
-                      onClick={() => {
-                        if (item.isImage) {
-                          setIsImageMode(true);
-                          setInputPrompt(item.prompt);
-                        } else {
-                          handleSendMessage(item.prompt);
-                        }
-                      }}
-                      className="p-3.5 bg-white hover:bg-slate-50 border border-slate-200 hover:border-slate-300 rounded-2xl text-left transition-all shadow-2xs group flex flex-col justify-between"
+                      onClick={() => handleSendMessage(item.prompt, true)}
+                      className="px-3 py-2 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-xl text-left text-xs font-semibold text-slate-800 transition-all hover:border-slate-300 shadow-2xs"
                     >
-                      <div className="flex items-center gap-2 text-slate-800 font-bold text-xs mb-1">
-                        <Icon className="w-3.5 h-3.5 text-slate-600 group-hover:text-red-600 transition-colors" />
-                        <span>{item.title}</span>
-                      </div>
-                      <span className="text-[11px] text-slate-400 group-hover:text-slate-600 transition-colors line-clamp-1">
-                        {item.desc}
-                      </span>
+                      {item.label}
                     </button>
-                  );
-                })}
+                  ))}
+                </div>
+              </div>
+
+              {/* Quick Store Operations Shortcuts */}
+              <div className="w-full max-w-2xl bg-slate-50/80 border border-slate-200/80 rounded-2xl p-4 text-left shadow-2xs space-y-2.5">
+                <div className="flex items-center justify-between">
+                  <div className="flex items-center gap-2 text-slate-900 font-bold text-xs">
+                    <Zap className="w-4 h-4 text-emerald-600" />
+                    <span>⚡ Quick Store Actions</span>
+                  </div>
+                  <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider">Live</span>
+                </div>
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-1">
+                  {QUICK_STORE_ACTIONS.map((item, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => handleSendMessage(item.prompt)}
+                      className="px-3 py-2 bg-white hover:bg-slate-50 border border-slate-200/90 rounded-xl text-left text-xs font-semibold text-slate-800 transition-all hover:border-slate-300 shadow-2xs"
+                    >
+                      {item.label}
+                    </button>
+                  ))}
+                </div>
               </div>
             </div>
           )}
@@ -696,7 +772,7 @@ export default function AICopilotTab() {
                 <RefreshCw className="w-3.5 h-3.5 animate-spin" />
               </div>
               <span className="text-xs text-slate-500 font-medium">
-                {isImageMode ? 'DALL-E 3 is creating your image...' : 'Copilot is thinking & executing actions...'}
+                {isImageMode ? 'AI is creating your image in 4K...' : 'Copilot is analyzing & executing store actions...'}
               </span>
             </div>
           )}
@@ -710,21 +786,32 @@ export default function AICopilotTab() {
         <div className="max-w-3xl mx-auto w-full">
           {/* Active Image Mode Indicator Toolbar */}
           {isImageMode && (
-            <div className="mb-2 px-3 py-1.5 bg-gradient-to-r from-amber-50 to-rose-50 border border-amber-200 rounded-2xl flex items-center justify-between text-xs animate-in fade-in duration-150">
+            <div className="mb-2 px-3 py-1.5 bg-gradient-to-r from-amber-50 to-rose-50 border border-amber-200 rounded-2xl flex flex-wrap items-center justify-between gap-2 text-xs animate-in fade-in duration-150">
               <div className="flex items-center gap-2">
                 <Palette className="w-4 h-4 text-rose-600" />
-                <span className="font-bold text-slate-800">DALL-E 3 Image Mode Active</span>
+                <span className="font-bold text-slate-800">Image Generation Mode</span>
               </div>
               <div className="flex items-center gap-2">
-                <span className="text-[11px] font-semibold text-slate-500">Aspect Ratio:</span>
+                <select
+                  value={imageModel}
+                  onChange={(e) => setImageModel(e.target.value)}
+                  className="bg-white border border-slate-200 rounded-lg text-xs font-bold px-2 py-1 text-slate-800"
+                >
+                  <option value="gpt-image-2.6-sunburst">GPT Image 2.6 Sunburst</option>
+                  <option value="gpt-image-2.6-flare">GPT Image 2.6 Flare</option>
+                  <option value="gpt-image-2.5-sunburst">GPT Image 2.5 Sunburst</option>
+                  <option value="gpt-image-2.5-flare">GPT Image 2.5 Flare</option>
+                  <option value="gpt-image-2">GPT Image 2</option>
+                  <option value="dall-e-3">DALL-E 3</option>
+                </select>
                 <select
                   value={imageSize}
                   onChange={(e) => setImageSize(e.target.value as any)}
                   className="bg-white border border-slate-200 rounded-lg text-xs font-bold px-2 py-1 text-slate-800"
                 >
-                  <option value="1792x1024">Wide Banner (16:9)</option>
-                  <option value="1024x1024">Square Product (1:1)</option>
-                  <option value="1024x1792">Vertical Mobile (9:16)</option>
+                  <option value="1792x1024">Wide (16:9)</option>
+                  <option value="1024x1024">Square (1:1)</option>
+                  <option value="1024x1792">Mobile (9:16)</option>
                 </select>
                 <button
                   type="button"
@@ -751,7 +838,7 @@ export default function AICopilotTab() {
                   ? 'bg-rose-100 text-rose-700'
                   : 'hover:bg-slate-100 text-slate-500 hover:text-slate-800'
               }`}
-              title={isImageMode ? 'Cancel Image Mode' : 'Create Image with DALL-E 3'}
+              title={isImageMode ? 'Cancel Image Mode' : 'Create Image (16:9 Banner, 1:1 Square, 9:16)'}
             >
               <Palette className="w-5 h-5" />
             </button>
@@ -769,8 +856,8 @@ export default function AICopilotTab() {
               }}
               placeholder={
                 isImageMode
-                  ? 'Describe the image you want to generate (e.g. "Modern fitness banner for Creatine with dark gym background")...'
-                  : 'Message NutriFitness Copilot or create an image...'
+                  ? 'Describe the image to create (e.g. "Modern fitness banner for Creatine with dark gym background")...'
+                  : 'Message NutriFitness Copilot (e.g. "change price of L-Glutamin to 42 chf 300g" or "create image")...'
               }
               rows={1}
               disabled={isLoading}

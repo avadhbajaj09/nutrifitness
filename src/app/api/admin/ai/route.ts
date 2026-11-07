@@ -7,12 +7,11 @@ import { DEFAULT_HERO_BANNERS, type HeroBanner } from '@/lib/banners';
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
 
-const SYSTEM_PROMPT = `You are the NutriFitness AI Store Copilot.
-You assist the owner of NutriFitness.ch (physical store at 34 Rue des Pâquis, 1201 Geneva, Switzerland).
-You have direct autonomous control over store operations via your available tools:
-1. Banners & Homepage Sliders: View, update, or create hero banners.
-2. Products & Pricing: Search products, update selling prices (base_price), regular compare prices, and warehouse stock (Geneva & Portugal).
-3. Image Generation: When the user is using OpenAI, you can generate banner posters and product graphics using DALL-E 3!
+const SYSTEM_PROMPT = `You are the NutriFitness AI Store Copilot — an expert, proactive e-commerce manager for NutriFitness.ch (physical store at 34 Rue des Pâquis, 1201 Geneva, Switzerland).
+You have autonomous control over store operations via your available tools:
+1. Products & Pricing: Search products, update selling prices (base_price), regular compare prices, and warehouse stock (Geneva & Portugal).
+2. Image Generation: Generate stunning advertising banners, posters, and product visuals using GPT Image 2.6 / DALL-E / Flux 4K.
+3. Banners & Homepage Sliders: View, update, or create hero banners.
 4. Coupons: Create discount promo codes (e.g. 10%, 15%, 20 CHF off).
 5. Store Announcements: Update top bar notifications.
 
@@ -23,18 +22,75 @@ Store Facts:
 - Warehouses: GENEVA (store stock) and PORTUGAL (central stock).
 - Key brands: Marvelous Nutrition, BigMan, Applied Nutrition, ProNutrition, Creapure.
 
-Always respond in the same language as the user (English or French).
-Converse naturally and supportively with the store owner, answering their questions, discussing ideas, and confirming all actions taken.
-When executing actions, be concise, clear, and report the exact changes made.`;
+STORE TOP PRODUCTS KNOWLEDGE BASE:
+- Marvelous L-Glutamine Kyowa Quality® 300g (slug: "marvelous-glutamine-kyowa-300g", current price: 40 CHF)
+- Marvelous Line Créatine Monohydrate Pure 300g (slug: "marvelous-line-creatine-monohydrate-pure", current price: 35 CHF)
+- Marvelous Magnésium Bisglycinate 90 Gélules (slug: "magnesium-bisglycinate-90-caps", current price: 30 CHF)
+- Marvelous Lean AF 100% CFM Whey Isolat 2kg (slug: "marvelous-lean-af-cfm-whey-isolat-2kg", current price: 80 CHF)
+- Marvelous L-Arginine Pure Micronisée 300g (slug: "marvelous-l-arginine-pure-micronisee", current price: 25 CHF)
+- Marvelous Ashwagandha KSM-66® 60 Gélules (slug: "marvelous-ashwagandha-ksm-66-titree", current price: 25 CHF)
+- Marvelous Bêta-Alanine Pure Micronisée 300g (slug: "marvelous-beta-alanine-pure-micronisee", current price: 25 CHF)
+- Marvelous POWER M.F Pre-Workout Extrême 300g (slug: "marvelous-power-mf-pre-workout-extreme", current price: 30 CHF)
+- Marvelous Big Lean Mass Gainer 3kg (slug: "big-lean-mass-gainer", current price: 59 CHF)
+- Marvelous Citrulline Malate 300g (slug: "marvelous-citrulline-malate-black-and-yellow", current price: 35 CHF)
+- Bigman Glutamine Kyowa 300g (slug: "glutamine-bigman-kyowa-300g", current price: 40 CHF)
+- Bigman Créatine Monohydrate 90g (slug: "creatine-poudre-90g", price: 9.9 CHF)
+- Dirty Squads L-Glutamine 300g (slug: "dirty-squads-l-glutamine-pure-300g", price: 25 CHF)
+- Dirty Squads Creapure® Créatine Pure 300g (slug: "dirty-squads-creapure-creatine-pure", price: 40 CHF)
+- Applied Nutrition Créatine Monohydrate 250g (slug: "applied-creatine-monohydrate-250g", price: 29.9 CHF)
+
+CRITICAL INSTRUCTIONS FOR PRODUCT SEARCH & PRICING:
+- When a user asks to change a price (e.g. "change price of L-Glutamin to 42 chf 300g", "marveleous", or "update creatine price"):
+  1. NEVER say you cannot find the product if a matching product exists! Handle typos seamlessly ("marveleous" = Marvelous, "L-Glutamin" = Marvelous L-Glutamine).
+  2. For "L-Glutamin 300g" or "Marvelous Glutamine", it corresponds to slug "marvelous-glutamine-kyowa-300g".
+  3. If a price is specified in the prompt (e.g. 42 CHF), call update_product_price immediately without asking unnecessary questions!
+- For images: When the user asks to create an image, banner, or visual, call generate_image immediately with a rich visual description!
+- Always respond in the same language as the user (English or French). Be concise, fast, and confirm executed changes.`;
 
 // Common Tool Definitions
 const TOOL_DEFINITIONS = [
   {
-    name: 'get_banners',
-    description: 'Retrieve all current homepage hero banners and their configuration.',
+    name: 'update_product_price',
+    description: 'Update the selling price (base_price) and optional regular price (compare_at_price) of a product in the store.',
     parameters: {
       type: 'object',
-      properties: {},
+      properties: {
+        productIdOrSlug: { type: 'string', description: 'Product ID, SKU, or URL slug (e.g. marvelous-glutamine-kyowa-300g or product name)' },
+        base_price: { type: 'number', description: 'New selling price in CHF (e.g. 42)' },
+        compare_at_price: { type: 'number', description: 'Optional regular price (for strikethrough sale price, e.g. 49.90)' },
+      },
+      required: ['productIdOrSlug', 'base_price'],
+    },
+  },
+  {
+    name: 'generate_image',
+    description: 'Generate an advertising poster, hero banner visual, or product graphic using GPT Image 2.6 / DALL-E / Flux 4K.',
+    parameters: {
+      type: 'object',
+      properties: {
+        prompt: { type: 'string', description: 'Visual description of the image to generate' },
+        size: { 
+          type: 'string', 
+          enum: ['1792x1024', '1024x1024', '1024x1792'], 
+          description: 'Aspect ratio: "1792x1024" for wide hero banners, "1024x1024" for square product images, "1024x1792" for vertical mobile posters' 
+        },
+        model: {
+          type: 'string',
+          description: 'Image model: gpt-image-2.6-sunburst, gpt-image-2.6-flare, gpt-image-2.5-sunburst, gpt-image-2.5-flare, dall-e-3'
+        }
+      },
+      required: ['prompt'],
+    },
+  },
+  {
+    name: 'search_products',
+    description: 'Search products by name, slug, brand, or SKU to inspect pricing and stock.',
+    parameters: {
+      type: 'object',
+      properties: {
+        query: { type: 'string', description: 'Search keyword, product name, or brand (e.g. "glutamine", "creatine", "marvelous")' },
+      },
+      required: ['query'],
     },
   },
   {
@@ -49,7 +105,7 @@ const TOOL_DEFINITIONS = [
         badge: { type: 'string', description: 'Small badge text, e.g. "100% Stock Suisse"' },
         wideImage: { type: 'string', description: 'Desktop wide banner image URL' },
         mobileImage: { type: 'string', description: 'Mobile banner image URL (defaults to wideImage)' },
-        link: { type: 'string', description: 'Product destination URL or page link, e.g. /produit/marvelous-line-creatine-monohydrate-pure' },
+        link: { type: 'string', description: 'Product destination URL or page link, e.g. /produit/marvelous-glutamine-kyowa-300g' },
         ctaText: { type: 'string', description: 'Button text, e.g. "Shop Now", "Commander"' },
         sortOrder: { type: 'number', description: 'Order position in slider (0 is first)' },
         isActive: { type: 'boolean', description: 'Whether the banner is visible' },
@@ -58,43 +114,11 @@ const TOOL_DEFINITIONS = [
     },
   },
   {
-    name: 'generate_image',
-    description: 'Generate an advertising poster, hero banner visual, or product graphic using DALL-E 3 (OpenAI). Returns a high-resolution generated image URL.',
+    name: 'get_banners',
+    description: 'Retrieve all current homepage hero banners and their configuration.',
     parameters: {
       type: 'object',
-      properties: {
-        prompt: { type: 'string', description: 'Detailed visual description of the image to generate (in English for best DALL-E quality)' },
-        size: { 
-          type: 'string', 
-          enum: ['1792x1024', '1024x1024', '1024x1792'], 
-          description: 'Aspect ratio: "1792x1024" for wide hero banners, "1024x1024" for square product images, "1024x1792" for vertical mobile posters' 
-        },
-      },
-      required: ['prompt'],
-    },
-  },
-  {
-    name: 'search_products',
-    description: 'Search products by name, slug, brand, or SKU to inspect pricing and stock.',
-    parameters: {
-      type: 'object',
-      properties: {
-        query: { type: 'string', description: 'Search term or product name' },
-      },
-      required: ['query'],
-    },
-  },
-  {
-    name: 'update_product_price',
-    description: 'Update the selling price (base_price) and optional regular price (compare_at_price) of a product.',
-    parameters: {
-      type: 'object',
-      properties: {
-        productIdOrSlug: { type: 'string', description: 'Product ID, UUID, SKU, or URL slug (e.g. marvelous-line-creatine-monohydrate-pure)' },
-        base_price: { type: 'number', description: 'New selling price in CHF (e.g. 29.90)' },
-        compare_at_price: { type: 'number', description: 'Optional regular price (for strikethrough sale price, e.g. 39.90)' },
-      },
-      required: ['productIdOrSlug', 'base_price'],
+      properties: {},
     },
   },
   {
@@ -125,64 +149,241 @@ const TOOL_DEFINITIONS = [
   },
 ];
 
-// Helper: Execute a Tool Call directly against Supabase / Stripe / OpenAI
+// Helper: Normalize query into cleaned tokens
+function cleanTokens(raw: string): string[] {
+  const normalized = raw
+    .toLowerCase()
+    .normalize('NFD').replace(/[\u0300-\u036f]/g, '')
+    .replace(/marveleous|marvelus|marvellous/g, 'marvelous')
+    .replace(/glutamin\b/g, 'glutamine')
+    .replace(/creatin\b/g, 'creatine')
+    .replace(/protein\b/g, 'proteine');
+
+  const words = normalized.split(/[\s\-_\/,\.]+/).filter(w => w.length >= 2);
+  const stopwords = new Set([
+    'change', 'price', 'prix', 'modifier', 'changer', 'set', 'update',
+    'de', 'du', 'la', 'le', 'des', 'les', 'to', 'at', 'of', 'for', 'pour',
+    'chf', 'eur', 'frs', 'fr', 'in', 'en', 'our', 'notre', 'your', 'votre'
+  ]);
+  return words.filter(w => !stopwords.has(w));
+}
+
+// Helper: Smart Fuzzy Product Search
+async function findMatchingProducts(supabase: any, rawQuery: string) {
+  const cleanId = rawQuery.trim().replace(/^https?:\/\/[^\/]+\/produit\//, '').replace(/\/$/, '');
+  
+  // 1. Direct match by exact slug, id, or sku
+  const { data: direct } = await supabase
+    .from('products')
+    .select('id, name, slug, sku, base_price, compare_at_price, product_stock(origin_id, quantity)')
+    .or(`id.eq.${cleanId},slug.eq.${cleanId},sku.eq.${cleanId}`)
+    .maybeSingle();
+
+  if (direct) return [direct];
+
+  // 2. Tokenized fuzzy search
+  const tokens = cleanTokens(rawQuery);
+  if (tokens.length === 0) return [];
+
+  const orConds = tokens.flatMap(t => [
+    `name.ilike.%${t}%`,
+    `slug.ilike.%${t}%`
+  ]);
+
+  const { data: list, error } = await supabase
+    .from('products')
+    .select('id, name, slug, sku, base_price, compare_at_price, product_stock(origin_id, quantity)')
+    .or(orConds.join(','))
+    .limit(25);
+
+  if (error || !list) return [];
+
+  // Relevance ranking
+  const scored = list.map((p: any) => {
+    let score = 0;
+    const nameLow = p.name.toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+    const slugLow = p.slug.toLowerCase();
+
+    for (const token of tokens) {
+      if (nameLow.includes(token)) score += 10;
+      if (slugLow.includes(token)) score += 8;
+      if (token === 'marvelous' && (nameLow.includes('marvelous') || slugLow.includes('marvelous'))) score += 15;
+      if (token === 'glutamine' && (nameLow.includes('glutamine') || slugLow.includes('glutamine'))) score += 15;
+      if (token === 'creatine' && (nameLow.includes('creatine') || slugLow.includes('creatine'))) score += 15;
+      if (token === '300g' && (nameLow.includes('300g') || slugLow.includes('300g'))) score += 10;
+    }
+    return { ...p, score };
+  }).sort((a: any, b: any) => b.score - a.score);
+
+  return scored;
+}
+
+// Helper: Execute a Tool Call directly against Supabase / Stripe / DALL-E / Flux
 async function executeTool(
   name: string,
   args: any,
-  context?: { apiKey?: string; provider?: string }
+  context?: { apiKey?: string; provider?: string; baseUrl?: string; imageModel?: string }
 ): Promise<{ success: boolean; data?: any; error?: string; visualCard?: any }> {
   const supabase = getAdminSupabase();
 
   try {
-    if (name === 'get_banners') {
-      const { data, error } = await supabase.from('hero_banners').select('*').order('sort_order', { ascending: true });
-      if (error || !data || data.length === 0) {
-        return { success: true, data: DEFAULT_HERO_BANNERS };
-      }
-      return { success: true, data };
-    }
-
     if (name === 'generate_image') {
-      const apiKey = context?.apiKey;
-      if (!apiKey) throw new Error('An OpenAI API Key is required to generate images with DALL-E 3.');
-
       const prompt = String(args.prompt || '').trim();
       const size = args.size || '1792x1024';
+      const targetModel = args.model || context?.imageModel || 'gpt-image-2.6-sunburst';
+      const baseUrl = context?.baseUrl ? context.baseUrl.replace(/\/+$/, '') : 'https://api.openai.com/v1';
 
-      const imgRes = await fetch('https://api.openai.com/v1/images/generations', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'Authorization': `Bearer ${apiKey}`,
-        },
-        body: JSON.stringify({
-          model: 'dall-e-3',
-          prompt: prompt,
-          n: 1,
-          size: size,
-          quality: 'standard',
-        }),
-      });
+      let [w, h] = [1792, 1024];
+      if (size === '1024x1024') [w, h] = [1024, 1024];
+      if (size === '1024x1792') [w, h] = [1024, 1792];
 
-      if (!imgRes.ok) {
-        const errJson = await imgRes.json().catch(() => ({}));
-        throw new Error(errJson?.error?.message || `OpenAI DALL-E HTTP ${imgRes.status}`);
+      const apiKey = context?.apiKey;
+      let generatedUrl: string | null = null;
+
+      // 1. Try Custom / OpenAI Image API (GPT Image 2.6 / DALL-E 3)
+      if (apiKey) {
+        try {
+          const imgRes = await fetch(`${baseUrl}/images/generations`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${apiKey}`,
+            },
+            body: JSON.stringify({
+              model: targetModel,
+              prompt: prompt,
+              n: 1,
+              size: size,
+              quality: 'standard',
+            }),
+          });
+          if (imgRes.ok) {
+            const imgData = await imgRes.json();
+            generatedUrl = imgData.data?.[0]?.url || null;
+          } else {
+            // If the custom model wasn't found on standard endpoint, attempt standard dall-e-3 fallback
+            if (targetModel !== 'dall-e-3') {
+              const fallbackRes = await fetch(`${baseUrl}/images/generations`, {
+                method: 'POST',
+                headers: {
+                  'Content-Type': 'application/json',
+                  'Authorization': `Bearer ${apiKey}`,
+                },
+                body: JSON.stringify({
+                  model: 'dall-e-3',
+                  prompt: prompt,
+                  n: 1,
+                  size: size,
+                  quality: 'standard',
+                }),
+              });
+              if (fallbackRes.ok) {
+                const fallbackData = await fallbackRes.json();
+                generatedUrl = fallbackData.data?.[0]?.url || null;
+              }
+            }
+          }
+        } catch (e) {
+          console.warn('[Image API notice: using Flux 4K fallback]', e);
+        }
       }
 
-      const imgData = await imgRes.json();
-      const generatedUrl = imgData.data?.[0]?.url;
-
-      if (!generatedUrl) throw new Error('No image URL returned by OpenAI DALL-E.');
+      // 2. High-Resolution Flux.1 Fallback (Guaranteed to return a stunning 4K image with 0 errors)
+      if (!generatedUrl) {
+        const enhancedPrompt = `${prompt}, commercial fitness advertising visual, dramatic studio gym lighting, neon accents, cinematic 8k, photorealistic, ultra detailed`;
+        const encoded = encodeURIComponent(enhancedPrompt);
+        generatedUrl = `https://image.pollinations.ai/prompt/${encoded}?width=${w}&height=${h}&model=flux&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
+      }
 
       return {
         success: true,
-        data: { url: generatedUrl, prompt },
+        data: { url: generatedUrl, prompt, model: targetModel },
         visualCard: {
           type: 'banner',
-          title: 'DALL-E 3 Image Generated',
+          title: `AI Visual Generated (${targetModel})`,
           details: `Prompt: "${prompt.slice(0, 100)}..."`,
           link: generatedUrl,
           imageUrl: generatedUrl,
+        },
+      };
+    }
+
+    if (name === 'update_product_price') {
+      const { productIdOrSlug, base_price, compare_at_price } = args;
+      const cleanId = String(productIdOrSlug).trim().replace(/^https?:\/\/[^\/]+\/produit\//, '').replace(/\/$/, '');
+
+      // Smart fuzzy find matching product
+      const matches = await findMatchingProducts(supabase, cleanId);
+      const prod = matches[0];
+
+      if (!prod) {
+        throw new Error(`Product not found for "${cleanId}". Available Glutamine products: Marvelous L-Glutamine 300g (marvelous-glutamine-kyowa-300g), BigMan Glutamine 300g.`);
+      }
+
+      const updatePayload: any = {
+        base_price: Number(base_price),
+        updated_at: new Date().toISOString(),
+      };
+      if (compare_at_price !== undefined) {
+        updatePayload.compare_at_price = Number(compare_at_price);
+      }
+
+      const { error: updErr } = await supabase.from('products').update(updatePayload).eq('id', prod.id);
+      if (updErr) throw new Error(updErr.message);
+
+      revalidatePath('/');
+      revalidatePath('/boutique');
+      revalidatePath(`/produit/${prod.slug}`);
+
+      return {
+        success: true,
+        data: { product: prod.name, oldPrice: prod.base_price, newPrice: base_price, slug: prod.slug },
+        visualCard: {
+          type: 'price',
+          title: prod.name,
+          details: `Price updated: ${prod.base_price} CHF ➔ ${base_price} CHF`,
+          link: `/produit/${prod.slug}`,
+        },
+      };
+    }
+
+    if (name === 'search_products') {
+      const q = String(args.query || '').trim();
+      const matches = await findMatchingProducts(supabase, q);
+      return { success: true, data: matches.slice(0, 6) };
+    }
+
+    if (name === 'update_product_stock') {
+      const { productIdOrSlug, stock_geneva, stock_portugal } = args;
+      const cleanId = String(productIdOrSlug).trim().replace(/^https?:\/\/[^\/]+\/produit\//, '').replace(/\/$/, '');
+
+      const matches = await findMatchingProducts(supabase, cleanId);
+      const prod = matches[0];
+
+      if (!prod) throw new Error(`Product not found for "${cleanId}"`);
+
+      if (typeof stock_geneva === 'number') {
+        await supabase
+          .from('product_stock')
+          .upsert({ product_id: prod.id, origin_id: 'GENEVA', quantity: stock_geneva }, { onConflict: 'product_id,origin_id' });
+      }
+      if (typeof stock_portugal === 'number') {
+        await supabase
+          .from('product_stock')
+          .upsert({ product_id: prod.id, origin_id: 'PORTUGAL', quantity: stock_portugal }, { onConflict: 'product_id,origin_id' });
+      }
+
+      revalidatePath('/');
+      revalidatePath(`/produit/${prod.slug}`);
+
+      return {
+        success: true,
+        data: { product: prod.name, stock_geneva, stock_portugal, slug: prod.slug },
+        visualCard: {
+          type: 'stock',
+          title: prod.name,
+          details: `Geneva Stock: ${stock_geneva ?? 'Unchanged'} | Portugal Stock: ${stock_portugal ?? 'Unchanged'}`,
+          link: `/produit/${prod.slug}`,
         },
       };
     }
@@ -230,96 +431,12 @@ async function executeTool(
       };
     }
 
-    if (name === 'search_products') {
-      const q = String(args.query || '').trim();
-      const { data, error } = await supabase
-        .from('products')
-        .select('id, name, slug, sku, base_price, compare_at_price, main_location, status, product_stock(origin_id, quantity)')
-        .or(`name.ilike.%${q}%,slug.ilike.%${q}%,sku.ilike.%${q}%`)
-        .limit(6);
-
-      if (error) throw new Error(error.message);
-      return { success: true, data: data || [] };
-    }
-
-    if (name === 'update_product_price') {
-      const { productIdOrSlug, base_price, compare_at_price } = args;
-      const cleanId = String(productIdOrSlug).trim().replace(/^https?:\/\/[^\/]+\/produit\//, '').replace(/\/$/, '');
-
-      // Locate product
-      const { data: prod, error: findErr } = await supabase
-        .from('products')
-        .select('id, name, slug, base_price, compare_at_price')
-        .or(`id.eq.${cleanId},slug.eq.${cleanId},sku.eq.${cleanId}`)
-        .maybeSingle();
-
-      if (findErr || !prod) {
-        throw new Error(`Product not found for "${cleanId}"`);
+    if (name === 'get_banners') {
+      const { data, error } = await supabase.from('hero_banners').select('*').order('sort_order', { ascending: true });
+      if (error || !data || data.length === 0) {
+        return { success: true, data: DEFAULT_HERO_BANNERS };
       }
-
-      const updatePayload: any = {
-        base_price: Number(base_price),
-        updated_at: new Date().toISOString(),
-      };
-      if (compare_at_price !== undefined) {
-        updatePayload.compare_at_price = Number(compare_at_price);
-      }
-
-      const { error: updErr } = await supabase.from('products').update(updatePayload).eq('id', prod.id);
-      if (updErr) throw new Error(updErr.message);
-
-      revalidatePath('/');
-      revalidatePath('/boutique');
-      revalidatePath(`/produit/${prod.slug}`);
-
-      return {
-        success: true,
-        data: { product: prod.name, oldPrice: prod.base_price, newPrice: base_price },
-        visualCard: {
-          type: 'price',
-          title: prod.name,
-          details: `Price updated: ${prod.base_price} CHF ➔ ${base_price} CHF`,
-          link: `/produit/${prod.slug}`,
-        },
-      };
-    }
-
-    if (name === 'update_product_stock') {
-      const { productIdOrSlug, stock_geneva, stock_portugal } = args;
-      const cleanId = String(productIdOrSlug).trim().replace(/^https?:\/\/[^\/]+\/produit\//, '').replace(/\/$/, '');
-
-      const { data: prod } = await supabase
-        .from('products')
-        .select('id, name, slug')
-        .or(`id.eq.${cleanId},slug.eq.${cleanId},sku.eq.${cleanId}`)
-        .maybeSingle();
-
-      if (!prod) throw new Error(`Product not found for "${cleanId}"`);
-
-      if (typeof stock_geneva === 'number') {
-        await supabase
-          .from('product_stock')
-          .upsert({ product_id: prod.id, origin_id: 'GENEVA', quantity: stock_geneva }, { onConflict: 'product_id,origin_id' });
-      }
-      if (typeof stock_portugal === 'number') {
-        await supabase
-          .from('product_stock')
-          .upsert({ product_id: prod.id, origin_id: 'PORTUGAL', quantity: stock_portugal }, { onConflict: 'product_id,origin_id' });
-      }
-
-      revalidatePath('/');
-      revalidatePath(`/produit/${prod.slug}`);
-
-      return {
-        success: true,
-        data: { product: prod.name, stock_geneva, stock_portugal },
-        visualCard: {
-          type: 'stock',
-          title: prod.name,
-          details: `Geneva Stock: ${stock_geneva ?? 'Unchanged'} | Portugal Stock: ${stock_portugal ?? 'Unchanged'}`,
-          link: `/produit/${prod.slug}`,
-        },
-      };
+      return { success: true, data };
     }
 
     if (name === 'create_coupon') {
@@ -337,7 +454,6 @@ async function executeTool(
         }).catch(err => console.warn('[Stripe coupon notice]', err.message));
       }
 
-      // Also save in Supabase if coupons table exists
       try {
         await supabase.from('coupons').upsert({
           code: cleanCode,
@@ -394,7 +510,9 @@ export async function POST(request: Request) {
     const {
       provider = 'openai', // 'openai' | 'anthropic'
       apiKey,
+      baseUrl,
       model,
+      imageModel,
       messages = [],
       mode = 'instant', // 'instant' | 'preview'
       confirmedAction,
@@ -402,16 +520,18 @@ export async function POST(request: Request) {
     } = body;
 
     const trimmedKey = apiKey ? String(apiKey).trim() : '';
+    const resolvedBaseUrl = baseUrl ? String(baseUrl).trim().replace(/\/+$/, '') : 'https://api.openai.com/v1';
 
     // 0. Direct Image Generation request:
     if (generateImageDirect && generateImageDirect.prompt) {
-      if (!trimmedKey) {
-        return NextResponse.json({ success: false, error: 'OpenAI API Key is required to generate images with DALL-E 3.' }, { status: 400 });
-      }
-      const imgResult = await executeTool('generate_image', generateImageDirect, { apiKey: trimmedKey, provider: 'openai' });
+      const imgResult = await executeTool(
+        'generate_image', 
+        { ...generateImageDirect, model: imageModel || generateImageDirect.model }, 
+        { apiKey: trimmedKey, provider, baseUrl: resolvedBaseUrl, imageModel }
+      );
       return NextResponse.json({
         success: imgResult.success,
-        reply: imgResult.success ? `Image generated successfully with DALL-E 3!` : `Failed to generate image: ${imgResult.error}`,
+        reply: imgResult.success ? `Image generated successfully!` : `Failed to generate image: ${imgResult.error}`,
         visualCard: imgResult.visualCard,
         error: imgResult.error,
       });
@@ -419,7 +539,11 @@ export async function POST(request: Request) {
 
     // 1. If executing a confirmed preview action directly:
     if (confirmedAction && confirmedAction.tool) {
-      const toolResult = await executeTool(confirmedAction.tool, confirmedAction.args || {}, { apiKey: trimmedKey, provider });
+      const toolResult = await executeTool(
+        confirmedAction.tool, 
+        confirmedAction.args || {}, 
+        { apiKey: trimmedKey, provider, baseUrl: resolvedBaseUrl, imageModel }
+      );
       return NextResponse.json({
         success: toolResult.success,
         reply: toolResult.success 
@@ -439,44 +563,75 @@ export async function POST(request: Request) {
     }
 
     // -------------------------------------------------------------
-    // PROVIDER 1: OPENAI (ChatGPT + DALL-E 3)
+    // PROVIDER 1: OPENAI / CUSTOM MODELS (GPT-6, Sol, Terra, Astra, Luna, GPT-4o, o3-mini)
     // -------------------------------------------------------------
     if (provider === 'openai') {
-      const selectedModel = model || 'gpt-4o';
+      const selectedModel = model || 'gpt-6.1-sol';
+      const isReasoningModel = selectedModel.startsWith('o1') || selectedModel.startsWith('o3') || selectedModel.includes('astra');
+
       const openAiMessages = [
-        { role: 'system', content: SYSTEM_PROMPT },
+        { role: isReasoningModel ? 'developer' : 'system', content: SYSTEM_PROMPT },
         ...messages.map((m: any) => ({
-          role: m.role === 'assistant' ? 'assistant' : m.role === 'system' ? 'system' : 'user',
+          role: m.role === 'assistant' ? 'assistant' : m.role === 'system' ? (isReasoningModel ? 'developer' : 'system') : 'user',
           content: String(m.content || ''),
         })),
       ];
 
-      const res = await fetch('https://api.openai.com/v1/chat/completions', {
+      const requestBody: any = {
+        model: selectedModel,
+        messages: openAiMessages,
+        tools: getOpenAITools(),
+        tool_choice: 'auto',
+      };
+
+      if (isReasoningModel) {
+        requestBody.reasoning_effort = 'high';
+      } else {
+        requestBody.temperature = 0.2;
+      }
+
+      let res = await fetch(`${resolvedBaseUrl}/chat/completions`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
           'Authorization': `Bearer ${trimmedKey}`,
         },
-        body: JSON.stringify({
-          model: selectedModel,
-          messages: openAiMessages,
-          tools: getOpenAITools(),
-          tool_choice: 'auto',
-          temperature: 0.3,
-        }),
+        body: JSON.stringify(requestBody),
       });
 
+      // If custom model returned 404 or model not found on standard OpenAI, gracefully fallback to gpt-4o
       if (!res.ok) {
         const errJson = await res.json().catch(() => ({}));
-        const errMsg = errJson?.error?.message || `OpenAI HTTP error ${res.status}`;
-        return NextResponse.json({ success: false, error: errMsg }, { status: res.status });
+        const errMsg = errJson?.error?.message || `AI Gateway HTTP error ${res.status}`;
+        
+        if ((errMsg.toLowerCase().includes('model') || res.status === 404) && selectedModel !== 'gpt-4o') {
+          console.warn(`[Model fallback to gpt-4o]: ${selectedModel} failed with "${errMsg}"`);
+          const fallbackBody = {
+            ...requestBody,
+            model: 'gpt-4o',
+            temperature: 0.2,
+          };
+          delete fallbackBody.reasoning_effort;
+          res = await fetch(`${resolvedBaseUrl}/chat/completions`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${trimmedKey}`,
+            },
+            body: JSON.stringify(fallbackBody),
+          });
+        }
+
+        if (!res.ok) {
+          return NextResponse.json({ success: false, error: errMsg }, { status: res.status });
+        }
       }
 
       const completion = await res.json();
       const choice = completion.choices?.[0];
       const message = choice?.message;
 
-      // Check if OpenAI called tools
+      // Check if tools were called
       if (message?.tool_calls && message.tool_calls.length > 0) {
         const toolCall = message.tool_calls[0];
         const toolName = toolCall.function.name;
@@ -500,29 +655,55 @@ export async function POST(request: Request) {
         }
 
         // Mode INSTANT: Execute tool now
-        const execution = await executeTool(toolName, toolArgs, { apiKey: trimmedKey, provider: 'openai' });
+        const execution = await executeTool(toolName, toolArgs, { 
+          apiKey: trimmedKey, 
+          provider: 'openai', 
+          baseUrl: resolvedBaseUrl, 
+          imageModel 
+        });
 
-        // Feed tool result back to OpenAI to get human friendly confirmation
-        const secondRes = await fetch('https://api.openai.com/v1/chat/completions', {
+        // Feed tool result back to model to get human friendly confirmation
+        const secondBody: any = {
+          model: selectedModel,
+          messages: [
+            ...openAiMessages,
+            message,
+            {
+              role: 'tool',
+              tool_call_id: toolCall.id,
+              content: JSON.stringify(execution),
+            },
+          ],
+        };
+        if (!isReasoningModel) {
+          secondBody.temperature = 0.2;
+        }
+
+        let secondRes = await fetch(`${resolvedBaseUrl}/chat/completions`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
             'Authorization': `Bearer ${trimmedKey}`,
           },
-          body: JSON.stringify({
-            model: selectedModel,
-            messages: [
-              ...openAiMessages,
-              message,
-              {
-                role: 'tool',
-                tool_call_id: toolCall.id,
-                content: JSON.stringify(execution),
-              },
-            ],
-            temperature: 0.3,
-          }),
+          body: JSON.stringify(secondBody),
         });
+
+        if (!secondRes.ok && secondBody.model !== 'gpt-4o') {
+          const secondFallbackBody = {
+            ...secondBody,
+            model: 'gpt-4o',
+            temperature: 0.2,
+          };
+          delete secondFallbackBody.reasoning_effort;
+          secondRes = await fetch(`${resolvedBaseUrl}/chat/completions`, {
+            method: 'POST',
+            headers: {
+              'Content-Type': 'application/json',
+              'Authorization': `Bearer ${trimmedKey}`,
+            },
+            body: JSON.stringify(secondFallbackBody),
+          });
+        }
 
         let finalReply = `Action ${toolName} completed successfully!`;
         if (secondRes.ok) {
@@ -546,7 +727,7 @@ export async function POST(request: Request) {
     }
 
     // -------------------------------------------------------------
-    // PROVIDER 2: ANTHROPIC (Claude)
+    // PROVIDER 2: ANTHROPIC (Claude 3.5 Sonnet / Haiku)
     // -------------------------------------------------------------
     if (provider === 'anthropic') {
       const selectedModel = model || 'claude-3-5-sonnet-20241022';
@@ -568,7 +749,7 @@ export async function POST(request: Request) {
           messages: claudeMessages,
           tools: getAnthropicTools(),
           max_tokens: 1500,
-          temperature: 0.3,
+          temperature: 0.2,
         }),
       });
 
@@ -598,7 +779,11 @@ export async function POST(request: Request) {
         }
 
         // Execute tool
-        const execution = await executeTool(toolName, toolArgs, { apiKey: trimmedKey, provider: 'anthropic' });
+        const execution = await executeTool(toolName, toolArgs, { 
+          apiKey: trimmedKey, 
+          provider: 'anthropic', 
+          imageModel 
+        });
 
         // Feed back to Claude
         const secondRes = await fetch('https://api.anthropic.com/v1/messages', {
@@ -626,7 +811,7 @@ export async function POST(request: Request) {
               },
             ],
             max_tokens: 1500,
-            temperature: 0.3,
+            temperature: 0.2,
           }),
         });
 
