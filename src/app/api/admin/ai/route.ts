@@ -189,18 +189,24 @@ function cleanTokens(raw: string): string[] {
   return words.filter(w => !stopwords.has(w));
 }
 
+const UUID_REGEX = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i;
+
 // Helper: Smart Fuzzy Product Search
 async function findMatchingProducts(supabase: any, rawQuery: string) {
   const cleanId = rawQuery.trim().replace(/^https?:\/\/[^\/]+\/produit\//, '').replace(/\/$/, '');
-  
-  // 1. Direct match by exact slug, id, or sku
-  const { data: direct } = await supabase
-    .from('products')
-    .select('id, name, slug, sku, brand, base_price, compare_at_price, images, product_stock(origin_id, quantity)')
-    .or(`id.eq.${cleanId},slug.eq.${cleanId},sku.eq.${cleanId}`)
-    .maybeSingle();
+  const baseSelect = 'id, name, slug, sku, brand, base_price, compare_at_price, images, product_stock(origin_id, quantity)';
 
-  if (direct) return [direct];
+  // 1. Direct match by exact slug, id (if UUID), or sku
+  if (UUID_REGEX.test(cleanId)) {
+    const { data: directId } = await supabase.from('products').select(baseSelect).eq('id', cleanId).maybeSingle();
+    if (directId) return [directId];
+  } else {
+    const { data: directSlug } = await supabase.from('products').select(baseSelect).eq('slug', cleanId).maybeSingle();
+    if (directSlug) return [directSlug];
+
+    const { data: directSku } = await supabase.from('products').select(baseSelect).eq('sku', cleanId).maybeSingle();
+    if (directSku) return [directSku];
+  }
 
   // 2. Tokenized fuzzy search
   const tokens = cleanTokens(rawQuery);
@@ -213,9 +219,9 @@ async function findMatchingProducts(supabase: any, rawQuery: string) {
 
   const { data: list, error } = await supabase
     .from('products')
-    .select('id, name, slug, sku, brand, base_price, compare_at_price, images, product_stock(origin_id, quantity)')
+    .select(baseSelect)
     .or(orConds.join(','))
-    .limit(50);
+    .limit(100);
 
   if (error || !list) return [];
 
@@ -228,13 +234,22 @@ async function findMatchingProducts(supabase: any, rawQuery: string) {
     for (const token of tokens) {
       if (nameLow.includes(token)) score += 15;
       if (slugLow.includes(token)) score += 12;
-      if (token === 'lean' && (nameLow.includes('lean') || slugLow.includes('lean'))) score += 20;
-      if (token === 'af' && (nameLow.includes('af') || slugLow.includes('af'))) score += 20;
+      if (token === 'lean' && (nameLow.includes('lean') || slugLow.includes('lean'))) score += 30;
+      if (token === 'af' && (nameLow.includes('af') || slugLow.includes('af'))) score += 40;
       if (token === 'marvelous' && (nameLow.includes('marvelous') || slugLow.includes('marvelous'))) score += 15;
       if (token === 'glutamine' && (nameLow.includes('glutamine') || slugLow.includes('glutamine'))) score += 15;
       if (token === 'creatine' && (nameLow.includes('creatine') || slugLow.includes('creatine'))) score += 15;
       if (token === '300g' && (nameLow.includes('300g') || slugLow.includes('300g'))) score += 10;
     }
+
+    // Heavy boost for exact product slug matches
+    if (tokens.includes('lean') && tokens.includes('af')) {
+      if (slugLow.includes('lean-af')) score += 100;
+    }
+    if (tokens.includes('glutamine')) {
+      if (slugLow.includes('marvelous-glutamine')) score += 50;
+    }
+
     return { ...p, score };
   }).sort((a: any, b: any) => b.score - a.score);
 
@@ -384,7 +399,6 @@ async function executeTool(
           title: prod.name,
           details: `Geneva Store: ${genevaStock} in stock | Portugal Central Warehouse: ${portugalStock} in stock (Total: ${totalStock})`,
           link: `/produit/${prod.slug}`,
-          imageUrl: primaryImg,
         },
       };
     }
@@ -416,8 +430,6 @@ async function executeTool(
       revalidatePath('/boutique');
       revalidatePath(`/produit/${prod.slug}`);
 
-      const primaryImg = Array.isArray(prod.images) ? prod.images[0]?.src : undefined;
-
       return {
         success: true,
         data: { product: prod.name, oldPrice: prod.base_price, newPrice: base_price, slug: prod.slug },
@@ -426,7 +438,6 @@ async function executeTool(
           title: prod.name,
           details: `Price updated: ${prod.base_price} CHF ➔ ${base_price} CHF`,
           link: `/produit/${prod.slug}`,
-          imageUrl: primaryImg,
         },
       };
     }

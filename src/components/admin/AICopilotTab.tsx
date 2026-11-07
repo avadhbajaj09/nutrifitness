@@ -717,8 +717,8 @@ export default function AICopilotTab() {
                       <div className="font-bold text-xs text-slate-900">{msg.visualCard.title}</div>
                       <div className="text-xs text-slate-600">{msg.visualCard.details}</div>
 
-                      {/* Generated Image Preview & Controls */}
-                      {msg.visualCard.imageUrl && (
+                      {/* Generated Image Preview & Controls (Only for Banners & Poster Generations) */}
+                      {msg.visualCard.imageUrl && msg.visualCard.type === 'banner' && (
                         <div className="mt-2 space-y-2">
                           <div className="rounded-xl overflow-hidden border border-slate-200 bg-black/5 shadow-inner">
                             <img
