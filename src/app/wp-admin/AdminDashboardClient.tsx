@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import HeroBannersManager from '@/components/admin/HeroBannersManager';
+import AICopilotTab from '@/components/admin/AICopilotTab';
 import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
 import { TWINT_CONFIG } from '@/lib/twint';
 import type { ProductItem, ProductVariant, SupportedLocale } from '@/lib/types';
@@ -294,11 +295,11 @@ export default function AdminDashboardClient() {
   // 2. DASHBOARD NAVIGATION & TIME
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned'>('pos');
+  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned' | 'ai'>('pos');
   const [heroBannersCount, setHeroBannersCount] = useState<number>(5);
 
   useEffect(() => {
-    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'banners' || tabParam === 'sales' || tabParam === 'abandoned') {
+    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'banners' || tabParam === 'sales' || tabParam === 'abandoned' || tabParam === 'ai') {
       setActiveTab(tabParam);
     }
   }, [tabParam]);
@@ -2495,6 +2496,7 @@ export default function AdminDashboardClient() {
                 {activeTab === 'banners' && (adminLang === 'fr' ? 'Gestion des Bannières de la Page d’Accueil' : 'Homepage Hero Banners Management')}
                 {activeTab === 'sales' && (adminLang === 'fr' ? 'Journal des Commandes & Ventes' : 'Orders & Sales Journal')}
                 {activeTab === 'abandoned' && (adminLang === 'fr' ? 'Paniers Abandonnés & Relances Clients' : 'Abandoned Carts & Customer Recovery')}
+                {activeTab === 'ai' && (adminLang === 'fr' ? 'Copilote IA Webmaster (Contrôle du site par prompt)' : 'AI Store Copilot (Natural Language Control)')}
               </h1>
               <span className="text-slate-300">/</span>
               <span className="text-xs text-slate-500 font-medium truncate flex items-center gap-1.5">
@@ -4055,6 +4057,11 @@ export default function AdminDashboardClient() {
             </div>
           </div>
         </div>
+      )}
+
+      {/* 6. AI COPILOT WEBMASTER (PROMPT CONTROL) */}
+      {activeTab === 'ai' && (
+        <AICopilotTab />
       )}
 
         </div>

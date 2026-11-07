@@ -14,12 +14,13 @@ import {
   CheckCircle2,
   Lock,
   ShoppingCart,
-  Image as ImageIcon
+  Image as ImageIcon,
+  Sparkles
 } from 'lucide-react';
 
 interface AdminSidebarProps {
-  activeTab?: 'pos' | 'catalog' | 'banners' | 'sales' | 'locations' | 'abandoned';
-  onSelectTab?: (tab: 'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned') => void;
+  activeTab?: 'pos' | 'catalog' | 'banners' | 'sales' | 'locations' | 'abandoned' | 'ai';
+  onSelectTab?: (tab: 'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned' | 'ai') => void;
   posCount?: number;
   catalogCount?: number;
   bannersCount?: number;
@@ -67,6 +68,14 @@ export default function AdminSidebar({
       isRoute: false,
     },
     {
+      id: 'ai',
+      label: 'Copilote IA (Prompt)',
+      icon: Sparkles,
+      badge: 'IA',
+      href: '/wp-admin?tab=ai',
+      isRoute: false,
+    },
+    {
       id: 'sales',
       label: 'Orders & Sales',
       icon: Receipt,
@@ -97,7 +106,7 @@ export default function AdminSidebar({
       router.push(item.href);
     } else {
       if (pathname?.startsWith('/wp-admin') && onSelectTab) {
-        onSelectTab(item.id as 'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned');
+        onSelectTab(item.id as 'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned' | 'ai');
       } else {
         router.push(item.href);
       }
@@ -165,8 +174,12 @@ export default function AdminSidebar({
                 <Icon className={`w-4 h-4 shrink-0 ${active ? 'text-white' : 'text-slate-400'}`} />
                 <span className="truncate">{item.label}</span>
               </div>
-              {item.badge !== undefined && item.badge > 0 && (
-                <span className="ml-2 px-1.5 py-0.5 rounded-md text-[10px] font-bold bg-slate-800 text-slate-300 border border-slate-700/60 shrink-0">
+              {item.badge !== undefined && (typeof item.badge === 'string' || item.badge > 0) && (
+                <span className={`ml-2 px-1.5 py-0.5 rounded-md text-[10px] font-bold shrink-0 ${
+                  typeof item.badge === 'string'
+                    ? 'bg-gradient-to-r from-red-600 to-rose-600 text-white shadow-xs'
+                    : 'bg-slate-800 text-slate-300 border border-slate-700/60'
+                }`}>
                   {item.badge}
                 </span>
               )}
