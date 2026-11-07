@@ -584,6 +584,8 @@ async function executeTool(
   }
 }
 
+const READ_ONLY_TOOLS = new Set(['get_product_stock', 'search_products', 'get_banners', 'generate_image']);
+
 // Convert tool definitions to OpenAI format
 function getOpenAITools() {
   return TOOL_DEFINITIONS.map(tool => ({
@@ -767,8 +769,8 @@ export async function POST(request: Request) {
           toolArgs = {};
         }
 
-        // Mode PREVIEW: ask for confirmation
-        if (mode === 'preview' && toolName !== 'search_products' && toolName !== 'get_banners') {
+        // Mode PREVIEW: ask for confirmation ONLY for state-modifying actions
+        if (mode === 'preview' && !READ_ONLY_TOOLS.has(toolName)) {
           return NextResponse.json({
             success: true,
             reply: `I am ready to perform the action **${toolName}**. Would you like to confirm and apply these changes?`,
@@ -915,7 +917,7 @@ export async function POST(request: Request) {
         const toolName = toolUseBlock.name;
         const toolArgs = toolUseBlock.input || {};
 
-        if (mode === 'preview' && toolName !== 'search_products' && toolName !== 'get_banners') {
+        if (mode === 'preview' && !READ_ONLY_TOOLS.has(toolName)) {
           return NextResponse.json({
             success: true,
             reply: `I am ready to perform the action **${toolName}**. Would you like to confirm and apply these changes?`,
