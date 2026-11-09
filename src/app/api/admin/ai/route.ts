@@ -10,10 +10,9 @@ export const dynamic = 'force-dynamic';
 const SYSTEM_PROMPT = `You are the NutriFitness AI Store Copilot — an expert, proactive e-commerce manager for NutriFitness.ch (physical store at 34 Rue des Pâquis, 1201 Geneva, Switzerland).
 You have autonomous control over store operations via your available tools:
 1. Products & Pricing: Search products, update selling prices (base_price), regular compare prices, and warehouse stock (Geneva & Portugal).
-2. Image Generation: Generate stunning advertising banners, posters, and product visuals using GPT Image 2.6 / DALL-E / Flux 4K.
-3. Banners & Homepage Sliders: View, update, or create hero banners.
-4. Coupons: Create discount promo codes (e.g. 10%, 15%, 20 CHF off).
-5. Store Announcements: Update top bar notifications.
+2. Banners & Homepage Sliders: View, update, or create hero banners.
+3. Coupons: Create discount promo codes (e.g. 10%, 15%, 20 CHF off).
+4. Store Announcements: Update top bar notifications.
 
 Store Facts:
 - Currency: Swiss Francs (CHF) and Euro (EUR).
@@ -47,7 +46,6 @@ CRITICAL INSTRUCTIONS FOR PRODUCT SEARCH & PRICING:
   1. NEVER say you cannot find the product if a matching product exists! Handle typos seamlessly ("marveleous" = Marvelous, "L-Glutamin" = Marvelous L-Glutamine).
   2. For "L-Glutamin 300g" or "Marvelous Glutamine", it corresponds to slug "marvelous-glutamine-kyowa-300g".
   3. If a price is specified in the prompt (e.g. 42 CHF), call update_product_price immediately without asking unnecessary questions!
-- For images: When the user asks to create an image, banner, or visual, call generate_image immediately with a rich visual description!
 - Always respond in the same language as the user (English or French). Be concise, fast, and confirm executed changes.`;
 
 // Common Tool Definitions
@@ -77,26 +75,6 @@ const TOOL_DEFINITIONS = [
         compare_at_price: { type: 'number', description: 'Optional regular price (for strikethrough sale price, e.g. 49.90)' },
       },
       required: ['productIdOrSlug', 'base_price'],
-    },
-  },
-  {
-    name: 'generate_image',
-    description: 'Generate an advertising poster, hero banner visual, or product graphic using GPT Image 2.6 / DALL-E / Flux 4K.',
-    parameters: {
-      type: 'object',
-      properties: {
-        prompt: { type: 'string', description: 'Visual description of the image to generate' },
-        size: { 
-          type: 'string', 
-          enum: ['1792x1024', '1024x1024', '1024x1792'], 
-          description: 'Aspect ratio: "1792x1024" for wide hero banners, "1024x1024" for square product images, "1024x1792" for vertical mobile posters' 
-        },
-        model: {
-          type: 'string',
-          description: 'Image model: gpt-image-2.6-sunburst, gpt-image-2.6-flare, gpt-image-2.5-sunburst, gpt-image-2.5-flare, dall-e-3'
-        }
-      },
-      required: ['prompt'],
     },
   },
   {
@@ -260,113 +238,11 @@ async function findMatchingProducts(supabase: any, rawQuery: string) {
 async function executeTool(
   name: string,
   args: any,
-  context?: { apiKey?: string; provider?: string; baseUrl?: string; imageModel?: string }
+  context?: { apiKey?: string; provider?: string; baseUrl?: string }
 ): Promise<{ success: boolean; data?: any; error?: string; visualCard?: any }> {
   const supabase = getAdminSupabase();
 
   try {
-    if (name === 'generate_image') {
-      let rawPrompt = String(args.prompt || '').trim();
-      const size = args.size || '1792x1024';
-      const targetModel = args.model || context?.imageModel || 'gpt-image-2.6-sunburst';
-      const baseUrl = context?.baseUrl ? context.baseUrl.replace(/\/+$/, '') : 'https://api.openai.com/v1';
-
-      // 1. Sanitize prompt: Never allow "tub" to hallucinate a bathroom or bathtub
-      let cleanPrompt = rawPrompt
-        .replace(/\b(tub|tubs|bathtub|bath)\b/gi, 'supplement powder container jar with screw lid')
-        .replace(/\b(bathroom|washroom|restroom|toilet)\b/gi, 'gym');
-
-      // 2. Identify referenced product from our store to inject exact Swiss fitness brand styling
-      const lower = cleanPrompt.toLowerCase();
-      let productBranding = 'NutriFitness Switzerland sports nutrition supplement';
-      if (lower.includes('lean af') || lower.includes('whey')) {
-        productBranding = 'Marvelous Lean AF 100% CFM Whey Isolate 2kg black cylindrical supplement container jar with yellow and red graphics';
-      } else if (lower.includes('creatine')) {
-        productBranding = 'Marvelous Line Pure Creatine Monohydrate 300g supplement bottle on stone podium';
-      } else if (lower.includes('glutamin')) {
-        productBranding = 'Marvelous L-Glutamine Kyowa Quality 300g supplement container bottle';
-      } else if (lower.includes('magnesium')) {
-        productBranding = 'Marvelous Magnesium Bisglycinate 90 capsules black supplement bottle';
-      } else if (lower.includes('pre-workout') || lower.includes('power m.f')) {
-        productBranding = 'Marvelous POWER M.F Pre-Workout Extreme 300g powder container with glowing sparks';
-      }
-
-      const enhancedPrompt = `Commercial sports nutrition advertisement poster for ${productBranding}. ${cleanPrompt}. Bold high-impact advertising billboard design, athletic fitness aesthetic with dark gym background, neon accents, dramatic studio product photography, 8k resolution, crisp clean packaging. STRICT NEGATIVE: no bathtubs, no bathrooms, no bathroom sinks, no residential furniture.`;
-
-      let [w, h] = [1792, 1024];
-      if (size === '1024x1024') [w, h] = [1024, 1024];
-      if (size === '1024x1792') [w, h] = [1024, 1792];
-
-      const apiKey = context?.apiKey;
-      let generatedUrl: string | null = null;
-
-      // 1. Try Custom / OpenAI Image API (GPT Image 2.6 / DALL-E 3)
-      if (apiKey) {
-        try {
-          const imgRes = await fetch(`${baseUrl}/images/generations`, {
-            method: 'POST',
-            headers: {
-              'Content-Type': 'application/json',
-              'Authorization': `Bearer ${apiKey}`,
-            },
-            body: JSON.stringify({
-              model: targetModel,
-              prompt: enhancedPrompt,
-              n: 1,
-              size: size,
-              quality: 'standard',
-            }),
-          });
-          if (imgRes.ok) {
-            const imgData = await imgRes.json();
-            generatedUrl = imgData.data?.[0]?.url || null;
-          } else {
-            // If the custom model wasn't found on standard endpoint, attempt standard dall-e-3 fallback
-            if (targetModel !== 'dall-e-3') {
-              const fallbackRes = await fetch(`${baseUrl}/images/generations`, {
-                method: 'POST',
-                headers: {
-                  'Content-Type': 'application/json',
-                  'Authorization': `Bearer ${apiKey}`,
-                },
-                body: JSON.stringify({
-                  model: 'dall-e-3',
-                  prompt: enhancedPrompt,
-                  n: 1,
-                  size: size,
-                  quality: 'standard',
-                }),
-              });
-              if (fallbackRes.ok) {
-                const fallbackData = await fallbackRes.json();
-                generatedUrl = fallbackData.data?.[0]?.url || null;
-              }
-            }
-          }
-        } catch (e) {
-          console.warn('[Image API notice: using Flux 4K fallback]', e);
-        }
-      }
-
-      // 2. High-Resolution Flux.1 Fallback (Guaranteed to return a stunning 4K image with 0 errors)
-      if (!generatedUrl) {
-        const encoded = encodeURIComponent(enhancedPrompt);
-        generatedUrl = `https://image.pollinations.ai/prompt/${encoded}?width=${w}&height=${h}&model=flux&nologo=true&seed=${Math.floor(Math.random() * 1000000)}`;
-      }
-
-      return {
-        success: true,
-        data: { url: generatedUrl, prompt: rawPrompt, model: targetModel },
-        visualCard: {
-          type: 'banner',
-          title: `AI Visual Generated (${targetModel})`,
-          details: `Prompt: "${rawPrompt.slice(0, 100)}..."`,
-          link: generatedUrl,
-          imageUrl: generatedUrl,
-        },
-      };
-    }
-
     if (name === 'get_product_stock') {
       const q = String(args.productIdOrSlug || args.query || '').trim();
       const cleanId = q.replace(/^https?:\/\/[^\/]+\/produit\//, '').replace(/\/$/, '');
@@ -595,7 +471,7 @@ async function executeTool(
   }
 }
 
-const READ_ONLY_TOOLS = new Set(['get_product_stock', 'search_products', 'get_banners', 'generate_image']);
+const READ_ONLY_TOOLS = new Set(['get_product_stock', 'search_products', 'get_banners']);
 
 // Convert tool definitions to OpenAI format
 function getOpenAITools() {
@@ -626,37 +502,20 @@ export async function POST(request: Request) {
       apiKey,
       baseUrl,
       model,
-      imageModel,
       messages = [],
       mode = 'instant', // 'instant' | 'preview'
       confirmedAction,
-      generateImageDirect,
     } = body;
 
     const trimmedKey = apiKey ? String(apiKey).trim() : '';
     const resolvedBaseUrl = baseUrl ? String(baseUrl).trim().replace(/\/+$/, '') : 'https://api.openai.com/v1';
-
-    // 0. Direct Image Generation request:
-    if (generateImageDirect && generateImageDirect.prompt) {
-      const imgResult = await executeTool(
-        'generate_image', 
-        { ...generateImageDirect, model: imageModel || generateImageDirect.model }, 
-        { apiKey: trimmedKey, provider, baseUrl: resolvedBaseUrl, imageModel }
-      );
-      return NextResponse.json({
-        success: imgResult.success,
-        reply: imgResult.success ? `Image generated successfully!` : `Failed to generate image: ${imgResult.error}`,
-        visualCard: imgResult.visualCard,
-        error: imgResult.error,
-      });
-    }
 
     // 1. If executing a confirmed preview action directly:
     if (confirmedAction && confirmedAction.tool) {
       const toolResult = await executeTool(
         confirmedAction.tool, 
         confirmedAction.args || {}, 
-        { apiKey: trimmedKey, provider, baseUrl: resolvedBaseUrl, imageModel }
+        { apiKey: trimmedKey, provider, baseUrl: resolvedBaseUrl }
       );
       return NextResponse.json({
         success: toolResult.success,
@@ -797,7 +656,6 @@ export async function POST(request: Request) {
           apiKey: trimmedKey, 
           provider: 'openai', 
           baseUrl: resolvedBaseUrl, 
-          imageModel 
         });
 
         // Feed tool result back to model to get human friendly confirmation
@@ -943,7 +801,6 @@ export async function POST(request: Request) {
         const execution = await executeTool(toolName, toolArgs, { 
           apiKey: trimmedKey, 
           provider: 'anthropic', 
-          imageModel 
         });
 
         // Feed back to Claude
