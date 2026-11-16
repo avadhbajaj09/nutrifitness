@@ -72,7 +72,7 @@ function validateSitemapLocs(urls: string[], context: string): void {
         parsed.search || parsed.hash) {
       throw new Error(`[Sitemap Guard] Noncanonical URL in ${context}: ${value}`);
     }
-    const normalized = parsed.pathname.replace(/\\/+$/, '') || '/';
+    const normalized = parsed.pathname.replace(/\/+$/, '') || '/';
     if (seen.has(normalized)) {
       throw new Error(`[Sitemap Guard] Duplicate URL in ${context}: ${value}`);
     }
