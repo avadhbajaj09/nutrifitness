@@ -33,9 +33,9 @@ export const revalidate = 60;
 export const dynamicParams = true;
 
 interface CategoryPageProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
 export async function generateStaticParams() {
@@ -45,7 +45,8 @@ export async function generateStaticParams() {
 }
 
 export async function generateMetadata({ params }: CategoryPageProps): Promise<Metadata> {
-  const category = getCategoryBySlug(params.slug);
+  const { slug } = await params;
+  const category = getCategoryBySlug(slug);
   if (!category) {
     return {
       title: 'Catégorie introuvable | NutriFitness.ch',
@@ -79,7 +80,8 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
 }
 
 export default async function CategoryDetailPage({ params }: CategoryPageProps) {
-  const category = getCategoryBySlug(params.slug);
+  const { slug } = await params;
+  const category = getCategoryBySlug(slug);
 
   if (!category) {
     notFound();
