@@ -6,11 +6,11 @@ export const dynamic = 'force-dynamic';
 
 export async function GET(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = getAdminSupabase();
-    const id = params.id;
+    const { id } = await params;
 
     const { data: email, error } = await supabase
       .from('emails')
@@ -40,11 +40,11 @@ export async function GET(
 
 export async function PATCH(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = getAdminSupabase();
-    const id = params.id;
+    const { id } = await params;
     const body = await req.json();
 
     const allowedUpdates: any = {};
@@ -88,11 +88,11 @@ export async function PATCH(
 
 export async function DELETE(
   req: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
   try {
     const supabase = getAdminSupabase();
-    const id = params.id;
+    const { id } = await params;
 
     // Check current email state
     const { data: existing } = await supabase

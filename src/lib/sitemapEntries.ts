@@ -129,7 +129,7 @@ export async function generateSitemaps(): Promise<{ id: string }[]> {
   return [{ id: 'pages' }, { id: 'produits' }, { id: 'categories' }, { id: 'blog' }, { id: 'marques' }];
 }
 
-export default async function sitemap({ id }: { id: string }): Promise<Entry[]> {
+export async function getSitemapEntries({ id }: { id: string }): Promise<Entry[]> {
   const redirectSources = getRedirectSources();
   const seenUrls = new Set<string>();
 

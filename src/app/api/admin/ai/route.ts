@@ -1,7 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
 import { stripe } from '@/lib/stripe';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
+import { revalidateTag } from '@/lib/cacheTags';
 import { DEFAULT_HERO_BANNERS, type HeroBanner } from '@/lib/banners';
 
 export const runtime = 'nodejs';

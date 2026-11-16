@@ -1,0 +1,39 @@
+name: Next.js 16 / Zod 4 upgrade compatibility probe
+on:
+  pull_request:
+    paths:
+      - '.github/workflows/dependency-migration-probe.yml'
+      - 'package.json'
+      - 'package-lock.json'
+      - 'src/lib/cacheTags.ts'
+      - 'src/app/api/**'
+      - 'src/app/sitemap/**'
+      - 'src/app/sitemap.ts'
+      - 'src/lib/sitemapEntries.ts'
+
+permissions:
+  contents: read
+
+jobs:
+  next16:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Check Node.js 22+ runtime
+        run: node -e "if (Number(process.versions.node.split('.')[0]) < 22) process.exit(1)"
+      - name: Install current lockfile
+        run: npm ci --ignore-scripts
+      - name: Probe patched Next.js 16 / React 19 / Zod 4 without writing source or lockfile
+        run: npm install --no-save --no-package-lock --ignore-scripts next@16.4.6 react@19 react-dom@19 zod@4.6.7
+      - name: Run TypeScript compatibility check
+        run: npm run typecheck
+      - name: Run existing comprehensive regression suite
+        run: npm run test:release-safety
+      - name: Test Next.js 16 build output (no deployment)
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://nutrifitness.ch
+      - name: Audit upgraded production dependencies
+        run: npm audit --omit=dev --audit-level=high || true

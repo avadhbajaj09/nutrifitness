@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
-import { revalidatePath, revalidateTag } from 'next/cache';
+import { revalidatePath } from 'next/cache';
+import { revalidateTag } from '@/lib/cacheTags';
 import { clearHiddenProductsCache } from '@/lib/hiddenProducts';
 import crypto from 'crypto';
 
@@ -41,9 +42,9 @@ async function findProductInDb(supabase: any, rawId: string) {
 
 export async function GET(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
   try {
     const supabase = getAdminSupabase();
     const product = await findProductInDb(supabase, id);
@@ -71,9 +72,9 @@ export async function GET(
 
 export async function POST(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
   try {
     const body = await request.json();
     const { action, user = 'admin', productData } = body;
@@ -185,9 +186,9 @@ export async function POST(
 
 export async function DELETE(
   request: Request,
-  { params }: { params: { id: string } }
+  { params }: { params: Promise<{ id: string }> }
 ) {
-  const { id } = params;
+  const { id } = await params;
   try {
     const supabase = getAdminSupabase();
     const product = await findProductInDb(supabase, id);
