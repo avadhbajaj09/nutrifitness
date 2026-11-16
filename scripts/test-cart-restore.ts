@@ -1,6 +1,7 @@
 import assert from 'node:assert/strict';
 import { createCartRestoreToken, verifyCartRestoreToken, cartRestoreUrl } from '../src/lib/cartRestore';
 
+async function main() {
 const previous = process.env.ADMIN_SESSION_SECRET;
 try {
   delete process.env.ADMIN_SESSION_SECRET;
@@ -21,3 +22,6 @@ try {
   if (previous === undefined) delete process.env.ADMIN_SESSION_SECRET;
   else process.env.ADMIN_SESSION_SECRET = previous;
 }
+
+}
+main().catch(error => { console.error(error); process.exit(1); });
