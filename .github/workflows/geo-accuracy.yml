@@ -1,0 +1,23 @@
+name: GEO source accuracy
+on:
+  pull_request:
+    paths:
+      - 'src/app/llms.txt/route.ts'
+      - 'scripts/test-llms-accuracy.ts'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/geo-accuracy.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Verify Node runtime
+        run: node -e "if (Number(process.versions.node.split('.')[0]) < 22) process.exit(1)"
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm run test:geo-accuracy
