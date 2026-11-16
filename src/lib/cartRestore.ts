@@ -29,6 +29,9 @@ export async function verifyCartRestoreToken(orderNumber: string, token: string 
   const secret = restoreSecret();
   if (!secret || !token || orderNumber.length > 120 || !/^\d{13}\.[A-Za-z0-9_-]{43}$/.test(token)) return false;
   const [expiry, signature] = token.split('.');
+  // Require canonical base64url representation of the HMAC signature.
+  try { if (base64url(fromUrlBase64(signature)) !== signature) return false; }
+  catch { return false; }
   const expires = Number(expiry);
   if (expires <= now || expires > now + RESTORE_LIFETIME) return false;
   try {
