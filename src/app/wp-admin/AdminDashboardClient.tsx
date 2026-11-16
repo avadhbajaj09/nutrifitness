@@ -59,7 +59,6 @@ import {
 } from 'lucide-react';
 import ProductEditorModal from './ProductEditorModal';
 
-const ADMIN_PASSWORD = 'Geneva@03564';
 
 function normalizeSearchText(str: string | undefined | null): string {
   return (str || '')
@@ -255,40 +254,40 @@ export default function AdminDashboardClient() {
   const [authError, setAuthError] = useState<string | null>(null);
 
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('nf_admin_auth');
-      if (stored === ADMIN_PASSWORD) {
-        setIsAuthenticated(true);
-      }
-    } catch {
-      // localStorage unavailable
-    }
-    setAuthChecking(false);
+    let active = true;
+    // Old browser-stored password must not be trusted or retained.
+    try { localStorage.removeItem('nf_admin_auth'); } catch {}
+    fetch('/api/auth/session?role=admin', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : { authenticated: false })
+      .then(data => { if (active) setIsAuthenticated(data.authenticated === true); })
+      .catch(() => { if (active) setIsAuthenticated(false); })
+      .finally(() => { if (active) setAuthChecking(false); });
+    return () => { active = false; };
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput === ADMIN_PASSWORD) {
+    setAuthError(null);
+    try {
+      const response = await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: 'admin', password: passwordInput })
+      });
+      if (!response.ok) throw new Error(response.status === 503
+        ? 'La connexion administrateur n’est pas encore configurée sur le serveur.'
+        : 'Mot de passe administrateur incorrect.');
+      setPasswordInput('');
       setIsAuthenticated(true);
-      setAuthError(null);
-      try {
-        localStorage.setItem('nf_admin_auth', ADMIN_PASSWORD);
-      } catch {
-        // ignore
-      }
-    } else {
-      setAuthError('Mot de passe administrateur incorrect. Veuillez vérifier la clé.');
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : 'Connexion impossible.');
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await fetch('/api/auth/session?role=admin', { method: 'DELETE' }).catch(() => {});
     setIsAuthenticated(false);
     setPasswordInput('');
-    try {
-      localStorage.removeItem('nf_admin_auth');
-    } catch {
-      // ignore
-    }
   };
 
   // -------------------------------------------------------------
