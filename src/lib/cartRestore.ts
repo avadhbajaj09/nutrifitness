@@ -33,7 +33,7 @@ export async function verifyCartRestoreToken(orderNumber: string, token: string 
   if (expires <= now || expires > now + RESTORE_LIFETIME) return false;
   try {
     return await crypto.subtle.verify(
-      'HMAC', await key(secret), fromUrlBase64(signature), encoder.encode(payload(orderNumber, expires))
+      'HMAC', await key(secret), new Uint8Array(fromUrlBase64(signature)), encoder.encode(payload(orderNumber, expires))
     );
   } catch { return false; }
 }
