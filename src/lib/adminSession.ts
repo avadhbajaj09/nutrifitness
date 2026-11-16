@@ -35,7 +35,7 @@ export async function verifyStaffSession(token: string | null | undefined, role:
   if (expires <= now || expires > now + SESSION_DURATION_MS) return false;
   try {
     return await crypto.subtle.verify(
-      'HMAC', await key(value), fromUrlBase64(parts[3]), encoder.encode(parts.slice(0, 3).join('.'))
+      'HMAC', await key(value), new Uint8Array(fromUrlBase64(parts[3])), encoder.encode(parts.slice(0, 3).join('.'))
     );
   } catch { return false; }
 }
