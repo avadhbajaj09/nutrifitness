@@ -17,7 +17,8 @@
     "test:acceptance": "tsx scripts/verify-acceptance.ts",
     "check:sitemap": "tsx scripts/check-sitemap.ts",
     "check:geo": "tsx scripts/check-geo-invariance.ts",
-    "test:cart-restore": "tsx scripts/test-cart-restore.ts"
+    "test:cart-restore": "tsx scripts/test-cart-restore.ts",
+    "test:order-auth": "tsx scripts/test-order-auth.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",
