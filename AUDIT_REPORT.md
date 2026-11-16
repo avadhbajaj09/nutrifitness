@@ -943,3 +943,7 @@ Source-read tool outputs inadvertently exposed database and provider credential 
 Local fault-injection stock test and formatter injection test were executed in-memory. Stock test returned success despite two injected write errors. Formatter retained an onerror attribute. Neither contacted production.
 
 **Approval gate:** Stop here. No Phase 2 or Phase 3 work is authorized by this report. Await the owner’s approval and operational scope.
+
+## Phase 2 stock remediation — approved 17 November 2026
+
+STK-01/STK-02 error propagation implemented locally: stock mutation SQL errors are checked, product PATCH checks writes, inline editor checks HTTP failures. Regression test executes the real route with injected resolved SQL errors and expects HTTP 500; invalid input and client error handling also covered. Four tests pass; TypeScript passes. Not deployed. Transactional persistence and other stock findings remain pending until subsequent entries below.

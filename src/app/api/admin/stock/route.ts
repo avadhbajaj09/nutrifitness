@@ -1,3 +1,4 @@
+import { requireWrite, inventoryInteger } from '@/lib/inventory/errors';
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
 import { revalidatePath, revalidateTag } from 'next/cache';
@@ -199,6 +200,11 @@ export async function POST(request: Request) {
       return NextResponse.json({ error: 'Missing productId' }, { status: 400 });
     }
 
+    if (!['GENEVA', 'PORTUGAL', 'ALL'].includes(origin) || (quantity === undefined) === (delta === undefined)) {
+      return NextResponse.json({ error: 'Indiquez une quantité ou un ajustement et un dépôt valide.' }, { status: 400 });
+    }
+    try { inventoryInteger(quantity === undefined ? delta : quantity, quantity === undefined); }
+    catch (error: any) { return NextResponse.json({ error: error.message }, { status: 400 }); }
     const supabase = getAdminSupabase();
 
     // 1. Resolve product in DB
@@ -273,6 +279,10 @@ export async function POST(request: Request) {
       }
     }
 
+    if ((variantId || variantSku || flavorHint) && !targetVariant) {
+      return NextResponse.json({ error: 'Variante introuvable pour ce produit.' }, { status: 400 });
+    }
+
     // 3. Determine origins to update
     const originsToUpdate: ('GENEVA' | 'PORTUGAL')[] = origin === 'PORTUGAL'
       ? ['PORTUGAL']
@@ -310,16 +320,16 @@ export async function POST(request: Request) {
 
       // Upsert into product_stock
       if (existingStock) {
-        await supabase
+        await requireWrite(supabase
           .from('product_stock')
           .update({
             quantity: newQty,
             is_active: newQty > 0,
             updated_at: now
           })
-          .eq('id', existingStock.id);
+          .eq('id', existingStock.id));
       } else {
-        await supabase
+        await requireWrite(supabase
           .from('product_stock')
           .insert({
             product_id: product.id,
@@ -329,21 +339,20 @@ export async function POST(request: Request) {
             is_active: newQty > 0,
             reserved_quantity: 0,
             updated_at: now
-          });
+          }));
       }
 
       // If variant, also update product_variants table
       if (targetVariant) {
         const col = targetOrigin === 'GENEVA' ? 'stock_geneva' : 'stock_portugal';
-        await supabase
+        await requireWrite(supabase
           .from('product_variants')
           .update({ [col]: newQty, updated_at: now })
-          .eq('id', targetVariant.id);
+          .eq('id', targetVariant.id));
       }
 
       // Sync into fulfillment_stock
-      try {
-        await supabase
+        await requireWrite(supabase
           .from('fulfillment_stock')
           .upsert({
             product_id: product.id,
@@ -352,8 +361,7 @@ export async function POST(request: Request) {
             origin_id: targetOrigin,
             quantity: newQty,
             updated_at: now
-          }, { onConflict: 'product_id,variant_sku,origin_id' });
-      } catch {}
+          }, { onConflict: 'product_id,variant_sku,origin_id' }));
     }
 
     // 4. Recalculate parent product stock sum

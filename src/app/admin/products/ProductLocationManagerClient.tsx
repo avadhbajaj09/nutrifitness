@@ -24,6 +24,7 @@ import {
   Package,
   Plus
 } from 'lucide-react';
+import { checkedFetch } from '@/lib/inventory/client';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
 const ADMIN_PASSWORD = 'Geneva@03564';
@@ -162,7 +163,7 @@ export default function ProductLocationManagerClient() {
         page: page.toString(),
         limit: '30'
       });
-      const res = await fetch(`/api/admin/products/?${params.toString()}`);
+      const res = await checkedFetch(`/api/admin/products/?${params.toString()}`);
       if (res.ok) {
         const data = await res.json();
         setProducts(data.products || []);
@@ -205,7 +206,7 @@ export default function ProductLocationManagerClient() {
     }));
 
     try {
-      const res = await fetch('/api/admin/products/', {
+      const res = await checkedFetch('/api/admin/products/', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -221,7 +222,7 @@ export default function ProductLocationManagerClient() {
         `Origine ${origin === 'GENEVA' ? 'Genève' : 'Portugal'} ${newActive ? 'activée' : 'désactivée'} pour ${product.name}`,
         async () => {
           // Undo handler
-          await fetch('/api/admin/products', {
+          await checkedFetch('/api/admin/products', {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
@@ -245,7 +246,7 @@ export default function ProductLocationManagerClient() {
     setProducts(prev => prev.map(p => p.id === product.id ? { ...p, main_location: newLoc } : p));
 
     try {
-      await fetch('/api/admin/products', {
+      await checkedFetch('/api/admin/products', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: product.id, main_location: newLoc })
@@ -265,7 +266,7 @@ export default function ProductLocationManagerClient() {
     setProducts(prev => prev.map(p => p.id === product.id ? { ...p, [key]: validQty } : p));
 
     try {
-      await fetch('/api/admin/products', {
+      await checkedFetch('/api/admin/products', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -274,7 +275,8 @@ export default function ProductLocationManagerClient() {
         })
       });
       showToast(`Stock ${origin === 'GENEVA' ? 'Genève' : 'Portugal'} mis à jour (${validQty})`);
-    } catch {
+    } catch (error: any) {
+      showToast(error.message);
       setProducts(prev => prev.map(p => p.id === product.id ? { ...p, [key]: oldQty } : p));
     }
   };
@@ -304,7 +306,7 @@ export default function ProductLocationManagerClient() {
     }));
 
     try {
-      await fetch('/api/admin/products', {
+      await checkedFetch('/api/admin/products', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -316,7 +318,8 @@ export default function ProductLocationManagerClient() {
         })
       });
       showToast(`Stock variante mis à jour (${validQty})`);
-    } catch {
+    } catch (error: any) {
+      showToast(error.message);
       fetchProducts();
     }
   };
@@ -326,7 +329,7 @@ export default function ProductLocationManagerClient() {
     const validPrice = Math.max(0, price);
     setProducts(prev => prev.map(p => p.id === product.id ? { ...p, base_price: validPrice } : p));
     try {
-      await fetch('/api/admin/products', {
+      await checkedFetch('/api/admin/products', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ id: product.id, base_price: validPrice })
@@ -348,7 +351,7 @@ export default function ProductLocationManagerClient() {
       };
     }));
     try {
-      await fetch('/api/admin/products', {
+      await checkedFetch('/api/admin/products', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -373,7 +376,7 @@ export default function ProductLocationManagerClient() {
       };
     }));
     try {
-      await fetch('/api/admin/products', {
+      await checkedFetch('/api/admin/products', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -398,7 +401,7 @@ export default function ProductLocationManagerClient() {
     const ptVal = parseInt(newFlavorPtStock, 10) || 0;
 
     try {
-      const res = await fetch('/api/admin/products', {
+      const res = await checkedFetch('/api/admin/products', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -439,7 +442,7 @@ export default function ProductLocationManagerClient() {
     } catch {}
 
     try {
-      await fetch(`/api/admin/products/${product.id}/`, {
+      await checkedFetch(`/api/admin/products/${product.id}/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'delete_to_draft' })
@@ -448,7 +451,7 @@ export default function ProductLocationManagerClient() {
       showToast(
         `"${product.name}" déplacé dans les brouillons`,
         async () => {
-          await fetch(`/api/admin/products/${product.id}/`, {
+          await checkedFetch(`/api/admin/products/${product.id}/`, {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({ action: 'restore' })
@@ -474,7 +477,7 @@ export default function ProductLocationManagerClient() {
     } catch {}
 
     try {
-      await fetch(`/api/admin/products/${product.id}/`, {
+      await checkedFetch(`/api/admin/products/${product.id}/`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action: 'restore' })
@@ -496,7 +499,7 @@ export default function ProductLocationManagerClient() {
     } catch {}
 
     try {
-      await fetch(`/api/admin/products/${id}/`, { method: 'DELETE' });
+      await checkedFetch(`/api/admin/products/${id}/`, { method: 'DELETE' });
       setProducts(prev => prev.filter(p => p.id !== id));
       setDeleteConfirmId(null);
       showToast('Produit définitivement supprimé.');
@@ -511,7 +514,7 @@ export default function ProductLocationManagerClient() {
     const ids = Array.from(selectedIds);
 
     try {
-      const res = await fetch('/api/admin/products/bulk/', {
+      const res = await checkedFetch('/api/admin/products/bulk/', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ action, product_ids: ids })
@@ -530,7 +533,7 @@ export default function ProductLocationManagerClient() {
   const openAuditLog = async (product: ProductRow) => {
     setAuditProduct(product);
     try {
-      const res = await fetch(`/api/admin/products/${product.id}/`);
+      const res = await checkedFetch(`/api/admin/products/${product.id}/`);
       if (res.ok) {
         const data = await res.json();
         setAuditLogs(data.auditLogs || []);

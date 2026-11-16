@@ -1,3 +1,4 @@
+import { requireWrite } from '@/lib/inventory/errors';
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
 import { revalidatePath, revalidateTag } from 'next/cache';
@@ -268,40 +269,40 @@ export async function PATCH(request: Request) {
       updates.main_location = main_location;
 
       if (main_location === 'PORTUGAL') {
-        await supabase.from('product_variants').update({ stock_geneva: 0 }).eq('product_id', realDbId);
-        await supabase.from('fulfillment_stock').update({ quantity: 0 }).eq('origin_id', 'GENEVA').or(`product_id.eq.${realDbId},product_id.eq.${existingProduct.woo_id},product_id.eq.prod-${existingProduct.woo_id}`);
-        await supabase.from('product_stock').upsert({
+        await requireWrite(supabase.from('product_variants').update({ stock_geneva: 0 }).eq('product_id', realDbId));
+        await requireWrite(supabase.from('fulfillment_stock').update({ quantity: 0 }).eq('origin_id', 'GENEVA').or(`product_id.eq.${realDbId},product_id.eq.${existingProduct.woo_id},product_id.eq.prod-${existingProduct.woo_id}`));
+        await requireWrite(supabase.from('product_stock').upsert({
           product_id: realDbId, variant_id: null, origin_id: 'GENEVA', quantity: 0, is_active: false, updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
-        await supabase.from('product_stock').upsert({
+        }, { onConflict: 'product_id,variant_id,origin_id' }));
+        await requireWrite(supabase.from('product_stock').upsert({
           product_id: realDbId, variant_id: null, origin_id: 'PORTUGAL', is_active: true, updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' }));
       } else if (main_location === 'GENEVA') {
-        await supabase.from('product_variants').update({ stock_portugal: 0 }).eq('product_id', realDbId);
-        await supabase.from('fulfillment_stock').update({ quantity: 0 }).eq('origin_id', 'PORTUGAL').or(`product_id.eq.${realDbId},product_id.eq.${existingProduct.woo_id},product_id.eq.prod-${existingProduct.woo_id}`);
-        await supabase.from('product_stock').upsert({
+        await requireWrite(supabase.from('product_variants').update({ stock_portugal: 0 }).eq('product_id', realDbId));
+        await requireWrite(supabase.from('fulfillment_stock').update({ quantity: 0 }).eq('origin_id', 'PORTUGAL').or(`product_id.eq.${realDbId},product_id.eq.${existingProduct.woo_id},product_id.eq.prod-${existingProduct.woo_id}`));
+        await requireWrite(supabase.from('product_stock').upsert({
           product_id: realDbId, variant_id: null, origin_id: 'PORTUGAL', quantity: 0, is_active: false, updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
-        await supabase.from('product_stock').upsert({
+        }, { onConflict: 'product_id,variant_id,origin_id' }));
+        await requireWrite(supabase.from('product_stock').upsert({
           product_id: realDbId, variant_id: null, origin_id: 'GENEVA', is_active: true, updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' }));
       } else if (main_location === 'COMMON') {
-        await supabase.from('product_stock').upsert({
+        await requireWrite(supabase.from('product_stock').upsert({
           product_id: realDbId, variant_id: null, origin_id: 'GENEVA', is_active: true, updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
-        await supabase.from('product_stock').upsert({
+        }, { onConflict: 'product_id,variant_id,origin_id' }));
+        await requireWrite(supabase.from('product_stock').upsert({
           product_id: realDbId, variant_id: null, origin_id: 'PORTUGAL', is_active: true, updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' }));
       }
     }
     if (status) updates.status = status;
 
     // Update products table if needed
     if (Object.keys(updates).length > 1) {
-      await supabase
+      await requireWrite(supabase
         .from('products')
         .update(updates)
-        .eq('id', realDbId);
+        .eq('id', realDbId));
     }
 
     // Handle Location Toggles & Stock Updates
@@ -319,14 +320,14 @@ export async function PATCH(request: Request) {
         ? Math.max(0, parseInt(stock_geneva, 10)) 
         : (currentGeneva?.quantity ?? 0);
 
-      await supabase.from('product_stock').upsert({
+      await requireWrite(supabase.from('product_stock').upsert({
         product_id: realDbId,
         variant_id: null,
         origin_id: 'GENEVA',
         quantity: newQty,
         is_active: newActive,
         updated_at: new Date().toISOString()
-      }, { onConflict: 'product_id,variant_id,origin_id' });
+      }, { onConflict: 'product_id,variant_id,origin_id' }));
     }
 
     // Portugal Stock / Active
@@ -341,14 +342,14 @@ export async function PATCH(request: Request) {
         ? Math.max(0, parseInt(stock_portugal, 10)) 
         : (currentPortugal?.quantity ?? 0);
 
-      await supabase.from('product_stock').upsert({
+      await requireWrite(supabase.from('product_stock').upsert({
         product_id: realDbId,
         variant_id: null,
         origin_id: 'PORTUGAL',
         quantity: newQty,
         is_active: newActive,
         updated_at: new Date().toISOString()
-      }, { onConflict: 'product_id,variant_id,origin_id' });
+      }, { onConflict: 'product_id,variant_id,origin_id' }));
     }
 
     // Handle variant stock updates if provided
@@ -363,35 +364,35 @@ export async function PATCH(request: Request) {
         if (v.attribute_value !== undefined) vUpdates.attribute_value = v.attribute_value;
         if (v.gtin13 !== undefined) vUpdates.gtin13 = v.gtin13;
 
-        await supabase.from('product_variants').update(vUpdates).eq('id', v.id);
+        await requireWrite(supabase.from('product_variants').update(vUpdates).eq('id', v.id));
 
         if (v.stock_geneva !== undefined) {
-          await supabase.from('product_stock').upsert({
+          await requireWrite(supabase.from('product_stock').upsert({
             product_id: realDbId,
             variant_id: v.id,
             origin_id: 'GENEVA',
             quantity: vUpdates.stock_geneva,
             is_active: true,
             updated_at: new Date().toISOString()
-          }, { onConflict: 'product_id,variant_id,origin_id' });
+          }, { onConflict: 'product_id,variant_id,origin_id' }));
         }
         if (v.stock_portugal !== undefined) {
-          await supabase.from('product_stock').upsert({
+          await requireWrite(supabase.from('product_stock').upsert({
             product_id: realDbId,
             variant_id: v.id,
             origin_id: 'PORTUGAL',
             quantity: vUpdates.stock_portugal,
             is_active: true,
             updated_at: new Date().toISOString()
-          }, { onConflict: 'product_id,variant_id,origin_id' });
+          }, { onConflict: 'product_id,variant_id,origin_id' }));
         }
       }
     }
 
     // Delete variant if requested
     if (body.delete_variant_id) {
-      await supabase.from('product_stock').delete().eq('variant_id', body.delete_variant_id);
-      await supabase.from('product_variants').delete().eq('id', body.delete_variant_id);
+      await requireWrite(supabase.from('product_stock').delete().eq('variant_id', body.delete_variant_id));
+      await requireWrite(supabase.from('product_variants').delete().eq('id', body.delete_variant_id));
     }
 
     // Add new variant/taste if requested
@@ -403,7 +404,7 @@ export async function PATCH(request: Request) {
       const vGen = Math.max(0, parseInt(av.stock_geneva || 0, 10));
       const vPt = Math.max(0, parseInt(av.stock_portugal || 0, 10));
 
-      await supabase.from('product_variants').insert({
+      await requireWrite(supabase.from('product_variants').insert({
         id: newVarId,
         product_id: realDbId,
         sku: av.sku || `NF-${String(Date.now()).slice(-6)}`,
@@ -415,33 +416,33 @@ export async function PATCH(request: Request) {
         gtin13: av.gtin13 || null,
         created_at: new Date().toISOString(),
         updated_at: new Date().toISOString()
-      });
+      }));
 
       if (vGen > 0) {
-        await supabase.from('product_stock').upsert({
+        await requireWrite(supabase.from('product_stock').upsert({
           product_id: realDbId,
           variant_id: newVarId,
           origin_id: 'GENEVA',
           quantity: vGen,
           is_active: true,
           updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' }));
       }
       if (vPt > 0) {
-        await supabase.from('product_stock').upsert({
+        await requireWrite(supabase.from('product_stock').upsert({
           product_id: realDbId,
           variant_id: newVarId,
           origin_id: 'PORTUGAL',
           quantity: vPt,
           is_active: true,
           updated_at: new Date().toISOString()
-        }, { onConflict: 'product_id,variant_id,origin_id' });
+        }, { onConflict: 'product_id,variant_id,origin_id' }));
       }
     }
 
     // Insert Audit Log
-    try {
-      await supabase.from('product_audit_log').insert({
+    {
+      await requireWrite(supabase.from('product_audit_log').insert({
         product_id: realDbId,
         user_id: user,
         action: 'update_product_location',
@@ -451,8 +452,8 @@ export async function PATCH(request: Request) {
           stock: existingProduct.product_stock
         },
         new_values: body
-      });
-    } catch {}
+      }));
+    }
 
     // On-Demand Revalidation
     try {
