@@ -24,7 +24,7 @@ jobs:
         run: node -e "if (Number(process.versions.node.split('.')[0]) < 22) process.exit(1)"
       - name: Install audited lockfile dependencies
         run: npm ci --ignore-scripts
-      - name: Run all security, commerce and SEO regression tests
+      - name: Run all security, commerce, SEO and secret-leak regression tests
         run: npm run test:release-safety
       - name: Dependency vulnerability overview (read-only)
         run: npm audit --omit=dev --audit-level=moderate || true
