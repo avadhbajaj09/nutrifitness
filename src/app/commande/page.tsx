@@ -242,7 +242,8 @@ export default function CheckoutPage() {
         .then((res) => res.json())
         .then(async (data) => {
           setIsProcessingStripe(false);
-          if (data.payment_status === 'paid' || data.status === 'complete') {
+          // A completed Stripe Checkout session is not proof that delayed payment succeeded.
+          if (data.payment_status === 'paid') {
             const finalOrderNum = data.order_id || orderIdParam || `CMD-${Math.floor(100000 + Math.random() * 900000)}`;
             setOrderNumber(finalOrderNum);
             setFinalTotalFormatted(formatPrice(data.amount_total || cartSubtotal));
