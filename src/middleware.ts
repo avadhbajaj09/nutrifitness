@@ -24,8 +24,12 @@ export async function middleware(request: NextRequest) {
   const adminOnly =
     (isAdminApi && !publicStock && !publicBanners) ||
     staffOrders ||
+    (pathname.startsWith('/api/mail/') && !/^\/api\/mail\/inbound\/?$/.test(pathname)) ||
+    /^\/api\/mail\/?$/.test(pathname) ||
+    /^\/api\/packlink\/?$/.test(pathname) ||
     (/^\/api\/catalog\/hidden\/?$/.test(pathname) && isMutation) ||
     /^\/api\/fulfillment\/stock\/?$/.test(pathname) ||
+    /^\/api\/fulfillment\/shipments\/?$/.test(pathname) ||
     (/^\/api\/checkout\/abandoned\/?$/.test(pathname) && method === 'GET' && !searchParams.has('orderNumber'));
   const warehouseOnly = pathname.startsWith('/api/teamomar/') && !/^\/api\/teamomar\/auth\/?$/.test(pathname);
   if (adminOnly || warehouseOnly) {
