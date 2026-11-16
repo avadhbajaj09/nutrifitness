@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { getProductFaqs } from '../src/lib/productFaq';
 import type { ProductItem } from '../src/lib/types';
 
@@ -46,4 +47,10 @@ assert.ok(!creatineText.includes('pureté garantie'));
 assert.ok(!creatineText.includes('rétention intramusculaire'));
 assert.ok(creatine.some(f => f.question.includes('Comment utiliser')));
 
-console.log('Product FAQ content-integrity checks passed.');
+// Schema.org shippingDestination expects ISO 3166-1 alpha-2 country codes.
+// The UK is represented as GB, not UK, in machine-readable country identifiers.
+const productPageSource = readFileSync('src/app/produit/[slug]/page.tsx', 'utf8');
+assert.ok(productPageSource.includes("'GB', 'NO', 'IS'"), 'Product shipping schema should use ISO GB');
+assert.ok(!productPageSource.includes("'UK', 'NO', 'IS'"), 'UK is not an ISO 3166-1 alpha-2 code');
+
+console.log('Product FAQ and shipping schema integrity checks passed.');
