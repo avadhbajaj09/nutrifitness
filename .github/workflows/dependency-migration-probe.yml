@@ -7,6 +7,9 @@ on:
       - 'package-lock.json'
       - 'src/lib/cacheTags.ts'
       - 'src/app/api/**'
+      - 'src/app/sitemap/**'
+      - 'src/app/sitemap.ts'
+      - 'src/lib/sitemapEntries.ts'
 
 permissions:
   contents: read
