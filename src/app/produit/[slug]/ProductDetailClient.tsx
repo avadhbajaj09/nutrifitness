@@ -91,7 +91,12 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const isPortugal = product.locationType === 'PORTUGAL_ONLY' || product.shippingOrigin === 'portugal' || (isCommon && !isSwissDestination);
   const isDeliverable = isProductDeliverableToCountry(effectiveCountry, product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal);
 
-  const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
+  // Display discounts only when a real compare-at price exists for the selected variant.
+  // Never invent a crossed-out price from the current selling price.
+  const listedCompareAt = selectedVariant ? selectedVariant.compareAtPriceChf : product.compareAtPriceChf;
+  const compareAtPrice = typeof listedCompareAt === 'number' && listedCompareAt > currentPrice
+    ? listedCompareAt
+    : undefined;
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;
 
   useEffect(() => {
