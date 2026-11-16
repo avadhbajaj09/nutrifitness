@@ -4,6 +4,7 @@
  */
 
 import { stripe } from '@/lib/stripe';
+import { cartRestoreUrl } from '@/lib/cartRestore';
 
 interface SendEmailParams {
   to: string | string[];
@@ -765,7 +766,7 @@ export async function sendAbandonedCartAlertToMarco(lead: any) {
     `Bonjour ${customerName}, c'est NutriFitness Genève. Nous avons remarqué que vous n'avez pas finalisé votre panier${firstProductName ? ` (${firstProductName})` : ''} sur nutrifitness.ch. Avez-vous besoin d'un conseil ou d'aide pour finaliser ?`
   );
   const waLink = waNumber ? `https://wa.me/${waNumber}?text=${waMessage}` : null;
-  const restoreUrl = `https://nutrifitness.ch/commande?restore=${orderNumber}`;
+  const restoreUrl = await cartRestoreUrl(String(orderNumber));
 
   const itemsHtml = items.map((it: any) => {
     const name = it.name || it.product_name || 'Article';
@@ -908,7 +909,7 @@ export async function sendCustomerCartRecoveryEmail(lead: any) {
   const currency = lead.currency || 'CHF';
   const items: any[] = Array.isArray(lead.items) ? lead.items : [];
   
-  const restoreUrl = `https://nutrifitness.ch/commande?restore=${orderNumber}`;
+  const restoreUrl = await cartRestoreUrl(String(orderNumber));
 
   const itemsHtml = items.map((it: any) => {
     const name = it.name || it.product_name || 'Article';
