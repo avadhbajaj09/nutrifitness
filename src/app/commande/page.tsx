@@ -363,7 +363,7 @@ export default function CheckoutPage() {
     if (existingLead) {
       checkoutLeadIdRef.current = existingLead;
     } else {
-      const newLead = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
+      const newLead = `WEB-${crypto.randomUUID()}`;
       sessionStorage.setItem('nf_checkout_lead_id', newLead);
       checkoutLeadIdRef.current = newLead;
     }
