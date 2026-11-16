@@ -24,7 +24,8 @@
     "test:content-integrity": "tsx scripts/test-content-integrity.ts",
     "test:merchant-gtin": "tsx scripts/test-merchant-gtin.ts",
     "test:release-safety": "npm run typecheck && npm run test:middleware && npm run test:cart-restore && npm run test:order-auth && npm run test:abandoned-lead && npm run test:delivery && npm run test:gating && npm run test:stock && npm run test:routing && npm run test:indexing-policy && npm run test:content-integrity && npm run test:merchant-gtin && npm run test:secret-hygiene",
-    "test:secret-hygiene": "tsx scripts/test-secret-hygiene.ts"
+    "test:secret-hygiene": "tsx scripts/test-secret-hygiene.ts",
+    "test:review-provenance": "tsx scripts/test-review-provenance.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",
