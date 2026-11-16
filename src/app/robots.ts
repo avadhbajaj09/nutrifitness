@@ -33,7 +33,7 @@ export default function robots(): Robots {
   // return "Disallow: /" just because VERCEL_ENV is undefined.
   const isPreview = process.env.VERCEL_ENV === 'preview' ||
     process.env.VERCEL_ENV === 'development' ||
-    /\.vercel\.app\/??$/.test(site);
+    site.includes('.vercel.app');
   const blockAll = process.env.ROBOTS_DISALLOW_ALL === 'true' ||
     (isPreview && process.env.ALLOW_INDEXING !== 'true');
   if (blockAll) {
