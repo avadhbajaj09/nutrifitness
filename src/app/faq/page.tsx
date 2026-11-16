@@ -11,5 +11,5 @@ export const metadata: Metadata = {
 };
 
 export default function FAQPage() {
-  return <FAQView canonicalUrl="https://nutrifitness.ch/faq/" />;
+  return <FAQView canonicalUrl="https://nutrifitness.ch/faq-geneve-complements-alimentaires-proteines-en-poudre/" />;
 }
