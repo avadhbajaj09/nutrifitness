@@ -211,6 +211,8 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
   const jsonLd = {
     '@context': 'https://schema.org',
     '@type': 'FAQPage',
+    'inLanguage': 'fr-CH',
+    ...(canonicalUrl ? { 'mainEntityOfPage': canonicalUrl } : {}),
     'mainEntity': FAQ_DATA.map(item => ({
       '@type': 'Question',
       'name': item.question,
