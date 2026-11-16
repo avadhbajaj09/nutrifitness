@@ -6,13 +6,17 @@ export const runtime = 'nodejs';
 export async function POST(request: Request) {
   try {
     const { searchParams } = new URL(request.url);
-    const secret = searchParams.get('secret') || (await request.json().catch(() => ({}))).secret;
+    // Parse once: a request stream cannot be consumed twice.
+    const body = await request.json().catch(() => ({}));
+    const configuredSecret = process.env.ADMIN_REVALIDATE_SECRET?.trim();
+    const suppliedSecret = request.headers.get('authorization')?.replace(/^Bearer\s+/i, '')
+      || searchParams.get('secret')
+      || body.secret;
 
-    if (secret !== 'Geneva@03564' && secret !== process.env.ADMIN_REVALIDATE_SECRET) {
+    // Never accept a hard-coded password or an undefined environment secret.
+    if (!configuredSecret || suppliedSecret !== configuredSecret) {
       return NextResponse.json({ error: 'Invalid revalidation secret' }, { status: 401 });
     }
-
-    const body = await request.json().catch(() => ({}));
     const { path, tag } = body;
 
     if (path) {
