@@ -20,6 +20,8 @@ export interface GoogleReview {
   location?: string;
   text: string;
   verified: boolean;
+  /** Direct source evidence for this exact review; do not infer from author/text. */
+  sourceUrl?: string;
   avatarColor?: string;
 }
 
@@ -128,8 +130,26 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
   }
 ];
 
-// STRICT FILTER: Only show reviews with 3 or more stars (ignore 1 and 2 stars)
-const GOOGLE_REVIEWS = RAW_GOOGLE_REVIEWS.filter(r => r.rating >= 3);
+/**
+ * Review provenance gate: hardcoded text and a `verified: true` flag are
+ * NOT evidence that a review was posted on Google. Only display entries with
+ * a direct Google Maps review source link. Do not filter out low ratings.
+ * Until independently sourced entries are supplied, the slider is hidden.
+ */
+function hasGoogleReviewSource(review: GoogleReview): boolean {
+  if (!review.verified || !review.sourceUrl) return false;
+  try {
+    const url = new URL(review.sourceUrl);
+    return url.protocol === 'https:' &&
+      (url.hostname === 'google.com' || url.hostname === 'www.google.com' ||
+       url.hostname === 'maps.google.com') &&
+      url.pathname.startsWith('/maps/');
+  } catch {
+    return false;
+  }
+}
+
+const GOOGLE_REVIEWS = RAW_GOOGLE_REVIEWS.filter(hasGoogleReviewSource);
 
 export default function GoogleReviewsSlider() {
   const scrollContainerRef = useRef<HTMLDivElement>(null);
@@ -169,6 +189,9 @@ export default function GoogleReviewsSlider() {
       setTimeout(checkScroll, 350);
     }
   };
+
+  // Do not present unsubstantiated testimonials as verified Google reviews.
+  if (GOOGLE_REVIEWS.length === 0) return null;
 
   return (
     <section className="mb-8 sm:mb-16">
