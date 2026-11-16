@@ -332,7 +332,7 @@ export default function AdminDashboardClient() {
     setRecoverySendingId(orderNum);
     setRecoveryFeedback(null);
     try {
-      const res = await fetch(`/api/checkout/abandoned?action=send_recovery&target=${encodeURIComponent(orderNum)}`);
+      const res = await fetch(`/api/checkout/abandoned?action=send_recovery&target=${encodeURIComponent(orderNum)}`, { method: 'POST' });
       const data = await res.json();
       if (data.success) {
         setRecoveryFeedback({ id: orderNum, msg: 'Email de relance envoyé au client avec succès !', ok: true });
