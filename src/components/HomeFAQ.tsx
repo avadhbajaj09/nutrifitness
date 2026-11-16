@@ -10,15 +10,15 @@ export default function HomeFAQ() {
   const homeFaqs = [
     {
       q: 'Où acheter des compléments alimentaires de sport en Suisse ?',
-      a: 'Nutrifitness est une boutique de nutrition sportive située au 34 Rue des Pâquis, 1201 Suisse, à 5 minutes de la Gare Cornavin. Vous y trouvez un stock complet de protéines whey, créatines pures, acides aminés BCAA, vitamines, minéraux et accessoires, avec des conseils personnalisés sur place par notre équipe d\'experts. Nous disposons également d\'une boutique en ligne avec livraison dans toute la Suisse.'
+      a: "NutriFitness est une boutique de nutrition sportive située Rue des Pâquis 34, 1201 Genève, Suisse, près de la gare Cornavin. Vous pouvez découvrir des protéines whey et végétales, de la créatine, des acides aminés, des vitamines, des minéraux et des accessoires. Notre boutique en ligne permet également de commander selon les options de livraison disponibles.",
     },
     {
       q: 'Nutrifitness livre-t-il dans toute la Suisse ?',
-      a: 'Oui, notre boutique en ligne expédie dans l\'ensemble des cantons suisses et au Liechtenstein via La Poste Suisse (service PostPac Priority en 1 à 2 jours ouvrables). La livraison est 100 % gratuite dès CHF 75.– d\'achats (forfait de CHF 9.90 en dessous). Zéro frais de douane ni taxe cachée.'
+      a: "NutriFitness propose la livraison en Suisse et au Liechtenstein pour les articles éligibles. Les délais et les frais dépendent du stock, du pays de destination, du lieu d'expédition et du transporteur ; ils sont précisés avant la confirmation de la commande.",
     },
     {
       q: 'Quels types de produits trouve-t-on chez Nutrifitness ?',
-      a: 'Notre catalogue réunit des protéines (whey concentrée, isolat CFM, caséine et protéines végétales bio), des gainers pour la prise de masse, de la créatine monohydrate (label Creapure®), des acides aminés essentiels (BCAA et EAA), des pré-workouts énergisants, des brûleurs de graisses, des vitamines & minéraux, des snacks protéinés et des accessoires sportifs.'
+      a: "Le catalogue propose notamment des protéines whey, isolats et protéines végétales, des gainers, de la créatine monohydrate, des acides aminés, des pré-workouts, des vitamines, des minéraux, des snacks et des accessoires. Vérifiez les ingrédients et les caractéristiques propres à chaque référence.",
     },
     {
       q: 'Comment choisir son premier complément alimentaire ?',
@@ -26,11 +26,11 @@ export default function HomeFAQ() {
     },
     {
       q: 'Quelles marques de nutrition sportive proposez-vous ?',
-      a: 'Nous distribuons officiellement les marques de renommée internationale et européenne les plus fiables : Optimum Nutrition, Applied Nutrition, Marvelous, Ghost Lifestyle, Bigman Nutrition, Pronutrition et Dirty Squads, ainsi que notre marque propre d\'accessoires NutriFitness Lab.'
+      a: "Notre catalogue comprend notamment Optimum Nutrition, Applied Nutrition, Marvelous, Ghost Lifestyle, Bigman Nutrition, Pronutrition et Dirty Squads. Les marques et les produits disponibles évoluent selon les approvisionnements ; consultez la boutique pour les références actuelles.",
     },
     {
       q: 'Puis-je retirer ma commande gratuitement en boutique en Suisse (Click & Collect) ?',
-      a: 'Oui, absolument. Lors de votre commande en ligne, choisissez simplement l\'option « Retrait en Boutique ». Votre commande est préparée sous 2 heures ouvrées et vous êtes prévenu dès qu\'elle est prête. Vous n\'avez qu\'à vous présenter au 34 Rue des Pâquis avec votre numéro de commande.'
+      a: "Le retrait Click & Collect est proposé pour les articles éligibles et disponibles à Genève. Lors de votre commande, choisissez l'option de retrait si elle apparaît et attendez la confirmation que vos articles sont prêts. La boutique se situe Rue des Pâquis 34, 1201 Genève.",
     },
     {
       q: 'Les compléments alimentaires remplacent-ils une alimentation équilibrée ?',
