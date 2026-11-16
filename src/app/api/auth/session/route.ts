@@ -31,7 +31,7 @@ export async function POST(request: Request) {
   if (!isSessionConfigured()) return privateResponse(NextResponse.json({ error: 'Staff login not configured' }, { status: 503 }));
   if (!(await validStaffPassword(role, password)))
     return privateResponse(NextResponse.json({ error: 'Invalid credentials' }, { status: 401 }));
-  const response = privateResponse(NextResponse.json({ authenticated: true }));
+  const response = privateResponse(NextResponse.json({ authenticated: true, success: true }));
   response.cookies.set(sessionCookie(role), await createStaffSession(role), {
     httpOnly: true, secure: process.env.NODE_ENV === 'production', sameSite: 'strict',
     path: '/', maxAge: SESSION_DURATION_MS / 1000,
