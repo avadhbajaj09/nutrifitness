@@ -1,22 +1,52 @@
 import { NextResponse } from 'next/server';
 import type { NextRequest } from 'next/server';
 
-export function middleware(request: NextRequest) {
+
+async function maintenanceHash(): Promise<string | null> {
+  const secret = process.env.MAINTENANCE_PREVIEW_SECRET;
+  if (!secret || secret.length < 24) return null;
+  const bytes = await crypto.subtle.digest('SHA-256', new TextEncoder().encode('maintenance-v1:' + secret));
+  return Array.from(new Uint8Array(bytes)).map(x => x.toString(16).padStart(2, '0')).join('');
+}
+export async function middleware(request: NextRequest) {
+
   const { pathname, searchParams } = request.nextUrl;
 
-  // 1. Secret preview query param check (?preview=nutrifit or ?preview=exit)
-  const previewParam = searchParams.get('preview')?.toLowerCase();
-  const validSecrets = ['nutrifit', 'nutrifitness', 'marco', '1201', 'active'];
+  // Protect staff routes at the Edge before invoking privileged Supabase APIs.
+  const { verifyStaffSession, sessionCookie, isSameOrigin } = await import('@/lib/adminSession');
+  const method = request.method.toUpperCase();
+  const isMutation = !['GET', 'HEAD', 'OPTIONS'].includes(method);
+  const isAdminApi = pathname.startsWith('/api/admin/');
+  const publicStock = method === 'GET' && /^\/api\/admin\/stock\/?$/.test(pathname);
+  const publicBanners = method === 'GET' &&
+    /^\/api\/admin\/banners\/?$/.test(pathname) && searchParams.get('active') === 'true';
+  const staffOrders = /^\/api\/orders\/?$/.test(pathname) && method !== 'POST';
+  const adminOnly =
+    (isAdminApi && !publicStock && !publicBanners) ||
+    staffOrders ||
+    (/^\/api\/catalog\/hidden\/?$/.test(pathname) && isMutation) ||
+    /^\/api\/fulfillment\/stock\/?$/.test(pathname) ||
+    (/^\/api\/checkout\/abandoned\/?$/.test(pathname) && method === 'GET' && !searchParams.has('orderNumber'));
+  const warehouseOnly = pathname.startsWith('/api/teamomar/') && !/^\/api\/teamomar\/auth\/?$/.test(pathname);
+  if (adminOnly || warehouseOnly) {
+    const adminValid = await verifyStaffSession(request.cookies.get(sessionCookie('admin'))?.value, 'admin');
+    const omarValid = warehouseOnly && await verifyStaffSession(request.cookies.get(sessionCookie('omar'))?.value, 'omar');
+    if (!adminValid && !omarValid) return NextResponse.json({ error: 'Unauthorized' }, { status: 401 });
+    if (isMutation && !isSameOrigin(request)) return NextResponse.json({ error: 'Invalid origin' }, { status: 403 });
+  }
 
-  if (previewParam && validSecrets.includes(previewParam)) {
+  // Maintenance preview requires a configured secret. No hard-coded public passwords.
+  const previewParam = searchParams.get('preview');
+  const validPreview = process.env.MAINTENANCE_PREVIEW_SECRET;
+  const previewHash = await maintenanceHash();
+  if (previewHash && validPreview && previewParam === validPreview) {
     // Clone URL and remove the preview parameter
     const cleanUrl = request.nextUrl.clone();
     cleanUrl.searchParams.delete('preview');
     const response = NextResponse.redirect(cleanUrl);
-    response.cookies.set('nf_maintenance_bypass', 'true', {
-      path: '/',
-      maxAge: 60 * 60 * 24 * 30, // 30 days
-      sameSite: 'lax',
+    response.cookies.set('nf_maintenance_bypass', previewHash, {
+      path: '/', httpOnly: true, secure: process.env.NODE_ENV === 'production',
+      maxAge: 60 * 60 * 24, sameSite: 'strict',
     });
     return response;
   }
@@ -47,7 +77,7 @@ export function middleware(request: NextRequest) {
     pathname === '/feeds/merchant.xml' ||
     pathname === '/maintenance';
 
-  const hasBypassCookie = request.cookies.get('nf_maintenance_bypass')?.value === 'true';
+  const hasBypassCookie = Boolean(previewHash && request.cookies.get('nf_maintenance_bypass')?.value === previewHash);
 
   if (isMaintenanceMode && !isExempt && !hasBypassCookie) {
     // Rewrite to /maintenance while preserving original URL
