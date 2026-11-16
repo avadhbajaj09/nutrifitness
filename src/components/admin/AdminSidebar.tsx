@@ -120,9 +120,11 @@ export default function AdminSidebar({
     return activeTab === id;
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await fetch('/api/auth/session?role=admin', { method: 'DELETE' }).catch(() => {});
     try {
       localStorage.removeItem('nutrifitness_admin_auth');
+      localStorage.removeItem('nf_admin_auth');
     } catch {}
     window.location.reload();
   };
