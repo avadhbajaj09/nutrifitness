@@ -36,7 +36,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'proteins',
     categoryLabel: 'Protéines & Nutrition',
     question: 'Quels compléments sportifs propose NutriFitness.ch ?',
-    answer: 'NutriFitness.ch propose une gamme complète de nutrition sportive de haute qualité : protéines whey (classique, isolat natif CFM, ISO Bulk biologique, caséine et protéines végétales bio), créatine monohydrate 200 mesh (label Creapure), acides aminés BCAA et EAA, gainers de masse propre, boosters pré-entraînement sans crash, brûleurs de graisses thermogéniques, oméga-3, collagène marin et bovin, vitamines & minéraux (vitamine C 1000mg, magnésium bisglycinate, ashwagandha KSM-66), et snacks protéinés / keto-friendly. Tous nos produits sont rigoureusement sélectionnés pour leur biodisponibilité, leur pureté certifiée et leur conformité stricte aux normes suisses.',
+    answer: "NutriFitness.ch propose des produits de nutrition sportive, notamment des protéines whey et végétales, de la créatine, des acides aminés, des vitamines, des minéraux et des snacks. La composition, les certifications et la disponibilité varient selon la référence ; consultez la fiche et l'étiquette de chaque produit.",
     keywords: ['produits', 'catalogue', 'gamme', 'whey', 'creatine', 'complements', 'boutique']
   },
   {
@@ -44,15 +44,15 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'proteins',
     categoryLabel: 'Protéines & Nutrition',
     question: 'Quelle est la différence entre la whey concentrée, l\'isolat et la caséine ?',
-    answer: 'La whey concentrée est obtenue après ultrafiltration du lactosérum : elle est absorbée rapidement (1 à 2 heures) après l\'effort, ce qui en fait la référence pour la récupération immédiate et la prise de masse musculaire générale. L\'isolat de whey (ou ISO Whey) subit une microfiltration à flux croisé (CFM) poussée : il affiche plus de 90 % de protéines pures, avec une teneur quasi nulle en graisses et en lactose (< 0.5 %), idéal en période de sèche ou pour les personnes intolérantes au lactose. Enfin, la caséine micellaire est une protéine à digestion lente (6 à 8 heures), parfaite avant le coucher ou lors de périodes de jeûne pour diffuser en continu des acides aminés et éviter le catabolisme musculaire nocturne.',
+    answer: "La whey concentrée et l'isolat sont deux formes de protéines de lactosérum ; l'isolat est généralement plus concentré en protéines et moins riche en lactose, mais les valeurs exactes dépendent de la marque et du produit. La caséine se digère généralement plus lentement. Comparez les tableaux nutritionnels et les allergènes des références proposées.",
     keywords: ['whey', 'isolat', 'caseine', 'difference', 'digestion', 'lactose', 'cfm']
   },
   {
     id: 'faq-3',
     category: 'creatine',
     categoryLabel: 'Créatine & Performance',
-    question: 'Pourquoi la créatine monohydrate est-elle l\'un de vos meilleures ventes ?',
-    answer: 'La créatine monohydrate est le complément nutritionnel le plus documenté et validé par la recherche scientifique mondiale. Elle permet de régénérer l\'adénosine triphosphate (ATP), fournissant une énergie explosive immédiate lors des séries lourdes ou des sprints. NutriFitness.ch distribue de la créatine monohydrate micronisée 200 mesh ultra-fine et du label Creapure®, d\'une pureté pharmaceutique garantie à 99.9 % sans solvants ni sous-produits toxiques. Elle accélère le gain de force, le volume cellulaire musculaire et la récupération après chaque séance d\'entraînement.',
+    question: "Pourquoi choisir une créatine monohydrate ?",
+    answer: "La créatine monohydrate fait partie des ingrédients de nutrition sportive les plus étudiés pour les efforts courts et intenses. Notre catalogue peut proposer plusieurs marques et formules, dont certaines portant le label Creapure®. Vérifiez la composition, les recommandations et les justificatifs propres à chaque référence avant l'achat.",
     keywords: ['creatine', 'creapure', 'force', 'monohydrate', 'performance', 'atp']
   },
   {
@@ -60,7 +60,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'weightloss',
     categoryLabel: 'Perte de Poids & Définition',
     question: 'Vendez-vous des compléments adaptés à la perte de poids et à la sèche ?',
-    answer: 'Oui, tout à fait. NutriFitness.ch propose une sélection ciblée pour soutenir la perte de masse grasse tout en protégeant le muscle acquis : des brûleurs de graisses thermogéniques de pointe stimulant le métabolisme de base, de la L-carnitine pour favoriser l\'oxydation des acides gras pendant l\'effort aérobie, des isolats de whey ultra-purs sans glucides ni lipides, des acides aminés BCAA/EAA pour empêcher la fonte musculaire en déficit calorique, ainsi que des coupe-faims naturels et snacks keto pauvres en sucres. Un service de coaching nutritionnel personnalisé avec bilan complet est également disponible en ligne et dans notre boutique de Genève.',
+    answer: "Nous proposons différentes références pour accompagner une alimentation et un programme d'entraînement adaptés à vos objectifs. Aucun complément ne remplace une alimentation équilibrée ou ne garantit une perte de graisse. Pour comparer les teneurs en protéines, sucres, caféine ou autres ingrédients, consultez les fiches produits et leurs étiquettes.",
     keywords: ['seche', 'perte de poids', 'bruleur', 'graisse', 'carnitine', 'regime']
   },
   // 2. Shipping & Swiss Store
@@ -69,7 +69,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'store',
     categoryLabel: 'Livraison & Boutique en Suisse',
     question: 'Quels sont les délais et frais de livraison pour la Suisse et le Liechtenstein ?',
-    answer: 'Toutes les commandes validées du lundi au vendredi avant 14h00 sont préparées et confiées à La Poste Suisse le jour même. La livraison s\'effectue par PostPac Priority en 1 à 2 jours ouvrables directement à votre domicile ou en point relais PickPost. La livraison est GRATUITE dès CHF 75.– d\'achats. Pour les commandes inférieures à 75 CHF, une participation forfaitaire de CHF 9.90 est appliquée. Nos stocks étant basés en Suisse, aucun frais de douane ni taxe imprévue ne s\'applique.',
+    answer: "Les frais et les dates estimées dépendent du produit, de son lieu d'expédition, du stock, de votre destination et du mode de livraison choisi. Certaines références partent de Genève, d'autres du Portugal. Les options, frais et délais applicables à votre commande sont indiqués avant sa validation.",
     keywords: ['livraison', 'poste suisse', 'delai', 'frais', 'postpac', 'priority', '24h', 'gratuit']
   },
   {
@@ -77,7 +77,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'store',
     categoryLabel: 'Livraison & Boutique en Suisse',
     question: 'Où se situe la boutique physique et proposez-vous le Click & Collect ?',
-    answer: 'Notre magasin de nutrition sportive est situé au 34 Rue des Pâquis, 1201 Suisse, à 5 minutes de la gare Cornavin. Nous proposons un service Click & Collect 100 % gratuit : vous passez votre commande sur nutrifitness.ch et vous venez la retirer 2 heures plus tard en boutique. Horaires : Lundi au Vendredi de 12h30 à 19h00, et le Samedi de 12h00 à 17h00. Notre équipe d\'experts est sur place pour vous conseiller personnellement.',
+    answer: "La boutique NutriFitness se trouve Rue des Pâquis 34, 1201 Genève, Suisse, près de la gare Cornavin. Le Click & Collect est proposé pour les articles éligibles au retrait et disponibles en boutique. Attendez la confirmation de préparation avant de vous déplacer. Les horaires affichés par la boutique font foi.",
     keywords: ['boutique', 'magasin', 'suisse', 'click and collect', 'paquis', 'horaires', 'adresse']
   },
   // 3. Orders, Payments & Legal
@@ -86,7 +86,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'orders',
     categoryLabel: 'Commandes & Paiements',
     question: 'Quels moyens de paiement suisses acceptez-vous ?',
-    answer: 'Nous acceptons l\'ensemble des solutions de paiement plébiscitées en Suisse : TWINT (règlement instantané par QR code ou notification mobile), cartes PostFinance Card et E-Finance, cartes de crédit/débit sécurisées (Visa, Mastercard, American Express via 3D Secure), ainsi qu\'Apple Pay et Google Pay. Toutes les transactions bénéficient d\'un cryptage SSL 256 bits conforme aux standards bancaires.',
+    answer: "Les moyens de paiement proposés pour votre commande sont affichés pendant le paiement. Les options peuvent varier selon le pays et le montant, notamment entre TWINT et les cartes de paiement. Vérifiez les possibilités disponibles au moment de finaliser l'achat.",
     keywords: ['twint', 'postfinance', 'carte', 'paiement', 'apple pay', 'securise']
   },
   {
@@ -103,7 +103,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'health',
     categoryLabel: 'Santé, Articulations & Bien-être',
     question: 'Vos compléments alimentaires sont-ils conformes à la législation suisse ?',
-    answer: 'Oui, à 100 %. Tous les compléments alimentaires vendus par NutriFitness répondent scrupuleusement aux ordonnances du Département fédéral de l\'intérieur (DFI) et aux contrôles de l\'Office fédéral de la sécurité alimentaire et des affaires vétérinaires (OSAV). Nos formules sont exemptes de substances interdites, métaux lourds et agents dopants.',
+    answer: "Les compléments alimentaires commercialisés en Suisse doivent respecter les exigences légales applicables, notamment celles relatives à leur composition et à leur étiquetage. Les caractéristiques et éventuelles certifications doivent être vérifiées pour chaque produit ; contactez notre équipe si vous souhaitez obtenir des informations complémentaires avant l'achat.",
     keywords: ['suisse', 'osav', 'dfi', 'legislation', 'qualite', 'securite', 'dopage']
   },
   {
@@ -111,7 +111,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'health',
     categoryLabel: 'Santé, Articulations & Bien-être',
     question: 'Quels sont les bienfaits du collagène en poudre pour les sportifs ?',
-    answer: 'Le collagène est la protéine structurelle majeure des tendons, ligaments, cartilages et de la peau. Avec l\'intensité des entraînements de musculation et de crossfit, le renouvellement collagénique est mis à rude épreuve. Notre poudre de collagène hydrolysé (peptides de haute biodisponibilité) favorise la régénération du cartilage articulaire, prévient les tendinites, améliore la flexibilité des tissus conjonctifs et favorise une récupération plus sereine chez les athlètes de force et d\'endurance.',
+    answer: "Le collagène est une protéine naturellement présente dans plusieurs tissus de l'organisme. Les poudres de collagène se distinguent par leur origine, leur composition et leurs quantités par portion. Un complément ne doit pas être présenté comme un moyen de prévenir ou de traiter une blessure ; consultez l'étiquette et demandez conseil à un professionnel de santé si nécessaire.",
     keywords: ['collagene', 'tendons', 'articulations', 'blessure', 'peptides', 'cartilage']
   },
   {
@@ -119,7 +119,7 @@ export const FAQ_DATA: FAQItem[] = [
     category: 'creatine',
     categoryLabel: 'Créatine & Performance',
     question: 'Dois-je faire une « phase de charge » avec la créatine ?',
-    answer: 'Non, la phase de charge (consommer 20g par jour pendant 5 jours) n\'est pas obligatoire et peut occasionner de légers troubles digestifs chez certaines personnes. Les études scientifiques récentes démontrent qu\'une prise quotidienne constante de 3g à 5g de créatine monohydrate micronisée permet de saturer les réserves musculaires en 3 à 4 semaines de façon tout aussi efficace et beaucoup plus douce pour l\'organisme. La régularité de la prise (de préférence avec un repas contenant des glucides ou votre shake post-entraînement) est la clé principale.',
+    answer: "Une phase de charge n'est pas indispensable dans tous les protocoles d'utilisation de créatine. La quantité appropriée et les précautions dépendent du produit et de la situation individuelle. Respectez les indications figurant sur l'emballage et demandez un avis professionnel en cas de doute.",
     keywords: ['creatine', 'charge', 'prise', 'dosage', 'grammes', 'timing']
   },
   // 5. Hub Specific Questions (PAGE 14)
