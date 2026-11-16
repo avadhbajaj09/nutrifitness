@@ -3,22 +3,29 @@ import { getAdminSupabase } from '@/lib/supabase';
 
 export const dynamic = 'force-dynamic';
 
+function text(value: unknown, limit: number): string {
+  return typeof value === 'string' ? value.trim().slice(0, limit) : '';
+}
+function escapeHtml(value: string): string {
+  return value.replace(/[&<>"']/g, char => ({
+    '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+  }[char] || char));
+}
+
 export async function POST(req: Request) {
   try {
     const supabase = getAdminSupabase();
     const body = await req.json();
 
-    const {
-      name,
-      email,
-      phone,
-      orderNumber,
-      subject,
-      message,
-    } = body;
+    const name = text(body.name, 120);
+    const email = text(body.email, 254);
+    const phone = text(body.phone, 40);
+    const orderNumber = text(body.orderNumber, 80);
+    const subject = text(body.subject, 150);
+    const message = text(body.message, 5000);
 
-    if (!email || !message) {
-      return NextResponse.json({ error: 'Email et message requis' }, { status: 400 });
+    if (!/^[^\s<>"@]+@[^\s<>"@]+\.[^\s<>"@]+$/.test(email) || !message) {
+      return NextResponse.json({ error: 'Email valide et message requis' }, { status: 400 });
     }
 
     const cleanSubject = subject ? `[Contact Web] ${subject}${orderNumber ? ` · Cmd #${orderNumber}` : ''}` : `Message client de ${name || email}`;
@@ -30,29 +37,29 @@ export async function POST(req: Request) {
         <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 14px;">
           <tr>
             <td style="padding: 6px 0; color: #64748b; width: 140px;">Client :</td>
-            <td style="padding: 6px 0; font-weight: bold; color: #0f172a;">${name || 'Non renseigné'}</td>
+            <td style="padding: 6px 0; font-weight: bold; color: #0f172a;">${escapeHtml(name || 'Non renseigné')}</td>
           </tr>
           <tr>
             <td style="padding: 6px 0; color: #64748b;">Email :</td>
-            <td style="padding: 6px 0; color: #0f172a;"><a href="mailto:${email}">${email}</a></td>
+            <td style="padding: 6px 0; color: #0f172a;"><a href="mailto:${encodeURIComponent(email)}">${escapeHtml(email)}</a></td>
           </tr>
           ${phone ? `
             <tr>
               <td style="padding: 6px 0; color: #64748b;">Téléphone :</td>
-              <td style="padding: 6px 0; color: #0f172a;">${phone}</td>
+              <td style="padding: 6px 0; color: #0f172a;">${escapeHtml(phone)}</td>
             </tr>
           ` : ''}
           ${orderNumber ? `
             <tr>
               <td style="padding: 6px 0; color: #64748b;">N° Commande :</td>
-              <td style="padding: 6px 0; font-weight: bold; color: #e11d1d;">#${orderNumber}</td>
+              <td style="padding: 6px 0; font-weight: bold; color: #e11d1d;">#${escapeHtml(orderNumber)}</td>
             </tr>
           ` : ''}
         </table>
         
         <div style="background-color: #f8fafc; border: 1px solid #e2e8f0; border-radius: 8px; padding: 16px; margin-bottom: 20px;">
           <div style="font-size: 12px; font-weight: bold; color: #64748b; text-transform: uppercase; margin-bottom: 8px;">Message du client :</div>
-          <div style="white-space: pre-wrap; font-size: 14px; color: #1e293b;">${message}</div>
+          <div style="white-space: pre-wrap; font-size: 14px; color: #1e293b;">${escapeHtml(message)}</div>
         </div>
 
         <div style="font-size: 12px; color: #94a3b8; border-top: 1px solid #e2e8f0; padding-top: 12px;">
