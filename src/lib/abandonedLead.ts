@@ -3,7 +3,7 @@
  * Never let them overwrite legitimate pending/paid orders or another customer's lead.
  */
 export function isValidAbandonedLeadId(value: string): boolean {
-  return /^WEB-(?:[0-9a-f]{8}-[0-9a-f-]{27,}|[0-9]{6})$/i.test(value) ||
+  return /^WEB-(?:[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}|[0-9]{6})$/i.test(value) ||
     /^LEAD-[0-9]{13}$/.test(value);
 }
 
