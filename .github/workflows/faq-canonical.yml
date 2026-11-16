@@ -1,0 +1,22 @@
+name: FAQ canonical and structured data
+on:
+  pull_request:
+    paths:
+      - 'src/app/faq/page.tsx'
+      - 'src/app/faq-geneve-complements-alimentaires-proteines-en-poudre/page.tsx'
+      - 'src/components/FAQView.tsx'
+      - 'scripts/test-faq-canonical.ts'
+      - 'package.json'
+      - '.github/workflows/faq-canonical.yml'
+permissions:
+  contents: read
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm run test:faq-canonical
