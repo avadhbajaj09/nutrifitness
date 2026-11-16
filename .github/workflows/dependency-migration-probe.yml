@@ -28,5 +28,9 @@ jobs:
         run: npm run typecheck
       - name: Run existing comprehensive regression suite
         run: npm run test:release-safety
+      - name: Test Next.js 16 build output (no deployment)
+        run: npm run build
+        env:
+          NEXT_PUBLIC_SITE_URL: https://nutrifitness.ch
       - name: Audit upgraded production dependencies
         run: npm audit --omit=dev --audit-level=high || true
