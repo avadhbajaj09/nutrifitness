@@ -31,6 +31,9 @@ export async function verifyStaffSession(token: string | null | undefined, role:
   const parts = token.split('.');
   if (parts.length !== 4 || parts[0] !== 'v1' || parts[1] !== role ||
       !/^\d{13}$/.test(parts[2]) || !/^[A-Za-z0-9_-]{43}$/.test(parts[3])) return false;
+  // Reject non-canonical base64url encodings (different padding bits with identical decoded bytes).
+  try { if (toUrlBase64(fromUrlBase64(parts[3])) !== parts[3]) return false; }
+  catch { return false; }
   const expires = Number(parts[2]);
   if (expires <= now || expires > now + SESSION_DURATION_MS) return false;
   try {
