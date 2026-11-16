@@ -19,7 +19,11 @@
     "check:geo": "tsx scripts/check-geo-invariance.ts",
     "test:cart-restore": "tsx scripts/test-cart-restore.ts",
     "test:order-auth": "tsx scripts/test-order-auth.ts",
-    "test:abandoned-lead": "tsx scripts/test-abandoned-lead.ts"
+    "test:abandoned-lead": "tsx scripts/test-abandoned-lead.ts",
+    "test:indexing-policy": "tsx scripts/test-indexing-policy.ts",
+    "test:content-integrity": "tsx scripts/test-content-integrity.ts",
+    "test:merchant-gtin": "tsx scripts/test-merchant-gtin.ts",
+    "test:release-safety": "npm run typecheck && npm run test:middleware && npm run test:cart-restore && npm run test:order-auth && npm run test:abandoned-lead && npm run test:delivery && npm run test:gating && npm run test:stock && npm run test:routing && npm run test:indexing-policy && npm run test:content-integrity && npm run test:merchant-gtin"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",
