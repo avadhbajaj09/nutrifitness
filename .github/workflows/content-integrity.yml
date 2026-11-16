@@ -1,0 +1,38 @@
+name: SEO content integrity
+
+on:
+  pull_request:
+    paths:
+      - 'src/lib/productFaq.ts'
+      - 'src/components/FAQView.tsx'
+      - 'src/components/HomeFAQ.tsx'
+      - 'src/lib/categories.ts'
+      - 'src/app/produit/**'
+      - 'src/lib/types.ts'
+      - 'scripts/test-content-integrity.ts'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/content-integrity.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Check out code
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Set up Node.js
+        uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '20'
+          cache: npm
+      - name: Install dependencies
+        run: npm ci --ignore-scripts
+      - name: Typecheck
+        run: npm run typecheck
+      - name: Check product FAQ factual integrity
+        run: npm run test:content-integrity
