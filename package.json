@@ -16,7 +16,8 @@
     "import:woo": "tsx scripts/import-woocommerce.ts",
     "test:acceptance": "tsx scripts/verify-acceptance.ts",
     "check:sitemap": "tsx scripts/check-sitemap.ts",
-    "check:geo": "tsx scripts/check-geo-invariance.ts"
+    "check:geo": "tsx scripts/check-geo-invariance.ts",
+    "test:merchant-gtin": "tsx scripts/test-merchant-gtin.ts"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "latest",
