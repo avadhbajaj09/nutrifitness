@@ -26,7 +26,6 @@ import {
 } from 'lucide-react';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
-const ADMIN_PASSWORD = 'Geneva@03564';
 
 interface VariantItem {
   id: string;
@@ -104,27 +103,33 @@ export default function ProductLocationManagerClient() {
   const [newFlavorGenStock, setNewFlavorGenStock] = useState<string>('0');
   const [newFlavorPtStock, setNewFlavorPtStock] = useState<string>('0');
 
-  // Check auth
+  // Verify the signed server-side session, never trust a localStorage flag.
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('nutrifitness_admin_auth');
-      if (stored === 'true') {
-        setIsAuthenticated(true);
-      }
-    } catch {}
-    setAuthChecking(false);
+    let active = true;
+    try { localStorage.removeItem('nutrifitness_admin_auth'); } catch {}
+    fetch('/api/auth/session?role=admin', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : { authenticated: false })
+      .then(data => { if (active) setIsAuthenticated(data.authenticated === true); })
+      .catch(() => { if (active) setIsAuthenticated(false); })
+      .finally(() => { if (active) setAuthChecking(false); });
+    return () => { active = false; };
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput === ADMIN_PASSWORD) {
+    setAuthError(null);
+    try {
+      const response = await fetch('/api/auth/session', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: 'admin', password: passwordInput })
+      });
+      if (!response.ok) throw new Error(response.status === 503
+        ? 'La connexion administrateur doit être configurée sur le serveur.'
+        : 'Mot de passe incorrect.');
+      setPasswordInput('');
       setIsAuthenticated(true);
-      try {
-        localStorage.setItem('nutrifitness_admin_auth', 'true');
-      } catch {}
-      setAuthError(null);
-    } else {
-      setAuthError('Mot de passe incorrect.');
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : 'Connexion impossible.');
     }
   };
 

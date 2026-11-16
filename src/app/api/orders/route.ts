@@ -1,6 +1,8 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
 import { sendOrderNotificationToAdmin, sendOrderConfirmationToCustomer } from '@/lib/email/resend';
+import { stripe } from '@/lib/stripe';
+import { verifyStaffSession, isSameOrigin } from '@/lib/adminSession';
 import fs from 'fs';
 import path from 'path';
 
@@ -175,8 +177,40 @@ export async function GET() {
 export async function POST(req: Request) {
   try {
     const newOrder = await req.json();
-    if (!newOrder) {
+    if (!newOrder || typeof newOrder !== 'object') {
       return NextResponse.json({ error: 'Commande invalide' }, { status: 400 });
+    }
+    if (!isSameOrigin(req)) {
+      return NextResponse.json({ error: 'Invalid origin' }, { status: 403 });
+    }
+
+    const cookie = (req.headers.get('cookie') || '').split(';')
+      .map(value => value.trim()).find(value => value.startsWith('nf_admin_session='))
+      ?.slice('nf_admin_session='.length);
+    const staff = await verifyStaffSession(cookie, 'admin');
+    if (!staff) {
+      // Customer browser may create a sale record only for a genuinely PAID
+      // Stripe Checkout session belonging to this exact order and amount.
+      const reference = newOrder.paymentDetails?.reference;
+      const orderNumber = String(newOrder.ticketNumber || '');
+      if (!process.env.STRIPE_SECRET_KEY || typeof reference !== 'string' ||
+          !/^cs_(test|live)_[A-Za-z0-9]+$/.test(reference) || !orderNumber) {
+        return NextResponse.json({ error: 'Paid checkout verification required' }, { status: 401 });
+      }
+      let checkout;
+      try { checkout = await stripe.checkout.sessions.retrieve(reference); }
+      catch { return NextResponse.json({ error: 'Checkout session not found' }, { status: 401 }); }
+
+      const paidAmount = (checkout.amount_total ?? -1) / 100;
+      const sessionOrder = checkout.metadata?.order_number || checkout.client_reference_id;
+      if (checkout.payment_status !== 'paid' || sessionOrder !== orderNumber ||
+          !Number.isFinite(Number(newOrder.total)) ||
+          Math.abs(paidAmount - Number(newOrder.total)) > 0.01) {
+        return NextResponse.json({ error: 'Paid checkout details do not match the order' }, { status: 403 });
+      }
+      newOrder.status = 'in_processing';
+      newOrder.paymentMethod = checkout.metadata?.payment_selected || 'card';
+      newOrder.client = { ...(newOrder.client || {}), email: checkout.customer_details?.email || checkout.customer_email || '' };
     }
 
     const rowToInsert = saleRecordToSupabaseRow(newOrder);
@@ -185,6 +219,11 @@ export async function POST(req: Request) {
 
     try {
       const supabase = getAdminSupabase();
+      const { data: existing } = await supabase.from('orders').select('*')
+        .eq('order_number', rowToInsert.order_number).maybeSingle();
+      if (existing) {
+        return NextResponse.json({ success: true, order: supabaseRowToSaleRecord(existing), alreadyExists: true });
+      }
       const { data, error } = await supabase
         .from('orders')
         .insert(rowToInsert)

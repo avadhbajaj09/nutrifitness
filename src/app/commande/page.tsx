@@ -242,7 +242,8 @@ export default function CheckoutPage() {
         .then((res) => res.json())
         .then(async (data) => {
           setIsProcessingStripe(false);
-          if (data.payment_status === 'paid' || data.status === 'complete') {
+          // A completed Stripe Checkout session is not proof that delayed payment succeeded.
+          if (data.payment_status === 'paid') {
             const finalOrderNum = data.order_id || orderIdParam || `CMD-${Math.floor(100000 + Math.random() * 900000)}`;
             setOrderNumber(finalOrderNum);
             setFinalTotalFormatted(formatPrice(data.amount_total || cartSubtotal));
@@ -363,7 +364,7 @@ export default function CheckoutPage() {
     if (existingLead) {
       checkoutLeadIdRef.current = existingLead;
     } else {
-      const newLead = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
+      const newLead = `WEB-${crypto.randomUUID()}`;
       sessionStorage.setItem('nf_checkout_lead_id', newLead);
       checkoutLeadIdRef.current = newLead;
     }
@@ -371,7 +372,7 @@ export default function CheckoutPage() {
     // Check for 1-click cart restoration parameter: ?restore=WEB-...
     const restoreParam = urlParams.get('restore');
     if (restoreParam) {
-      fetch(`/api/checkout/abandoned?orderNumber=${encodeURIComponent(restoreParam)}`)
+      fetch(`/api/checkout/abandoned?orderNumber=${encodeURIComponent(restoreParam)}&token=${encodeURIComponent(urlParams.get('token') || '')}`)
         .then(res => res.json())
         .then(data => {
           if (data.success && data.lead) {

@@ -31,7 +31,6 @@ import {
   Mail
 } from 'lucide-react';
 
-const OMAR_PASSWORD = 'TeamOmar@23277';
 
 interface ProductVariant {
   id: string;
@@ -149,34 +148,38 @@ export default function TeamOmarClient() {
     return () => clearInterval(interval);
   }, []);
 
-  // Check auth from localStorage
+  // The server verifies staff identity; the browser never stores warehouse credentials.
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('nutrifitness_omar_auth');
-      if (stored === 'true') {
-        setIsAuthenticated(true);
-      }
-    } catch {}
-    setAuthChecking(false);
+    let active = true;
+    try { localStorage.removeItem('nutrifitness_omar_auth'); } catch {}
+    fetch('/api/auth/session?role=omar', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : { authenticated: false })
+      .then(data => { if (active) setIsAuthenticated(data.authenticated === true); })
+      .catch(() => { if (active) setIsAuthenticated(false); })
+      .finally(() => { if (active) setAuthChecking(false); });
+    return () => { active = false; };
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput === OMAR_PASSWORD) {
+    setAuthError(null);
+    try {
+      const response = await fetch('/api/auth/session', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: 'omar', password: passwordInput })
+      });
+      if (!response.ok) throw new Error(response.status === 503
+        ? 'Warehouse login is not configured on the server.'
+        : 'Incorrect password. Please contact warehouse management.');
       setIsAuthenticated(true);
-      try {
-        localStorage.setItem('nutrifitness_omar_auth', 'true');
-      } catch {}
-      setAuthError(null);
-    } else {
-      setAuthError('Incorrect password. Please contact warehouse management.');
+      setPasswordInput('');
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : 'Login failed.');
     }
   };
 
-  const handleLogout = () => {
-    try {
-      localStorage.removeItem('nutrifitness_omar_auth');
-    } catch {}
+  const handleLogout = async () => {
+    await fetch('/api/auth/session?role=omar', { method: 'DELETE' }).catch(() => {});
     setIsAuthenticated(false);
     setPasswordInput('');
   };

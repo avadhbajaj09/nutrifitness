@@ -32,7 +32,6 @@ import {
   Minimize2
 } from 'lucide-react';
 
-const ADMIN_PASSWORD = 'Geneva@03564';
 
 interface Attachment {
   filename: string;
@@ -106,18 +105,16 @@ export default function MailClient() {
 
   const fileInputRef = useRef<HTMLInputElement>(null);
 
-  // Check stored auth
+  // Check the server-issued session; never trust or retain a client-stored password.
   useEffect(() => {
-    try {
-      const stored = localStorage.getItem('nf_admin_auth');
-      if (stored === ADMIN_PASSWORD) {
-        setIsAuthenticated(true);
-      }
-    } catch {
-      // ignore
-    } finally {
-      setAuthChecking(false);
-    }
+    let active = true;
+    try { localStorage.removeItem('nf_admin_auth'); } catch {}
+    fetch('/api/auth/session?role=admin', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : { authenticated: false })
+      .then(data => { if (active) setIsAuthenticated(data.authenticated === true); })
+      .catch(() => { if (active) setIsAuthenticated(false); })
+      .finally(() => { if (active) setAuthChecking(false); });
+    return () => { active = false; };
   }, []);
 
   // Search debounce
@@ -164,29 +161,28 @@ export default function MailClient() {
     }
   }, [isAuthenticated, activeFolder, debouncedSearch]);
 
-  // Handle Login
-  const handleLogin = (e: React.FormEvent) => {
+  // Shared secure login for admin, inventory manager and email console.
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput === ADMIN_PASSWORD) {
+    setAuthError(null);
+    try {
+      const response = await fetch('/api/auth/session', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: 'admin', password: passwordInput })
+      });
+      if (!response.ok) throw new Error(response.status === 503
+        ? 'La connexion administrateur doit être configurée sur le serveur.'
+        : 'Mot de passe administrateur incorrect.');
+      setPasswordInput('');
       setIsAuthenticated(true);
-      setAuthError(null);
-      try {
-        localStorage.setItem('nf_admin_auth', ADMIN_PASSWORD);
-      } catch {
-        // ignore
-      }
-    } else {
-      setAuthError('Mot de passe administrateur incorrect.');
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : 'Connexion impossible.');
     }
   };
 
-  const handleLogout = () => {
+  const handleLogout = async () => {
+    await fetch('/api/auth/session?role=admin', { method: 'DELETE' }).catch(() => {});
     setIsAuthenticated(false);
-    try {
-      localStorage.removeItem('nf_admin_auth');
-    } catch {
-      // ignore
-    }
   };
 
   // Select an email and load full details
