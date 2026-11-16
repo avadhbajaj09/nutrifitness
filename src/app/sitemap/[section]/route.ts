@@ -4,9 +4,10 @@ import { getSitemapEntries } from '@/lib/sitemapEntries';
 export const dynamic = 'force-dynamic';
 
 const SEGMENTS = new Set(['pages', 'produits', 'categories', 'blog', 'marques']);
-const escapeXml = (value: string) => value.replace(/[&<>"']/g, char => ({
+const XML_ENTITIES: Record<string, string> = {
   '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&apos;'
-}[char] || char));
+};
+const escapeXml = (value: string) => value.replace(/[&<>"']/g, char => XML_ENTITIES[char] || char);
 
 export async function GET(_request: Request, context: { params: Promise<{ section: string }> }) {
   const { section } = await context.params;
