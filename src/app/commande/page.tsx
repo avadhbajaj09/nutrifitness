@@ -371,7 +371,7 @@ export default function CheckoutPage() {
     // Check for 1-click cart restoration parameter: ?restore=WEB-...
     const restoreParam = urlParams.get('restore');
     if (restoreParam) {
-      fetch(`/api/checkout/abandoned?orderNumber=${encodeURIComponent(restoreParam)}`)
+      fetch(`/api/checkout/abandoned?orderNumber=${encodeURIComponent(restoreParam)}&token=${encodeURIComponent(urlParams.get('token') || '')}`)
         .then(res => res.json())
         .then(data => {
           if (data.success && data.lead) {
