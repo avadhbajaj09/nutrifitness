@@ -4,6 +4,12 @@ on:
   pull_request:
     paths:
       - 'src/lib/adminSession.ts'
+      - 'src/lib/cartRestore.ts'
+      - 'src/app/api/checkout/abandoned/route.ts'
+      - 'src/lib/email/resend.ts'
+      - 'src/app/commande/page.tsx'
+      - 'src/app/mail/MailClient.tsx'
+      - 'scripts/test-cart-restore.ts'
       - 'src/app/api/auth/session/route.ts'
       - 'src/app/api/teamomar/auth/route.ts'
       - 'src/app/teamomar/TeamOmarClient.tsx'
@@ -33,3 +39,4 @@ jobs:
       - run: npm ci --ignore-scripts
       - run: npm run typecheck
       - run: npm run test:middleware
+      - run: npm run test:cart-restore
