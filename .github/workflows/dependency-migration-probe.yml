@@ -5,6 +5,8 @@ on:
       - '.github/workflows/dependency-migration-probe.yml'
       - 'package.json'
       - 'package-lock.json'
+      - 'src/lib/cacheTags.ts'
+      - 'src/app/api/**'
 
 permissions:
   contents: read
