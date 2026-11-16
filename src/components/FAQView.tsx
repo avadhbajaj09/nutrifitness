@@ -247,7 +247,7 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
           Questions Fréquentes <span className="text-[#F80404]">& FAQ</span>
         </h1>
         <p className="text-xs sm:text-sm text-white/60 mt-2 max-w-2xl">
-          Compléments alimentaires, protéines whey, créatine Creapure, livraison en 1 à 2 jours par La Poste Suisse et retrait Click & Collect à notre boutique en Suisse.
+          Compléments alimentaires, protéines whey, créatine et conseils nutrition sportive. Consultez les conditions de livraison selon le produit et les possibilités de retrait en boutique à Genève.
         </p>
       </header>
 
@@ -355,16 +355,16 @@ export default function FAQView({ canonicalUrl }: { canonicalUrl?: string }) {
         </h2>
         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3">
           <Link href="/livraison/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
-            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">📦 Livraison 1-2 jours</p>
-            <p className="text-[11px] text-white/60 mt-1">PostPac Priority, tarifs et seuil franco dès 75 CHF.</p>
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">📦 Livraison & Expédition</p>
+            <p className="text-[11px] text-white/60 mt-1">Consultez les délais et frais applicables selon votre commande et sa destination.</p>
           </Link>
           <Link href="/paiement/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
-            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">💳 Paiement Sécurisé</p>
-            <p className="text-[11px] text-white/60 mt-1">TWINT, PostFinance, CB 3D Secure, Apple Pay.</p>
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">💳 Moyens de paiement</p>
+            <p className="text-[11px] text-white/60 mt-1">Consultez les moyens de paiement proposés lors de votre commande.</p>
           </Link>
           <Link href="/retours/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
-            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">↩️ Retours 14 Jours</p>
-            <p className="text-[11px] text-white/60 mt-1">Délai 14 jours, scellés de sécurité et procédure.</p>
+            <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">↩️ Conditions de retour</p>
+            <p className="text-[11px] text-white/60 mt-1">Consultez les conditions commerciales, exclusions et procédure de retour.</p>
           </Link>
           <Link href="/magasin-geneve/" className="p-4 bg-[#141414] hover:bg-[#1a1a1a] rounded-2xl border border-white/10 hover:border-[#F80404]/40 transition-all group">
             <p className="text-xs font-black uppercase text-white group-hover:text-[#F80404] transition-colors">📍 Boutique en Suisse</p>
