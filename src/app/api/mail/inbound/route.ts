@@ -7,9 +7,10 @@ function text(value: unknown, limit: number): string {
   return typeof value === 'string' ? value.trim().slice(0, limit) : '';
 }
 function escapeHtml(value: string): string {
-  return value.replace(/[&<>"']/g, char => ({
+  const entities: Record<string, string> = {
     '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
-  }[char] || char));
+  };
+  return value.replace(/[&<>"']/g, char => entities[char] || char);
 }
 
 export async function POST(req: Request) {
