@@ -30,7 +30,9 @@ export async function middleware(request: NextRequest) {
     (/^\/api\/catalog\/hidden\/?$/.test(pathname) && isMutation) ||
     /^\/api\/fulfillment\/stock\/?$/.test(pathname) ||
     /^\/api\/fulfillment\/shipments\/?$/.test(pathname) ||
-    (/^\/api\/checkout\/abandoned\/?$/.test(pathname) && method === 'GET' && !searchParams.has('orderNumber'));
+    (/^\/api\/checkout\/abandoned\/?$/.test(pathname) &&
+      ((method === 'GET' && !searchParams.has('orderNumber')) ||
+       (method === 'POST' && searchParams.get('action') === 'send_recovery')));
   const warehouseOnly = pathname.startsWith('/api/teamomar/') && !/^\/api\/teamomar\/auth\/?$/.test(pathname);
   if (adminOnly || warehouseOnly) {
     const adminValid = await verifyStaffSession(request.cookies.get(sessionCookie('admin'))?.value, 'admin');
