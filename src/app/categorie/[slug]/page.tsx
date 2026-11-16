@@ -181,10 +181,10 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
         <header className="mb-8">
           <div className="flex flex-wrap items-center gap-3 mb-3">
             <span className="px-3 py-1 rounded-full bg-[#F80404]/10 border border-[#F80404]/30 text-[#F80404] text-[10px] font-black uppercase tracking-wider font-heading">
-              🇨🇭 Stock 100% Suisse · Livraison 1-2 jours
+              🇨🇭 Boutique à Genève · Livraison selon disponibilité
             </span>
             <span className="text-xs text-white/60 font-bold">
-              {categoryProducts.length} produit{categoryProducts.length > 1 ? 's' : ''} disponibles
+              {categoryProducts.length} produit{categoryProducts.length > 1 ? 's' : ''} au catalogue
             </span>
           </div>
 

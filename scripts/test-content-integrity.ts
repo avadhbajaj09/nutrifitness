@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { getProductFaqs } from '../src/lib/productFaq';
 import type { ProductItem } from '../src/lib/types';
 
@@ -47,3 +48,9 @@ assert.ok(!creatineText.includes('rétention intramusculaire'));
 assert.ok(creatine.some(f => f.question.includes('Comment utiliser')));
 
 console.log('Product FAQ content-integrity checks passed.');
+
+// Category cards must not claim all catalogue entries are available in Swiss stock.
+const categoryPage = readFileSync('src/app/categorie/[slug]/page.tsx', 'utf8');
+assert.ok(!categoryPage.includes('Stock 100% Suisse'), 'Category header must not claim universal Swiss stock');
+assert.ok(!categoryPage.includes('Livraison 1-2 jours'), 'Category header must not promise universal delivery times');
+assert.ok(categoryPage.includes('au catalogue'), 'Category count must identify listings, not live stock');
