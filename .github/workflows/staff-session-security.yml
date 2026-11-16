@@ -6,6 +6,8 @@ on:
       - 'src/lib/adminSession.ts'
       - 'src/lib/cartRestore.ts'
       - 'src/app/api/checkout/abandoned/route.ts'
+      - 'src/app/api/orders/route.ts'
+      - 'scripts/test-order-auth.ts'
       - 'src/lib/email/resend.ts'
       - 'src/app/commande/page.tsx'
       - 'src/app/mail/MailClient.tsx'
@@ -40,3 +42,4 @@ jobs:
       - run: npm run typecheck
       - run: npm run test:middleware
       - run: npm run test:cart-restore
+      - run: npm run test:order-auth
