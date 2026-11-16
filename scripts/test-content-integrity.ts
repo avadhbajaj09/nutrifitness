@@ -1,4 +1,5 @@
 import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
 import { getProductFaqs } from '../src/lib/productFaq';
 import type { ProductItem } from '../src/lib/types';
 
@@ -46,4 +47,17 @@ assert.ok(!creatineText.includes('pureté garantie'));
 assert.ok(!creatineText.includes('rétention intramusculaire'));
 assert.ok(creatine.some(f => f.question.includes('Comment utiliser')));
 
-console.log('Product FAQ content-integrity checks passed.');
+
+// French FAQ landing-page copy must not promise the same dispatch time,
+// stock origin, payment option or return eligibility for every order.
+const faqViewSource = readFileSync('src/components/FAQView.tsx', 'utf8');
+const faqMetadataSource = readFileSync('src/app/faq/page.tsx', 'utf8');
+assert.ok(faqViewSource.includes('conditions de livraison selon le produit'));
+assert.ok(faqViewSource.includes('Consultez les conditions commerciales, exclusions'));
+assert.ok(faqViewSource.includes('Consultez les moyens de paiement proposés'));
+assert.ok(!faqViewSource.includes('livraison en 1 à 2 jours par La Poste Suisse'));
+assert.ok(!faqViewSource.includes('📦 Livraison 1-2 jours'));
+assert.ok(!faqViewSource.includes('PostPac Priority, tarifs et seuil franco dès 75 CHF.'));
+assert.ok(!faqMetadataSource.includes('livraison 1-2 jours en Suisse'));
+
+console.log('Product and French FAQ content-integrity checks passed.');
