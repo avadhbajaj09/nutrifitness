@@ -136,7 +136,7 @@ const RAW_GOOGLE_REVIEWS: GoogleReview[] = [
  * a direct Google Maps review source link. Do not filter out low ratings.
  * Until independently sourced entries are supplied, the slider is hidden.
  */
-function hasGoogleReviewSource(review: GoogleReview): boolean {
+export function hasGoogleReviewSource(review: GoogleReview): boolean {
   if (!review.verified || !review.sourceUrl) return false;
   try {
     const url = new URL(review.sourceUrl);
