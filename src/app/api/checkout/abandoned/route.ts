@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
 import { sendAbandonedCartAlertToMarco, sendCustomerCartRecoveryEmail } from '@/lib/email/resend';
 import { verifyCartRestoreToken } from '@/lib/cartRestore';
+import { isValidAbandonedLeadId, canUpdateAbandonedLead } from '@/lib/abandonedLead';
 
 async function sendRecoveryForOrder(targetNumber: string) {
   const supabase = getAdminSupabase();
@@ -60,18 +61,26 @@ export async function POST(req: Request) {
       return NextResponse.json({ success: false, reason: 'Empty cart' }, { status: 200 });
     }
 
-    const supabase = getAdminSupabase();
     const targetOrderNumber = String(orderNumber || leadId || `LEAD-${Date.now()}`);
+    if (!isValidAbandonedLeadId(targetOrderNumber) ||
+        (leadId && orderNumber && String(leadId) !== String(orderNumber))) {
+      return NextResponse.json({ error: 'Invalid abandoned cart identifier' }, { status: 400 });
+    }
+    if (items.length > 100) return NextResponse.json({ error: 'Too many cart items' }, { status: 400 });
 
-    // Check if order already completed/paid in DB
-    const { data: existing } = await supabase
+    const supabase = getAdminSupabase();
+    // Never let this public endpoint alter paid, pending or another customer's orders.
+    const { data: existing, error: existingError } = await supabase
       .from('orders')
-      .select('status, shipping_address')
+      .select('status, shipping_address, customer_email, customer_phone')
       .eq('order_number', targetOrderNumber)
       .maybeSingle();
-
-    if (existing && ['shipped', 'delivered', 'paid', 'processing', 'completed'].includes(existing.status)) {
-      return NextResponse.json({ success: true, message: 'Order already completed, skipping abandonment' });
+    if (existingError) return NextResponse.json({ error: 'Could not check cart status' }, { status: 500 });
+    if (existing && existing.status !== 'abandoned') {
+      return NextResponse.json({ success: true, message: 'Existing order is not an abandoned cart' });
+    }
+    if (!canUpdateAbandonedLead(existing, email, phone)) {
+      return NextResponse.json({ error: 'Cannot modify this abandoned cart' }, { status: 409 });
     }
 
     const cleanItems = items.map((it: any) => ({
