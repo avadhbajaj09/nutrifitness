@@ -31,7 +31,6 @@ import { FlagIcon } from '@/components/delivery/FlagIcon';
 import { DeliveryRule, CountryGroup, HolidayEntry, DeliverySettings, EstimateDeliveryResult } from '@/lib/delivery/types';
 import { estimateDelivery } from '@/lib/delivery/estimate';
 
-const ADMIN_PASSWORD = 'Geneva@03564';
 
 export default function AdminShippingClient() {
   // Auth state
@@ -95,28 +94,34 @@ export default function AdminShippingClient() {
     setTimeout(() => setToastMessage(null), 3500);
   };
 
-  // Auth Initialization
+  // Shared server-side administrator authentication; no browser-stored password.
   useEffect(() => {
-    try {
-      const stored = sessionStorage.getItem('nf_admin_auth') || localStorage.getItem('nf_admin_auth');
-      if (stored === 'true') {
-        setIsAuthenticated(true);
-      }
-    } catch {}
-    setAuthChecking(false);
+    let active = true;
+    try { sessionStorage.removeItem('nf_admin_auth'); localStorage.removeItem('nf_admin_auth'); } catch {}
+    fetch('/api/auth/session?role=admin', { cache: 'no-store' })
+      .then(r => r.ok ? r.json() : { authenticated: false })
+      .then(data => { if (active) setIsAuthenticated(data.authenticated === true); })
+      .catch(() => { if (active) setIsAuthenticated(false); })
+      .finally(() => { if (active) setAuthChecking(false); });
+    return () => { active = false; };
   }, []);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (passwordInput.trim() === ADMIN_PASSWORD) {
+    setAuthError('');
+    try {
+      const response = await fetch('/api/auth/session', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ role: 'admin', password: passwordInput })
+      });
+      if (!response.ok) throw new Error(response.status === 503
+        ? 'La connexion administrateur doit être configurée sur le serveur.'
+        : 'Mot de passe incorrect.');
+      setPasswordInput('');
       setIsAuthenticated(true);
-      setAuthError('');
-      try {
-        sessionStorage.setItem('nf_admin_auth', 'true');
-        localStorage.setItem('nf_admin_auth', 'true');
-      } catch {}
-    } else {
-      setAuthError('Mot de passe incorrect.');
+    } catch (error) {
+      setAuthError(error instanceof Error ? error.message : 'Connexion impossible.');
     }
   };
 
