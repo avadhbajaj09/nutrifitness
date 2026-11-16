@@ -43,3 +43,7 @@ jobs:
       - run: npm run test:middleware
       - run: npm run test:cart-restore
       - run: npm run test:order-auth
+      - run: npm run test:delivery
+      - run: npm run test:gating
+      - run: npm run test:stock
+      - run: npm run test:routing
