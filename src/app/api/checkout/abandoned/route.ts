@@ -1,8 +1,38 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
 import { sendAbandonedCartAlertToMarco, sendCustomerCartRecoveryEmail } from '@/lib/email/resend';
+import { verifyCartRestoreToken } from '@/lib/cartRestore';
+
+async function sendRecoveryForOrder(targetNumber: string) {
+  const supabase = getAdminSupabase();
+  const { data: order } = await supabase.from('orders').select('*')
+    .eq('order_number', targetNumber).maybeSingle();
+  if (!order) return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+  const result = await sendCustomerCartRecoveryEmail({
+    orderNumber: order.order_number,
+    customerName: order.customer_name,
+    customerEmail: order.customer_email,
+    totalAmount: order.total_amount,
+    currency: order.currency,
+    items: order.items
+  });
+  if (result.success) {
+    const shipping = order.shipping_address || {};
+    await supabase.from('orders').update({
+      shipping_address: { ...shipping, customer_recovery_sent_at: new Date().toISOString() }
+    }).eq('order_number', targetNumber);
+  }
+  return NextResponse.json(result);
+}
 
 export async function POST(req: Request) {
+  const url = new URL(req.url);
+  if (url.searchParams.get('action') === 'send_recovery') {
+    const target = url.searchParams.get('target');
+    if (!target) return NextResponse.json({ error: 'Missing target order number' }, { status: 400 });
+    try { return await sendRecoveryForOrder(target); }
+    catch { return NextResponse.json({ error: 'Recovery action failed' }, { status: 500 }); }
+  }
   try {
     const body = await req.json();
     const {
@@ -130,9 +160,14 @@ export async function GET(req: Request) {
 
     // 1. Restore specific cart on /commande?restore=...
     if (orderNumber) {
+      // The former sequential WEB-ID lookup exposed private shipping and contact data.
+      // Only a seven-day signed URL generated in a recovery email may retrieve it.
+      if (!(await verifyCartRestoreToken(orderNumber, searchParams.get('token')))) {
+        return NextResponse.json({ error: 'Invalid or expired recovery link' }, { status: 401 });
+      }
       const { data: order, error } = await supabase
         .from('orders')
-        .select('*')
+        .select('customer_email, customer_phone, customer_name, shipping_address')
         .eq('order_number', orderNumber)
         .maybeSingle();
 
@@ -140,46 +175,24 @@ export async function GET(req: Request) {
         return NextResponse.json({ error: 'Order or lead not found' }, { status: 404 });
       }
 
-      return NextResponse.json({ success: true, lead: order });
+      // Never expose whole order rows, payment metadata, or internal status on public links.
+      const ship = order.shipping_address || {};
+      return NextResponse.json({
+        success: true,
+        lead: {
+          customer_email: order.customer_email, customer_phone: order.customer_phone,
+          customer_name: order.customer_name,
+          shipping_address: {
+            street: ship.street || ship.address, postalCode: ship.postalCode,
+            city: ship.city, country: ship.country
+          }
+        }
+      }, { headers: { 'Cache-Control': 'private, no-store', 'Referrer-Policy': 'no-referrer' } });
     }
 
-    // 2. Trigger manual or automated customer recovery email
+    // Recovery emails are state-changing operations and must not be GET requests.
     if (action === 'send_recovery') {
-      const targetNumber = searchParams.get('target');
-      if (!targetNumber) {
-        return NextResponse.json({ error: 'Missing target order number' }, { status: 400 });
-      }
-
-      const { data: order } = await supabase
-        .from('orders')
-        .select('*')
-        .eq('order_number', targetNumber)
-        .maybeSingle();
-
-      if (!order) {
-        return NextResponse.json({ error: 'Order not found' }, { status: 404 });
-      }
-
-      const res = await sendCustomerCartRecoveryEmail({
-        orderNumber: order.order_number,
-        customerName: order.customer_name,
-        customerEmail: order.customer_email,
-        totalAmount: order.total_amount,
-        currency: order.currency,
-        items: order.items
-      });
-
-      if (res.success) {
-        const shipping = order.shipping_address || {};
-        await supabase.from('orders').update({
-          shipping_address: {
-            ...shipping,
-            customer_recovery_sent_at: new Date().toISOString()
-          }
-        }).eq('order_number', targetNumber);
-      }
-
-      return NextResponse.json(res);
+      return NextResponse.json({ error: 'Use authenticated POST for recovery emails' }, { status: 405 });
     }
 
     // 3. List all abandoned carts for Admin Dashboard
