@@ -1,4 +1,5 @@
-import { requireWrite, inventoryInteger } from '@/lib/inventory/errors';
+import { inventoryInteger } from '@/lib/inventory/errors';
+import { inventoryFailure } from '@/lib/inventory/save';
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
 import { revalidatePath, revalidateTag } from 'next/cache';
@@ -22,8 +23,8 @@ export async function GET() {
       supabase.from('product_variants').select('id, product_id, sku, attribute_name, attribute_value, stock_geneva, stock_portugal')
     ]);
 
-    if (productsRes.error) {
-      return NextResponse.json({ error: productsRes.error.message }, { status: 500 });
+    if (productsRes.error || stockRes.error || variantsRes.error) {
+      return NextResponse.json({ error: 'Le stock ne peut pas être chargé.' }, { status: 500 });
     }
 
     const products = productsRes.data || [];
@@ -61,8 +62,8 @@ export async function GET() {
       const parentGeneva = pStocks.find(s => !s.variant_id && s.origin_id === 'GENEVA');
       const parentPortugal = pStocks.find(s => !s.variant_id && s.origin_id === 'PORTUGAL');
 
-      let genTotal = parentGeneva ? Number(parentGeneva.quantity) || 0 : 0;
-      let ptTotal = parentPortugal ? Number(parentPortugal.quantity) || 0 : 0;
+      let genTotal = parentGeneva?.is_active ? Number(parentGeneva.quantity) || 0 : 0;
+      let ptTotal = parentPortugal?.is_active ? Number(parentPortugal.quantity) || 0 : 0;
 
       // Variant stock map
       const variantStockMap: Record<string, { geneva: number; portugal: number; total: number; inStock: boolean }> = {};
@@ -72,17 +73,8 @@ export async function GET() {
         const vGenStock = vStocks.find(s => s.origin_id === 'GENEVA');
         const vPtStock = vStocks.find(s => s.origin_id === 'PORTUGAL');
 
-        const vGenFromStock = vGenStock ? Number(vGenStock.quantity) : undefined;
-        const vGenFromVariant = (v.stock_geneva !== null && v.stock_geneva !== undefined) ? Number(v.stock_geneva) : undefined;
-        const vGen = (vGenFromVariant !== undefined && vGenFromVariant > 0)
-          ? vGenFromVariant
-          : (vGenFromStock !== undefined ? vGenFromStock : (vGenFromVariant || 0));
-
-        const vPtFromStock = vPtStock ? Number(vPtStock.quantity) : undefined;
-        const vPtFromVariant = (v.stock_portugal !== null && v.stock_portugal !== undefined) ? Number(v.stock_portugal) : undefined;
-        const vPt = (vPtFromVariant !== undefined && vPtFromVariant > 0)
-          ? vPtFromVariant
-          : (vPtFromStock !== undefined ? vPtFromStock : (vPtFromVariant || 0));
+        const vGen = vGenStock?.is_active ? Number(vGenStock.quantity) : 0;
+        const vPt = vPtStock?.is_active ? Number(vPtStock.quantity) : 0;
 
         const vTot = vGen + vPt;
 
@@ -133,19 +125,8 @@ export async function GET() {
 
       // If parent has variants and parent stock is 0, sum up variants
       if (pVariants.length > 0) {
-        const sumGen = pVariants.reduce((sum, v) => {
-          const vStocks = pStocks.filter(s => s.variant_id === v.id);
-          const vGen = vStocks.find(s => s.origin_id === 'GENEVA');
-          return sum + (vGen ? Number(vGen.quantity) || 0 : Number(v.stock_geneva) || 0);
-        }, 0);
-        const sumPt = pVariants.reduce((sum, v) => {
-          const vStocks = pStocks.filter(s => s.variant_id === v.id);
-          const vPt = vStocks.find(s => s.origin_id === 'PORTUGAL');
-          return sum + (vPt ? Number(vPt.quantity) || 0 : Number(v.stock_portugal) || 0);
-        }, 0);
-
-        if (genTotal === 0 && sumGen > 0) genTotal = sumGen;
-        if (ptTotal === 0 && sumPt > 0) ptTotal = sumPt;
+        genTotal = pVariants.reduce((sum, v) => sum + Number(variantStockMap[v.id]?.geneva || 0), 0);
+        ptTotal = pVariants.reduce((sum, v) => sum + Number(variantStockMap[v.id]?.portugal || 0), 0);
       }
 
       const totalQty = genTotal + ptTotal;
@@ -187,227 +168,27 @@ export async function GET() {
 export async function POST(request: Request) {
   try {
     const body = await request.json();
-    const {
-      productId,
-      variantId,
-      variantSku,
-      origin = 'GENEVA', // 'GENEVA' | 'PORTUGAL' | 'ALL'
-      quantity,
-      delta
-    } = body;
-
-    if (!productId) {
-      return NextResponse.json({ error: 'Missing productId' }, { status: 400 });
+    if (!body.productId || !['GENEVA', 'PORTUGAL', 'ALL'].includes(body.origin || 'GENEVA') ||
+        (body.quantity === undefined) === (body.delta === undefined)) {
+      return NextResponse.json({ error: 'Quantité, dépôt ou produit invalide.' }, { status: 400 });
     }
-
-    if (!['GENEVA', 'PORTUGAL', 'ALL'].includes(origin) || (quantity === undefined) === (delta === undefined)) {
-      return NextResponse.json({ error: 'Indiquez une quantité ou un ajustement et un dépôt valide.' }, { status: 400 });
-    }
-    try { inventoryInteger(quantity === undefined ? delta : quantity, quantity === undefined); }
+    try { inventoryInteger(body.quantity === undefined ? body.delta : body.quantity, body.quantity === undefined); }
     catch (error: any) { return NextResponse.json({ error: error.message }, { status: 400 }); }
-    const supabase = getAdminSupabase();
-
-    // 1. Resolve product in DB
-    const id = String(productId).trim();
-    let query = supabase.from('products').select('id, woo_id, slug, sku, main_location');
-    if (isUUID(id)) {
-      query = query.eq('id', id);
-    } else {
-      const cleanId = id.replace(/^prod-/, '');
-      query = query.or(`woo_id.eq.${id},woo_id.eq.${cleanId},slug.eq.${id},sku.eq.${id},sku.eq.${cleanId}`);
-    }
-    const { data: product, error: prodErr } = await query.maybeSingle();
-
-    if (prodErr || !product) {
-      return NextResponse.json({ error: 'Product not found in database' }, { status: 404 });
-    }
-
-    // 2. Resolve variant if specified
-    let targetVariant: any = null;
-    const flavorHint = body.attributeValue || body.flavor || body.flavorName;
-    if (variantId || variantSku || flavorHint) {
-      const vIdStr = String(variantId || '').trim();
-      const cleanVId = vIdStr.replace(/^var-/, '').trim();
-
-      if (vIdStr && isUUID(vIdStr)) {
-        const { data: vData } = await supabase
-          .from('product_variants')
-          .select('*')
-          .eq('product_id', product.id)
-          .eq('id', vIdStr)
-          .maybeSingle();
-        targetVariant = vData;
-      } else if (cleanVId && isUUID(cleanVId)) {
-        const { data: vData } = await supabase
-          .from('product_variants')
-          .select('*')
-          .eq('product_id', product.id)
-          .eq('id', cleanVId)
-          .maybeSingle();
-        targetVariant = vData;
-      }
-
-      if (!targetVariant) {
-        const { data: allVars } = await supabase
-          .from('product_variants')
-          .select('*')
-          .eq('product_id', product.id);
-
-        if (allVars && allVars.length > 0) {
-          const matchKeys = [
-            vIdStr.toLowerCase(),
-            cleanVId.toLowerCase(),
-            (variantSku || '').toLowerCase().trim(),
-            String(flavorHint || '').toLowerCase().trim()
-          ].filter(Boolean);
-
-          targetVariant = allVars.find((v: any) => {
-            const vIdLower = (v.id || '').toLowerCase();
-            const vWoo = String(v.woo_id || '').toLowerCase().trim();
-            const vSku = (v.sku || '').toLowerCase().trim();
-            const vAttr = (v.attribute_value || '').toLowerCase().trim();
-
-            return matchKeys.some(k =>
-              k === vIdLower ||
-              k === vWoo ||
-              (vSku && k === vSku) ||
-              (vAttr && k === vAttr) ||
-              (vAttr && (k.includes(vAttr) || vAttr.includes(k)))
-            );
-          }) || null;
-        }
-      }
-    }
-
-    if ((variantId || variantSku || flavorHint) && !targetVariant) {
-      return NextResponse.json({ error: 'Variante introuvable pour ce produit.' }, { status: 400 });
-    }
-
-    // 3. Determine origins to update
-    const originsToUpdate: ('GENEVA' | 'PORTUGAL')[] = origin === 'PORTUGAL'
-      ? ['PORTUGAL']
-      : origin === 'ALL'
-      ? ['GENEVA', 'PORTUGAL']
-      : ['GENEVA'];
-
-    const now = new Date().toISOString();
-
-    for (const targetOrigin of originsToUpdate) {
-      // Find existing stock row in product_stock
-      let stockQuery = supabase
-        .from('product_stock')
-        .select('*')
-        .eq('product_id', product.id)
-        .eq('origin_id', targetOrigin);
-
-      if (targetVariant?.id) {
-        stockQuery = stockQuery.eq('variant_id', targetVariant.id);
-      } else {
-        stockQuery = stockQuery.is('variant_id', null);
-      }
-
-      const { data: existingStock } = await stockQuery.maybeSingle();
-      const currentQty = existingStock ? Number(existingStock.quantity) || 0 : 0;
-
-      let newQty = 0;
-      if (typeof quantity === 'number') {
-        newQty = Math.max(0, Math.floor(quantity));
-      } else if (typeof delta === 'number') {
-        newQty = Math.max(0, currentQty + Math.floor(delta));
-      } else {
-        newQty = currentQty;
-      }
-
-      // Upsert into product_stock
-      if (existingStock) {
-        await requireWrite(supabase
-          .from('product_stock')
-          .update({
-            quantity: newQty,
-            is_active: newQty > 0,
-            updated_at: now
-          })
-          .eq('id', existingStock.id));
-      } else {
-        await requireWrite(supabase
-          .from('product_stock')
-          .insert({
-            product_id: product.id,
-            variant_id: targetVariant?.id || null,
-            origin_id: targetOrigin,
-            quantity: newQty,
-            is_active: newQty > 0,
-            reserved_quantity: 0,
-            updated_at: now
-          }));
-      }
-
-      // If variant, also update product_variants table
-      if (targetVariant) {
-        const col = targetOrigin === 'GENEVA' ? 'stock_geneva' : 'stock_portugal';
-        await requireWrite(supabase
-          .from('product_variants')
-          .update({ [col]: newQty, updated_at: now })
-          .eq('id', targetVariant.id));
-      }
-
-      // Sync into fulfillment_stock
-        await requireWrite(supabase
-          .from('fulfillment_stock')
-          .upsert({
-            product_id: product.id,
-            product_sku: product.sku || product.woo_id || product.id,
-            variant_sku: targetVariant?.sku || null,
-            origin_id: targetOrigin,
-            quantity: newQty,
-            updated_at: now
-          }, { onConflict: 'product_id,variant_sku,origin_id' }));
-    }
-
-    // 4. Recalculate parent product stock sum
-    const { data: allProdStocks } = await supabase
-      .from('product_stock')
-      .select('*')
-      .eq('product_id', product.id);
-
-    const genevaSum = (allProdStocks || [])
-      .filter(s => s.origin_id === 'GENEVA')
-      .reduce((sum, s) => sum + (Number(s.quantity) || 0), 0);
-
-    const portugalSum = (allProdStocks || [])
-      .filter(s => s.origin_id === 'PORTUGAL')
-      .reduce((sum, s) => sum + (Number(s.quantity) || 0), 0);
-
-    const totalStock = genevaSum + portugalSum;
-
-    // Clear caches & revalidate
-    clearDeliveryCache();
-    try {
-      revalidatePath('/', 'layout');
-      revalidatePath('/boutique');
-      revalidatePath('/panier');
-      if (product.slug) {
-        revalidatePath(`/produit/${product.slug}`);
-      }
-      revalidateTag('products');
-    } catch {}
-
-    return NextResponse.json({
-      success: true,
-      productId: product.id,
-      wooId: product.woo_id,
-      slug: product.slug,
-      stockGeneva: genevaSum,
-      stockPortugal: portugalSum,
-      totalStock,
-      inStock: totalStock > 0
+    const { data, error } = await getAdminSupabase().rpc('adjust_inventory', {
+      payload: body, actor: 'legacy_admin_unverified',
     });
-  } catch (err: any) {
-    console.error('[Stock API POST error]:', err);
-    return NextResponse.json({ error: err.message || 'Server error' }, { status: 500 });
+    if (error) {
+      const failure = inventoryFailure(error);
+      return NextResponse.json({ error: failure.error }, { status: failure.status });
+    }
+    clearDeliveryCache();
+    revalidatePath('/', 'layout');
+    revalidateTag('products');
+    if (data.slug) revalidatePath(`/produit/${data.slug}`);
+    return NextResponse.json(data);
+  } catch {
+    return NextResponse.json({ error: 'La modification n’a pas été enregistrée.' }, { status: 500 });
   }
 }
 
-export async function PATCH(request: Request) {
-  return POST(request);
-}
+export async function PATCH(request: Request) { return POST(request); }

@@ -513,6 +513,7 @@ export default function AdminDashboardClient() {
                     ...existingP,
                     priceChf: (dbP.base_price !== null && dbP.base_price !== undefined) ? Number(dbP.base_price) : existingP.priceChf,
                     compareAtPriceChf: dbP.compare_at_price ? Number(dbP.compare_at_price) : existingP.compareAtPriceChf,
+                    inventoryUpdatedAt: dbP.updated_at,
                     stockGeneva: Number(dbP.stock_geneva) || 0,
                     stockPortugal: Number(dbP.stock_portugal) || 0,
                     locationType: locType,
@@ -553,7 +554,8 @@ export default function AdminDashboardClient() {
                         format: '1 unité',
                         priceChf: Number(dbP.base_price) || 0,
                         inventoryQuantity: (Number(dbP.stock_geneva) || 0) + (Number(dbP.stock_portugal) || 0),
-                        stockGeneva: Number(dbP.stock_geneva) || 0,
+                        inventoryUpdatedAt: dbP.updated_at,
+                    stockGeneva: Number(dbP.stock_geneva) || 0,
                         stockPortugal: Number(dbP.stock_portugal) || 0,
                         inStock: ((Number(dbP.stock_geneva) || 0) + (Number(dbP.stock_portugal) || 0)) > 0,
                         image: pImages[0]?.src
@@ -568,6 +570,7 @@ export default function AdminDashboardClient() {
                     taxCategory: 'food_reduced',
                     priceChf: Number(dbP.base_price) || 0,
                     compareAtPriceChf: dbP.compare_at_price ? Number(dbP.compare_at_price) : undefined,
+                    inventoryUpdatedAt: dbP.updated_at,
                     stockGeneva: Number(dbP.stock_geneva) || 0,
                     stockPortugal: Number(dbP.stock_portugal) || 0,
                     locationType: locType,
@@ -629,15 +632,6 @@ export default function AdminDashboardClient() {
           }
         } catch {}
 
-        // Also merge local stock overrides if any
-        try {
-          const localStock = localStorage.getItem('nutrifitness_stock_overrides');
-          if (localStock) {
-            const parsedLocal = JSON.parse(localStock);
-            dbStockMap = { ...dbStockMap, ...parsedLocal };
-          }
-        } catch {}
-
         // Apply real stock to all products
         const withStocks = filtered.map(p => {
           const id = (p.id || '').toLowerCase().trim();
@@ -645,7 +639,7 @@ export default function AdminDashboardClient() {
           const slug = (p.slug?.fr || '').toLowerCase().trim();
           const stockEntry = dbStockMap[id] || dbStockMap[cleanId] || dbStockMap[`prod-${cleanId}`] || dbStockMap[slug];
 
-          if (!stockEntry) return p;
+          if (!stockEntry || p.inventoryUpdatedAt) return p;
 
           const updatedVariants = (p.variants || []).map(v => {
             const vKey = (v.id || v.sku || '').toLowerCase().trim();
@@ -780,6 +774,7 @@ export default function AdminDashboardClient() {
     try {
       const payload = {
         id: savedProduct.id,
+        expected_updated_at: savedProduct.inventoryUpdatedAt,
         name: savedProduct.name?.fr || '',
         slug: savedProduct.slug?.fr || '',
         brand: savedProduct.brand,
@@ -840,6 +835,8 @@ export default function AdminDashboardClient() {
         const errJson = await res.json().catch(() => ({}));
         throw new Error(errJson.error || `Erreur serveur (${res.status}) lors de l'enregistrement dans la base de données.`);
       }
+      const persisted = await res.json();
+      savedProduct.inventoryUpdatedAt = persisted.updated_at;
     } catch (err: any) {
       console.error('[handleSaveProduct] Error saving product to DB:', err);
       throw err;
@@ -1996,6 +1993,7 @@ export default function AdminDashboardClient() {
             productId: it.productId,
             variantId: it.variantId,
             variantSku: it.sku,
+            idempotency_key: `${newSale.ticketNumber}:${it.productId}:${it.variantId || it.sku || 'simple'}`,
             delta: -it.quantity,
             origin: 'GENEVA'
           })
@@ -3772,6 +3770,16 @@ export default function AdminDashboardClient() {
                         {/* Actions */}
                         <td className="py-3 px-4 text-right whitespace-nowrap">
                           <div className="flex items-center justify-end gap-1.5">
+                            <a
+                              href={`/admin/shipping-label?orderId=${encodeURIComponent(sale.id)}&orderNumber=${encodeURIComponent(sale.ticketNumber)}&name=${encodeURIComponent(sale.client?.name || sale.clientName || 'Client')}&street=${encodeURIComponent(sale.client?.street || sale.client?.address || '')}&zip=${encodeURIComponent(sale.client?.postalCode || '')}&city=${encodeURIComponent(sale.client?.city || '')}&phone=${encodeURIComponent(sale.client?.phone || '')}`}
+                              target="_blank"
+                              rel="noopener noreferrer"
+                              className="px-2 py-1 bg-[#FFCC00] hover:bg-[#F5C400] text-slate-950 font-bold text-xs rounded-lg transition-colors inline-flex items-center gap-1 shadow-2xs"
+                              title="Imprimer l'étiquette colis suisse officielle (4×6'')"
+                            >
+                              <Tag className="w-3 h-3 text-slate-950" />
+                              <span>Étiquette</span>
+                            </a>
                             <button
                               type="button"
                               onClick={() => setInspectingSale(sale)}
@@ -5527,6 +5535,23 @@ export default function AdminDashboardClient() {
                     <span className="text-[11px] text-slate-500">
                       Frais de port : {inspectingSale.shipping?.cost ? `CHF ${inspectingSale.shipping.cost.toFixed(2)}` : 'Gratuit'}
                     </span>
+                    {inspectingSale.shipping?.trackingNumber && (
+                      <div className="mt-2 p-2 bg-amber-50 rounded-xl border border-amber-200">
+                        <span className="text-[10px] text-amber-800 font-bold block uppercase tracking-wider">Suivi La Poste Suisse :</span>
+                        <div className="flex items-center justify-between gap-2 mt-0.5">
+                          <span className="font-mono font-bold text-xs text-slate-900">{inspectingSale.shipping.trackingNumber}</span>
+                          <a
+                            href={`https://service.post.ch/ekp-web/ui/entry/search/${inspectingSale.shipping.trackingNumber.replace(/\D/g, '')}`}
+                            target="_blank"
+                            rel="noopener noreferrer"
+                            className="text-[10px] text-amber-900 hover:text-amber-950 font-bold flex items-center gap-0.5 underline"
+                          >
+                            <span>Suivre l'envoi</span>
+                            <ExternalLink className="w-2.5 h-2.5" />
+                          </a>
+                        </div>
+                      </div>
+                    )}
                   </div>
                 </div>
               </div>
@@ -5629,7 +5654,17 @@ export default function AdminDashboardClient() {
             </div>
 
             {/* Action Buttons */}
-            <div className="flex items-center justify-end gap-2.5 pt-2">
+            <div className="flex flex-wrap items-center justify-end gap-2.5 pt-2">
+              <a
+                href={`/admin/shipping-label?orderId=${encodeURIComponent(inspectingSale.id)}&orderNumber=${encodeURIComponent(inspectingSale.ticketNumber)}&name=${encodeURIComponent(inspectingSale.client?.name || inspectingSale.clientName || 'Client')}&street=${encodeURIComponent(inspectingSale.client?.street || inspectingSale.client?.address || '')}&zip=${encodeURIComponent(inspectingSale.client?.postalCode || '')}&city=${encodeURIComponent(inspectingSale.client?.city || '')}&phone=${encodeURIComponent(inspectingSale.client?.phone || '')}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="px-4 py-2.5 bg-[#FFCC00] hover:bg-[#F5C400] text-slate-950 font-bold text-xs uppercase tracking-wider rounded-xl transition-all flex items-center gap-1.5 shadow-xs"
+                title="Générer & imprimer l'étiquette colis officielle La Poste Suisse (4×6'')"
+              >
+                <Tag className="w-4 h-4 text-slate-950" />
+                <span>Étiquette Colis (4×6")</span>
+              </a>
               <button
                 type="button"
                 onClick={() => {

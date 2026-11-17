@@ -20,7 +20,10 @@ const errors = load('src/lib/inventory/errors.ts');
 
 function stockRoute({ failWrite = false } = {}) {
   let writes = 0;
-  const db = { from(table) {
+  const db = { rpc() {
+    writes++;
+    return Promise.resolve({ data: { success: true }, error: failWrite ? { message: 'fixture failure' } : null });
+  }, from(table) {
     let mutation = false;
     const query = {
       select() { return query; }, eq() { return query; }, is() { return query; }, or() { return query; },
@@ -39,6 +42,7 @@ function stockRoute({ failWrite = false } = {}) {
     'next/server': { NextResponse: { json: (body, init) => new Response(JSON.stringify(body), init) } },
     '@/lib/supabase': { getAdminSupabase: () => db },
     '@/lib/inventory/errors': errors,
+    '@/lib/inventory/save': load('src/lib/inventory/save.ts', { '@/lib/supabase': { getAdminSupabase: () => db } }),
     'next/cache': { revalidatePath() {}, revalidateTag() {} },
     '@/lib/delivery/service': { clearDeliveryCache() {} },
   }), writes: () => writes };

@@ -46,6 +46,7 @@ export interface ProductVariant {
 }
 
 export interface ProductItem {
+  inventoryUpdatedAt?: string;
   id: string;
   gtin13?: string;
   slug: Record<SupportedLocale, string>;

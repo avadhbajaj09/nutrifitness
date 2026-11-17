@@ -25,6 +25,7 @@ import {
   Plus
 } from 'lucide-react';
 import { checkedFetch } from '@/lib/inventory/client';
+import StockQuantityInput from '@/components/admin/StockQuantityInput';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 
 const ADMIN_PASSWORD = 'Geneva@03564';
@@ -210,13 +211,14 @@ export default function ProductLocationManagerClient() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: product.id,
+          id: product.id, expected_updated_at: product.updated_at,
           toggle_location: origin,
           [isGeneva ? 'is_geneva_active' : 'is_portugal_active']: newActive
         })
       });
 
       if (!res.ok) throw new Error('Erreur de mise à jour');
+      const data = await res.json().catch(() => ({}));
 
       showToast(
         `Origine ${origin === 'GENEVA' ? 'Genève' : 'Portugal'} ${newActive ? 'activée' : 'désactivée'} pour ${product.name}`,
@@ -226,7 +228,7 @@ export default function ProductLocationManagerClient() {
             method: 'PATCH',
             headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-              id: product.id,
+              id: product.id, expected_updated_at: data.updated_at,
               [isGeneva ? 'is_geneva_active' : 'is_portugal_active']: !newActive
             })
           });
@@ -249,8 +251,9 @@ export default function ProductLocationManagerClient() {
       await checkedFetch('/api/admin/products', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: product.id, main_location: newLoc })
+        body: JSON.stringify({ id: product.id, expected_updated_at: product.updated_at, main_location: newLoc })
       });
+      await fetchProducts();
       showToast(`Emplacement principal défini sur ${newLoc === 'GENEVA' ? 'Genève' : 'Portugal'}`);
     } catch {
       setProducts(prev => prev.map(p => p.id === product.id ? { ...p, main_location: oldLoc } : p));
@@ -270,10 +273,11 @@ export default function ProductLocationManagerClient() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: product.id,
+          id: product.id, expected_updated_at: product.updated_at,
           [key]: validQty
         })
       });
+      await fetchProducts();
       showToast(`Stock ${origin === 'GENEVA' ? 'Genève' : 'Portugal'} mis à jour (${validQty})`);
     } catch (error: any) {
       showToast(error.message);
@@ -310,13 +314,14 @@ export default function ProductLocationManagerClient() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: product.id,
+          id: product.id, expected_updated_at: product.updated_at,
           variants: [{
             id: variantId,
             [isGeneva ? 'stock_geneva' : 'stock_portugal']: validQty
           }]
         })
       });
+      await fetchProducts();
       showToast(`Stock variante mis à jour (${validQty})`);
     } catch (error: any) {
       showToast(error.message);
@@ -332,8 +337,9 @@ export default function ProductLocationManagerClient() {
       await checkedFetch('/api/admin/products', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ id: product.id, base_price: validPrice })
+        body: JSON.stringify({ id: product.id, expected_updated_at: product.updated_at, base_price: validPrice })
       });
+      await fetchProducts();
       showToast(`Prix mis à jour : CHF ${validPrice.toFixed(2)}`);
     } catch {
       fetchProducts();
@@ -355,7 +361,7 @@ export default function ProductLocationManagerClient() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: product.id,
+          id: product.id, expected_updated_at: product.updated_at,
           variants: [{ id: variantId, price: validPrice }]
         })
       });
@@ -380,7 +386,7 @@ export default function ProductLocationManagerClient() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: product.id,
+          id: product.id, expected_updated_at: product.updated_at,
           delete_variant_id: variantId
         })
       });
@@ -405,7 +411,7 @@ export default function ProductLocationManagerClient() {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
-          id: product.id,
+          id: product.id, expected_updated_at: product.updated_at,
           add_variant: {
             flavor: newFlavorName.trim(),
             price: priceVal,
@@ -912,11 +918,11 @@ export default function ProductLocationManagerClient() {
 
                           {/* Stock Genève (Inline Input) */}
                           <td className="p-3 text-center">
-                            <input
-                              type="number"
-                              min={0}
+                            <StockQuantityInput
                               value={product.stock_geneva}
-                              onChange={e => handleUpdateStock(product, 'GENEVA', parseInt(e.target.value, 10))}
+                              disabled={product.variants.length > 0}
+                              title={product.variants.length ? 'Total calculé : modifiez les variantes ci-dessous.' : undefined}
+                              onCommit={quantity => handleUpdateStock(product, 'GENEVA', quantity)}
                               className={`w-16 text-center font-bold text-xs py-1 px-1 rounded-lg border focus:outline-none ${
                                 product.stock_geneva < 5
                                   ? 'border-red-300 bg-red-50 text-red-700'
@@ -929,11 +935,11 @@ export default function ProductLocationManagerClient() {
 
                           {/* Stock Portugal (Inline Input) */}
                           <td className="p-3 text-center">
-                            <input
-                              type="number"
-                              min={0}
+                            <StockQuantityInput
                               value={product.stock_portugal}
-                              onChange={e => handleUpdateStock(product, 'PORTUGAL', parseInt(e.target.value, 10))}
+                              disabled={product.variants.length > 0}
+                              title={product.variants.length ? 'Total calculé : modifiez les variantes ci-dessous.' : undefined}
+                              onCommit={quantity => handleUpdateStock(product, 'PORTUGAL', quantity)}
                               className={`w-16 text-center font-bold text-xs py-1 px-1 rounded-lg border focus:outline-none ${
                                 product.stock_portugal < 5
                                   ? 'border-red-300 bg-red-50 text-red-700'
@@ -1041,22 +1047,18 @@ export default function ProductLocationManagerClient() {
                                       <div className="flex items-center gap-4">
                                         <div className="flex items-center gap-1.5">
                                           <span className="text-[11px] text-slate-500">🇨🇭 Geneva:</span>
-                                          <input
-                                            type="number"
-                                            min={0}
+                                          <StockQuantityInput
                                             value={variant.stock_geneva}
-                                            onChange={e => handleUpdateVariantStock(product, variant.id, 'GENEVA', parseInt(e.target.value, 10))}
+                                            onCommit={quantity => handleUpdateVariantStock(product, variant.id, 'GENEVA', quantity)}
                                             className="w-16 text-center font-bold text-xs py-1 px-1 rounded-lg border border-slate-200 bg-slate-50"
                                           />
                                         </div>
 
                                         <div className="flex items-center gap-1.5">
                                           <span className="text-[11px] text-slate-500">🇵🇹 Portugal:</span>
-                                          <input
-                                            type="number"
-                                            min={0}
+                                          <StockQuantityInput
                                             value={variant.stock_portugal}
-                                            onChange={e => handleUpdateVariantStock(product, variant.id, 'PORTUGAL', parseInt(e.target.value, 10))}
+                                            onCommit={quantity => handleUpdateVariantStock(product, variant.id, 'PORTUGAL', quantity)}
                                             className="w-16 text-center font-bold text-xs py-1 px-1 rounded-lg border border-slate-200 bg-slate-50"
                                           />
                                         </div>
