@@ -192,12 +192,12 @@ export const CATEGORIES_DATA: CategoryData[] = [
     name: 'Créatine Monohydrate',
     h1: 'Créatine : monohydrate pure et label Creapure®',
     metaTitle: 'Créatine monohydrate et Creapure® Suisse | Nutrifitness Genève',
-    metaDescription: 'Créatine monohydrate, label Creapure® et poudre micronisée 200 mesh. Maximisez votre force et puissance. Stock en Suisse, livraison 24h.',
+    metaDescription: 'Découvrez la créatine monohydrate et les références Creapure® chez NutriFitness Genève. Comparez les formats, la composition et la livraison en Suisse.',
     targetKeywords: ['créatine Suisse', 'créatine monohydrate Genève', 'créatine Creapure achat', 'créatine musculation force'],
     subcategories: ['Créatine Monohydrate 100%', 'Label Creapure® Allemand', 'Poudres Micronisées 200 Mesh', 'Gélules & Tablettes'],
     intro: [
-      "La créatine est la molécule ergogène la plus rigoureusement documentée au monde dans le domaine de la science sportive (+ de 500 études cliniques). Elle optimise la resynthèse de l'adénosine triphosphate (ATP) lors des efforts anaérobies explosifs, décuplant la force maximale, le nombre de répétitions et la volumisation cellulaire intramusculaire.",
-      "NutriFitness Genève propose exclusivement des créatines certifiées pures : créatine monohydrate micronisée 200 mesh pour une dissolution parfaite sans résidus, et créatines brevetées sous le prestigieux label allemand Creapure® (pureté garantie à 99.99%). Aucun déchet de synthèse (dicyandiamide ou dihydrotriazine)."
+      "La créatine monohydrate est une substance largement étudiée dans le domaine de la nutrition sportive, notamment pour les efforts courts et répétés de forte intensité. Les résultats varient selon les personnes, l'entraînement et la formule utilisée.",
+      "NutriFitness Genève propose différentes références de créatine monohydrate, dont certaines peuvent porter le label Creapure®. Consultez la fiche de chaque produit pour vérifier son origine, sa composition et les certifications effectivement déclarées par le fabricant."
     ],
     buyingGuide: [
       {
@@ -211,29 +211,29 @@ export const CATEGORIES_DATA: CategoryData[] = [
       {
         title: 'Protocole de prise recommandé',
         steps: [
-          { title: 'Dose quotidienne', description: '3 à 5 g par jour en continu, sans interruption obligatoire.' },
-          { title: 'Phase de charge facultative', description: 'Une dose constante de 3-5 g sature pleinement les stocks musculaires en 3 à 4 semaines sans inconfort digestif.' },
-          { title: 'Prise avec des glucides/protéines', description: 'L\'élévation conjointe d\'insuline optimise le transport de la créatine vers les myocytes.' },
-          { title: 'Jours de repos', description: 'Maintenez impérativement la prise quotidienne le matin pour conserver la saturation.' }
+          { title: 'Quantité par portion', description: 'Suivez les indications sur l’emballage de la référence choisie ; les portions varient selon le produit.' },
+          { title: 'Phase de charge', description: 'Les protocoles varient ; une phase de charge n’est pas nécessaire dans tous les cas. Respectez les recommandations du fabricant.' },
+          { title: 'Avec un repas ou une boisson', description: 'Vérifiez les instructions de préparation et d’utilisation spécifiques à la formule.' },
+          { title: 'Jours de repos', description: 'Référez-vous aux conseils d’utilisation figurant sur l’étiquette du produit.' }
         ]
       }
     ],
     faqs: [
       {
         question: 'Quelle est la différence entre créatine monohydrate et Creapure® ?',
-        answer: 'Creapure® est une marque brevetée de créatine monohydrate synthétisée en Allemagne avec une pureté certifiée de 99.99 %, garantissant l\'absence totale de métaux lourds et sous-produits toxiques.'
+        answer: 'Creapure® est une marque de créatine monohydrate associée à un procédé de fabrication spécifique. Vérifiez la présence du label et les documents du fabricant pour chaque référence, plutôt que de supposer une pureté identique pour tous les produits.'
       },
       {
         question: 'Faut-il faire une phase de charge ?',
-        answer: 'Non, les études récentes démontrent qu\'une dose stable de 3 à 5 g par jour atteint les mêmes niveaux de saturation intramusculaire en 3 à 4 semaines, évitant tout désagrément intestinal.'
+        answer: 'Une phase de charge n’est pas indispensable dans tous les protocoles. Suivez les quantités et précautions indiquées sur l’étiquette et demandez conseil à un professionnel de santé si nécessaire.'
       },
       {
         question: 'La créatine provoque-t-elle de la rétention d\'eau sous-cutanée ?',
-        answer: 'Non, la rétention est strictement intracellulaire : l\'eau est attirée à l\'intérieur de la fibre musculaire, favorisant l\'hydratation cellulaire et un aspect musculaire plus dense et volumineux.'
+        answer: 'La créatine peut s’accompagner de variations du poids corporel liées notamment à l’eau dans les muscles. L’effet varie d’une personne à l’autre ; il ne faut pas promettre une absence complète de rétention d’eau.'
       },
       {
         question: 'Peut-on mélanger la créatine dans son shaker de protéines ?',
-        answer: 'Absolument. La créatine est stable et s\'associe idéalement aux protéines et glucides après l\'entraînement pour une assimilation accrue.'
+        answer: 'Certaines personnes consomment créatine et protéines dans une même boisson. Vérifiez toutefois les instructions de chaque produit et les éventuelles contre-indications.'
       }
     ],
     internalLinks: [

@@ -1,0 +1,52 @@
+name: Staff session security
+
+on:
+  pull_request:
+    paths:
+      - 'src/lib/adminSession.ts'
+      - 'src/lib/cartRestore.ts'
+      - 'src/lib/abandonedLead.ts'
+      - 'scripts/test-abandoned-lead.ts'
+      - 'src/app/api/checkout/abandoned/route.ts'
+      - 'src/app/api/orders/route.ts'
+      - 'scripts/test-order-auth.ts'
+      - 'src/lib/email/resend.ts'
+      - 'src/app/commande/page.tsx'
+      - 'src/app/mail/MailClient.tsx'
+      - 'scripts/test-cart-restore.ts'
+      - 'src/app/api/auth/session/route.ts'
+      - 'src/app/api/teamomar/auth/route.ts'
+      - 'src/app/teamomar/TeamOmarClient.tsx'
+      - 'src/app/wp-admin/AdminDashboardClient.tsx'
+      - 'src/app/admin/products/ProductLocationManagerClient.tsx'
+      - 'src/components/admin/AdminSidebar.tsx'
+      - 'src/middleware.ts'
+      - 'src/middleware.test.ts'
+      - 'package.json'
+      - 'package-lock.json'
+      - '.github/workflows/staff-session-security.yml'
+
+permissions:
+  contents: read
+
+jobs:
+  verify:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - uses: actions/setup-node@49933ea5288caeca8642d1e84afbd3f7d6820020 # v4.4.0
+        with:
+          node-version: '22'
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm run test:middleware
+      - run: npm run test:cart-restore
+      - run: npm run test:order-auth
+      - run: npm run test:abandoned-lead
+      - run: npm run test:delivery
+      - run: npm run test:gating
+      - run: npm run test:stock
+      - run: npm run test:routing

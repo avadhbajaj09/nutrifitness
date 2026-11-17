@@ -98,7 +98,7 @@ Located at `src/components/delivery/DeliveryEstimate.tsx`:
 
 ## 6. Admin Dashboard (`/admin/shipping`)
 
-Accessible with administrator credentials (`Geneva@03564`):
+Accessible only after authenticated administrator login; credentials are configured as secure server-side environment variables. Never place passwords in documentation or source code.
 1. **Règles de Livraison**:
    - Filter by origin (Genève / Portugal) and status.
    - One-click active/inactive toggle.

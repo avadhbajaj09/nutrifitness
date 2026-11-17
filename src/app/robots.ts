@@ -29,7 +29,14 @@ const AI_USER_AGENTS = [
 
 export default function robots(): Robots {
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nutrifitness.ch';
-  if (process.env.VERCEL_ENV !== 'production' && process.env.ALLOW_INDEXING !== 'true') {
+  // Hosting-neutral indexing guard: production outside Vercel must not accidentally
+  // return "Disallow: /" just because VERCEL_ENV is undefined.
+  const isPreview = process.env.VERCEL_ENV === 'preview' ||
+    process.env.VERCEL_ENV === 'development' ||
+    site.includes('.vercel.app');
+  const blockAll = process.env.ROBOTS_DISALLOW_ALL === 'true' ||
+    (isPreview && process.env.ALLOW_INDEXING !== 'true');
+  if (blockAll) {
     return { rules: { userAgent: '*', disallow: '/' } };
   }
 

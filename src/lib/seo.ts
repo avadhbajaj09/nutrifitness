@@ -35,22 +35,27 @@ export function formatMetaDescription(description: string): string {
 }
 
 /**
- * Returns a valid GTIN/EAN if available on the product or variant, or undefined.
+ * Check GS1 GTIN-8, UPC-A (GTIN-12), EAN-13 and GTIN-14 check digits.
+ * A retailer SKU is not a manufacturer-issued GTIN even if it is numeric.
  */
+export function isValidGtin(candidate: string | undefined | null): boolean {
+  if (!candidate || !/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(candidate)) return false;
+  let sum = 0;
+  let weight = 3;
+  for (let i = candidate.length - 2; i >= 0; i--) {
+    sum += Number(candidate[i]) * weight;
+    weight = weight === 3 ? 1 : 3;
+  }
+  return ((10 - (sum % 10)) % 10) === Number(candidate[candidate.length - 1]);
+}
+
+/** Only expose explicitly supplied, checksum-valid manufacturer GTINs. */
 export function getProductGtin(
   product: { gtin13?: string; variants?: { sku?: string; gtin13?: string }[] },
   variant?: { sku?: string; gtin13?: string }
 ): string | undefined {
-  if (variant?.gtin13 && variant.gtin13.trim()) return variant.gtin13.trim();
-  if (product.gtin13 && product.gtin13.trim()) return product.gtin13.trim();
-
-  const sku = variant?.sku || product.variants?.[0]?.sku;
-  if (sku) {
-    const cleanSku = sku.trim();
-    if (/^\d{8}$|^\d{12,14}$/.test(cleanSku)) {
-      return cleanSku;
-    }
-  }
-  return undefined;
+  const candidate = [variant?.gtin13, product.gtin13, ...(variant ? [] : [product.variants?.[0]?.gtin13])]
+    .map(value => value?.trim())
+    .find(value => isValidGtin(value));
+  return candidate || undefined;
 }
-

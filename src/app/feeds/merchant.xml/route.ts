@@ -91,7 +91,8 @@ export async function GET(request: NextRequest) {
 
   const itemsXml = eligibleProducts
     .map(product => {
-      const defaultVariant = product.variants?.[0];
+      // Merchant listing must reference an available variant, not a sold-out first flavor.
+      const defaultVariant = product.variants?.find(v => v.inStock && v.inventoryQuantity > 0) || product.variants?.[0];
       const sku = defaultVariant?.sku || product.id;
       const title = product.name?.fr || product.name?.en || 'Complément Sportif';
       
@@ -133,7 +134,8 @@ export async function GET(request: NextRequest) {
 
       // GTIN and identifier existence
       const gtin = getProductGtin(product, defaultVariant);
-      const identifierExists = gtin ? 'yes' : 'no';
+      // Never invent an MPN from a retailer SKU or declare identifiers absent for a branded product.
+      const identifierElement = gtin ? '      <g:identifier_exists>yes</g:identifier_exists>\n' : '';
 
       // Category and product type
       const categoryObj = getCategoryBySlug(product.categorySlug);
@@ -149,12 +151,12 @@ export async function GET(request: NextRequest) {
 ${additionalImages ? additionalImages + '\n' : ''}      <g:availability>in_stock</g:availability>
       <g:price>${escapeXml(priceFormatted)}</g:price>
       <g:brand>${escapeXml(product.brand)}</g:brand>
-${gtin ? `      <g:gtin>${escapeXml(gtin)}</g:gtin>\n` : ''}      <g:mpn>${escapeXml(sku)}</g:mpn>
+${gtin ? `      <g:gtin>${escapeXml(gtin)}</g:gtin>\n` : ''}
       <g:condition>new</g:condition>
       <g:google_product_category>Health &amp; Beauty &gt; Health Care &gt; Fitness &amp; Nutrition</g:google_product_category>
       <g:product_type>${escapeXml(productType)}</g:product_type>
       <g:shipping_weight>${escapeXml(weight)}</g:shipping_weight>
-      <g:identifier_exists>${identifierExists}</g:identifier_exists>
+${identifierElement.trimEnd()}
       <g:shipping>
         <g:country>${escapeXml(targetCountry)}</g:country>
         <g:service>${escapeXml(shippingService)}</g:service>
