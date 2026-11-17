@@ -44,10 +44,10 @@ export async function generateSwissPostLabel(options: GenerateLabelOptions): Pro
     ? options.printPreview 
     : (process.env.SWISSPOST_PRINT_PREVIEW === 'true');
 
-  const senderName1 = process.env.SWISSPOST_SENDER_NAME1 || 'NUTRIFITNESS CH';
-  const senderName2 = process.env.SWISSPOST_SENDER_NAME2 || 'SCARPANTONI NUTRIFIT';
-  const senderStreet = process.env.SWISSPOST_SENDER_STREET || 'Route de Chêne 14';
-  const senderZip = process.env.SWISSPOST_SENDER_ZIP || '1207';
+  const senderName1 = process.env.SWISSPOST_SENDER_NAME1 || 'NUTRIFITNESS';
+  const senderName2 = process.env.SWISSPOST_SENDER_NAME2 || '';
+  const senderStreet = process.env.SWISSPOST_SENDER_STREET || 'Rue des Pâquis 34';
+  const senderZip = process.env.SWISSPOST_SENDER_ZIP || '1201';
   const senderCity = process.env.SWISSPOST_SENDER_CITY || 'Genève';
   const senderCountry = process.env.SWISSPOST_SENDER_COUNTRY || 'CH';
 
@@ -57,7 +57,7 @@ export async function generateSwissPostLabel(options: GenerateLabelOptions): Pro
     ppFranking: false,
     customer: {
       name1: senderName1,
-      name2: senderName2,
+      name2: senderName2 || undefined,
       street: senderStreet,
       zip: senderZip,
       city: senderCity,

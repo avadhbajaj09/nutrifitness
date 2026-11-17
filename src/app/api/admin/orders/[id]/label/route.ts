@@ -98,10 +98,10 @@ export async function GET(
         country,
       },
       sender: {
-        name1: process.env.SWISSPOST_SENDER_NAME1 || 'NUTRIFITNESS CH',
-        name2: process.env.SWISSPOST_SENDER_NAME2 || 'SCARPANTONI NUTRIFIT',
-        street: process.env.SWISSPOST_SENDER_STREET || 'Route de Chêne 14',
-        zip: process.env.SWISSPOST_SENDER_ZIP || '1207',
+        name1: process.env.SWISSPOST_SENDER_NAME1 || 'NUTRIFITNESS',
+        name2: process.env.SWISSPOST_SENDER_NAME2 || '',
+        street: process.env.SWISSPOST_SENDER_STREET || 'Rue des Pâquis 34',
+        zip: process.env.SWISSPOST_SENDER_ZIP || '1201',
         city: process.env.SWISSPOST_SENDER_CITY || 'Genève',
       },
     });
