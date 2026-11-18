@@ -82,8 +82,10 @@ BEGIN
     ORDER BY (id::text=payload->>'id') DESC LIMIT 1 FOR UPDATE;
   IF p.id IS NULL AND mode='patch' THEN RAISE EXCEPTION 'Produit introuvable' USING ERRCODE='P0002'; END IF;
   IF p.id IS NOT NULL THEN
-    IF payload->>'expected_updated_at' IS NULL OR (payload->>'expected_updated_at')::timestamptz IS DISTINCT FROM p.updated_at THEN
-      RAISE EXCEPTION 'Ce produit a été modifié. Rechargez-le avant d’enregistrer.' USING ERRCODE='40001';
+    IF mode='patch' AND payload ? 'expected_updated_at' AND payload->>'expected_updated_at' IS NOT NULL THEN
+      IF date_trunc('second', (payload->>'expected_updated_at')::timestamptz) IS DISTINCT FROM date_trunc('second', p.updated_at) THEN
+        RAISE EXCEPTION 'Ce produit a été modifié. Rechargez-le avant d’enregistrer.' USING ERRCODE='40001';
+      END IF;
     END IF;
     SELECT COALESCE(jsonb_agg(to_jsonb(s)), '[]'::jsonb) INTO old_stock FROM public.product_stock s WHERE product_id=p.id;
     SELECT EXISTS(SELECT 1 FROM public.product_variants WHERE product_id=p.id) INTO is_variable;
@@ -220,9 +222,10 @@ BEGIN
       RETURN prior.result;
     END IF;
   END IF;
-  IF payload ? 'quantity' AND (payload->>'expected_updated_at' IS NULL OR
-      (payload->>'expected_updated_at')::timestamptz IS DISTINCT FROM p.updated_at) THEN
-    RAISE EXCEPTION 'Stock modifié ailleurs' USING ERRCODE='40001';
+  IF payload ? 'quantity' AND payload ? 'expected_updated_at' AND payload->>'expected_updated_at' IS NOT NULL THEN
+    IF date_trunc('second', (payload->>'expected_updated_at')::timestamptz) IS DISTINCT FROM date_trunc('second', p.updated_at) THEN
+      RAISE EXCEPTION 'Stock modifié ailleurs' USING ERRCODE='40001';
+    END IF;
   END IF;
   IF hint IS NOT NULL THEN
     SELECT * INTO v FROM public.product_variants WHERE product_id=p.id AND

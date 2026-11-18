@@ -314,7 +314,7 @@ export async function POST(request: Request) {
 
     return NextResponse.json({ 
       success: true,
-      updated_at: data.updated_at,
+      updated_at: data?.updated_at || new Date().toISOString(),
       id: resultId, 
       slug: resultSlug, 
       status: resultStatus 
