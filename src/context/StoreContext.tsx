@@ -17,6 +17,7 @@ export interface CartItem {
   brand: string;
   image: string;
   price: number; // resolved unit price
+  basePrice?: number; // base unit price before tiered volume discount
   priceChf?: number;
   priceEurSwiss?: number;
   priceEurEurope?: number;
@@ -583,27 +584,28 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       ? (rawFlavor[locale] || rawFlavor.fr || rawFlavor.en || 'Standard')
       : String(rawFlavor || 'Standard');
 
-    const rawSize = options.size || product.size || (isEbook ? 'Format PDF' : 'Format standard');
+    const matchedVariant = product.variants?.find((v: any) => {
+      const vFlav = typeof v.flavorName === 'object' && v.flavorName !== null
+        ? (v.flavorName[locale] || v.flavorName.fr || v.flavorName.en)
+        : v.flavorName;
+      if (!vFlav) return false;
+      const sNorm = (flavor || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+      const vNorm = String(vFlav).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+      return sNorm === vNorm || sNorm.includes(vNorm) || vNorm.includes(sNorm);
+    });
+
+    const variantFormat = matchedVariant?.format;
+    const rawSize = options.size || variantFormat || product.size || (isEbook ? 'Format PDF' : 'Format standard');
     const size = typeof rawSize === 'object' && rawSize !== null
       ? (rawSize[locale] || rawSize.fr || rawSize.en || 'Format standard')
       : String(rawSize || 'Format standard');
 
-    const resolvedPriceInfo = getProductPricing(product);
+    const resolvedPriceInfo = getProductPricing(product, matchedVariant);
     const price = Number(options.price !== undefined ? options.price : resolvedPriceInfo.price);
+    const baseChfPrice = matchedVariant?.priceChf ?? product.priceChf ?? price;
     
     // Resolve specific flavor image if variant has packshot
-    let image = options.image || product.image;
-    if (!image && product.variants && flavor) {
-      const matchedVariant = product.variants.find((v: any) => {
-        const vFlav = typeof v.flavorName === 'object' && v.flavorName !== null
-          ? (v.flavorName[locale] || v.flavorName.fr || v.flavorName.en)
-          : v.flavorName;
-        return vFlav === flavor;
-      });
-      if (matchedVariant?.image) {
-        image = matchedVariant.image;
-      }
-    }
+    let image = options.image || matchedVariant?.image || product.image;
     if (!image) {
       image = (product.images && product.images[0] ? product.images[0].src : '/images/placeholder.webp');
     }
@@ -705,11 +707,35 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             `Quantité maximale disponible atteinte (${availableStock} unité(s)).`
           );
           const next = [...prev];
-          next[index] = { ...next[index], quantity: availableStock };
+          const existingItem = next[index];
+          const base = (existingItem as any).basePrice ?? existingItem.priceChf ?? existingItem.price;
+          let updatedUnitPrice = existingItem.price;
+          if (!existingItem.isEbook && Number.isFinite(Number(base)) && Number(base) > 0) {
+            if (availableStock >= 3) {
+              updatedUnitPrice = Math.round(Number(base) * 0.90 * 100) / 100;
+            } else if (availableStock === 2) {
+              updatedUnitPrice = Math.round(Number(base) * 0.95 * 100) / 100;
+            } else {
+              updatedUnitPrice = Number(base);
+            }
+          }
+          next[index] = { ...existingItem, quantity: availableStock, price: updatedUnitPrice };
           return next;
         }
         const next = [...prev];
-        next[index] = { ...next[index], quantity: newTotalQty };
+        const existingItem = next[index];
+        const base = (existingItem as any).basePrice ?? existingItem.priceChf ?? existingItem.price;
+        let updatedUnitPrice = existingItem.price;
+        if (!existingItem.isEbook && Number.isFinite(Number(base)) && Number(base) > 0) {
+          if (newTotalQty >= 3) {
+            updatedUnitPrice = Math.round(Number(base) * 0.90 * 100) / 100;
+          } else if (newTotalQty === 2) {
+            updatedUnitPrice = Math.round(Number(base) * 0.95 * 100) / 100;
+          } else {
+            updatedUnitPrice = Number(base);
+          }
+        }
+        next[index] = { ...existingItem, quantity: newTotalQty, price: updatedUnitPrice };
         return next;
       } else {
         const safeQty = Math.min(quantity, availableStock);
@@ -723,10 +749,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
             brand,
             image,
             price,
-            priceChf: product.priceChf,
-            priceEurSwiss: product.priceEurSwiss,
-            priceEurEurope: product.priceEurEurope,
-            priceEur: product.priceEurEurope || product.priceEur,
+            basePrice: baseChfPrice,
+            priceChf: baseChfPrice,
+            priceEurSwiss: matchedVariant?.priceEurSwiss ?? product.priceEurSwiss,
+            priceEurEurope: matchedVariant?.priceEurEurope ?? product.priceEurEurope,
+            priceEur: matchedVariant?.priceEurEurope ?? product.priceEurEurope ?? matchedVariant?.priceEur ?? product.priceEur,
             flavor,
             size,
             quantity: safeQty,
@@ -751,9 +778,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       return;
     }
 
-    const matchedVariant = product.variants?.find((v: any) => 
-      (v.flavorName && (v.flavorName.fr === flavor || v.flavorName === flavor))
-    );
     const sku = matchedVariant?.sku || product.variants?.[0]?.sku || product.id || slug;
     const activeCurr = currency || 'CHF';
     const itemData = {
@@ -833,11 +857,35 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
               if (nextQty > maxStock) {
                 showToast('Stock limité', `Quantité maximale disponible atteinte (${maxStock} unité(s)).`);
-                return { ...item, quantity: maxStock };
+                const base = (item as any).basePrice ?? item.priceChf ?? item.price;
+                let unitPrice = item.price;
+                if (!item.isEbook && Number.isFinite(Number(base)) && Number(base) > 0) {
+                  if (maxStock >= 3) {
+                    unitPrice = Math.round(Number(base) * 0.90 * 100) / 100;
+                  } else if (maxStock === 2) {
+                    unitPrice = Math.round(Number(base) * 0.95 * 100) / 100;
+                  } else {
+                    unitPrice = Number(base);
+                  }
+                }
+                return { ...item, quantity: maxStock, price: unitPrice };
               }
             }
 
-            return { ...item, quantity: nextQty };
+            // Dynamically recalculate unit price with tiered discounts off basePrice
+            let unitPrice = item.price;
+            const base = (item as any).basePrice ?? item.priceChf ?? item.price;
+            if (!item.isEbook && Number.isFinite(Number(base)) && Number(base) > 0) {
+              if (nextQty >= 3) {
+                unitPrice = Math.round(Number(base) * 0.90 * 100) / 100;
+              } else if (nextQty === 2) {
+                unitPrice = Math.round(Number(base) * 0.95 * 100) / 100;
+              } else {
+                unitPrice = Number(base);
+              }
+            }
+
+            return { ...item, quantity: nextQty, price: unitPrice };
           }
           return item;
         })
@@ -874,10 +922,9 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
 
   const cartSubtotal = cart.reduce((sum, item) => {
     if (!item) return sum;
-    const rawPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
-      ? getProductPricing(item).price
-      : item.price;
-    const numPrice = Number.isFinite(Number(rawPrice)) ? Number(rawPrice) : 29.90;
+    const numPrice = Number.isFinite(Number(item.price))
+      ? Number(item.price)
+      : (Number.isFinite(Number(item.priceChf)) ? Number(item.priceChf) : 29.90);
     const qty = Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1;
     return sum + (numPrice * qty);
   }, 0);

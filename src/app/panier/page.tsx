@@ -265,7 +265,8 @@ export default function CartPage() {
                         const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
                           ? (flavorObj?.[locale] || flavorObj?.fr || 'Standard')
                           : String(item.flavor || 'Standard');
-                        const isDistinct = flavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(flavorStr.toLowerCase());
+                        const cleanFlavorStr = flavorStr.replace(/\s*\(\d+\s*KG\)/i, '').trim();
+                        const isDistinct = cleanFlavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(cleanFlavorStr.toLowerCase());
                         const sizeStr = typeof item.size === 'object' && item.size !== null
                           ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard')
                           : String(item.size || 'Format standard');
@@ -279,7 +280,7 @@ export default function CartPage() {
                             }`}>
                               <span>{isDistinct ? '⚡' : '🏷️'}</span>
                               <span className="text-white/60 text-[10px] uppercase font-semibold">Saveur :</span>
-                              <span className="font-black text-white">{flavorStr}</span>
+                              <span className="font-black text-white">{cleanFlavorStr}</span>
                             </span>
                             {sizeStr && sizeStr !== 'Format standard' && (
                               <span className="text-[10px] text-white/60 bg-white/5 border border-white/10 px-1.5 py-0.5 rounded">

@@ -135,7 +135,8 @@ export default function CartDrawer() {
                         const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
                           ? (flavorObj?.[locale] || flavorObj?.fr || 'Standard')
                           : String(item.flavor || 'Standard');
-                        const isDistinct = flavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(flavorStr.toLowerCase());
+                        const cleanFlavorStr = flavorStr.replace(/\s*\(\d+\s*KG\)/i, '').trim();
+                        const isDistinct = cleanFlavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(cleanFlavorStr.toLowerCase());
                         const sizeStr = typeof item.size === 'object' && item.size !== null
                           ? ((item.size as Record<string, string>)[locale] || (item.size as Record<string, string>).fr || 'Format standard')
                           : String(item.size || 'Format standard');
@@ -149,7 +150,7 @@ export default function CartDrawer() {
                             }`}>
                               <span>{isDistinct ? '⚡' : '🏷️'}</span>
                               <span className="text-white/60 uppercase">Goût:</span>
-                              <span className="font-black text-white">{flavorStr}</span>
+                              <span className="font-black text-white">{cleanFlavorStr}</span>
                             </span>
                             {sizeStr && sizeStr !== 'Format standard' && (
                               <span className="text-[10px] text-white/50">{sizeStr}</span>
@@ -190,10 +191,9 @@ export default function CartDrawer() {
                     const itemQty = Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1;
                     const isMaxStockReached = !item.isEbook && itemMaxStock > 0 && itemQty >= itemMaxStock;
 
-                    const rawPrice = (item.priceChf !== undefined || item.priceEurEurope !== undefined)
-                      ? getProductPricing(item).price
-                      : item.price;
-                    const itemUnitPrice = Number.isFinite(Number(rawPrice)) ? Number(rawPrice) : 29.90;
+                    const itemUnitPrice = Number.isFinite(Number(item.price))
+                      ? Number(item.price)
+                      : (Number.isFinite(Number(item.priceChf)) ? Number(item.priceChf) : 29.90);
 
                     return (
                       <div className="flex justify-between items-center mt-3 pt-2 border-t border-white/5">

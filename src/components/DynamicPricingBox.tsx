@@ -155,6 +155,7 @@ export default function DynamicPricingBox({
     addToCart(product, {
       quantity: Math.max(1, Math.min(quantity || 1, maxAvailableStock)),
       flavor: selectedFlavor,
+      size: selectedVariant?.format || (selectedFlavor.includes('4KG') ? '4 KG' : (selectedFlavor.includes('3KG') ? '3 KG' : undefined)),
       price: activeUnitPrice,
       image: selectedVariant?.image,
       stockGeneva: vGen,
@@ -223,7 +224,7 @@ export default function DynamicPricingBox({
       
       {/* Dynamic Unit Price Display & Stock */}
       <div className="flex flex-wrap items-baseline justify-between gap-3 pb-3 border-b border-white/10">
-        <div className="flex items-baseline gap-3">
+        <div className="flex items-baseline gap-3 flex-wrap">
           <span className="text-3xl sm:text-4xl font-black text-white font-heading tracking-tight">
             {fmtCurrency(activeUnitPrice)}
           </span>
@@ -235,6 +236,11 @@ export default function DynamicPricingBox({
           {selectedTier > 1 && (
             <span className="px-2.5 py-0.5 rounded-full bg-[#95d600]/20 text-[#95d600] text-xs font-black uppercase tracking-wider">
               -{selectedTier === 2 ? '5%' : '10%'} Remise
+            </span>
+          )}
+          {(selectedVariant?.format || (selectedFlavor.includes('4KG') ? '4 KG' : (selectedFlavor.includes('3KG') ? '3 KG' : null))) && (
+            <span className="text-xs font-bold text-white/90 bg-white/10 px-2 py-0.5 rounded-md border border-white/10">
+              {selectedVariant?.format || (selectedFlavor.includes('4KG') ? '4 KG' : '3 KG')}
             </span>
           )}
         </div>

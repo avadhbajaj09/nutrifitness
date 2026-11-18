@@ -33,12 +33,17 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
   const [activeTab, setActiveTab] = useState<'desc' | 'usage' | 'nutrition' | 'faq'>('desc');
   const [mobileOpenSection, setMobileOpenSection] = useState<string | null>('desc');
-  const [selectedFlavor, setSelectedFlavor] = useState<string>(
-    product.variants?.find(v => (v.stockGeneva || 0) > 0)?.flavorName?.fr ||
-    product.variants?.find(v => v.inStock)?.flavorName?.fr ||
-    getLocalized(product.variants?.[0]?.flavorName, locale) ||
-    'Standard'
-  );
+  const defaultFlavor = (() => {
+    if (product.id === 'prod-11269' || product.slug?.fr === 'big-lean-mass-gainer' || product.slug?.en === 'big-lean-mass-gainer') {
+      const van = product.variants?.find(v => (v.flavorName?.fr || '').toLowerCase().includes('vanil'));
+      if (van?.flavorName?.fr) return van.flavorName.fr;
+    }
+    return product.variants?.find(v => (v.stockGeneva || 0) > 0)?.flavorName?.fr ||
+      product.variants?.find(v => v.inStock)?.flavorName?.fr ||
+      getLocalized(product.variants?.[0]?.flavorName, locale) ||
+      'Standard';
+  })();
+  const [selectedFlavor, setSelectedFlavor] = useState<string>(defaultFlavor);
   const [quantity, setQuantity] = useState<number>(1);
   const [selectedImage, setSelectedImage] = useState<string | null>(null);
   const productFaqs = getProductFaqs(product);
@@ -357,9 +362,19 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {/* Flavor / Option Selector */}
           {(product.variants.length > 1 || (product.variants.length === 1 && product.variants[0]?.flavorName?.fr !== 'Standard')) && (
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-white/80 mb-2 font-heading">
-                {locale === 'de' ? 'Option / Geschmack :' : locale === 'it' ? 'Opzione / Gusto :' : locale === 'en' ? 'Option / Flavor :' : 'Option / Parfum :'}
-              </label>
+              <div className="flex items-center justify-between mb-2">
+                <label className="block text-xs font-bold uppercase tracking-wider text-white/80 font-heading">
+                  {locale === 'de' ? 'Option / Geschmack :' : locale === 'it' ? 'Opzione / Gusto :' : locale === 'en' ? 'Option / Flavor :' : 'Option / Parfum :'}
+                </label>
+                {(selectedVariant?.format || (selectedFlavor.includes('4KG') ? '4 KG' : (selectedFlavor.includes('3KG') ? '3 KG' : null))) && (
+                  <span className="text-xs font-bold text-white/90 bg-white/10 px-2.5 py-1 rounded-lg border border-white/10 flex items-center gap-1.5">
+                    <span className="text-white/50 font-normal">Format :</span>
+                    <span className="text-[#95d600] font-black">
+                      {selectedVariant?.format || (selectedFlavor.includes('4KG') ? '4 KG' : '3 KG')}
+                    </span>
+                  </span>
+                )}
+              </div>
               <div className="flex flex-wrap gap-2">
                 {product.variants.map((v, i) => {
                   const flv = v.flavorName?.fr || 'Standard';
@@ -383,6 +398,22 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                     ? (!isAvailableInSwiss && !isAvailableInPt)
                     : !isAvailableInPt;
 
+                  const rawFlv = v.flavorName?.[locale] || v.flavorName?.fr || 'Standard';
+                  let displayLabel = rawFlv;
+                  const isMassGainer = product.id === 'prod-11269' || product.slug?.fr === 'big-lean-mass-gainer' || product.slug?.en === 'big-lean-mass-gainer' || (v.format && v.priceChf && product.variants?.some((other: any) => other.priceChf !== v.priceChf));
+                  if (isMassGainer) {
+                    const cleanFlavor = rawFlv.replace(/\s*\(\d+\s*KG\)/i, '').trim().toUpperCase();
+                    const fmt = v.format || (rawFlv.includes('4KG') ? '4 KG' : (rawFlv.includes('3KG') ? '3 KG' : ''));
+                    const pr = v.priceChf ? `CHF ${v.priceChf}` : '';
+                    if (fmt && pr) {
+                      displayLabel = `${cleanFlavor} — ${fmt} — ${pr}`;
+                    } else if (fmt) {
+                      displayLabel = `${cleanFlavor} — ${fmt}`;
+                    } else {
+                      displayLabel = cleanFlavor;
+                    }
+                  }
+
                   return (
                     <button 
                       key={i}
@@ -393,13 +424,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
                           setSelectedImage(v.image);
                         }
                       }}
-                      className={`min-h-[44px] px-3.5 py-2 text-xs font-bold rounded-xl border transition-all flex items-center justify-between gap-2 ${
+                      className={`min-h-[44px] px-3.5 py-2 text-xs font-bold rounded-xl border transition-all flex items-center justify-between gap-2.5 ${
                         isSelected 
                           ? 'border-[#95d600] bg-[#95d600]/20 text-white ring-1 ring-[#95d600]' 
                           : 'border-white/15 bg-white/5 text-white/80 hover:border-white'
                       }`}
                     >
-                      <span>{flv}</span>
+                      <span className="font-heading">{displayLabel}</span>
                       {isSwissDest ? (
                         isAvailableInSwiss ? (
                           <span className="text-[10px] font-semibold text-emerald-400 bg-emerald-500/10 px-1.5 py-0.5 rounded border border-emerald-500/20 whitespace-nowrap">
@@ -439,7 +470,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {isDeliverable && (
             <Link 
               href="/commande/"
-              onClick={() => addToCart(product, { quantity: 1, flavor: selectedFlavor, price: currentPrice, image: activeImg })}
+              onClick={() => addToCart(product, {
+                quantity: 1,
+                flavor: selectedFlavor,
+                size: selectedVariant?.format || (selectedFlavor.includes('4KG') ? '4 KG' : '3 KG'),
+                price: currentPrice,
+                image: activeImg
+              })}
               className="w-full min-h-[50px] px-6 py-4 bg-white/10 hover:bg-white/15 text-white font-black uppercase tracking-wider text-xs rounded-xl border border-white/20 transition-all flex items-center justify-center gap-2 shadow-sm block text-center active:scale-98"
             >
               <span>🇨🇭</span>
@@ -770,7 +807,13 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           ) : (
             <button 
               type="button"
-              onClick={() => addToCart(product, { quantity, flavor: selectedFlavor, price: currentPrice, image: activeImg })}
+              onClick={() => addToCart(product, {
+                quantity,
+                flavor: selectedFlavor,
+                size: selectedVariant?.format || (selectedFlavor.includes('4KG') ? '4 KG' : '3 KG'),
+                price: currentPrice,
+                image: activeImg
+              })}
               className="shrink-0 min-h-[44px] px-5 py-2.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all flex items-center gap-2 active:scale-95 shadow-md"
             >
               <svg className="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor">

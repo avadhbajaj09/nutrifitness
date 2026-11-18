@@ -290,16 +290,18 @@ export default async function ProductDetailPage({ params }: Props) {
         const pt = Number(v.stock_portugal) || 0;
         const tot = gen + pt;
         const flavor = v.attribute_value || 'Standard';
+        const rawVar = rawProduct?.variants?.find((rv: any) => rv.id === v.id || rv.sku === v.sku || (rv.flavorName?.fr && rv.flavorName.fr.toLowerCase() === flavor.toLowerCase()));
+        const format = rawVar?.format || (flavor.includes('4KG') ? '4 KG' : (flavor.includes('3KG') ? '3 KG' : (v.attribute_name === 'poids' ? flavor : '1 unité')));
         return {
           id: v.id,
           sku: v.sku || ('NF-' + (v.woo_id || v.id.slice(0, 8))),
           flavorName: { fr: flavor, de: flavor, it: flavor, en: flavor },
-          format: v.attribute_name === 'poids' ? flavor : '1 unité',
+          format,
           priceChf: Number(v.price) || product.priceChf,
           compareAtPriceChf: v.compare_at_price ? Number(v.compare_at_price) : undefined,
           inventoryQuantity: tot,
           inStock: tot > 0,
-          image: v.image_url || product.images?.[0]?.src || '/images/placeholder.webp',
+          image: v.image_url || rawVar?.image || product.images?.[0]?.src || '/images/placeholder.webp',
           stockGeneva: gen,
           stockPortugal: pt,
           gtin13: v.gtin13 || ''

@@ -1835,7 +1835,8 @@ export default function CheckoutPage() {
               const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
                 ? (flavorObj?.[locale] || flavorObj?.fr || 'Standard')
                 : String(item.flavor || 'Standard');
-              const isDistinctFlavor = flavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(flavorStr.toLowerCase());
+              const cleanFlavorStr = flavorStr.replace(/\s*\(\d+\s*KG\)/i, '').trim();
+              const isDistinctFlavor = cleanFlavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(cleanFlavorStr.toLowerCase());
 
               return (
                 <div key={item.itemKey} className="flex items-start gap-3 pt-3 first:pt-1">
@@ -1866,7 +1867,7 @@ export default function CheckoutPage() {
                       }`}>
                         <span>{isDistinctFlavor ? '⚡' : '🏷️'}</span>
                         <span className="text-white/60 text-[10px] uppercase font-semibold">Saveur :</span>
-                        <span className="font-black text-white">{flavorStr}</span>
+                        <span className="font-black text-white">{cleanFlavorStr}</span>
                       </span>
                       {item.size && item.size !== 'Format standard' && (
                         <span className="text-[10px] text-white/60 bg-white/5 border border-white/10 px-1.5 py-0.5 rounded">

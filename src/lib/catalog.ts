@@ -12763,23 +12763,23 @@ export const PRODUCTS: ProductItem[] = [
       "en": "big-lean-mass-gainer"
     },
     "name": {
-      "fr": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine",
-      "de": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine",
-      "it": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine",
-      "en": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine"
+      "fr": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG",
+      "de": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG",
+      "it": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG",
+      "en": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG"
     },
     "brand": "Marvelous",
     "categorySlug": "prise-de-masse",
     "taxCategory": "food_reduced",
-    "priceChf": 59,
+    "priceChf": 60,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/04/BIG-LEAN-GAINER-3KG.webp",
+        "src": "/images/products/marvelous/big-vanilla.png",
         "alt": {
-          "fr": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines",
-          "de": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines",
-          "it": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines",
-          "en": "Gainer Big - Supplément de prise de masse avec maltodextrine et protéines"
+          "fr": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Vanilla",
+          "de": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Vanilla",
+          "it": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Vanilla",
+          "en": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Vanilla"
         },
         "width": 800,
         "height": 800
@@ -12787,10 +12787,10 @@ export const PRODUCTS: ProductItem[] = [
       {
         "src": "/images/products/marvelous/big-choco.png",
         "alt": {
-          "fr": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Chocolate",
-          "de": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Chocolate",
-          "it": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Chocolate",
-          "en": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Chocolate"
+          "fr": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Chocolate",
+          "de": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Chocolate",
+          "it": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Chocolate",
+          "en": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Chocolate"
         },
         "width": 800,
         "height": 800
@@ -12798,40 +12798,29 @@ export const PRODUCTS: ProductItem[] = [
       {
         "src": "/images/products/marvelous/big-cookies.png",
         "alt": {
-          "fr": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Cookies and Cream",
-          "de": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Cookies and Cream",
-          "it": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Cookies and Cream",
-          "en": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Cookies and Cream"
-        },
-        "width": 800,
-        "height": 800
-      },
-      {
-        "src": "/images/products/marvelous/big-vanilla.png",
-        "alt": {
-          "fr": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Vanilla",
-          "de": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Vanilla",
-          "it": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Vanilla",
-          "en": "Marvelous Big Lean Mass Gainer 3kg – Prise de Muscle Sec Riche en Isolat & Flocons d'Avoine - Vanilla"
+          "fr": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Cookies and Cream",
+          "de": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Cookies and Cream",
+          "it": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Cookies and Cream",
+          "en": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Cookies and Cream"
         },
         "width": 800,
         "height": 800
       }
     ],
     "shortDescription": {
-      "fr": "Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Cette formule intègre ratio équilibré 50/50 protéines nobles (isolat de lactosérum wpi) et glucides complexes à ig bas (avoine micronisée) pour des résultats visibles et durables. Stock direct 100% en Suisse, expédié en 1 à 2 jours par PostPac Priority ou disponible en retrait immédiat à notre boutique NutriFitness Genève (34 Rue des Pâquis).",
-      "de": "Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Hochwertige Formel mit Ratio équilibré 50/50 protéines nobles (isolat de lactosérum WPI) et glucides complexes à IG bas (avoine micronisée). 100% Schweizer Lagerware, versandfertig in 24 Stunden per PostPac Priority oder direkt abholbar im Store Genf.",
-      "it": "Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Formula avanzata con Ratio équilibré 50/50 protéines nobles (isolat de lactosérum WPI) et glucides complexes à IG bas (avoine micronisée). Stock 100% svizzero con spedizione rapida 1-2 giorni PostPac Priority o ritiro immediato nel negozio di Ginevra.",
-      "en": "Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Advanced formula containing Ratio équilibré 50/50 protéines nobles (isolat de lactosérum WPI) et glucides complexes à IG bas (avoine micronisée). 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
+      "fr": "Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Disponible en format 3 KG (Vanille à CHF 60.00) et 4 KG (Chocolat et Cookies & Cream à CHF 70.00). Formule équilibrée riche en isolat de lactosérum WPI et glucides complexes d'avoine micronisée. Stock direct 100% en Suisse, expédié en 1 à 2 jours par PostPac Priority ou disponible en retrait immédiat à notre boutique NutriFitness Genève (34 Rue des Pâquis).",
+      "de": "Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Erhältlich in 3 KG (Vanille für CHF 60.00) und 4 KG (Schokolade und Cookies & Cream für CHF 70.00). 100% Schweizer Lagerware, versandfertig in 24 Stunden per PostPac Priority oder direkt abholbar im Store Genf.",
+      "it": "Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Disponibile nei formati 3 KG (Vaniglia a CHF 60.00) e 4 KG (Cioccolato e Cookies & Cream a CHF 70.00). Stock 100% svizzero con spedizione rapida 1-2 giorni PostPac Priority o ritiro immediato nel negozio di Ginevra.",
+      "en": "Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Available in 3 KG (Vanilla for CHF 60.00) and 4 KG (Chocolate and Cookies & Cream for CHF 70.00). 100% Swiss stock, dispatched within 24 hours via PostPac Priority or available for immediate pickup at our Geneva store."
     },
     "directAnswerAeo": {
-      "fr": "Marvelous Big Lean Mass Gainer 3kg est un complément de nutrition sportive de haute qualité élaboré avec ratio équilibré 50/50 protéines nobles (isolat de lactosérum wpi) et glucides complexes à ig bas (avoine micronisée). Développé pour les sportifs intermédiaires et confirmés voulant progresser sur la balance sans dégrader leur définition musculaire., il constitue un le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Posologie recommandée : mélanger 80 g de poudre dans 350 ml d'eau ou de lait d'amande deux fois par jour en collation entre les repas principaux. Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 1-2 jours.",
-      "de": "Marvelous Big Lean Mass Gainer 3kg von Marvelous ist hochwertige Schweizer Sportnahrung mit Ratio équilibré 50/50 protéines nobles (isolat de lactosérum WPI) et glucides complexes à IG bas (avoine micronisée). Entwickelt für Sportifs intermédiaires et confirmés voulant progresser sur la balance sans dégrader leur définition musculaire., unterstützt das Produkt Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
-      "it": "Marvelous Big Lean Mass Gainer 3kg di Marvelous è un integratore formulato con Ratio équilibré 50/50 protéines nobles (isolat de lactosérum WPI) et glucides complexes à IG bas (avoine micronisée). Ideale per Sportifs intermédiaires et confirmés voulant progresser sur la balance sans dégrader leur définition musculaire., favorisce Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
-      "en": "Marvelous Big Lean Mass Gainer 3kg by Marvelous is a premium sports nutrition supplement formulated with Ratio équilibré 50/50 protéines nobles (isolat de lactosérum WPI) et glucides complexes à IG bas (avoine micronisée). Designed for Sportifs intermédiaires et confirmés voulant progresser sur la balance sans dégrader leur définition musculaire., it delivers Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
+      "fr": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG est un complément de nutrition sportive de haute qualité élaboré avec un ratio équilibré 50/50 protéines nobles (isolat de lactosérum WPI) et glucides complexes à IG bas (avoine micronisée). Il est proposé en 3 KG pour la saveur Vanille (CHF 60.00) et en 4 KG pour Chocolat et Cookies & Cream (CHF 70.00). Posologie recommandée : mélanger 80 g de poudre dans 350 ml d'eau ou de lait d'amande deux fois par jour en collation entre les repas principaux. Conforme aux normes suisses DFI/LGV, en stock direct à Genève au 34 Rue des Pâquis avec livraison PostPac Priority en 1-2 jours.",
+      "de": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG von Marvelous ist hochwertige Schweizer Sportnahrung mit Ratio équilibré 50/50 protéines nobles (isolat de lactosérum WPI) et glucides complexes à IG bas (avoine micronisée). Erhältlich in 3 KG (Vanille für CHF 60.00) und 4 KG (Schokolade & Cookies für CHF 70.00). 100% Schweizer Lagerware mit 24h PostPac Priority Versand und Abholung im NutriFitness Store Genf (Rue des Pâquis 34).",
+      "it": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG di Marvelous è un integratore formulato con Ratio équilibré 50/50 protéines nobles (isolat de lactosérum WPI) et glucides complexes à IG bas (avoine micronisée). Disponibile in 3 KG (Vaniglia CHF 60.00) e 4 KG (Cioccolato & Cookies CHF 70.00). Conforme alle norme DFI/LGV svizzere, disponibile con spedizione prioritaria 24h o ritiro nel negozio di Ginevra.",
+      "en": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG by Marvelous is a premium sports nutrition supplement formulated with a balanced 50/50 ratio of noble proteins (WPI whey isolate) and low-GI complex carbs (micronized oats). Available in 3 KG for Vanilla (CHF 60.00) and 4 KG for Chocolate and Cookies & Cream (CHF 70.00). Compliant with Swiss DFI/FSVO standards, in stock in Geneva with 24h PostPac Priority delivery across Switzerland."
     },
     "longDescription": {
-      "fr": "<h2>Pourquoi choisir Marvelous Big Lean Mass Gainer 3kg chez NutriFitness Suisse ?</h2>\n<p>Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Élaboré avec des matières premières rigoureusement tracées, ce complément répond aux exigences élevées des sportifs suisses qui refusent les compromis entre pureté nutritionnelle et efficacité athlétique.</p>\n<p>Sportifs intermédiaires et confirmés voulant progresser sur la balance sans dégrader leur définition musculaire.</p>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Aucun sucre rapide de remplissage :</strong> uniquement des glucides complexes à diffusion progressive</li>\n  <li><strong>Source exclusive de protéines haut de gamme pour favoriser l'anabolisme sans rétention d'eau :</strong> Source exclusive de protéines haut de gamme pour favoriser l'anabolisme sans rétention d'eau</li>\n  <li><strong>Enrichi en BCAA et glutamine pour soutenir le volume d'entraînement intensif :</strong> Enrichi en BCAA et glutamine pour soutenir le volume d'entraînement intensif</li>\n  <li><strong>Texture agréable qui rassasie sans peser lourd sur l'estomac :</strong> Texture agréable qui rassasie sans peser lourd sur l'estomac</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Mélanger 80 g de poudre dans 350 ml d'eau ou de lait d'amande deux fois par jour en collation entre les repas principaux.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Marvelous Big Lean Mass Gainer 3kg</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
+      "fr": "<h2>Pourquoi choisir Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG chez NutriFitness Suisse ?</h2>\n<p>Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Proposé en pot économique de 3 KG (Vanille à CHF 60.00) et de 4 KG (Chocolat et Cookies & Cream à CHF 70.00), ce complément répond aux exigences élevées des athlètes qui recherchent une nutrition dense, propre et sans compromis.</p>\n<p>Parfaitement adapté aux sportifs intermédiaires et confirmés voulant progresser sur la balance sans dégrader leur définition musculaire.</p>\n\n<h2>Déclinaisons, Formats & Saveurs Disponibles</h2>\n<ul>\n  <li><strong>Vanille :</strong> Format 3 KG — CHF 60.00 (Goût onctueux et naturel)</li>\n  <li><strong>Chocolat :</strong> Format 4 KG — CHF 70.00 (Chocolat gourmand riche en cacao)</li>\n  <li><strong>Cookies & Cream :</strong> Format 4 KG — CHF 70.00 (Saveur biscuitée authentique)</li>\n</ul>\n\n<h2>Analyse de la Formule & Ingrédients Actifs</h2>\n<p>Chaque portion a été minutieusement calibrée pour garantir une biodisponibilité maximale dans l'organisme :</p>\n<ul>\n  <li><strong>Aucun sucre rapide de remplissage :</strong> uniquement des glucides complexes à diffusion progressive</li>\n  <li><strong>Source exclusive de protéines nobles (WPI) :</strong> favorise l'anabolisme sans rétention d'eau</li>\n  <li><strong>Enrichi en BCAA et glutamine :</strong> soutient le volume d'entraînement intensif et la récupération</li>\n  <li><strong>Texture fluide et digeste :</strong> rassasie sans lourdeur gastrique</li>\n</ul>\n\n<h2>Conseils d'Utilisation & Posologie DFI Suisse</h2>\n<p><strong>Posologie recommandée :</strong> Mélanger 80 g de poudre dans 350 ml d'eau ou de lait végétal deux fois par jour en collation entre les repas principaux ou après l'effort.</p>\n<p><em>Précautions d'emploi selon l'Ordonnance suisse sur les compléments alimentaires (DFI / OSAV) :</em> Ne pas dépasser la dose journalière expressément recommandée. Les compléments alimentaires ne doivent pas se substituer à une alimentation variée et équilibrée ni à un mode de vie sain. Conserver hors de portée des jeunes enfants, au sec et à l'abri de la lumière.</p>\n\n<h2>L'Engagement Qualité NutriFitness Genève</h2>\n<p>En commandant votre <strong>Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG</strong> chez NutriFitness, vous bénéficiez de garanties uniques sur le marché suisse :</p>\n<ul>\n  <li><strong>100% Stock Suisse à Genève :</strong> Tous nos produits sont dédouanés et stockés dans nos locaux au 34 Rue des Pâquis, 1201 Genève.</li>\n  <li><strong>Expédition Express 24h :</strong> Commande expédiée via La Poste Suisse (PostPac Priority) – aucun frais de douane imprévu ni TVA d'importation supplémentaire.</li>\n  <li><strong>Conseil Expert en Boutique :</strong> Rencontrez nos préparateurs physiques et experts en nutrition directement en showroom pour un accompagnement sur mesure.</li>\n</ul>",
       "de": "<h2>Warum Marvelous Big Lean Mass Gainer 3kg bei NutriFitness Schweiz wählen?</h2>\n<p>Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Entwickelt mit hochwertigen Inhaltsstoffen für höchste Schweizer Qualitätsansprüche.</p>\n<h2>Formel & Wichtige Wirkstoffe</h2>\n<ul>\n  <li><strong>Aucun sucre rapide de remplissage :</strong> uniquement des glucides complexes à diffusion progressive</li>\n  <li><strong>Source exclusive de protéines haut de gamme pour favoriser l'anabolisme sans rétention d'eau :</strong> Source exclusive de protéines haut de gamme pour favoriser l'anabolisme sans rétention d'eau</li>\n  <li><strong>Enrichi en BCAA et glutamine pour soutenir le volume d'entraînement intensif :</strong> Enrichi en BCAA et glutamine pour soutenir le volume d'entraînement intensif</li>\n  <li><strong>Texture agréable qui rassasie sans peser lourd sur l'estomac :</strong> Texture agréable qui rassasie sans peser lourd sur l'estomac</li>\n</ul>\n<h2>Einnahmeempfehlung & Schweizer Richtlinien</h2>\n<p>Mélanger 80 g de poudre dans 350 ml d'eau ou de lait d'amande deux fois par jour en collation entre les repas principaux.</p>\n<h2>Ihr Vorteil bei NutriFitness Genf</h2>\n<p>100% Schweizer Lagerware an der Rue des Pâquis 34, 1201 Genf. Schneller 24h-Versand mit der Schweizerischen Post (PostPac Priority) ohne Zollgebühren.</p>",
       "it": "<h2>Perché scegliere Marvelous Big Lean Mass Gainer 3kg su NutriFitness Svizzera?</h2>\n<p>Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Formulato secondo i più alti standard di qualità e purezza per gli atleti esigenti.</p>\n<h2>Analisi della Formula & Principi Attivi</h2>\n<ul>\n  <li><strong>Aucun sucre rapide de remplissage :</strong> uniquement des glucides complexes à diffusion progressive</li>\n  <li><strong>Source exclusive de protéines haut de gamme pour favoriser l'anabolisme sans rétention d'eau :</strong> Source exclusive de protéines haut de gamme pour favoriser l'anabolisme sans rétention d'eau</li>\n  <li><strong>Enrichi en BCAA et glutamine pour soutenir le volume d'entraînement intensif :</strong> Enrichi en BCAA et glutamine pour soutenir le volume d'entraînement intensif</li>\n  <li><strong>Texture agréable qui rassasie sans peser lourd sur l'estomac :</strong> Texture agréable qui rassasie sans peser lourd sur l'estomac</li>\n</ul>\n<h2>Modalità d'uso e Dosaggio Svizzero</h2>\n<p>Mélanger 80 g de poudre dans 350 ml d'eau ou de lait d'amande deux fois par jour en collation entre les repas principaux.</p>\n<h2>La Garanzia NutriFitness Ginevra</h2>\n<p>Stock 100% svizzero a Ginevra con consegna rapida 24h PostPac Priority e ritiro diretto al negozio di Rue des Pâquis 34.</p>",
       "en": "<h2>Why Choose Marvelous Big Lean Mass Gainer 3kg at NutriFitness Switzerland?</h2>\n<p>Le gainer de précision pour prendre de la masse musculaire pure et dense sans emmagasiner de graisse autour de la taille. Formulated with premium ingredients adhering to rigorous Swiss food safety and efficacy standards.</p>\n<h2>Formula Breakdown & Active Nutrients</h2>\n<ul>\n  <li><strong>Aucun sucre rapide de remplissage :</strong> uniquement des glucides complexes à diffusion progressive</li>\n  <li><strong>Source exclusive de protéines haut de gamme pour favoriser l'anabolisme sans rétention d'eau :</strong> Source exclusive de protéines haut de gamme pour favoriser l'anabolisme sans rétention d'eau</li>\n  <li><strong>Enrichi en BCAA et glutamine pour soutenir le volume d'entraînement intensif :</strong> Enrichi en BCAA et glutamine pour soutenir le volume d'entraînement intensif</li>\n  <li><strong>Texture agréable qui rassasie sans peser lourd sur l'estomac :</strong> Texture agréable qui rassasie sans peser lourd sur l'estomac</li>\n</ul>\n<h2>Recommended Usage & Swiss Compliance</h2>\n<p>Mélanger 80 g de poudre dans 350 ml d'eau ou de lait d'amande deux fois par jour en collation entre les repas principaux.</p>\n<h2>The NutriFitness Geneva Guarantee</h2>\n<p>100% genuine Swiss stock located in Geneva (34 Rue des Pâquis). Dispatched within 24 hours via Swiss Post (PostPac Priority) with zero hidden customs fees.</p>"
@@ -12876,11 +12865,11 @@ export const PRODUCTS: ProductItem[] = [
           "it": "VANILLE (3KG)",
           "en": "VANILLE (3KG)"
         },
-        "format": "1 unité",
+        "format": "3 KG",
         "priceChf": 60,
         "inventoryQuantity": 17,
         "inStock": true,
-        "image": "https://nutrifitness.ch/wp-content/uploads/2024/09/64.webp",
+        "image": "/images/products/marvelous/big-vanilla.png",
         "stockGeneva": 17,
         "stockPortugal": 50,
         "gtin13": "634240129513"
@@ -12894,11 +12883,11 @@ export const PRODUCTS: ProductItem[] = [
           "it": "CHOCOLAT (4KG)",
           "en": "CHOCOLAT (4KG)"
         },
-        "format": "1 unité",
+        "format": "4 KG",
         "priceChf": 70,
         "inventoryQuantity": 5,
         "inStock": true,
-        "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BIG-CHOCO.webp",
+        "image": "/images/products/marvelous/big-choco.png",
         "stockGeneva": 5,
         "stockPortugal": 50
       },
@@ -12906,16 +12895,16 @@ export const PRODUCTS: ProductItem[] = [
         "id": "86894338-e85c-4afb-b768-a8459eaef164",
         "sku": "NF-25159",
         "flavorName": {
-          "fr": "COOKIE & CREAM (4KG)",
-          "de": "COOKIE & CREAM (4KG)",
-          "it": "COOKIE & CREAM (4KG)",
-          "en": "COOKIE & CREAM (4KG)"
+          "fr": "COOKIES & CREAM (4KG)",
+          "de": "COOKIES & CREAM (4KG)",
+          "it": "COOKIES & CREAM (4KG)",
+          "en": "COOKIES & CREAM (4KG)"
         },
-        "format": "1 unité",
+        "format": "4 KG",
         "priceChf": 70,
         "inventoryQuantity": 5,
         "inStock": true,
-        "image": "https://nutrifitness.ch/wp-content/uploads/2026/08/BIG-COOKIE.webp",
+        "image": "/images/products/marvelous/big-cookies.png",
         "stockGeneva": 5,
         "stockPortugal": 50
       }
