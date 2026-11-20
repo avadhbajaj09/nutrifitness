@@ -332,10 +332,12 @@ export async function POST(req: Request) {
                 items: finalOrderItems,
               };
 
-              await Promise.allSettled([
+              const mailResults = await Promise.allSettled([
                 sendOrderNotificationToAdmin(emailPayload),
                 sendOrderConfirmationToCustomer(emailPayload),
               ]);
+              const adminSent = mailResults[0].status === 'fulfilled' && !!(mailResults[0].value as any)?.success;
+              const customerSent = mailResults[1].status === 'fulfilled' && !!(mailResults[1].value as any)?.success;
 
               await supabase.from('orders').update({
                 shipping_address: {
@@ -343,8 +345,10 @@ export async function POST(req: Request) {
                   stripeSessionId: session.id,
                   confirmedByWebhook: true,
                   webhookConfirmedAt: new Date().toISOString(),
-                  emails_sent: true,
+                  emails_sent: adminSent || customerSent,
                   emails_sent_at: new Date().toISOString(),
+                  email_admin_status: adminSent ? 'sent' : (mailResults[0] as any)?.value?.error || 'failed',
+                  email_customer_status: customerSent ? 'sent' : (mailResults[1] as any)?.value?.error || 'failed',
                 }
               }).eq('order_number', orderNum);
             } catch (mailErr) {

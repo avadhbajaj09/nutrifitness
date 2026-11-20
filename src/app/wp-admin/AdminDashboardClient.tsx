@@ -1704,6 +1704,11 @@ export default function AdminDashboardClient() {
     );
   };
 
+  const isInvalidSale = (s: PosSaleRecord) => {
+    const st = (s.status || '').toLowerCase().trim();
+    return isDummySaleRecord(s) || ['abandoned', 'cancelled', 'payment_failed', 'pending'].includes(st);
+  };
+
   const syncOrders = async () => {
     setIsRefreshingSales(true);
     let local: PosSaleRecord[] = [];
@@ -1711,7 +1716,7 @@ export default function AdminDashboardClient() {
       const stored = localStorage.getItem('nutrifitness_pos_sales');
       if (stored) {
         local = JSON.parse(stored);
-        local = local.filter((s: PosSaleRecord) => !isDummySaleRecord(s));
+        local = local.filter((s: PosSaleRecord) => !isInvalidSale(s));
       }
     } catch {
       // ignore
@@ -1726,14 +1731,14 @@ export default function AdminDashboardClient() {
           const map = new Map<string, PosSaleRecord>();
           // Priority 1: Supabase real database orders
           data.orders.forEach((s: PosSaleRecord) => {
-            if (!isDummySaleRecord(s)) {
+            if (!isInvalidSale(s)) {
               const key = s.id || s.ticketNumber;
               map.set(key, s);
             }
           });
           // Priority 2: Offline POS sales from local buffer
           local.forEach((s: PosSaleRecord) => {
-            if (!isDummySaleRecord(s)) {
+            if (!isInvalidSale(s)) {
               const key = s.id || s.ticketNumber;
               if (!map.has(key)) {
                 map.set(key, s);
@@ -1756,7 +1761,7 @@ export default function AdminDashboardClient() {
     }
 
     if (local.length > 0) {
-      setSalesHistory(local);
+      setSalesHistory(local.filter((s: PosSaleRecord) => !isInvalidSale(s)));
     }
     setTimeout(() => setIsRefreshingSales(false), 300);
   };
@@ -2480,7 +2485,7 @@ export default function AdminDashboardClient() {
         posCount={posProducts.length}
         catalogCount={allProducts.length}
         bannersCount={heroBannersCount}
-        salesCount={salesHistory.length}
+        salesCount={salesHistory.filter(s => !isInvalidSale(s)).length}
         abandonedCount={abandonedCarts.length}
       />
       <div className="flex-1 min-w-0 flex flex-col pb-20">
@@ -3472,15 +3477,15 @@ export default function AdminDashboardClient() {
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Recette Totale Enregistrée</span>
               <p className="text-2xl font-black text-emerald-700 font-heading mt-1">
-                CHF {salesHistory.reduce((sum, s) => sum + s.total, 0).toFixed(2)}
+                CHF {salesHistory.filter(s => !isInvalidSale(s)).reduce((sum, s) => sum + s.total, 0).toFixed(2)}
               </p>
-              <p className="text-xs text-slate-500 mt-1">{salesHistory.length} tickets validés</p>
+              <p className="text-xs text-slate-500 mt-1">{salesHistory.filter(s => !isInvalidSale(s)).length} ventes confirmées</p>
             </div>
 
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Paiements TWINT</span>
               <p className="text-2xl font-black text-slate-900 font-heading mt-1">
-                CHF {salesHistory.filter(s => s.paymentMethod === 'twint').reduce((sum, s) => sum + s.total, 0).toFixed(2)}
+                CHF {salesHistory.filter(s => !isInvalidSale(s) && s.paymentMethod === 'twint').reduce((sum, s) => sum + s.total, 0).toFixed(2)}
               </p>
               <p className="text-xs text-slate-500 mt-1">Encaissements instantanés QR</p>
             </div>
@@ -3488,7 +3493,7 @@ export default function AdminDashboardClient() {
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Paiements Carte</span>
               <p className="text-2xl font-black text-slate-900 font-heading mt-1">
-                CHF {salesHistory.filter(s => s.paymentMethod === 'card').reduce((sum, s) => sum + s.total, 0).toFixed(2)}
+                CHF {salesHistory.filter(s => !isInvalidSale(s) && s.paymentMethod === 'card').reduce((sum, s) => sum + s.total, 0).toFixed(2)}
               </p>
               <p className="text-xs text-slate-500 mt-1">Terminaux de paiement</p>
             </div>
@@ -3496,7 +3501,7 @@ export default function AdminDashboardClient() {
             <div className="bg-white p-5 rounded-2xl border border-slate-200 shadow-xs">
               <span className="text-xs font-bold text-slate-400 uppercase tracking-wider">Espèces (Cash)</span>
               <p className="text-2xl font-black text-slate-900 font-heading mt-1">
-                CHF {salesHistory.filter(s => s.paymentMethod === 'cash_chf').reduce((sum, s) => sum + s.total, 0).toFixed(2)}
+                CHF {salesHistory.filter(s => !isInvalidSale(s) && s.paymentMethod === 'cash_chf').reduce((sum, s) => sum + s.total, 0).toFixed(2)}
               </p>
               <p className="text-xs text-slate-500 mt-1">Fond de caisse boutique</p>
             </div>
@@ -3563,11 +3568,14 @@ export default function AdminDashboardClient() {
             {/* Filter Pills */}
             <div className="flex flex-wrap items-center gap-2 pt-2 border-t border-slate-100">
               <span className="text-[11px] font-bold text-slate-400 uppercase tracking-wider mr-1">Canal de vente :</span>
-              {[
-                { id: 'all', label: `Toutes les ventes (${salesHistory.length})` },
-                { id: 'pos', label: `🇨🇭 Caisse Magasin (${salesHistory.filter(s => !s.ticketNumber.startsWith('WEB-') && !s.seller?.includes('Web')).length})` },
-                { id: 'web', label: `🌐 Site Web (${salesHistory.filter(s => s.ticketNumber.startsWith('WEB-') || s.seller?.includes('Web')).length})` },
-              ].map(pill => (
+              {(() => {
+                const validSalesList = salesHistory.filter(s => !isInvalidSale(s));
+                return [
+                  { id: 'all', label: `Toutes les ventes (${validSalesList.length})` },
+                  { id: 'pos', label: `🇨🇭 Caisse Magasin (${validSalesList.filter(s => !s.ticketNumber.startsWith('WEB-') && !s.seller?.includes('Web')).length})` },
+                  { id: 'web', label: `🌐 Site Web (${validSalesList.filter(s => s.ticketNumber.startsWith('WEB-') || s.seller?.includes('Web')).length})` },
+                ];
+              })().map(pill => (
                 <button
                   key={pill.id}
                   type="button"
@@ -3601,6 +3609,7 @@ export default function AdminDashboardClient() {
                 <tbody className="divide-y divide-slate-100">
                   {salesHistory
                     .filter(sale => {
+                      if (isInvalidSale(sale)) return false;
                       const isWeb = sale.ticketNumber.startsWith('WEB-') || sale.seller?.includes('Web');
                       if (salesFilterOrigin === 'pos') return !isWeb;
                       if (salesFilterOrigin === 'web') return isWeb;

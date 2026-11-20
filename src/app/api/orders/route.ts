@@ -139,13 +139,23 @@ function saleRecordToSupabaseRow(payload: any): any {
   };
 }
 
-export async function GET() {
+export async function GET(req: Request) {
   try {
     const supabase = getAdminSupabase();
-    const { data, error } = await supabase
+    const { searchParams } = new URL(req.url);
+    const includeAll = searchParams.get('include_all') === 'true' || searchParams.get('all') === 'true';
+
+    let query = supabase
       .from('orders')
       .select('*')
       .order('created_at', { ascending: false });
+
+    // Exclude abandoned carts, payment failures, cancelled and unpaid pending carts from sales journal
+    if (!includeAll) {
+      query = query.not('status', 'in', '("abandoned","payment_failed","cancelled","pending")');
+    }
+
+    const { data, error } = await query;
 
     if (!error && Array.isArray(data)) {
       const mappedOrders = data.map(supabaseRowToSaleRecord);
@@ -218,10 +228,12 @@ export async function POST(req: Request) {
     try {
       const alreadySent = finalRecord?.shipping_address?.emails_sent || finalRecord?.shipping_address?.emails_sent_at;
       if (!alreadySent) {
-        await Promise.allSettled([
+        const mailResults = await Promise.allSettled([
           sendOrderNotificationToAdmin(finalRecord),
           sendOrderConfirmationToCustomer(finalRecord),
         ]);
+        const adminSent = mailResults[0].status === 'fulfilled' && !!(mailResults[0].value as any)?.success;
+        const customerSent = mailResults[1].status === 'fulfilled' && !!(mailResults[1].value as any)?.success;
 
         if (isSupabaseOk && finalRecord.ticketNumber) {
           try {
@@ -232,8 +244,10 @@ export async function POST(req: Request) {
               .update({
                 shipping_address: {
                   ...currentAddr,
-                  emails_sent: true,
-                  emails_sent_at: new Date().toISOString()
+                  emails_sent: adminSent || customerSent,
+                  emails_sent_at: new Date().toISOString(),
+                  email_admin_status: adminSent ? 'sent' : (mailResults[0] as any)?.value?.error || 'failed',
+                  email_customer_status: customerSent ? 'sent' : (mailResults[1] as any)?.value?.error || 'failed',
                 }
               })
               .eq('order_number', finalRecord.ticketNumber);
