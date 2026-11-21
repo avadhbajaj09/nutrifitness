@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getAdminSupabase } from '@/lib/supabase';
 import { generateSwissPostLabel } from '@/lib/swisspost/label';
+import { sendShipmentUpdate } from '@/lib/email/resend';
 
 export const runtime = 'nodejs';
 export const dynamic = 'force-dynamic';
@@ -69,6 +70,20 @@ export async function GET(
         label_created_at: new Date().toISOString(),
       })
       .eq('id', order.id);
+
+    // 3b. Send shipping tracking update email to customer
+    const targetEmail = order.customer_email || addr.email;
+    if (targetEmail && targetEmail.includes('@')) {
+      try {
+        await sendShipmentUpdate(targetEmail, {
+          orderNumber: order.order_number || `NF-${order.id.slice(0, 8)}`,
+          trackingNumber: labelResult.trackingNumber,
+          carrier: 'La Poste Suisse',
+        });
+      } catch (shipMailErr) {
+        console.warn('[SwissPost Label API] Could not send tracking email:', shipMailErr);
+      }
+    }
 
     // 4. Return binary PDF if requested
     if (isPdfRequested) {

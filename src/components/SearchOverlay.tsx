@@ -1,6 +1,6 @@
 'use client';
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useRouter } from 'next/navigation';
@@ -13,7 +13,7 @@ import { trackSearch } from '@/lib/analytics';
 
 export default function SearchOverlay() {
   const router = useRouter();
-  const { isSearchOpen, closeSearch, isProductVisible, locale } = useStore();
+  const { isSearchOpen, closeSearch, isProductVisible, locale, getCatalogOverride } = useStore();
   const [query, setQuery] = useState('');
   const [recentSearches, setRecentSearches] = useState<string[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
@@ -64,12 +64,84 @@ export default function SearchOverlay() {
   if (!isSearchOpen) return null;
 
   const trimmedQuery = query.trim();
-  const visibleProducts = PRODUCTS.filter(p => isProductVisible(p));
-  const matchedProducts = trimmedQuery
-    ? searchProducts(visibleProducts, trimmedQuery, locale || 'fr')
-    : visibleProducts;
+
+  // Merge static catalog with live Supabase overrides for accurate prices, variants, and primary images
+  const visibleProducts = useMemo(() => {
+    return PRODUCTS.filter(p => isProductVisible(p)).map(p => {
+      const ovr = getCatalogOverride ? getCatalogOverride(p) : null;
+      if (!ovr) return p;
+      return {
+        ...p,
+        priceChf: typeof ovr.priceChf === 'number' ? ovr.priceChf : p.priceChf,
+        images: Array.isArray(ovr.images) && ovr.images.length > 0 ? ovr.images : p.images,
+        variants: Array.isArray(ovr.variants) && ovr.variants.length > 0 ? ovr.variants : p.variants,
+        name: ovr.name ? (typeof p.name === 'object' ? { ...p.name, fr: ovr.name } : ovr.name) : p.name
+      };
+    });
+  }, [isProductVisible, getCatalogOverride]);
+
+  const matchedProducts = useMemo(() => {
+    return trimmedQuery
+      ? searchProducts(visibleProducts, trimmedQuery, locale || 'fr')
+      : visibleProducts;
+  }, [visibleProducts, trimmedQuery, locale]);
 
   const results = trimmedQuery ? matchedProducts.slice(0, 15) : visibleProducts.slice(0, 9);
+
+  const queryTokens = useMemo(() => {
+    return trimmedQuery
+      .toLowerCase()
+      .normalize('NFD')
+      .replace(/[\u0300-\u036f]/g, '')
+      .split(/\s+/)
+      .filter(Boolean);
+  }, [trimmedQuery]);
+
+  const getProductDisplayInfo = (item: any) => {
+    const slug = getLocalized(item.slug);
+    const name = getLocalized(item.name);
+    let priceLabel = formatChf(item.priceChf);
+    let displayImg = item.images?.[0]?.src || '/images/placeholder.webp';
+    let matchedVariantName: string | null = null;
+
+    if (Array.isArray(item.variants) && item.variants.length > 0) {
+      let matchedVar: any = null;
+      if (queryTokens.length > 0) {
+        matchedVar = item.variants.find((v: any) => {
+          const fName = typeof v.flavorName === 'object' ? (v.flavorName[locale || 'fr'] || v.flavorName.fr) : (v.flavorName || v.flavor || '');
+          const normF = String(fName).toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '');
+          return queryTokens.some(tok => tok.length >= 3 && normF.includes(tok));
+        });
+      }
+
+      if (matchedVar) {
+        const vPrice = typeof matchedVar.priceChf === 'number' ? matchedVar.priceChf : (typeof matchedVar.price === 'number' ? matchedVar.price : item.priceChf);
+        priceLabel = formatChf(vPrice);
+        const vFlavor = typeof matchedVar.flavorName === 'object' ? (matchedVar.flavorName[locale || 'fr'] || matchedVar.flavorName.fr) : (matchedVar.flavorName || matchedVar.flavor || '');
+        if (vFlavor && vFlavor !== 'Standard') {
+          matchedVariantName = vFlavor;
+        }
+        if (matchedVar.image) {
+          displayImg = matchedVar.image;
+        }
+      } else {
+        const prices = item.variants
+          .map((v: any) => typeof v.priceChf === 'number' ? v.priceChf : (typeof v.price === 'number' ? v.price : item.priceChf))
+          .filter(Boolean);
+        if (prices.length > 0) {
+          const minP = Math.min(...prices);
+          const maxP = Math.max(...prices);
+          if (minP < maxP) {
+            priceLabel = `Dès ${formatChf(minP)}`;
+          } else {
+            priceLabel = formatChf(minP);
+          }
+        }
+      }
+    }
+
+    return { slug, name, priceLabel, displayImg, matchedVariantName };
+  };
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -200,9 +272,7 @@ export default function SearchOverlay() {
             <>
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3">
                 {results.map(item => {
-                  const slug = getLocalized(item.slug);
-                  const name = getLocalized(item.name);
-                  const img = item.images?.[0]?.src || '/images/placeholder.webp';
+                  const { slug, name, priceLabel, displayImg, matchedVariantName } = getProductDisplayInfo(item);
 
                   return (
                     <Link 
@@ -212,13 +282,20 @@ export default function SearchOverlay() {
                       className="flex items-center gap-3 p-3 bg-[#181818] hover:bg-[#202020] rounded-xl border border-white/10 hover:border-[#F80404]/50 transition-all group"
                     >
                       <div className="relative w-14 h-14 bg-black/40 rounded-lg p-1.5 shrink-0 flex items-center justify-center border border-white/5">
-                        <Image src={img} alt={name} fill className="object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform p-1" />
+                        <Image src={displayImg} alt={name} fill className="object-contain filter drop-shadow-sm group-hover:scale-105 transition-transform p-1" />
                       </div>
                       <div className="min-w-0 flex-1">
-                        <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider truncate">{item.brand}</p>
+                        <div className="flex items-center justify-between gap-1">
+                          <p className="text-[10px] font-black uppercase text-[#F80404] tracking-wider truncate">{item.brand}</p>
+                          {matchedVariantName && (
+                            <span className="text-[9px] font-bold text-amber-300 bg-amber-950/60 border border-amber-800/60 px-1.5 py-0.2 rounded truncate">
+                              {matchedVariantName}
+                            </span>
+                          )}
+                        </div>
                         <h4 className="text-xs font-bold text-white truncate group-hover:text-[#F80404] transition-colors">{name}</h4>
                         <div className="flex items-center justify-between mt-1">
-                          <span className="text-xs font-black text-white">{formatChf(item.priceChf)}</span>
+                          <span className="text-xs font-black text-white">{priceLabel}</span>
                           <span className="text-[10px] text-emerald-400 font-bold">En stock (Suisse)</span>
                         </div>
                       </div>

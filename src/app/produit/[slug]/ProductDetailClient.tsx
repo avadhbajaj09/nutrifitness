@@ -168,13 +168,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {/* Mobile Swipeable Gallery with Dots (sm:hidden) */}
           <div className="sm:hidden w-full flex flex-col items-center">
             <div className="relative aspect-square w-full max-w-[340px] flex items-center justify-center">
-              {discountPercent > 0 && (
-                <div className="absolute top-0 left-0 z-10">
-                  <span className="inline-flex items-center bg-[#F80404] text-black text-xs font-black px-2.5 py-1 rounded-full shadow-md">
-                    -{discountPercent}% Remise
-                  </span>
-                </div>
-              )}
               {product.images && product.images.length > 1 ? (
                 <div 
                   className="w-full h-full flex overflow-x-auto snap-x snap-mandatory no-scrollbar"
@@ -233,13 +226,6 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
           {/* Desktop Gallery (hidden sm:flex) */}
           <div className="hidden sm:flex flex-col items-center justify-center w-full">
             <div className="relative aspect-square w-full max-w-[480px] flex items-center justify-center">
-              {discountPercent > 0 && (
-                <div className="absolute top-0 left-0 z-10 flex flex-col gap-1.5 items-start">
-                  <span className="inline-flex items-center bg-[#F80404] text-black text-xs font-black px-2.5 py-1 rounded-full shadow-md">
-                    -{discountPercent}% Remise
-                  </span>
-                </div>
-              )}
               <Image 
                 src={mainImgSrc || '/images/placeholder.webp'} 
                 alt={name}

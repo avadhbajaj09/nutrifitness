@@ -77,6 +77,16 @@ function ShopContent() {
       }
       if (swissOnly && !p.isSwissOrigin) return false;
       return true;
+    }).map(p => {
+      const ovr = getCatalogOverride ? getCatalogOverride(p) : null;
+      if (!ovr) return p;
+      return {
+        ...p,
+        priceChf: typeof ovr.priceChf === 'number' ? ovr.priceChf : p.priceChf,
+        images: Array.isArray(ovr.images) && ovr.images.length > 0 ? ovr.images : p.images,
+        variants: Array.isArray(ovr.variants) && ovr.variants.length > 0 ? ovr.variants : p.variants,
+        name: ovr.name ? (typeof p.name === 'object' ? { ...p.name, fr: ovr.name } : ovr.name) : p.name
+      };
     });
 
     if (searchQuery.trim()) {

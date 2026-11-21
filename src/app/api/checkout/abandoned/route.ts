@@ -40,7 +40,7 @@ export async function POST(req: Request) {
       .eq('order_number', targetOrderNumber)
       .maybeSingle();
 
-    if (existing && ['shipped', 'delivered', 'paid', 'processing', 'completed'].includes(existing.status)) {
+    if (existing && ['shipped', 'delivered', 'paid', 'processing', 'completed', 'in_processing', 'livre', 'expedie'].includes(existing.status)) {
       return NextResponse.json({ success: true, message: 'Order already completed, skipping abandonment' });
     }
 
@@ -158,6 +158,29 @@ export async function GET(req: Request) {
 
       if (!order) {
         return NextResponse.json({ error: 'Order not found' }, { status: 404 });
+      }
+
+      // Safeguard: Never send recovery email if order is already completed/paid
+      const completedStatuses = ['shipped', 'delivered', 'paid', 'processing', 'completed', 'in_processing', 'livre', 'expedie'];
+      if (completedStatuses.includes(order.status)) {
+        return NextResponse.json({ success: false, error: 'Cette commande est déjà finalisée et payée.' }, { status: 400 });
+      }
+
+      // Safeguard: Check if customer already placed another successful order with the same email
+      if (order.customer_email) {
+        const { data: customerCompleted } = await supabase
+          .from('orders')
+          .select('order_number')
+          .eq('customer_email', order.customer_email)
+          .in('status', completedStatuses)
+          .limit(1);
+
+        if (customerCompleted && customerCompleted.length > 0) {
+          return NextResponse.json({
+            success: false,
+            error: `Le client a déjà finalisé une commande (${customerCompleted[0].order_number}). Relance annulée pour éviter le spam.`
+          }, { status: 400 });
+        }
       }
 
       const res = await sendCustomerCartRecoveryEmail({

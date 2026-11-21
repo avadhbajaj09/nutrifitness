@@ -39,3 +39,5 @@ next-env.d.ts
 scratch/
 nutrifitness-product-images*
 supabase/.temp/
+
+backups/

@@ -1951,7 +1951,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 40,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/glutmine-red-and-yellow-mockup-scaled.png",
+        "src": "/images/products/marvelous/glutmine-red-and-yellow-mockup-scaled.png",
         "alt": {
           "fr": "GLUTAMINE MARVELOUS 300G – L-Glutamine micronisée 99,9 % pure",
           "de": "GLUTAMINE MARVELOUS 300G – L-Glutamine micronisée 99,9 % pure",
@@ -2063,7 +2063,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "NutriFitness Ebooks",
     "categorySlug": "guides-ebooks",
     "taxCategory": "standard",
-    "priceChf": 29.9,
+    "priceChf": 0,
     "compareAtPriceChf": 49.9,
     "images": [
       {
@@ -5196,7 +5196,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 33,
+    "priceChf": 39.9,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous12.png",
@@ -5441,7 +5441,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 17,
+    "priceChf": 20,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous34.png",
@@ -6340,10 +6340,10 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 79,
+    "priceChf": 90,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/07/WHEY-MUSCLES-DUBAI-WHITE-CHOCOLATE-2KG.png",
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/admin-uploads/1793027454002-cinaboom.webp",
         "alt": {
           "fr": "Muscles Whey 2kg – Protéine WPC80 pure dubai white chocolate",
           "de": "Muscles Whey 2kg – Protéine WPC80 pure dubai white chocolate",
@@ -6817,7 +6817,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines-mineraux",
     "taxCategory": "food_reduced",
-    "priceChf": 33,
+    "priceChf": 40,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-56.png",
@@ -8826,7 +8826,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Pronutrition.it",
     "categorySlug": "snacks",
     "taxCategory": "food_reduced",
-    "priceChf": 3.5,
+    "priceChf": 0,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2025/01/CORNETTO-CROISSANT-KETO-CHOCOLAT-POIRE-50G.png",
@@ -9878,7 +9878,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 120,
+    "priceChf": 115,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/11/ISO-BULK-CHOCO-1.8KG.png",
@@ -11141,7 +11141,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "decuple-votre-energie-et-recuperation",
     "taxCategory": "food_reduced",
-    "priceChf": 20,
+    "priceChf": 30,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous32.png",
@@ -12269,7 +12269,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "complements-de-qualite-pendant-le-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 25,
+    "priceChf": 35,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/glycrol-mockup-scaled.png",
@@ -12774,7 +12774,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 60,
     "images": [
       {
-        "src": "/images/products/marvelous/big-vanilla.png",
+        "src": "/images/products/marvelous/big-cookies.png",
         "alt": {
           "fr": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Vanilla",
           "de": "Marvelous BIG Lean Mass Gainer – 3 KG / 4 KG - Vanilla",
@@ -13365,10 +13365,10 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "apres-sport",
     "taxCategory": "food_reduced",
-    "priceChf": 42,
+    "priceChf": 55,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/03/SAVIOR-CREATINE-950G.webp",
+        "src": "https://res.cloudinary.com/yt8axxmy/image/upload/v1793199858/SAVIOR_ANANAS_q8hq0z.png",
         "alt": {
           "fr": "récupération optimale et croissance musculaire avec savior 950g",
           "de": "récupération optimale et croissance musculaire avec savior 950g",
@@ -13512,7 +13512,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Eurovo",
     "categorySlug": "complements",
     "taxCategory": "food_reduced",
-    "priceChf": 10,
+    "priceChf": 12,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/03/LIQUIDE-DE-BLANC-DOEUF-1L.webp",
@@ -13620,7 +13620,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 30,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/ASHWAGANDHA-60-CAPS.png",
+        "src": "https://nutrifitness.ch/wp-content/uploads/2024/10/ASHWAGANDHA-60-CAPS.png",
         "alt": {
           "fr": "Ashwagandha 60 Caps : Clarté mentale, stress réduit, récupération musculaire, bien-être optimal.",
           "de": "Ashwagandha 60 Caps : Clarté mentale, stress réduit, récupération musculaire, bien-être optimal.",
@@ -13737,7 +13737,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/02/CAFFEINE-200MG-90-CAPS.png",
+        "src": "https://nutrifitness.ch/wp-content/uploads/2023/02/CAFFEINE-200MG-90-CAPS.png",
         "alt": {
           "fr": "Supplément de Caféine 90 caps comprimés pour énergie et performance",
           "de": "Supplément de Caféine 90 caps comprimés pour énergie et performance",
@@ -13854,7 +13854,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 20,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/PICOLINAT-DE-CHROME-100-CAPS.png",
+        "src": "https://nutrifitness.ch/wp-content/uploads/2023/01/PICOLINAT-DE-CHROME-100-CAPS.png",
         "alt": {
           "fr": "Chromium Picolinate Vegan, régulation glycémique, contrôle métabolique",
           "de": "Chromium Picolinate Vegan, régulation glycémique, contrôle métabolique",
@@ -13971,7 +13971,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/10/VITAMINE-C-LIPOSOMALE-60-CAPS.png",
+        "src": "https://nutrifitness.ch/wp-content/uploads/2024/10/VITAMINE-C-LIPOSOMALE-60-CAPS.png",
         "alt": {
           "fr": "vitamine C liposomale 60 capsules, renforcement du système immunitaire, antioxydant",
           "de": "vitamine C liposomale 60 capsules, renforcement du système immunitaire, antioxydant",
@@ -14088,7 +14088,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 15,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2023/01/NF-GALLON-2.2L.webp",
+        "src": "https://nutrifitness.ch/wp-content/uploads/2023/01/NF-GALLON-2.2L.webp",
         "alt": {
           "fr": "Gallon 2,2L avec rangement intégré – Hydratation pratique et organisée",
           "de": "Gallon 2,2L avec rangement intégré – Hydratation pratique et organisée",
@@ -14193,7 +14193,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/09/84.webp",
+        "src": "https://nutrifitness.ch/wp-content/uploads/2024/09/84.webp",
         "alt": {
           "fr": "CREAPURE PREMIUM 250G",
           "de": "CREAPURE PREMIUM 250G",
@@ -14306,7 +14306,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "pre-workout",
     "taxCategory": "food_reduced",
-    "priceChf": 32,
+    "priceChf": 40,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous27.png",
@@ -14680,7 +14680,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "perte-de-poids",
     "taxCategory": "food_reduced",
-    "priceChf": 30,
+    "priceChf": 35,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/79-1.png",
@@ -16325,7 +16325,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous25.png",
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/66.jpg",
         "alt": {
           "fr": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance",
           "de": "Marvelous Hyper Trophy Formule Anabolique 2kg – Isolat de Whey & Matrice de Croissance",
@@ -16921,10 +16921,10 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 70,
+    "priceChf": 80,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-51.png",
+        "src": "https://res.cloudinary.com/yt8axxmy/image/upload/v1793201278/LEAN_AF_PINHA_COLADA_lsx4mc.png",
         "alt": {
           "fr": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure",
           "de": "Marvelous Lean AF 100% CFM Whey Isolat 2kg – Zéro Sucre Zéro Graisse Ultra Pure",
@@ -17741,7 +17741,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Marveleous-52.png",
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Creatine-flvours-1.jpg",
         "alt": {
           "fr": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités",
           "de": "Marvelous Créatine Monohydrate Aromatisée 300g – Force Maximale & Goûts Fruités",
@@ -17909,7 +17909,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "peau-et-articulations",
     "taxCategory": "food_reduced",
-    "priceChf": 40,
+    "priceChf": 35,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/collagen-Flavored.png",
@@ -18329,7 +18329,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 35,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/Untitled-design-8-1.png",
+        "src": "https://res.cloudinary.com/yt8axxmy/image/upload/v1793203122/product_5_hgvsse.png",
         "alt": {
           "fr": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire",
           "de": "Marvelous Citrulline Malate Black & Yellow Edition 300g – Congestion & Oxygénation Musculaire",
@@ -18430,7 +18430,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "proteines",
     "taxCategory": "food_reduced",
-    "priceChf": 85,
+    "priceChf": 90,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/hydro-mockup-choco.png",
@@ -18762,7 +18762,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "sante-bien-etre",
     "taxCategory": "food_reduced",
-    "priceChf": 18,
+    "priceChf": 25,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-May-19-2026-02_33_51-PM.png",
@@ -19075,7 +19075,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Marvelous",
     "categorySlug": "vitamines",
     "taxCategory": "food_reduced",
-    "priceChf": 29,
+    "priceChf": 29.9,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/marvelous/ChatGPT-Image-Sep-30-2026-09_25_14-PM.png",
@@ -20602,7 +20602,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 60,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/wp-content/uploads/2024/12/GHOST-ISO-WHEY-932G.png",
+        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/admin-uploads/1795104171000-ghost-pre-workout-pasteque.png",
         "alt": {
           "fr": "GHOST PRE-WORKOUT 645G",
           "de": "GHOST PRE-WORKOUT 645G",
@@ -21119,7 +21119,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Pronutrition.it",
     "categorySlug": "snacks",
     "taxCategory": "food_reduced",
-    "priceChf": 4,
+    "priceChf": 29.9,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/pronutrition-muffin-keto-amarena-50g.png",
@@ -21259,7 +21259,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Go Ginger",
     "categorySlug": "sante-bien-etre",
     "taxCategory": "food_reduced",
-    "priceChf": 3.9,
+    "priceChf": 4,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/ginger-shot-go-ginger-60ml.png",
@@ -21402,7 +21402,7 @@ export const PRODUCTS: ProductItem[] = [
     "priceChf": 55,
     "images": [
       {
-        "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/images/products/dirtysquads/tutti-fruity-stimx.jpg",
+        "src": "https://res.cloudinary.com/yt8axxmy/image/upload/v1793205119/STIMX_T-F_nfyxrd.webp",
         "alt": {
           "fr": "STIMX 300G",
           "de": "STIMX 300G",
@@ -21539,7 +21539,7 @@ export const PRODUCTS: ProductItem[] = [
     "brand": "Grenade",
     "categorySlug": "snacks",
     "taxCategory": "food_reduced",
-    "priceChf": 4.5,
+    "priceChf": 4,
     "images": [
       {
         "src": "https://punhmwlpaghmjndpyusf.supabase.co/storage/v1/object/public/product-images/products/flavors/grenade-carb-killa-caramel-chaos.webp",
