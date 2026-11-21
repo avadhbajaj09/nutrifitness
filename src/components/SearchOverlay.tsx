@@ -61,12 +61,12 @@ export default function SearchOverlay() {
     return () => window.removeEventListener('keydown', handleKeyDown);
   }, [closeSearch]);
 
-  if (!isSearchOpen) return null;
-
   const trimmedQuery = query.trim();
 
   // Merge static catalog with live Supabase overrides for accurate prices, variants, and primary images
+  // Must run unconditionally on every render to respect React Rules of Hooks
   const visibleProducts = useMemo(() => {
+    if (!isSearchOpen) return [];
     return PRODUCTS.filter(p => isProductVisible(p)).map(p => {
       const ovr = getCatalogOverride ? getCatalogOverride(p) : null;
       if (!ovr) return p;
@@ -78,24 +78,26 @@ export default function SearchOverlay() {
         name: ovr.name ? (typeof p.name === 'object' ? { ...p.name, fr: ovr.name } : ovr.name) : p.name
       };
     });
-  }, [isProductVisible, getCatalogOverride]);
+  }, [isSearchOpen, isProductVisible, getCatalogOverride]);
 
   const matchedProducts = useMemo(() => {
+    if (!isSearchOpen) return [];
     return trimmedQuery
       ? searchProducts(visibleProducts, trimmedQuery, locale || 'fr')
       : visibleProducts;
-  }, [visibleProducts, trimmedQuery, locale]);
+  }, [isSearchOpen, visibleProducts, trimmedQuery, locale]);
 
   const results = trimmedQuery ? matchedProducts.slice(0, 15) : visibleProducts.slice(0, 9);
 
   const queryTokens = useMemo(() => {
+    if (!isSearchOpen) return [];
     return trimmedQuery
       .toLowerCase()
       .normalize('NFD')
       .replace(/[\u0300-\u036f]/g, '')
       .split(/\s+/)
       .filter(Boolean);
-  }, [trimmedQuery]);
+  }, [isSearchOpen, trimmedQuery]);
 
   const getProductDisplayInfo = (item: any) => {
     const slug = getLocalized(item.slug);
@@ -154,6 +156,9 @@ export default function SearchOverlay() {
   };
 
   const POPULAR_SEARCHES = ['Créatine', 'Whey', 'Magnésium', 'Zinc', 'Pre-Workout', 'Isolate'];
+
+  // Early return ONLY after all hooks have been invoked
+  if (!isSearchOpen) return null;
 
   return (
     <div 
