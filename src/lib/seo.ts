@@ -20,10 +20,10 @@ export function clampText(text: string, maxLen: number): string {
 }
 
 export function formatProductMetaTitle(productName: string): string {
-  const suffix = ' | NutriFitness';
-  const maxNameLen = 60 - suffix.length; // 45 chars
-  const clampedName = clampText(productName, maxNameLen);
-  return `${clampedName}${suffix}`;
+  const name = productName.replace(/\s+/g, ' ').trim();
+  const suffix = ' | NutriFitness Suisse';
+  // Product identity (including pack size) is more important than a rigid character limit.
+  return name.length + suffix.length <= 68 ? name + suffix : name + ' | NutriFitness';
 }
 
 export function formatMetaTitle(title: string): string {
