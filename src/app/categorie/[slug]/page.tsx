@@ -58,7 +58,6 @@ export async function generateMetadata({ params }: CategoryPageProps): Promise<M
   return {
     title,
     description,
-    keywords: category.targetKeywords,
     alternates: {
       canonical: `https://nutrifitness.ch/categorie/${category.slug}/`,
     },
@@ -154,15 +153,15 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
       {/* Schemas */}
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(collectionSchema).replace(/</g, '\\u003c') }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }}
       />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -181,7 +180,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
         <header className="mb-8">
           <div className="flex flex-wrap items-center gap-3 mb-3">
             <span className="px-3 py-1 rounded-full bg-[#F80404]/10 border border-[#F80404]/30 text-[#F80404] text-[10px] font-black uppercase tracking-wider font-heading">
-              🇨🇭 Stock 100% Suisse · Livraison 1-2 jours
+              🇨🇭 Boutique à Genève · Livraison selon disponibilité
             </span>
             <span className="text-xs text-white/60 font-bold">
               {categoryProducts.length} produit{categoryProducts.length > 1 ? 's' : ''} disponibles
@@ -191,6 +190,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
           <h1 className="text-2xl sm:text-4xl lg:text-5xl font-black uppercase text-white font-heading tracking-tight mb-4">
             {category.h1}
           </h1>
+          <p className="text-sm text-white/80 mb-4 leading-relaxed">{category.metaDescription}</p>
 
           {/* Subcategories Pills */}
           {category.subcategories && category.subcategories.length > 0 && (
@@ -222,11 +222,11 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
               <div className="pt-2 flex flex-wrap items-center gap-4 text-xs font-bold text-white/60">
                 <span className="flex items-center gap-1.5 text-white">
                   <CheckCircle2 className="w-4 h-4 text-[#95d600]" />
-                  Conforme aux normes suisses OSAV & DFI
+                  Composition et précautions sur chaque fiche
                 </span>
                 <span className="flex items-center gap-1.5 text-white">
                   <MapPin className="w-4 h-4 text-[#F80404]" />
-                  Conseils & retrait immédiat : 34 Rue des Pâquis, 1201 Genève
+                  Conseils & retrait selon disponibilité : 34 Rue des Pâquis, 1201 Genève
                 </span>
               </div>
             </div>
@@ -251,7 +251,7 @@ export default async function CategoryDetailPage({ params }: CategoryPageProps) 
               Catalogue : {category.name}
             </h2>
             <span className="text-xs font-bold text-white/50">
-              Pas de frais de douane
+              Conditions de livraison au panier
             </span>
           </div>
 
