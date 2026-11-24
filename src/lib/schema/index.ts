@@ -52,11 +52,11 @@ export function faqPage(items: FaqItem[]): JsonLd | null {
   };
 }
 
-export function product(p: ProductInput, shipping?: { cost: number; minDays: number; maxDays: number; destinations?: string[] }, returnDays = 14): JsonLd {
+export function product(p: ProductInput, shipping?: { cost: number; minDays: number; maxDays: number; destinations?: string[] }, returnDays?: number): JsonLd {
   const url = abs(`/produit/${p.slug}/`);
   return {
     '@context': 'https://schema.org', '@type': 'Product', '@id': `${url}#product`, url, name: p.name, description: p.description,
-    image: p.images, brand: { '@type': 'Brand', name: p.brand },
+    image: p.images.filter(Boolean).map(img => abs(img)), brand: { '@type': 'Brand', name: p.brand },
     ...(p.sku ? { sku: p.sku } : {}),
     ...(p.gtin ? (p.gtin.length === 13 ? { gtin13: p.gtin } : { gtin: p.gtin }) : {}),
     ...(p.mpn ? { mpn: p.mpn } : {}),
@@ -77,7 +77,7 @@ export function product(p: ProductInput, shipping?: { cost: number; minDays: num
           handlingTime: { '@type': 'QuantitativeValue', minValue: 0, maxValue: 1, unitCode: 'DAY' },
           transitTime: { '@type': 'QuantitativeValue', minValue: shipping.minDays, maxValue: shipping.maxDays, unitCode: 'DAY' } },
       } } : {}),
-      hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'CH', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: returnDays, returnMethod: 'https://schema.org/ReturnByMail' },
+      ...(returnDays !== undefined ? { hasMerchantReturnPolicy: { '@type': 'MerchantReturnPolicy', applicableCountry: 'CH', returnPolicyCategory: 'https://schema.org/MerchantReturnFiniteReturnWindow', merchantReturnDays: returnDays, returnMethod: 'https://schema.org/ReturnByMail' } } : {}),
     },
     ...(p.rating && p.rating.count > 0 ? { aggregateRating: { '@type': 'AggregateRating', ratingValue: p.rating.value, reviewCount: p.rating.count } } : {}),
     ...(p.reviews && p.reviews.length ? { review: p.reviews.map(r => ({ '@type': 'Review', author: { '@type': 'Person', name: r.author }, datePublished: r.date, reviewBody: r.body, reviewRating: { '@type': 'Rating', ratingValue: r.rating, bestRating: 5 } })) } : {}),
