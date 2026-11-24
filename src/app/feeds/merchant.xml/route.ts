@@ -24,26 +24,6 @@ function stripHtml(html: string): string {
     .trim();
 }
 
-function parseWeight(formatStr?: string, nameStr?: string): string {
-  const combined = `${formatStr || ''} ${nameStr || ''}`.toLowerCase();
-  const kgMatch = combined.match(/([\d.,]+)\s*kg/);
-  if (kgMatch) {
-    const val = parseFloat(kgMatch[1].replace(',', '.'));
-    if (!isNaN(val)) return `${Math.round(val * 1000)} g`;
-  }
-  const gMatch = combined.match(/([\d.,]+)\s*g\b/);
-  if (gMatch) {
-    const val = parseFloat(gMatch[1].replace(',', '.'));
-    if (!isNaN(val)) return `${Math.round(val)} g`;
-  }
-  const capsMatch = combined.match(/(\d+)\s*(gélules|caps|capsules|comprimés|tablets)/);
-  if (capsMatch) {
-    const count = parseInt(capsMatch[1], 10);
-    return `${Math.min(1000, Math.max(150, Math.round(count * 2.5)))} g`;
-  }
-  return '500 g';
-}
-
 function formatImageUrl(src: string | undefined, siteUrl: string): string {
   if (!src) return `${siteUrl}/images/placeholder.webp`;
   if (src.startsWith('http://') || src.startsWith('https://')) return src;
@@ -133,12 +113,10 @@ export async function GET(request: NextRequest) {
 
       // GTIN and identifier existence
       const gtin = getProductGtin(product, defaultVariant);
-      const identifierExists = gtin ? 'yes' : 'no';
 
       // Category and product type
       const categoryObj = getCategoryBySlug(product.categorySlug);
       const productType = categoryObj?.name || 'Nutrition Sportive';
-      const weight = parseWeight(defaultVariant?.format, title);
 
       return `    <item>
       <g:id>${escapeXml(sku)}</g:id>
@@ -149,12 +127,10 @@ export async function GET(request: NextRequest) {
 ${additionalImages ? additionalImages + '\n' : ''}      <g:availability>in_stock</g:availability>
       <g:price>${escapeXml(priceFormatted)}</g:price>
       <g:brand>${escapeXml(product.brand)}</g:brand>
-${gtin ? `      <g:gtin>${escapeXml(gtin)}</g:gtin>\n` : ''}      <g:mpn>${escapeXml(sku)}</g:mpn>
+${gtin ? `      <g:gtin>${escapeXml(gtin)}</g:gtin>\n` : ''}
       <g:condition>new</g:condition>
       <g:google_product_category>Health &amp; Beauty &gt; Health Care &gt; Fitness &amp; Nutrition</g:google_product_category>
       <g:product_type>${escapeXml(productType)}</g:product_type>
-      <g:shipping_weight>${escapeXml(weight)}</g:shipping_weight>
-      <g:identifier_exists>${identifierExists}</g:identifier_exists>
       <g:shipping>
         <g:country>${escapeXml(targetCountry)}</g:country>
         <g:service>${escapeXml(shippingService)}</g:service>
