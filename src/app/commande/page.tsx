@@ -960,6 +960,7 @@ export default function CheckoutPage() {
           customerName: clientFullName,
           customerPhone,
           shippingCost: totalShippingCost,
+          shippingMethod: genevaShippingMethod,
           paymentMethod,
           couponCode: appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined),
           shippingAddress: {
