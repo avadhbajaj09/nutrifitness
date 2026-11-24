@@ -4,7 +4,12 @@ import { normalizeName, importWooCommerce } from './import-woocommerce';
 
 const { Client } = pg;
 const CSV_PATH = process.env.WOO_CSV_PATH || '/Users/shikha/Nutrifitness.ch/wc-product-export-7-10-2026-1791397377965.csv';
-const DB_URL = process.env.DATABASE_URL || 'postgresql://postgres:Not1just%25maddy@db.punhmwlpaghmjndpyusf.supabase.co:5432/postgres';
+const DB_URL = process.env.TEST_DATABASE_URL || process.env.DATABASE_URL;
+
+function isProductionDatabase(url?: string): boolean {
+  if (!url) return false;
+  return url.includes('punhmwlpaghmjndpyusf') || url.includes('nutrifitness.ch') || process.env.NODE_ENV === 'production';
+}
 
 let passed = 0;
 let failed = 0;
@@ -23,6 +28,19 @@ async function runAcceptanceChecks() {
   console.log('====================================================');
   console.log('  NUTRIFITNESS CATALOG ACCEPTANCE & INTEGRITY TESTS  ');
   console.log('====================================================\n');
+
+  if (!DB_URL) {
+    console.error('❌ ERROR: Neither DATABASE_URL nor TEST_DATABASE_URL is provided.');
+    console.error('Please specify DATABASE_URL (or TEST_DATABASE_URL for isolated testing).');
+    process.exit(1);
+  }
+
+  const isProd = isProductionDatabase(DB_URL);
+  if (isProd) {
+    console.log('🔒 NOTICE: Connected to PRODUCTION database.');
+    console.log('   Read-only data integrity checks (Checks 1-6, 9) will run normally.');
+    console.log('   Mutating tests (TEST 7 & TEST 8) are DISABLED to protect live catalog.\n');
+  }
 
   const client = new Client({
     connectionString: DB_URL,
@@ -147,65 +165,75 @@ async function runAcceptanceChecks() {
     // TEST 7: Idempotent Re-run Test
     // -------------------------------------------------------------------------
     console.log('\n--- TEST 7: Idempotent Re-Run Verification ---');
-    const beforeCount = await client.query(`SELECT count(*) FROM products`);
-    const reImportResult = await importWooCommerce();
-    const afterCount = await client.query(`SELECT count(*) FROM products`);
-    assert(
-      parseInt(beforeCount.rows[0].count, 10) === parseInt(afterCount.rows[0].count, 10),
-      `Idempotent re-run created 0 new products (Before: ${beforeCount.rows[0].count}, After: ${afterCount.rows[0].count})`
-    );
-    assert(reImportResult.duplicateSkus === 0, `Idempotent re-run generated 0 duplicate SKUs`);
+    if (isProd && process.env.ALLOW_PRODUCTION_TEST_MUTATIONS !== 'true') {
+      console.log('  🛡️  SKIPPED: importWooCommerce() mutation blocked against production database.');
+      assert(true, `Idempotent re-run skipped on production (Safety Guard Active)`);
+    } else {
+      const beforeCount = await client.query(`SELECT count(*) FROM products`);
+      const reImportResult = await importWooCommerce();
+      const afterCount = await client.query(`SELECT count(*) FROM products`);
+      assert(
+        parseInt(beforeCount.rows[0].count, 10) === parseInt(afterCount.rows[0].count, 10),
+        `Idempotent re-run created 0 new products (Before: ${beforeCount.rows[0].count}, After: ${afterCount.rows[0].count})`
+      );
+      assert(reImportResult.duplicateSkus === 0, `Idempotent re-run generated 0 duplicate SKUs`);
+    }
 
     // -------------------------------------------------------------------------
     // TEST 8: Delete-to-Draft & Restore Test
     // -------------------------------------------------------------------------
     console.log('\n--- TEST 8: Delete-to-Draft & Restore Workflow ---');
-    // Pick first published product
-    const testProd = pubProductsRes.rows[0];
-    const testId = testProd.id;
+    if (isProd && process.env.ALLOW_PRODUCTION_TEST_MUTATIONS !== 'true') {
+      console.log('  🛡️  SKIPPED: Live product update/delete mutation blocked against production database.');
+      assert(true, `Soft-delete and restore skipped on production (Safety Guard Active)`);
+    } else {
+      // Pick first published product
+      const testProd = pubProductsRes.rows[0];
+      const testId = testProd.id;
 
-    // 1. Soft-delete
-    await client.query(`
-      UPDATE products 
-      SET status = 'draft', deleted_at = NOW(), updated_at = NOW() 
-      WHERE id = $1
-    `, [testId]);
-    await client.query(`
-      INSERT INTO product_audit_log (product_id, user_id, action, new_values)
-      VALUES ($1, 'test-runner', 'delete_to_draft', '{"status":"draft"}'::jsonb)
-    `, [testId]);
+      // 1. Soft-delete
+      await client.query(`
+        UPDATE products 
+        SET status = 'draft', deleted_at = NOW(), updated_at = NOW() 
+        WHERE id = $1
+      `, [testId]);
+      await client.query(`
+        INSERT INTO product_audit_log (product_id, user_id, action, new_values)
+        VALUES ($1, 'test-runner', 'delete_to_draft', '{"status":"draft"}'::jsonb)
+      `, [testId]);
 
-    const checkDraft = await client.query(`SELECT status, deleted_at FROM products WHERE id = $1`, [testId]);
-    assert(
-      checkDraft.rows[0].status === 'draft' && checkDraft.rows[0].deleted_at !== null,
-      `Soft delete sets status = 'draft' and sets deleted_at timestamp`
-    );
+      const checkDraft = await client.query(`SELECT status, deleted_at FROM products WHERE id = $1`, [testId]);
+      assert(
+        checkDraft.rows[0].status === 'draft' && checkDraft.rows[0].deleted_at !== null,
+        `Soft delete sets status = 'draft' and sets deleted_at timestamp`
+      );
 
-    // 2. Restore
-    await client.query(`
-      UPDATE products 
-      SET status = 'published', deleted_at = NULL, updated_at = NOW() 
-      WHERE id = $1
-    `, [testId]);
-    await client.query(`
-      INSERT INTO product_audit_log (product_id, user_id, action, new_values)
-      VALUES ($1, 'test-runner', 'restore', '{"status":"published"}'::jsonb)
-    `, [testId]);
+      // 2. Restore
+      await client.query(`
+        UPDATE products 
+        SET status = 'published', deleted_at = NULL, updated_at = NOW() 
+        WHERE id = $1
+      `, [testId]);
+      await client.query(`
+        INSERT INTO product_audit_log (product_id, user_id, action, new_values)
+        VALUES ($1, 'test-runner', 'restore', '{"status":"published"}'::jsonb)
+      `, [testId]);
 
-    const checkRestored = await client.query(`SELECT status, deleted_at FROM products WHERE id = $1`, [testId]);
-    assert(
-      checkRestored.rows[0].status === 'published' && checkRestored.rows[0].deleted_at === null,
-      `Restore sets status = 'published' and clears deleted_at`
-    );
+      const checkRestored = await client.query(`SELECT status, deleted_at FROM products WHERE id = $1`, [testId]);
+      assert(
+        checkRestored.rows[0].status === 'published' && checkRestored.rows[0].deleted_at === null,
+        `Restore sets status = 'published' and clears deleted_at`
+      );
 
-    const auditCheck = await client.query(`
-      SELECT action FROM product_audit_log WHERE product_id = $1 ORDER BY created_at DESC LIMIT 2
-    `, [testId]);
-    assert(
-      auditCheck.rows.some((r: any) => r.action === 'delete_to_draft') &&
-      auditCheck.rows.some((r: any) => r.action === 'restore'),
-      `Audit logs recorded delete_to_draft and restore actions`
-    );
+      const auditCheck = await client.query(`
+        SELECT action FROM product_audit_log WHERE product_id = $1 ORDER BY created_at DESC LIMIT 2
+      `, [testId]);
+      assert(
+        auditCheck.rows.some((r: any) => r.action === 'delete_to_draft') &&
+        auditCheck.rows.some((r: any) => r.action === 'restore'),
+        `Audit logs recorded delete_to_draft and restore actions`
+      );
+    }
 
     // -------------------------------------------------------------------------
     // TEST 9: Badge Logic Verification for 3 Product Types

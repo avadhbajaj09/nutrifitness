@@ -5,7 +5,12 @@ import pg from 'pg';
 const { Client } = pg;
 
 const CSV_PATH = process.env.WOO_CSV_PATH || '/Users/shikha/Nutrifitness.ch/wc-product-export-7-10-2026-1791397377965.csv';
-const DB_URL = process.env.DATABASE_URL || 'postgresql://postgres:Not1just%25maddy@db.punhmwlpaghmjndpyusf.supabase.co:5432/postgres';
+const DB_URL = process.env.DATABASE_URL;
+
+function isProductionDatabase(url?: string): boolean {
+  if (!url) return false;
+  return url.includes('punhmwlpaghmjndpyusf') || url.includes('nutrifitness.ch') || process.env.NODE_ENV === 'production';
+}
 
 export function normalizeName(name: string): string {
   if (!name) return '';
@@ -60,11 +65,19 @@ function parseCSV(text: string): string[][] {
   return rows;
 }
 
-export async function importWooCommerce() {
+export async function importWooCommerce(options?: { allowProduction?: boolean; forceStatusSync?: boolean }) {
   console.log('====================================================');
   console.log('   NutriFitness WooCommerce Catalog Import Script    ');
   console.log('====================================================');
   console.log('Reading CSV from:', CSV_PATH);
+
+  if (!DB_URL) {
+    throw new Error('DATABASE_URL environment variable is required to run importWooCommerce.');
+  }
+
+  if (isProductionDatabase(DB_URL) && !options?.allowProduction && process.env.CONFIRM_PRODUCTION_IMPORT !== 'true') {
+    throw new Error('SAFETY BLOCK: Attempted to run importWooCommerce against production database without CONFIRM_PRODUCTION_IMPORT=true.');
+  }
 
   if (!fs.existsSync(CSV_PATH)) {
     throw new Error(`CSV file not found at ${CSV_PATH}`);
@@ -179,7 +192,7 @@ export async function importWooCommerce() {
     const productByNormName = new Map<string, any>();
 
     // Load existing products from DB to support idempotent updates
-    const existingProductsRes = await client.query(`SELECT id, woo_id, sku, normalized_name, name, slug FROM products`);
+    const existingProductsRes = await client.query(`SELECT id, woo_id, sku, normalized_name, name, slug, status, images FROM products`);
     const dbProductMapBySku = new Map<string, any>();
     const dbProductMapByWooId = new Map<string, any>();
     const dbProductMapByNormName = new Map<string, any>();
@@ -240,6 +253,20 @@ export async function importWooCommerce() {
       let productId = existing ? existing.id : null;
 
       if (existing) {
+        // SAFETY: Never downgrade an already published product to draft from an old CSV unless explicitly forced
+        const finalStatus = (!options?.forceStatusSync && existing.status === 'published' && status === 'draft')
+          ? 'published'
+          : status;
+
+        // SAFETY: If existing product already has Supabase Storage or Cloudinary CDN images, do not overwrite with legacy wp-content URLs
+        const existingHasCdnImages = Array.isArray(existing.images) && existing.images.some((img: any) => {
+          const src = typeof img === 'string' ? img : img?.src;
+          return src && (src.includes('supabase.co') || src.includes('cloudinary.com'));
+        });
+        const finalImages = (existingHasCdnImages && imagesList.some(img => img.src.includes('wp-content/uploads')))
+          ? existing.images
+          : imagesList;
+
         // UPDATE existing product
         const updateRes = await client.query(
           `UPDATE products
@@ -266,14 +293,14 @@ export async function importWooCommerce() {
             name,
             normName,
             type === 'variable' ? 'variable' : 'simple',
-            status,
+            finalStatus,
             regPrice,
             salePrice,
             weightKg,
             weightGrams,
             shortDesc,
             fullDesc,
-            JSON.stringify(imagesList),
+            JSON.stringify(finalImages),
             isFeatured,
             productId
           ]
