@@ -30,16 +30,31 @@ export async function GET() {
     const overrides: Record<string, any> = {};
 
     for (const p of dbProducts || []) {
-      const entry = {
+      const variantPrices = Array.isArray(p.product_variants)
+        ? p.product_variants.map((v: any) => Number(v.price)).filter((pr: number) => pr > 0)
+        : [];
+      const minVariantPrice = variantPrices.length > 0 ? Math.min(...variantPrices) : undefined;
+      const basePriceNum = Number(p.base_price) || 0;
+      const effectivePriceChf = basePriceNum > 0 ? basePriceNum : minVariantPrice;
+
+      const rawImages = Array.isArray(p.images) ? p.images : [];
+      const validImages = rawImages.filter((img: any) => {
+        const src = typeof img === 'string' ? img : img?.src;
+        if (!src || typeof src !== 'string') return false;
+        if (src.includes('nutrifitness.ch/wp-content')) return false;
+        return true;
+      });
+
+      const entry: Record<string, any> = {
         id: p.id,
         wooId: p.woo_id,
         sku: p.sku,
         slug: p.slug,
         name: p.name,
         brand: p.brand,
-        priceChf: Number(p.base_price) || 0,
+        ...(effectivePriceChf !== undefined ? { priceChf: effectivePriceChf } : {}),
         compareAtPriceChf: p.compare_at_price ? Number(p.compare_at_price) : undefined,
-        images: Array.isArray(p.images) ? p.images : [],
+        ...(validImages.length > 0 ? { images: validImages } : {}),
         gtin13: p.gtin13 || '',
         stockGeneva: Number(p.stock_geneva) || 0,
         stockPortugal: Number(p.stock_portugal) || 0,
@@ -56,7 +71,7 @@ export async function GET() {
           id: v.id,
           sku: v.sku,
           flavor: v.attribute_value,
-          priceChf: Number(v.price) || (Number(p.base_price) || 0),
+          priceChf: Number(v.price) || (effectivePriceChf || 0),
           compareAtPriceChf: v.compare_at_price ? Number(v.compare_at_price) : undefined,
           image: v.image_url,
           stockGeneva: Number(v.stock_geneva) || 0,

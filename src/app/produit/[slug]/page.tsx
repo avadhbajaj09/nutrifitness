@@ -175,8 +175,13 @@ export default async function ProductDetailPage({ params }: Props) {
       product.brand = dbProduct.brand;
     }
 
-    if (dbProduct.base_price !== null && dbProduct.base_price !== undefined) {
+    if (dbProduct.base_price !== null && dbProduct.base_price !== undefined && Number(dbProduct.base_price) > 0) {
       product.priceChf = Number(dbProduct.base_price);
+    } else if (Array.isArray(dbProduct.product_variants) && dbProduct.product_variants.length > 0) {
+      const vPrices = dbProduct.product_variants.map((v: any) => Number(v.price)).filter((pr: number) => pr > 0);
+      if (vPrices.length > 0) {
+        product.priceChf = Math.min(...vPrices);
+      }
     }
 
     if (dbProduct.compare_at_price !== null && dbProduct.compare_at_price !== undefined) {
@@ -237,18 +242,24 @@ export default async function ProductDetailPage({ params }: Props) {
     }
 
     if (Array.isArray(dbProduct.images) && dbProduct.images.length > 0) {
-      product.images = dbProduct.images.map((img: any) => {
-        const src = typeof img === 'string' ? img : img.src;
-        const altText = typeof img === 'string' 
-          ? (dbProduct.name || product.name?.fr || '') 
-          : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || dbProduct.name || product.name?.fr || ''));
-        return {
-          src,
-          alt: { fr: altText, de: altText, it: altText, en: altText },
-          width: 800,
-          height: 800
-        };
+      const filteredDbImages = dbProduct.images.filter((img: any) => {
+        const src = typeof img === 'string' ? img : img?.src;
+        return src && typeof src === 'string' && !src.includes('nutrifitness.ch/wp-content');
       });
+      if (filteredDbImages.length > 0) {
+        product.images = filteredDbImages.map((img: any) => {
+          const src = typeof img === 'string' ? img : img.src;
+          const altText = typeof img === 'string' 
+            ? (dbProduct.name || product.name?.fr || '') 
+            : (typeof img.alt === 'string' ? img.alt : (img.alt?.fr || dbProduct.name || product.name?.fr || ''));
+          return {
+            src,
+            alt: { fr: altText, de: altText, it: altText, en: altText },
+            width: 800,
+            height: 800
+          };
+        });
+      }
     }
 
     const loc = dbProduct.main_location as 'GENEVA' | 'PORTUGAL' | 'COMMON' | undefined;

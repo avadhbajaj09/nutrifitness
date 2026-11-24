@@ -26,5 +26,7 @@ assert(!isProductDeliverableToCountry('IN', 'PORTUGAL_ONLY', 'portugal'), 'Block
 // 3. No stock gating needed: all products available
 assert(isProductDeliverableToCountry('CH', undefined, undefined, 0, 0), 'Available in CH without stock restrictions');
 assert(isProductDeliverableToCountry('FR', undefined, undefined, 0, 0), 'Available in FR without stock restrictions');
+assert(isProductDeliverableToCountry('CH', 'GENEVA_ONLY', 'switzerland', 0, 0), 'Available in CH even when 0 stock (inventory check handles Out of Stock, not country restriction)');
+assert(!isProductDeliverableToCountry('FR', 'GENEVA_ONLY', 'switzerland', 10, 0), 'Swiss-only product blocked for European destination (FR)');
 
 console.log('\nAll storefront gating assertions passed successfully!');

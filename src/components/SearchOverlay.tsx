@@ -70,10 +70,12 @@ export default function SearchOverlay() {
     return PRODUCTS.filter(p => isProductVisible(p)).map(p => {
       const ovr = getCatalogOverride ? getCatalogOverride(p) : null;
       if (!ovr) return p;
+      const validOverrideImages = Array.isArray(ovr.images) && ovr.images.length > 0 && !ovr.images[0]?.src?.includes('nutrifitness.ch/wp-content') ? ovr.images : null;
+      const validOverridePrice = typeof ovr.priceChf === 'number' && ovr.priceChf > 0 ? ovr.priceChf : null;
       return {
         ...p,
-        priceChf: typeof ovr.priceChf === 'number' ? ovr.priceChf : p.priceChf,
-        images: Array.isArray(ovr.images) && ovr.images.length > 0 ? ovr.images : p.images,
+        priceChf: validOverridePrice ?? p.priceChf,
+        images: validOverrideImages ?? p.images,
         variants: Array.isArray(ovr.variants) && ovr.variants.length > 0 ? ovr.variants : p.variants,
         name: ovr.name ? (typeof p.name === 'object' ? { ...p.name, fr: ovr.name } : ovr.name) : p.name
       };

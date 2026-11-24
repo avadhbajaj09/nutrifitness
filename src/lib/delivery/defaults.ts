@@ -154,11 +154,8 @@ export function isProductDeliverableToCountry(
   const isSwissDestination = code === 'CH' || code === 'LI';
 
   // In Switzerland & Liechtenstein:
-  // If product is Swiss-only (GENEVA_ONLY) and stockGeneva is explicitly <= 0, it cannot be fulfilled from Geneva
+  // All catalog items are deliverable to CH/LI. Inventory status (in stock vs out of stock) is handled by inventory checks.
   if (isSwissDestination) {
-    if ((locationType === 'GENEVA_ONLY' || shippingOrigin === 'switzerland') && stockGeneva !== undefined && stockGeneva <= 0) {
-      return false;
-    }
     return true;
   }
 
