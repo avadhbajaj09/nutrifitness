@@ -163,6 +163,9 @@ export async function POST(req: Request) {
 
     // 1. Process successful checkout and payment events
     if (event.type === 'checkout.session.completed' || event.type === 'checkout.session.async_payment_succeeded') {
+      if ((event.data.object as { payment_status?: string }).payment_status !== 'paid') {
+        return NextResponse.json({ received: true, pending: true });
+      }
       const session = event.data?.object;
       if (session) {
         const orderNumber =
