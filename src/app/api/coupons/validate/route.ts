@@ -10,6 +10,18 @@ interface LocalCoupon {
 }
 
 const LOCAL_FALLBACK_COUPONS: Record<string, LocalCoupon> = {
+  VIP5: {
+    rate: 0.05,
+    percentOff: 5,
+    discountType: 'percent',
+    description: '-5% de réduction exclusive sur votre panier',
+  },
+  REVIENS5: {
+    rate: 0.05,
+    percentOff: 5,
+    discountType: 'percent',
+    description: '-5% de réduction exclusive sur votre panier',
+  },
   SWISS10: {
     rate: 0.10,
     percentOff: 10,
@@ -123,6 +135,22 @@ export async function POST(req: Request) {
     // 3. Check fallback predefined promotional codes
     const fallback = LOCAL_FALLBACK_COUPONS[cleanCode];
     if (fallback) {
+      if (stripe && fallback.percentOff) {
+        try {
+          const existingCoupon = await stripe.coupons.retrieve(cleanCode).catch(() => null);
+          if (!existingCoupon || !existingCoupon.valid) {
+            await stripe.coupons.create({
+              id: cleanCode,
+              name: fallback.description,
+              percent_off: fallback.percentOff,
+              duration: 'forever',
+            }).catch(err => console.warn(`[Stripe Coupon] Auto-create notice: ${err.message}`));
+          }
+        } catch (stripeErr) {
+          console.warn('[Stripe Coupon Auto-create error]', stripeErr);
+        }
+      }
+
       return NextResponse.json({
         valid: true,
         code: cleanCode,
@@ -131,6 +159,7 @@ export async function POST(req: Request) {
         amountOff: fallback.amountOff,
         discountType: fallback.discountType,
         description: fallback.description,
+        stripeCouponId: cleanCode,
       });
     }
 

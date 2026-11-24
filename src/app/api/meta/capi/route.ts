@@ -41,6 +41,7 @@ export async function POST(req: Request) {
       phone,
       items,
       event_source_url,
+      test_event_code,
     } = body;
 
     if (!event_id) {
@@ -69,6 +70,7 @@ export async function POST(req: Request) {
       fbc,
       contents,
       numItems: contents ? contents.reduce((acc: number, c: any) => acc + c.quantity, 0) : undefined,
+      testEventCode: test_event_code,
     });
 
     return NextResponse.json(result, { status: result.ok ? 200 : 500 });

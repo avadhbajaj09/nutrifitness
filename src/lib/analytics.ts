@@ -358,22 +358,51 @@ export function trackPurchase(params: {
 export function trackMetaEvent(payload: MetaEventPayload): void {
   if (!hasMarketingConsent()) return;
 
+  const eventData = {
+    currency: payload.currency,
+    value: payload.value,
+    content_name: payload.contentName,
+    content_category: payload.contentCategory,
+    content_ids: payload.contentIds,
+    content_type: 'product',
+    contents: payload.contents,
+    num_items: payload.numItems,
+  };
+
+  // 1. Push to Google Tag Manager dataLayer
   pushDataLayer({
     event: `meta_${payload.eventName}`,
     meta_event_name: payload.eventName,
     event_id: payload.eventId,
     ecommerce_event_id: payload.eventId,
-    meta_data: {
-      currency: payload.currency,
-      value: payload.value,
-      content_name: payload.contentName,
-      content_category: payload.contentCategory,
-      content_ids: payload.contentIds,
-      content_type: 'product',
-      contents: payload.contents,
-      num_items: payload.numItems,
-    },
+    meta_data: eventData,
   });
+
+  // 2. Direct browser Meta Pixel dispatch (with eventID for deduplication)
+  if (typeof window !== 'undefined' && typeof (window as any).fbq === 'function') {
+    try {
+      (window as any).fbq('track', payload.eventName, eventData, { eventID: payload.eventId });
+    } catch {}
+  }
+
+  // 3. Server-side Meta Conversions API (CAPI) dispatch
+  if (typeof window !== 'undefined' && typeof fetch === 'function') {
+    try {
+      fetch('/api/meta/capi', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          event_name: payload.eventName,
+          event_id: payload.eventId,
+          value: payload.value,
+          currency: payload.currency,
+          items: payload.contents || (payload.contentIds ? payload.contentIds.map(id => ({ id })) : undefined),
+          event_source_url: window.location.href,
+        }),
+        keepalive: true,
+      }).catch(() => {});
+    } catch {}
+  }
 }
 
 export function trackMetaViewContent(params: {

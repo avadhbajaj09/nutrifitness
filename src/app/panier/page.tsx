@@ -49,31 +49,9 @@ export default function CartPage() {
   const [isApplyingCoupon, setIsApplyingCoupon] = useState(false);
   const [couponMessage, setCouponMessage] = useState<{ text: string; isError: boolean } | null>(null);
 
-  useEffect(() => {
-    try {
-      const stored = localStorage.getItem('nf_applied_coupon');
-      if (stored) {
-        const parsed = JSON.parse(stored);
-        if (parsed.code && (parsed.rate !== undefined || parsed.amountOff !== undefined)) {
-          setCouponCode(parsed.code);
-          setDiscountRate(parsed.rate || 0);
-          setAppliedCoupon(parsed);
-          setCouponMessage({
-            text: `✓ Code "${parsed.code}" actif (${parsed.description || `-${Math.round((parsed.rate || 0) * 100)}%`})`,
-            isError: false,
-          });
-        }
-      }
-    } catch {}
-  }, []);
-
-  const handleApplyCoupon = async (e: React.FormEvent) => {
-    e.preventDefault();
-    const clean = couponCode.trim().toUpperCase();
-    if (!clean) {
-      setCouponMessage({ text: 'Veuillez saisir un code promo.', isError: true });
-      return;
-    }
+  const applyCouponByCode = async (codeToApply: string) => {
+    const clean = codeToApply.trim().toUpperCase();
+    if (!clean) return;
 
     setIsApplyingCoupon(true);
     setCouponMessage(null);
@@ -119,6 +97,40 @@ export default function CartPage() {
     } finally {
       setIsApplyingCoupon(false);
     }
+  };
+
+  useEffect(() => {
+    try {
+      const params = typeof window !== 'undefined' ? new URLSearchParams(window.location.search) : null;
+      const urlCoupon = params?.get('coupon') || params?.get('promo');
+      if (urlCoupon) {
+        applyCouponByCode(urlCoupon);
+        return;
+      }
+
+      const stored = localStorage.getItem('nf_applied_coupon');
+      if (stored) {
+        const parsed = JSON.parse(stored);
+        if (parsed.code && (parsed.rate !== undefined || parsed.amountOff !== undefined)) {
+          setCouponCode(parsed.code);
+          setDiscountRate(parsed.rate || 0);
+          setAppliedCoupon(parsed);
+          setCouponMessage({
+            text: `✓ Code "${parsed.code}" actif (${parsed.description || `-${Math.round((parsed.rate || 0) * 100)}%`})`,
+            isError: false,
+          });
+        }
+      }
+    } catch {}
+  }, []);
+
+  const handleApplyCoupon = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!couponCode.trim()) {
+      setCouponMessage({ text: 'Veuillez saisir un code promo.', isError: true });
+      return;
+    }
+    await applyCouponByCode(couponCode);
   };
 
   const handleRemoveCoupon = () => {

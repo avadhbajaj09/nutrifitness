@@ -14,6 +14,7 @@ export interface MetaCapiEventParams {
   fbc?: string;
   contents?: Array<{ id: string; quantity: number; item_price?: number }>;
   numItems?: number;
+  testEventCode?: string;
 }
 
 export function hashSha256(value: string): string {
@@ -37,8 +38,8 @@ export async function sendMetaConversionEvent(params: MetaCapiEventParams): Prom
   skipped?: boolean;
   error?: string;
 }> {
-  const pixelId = process.env.META_PIXEL_ID;
-  const accessToken = process.env.META_CAPI_TOKEN;
+  const pixelId = process.env.META_PIXEL_ID || process.env.NEXT_PUBLIC_META_PIXEL_ID;
+  const accessToken = process.env.META_CAPI_TOKEN || process.env.META_CAPI_ACCESS_TOKEN;
 
   if (!pixelId || !accessToken) {
     // Skipped gracefully when credentials are not configured in environment
@@ -84,7 +85,7 @@ export async function sendMetaConversionEvent(params: MetaCapiEventParams): Prom
     customData.num_items = params.numItems;
   }
 
-  const eventPayload = {
+  const eventPayload: Record<string, unknown> = {
     data: [
       {
         event_name: params.eventName,
@@ -97,6 +98,11 @@ export async function sendMetaConversionEvent(params: MetaCapiEventParams): Prom
       },
     ],
   };
+
+  const testEventCode = params.testEventCode || process.env.META_TEST_EVENT_CODE;
+  if (testEventCode) {
+    eventPayload.test_event_code = testEventCode;
+  }
 
   try {
     const url = `https://graph.facebook.com/v19.0/${pixelId}/events?access_token=${accessToken}`;
