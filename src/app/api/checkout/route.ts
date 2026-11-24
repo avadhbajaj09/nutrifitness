@@ -16,7 +16,6 @@ export async function POST(req: Request) {
 
     const body = await req.json();
     const {
-      orderNumber,
       items,
       currency = 'CHF',
       customerEmail,
@@ -32,6 +31,7 @@ export async function POST(req: Request) {
       return NextResponse.json({ error: 'Cart is empty.' }, { status: 400 });
     }
 
+    const orderNumber = 'NF-' + crypto.randomUUID();
     const supabase = getAdminSupabase();
 
     // Validate destination, quantity and prices against trusted catalogue records.
@@ -144,7 +144,7 @@ export async function POST(req: Request) {
       const subtotalVal = cleanItems.reduce((acc: number, it: any) => acc + (it.price * it.quantity), 0);
       const totalVal = subtotalVal + Number(shippingCost || 0);
 
-      await supabase.from('orders').upsert({
+      const { error: orderError } = await supabase.from('orders').insert({
         order_number: orderNum,
         customer_name: customerName || 'Client',
         customer_email: customerEmail || '',
@@ -164,14 +164,16 @@ export async function POST(req: Request) {
           postalCode: shippingAddress?.postalCode || '',
           country: shippingAddress?.country || 'Suisse',
           shippingCost: Number(shippingCost) || 0,
-          shippingMethod: 'post_priority',
-          shippingLabel: 'PostPac Priority (La Poste Suisse 1-2 jours)',
+          shippingMethod: pickup ? 'store_pickup' : 'post_priority',
+          shippingLabel: pickup ? 'Retrait boutique Genève' : 'Livraison suivie',
           subtotal: subtotalVal,
           couponCode: couponCode || ''
         }
-      }, { onConflict: 'order_number' });
+      });
+      if (orderError) throw orderError;
     } catch (dbErr) {
       console.warn('[Checkout API] Could not pre-record pending order:', dbErr);
+      return NextResponse.json({ error: 'Order service temporarily unavailable' }, { status: 503 });
     }
 
     const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nutrifitness.ch';
