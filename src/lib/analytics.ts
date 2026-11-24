@@ -77,7 +77,7 @@ function logDataLayerDebug(payload: Record<string, unknown>): void {
 }
 
 /**
- * Universal safe dataLayer pusher (auto-syncs to window.gtag for direct GA4 feed)
+ * Universal dataLayer pusher; configure GA4 ecommerce tags in GTM only.
  */
 export function pushDataLayer(payload: Record<string, unknown>): void {
   if (typeof window === 'undefined') return;
@@ -85,26 +85,14 @@ export function pushDataLayer(payload: Record<string, unknown>): void {
   logDataLayerDebug(payload);
   window.dataLayer.push(payload);
 
-  try {
-    if (typeof window.gtag === 'function' && payload.event && typeof payload.event === 'string' && payload.event !== 'dataLayer_push') {
-      const eventName = payload.event;
-      if (payload.ecommerce && typeof payload.ecommerce === 'object') {
-        window.gtag('event', eventName, payload.ecommerce as Record<string, any>);
-      } else {
-        const { event, ...rest } = payload;
-        window.gtag('event', eventName, rest);
-      }
-    }
-  } catch {
-    // ignore
-  }
+
 }
 
 /**
  * 0. Search term tracking (GA4 search event)
  */
 export function trackSearch(searchTerm: string): void {
-  if (!searchTerm || !searchTerm.trim()) return;
+  if (!hasAnalyticsConsent() || !searchTerm || !searchTerm.trim()) return;
   pushDataLayer({
     event: 'search',
     search_term: searchTerm.trim(),
@@ -335,7 +323,14 @@ export function trackPurchase(params: {
   items: EcommerceItem[];
   coupon?: string;
 }): void {
-  if (!hasAnalyticsConsent()) return;
+  if (!hasAnalyticsConsent() || !params.transaction_id?.trim()) return;
+  if (!['CHF', 'EUR'].includes(params.currency.toUpperCase())) return;
+  if (!Number.isFinite(params.value) || params.value < 0 || !params.items.length) return;
+  const key = 'nf_ga4_purchase_' + params.transaction_id;
+  try {
+    if (sessionStorage.getItem(key)) return;
+    sessionStorage.setItem(key, '1');
+  } catch { /* GA4 transaction ID also supports deduplication */ }
 
   pushDataLayer({ ecommerce: null });
   pushDataLayer({
