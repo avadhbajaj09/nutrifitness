@@ -1,5 +1,7 @@
 import { NextResponse } from 'next/server';
 import Stripe from 'stripe';
+import { PRODUCTS } from '@/lib/catalog';
+import { isCountrySupported } from '@/lib/delivery/defaults';
 import { stripe } from '@/lib/stripe';
 import { getAdminSupabase } from '@/lib/supabase';
 
@@ -32,78 +34,82 @@ export async function POST(req: Request) {
 
     const supabase = getAdminSupabase();
 
-    // 1. Authoritative Server-Side Inventory Check
-    const destCountryStr = String(shippingAddress?.country || '').toLowerCase().trim();
-    const isSwissDest = destCountryStr.includes('suisse') ||
-      destCountryStr.includes('switzerland') ||
-      destCountryStr === 'ch' ||
-      destCountryStr === 'li' ||
-      (currency || 'CHF').toUpperCase() === 'CHF';
-
+    // Validate destination, quantity and prices against trusted catalogue records.
+    const country = String(shippingAddress?.country || '').toUpperCase().trim();
+    const isSwissDest = country === 'CH' || country === 'LI';
+    const expectedCurrency = isSwissDest ? 'CHF' : 'EUR';
+    if (!isCountrySupported(country) || currency !== expectedCurrency || items.length > 100) {
+      return NextResponse.json({ error: 'Invalid destination or currency' }, { status: 400 });
+    }
+    const quantities = new Map<string, number>();
+    let physicalItems = 0;
+    let portugalItems = 0;
     for (const item of items) {
-      if (item.isEbook || (item.categorySlug && item.categorySlug === 'guides-ebooks')) continue;
       const rawId = String(item.id || item.productId || '').trim();
       const cleanId = rawId.replace(/^prod-/, '');
-      const reqQty = Math.max(1, Number(item.quantity || 1));
-      const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
-        ? ((item.flavor as any).fr || '')
-        : (item.flavor ? String(item.flavor) : '');
-
-      const isUuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(rawId) ||
-        /^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cleanId);
-      const isNumeric = /^\d+$/.test(cleanId);
-
-      const orParts: string[] = [];
-      if (isUuid) {
-        orParts.push(`id.eq.${isUuid ? (cleanId.length === 36 ? cleanId : rawId) : rawId}`);
+      const qty = Number(item.quantity);
+      if (!Number.isSafeInteger(qty) || qty < 1 || qty > 100) {
+        return NextResponse.json({ error: 'Invalid quantity' }, { status: 400 });
       }
-      if (isNumeric) orParts.push(`woo_id.eq.${cleanId}`);
-      if (item.slug) orParts.push(`slug.eq.${item.slug}`);
-
-      let dbProduct: any = null;
-      if (orParts.length > 0) {
-        try {
-          const { data } = await supabase
-            .from('products')
-            .select(`
-              id, name, main_location, stock_geneva, stock_portugal,
-              product_variants (id, sku, attribute_value, stock_geneva, stock_portugal)
-            `)
-            .or(orParts.join(','))
-            .maybeSingle();
-          dbProduct = data;
-        } catch {}
+      const slug = String(item.slug || '');
+      const staticProduct = PRODUCTS.find(p => p.id === rawId || (slug && p.slug.fr === slug));
+      const ebook = staticProduct?.id === 'prod-25430' && staticProduct?.categorySlug === 'guides-ebooks';
+      const norm = (v: unknown) => String(v || '').toLowerCase().normalize('NFD').replace(/[\u0300-\u036f]/g, '').replace(/[^a-z0-9]/g, '');
+      const flavor = norm(typeof item.flavor === 'object' ? item.flavor?.fr : item.flavor);
+      const filters: string[] = [];
+      if (/^[0-9a-f]{8}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{4}-[0-9a-f]{12}$/i.test(cleanId)) filters.push('id.eq.' + cleanId);
+      if (/^\d+$/.test(cleanId)) filters.push('woo_id.eq.' + cleanId);
+      if (/^[a-z0-9-]+$/i.test(slug)) filters.push('slug.eq.' + slug);
+      if (!filters.length) return NextResponse.json({ error: 'Unknown product' }, { status: 400 });
+      const { data: product, error } = await supabase.from('products')
+        .select('id, name, slug, sku, base_price, main_location, stock_geneva, stock_portugal, status, deleted_at, product_variants(id, sku, attribute_value, price, stock_geneva, stock_portugal)')
+        .or(filters.join(',')).maybeSingle();
+      if (error || !product || product.status !== 'published' || product.deleted_at) {
+        return NextResponse.json({ error: 'Produit indisponible. Actualisez votre panier.' }, { status: 409 });
       }
-
-      if (dbProduct) {
-        let maxStock = 0;
-        if (flavorStr && Array.isArray(dbProduct.product_variants) && dbProduct.product_variants.length > 0) {
-          const matchedVariant = dbProduct.product_variants.find((v: any) =>
-            (v.attribute_value && v.attribute_value.toLowerCase().trim() === flavorStr.toLowerCase().trim()) ||
-            (v.sku && v.sku.toLowerCase().trim() === (item.sku || '').toLowerCase().trim())
-          );
-          if (matchedVariant) {
-            maxStock = isSwissDest ? Number(matchedVariant.stock_geneva || 0) : Number(matchedVariant.stock_portugal || 0);
-          } else {
-            maxStock = isSwissDest ? Number(dbProduct.stock_geneva || 0) : Number(dbProduct.stock_portugal || 0);
-          }
-        } else {
-          maxStock = isSwissDest ? Number(dbProduct.stock_geneva || 0) : Number(dbProduct.stock_portugal || 0);
-        }
-
-        if (reqQty > maxStock) {
-          const prodName = typeof item.name === 'object' && item.name !== null
-            ? ((item.name as any).fr || Object.values(item.name)[0] || 'Produit')
-            : (item.name || dbProduct.name || 'Produit');
-          const locName = isSwissDest ? 'en Suisse' : 'dans l\'entrepôt Europe';
-          return NextResponse.json({
-            error: 'INSUFFICIENT_STOCK',
-            message: `Stock insuffisant pour "${prodName}${flavorStr && flavorStr !== 'Standard' ? ` - ${flavorStr}` : ''}". Quantité disponible ${locName} : ${maxStock} unité(s).`,
-            item_id: item.id,
-            available_stock: maxStock
-          }, { status: 400 });
+      const variants = product.product_variants || [];
+      const matches = variants.filter((v: any) => (item.sku && v.sku === item.sku) || (flavor && norm(v.attribute_value) === flavor));
+      const variant = matches.length === 1 ? matches[0] : variants.length === 1 && !flavor ? variants[0] : undefined;
+      if (variants.length && !variant) return NextResponse.json({ error: 'Variante indisponible. Actualisez votre panier.' }, { status: 409 });
+      const key = product.id + ':' + (variant?.id || 'base');
+      const totalQty = (quantities.get(key) || 0) + qty;
+      if (quantities.has(key)) return NextResponse.json({ error: 'Duplicate cart item' }, { status: 400 });
+      quantities.set(key, totalQty);
+      if (ebook && totalQty !== 1) return NextResponse.json({ error: 'Invalid digital quantity' }, { status: 400 });
+      const source = variant || product;
+      const gen = Number(source.stock_geneva || 0);
+      const pt = Number(source.stock_portugal || 0);
+      const genevaOnly = product.main_location === 'GENEVA';
+      const fromGeneva = isSwissDest && product.main_location !== 'PORTUGAL' && gen >= qty;
+      if (!ebook) {
+        physicalItems++;
+        if (!fromGeneva) portugalItems++;
+        if ((!fromGeneva && genevaOnly) || (fromGeneva ? gen : pt) < qty) {
+          return NextResponse.json({ error: 'INSUFFICIENT_STOCK', message: 'Stock insuffisant. Actualisez votre panier.' }, { status: 409 });
         }
       }
+      const base = Number(variant?.price ?? product.base_price);
+      const staticVariant = staticProduct?.variants?.find(v => (variant?.sku && v.sku === variant.sku) || norm(v.flavorName?.fr) === flavor);
+      const euro = staticVariant?.priceEurEurope ?? staticProduct?.priceEurEurope ?? staticVariant?.priceEur ?? staticProduct?.priceEur;
+      if (!Number.isFinite(base) || base <= 0) return NextResponse.json({ error: 'Invalid product price' }, { status: 409 });
+      const unit = isSwissDest ? base : (euro ?? Math.round(base * 0.95 * 100) / 100);
+      const discounted = !ebook && qty >= 3 ? unit * 0.90 : !ebook && qty === 2 ? unit * 0.95 : unit;
+      const price = Math.round(discounted * 100) / 100;
+      if (!Number.isFinite(price) || price < 0.50 || Math.abs(Number(item.price) - price) > 0.005 || !Number.isFinite(Number(item.price))) {
+        return NextResponse.json({ error: 'PRICE_CHANGED', message: 'Le prix a changé. Actualisez votre panier.' }, { status: 409 });
+      }
+      item.price = price;
+      item.id = product.id;
+      item.sku = variant?.sku || product.sku || product.id;
+      item.name = product.name;
+      item.quantity = qty;
+      item.shippingOrigin = fromGeneva ? 'switzerland' : 'portugal';
+    }
+    const subtotal = items.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0);
+    const pickup = body.shippingMethod === 'clickcollect' && country === 'CH' && portugalItems === 0 && /^12\d{2}$/.test(String(shippingAddress?.postalCode || ''));
+    const expectedShipping = !physicalItems || subtotal >= 75 || pickup ? 0 : 9.90;
+    if (!Number.isFinite(Number(shippingCost)) || Math.abs(Number(shippingCost) - expectedShipping) > 0.005) {
+      return NextResponse.json({ error: 'SHIPPING_CHANGED', message: 'Les frais de livraison ont changé. Actualisez votre panier.' }, { status: 409 });
     }
 
     // Pre-record pending order with full cart items into Supabase
@@ -131,6 +137,7 @@ export async function POST(req: Request) {
           price: unitPrice,
           quantity: qty,
           image: item.image || '/images/placeholder.webp',
+          shippingOrigin: item.shippingOrigin,
         };
       });
 
@@ -167,9 +174,7 @@ export async function POST(req: Request) {
       console.warn('[Checkout API] Could not pre-record pending order:', dbErr);
     }
 
-    const host = req.headers.get('host') || 'nutrifitness.ch';
-    const protocol = host.includes('localhost') ? 'http' : 'https';
-    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || `${protocol}://${host}`;
+    const baseUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://nutrifitness.ch';
 
     const normalizedCurrency = (currency || 'CHF').toLowerCase();
 
