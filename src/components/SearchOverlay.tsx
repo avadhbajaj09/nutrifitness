@@ -9,7 +9,7 @@ import { PRODUCTS } from '@/lib/catalog';
 import { formatChf } from '@/lib/tax';
 import { getLocalized } from '@/lib/types';
 import { searchProducts } from '@/lib/search';
-import { trackSearch } from '@/lib/analytics';
+import { trackSearch, trackMetaSearch } from '@/lib/analytics';
 
 export default function SearchOverlay() {
   const router = useRouter();
@@ -150,6 +150,7 @@ export default function SearchOverlay() {
     if (trimmedQuery) {
       saveRecentSearch(trimmedQuery);
       trackSearch(trimmedQuery);
+      trackMetaSearch(trimmedQuery);
       closeSearch();
       router.push(`/boutique?q=${encodeURIComponent(trimmedQuery)}`);
     }

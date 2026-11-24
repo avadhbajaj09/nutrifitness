@@ -32,7 +32,9 @@ export type MetaStandardEvent =
   | 'ViewContent'
   | 'AddToCart'
   | 'InitiateCheckout'
-  | 'Purchase';
+  | 'AddPaymentInfo'
+  | 'Purchase'
+  | 'Search';
 
 export interface MetaEventPayload {
   eventName: MetaStandardEvent;
@@ -44,6 +46,7 @@ export interface MetaEventPayload {
   contentIds?: string[];
   contents?: { id: string; quantity: number; item_price: number }[];
   numItems?: number;
+  searchString?: string;
 }
 
 declare global {
@@ -358,7 +361,7 @@ export function trackPurchase(params: {
 export function trackMetaEvent(payload: MetaEventPayload): void {
   if (!hasMarketingConsent()) return;
 
-  const eventData = {
+  const eventData: Record<string, unknown> = {
     currency: payload.currency,
     value: payload.value,
     content_name: payload.contentName,
@@ -367,6 +370,7 @@ export function trackMetaEvent(payload: MetaEventPayload): void {
     content_type: 'product',
     contents: payload.contents,
     num_items: payload.numItems,
+    ...(payload.searchString ? { search_string: payload.searchString } : {}),
   };
 
   // 1. Push to Google Tag Manager dataLayer
@@ -504,4 +508,46 @@ export function trackMetaPurchase(params: {
   });
 
   return eventId;
+}
+
+export function trackMetaSearch(searchTerm: string, eventId?: string): string {
+  const evId = eventId || generateEventId('search');
+  if (!hasMarketingConsent() || !searchTerm || !searchTerm.trim()) return evId;
+
+  trackMetaEvent({
+    eventName: 'Search',
+    eventId: evId,
+    currency: 'CHF',
+    value: 0,
+    searchString: searchTerm.trim(),
+  });
+
+  return evId;
+}
+
+export function trackMetaAddPaymentInfo(params: {
+  items: EcommerceItem[];
+  totalValue: number;
+  currency: string;
+  paymentType?: string;
+  eventId?: string;
+}): string {
+  const evId = params.eventId || generateEventId('payinfo');
+  if (!hasMarketingConsent()) return evId;
+
+  trackMetaEvent({
+    eventName: 'AddPaymentInfo',
+    eventId: evId,
+    currency: params.currency,
+    value: Math.round(params.totalValue * 100) / 100,
+    contentIds: params.items.map(i => i.item_id),
+    contents: params.items.map(i => ({
+      id: i.item_id,
+      quantity: i.quantity || 1,
+      item_price: i.price,
+    })),
+    numItems: params.items.reduce((acc, i) => acc + (i.quantity || 1), 0),
+  });
+
+  return evId;
 }

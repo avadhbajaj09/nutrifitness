@@ -31,6 +31,7 @@ import {
   trackPurchase, 
   trackAddPaymentInfo, 
   trackMetaInitiateCheckout, 
+  trackMetaAddPaymentInfo,
   trackMetaPurchase 
 } from '@/lib/analytics';
 import { TWINT_CONFIG } from '@/lib/twint';
@@ -949,6 +950,13 @@ export default function CheckoutPage() {
     }));
 
     trackAddPaymentInfo({
+      items: purchaseItems,
+      totalValue: grandTotal,
+      currency: activeCurr,
+      paymentType: paymentMethod,
+    });
+
+    trackMetaAddPaymentInfo({
       items: purchaseItems,
       totalValue: grandTotal,
       currency: activeCurr,
