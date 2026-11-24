@@ -26,38 +26,19 @@ export default function GoogleAnalytics() {
               try { parsed = JSON.parse(decodeURIComponent(consentMatch[1])); } catch(e){}
             }
 
-            // Google Consent Mode v2: default granted if accepted, else sensible defaults
+            // Google Consent Mode v2: default denied unless explicitly accepted
             gtag('consent', 'default', {
-              'analytics_storage': (parsed && parsed.analytics === false) ? 'denied' : 'granted',
-              'ad_storage': (parsed && parsed.marketing === false) ? 'denied' : 'granted',
-              'ad_user_data': (parsed && parsed.marketing === false) ? 'denied' : 'granted',
-              'ad_personalization': (parsed && parsed.marketing === false) ? 'denied' : 'granted',
+              'analytics_storage': (parsed && parsed.analytics === true) ? 'granted' : 'denied',
+              'ad_storage': (parsed && parsed.marketing === true) ? 'granted' : 'denied',
+              'ad_user_data': (parsed && parsed.marketing === true) ? 'granted' : 'denied',
+              'ad_personalization': (parsed && parsed.marketing === true) ? 'granted' : 'denied',
               'wait_for_update': 500
             });
           `,
         }}
       />
 
-      {/* 2. Google Analytics 4 (gtag.js) direct feed to G-PM7DDRRRRC */}
-      <Script
-        id="ga4-script"
-        strategy="afterInteractive"
-        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
-      />
-      <Script
-        id="ga4-config"
-        strategy="afterInteractive"
-        dangerouslySetInnerHTML={{
-          __html: `
-            gtag('js', new Date());
-            gtag('config', '${GA_MEASUREMENT_ID}', {
-              send_page_view: true
-            });
-          `,
-        }}
-      />
-
-      {/* 3. Google Tag Manager Container (Loaded via next/script afterInteractive) */}
+      {/* 2. Google Tag Manager Container (Loaded via next/script afterInteractive) */}
       <Script
         id="gtm-loader"
         strategy="afterInteractive"

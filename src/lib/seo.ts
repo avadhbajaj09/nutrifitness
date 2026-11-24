@@ -20,10 +20,10 @@ export function clampText(text: string, maxLen: number): string {
 }
 
 export function formatProductMetaTitle(productName: string): string {
-  const suffix = ' | NutriFitness';
-  const maxNameLen = 60 - suffix.length; // 45 chars
-  const clampedName = clampText(productName, maxNameLen);
-  return `${clampedName}${suffix}`;
+  const name = productName.replace(/\s+/g, ' ').trim();
+  const suffix = ' | NutriFitness Suisse';
+  // Product identity (including pack size) is more important than a rigid character limit.
+  return name.length + suffix.length <= 68 ? name + suffix : name + ' | NutriFitness';
 }
 
 export function formatMetaTitle(title: string): string {
@@ -41,16 +41,22 @@ export function getProductGtin(
   product: { gtin13?: string; variants?: { sku?: string; gtin13?: string }[] },
   variant?: { sku?: string; gtin13?: string }
 ): string | undefined {
-  if (variant?.gtin13 && variant.gtin13.trim()) return variant.gtin13.trim();
-  if (product.gtin13 && product.gtin13.trim()) return product.gtin13.trim();
-
-  const sku = variant?.sku || product.variants?.[0]?.sku;
-  if (sku) {
-    const cleanSku = sku.trim();
-    if (/^\d{8}$|^\d{12,14}$/.test(cleanSku)) {
-      return cleanSku;
-    }
-  }
-  return undefined;
+  const candidate = (variant ? variant.gtin13 : product.gtin13)?.trim();
+  if (!candidate || !/^(?:\d{8}|\d{12}|\d{13}|\d{14})$/.test(candidate) || /^0+$/.test(candidate)) return undefined;
+  const digits = candidate.split('').map(Number);
+  const check = digits.pop();
+  const sum = digits.reverse().reduce((total, digit, index) => total + digit * (index % 2 === 0 ? 3 : 1), 0);
+  return (10 - (sum % 10)) % 10 === check ? candidate : undefined;
 }
 
+export function formatProductSearchDescription(name: string, description: string, brand?: string): string {
+  const cleanName = name.replace(/\s+/g, ' ').trim();
+  const cleanBrand = (brand || '').trim();
+  const identity = cleanBrand && !cleanName.toLowerCase().includes(cleanBrand.toLowerCase()) ? cleanBrand + ' ' + cleanName : cleanName;
+  const prefix = identity + ' en Suisse. ';
+  const detail = description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const ending = 'Prix et disponibilité chez NutriFitness Genève.';
+  if (prefix.length + ending.length >= 155) return clampText(prefix + ending, 155);
+  const room = 155 - prefix.length - ending.length - 2;
+  return prefix + (room > 25 && detail ? clampText(detail, room).replace(/[.!?]+$/, '') + '. ' : '') + ending;
+}

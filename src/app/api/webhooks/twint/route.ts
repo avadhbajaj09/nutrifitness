@@ -1,5 +1,4 @@
 import { NextResponse } from 'next/server';
-import { getAdminSupabase } from '@/lib/supabase';
 import { TWINT_CONFIG } from '@/lib/twint';
 
 export const runtime = 'nodejs';
@@ -42,46 +41,14 @@ export async function POST(req: Request) {
       payload.key ||
       '';
 
-    const isSecretValid = !TWINT_CONFIG.webhookSecret || !secretHeader || secretHeader === TWINT_CONFIG.webhookSecret;
-    if (TWINT_CONFIG.webhookSecret && secretHeader) {
-      if (secretHeader === TWINT_CONFIG.webhookSecret) {
-        console.log('[TWINT Webhook] Webhook secret verified successfully');
-      } else {
-        console.warn('[TWINT Webhook] Webhook secret mismatch:', secretHeader);
-      }
+    // Stripe is the authoritative online checkout provider. Do not accept
+    // legacy callbacks as proof of payment until the provider contract and
+    // amount/currency reconciliation are implemented and tested.
+    if (!TWINT_CONFIG.webhookSecret || !secretHeader || secretHeader !== TWINT_CONFIG.webhookSecret) {
+      return NextResponse.json({ error: 'Unauthorized webhook' }, { status: 401 });
     }
 
-    const orderNumber = payload.orderNumber || payload.order_id || payload.orderId || payload.reference;
-    const status = payload.status || payload.payment_status || 'paid';
-    const amount = payload.amount;
-
-    console.log('[TWINT Webhook] Received notification:', {
-      orderNumber,
-      status,
-      amount,
-      storeUuid: payload.storeUUID || payload.store_uuid || TWINT_CONFIG.storeUuid,
-    });
-
-    if (orderNumber) {
-      const supabase = getAdminSupabase();
-      const cleanOrderNum = String(orderNumber).trim();
-
-      await supabase
-        .from('orders')
-        .update({
-          payment_status: status === 'SUCCESS' || status === 'paid' ? 'paid' : status,
-          status: status === 'SUCCESS' || status === 'paid' ? 'in_processing' : 'pending',
-          updated_at: new Date().toISOString(),
-        })
-        .or(`order_number.eq.${cleanOrderNum},id.eq.${cleanOrderNum}`);
-    }
-
-    return NextResponse.json({
-      success: true,
-      received: true,
-      storeUuid: TWINT_CONFIG.storeUuid,
-      merchantName: TWINT_CONFIG.merchantName,
-    });
+    return NextResponse.json({ error: 'Legacy TWINT callback disabled; use verified Stripe payment events' }, { status: 503 });
   } catch (err: any) {
     console.error('[TWINT Webhook] Error processing webhook:', err);
     return NextResponse.json({ error: err.message || 'Internal Server Error' }, { status: 500 });

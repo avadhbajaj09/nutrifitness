@@ -12,6 +12,9 @@ const PRIVATE_DISALLOWS = [
   '/wp-admin',
   '/wp-admin/',
   '/api/',
+  '/admin/',
+  '/mail/',
+  '/teamomar/',
   '/*?orderby=',
   '/*?filter_',
 ];
@@ -29,7 +32,9 @@ const AI_USER_AGENTS = [
 
 export default function robots(): Robots {
   const site = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nutrifitness.ch';
-  if (process.env.VERCEL_ENV !== 'production' && process.env.ALLOW_INDEXING !== 'true') {
+  const allowIndexing = process.env.ALLOW_INDEXING === 'true' ||
+    (process.env.ALLOW_INDEXING === undefined && process.env.VERCEL_ENV === 'production');
+  if (!allowIndexing) {
     return { rules: { userAgent: '*', disallow: '/' } };
   }
 

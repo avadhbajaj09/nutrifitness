@@ -11,6 +11,7 @@ import { trackAddToCart, trackRemoveFromCart, trackMetaAddToCart } from '@/lib/a
 
 export interface CartItem {
   itemKey: string;
+  sku?: string;
   id: string;
   slug: string;
   name: string;
@@ -744,6 +745,7 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           {
             itemKey,
             id: product.id || slug,
+            sku: matchedVariant?.sku || product.sku,
             slug,
             name,
             brand,

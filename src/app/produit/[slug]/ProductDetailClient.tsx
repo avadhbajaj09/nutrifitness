@@ -7,6 +7,7 @@ import { useStore } from '@/context/StoreContext';
 import ProductCarousel from '@/components/ProductCarousel';
 import DynamicPricingBox from '@/components/DynamicPricingBox';
 import { ProductItem, getLocalized } from '@/lib/types';
+import { ALL_BRANDS } from '@/lib/brands';
 import { getProductFaqs } from '@/lib/productFaq';
 import { DeliveryEstimate } from '@/components/delivery/DeliveryEstimate';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
@@ -58,6 +59,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
   const category = getCategoryBySlug(product.categorySlug);
   const categoryName = category?.name || 'Boutique';
+  const brandPage = ALL_BRANDS.find(b => b.name.toLowerCase() === product.brand.toLowerCase() || b.displayName.toLowerCase() === product.brand.toLowerCase());
   const categoryHref = category ? `/categorie/${category.slug}/` : '/boutique/';
   const relevantGuide = getRelevantGuideForProduct(product.categorySlug, name);
 
@@ -96,7 +98,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
   const isPortugal = product.locationType === 'PORTUGAL_ONLY' || product.shippingOrigin === 'portugal' || (isCommon && !isSwissDestination);
   const isDeliverable = isProductDeliverableToCountry(effectiveCountry, product.locationType, product.shippingOrigin, product.stockGeneva, product.stockPortugal);
 
-  const compareAtPrice = product.compareAtPriceChf || (currentPrice > 40 ? Math.round((currentPrice * 1.18) * 20) / 20 : undefined);
+  const compareAtPrice = product.compareAtPriceChf && product.compareAtPriceChf > currentPrice ? product.compareAtPriceChf : undefined;
   const discountPercent = compareAtPrice ? Math.round(((compareAtPrice - currentPrice) / compareAtPrice) * 100) : 0;
 
   useEffect(() => {
@@ -152,7 +154,7 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
       {/* Product Header (Single responsive H1 for all screen sizes) */}
       <div className="mb-4 lg:mb-6 space-y-1.5">
         <p className="text-xs font-black uppercase tracking-widest text-[#F80404] font-heading">
-          {product.brand}
+          {brandPage ? <Link href={`/marque/${brandPage.slug}/`} className="hover:underline">{product.brand}</Link> : product.brand}
         </p>
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black text-white tracking-tight font-heading leading-tight">
           {name}

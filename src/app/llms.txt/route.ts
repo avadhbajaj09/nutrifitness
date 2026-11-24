@@ -2,14 +2,14 @@ import { NextResponse } from 'next/server';
 import { COMPANY } from '@/lib/company';
 import { CATEGORIES_DATA } from '@/lib/categories';
 import { BLOG_POSTS } from '@/lib/blog';
-import { PRODUCTS } from '@/lib/catalog';
+import { getVisibleProducts } from '@/lib/hiddenProducts';
 
-export const dynamic = 'force-static';
+export const dynamic = 'force-dynamic';
 export const revalidate = 86400;
 
 export async function GET() {
   const brandMap = new Map<string, number>();
-  for (const p of PRODUCTS) {
+  for (const p of await getVisibleProducts()) {
     if (p.brand) {
       brandMap.set(p.brand, (brandMap.get(p.brand) || 0) + 1);
     }
@@ -19,7 +19,7 @@ export async function GET() {
   const lines: string[] = [
     `# NutriFitness — Documentation & Informations Clés`,
     ``,
-    `> Boutique suisse indépendante de nutrition sportive haut de gamme, basée à Genève et en ligne sur nutrifitness.ch. Spécialisée en protéines pures (whey isolate, concentrée, végétales), créatines labellisées (Creapure®), acides aminés, pré-workouts, vitamines et minéraux conformes aux normes suisses OSAV / DFI.`,
+    `> Boutique suisse indépendante de nutrition sportive haut de gamme, basée à Genève et en ligne sur nutrifitness.ch. Spécialisée en protéines pures (whey isolate, concentrée, végétales), créatine, acides aminés, pré-workouts, vitamines et minéraux. Consulter chaque fiche pour les caractéristiques et disponibilités.`,
     ``,
     `## Informations Légales & Entreprise`,
     `- Nom commercial : ${COMPANY.tradingName}`,
@@ -30,7 +30,7 @@ export async function GET() {
     `- Téléphone : ${COMPANY.contact.phoneFormatted}`,
     `- E-mail : ${COMPANY.contact.email}`,
     `- Horaires boutique : Lundi - Vendredi : 12h30 - 19h00 | Samedi : 12h00 - 17h00 | Dimanche : Fermé`,
-    `- Retrait boutique : Click & Collect disponible en 2h à la Rue des Pâquis 34, 1201 Genève`,
+    `- Retrait boutique : Click & Collect selon disponibilité à la Rue des Pâquis 34, 1201 Genève`,
     ``,
     `## Ce que vend la boutique`,
     `- Protéines en poudre : Whey Isolate CFM, Whey Concentrée, Protéines Végétales (pois, riz, soja), Protéines Clear`,
@@ -42,9 +42,9 @@ export async function GET() {
     `- Formations & Guides : Guide Ultime des Compléments Alimentaires (66 pages PDF) et coaching nutritionnel personnalisé`,
     ``,
     `## Expédition & Logistique Multi-Origine`,
-    `- Articles expédiés depuis la Suisse (Genève) : Expédition prioritaire en 1 à 2 jours ouvrables via La Poste Suisse (PostPac Priority). Livraison gratuite dès 75 CHF d'achat en Suisse et Liechtenstein. Retrait Click & Collect immédiat à Genève.`,
+    `- Articles expédiés depuis la Suisse (Genève) : Expédition prioritaire en 1 à 2 jours ouvrables via La Poste Suisse (PostPac Priority). Livraison gratuite dès 75 CHF d'achat en Suisse et Liechtenstein. Retrait Click & Collect selon disponibilité à Genève.`,
     `- Articles expédiés depuis l'usine (Portugal) : Gammes partenaires expédiées directement depuis le Portugal vers toute l'Europe (3 à 7 jours) et la Suisse (4 à 8 jours) avec suivi transporteur international.`,
-    `- Douane : Aucun frais de douane caché pour les résidents suisses sur les commandes boutique.`,
+    `- Douane : Consulter la politique de livraison et les frais affichés lors de la commande.`,
     ``,
     `## Langues & Devises`,
     `- Langue principale : Français (fr-CH)`,
@@ -61,14 +61,14 @@ export async function GET() {
     `## Guides Scientifiques & Ebook`,
     `- [Le Guide Ultime des Compléments Alimentaires (66 pages PDF)](https://nutrifitness.ch/guide-des-complements-alimentaires/) : Guide de référence par l'équipe NutriFitness (29.90 CHF)`,
     `- [Coaching Nutritionnel Personnalisé](https://nutrifitness.ch/coaching-nutritionnel-personnalise/) : Bilan et plan nutritionnel sur mesure à Genève`,
-    `- [Blog & Guides d'Experts](https://nutrifitness.ch/blog/) : 20 dossiers scientifiques complets`,
+    `- [Blog & Guides d'Experts](https://nutrifitness.ch/blog/) : Articles et guides de la boutique`,
     ...BLOG_POSTS.map(b => `  - [${b.title}](https://nutrifitness.ch/blog/${b.slug}/) (${b.category})`),
     ``,
     `## Pages d'Information & Politiques`,
     `- [Magasin physique à Genève](https://nutrifitness.ch/magasin-geneve/) : Accès, plan et services en boutique`,
     `- [À Propos de NutriFitness](https://nutrifitness.ch/a-propos/) : Histoire de la marque depuis 2015 et fondateur`,
     `- [Politique de Livraison](https://nutrifitness.ch/livraison/) : Délais, transporteurs et gratuité dès 75 CHF`,
-    `- [Politique de Retours & Rétractation](https://nutrifitness.ch/retours/) : 14 jours de rétractation conforme au droit suisse`,
+    `- [Politique de Retours & Rétractation](https://nutrifitness.ch/retours/) : Conditions et délais de retour indiqués dans la politique de la boutique`,
     `- [Moyens de Paiement](https://nutrifitness.ch/paiement/) : TWINT, PostFinance et cartes sécurisées`,
     `- [Contact & Support](https://nutrifitness.ch/contact/) : Formulaire, téléphone direct et e-mail`,
     `- [Foire Aux Questions (FAQ)](https://nutrifitness.ch/faq/) : Réponses aux questions fréquentes`,

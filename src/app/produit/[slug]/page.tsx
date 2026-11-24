@@ -10,7 +10,7 @@ import { getProductFaqs } from '@/lib/productFaq';
 import { getAdminSupabase } from '@/lib/supabase';
 import { getCategoryBySlug } from '@/lib/categories';
 
-import { formatProductMetaTitle, formatMetaDescription, getProductGtin } from '@/lib/seo';
+import { formatProductMetaTitle, formatProductSearchDescription, getProductGtin } from '@/lib/seo';
 import { getProductOriginType } from '@/lib/translations';
 import { stripHtmlAndEscapes } from '@/lib/formatContent';
 
@@ -40,41 +40,27 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   }
 
   let product = getProductBySlug(params.slug, 'fr');
-  if (!product) {
-    try {
-      const supabase = getAdminSupabase();
-      const { data: dbItem } = await supabase
-        .from('products')
-        .select('id, name, short_description, images')
-        .eq('slug', params.slug)
-        .maybeSingle();
-
-      if (dbItem) {
-        const title = formatProductMetaTitle(dbItem.name || params.slug);
-        const metaDesc = formatMetaDescription(dbItem.short_description || dbItem.name || '');
-        const image = dbItem.images?.[0]?.src || 'https://nutrifitness.ch/images/brand/logo.png';
-        return {
-          title,
-          description: metaDesc,
-          alternates: {
-            canonical: `https://nutrifitness.ch/produit/${params.slug}/`,
-          },
-          openGraph: {
-            title,
-            description: metaDesc,
-            images: [image],
-          },
-          twitter: {
-            card: 'summary_large_image',
-            title,
-            description: metaDesc,
-            images: [image],
-          },
-        };
+  try {
+    const supabase = getAdminSupabase();
+    const { data: dbItem } = await supabase.from('products')
+      .select('id, name, brand, short_description, images, status, deleted_at')
+      .eq('slug', params.slug).maybeSingle();
+    if (dbItem) {
+      if (dbItem.status !== 'published' || dbItem.deleted_at || hiddenSlugs.has(String(dbItem.id).toLowerCase())) {
+        return { robots: { index: false, follow: false } };
       }
-    } catch {}
-    return {};
-  }
+      const title = formatProductMetaTitle(dbItem.name || params.slug);
+      const description = formatProductSearchDescription(dbItem.name || params.slug, stripHtmlAndEscapes(dbItem.short_description || ''), dbItem.brand);
+      const image = dbItem.images?.[0]?.src || product?.images?.[0]?.src || 'https://nutrifitness.ch/images/brand/logo.png';
+      return {
+        title, description,
+        alternates: { canonical: `https://nutrifitness.ch/produit/${params.slug}/` },
+        openGraph: { title, description, images: [image] },
+        twitter: { card: 'summary_large_image', title, description, images: [image] }
+      };
+    }
+  } catch { /* fallback to static catalogue */ }
+  if (!product) return { robots: { index: false, follow: false } };
 
   const prodId = (product.id || '').toLowerCase().trim();
   const cleanId = prodId.replace(/^prod-/, '');
@@ -87,7 +73,7 @@ export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const name = getLocalized(product.name);
   const desc = stripHtmlAndEscapes(getLocalized(product.shortDescription));
   const title = formatProductMetaTitle(name);
-  const metaDesc = formatMetaDescription(desc);
+  const metaDesc = formatProductSearchDescription(name, desc, product.brand);
   const image = product.images?.[0]?.src || 'https://nutrifitness.ch/images/brand/logo.png';
 
   return {
@@ -351,12 +337,12 @@ export default async function ProductDetailPage({ params }: Props) {
   };
 
   const relatedProducts = PRODUCTS.filter(p => {
-    if (isHidden(p)) return false;
-    return p.id !== product.id && p.categorySlug === product.categorySlug;
-  }).slice(0, 8);
+    if (isHidden(p) || p.status === 'draft') return false;
+    return p.id !== product.id && p.slug.fr !== params.slug && p.categorySlug === product.categorySlug;
+  }).sort((a,b) => Number(b.brand === product.brand) - Number(a.brand === product.brand)).slice(0, 8);
   const fallbackRelated = relatedProducts.length > 0 ? relatedProducts : PRODUCTS.filter(p => {
     if (isHidden(p)) return false;
-    return p.id !== product.id;
+    return p.id !== product.id && p.slug.fr !== params.slug;
   }).slice(0, 8);
 
   const gtin = getProductGtin(product);
@@ -424,15 +410,15 @@ export default async function ProductDetailPage({ params }: Props) {
     <>
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(productSchema).replace(/</g, '\\u003c') }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbSchema).replace(/</g, '\\u003c') }}
       />
       <script
         type="application/ld+json"
-        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema) }}
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(faqSchema).replace(/</g, '\\u003c') }}
       />
       <ProductDetailClient product={product} relatedProducts={fallbackRelated} />
     </>

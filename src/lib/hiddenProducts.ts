@@ -35,7 +35,7 @@ export async function getHiddenProductSlugs(): Promise<Set<string>> {
         hidden.add(p.sku.toLowerCase().trim());
       }
       if (p.woo_id) {
-        const wid = p.woo_id.toLowerCase().trim();
+        const wid = String(p.woo_id).toLowerCase().trim();
         hidden.add(wid);
         const cleanWid = wid.replace(/^prod-/, '');
         hidden.add(cleanWid);
