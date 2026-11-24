@@ -79,8 +79,8 @@ async function deductOrderStock(supabase: any, items: any[], isSwiss: boolean) {
 
       if (!dbP) continue;
 
-      const origin = isSwiss ? 'GENEVA' : 'PORTUGAL';
-      const pCol = isSwiss ? 'stock_geneva' : 'stock_portugal';
+      const origin = it.shippingOrigin === 'portugal' ? 'PORTUGAL' : it.shippingOrigin === 'switzerland' ? 'GENEVA' : isSwiss ? 'GENEVA' : 'PORTUGAL';
+      const pCol = origin === 'GENEVA' ? 'stock_geneva' : 'stock_portugal';
       const currentStock = Number(dbP[pCol]) || 0;
       const newParentStock = Math.max(0, currentStock - qty);
 
@@ -268,6 +268,7 @@ export async function POST(req: Request) {
           const currentAddress = typeof existing.shipping_address === 'object' && existing.shipping_address ? existing.shipping_address : {};
           const updatePayload: any = {
             status: 'in_processing',
+            total_amount: value ?? existing.total_amount,
             payment_method: paymentMethod,
             shipping_address: {
               ...currentAddress,
