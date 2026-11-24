@@ -2,8 +2,8 @@ import { NextRequest, NextResponse } from 'next/server';
 import { PRODUCTS } from '@/lib/catalog';
 import { getCategoryBySlug } from '@/lib/categories';
 import { getProductGtin } from '@/lib/seo';
-import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
-import { convertPrice } from '@/lib/tax';
+import { isCountrySupported } from '@/lib/delivery/defaults';
+import { getAdminSupabase } from '@/lib/supabase';
 import { getHiddenProductSlugs } from '@/lib/hiddenProducts';
 
 export const dynamic = 'force-dynamic';
@@ -35,110 +35,59 @@ export async function GET(request: NextRequest) {
   const countryParam = (searchParams.get('country') || 'CH').toUpperCase().trim();
   const targetCountry = countryParam.length === 2 ? countryParam : 'CH';
   const isSwiss = targetCountry === 'CH' || targetCountry === 'LI';
+  if (!isCountrySupported(targetCountry)) return new NextResponse('Unsupported destination', { status: 400 });
 
   const SITE_URL = process.env.NEXT_PUBLIC_SITE_URL ?? 'https://nutrifitness.ch';
   const hiddenSlugs = await getHiddenProductSlugs();
 
-  // Filter available, non-hidden, physical, in-stock products for the target country
-  const eligibleProducts = PRODUCTS.filter(p => {
-    // Exclude draft status
-    if (p.status === 'draft') return false;
-
-    // Exclude digital products
-    if (p.categorySlug === 'guides-ebooks' || p.id === 'prod-25430') return false;
-
-    // Exclude hidden products
-    const slugFr = (p.slug?.fr || '').toLowerCase().trim();
-    const id = p.id || '';
-    const sku = p.variants?.[0]?.sku ? p.variants[0].sku.toLowerCase().trim() : '';
-    if (hiddenSlugs.has(slugFr) || hiddenSlugs.has(id) || (sku && hiddenSlugs.has(sku))) {
-      return false;
-    }
-
-    // Exclude out of stock products
-    const hasStock = p.variants?.some(v => v.inStock && v.inventoryQuantity > 0) ?? true;
-    if (!hasStock) return false;
-
-    // Check delivery eligibility for target country
-    return isProductDeliverableToCountry(
-      targetCountry,
-      p.locationType,
-      p.shippingOrigin,
-      p.stockGeneva,
-      p.stockPortugal
-    );
+  // Published database records are authoritative. Never advertise stale inventory on query failure.
+  const supabase = getAdminSupabase();
+  const { data: rows, error } = await supabase.from('products')
+    .select('id, woo_id, sku, slug, name, brand, base_price, short_description, images, main_location, stock_geneva, stock_portugal, gtin13, product_variants(id, sku, attribute_value, price, image_url, stock_geneva, stock_portugal, gtin13)')
+    .eq('status', 'published').is('deleted_at', null);
+  if (error || !rows) return new NextResponse('Feed temporarily unavailable', { status: 503 });
+  const eligible = rows.filter(p => {
+    const ids = [p.id, p.slug, p.sku, p.woo_id, 'prod-' + p.woo_id].filter(Boolean).map(x => String(x).toLowerCase());
+    return p.slug && !ids.some(x => hiddenSlugs.has(x)) && String(p.woo_id) !== '25430';
   });
-
-  const itemsXml = eligibleProducts
-    .map(product => {
-      const defaultVariant = product.variants?.[0];
-      const sku = defaultVariant?.sku || product.id;
-      const title = product.name?.fr || product.name?.en || 'Complément Sportif';
-      
-      // Clean description
-      const rawDesc = product.shortDescription?.fr || product.longDescription?.fr || title;
-      const cleanDesc = stripHtml(rawDesc).slice(0, 4500);
-
-      // Link and images
-      const link = `${SITE_URL}/produit/${product.slug.fr}/`;
-      const primaryImage = formatImageUrl(product.images?.[0]?.src, SITE_URL);
-      const additionalImages = (product.images || [])
-        .slice(1, 10)
-        .map(img => `      <g:additional_image_link>${escapeXml(formatImageUrl(img.src, SITE_URL))}</g:additional_image_link>`)
-        .join('\n');
-
-      // Price and currency calculation
-      let priceFormatted = '';
-      let shippingCostFormatted = '';
-      let shippingService = '';
-
-      if (isSwiss) {
-        const priceVal = defaultVariant?.priceChf || product.priceChf;
-        priceFormatted = `${priceVal.toFixed(2)} CHF`;
-        const isFreeShipping = priceVal >= 75;
-        shippingCostFormatted = isFreeShipping ? '0.00 CHF' : '9.90 CHF';
-        shippingService = 'PostPac Priority (La Poste Suisse)';
-      } else {
-        const eurPriceVal =
-          defaultVariant?.priceEurEurope ||
-          defaultVariant?.priceEur ||
-          product.priceEurEurope ||
-          product.priceEur ||
-          convertPrice(defaultVariant?.priceChf || product.priceChf, 'EUR');
-        priceFormatted = `${eurPriceVal.toFixed(2)} EUR`;
-        const isFreeShipping = eurPriceVal >= 75;
-        shippingCostFormatted = isFreeShipping ? '0.00 EUR' : '9.90 EUR';
-        shippingService = 'Livraison Suivie Europe';
-      }
-
-      // GTIN and identifier existence
-      const gtin = getProductGtin(product, defaultVariant);
-
-      // Category and product type
-      const categoryObj = getCategoryBySlug(product.categorySlug);
-      const productType = categoryObj?.name || 'Nutrition Sportive';
-
-      return `    <item>
-      <g:id>${escapeXml(sku)}</g:id>
-      <title>${escapeXml(title)}</title>
-      <description>${escapeXml(cleanDesc)}</description>
+  const itemsXml = eligible.map(p => {
+    const local = PRODUCTS.find(x => x.slug.fr === p.slug || x.id === 'prod-' + p.woo_id);
+    if (local?.categorySlug === 'guides-ebooks' || !p.name || !p.brand) return '';
+    if (!isSwiss && p.main_location === 'GENEVA') return '';
+    const variants = p.product_variants || [];
+    // A parent landing page does not yet select variant-specific URLs.
+    // Advertise only the default visible offer, not unselectable variants.
+    const available = (v: any) => isSwiss
+      ? (p.main_location !== 'PORTUGAL' && Number(v.stock_geneva) > 0) || (p.main_location !== 'GENEVA' && Number(v.stock_portugal) > 0)
+      : p.main_location !== 'GENEVA' && Number(v.stock_portugal) > 0;
+    const first = variants.find((v: any) => isSwiss && Number(v.stock_geneva) > 0) || variants.find((v: any) => available(v)) || variants[0];
+    const offer = first || p;
+    const chf = Number(first?.price ?? p.base_price);
+    const staticVariant = local?.variants?.find(v => v.sku === first?.sku);
+    const price = isSwiss ? chf : (staticVariant?.priceEurEurope ?? local?.priceEurEurope ?? staticVariant?.priceEur ?? local?.priceEur ?? Math.round(chf * 0.95 * 100) / 100);
+    const rawImage = Array.isArray(p.images) ? p.images[0] : undefined;
+    const image = first?.image_url || (typeof rawImage === 'string' ? rawImage : rawImage?.src) || local?.images?.[0]?.src;
+    const sku = first?.sku || p.sku || p.id;
+    if (!Number.isFinite(price) || price <= 0 || !image || image.includes('placeholder') || !sku) return '';
+    const gtin = getProductGtin({ gtin13: p.gtin13 }, first ? { gtin13: first.gtin13, sku: first.sku } : undefined);
+    const currency = isSwiss ? 'CHF' : 'EUR';
+    const link = SITE_URL + '/produit/' + p.slug + '/';
+    const category = getCategoryBySlug(local?.categorySlug || '');
+    const description = stripHtml(p.short_description || local?.shortDescription?.fr || p.name).slice(0, 4500);
+    return `    <item>
+      <g:id>${escapeXml(String(sku))}</g:id>
+      <title>${escapeXml(p.name)}</title>
+      <description>${escapeXml(description)}</description>
       <link>${escapeXml(link)}</link>
-      <g:image_link>${escapeXml(primaryImage)}</g:image_link>
-${additionalImages ? additionalImages + '\n' : ''}      <g:availability>in_stock</g:availability>
-      <g:price>${escapeXml(priceFormatted)}</g:price>
-      <g:brand>${escapeXml(product.brand)}</g:brand>
-${gtin ? `      <g:gtin>${escapeXml(gtin)}</g:gtin>\n` : ''}
+      <g:image_link>${escapeXml(formatImageUrl(image, SITE_URL))}</g:image_link>
+      <g:availability>${available(offer) ? 'in_stock' : 'out_of_stock'}</g:availability>
+      <g:price>${price.toFixed(2)} ${currency}</g:price>
+      <g:brand>${escapeXml(p.brand)}</g:brand>
+      ${gtin ? '<g:gtin>' + escapeXml(gtin) + '</g:gtin>' : ''}
       <g:condition>new</g:condition>
-      <g:google_product_category>Health &amp; Beauty &gt; Health Care &gt; Fitness &amp; Nutrition</g:google_product_category>
-      <g:product_type>${escapeXml(productType)}</g:product_type>
-      <g:shipping>
-        <g:country>${escapeXml(targetCountry)}</g:country>
-        <g:service>${escapeXml(shippingService)}</g:service>
-        <g:price>${escapeXml(shippingCostFormatted)}</g:price>
-      </g:shipping>
+      <g:product_type>${escapeXml(category?.name || 'Nutrition sportive')}</g:product_type>
     </item>`;
-    })
-    .join('\n');
+  }).filter(Boolean).join('\n');
 
   const xmlContent = `<?xml version="1.0" encoding="UTF-8"?>
 <rss version="2.0" xmlns:g="http://base.google.com/ns/1.0">
