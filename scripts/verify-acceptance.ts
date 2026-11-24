@@ -165,12 +165,14 @@ async function runAcceptanceChecks() {
     // TEST 7: Idempotent Re-run Test
     // -------------------------------------------------------------------------
     console.log('\n--- TEST 7: Idempotent Re-Run Verification ---');
-    if (isProd && process.env.ALLOW_PRODUCTION_TEST_MUTATIONS !== 'true') {
-      console.log('  🛡️  SKIPPED: importWooCommerce() mutation blocked against production database.');
-      assert(true, `Idempotent re-run skipped on production (Safety Guard Active)`);
+    const hasDedicatedTestDb = Boolean(process.env.TEST_DATABASE_URL && !isProductionDatabase(process.env.TEST_DATABASE_URL));
+    if (!hasDedicatedTestDb) {
+      console.log('  🛡️  SKIPPED: Mutating tests (importWooCommerce re-run) are strictly disabled.');
+      console.log('      To run mutating tests, configure an isolated non-production database via TEST_DATABASE_URL.');
+      assert(true, `Idempotent re-run skipped (Production / non-isolated DB protected)`);
     } else {
       const beforeCount = await client.query(`SELECT count(*) FROM products`);
-      const reImportResult = await importWooCommerce();
+      const reImportResult = await importWooCommerce({ allowProduction: false });
       const afterCount = await client.query(`SELECT count(*) FROM products`);
       assert(
         parseInt(beforeCount.rows[0].count, 10) === parseInt(afterCount.rows[0].count, 10),
@@ -183,9 +185,10 @@ async function runAcceptanceChecks() {
     // TEST 8: Delete-to-Draft & Restore Test
     // -------------------------------------------------------------------------
     console.log('\n--- TEST 8: Delete-to-Draft & Restore Workflow ---');
-    if (isProd && process.env.ALLOW_PRODUCTION_TEST_MUTATIONS !== 'true') {
-      console.log('  🛡️  SKIPPED: Live product update/delete mutation blocked against production database.');
-      assert(true, `Soft-delete and restore skipped on production (Safety Guard Active)`);
+    if (!hasDedicatedTestDb) {
+      console.log('  🛡️  SKIPPED: Mutating tests (live product soft-delete/restore) are strictly disabled.');
+      console.log('      To run mutating tests, configure an isolated non-production database via TEST_DATABASE_URL.');
+      assert(true, `Soft-delete and restore skipped (Production / non-isolated DB protected)`);
     } else {
       // Pick first published product
       const testProd = pubProductsRes.rows[0];
