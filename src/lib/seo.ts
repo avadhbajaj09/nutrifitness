@@ -48,3 +48,15 @@ export function getProductGtin(
   const sum = digits.reverse().reduce((total, digit, index) => total + digit * (index % 2 === 0 ? 3 : 1), 0);
   return (10 - (sum % 10)) % 10 === check ? candidate : undefined;
 }
+
+export function formatProductSearchDescription(name: string, description: string, brand?: string): string {
+  const cleanName = name.replace(/\s+/g, ' ').trim();
+  const cleanBrand = (brand || '').trim();
+  const identity = cleanBrand && !cleanName.toLowerCase().includes(cleanBrand.toLowerCase()) ? cleanBrand + ' ' + cleanName : cleanName;
+  const prefix = identity + ' en Suisse. ';
+  const detail = description.replace(/<[^>]*>/g, ' ').replace(/\s+/g, ' ').trim();
+  const ending = 'Prix et disponibilité chez NutriFitness Genève.';
+  if (prefix.length + ending.length >= 155) return clampText(prefix + ending, 155);
+  const room = 155 - prefix.length - ending.length - 2;
+  return prefix + (room > 25 && detail ? clampText(detail, room).replace(/[.!?]+$/, '') + '. ' : '') + ending;
+}
