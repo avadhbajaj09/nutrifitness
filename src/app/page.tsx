@@ -23,8 +23,8 @@ import {
 } from '@/components/HomeProductFeed';
 
 export const metadata: Metadata = {
-  title: 'Nutrition Sportive & Protéines en Suisse | NutriFitness.ch',
-  description: 'Boutique de nutrition sportive en Suisse et en ligne. Protéines whey, créatine Creapure®, pré-workout. 100% stock en Suisse, livraison 1-2 jours offerte dès 75 CHF ou retrait Click & Collect.',
+  title: 'Nutrition sportive Suisse | Whey, créatine & compléments',
+  description: 'Achetez whey, créatine et compléments alimentaires chez NutriFitness Genève. Comparez les produits, prix et options de livraison en Suisse.',
   alternates: {
     canonical: 'https://nutrifitness.ch/',
   },
@@ -48,7 +48,7 @@ export default async function HomePage() {
       {/* HERO SECTION / H1 */}
       <div className="mb-4 sm:mb-6">
         <h1 className="text-2xl sm:text-3xl lg:text-4xl font-black uppercase text-white font-heading tracking-tight leading-tight">
-          Nutrition sportive et protéines à Genève et en Suisse
+          Nutrition sportive et compléments alimentaires en Suisse
         </h1>
       </div>
 
@@ -88,7 +88,7 @@ export default async function HomePage() {
             LIVRAISON OFFERTE DÈS 75 CHF PARTOUT EN SUISSE
           </h2>
           <p className="text-xs sm:text-sm text-white/80 leading-relaxed">
-            Passez votre commande en toute sérénité : zéro formalité douanière, livraison express par la Poste Suisse en 1 à 2 jours ou retrait gratuit dans notre boutique à Genève.
+            Consultez les délais de livraison et les options de retrait à Genève selon les produits de votre panier.
           </p>
           <div>
             <Link 
