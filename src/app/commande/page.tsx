@@ -242,7 +242,7 @@ export default function CheckoutPage() {
         .then((res) => res.json())
         .then(async (data) => {
           setIsProcessingStripe(false);
-          if (data.payment_status === 'paid' || data.status === 'complete') {
+          if (data.payment_status === 'paid') {
             const finalOrderNum = data.order_id || orderIdParam || `CMD-${Math.floor(100000 + Math.random() * 900000)}`;
             setOrderNumber(finalOrderNum);
             setFinalTotalFormatted(formatPrice(data.amount_total || cartSubtotal));
@@ -299,14 +299,7 @@ export default function CheckoutPage() {
               status: 'in_processing'
             };
 
-            // Post confirmed paid order to database
-            try {
-              await fetch('/api/orders/', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(paidOrderPayload)
-              });
-            } catch {}
+            // Verified server-side Stripe webhook owns order persistence.
 
             // Save to POS sales local cache
             try {
@@ -349,7 +342,7 @@ export default function CheckoutPage() {
             setIsSuccess(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
           } else {
-            setStripeError('Le statut du paiement n\'a pas pu être validé. Veuillez réessayer.');
+            setStripeError('Le paiement n\'est pas encore confirmé. Vérifiez votre confirmation avant de réessayer.');
           }
         })
         .catch(() => {
