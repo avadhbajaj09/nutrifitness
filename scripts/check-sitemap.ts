@@ -53,6 +53,33 @@ function extractTags(xml: string, tag: string): string[] {
   return matches;
 }
 
+/**
+ * Sitemap loc entries must be absolute HTTPS URLs on the canonical production
+ * host. Never silently rewrite an off-domain or insecure loc to localhost:
+ * doing so would hide indexing errors in the published XML.
+ */
+function validateSitemapLocs(urls: string[], context: string): void {
+  const seen = new Set<string>();
+  for (const value of urls) {
+    let parsed: URL;
+    try {
+      parsed = new URL(value);
+    } catch {
+      throw new Error(`[Sitemap Guard] Invalid URL in ${context}: ${value}`);
+    }
+    if (parsed.protocol !== 'https:' || parsed.hostname !== BASE_HOST ||
+        parsed.port || parsed.username || parsed.password ||
+        parsed.search || parsed.hash) {
+      throw new Error(`[Sitemap Guard] Noncanonical URL in ${context}: ${value}`);
+    }
+    const normalized = parsed.pathname.replace(/\/+$/, '') || '/';
+    if (seen.has(normalized)) {
+      throw new Error(`[Sitemap Guard] Duplicate URL in ${context}: ${value}`);
+    }
+    seen.add(normalized);
+  }
+}
+
 function extractCanonical(html: string): string | null {
   const match = html.match(/<link[^>]*rel=["']canonical["'][^>]*href=["']([^"']+)["']/i)
     || html.match(/<link[^>]*href=["']([^"']+)["'][^>]*rel=["']canonical["']/i);
@@ -87,6 +114,7 @@ async function main() {
   let allUrls: string[] = [];
 
   if (subSitemaps.length > 0 && indexRes.body.includes('<sitemap>')) {
+    validateSitemapLocs(subSitemaps, 'sitemap index');
     console.log(`[Sitemap Guard] Found ${subSitemaps.length} sub-sitemaps:`, subSitemaps);
     for (const sub of subSitemaps) {
       const res = await fetchText(sub.replace(/^https?:\/\/[^\/]+/, LOCAL_ORIGIN));
@@ -95,6 +123,7 @@ async function main() {
         process.exit(1);
       }
       const locs = extractTags(res.body, 'loc');
+      validateSitemapLocs(locs, sub);
       console.log(`  -> ${sub}: ${locs.length} URLs`);
       allUrls.push(...locs);
     }
@@ -102,6 +131,7 @@ async function main() {
     allUrls = extractTags(indexRes.body, 'loc');
   }
 
+  validateSitemapLocs(allUrls, 'combined sitemap URLs');
   console.log(`\n[Sitemap Guard] Total URLs to verify: ${allUrls.length}`);
 
   let pass200Count = 0;

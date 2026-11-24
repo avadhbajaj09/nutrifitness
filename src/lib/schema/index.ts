@@ -9,7 +9,7 @@ export function organization(): JsonLd {
 
   return {
     '@context': 'https://schema.org', '@type': 'Organization', '@id': `${SITE_URL}/#organization`,
-    name: SITE_NAME, url: SITE_URL, logo: abs('/logo.png'),
+    name: SITE_NAME, url: SITE_URL, logo: abs('/images/brand/logo.png'),
     sameAs,
   };
 }

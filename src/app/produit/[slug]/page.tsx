@@ -353,7 +353,7 @@ export default async function ProductDetailPage({ params }: Props) {
     : [
         'CH', 'LI', 'PT', 'ES', 'FR', 'DE', 'IT', 'AT', 'BE', 'LU', 'NL', 'IE', 'DK',
         'SE', 'FI', 'PL', 'CZ', 'SK', 'HU', 'SI', 'HR', 'RO', 'BG', 'EE', 'LV', 'LT',
-        'GR', 'CY', 'MT', 'UK', 'NO', 'IS'
+        'GR', 'CY', 'MT', 'GB', 'NO', 'IS'
       ];
 
   const hasStock = (typeof product.stockGeneva === 'number' || typeof product.stockPortugal === 'number')
