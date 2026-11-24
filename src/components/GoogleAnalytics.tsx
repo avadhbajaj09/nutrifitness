@@ -26,12 +26,12 @@ export default function GoogleAnalytics() {
               try { parsed = JSON.parse(decodeURIComponent(consentMatch[1])); } catch(e){}
             }
 
-            // Google Consent Mode v2: default granted if accepted, else sensible defaults
+            // Google Consent Mode v2: default denied unless explicitly accepted
             gtag('consent', 'default', {
-              'analytics_storage': (parsed && parsed.analytics === false) ? 'denied' : 'granted',
-              'ad_storage': (parsed && parsed.marketing === false) ? 'denied' : 'granted',
-              'ad_user_data': (parsed && parsed.marketing === false) ? 'denied' : 'granted',
-              'ad_personalization': (parsed && parsed.marketing === false) ? 'denied' : 'granted',
+              'analytics_storage': (parsed && parsed.analytics === true) ? 'granted' : 'denied',
+              'ad_storage': (parsed && parsed.marketing === true) ? 'granted' : 'denied',
+              'ad_user_data': (parsed && parsed.marketing === true) ? 'granted' : 'denied',
+              'ad_personalization': (parsed && parsed.marketing === true) ? 'granted' : 'denied',
               'wait_for_update': 500
             });
           `,
