@@ -68,19 +68,24 @@ async function products(): Promise<Source> {
 
   // Load updated_at timestamps from Supabase for freshness if available
   const dbTimestamps = new Map<string, string>();
+  const dbSlugs = new Set<string>();
   try {
     const supabase = getAdminSupabase();
-    const { data } = await supabase
+    const { data, error } = await supabase
       .from('products')
-      .select('slug, updated_at')
+      .select('slug, updated_at, id, sku, woo_id')
       .eq('status', 'published')
       .is('deleted_at', null);
 
+    if (error) throw error;
     if (data && data.length > 0) {
       for (const row of data) {
-        if (row.slug && row.updated_at) {
-          dbTimestamps.set(row.slug, new Date(row.updated_at).toISOString());
-        }
+        if (!row.slug || !/^[a-z0-9]+(?:-[a-z0-9]+)*$/i.test(row.slug)) continue;
+        const identifiers = [row.slug, row.id, row.sku, row.woo_id].filter(Boolean).map(v => String(v).toLowerCase().trim());
+        if (identifiers.some(v => hiddenSlugs.has(v) || hiddenSlugs.has('prod-' + v))) continue;
+        dbSlugs.add(row.slug);
+        const timestamp = Date.parse(row.updated_at || '');
+        if (Number.isFinite(timestamp)) dbTimestamps.set(row.slug, new Date(timestamp).toISOString());
       }
     }
   } catch (err) {
@@ -90,7 +95,7 @@ async function products(): Promise<Source> {
   const results: Source = [];
   const seenSlugs = new Set<string>();
 
-  for (const [slug] of validCatalogMap.entries()) {
+  for (const slug of new Set([...validCatalogMap.keys(), ...dbSlugs])) {
     // 1. Skip if slug is a redirect source
     const productPath = `/produit/${slug}/`;
     const productPathNoSlash = `/produit/${slug}`;
