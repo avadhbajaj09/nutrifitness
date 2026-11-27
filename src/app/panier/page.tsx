@@ -165,53 +165,57 @@ export default function CartPage() {
 
   const handleBeginCheckoutClick = () => {
     try {
-      sessionStorage.setItem('nf_begin_checkout_at', Date.now().toString());
-    } catch {}
+      try {
+        sessionStorage.setItem('nf_begin_checkout_at', Date.now().toString());
+      } catch {}
 
-    const discountRatio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
-    const items = cart.map(item => {
-      const rawName = typeof item.name === 'object' && item.name !== null 
-        ? ((item.name as any).fr || Object.values(item.name)[0] || 'Produit') 
-        : String(item.name || 'Produit');
-      const flavorStr = typeof item.flavor === 'object' && item.flavor !== null 
-        ? ((item.flavor as any).fr || '') 
-        : (item.flavor && item.flavor !== 'Standard' && item.flavor !== 'neutre' ? String(item.flavor) : '');
-      const sizeStr = typeof item.size === 'object' && item.size !== null 
-        ? ((item.size as any).fr || '') 
-        : (item.size && item.size !== 'Format standard' ? String(item.size) : '');
-      const variantParts = [flavorStr, sizeStr].filter(Boolean);
-      const itemVariant = variantParts.length > 0 ? variantParts.join(' / ') : undefined;
-      const price = Number(item.price) || 0;
-      const itemDiscount = discountRatio > 0 ? Math.round(price * discountRatio * 100) / 100 : undefined;
+      const discountRatio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
+      const items = (cart || []).filter(it => it && typeof it === 'object').map(item => {
+        const rawName = typeof item.name === 'object' && item.name !== null 
+          ? ((item.name as any).fr || Object.values(item.name)[0] || 'Produit') 
+          : String(item.name || 'Produit');
+        const flavorStr = typeof item.flavor === 'object' && item.flavor !== null 
+          ? ((item.flavor as any).fr || '') 
+          : (item.flavor && item.flavor !== 'Standard' && item.flavor !== 'neutre' ? String(item.flavor) : '');
+        const sizeStr = typeof item.size === 'object' && item.size !== null 
+          ? ((item.size as any).fr || '') 
+          : (item.size && item.size !== 'Format standard' ? String(item.size) : '');
+        const variantParts = [flavorStr, sizeStr].filter(Boolean);
+        const itemVariant = variantParts.length > 0 ? variantParts.join(' / ') : undefined;
+        const price = Number(item.price) || 0;
+        const itemDiscount = discountRatio > 0 ? Math.round(price * discountRatio * 100) / 100 : undefined;
 
-      return {
-        item_id: String(item.sku || item.itemKey || item.id || rawName).trim(),
-        item_name: rawName.trim(),
-        item_brand: item.brand || 'NutriFitness',
-        item_category: (item as any).categorySlug || 'Nutrition Sportive',
-        item_variant: itemVariant,
-        price,
-        quantity: item.quantity,
-        discount: itemDiscount,
-      };
-    });
+        return {
+          item_id: String(item.sku || item.itemKey || item.id || rawName).trim(),
+          item_name: rawName.trim(),
+          item_brand: item.brand || 'NutriFitness',
+          item_category: (item as any).categorySlug || 'Nutrition Sportive',
+          item_variant: itemVariant,
+          price,
+          quantity: Number(item.quantity) || 1,
+          discount: itemDiscount,
+        };
+      });
 
-    const activeCurr = (currency || 'CHF').toUpperCase();
-    const activeCoupon = blackFriday.isActive
-      ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
-      : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
+      const activeCurr = (currency || 'CHF').toUpperCase();
+      const activeCoupon = blackFriday.isActive
+        ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
+        : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
 
-    trackBeginCheckout({
-      items,
-      totalValue: discountedSubtotal,
-      currency: activeCurr,
-      coupon: activeCoupon,
-    });
-    trackMetaInitiateCheckout({
-      items,
-      totalValue: discountedSubtotal,
-      currency: activeCurr,
-    });
+      trackBeginCheckout({
+        items,
+        totalValue: discountedSubtotal,
+        currency: activeCurr,
+        coupon: activeCoupon,
+      });
+      trackMetaInitiateCheckout({
+        items,
+        totalValue: discountedSubtotal,
+        currency: activeCurr,
+      });
+    } catch (err) {
+      console.warn('[Cart] Begin checkout tracking error:', err);
+    }
   };
 
   return (

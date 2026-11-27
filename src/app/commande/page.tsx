@@ -72,7 +72,7 @@ function buildEcommerceItems(
   discountRatio = 0
 ): EcommerceItem[] {
   if (!items || !Array.isArray(items)) return [];
-  return items.map((item) => {
+  return items.filter(it => it && typeof it === 'object').map((item) => {
     const rawName = typeof item.name === 'object' && item.name !== null
       ? ((item.name as any).fr || Object.values(item.name)[0] || 'Produit')
       : String(item.name || 'Produit');
@@ -91,11 +91,15 @@ function buildEcommerceItems(
     const price = Number(item.price) || 0;
     const discount = discountRatio > 0 ? Math.round(price * discountRatio * 100) / 100 : undefined;
 
+    const categoryStr = typeof item.categorySlug === 'object' && item.categorySlug !== null
+      ? ((item.categorySlug as any).fr || Object.values(item.categorySlug)[0] || 'Nutrition Sportive')
+      : String(item.categorySlug || 'Nutrition Sportive');
+
     return {
       item_id: String(item.sku || item.productId || item.id || item.itemKey || rawName).trim(),
       item_name: rawName.trim(),
-      item_brand: item.brand || 'NutriFitness',
-      item_category: item.categorySlug || 'Nutrition Sportive',
+      item_brand: typeof item.brand === 'string' ? item.brand : 'NutriFitness',
+      item_category: categoryStr,
       item_variant: itemVariant,
       price,
       quantity: Number(item.quantity) || 1,
@@ -419,14 +423,20 @@ export default function CheckoutPage() {
         });
     }
 
-    // Initialize or restore session lead ID
-    const existingLead = sessionStorage.getItem('nf_checkout_lead_id');
-    if (existingLead) {
-      checkoutLeadIdRef.current = existingLead;
-    } else {
-      const newLead = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
-      sessionStorage.setItem('nf_checkout_lead_id', newLead);
-      checkoutLeadIdRef.current = newLead;
+    // Initialize or restore session lead ID (guarded for Safari Private Browsing quota restrictions)
+    try {
+      const existingLead = sessionStorage.getItem('nf_checkout_lead_id');
+      if (existingLead) {
+        checkoutLeadIdRef.current = existingLead;
+      } else {
+        const newLead = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
+        sessionStorage.setItem('nf_checkout_lead_id', newLead);
+        checkoutLeadIdRef.current = newLead;
+      }
+    } catch {
+      if (!checkoutLeadIdRef.current) {
+        checkoutLeadIdRef.current = `WEB-${Math.floor(100000 + Math.random() * 900000)}`;
+      }
     }
 
     // Check for 1-click cart restoration parameter: ?restore=WEB-...
@@ -478,13 +488,26 @@ export default function CheckoutPage() {
 
     // 1. Direct city check
     if (rawCity) {
+      // Check Swiss cities
+      const chCities = [
+        'genève', 'geneve', 'geneva', 'lausanne', 'zürich', 'zurich', 'bern', 'berne',
+        'bâle', 'basel', 'luzern', 'lucerne', 'lugano', 'st. gallen', 'saint-gall', 'biel',
+        'bienne', 'thun', 'fribourg', 'freiburg', 'schaffhausen', 'vernier', 'chur', 'sion',
+        'sitten', 'uster', 'montreux', 'lancy', 'meyrin', 'carouge', 'onex', 'versoix',
+        'nyon', 'morges', 'vevey', 'yverdon', 'neuchâtel', 'neuchatel', 'aarau', 'bellinzona'
+      ];
+      if (chCities.some(c => rawCity === c || rawCity.startsWith(c + ' '))) {
+        targetCountry = 'CH';
+        detectedPlaceName = 'Suisse';
+      }
+
       // Check Portuguese cities
       const ptCities = [
         'lisbon', 'lisboa', 'lisbonne', 'lissabon', 'porto', 'oporte', 'coimbra',
         'braga', 'setubal', 'setúbal', 'faro', 'aveiro', 'funchal', 'amadora',
         'almada', 'cascais', 'sintra', 'guimaraes', 'guimarães', 'evora', 'évora'
       ];
-      if (ptCities.some(c => rawCity === c || rawCity.startsWith(c + ' '))) {
+      if (!targetCountry && ptCities.some(c => rawCity === c || rawCity.startsWith(c + ' '))) {
         targetCountry = 'PT';
         detectedPlaceName = 'Lisbonne / Portugal';
       }
@@ -521,7 +544,17 @@ export default function CheckoutPage() {
       }
     }
 
-    // 2. Postal code pattern check (e.g. Portuguese 4-3 digits: 1000-001)
+    // 2. Postal code pattern check
+    // 2a. Swiss NPA (4 digits between 1000 and 9999)
+    if (!targetCountry && /^\d{4}$/.test(rawZip)) {
+      const val = parseInt(rawZip, 10);
+      if (val >= 1000 && val <= 9999 && customerCountry !== 'CH' && customerCountry !== 'LI') {
+        targetCountry = 'CH';
+        detectedPlaceName = 'NPA suisse (4 chiffres)';
+      }
+    }
+
+    // 2b. Portuguese 4-3 digits: 1000-001
     if (!targetCountry && /^\d{4}-\d{3}$/.test(rawZip)) {
       targetCountry = 'PT';
       detectedPlaceName = 'Code postal portugais (XXXX-XXX)';
@@ -549,9 +582,10 @@ export default function CheckoutPage() {
   const postalValidation = useMemo(() => {
     const raw = customerPostalCode.trim();
     if (!raw) return { isValid: false, message: 'Code postal requis' };
+    const safeCountry = (customerCountry || 'CH').toUpperCase();
 
     // 1. Check if user typed an unsupported international format (like 6-digit Indian pincode 451001)
-    if (/^\d{6}$/.test(raw) && !['PL', 'RO'].includes(customerCountry)) {
+    if (/^\d{6}$/.test(raw) && !['PL', 'RO'].includes(safeCountry)) {
       return {
         isValid: false,
         message: '❌ Code postal non desservi. NutriFitness livre exclusivement en Suisse, au Liechtenstein et dans l\'Union Européenne.'
@@ -559,7 +593,7 @@ export default function CheckoutPage() {
     }
 
     // 2. Switzerland validation
-    if (customerCountry === 'CH') {
+    if (safeCountry === 'CH') {
       const normCity = customerCity.trim().toLowerCase();
       const ptCities = ['lisbon', 'lisboa', 'lisbonne', 'lissabon', 'porto', 'coimbra', 'braga', 'faro', 'aveiro', 'funchal', 'setubal', 'setúbal'];
       if (ptCities.some(c => normCity === c || normCity.startsWith(c + ' '))) {
@@ -581,7 +615,7 @@ export default function CheckoutPage() {
     }
 
     // 3. Liechtenstein validation
-    if (customerCountry === 'LI') {
+    if (safeCountry === 'LI') {
       const is4Digits = /^\d{4}$/.test(raw);
       const val = parseInt(raw, 10);
       if (!is4Digits || val < 9485 || val > 9499) {
@@ -594,7 +628,7 @@ export default function CheckoutPage() {
     }
 
     // 4. France, Germany, Italy, Spain (5 digits)
-    if (['FR', 'DE', 'IT', 'ES'].includes(customerCountry)) {
+    if (['FR', 'DE', 'IT', 'ES'].includes(safeCountry)) {
       if (!/^\d{5}$/.test(raw)) {
         return {
           isValid: false,
@@ -605,7 +639,7 @@ export default function CheckoutPage() {
     }
 
     // 5. Portugal (4 digits or 0000-000)
-    if (customerCountry === 'PT') {
+    if (safeCountry === 'PT') {
       if (!/^\d{4}(-\d{3})?$/.test(raw)) {
         return {
           isValid: false,
@@ -629,7 +663,7 @@ export default function CheckoutPage() {
   // Is customer's address in Geneva canton?
   // Only Geneva residents (NPA 1200-1299 or city 'Genève') have access to Click & Collect
   const isGenevaAddress = useMemo(() => {
-    if (customerCountry !== 'CH') return false;
+    if ((customerCountry || 'CH').toUpperCase() !== 'CH') return false;
     const npaNum = parseInt(customerPostalCode.trim(), 10);
     const hasGenevaNpa = !isNaN(npaNum) && npaNum >= 1200 && npaNum <= 1299;
     const hasGenevaCity = /gen[èe]ve/i.test(customerCity.trim());
@@ -653,23 +687,25 @@ export default function CheckoutPage() {
 
   // Track non-deliverable items for selected customer destination
   const nonDeliverableItems = useMemo(() => {
+    const dest = (customerCountry || 'CH').toUpperCase();
     return cart.filter(item => {
       if (item.isEbook) return false;
-      return !isProductDeliverableToCountry(customerCountry, item.locationType, item.shippingOrigin);
+      return !isProductDeliverableToCountry(dest, item.locationType, item.shippingOrigin);
     });
   }, [cart, customerCountry]);
   const hasBlockedItems = nonDeliverableItems.length > 0;
 
   // Group cart items by origin based on destination country
   const { genevaItems, portugalItems, isMixedCart } = useMemo(() => {
-    const destIsCH = customerCountry === 'CH' || customerCountry === 'LI';
+    const dest = (customerCountry || 'CH').toUpperCase();
+    const destIsCH = dest === 'CH' || dest === 'LI';
     const geList: CartItem[] = [];
     const ptList: CartItem[] = [];
 
     for (const item of cart) {
       if (item.isEbook) continue;
       // If item cannot be delivered to customerCountry, do NOT group into valid shipments
-      if (!isProductDeliverableToCountry(customerCountry, item.locationType, item.shippingOrigin)) {
+      if (!isProductDeliverableToCountry(dest, item.locationType, item.shippingOrigin)) {
         continue;
       }
 
@@ -791,27 +827,68 @@ export default function CheckoutPage() {
   // Track GA4 begin_checkout and Meta InitiateCheckout
   useEffect(() => {
     if (typeof window === 'undefined') return;
-    const urlParams = new URLSearchParams(window.location.search);
-    const isReturningFromStripe = Boolean(urlParams.get('session_id'));
-
-    // Check if begin_checkout was already fired from cart page transition within last 30s
-    let isRecentFromCart = false;
     try {
-      const lastBeginAt = sessionStorage.getItem('nf_begin_checkout_at');
-      if (lastBeginAt && Date.now() - Number(lastBeginAt) < 30000) {
-        isRecentFromCart = true;
-        sessionStorage.removeItem('nf_begin_checkout_at');
-      }
-    } catch {}
+      const urlParams = new URLSearchParams(window.location.search);
+      const isReturningFromStripe = Boolean(urlParams.get('session_id'));
 
-    if (
-      cart && 
-      cart.length > 0 && 
-      !isReturningFromStripe && 
-      !isRecentFromCart && 
-      !hasFiredBeginCheckoutRef.current
-    ) {
-      hasFiredBeginCheckoutRef.current = true;
+      // Check if begin_checkout was already fired from cart page transition within last 30s
+      let isRecentFromCart = false;
+      try {
+        const lastBeginAt = sessionStorage.getItem('nf_begin_checkout_at');
+        if (lastBeginAt && Date.now() - Number(lastBeginAt) < 30000) {
+          isRecentFromCart = true;
+          sessionStorage.removeItem('nf_begin_checkout_at');
+        }
+      } catch {}
+
+      if (
+        cart && 
+        cart.length > 0 && 
+        !isReturningFromStripe && 
+        !isRecentFromCart && 
+        !hasFiredBeginCheckoutRef.current
+      ) {
+        hasFiredBeginCheckoutRef.current = true;
+        const ratio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
+        const ecommerceItems = buildEcommerceItems(cart, ratio);
+        const activeCurr = (currency || 'CHF').toUpperCase();
+        const activeCoupon = blackFriday.isActive
+          ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
+          : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
+
+        trackBeginCheckout({
+          items: ecommerceItems,
+          totalValue: discountedSubtotal,
+          currency: activeCurr,
+          coupon: activeCoupon,
+        });
+
+        trackMetaInitiateCheckout({
+          items: ecommerceItems,
+          totalValue: discountedSubtotal,
+          currency: activeCurr,
+        });
+      }
+    } catch (err) {
+      console.warn('[Checkout] Begin checkout tracking error:', err);
+    }
+  }, [cart, cartSubtotal, currency, discountAmount, discountedSubtotal, blackFriday, appliedCoupon, discountRate, couponCode]);
+
+  // Record shipping info helper for GA4 add_shipping_info
+  const recordShippingInfo = useCallback((force = false) => {
+    try {
+      if (!cart || cart.length === 0 || !isAddressCompleted || !postalValidation.isValid) return;
+
+      const shippingTier = isMixedCart
+        ? `Expédition Combinée (${genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'PostPac Priority'} + Livraison Directe)`
+        : genevaItems.length > 0
+        ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique)' : 'PostPac Priority (La Poste Suisse)')
+        : 'Transporteur Express International';
+
+      const shippingFingerprint = `${customerCountry}|${customerPostalCode}|${customerCity}|${shippingTier}|${totalShippingCost}|${cart.length}|${discountedSubtotal}`;
+      if (!force && lastTrackedShippingRef.current === shippingFingerprint) return;
+      lastTrackedShippingRef.current = shippingFingerprint;
+
       const ratio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
       const ecommerceItems = buildEcommerceItems(cart, ratio);
       const activeCurr = (currency || 'CHF').toUpperCase();
@@ -819,50 +896,17 @@ export default function CheckoutPage() {
         ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
         : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
 
-      trackBeginCheckout({
+      trackAddShippingInfo({
         items: ecommerceItems,
-        totalValue: discountedSubtotal,
+        totalValue: grandTotal,
         currency: activeCurr,
+        shippingTier,
+        shippingCost: totalShippingCost,
         coupon: activeCoupon,
       });
-
-      trackMetaInitiateCheckout({
-        items: ecommerceItems,
-        totalValue: discountedSubtotal,
-        currency: activeCurr,
-      });
+    } catch (err) {
+      console.warn('[Checkout] Shipping info tracking error:', err);
     }
-  }, [cart, cartSubtotal, currency, discountAmount, discountedSubtotal, blackFriday, appliedCoupon, discountRate, couponCode]);
-
-  // Record shipping info helper for GA4 add_shipping_info
-  const recordShippingInfo = useCallback((force = false) => {
-    if (!cart || cart.length === 0 || !isAddressCompleted || !postalValidation.isValid) return;
-
-    const shippingTier = isMixedCart
-      ? `Expédition Combinée (${genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'PostPac Priority'} + Livraison Directe)`
-      : genevaItems.length > 0
-      ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique)' : 'PostPac Priority (La Poste Suisse)')
-      : 'Transporteur Express International';
-
-    const shippingFingerprint = `${customerCountry}|${customerPostalCode}|${customerCity}|${shippingTier}|${totalShippingCost}|${cart.length}|${discountedSubtotal}`;
-    if (!force && lastTrackedShippingRef.current === shippingFingerprint) return;
-    lastTrackedShippingRef.current = shippingFingerprint;
-
-    const ratio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
-    const ecommerceItems = buildEcommerceItems(cart, ratio);
-    const activeCurr = (currency || 'CHF').toUpperCase();
-    const activeCoupon = blackFriday.isActive
-      ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
-      : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
-
-    trackAddShippingInfo({
-      items: ecommerceItems,
-      totalValue: grandTotal,
-      currency: activeCurr,
-      shippingTier,
-      shippingCost: totalShippingCost,
-      coupon: activeCoupon,
-    });
   }, [
     cart, 
     isAddressCompleted, 
@@ -894,29 +938,33 @@ export default function CheckoutPage() {
 
   // Handle explicit payment method toggle
   const handlePaymentMethodSelect = (method: 'card' | 'twint' | 'postfinance') => {
-    setPaymentMethod(method);
-    if (cart.length > 0 && isAddressCompleted && postalValidation.isValid) {
-      const ratio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
-      const ecommerceItems = buildEcommerceItems(cart, ratio);
-      const activeCurr = (currency || 'CHF').toUpperCase();
-      const activeCoupon = blackFriday.isActive
-        ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
-        : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
+    try {
+      setPaymentMethod(method);
+      if (cart.length > 0 && isAddressCompleted && postalValidation.isValid) {
+        const ratio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
+        const ecommerceItems = buildEcommerceItems(cart, ratio);
+        const activeCurr = (currency || 'CHF').toUpperCase();
+        const activeCoupon = blackFriday.isActive
+          ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
+          : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
 
-      trackAddPaymentInfo({
-        items: ecommerceItems,
-        totalValue: grandTotal,
-        currency: activeCurr,
-        paymentType: method,
-        coupon: activeCoupon,
-      });
+        trackAddPaymentInfo({
+          items: ecommerceItems,
+          totalValue: grandTotal,
+          currency: activeCurr,
+          paymentType: method,
+          coupon: activeCoupon,
+        });
 
-      trackMetaAddPaymentInfo({
-        items: ecommerceItems,
-        totalValue: grandTotal,
-        currency: activeCurr,
-        paymentType: method,
-      });
+        trackMetaAddPaymentInfo({
+          items: ecommerceItems,
+          totalValue: grandTotal,
+          currency: activeCurr,
+          paymentType: method,
+        });
+      }
+    } catch (err) {
+      console.warn('[Checkout] Payment select tracking error:', err);
     }
   };
 
@@ -1405,7 +1453,11 @@ export default function CheckoutPage() {
             <ul className="list-disc list-inside space-y-1 text-red-200/90 pl-1">
               {nonDeliverableItems.map(item => (
                 <li key={item.itemKey}>
-                  <span className="font-semibold text-white">{item.name}</span>
+                  <span className="font-semibold text-white">
+                    {typeof item.name === 'object' && item.name !== null
+                      ? ((item.name as any)[locale] || (item.name as any).fr || Object.values(item.name)[0] || 'Produit')
+                      : String(item.name || 'Produit')}
+                  </span>
                 </li>
               ))}
             </ul>
@@ -2029,19 +2081,23 @@ export default function CheckoutPage() {
           {/* Cart items list with Origin Badges & Prominent Flavours */}
           <div className="space-y-3.5 max-h-72 overflow-y-auto pr-1 divide-y divide-white/10">
             {cart.map(item => {
+              const safeCountry = String(customerCountry || 'CH').toUpperCase();
               const isCommon = item.locationType === 'COMMON' || item.shippingOrigin === 'common';
-              const isPt = (item.shippingOrigin === 'portugal' && !isCommon) || (!customerCountry.includes('CH') && isCommon);
+              const isPt = (item.shippingOrigin === 'portugal' && !isCommon) || (!safeCountry.includes('CH') && isCommon);
               const flavorObj = item.flavor as unknown as Record<string, string> | null | undefined;
               const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
                 ? (flavorObj?.[locale] || flavorObj?.fr || 'Standard')
                 : String(item.flavor || 'Standard');
               const cleanFlavorStr = flavorStr.replace(/\s*\(\d+\s*KG\)/i, '').trim();
               const isDistinctFlavor = cleanFlavorStr && !['standard', 'neutre', 'format standard', 'default'].includes(cleanFlavorStr.toLowerCase());
+              const itemName = typeof item.name === 'object' && item.name !== null
+                ? ((item.name as any)[locale] || (item.name as any).fr || Object.values(item.name)[0] || 'Produit')
+                : String(item.name || 'Produit');
 
               return (
                 <div key={item.itemKey} className="flex items-start gap-3 pt-3 first:pt-1">
                   <div className="relative w-14 h-14 bg-black/40 rounded-xl p-1.5 shrink-0 border border-white/10 flex items-center justify-center">
-                    <Image src={item.image || '/images/placeholder.webp'} alt={item.name} fill className="object-contain p-1" />
+                    <Image src={item.image || '/images/placeholder.webp'} alt={itemName} fill className="object-contain p-1" />
                   </div>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-1.5 flex-wrap">
@@ -2055,7 +2111,7 @@ export default function CheckoutPage() {
                       </span>
                     </div>
                     <h4 className="text-xs font-bold text-white leading-snug mt-0.5 line-clamp-2">
-                      {item.name}
+                      {itemName}
                     </h4>
                     
                     {/* Clear High-Visibility Flavour Badge */}

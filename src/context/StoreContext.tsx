@@ -412,14 +412,16 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       }
 
       // Country initialization & auto-detection
+      // Default to Switzerland ('CH') on nutrifitness.ch so Swiss boutique inventory is never blocked by proxy/IP detection
       const savedCountry = localStorage.getItem(COUNTRY_KEY);
+      const isExplicit = localStorage.getItem('nutrifitness_country_explicit') === 'true';
       const cookieMatch = typeof document !== 'undefined'
         ? document.cookie.match(/(?:^|;\s*)nf_country=([^;]*)/)
         : null;
       const cookieCountry = cookieMatch ? decodeURIComponent(cookieMatch[1]) : null;
       const initialCountry = savedCountry || cookieCountry;
 
-      if (initialCountry && /^[A-Z]{2}$/i.test(initialCountry)) {
+      if (initialCountry && /^[A-Z]{2}$/i.test(initialCountry) && isExplicit) {
         const rawUpper = initialCountry.toUpperCase();
         const upper = isCountrySupported(rawUpper) ? rawUpper : 'CH';
         setCountryCodeState(upper);
@@ -431,24 +433,14 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
           document.cookie = `nf_country=${upper}; path=/; max-age=2592000; SameSite=Lax`;
         } catch (_) {}
       } else {
-        // Auto-detect country via IP header
-        fetch('/api/fulfillment/availability/?detect=1')
-          .then(r => r.json())
-          .then(data => {
-            if (data?.country && typeof data.country === 'string' && /^[A-Z]{2}$/i.test(data.country)) {
-              const rawDetected = data.country.toUpperCase();
-              const detected = isCountrySupported(rawDetected) ? rawDetected : 'CH';
-              setCountryCodeState(detected);
-              const autoCurrency: SupportedCurrency = (detected === 'CH' || detected === 'LI') ? 'CHF' : 'EUR';
-              setCurrencyState(autoCurrency);
-              try {
-                localStorage.setItem(COUNTRY_KEY, detected);
-                localStorage.setItem(CURRENCY_KEY, autoCurrency);
-                document.cookie = `nf_country=${detected}; path=/; max-age=2592000; SameSite=Lax`;
-              } catch (_) {}
-            }
-          })
-          .catch(() => {});
+        // Guaranteed Swiss default on storefront unless explicitly changed by customer
+        setCountryCodeState('CH');
+        setCurrencyState('CHF');
+        try {
+          localStorage.setItem(COUNTRY_KEY, 'CH');
+          localStorage.setItem(CURRENCY_KEY, 'CHF');
+          document.cookie = `nf_country=CH; path=/; max-age=2592000; SameSite=Lax`;
+        } catch (_) {}
       }
     } catch (e) {
       console.warn('Storage read error:', e);
@@ -486,13 +478,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
   };
 
   const setCountryCode = (newCode: string) => {
-    const upper = (newCode || 'CH').toUpperCase().trim();
+    const rawUpper = (newCode || 'CH').toUpperCase().trim();
+    const upper = isCountrySupported(rawUpper) ? rawUpper : 'CH';
     setCountryCodeState(upper);
     const targetCurrency: SupportedCurrency = (upper === 'CH' || upper === 'LI') ? 'CHF' : 'EUR';
     setCurrencyState(targetCurrency);
     try {
       localStorage.setItem(COUNTRY_KEY, upper);
       localStorage.setItem(CURRENCY_KEY, targetCurrency);
+      localStorage.setItem('nutrifitness_country_explicit', 'true');
       document.cookie = `nf_country=${upper}; path=/; max-age=2592000; SameSite=Lax`;
     } catch (e) {}
   };

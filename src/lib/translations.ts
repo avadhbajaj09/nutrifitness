@@ -72,6 +72,7 @@ export interface TranslationDictionary {
     originPortugal: string;
     originCommon: string;
     notAvailableCountry: string;
+    notAvailable: string;
   };
   checkout: {
     title: string;
@@ -150,7 +151,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       originSwitzerland: 'Expédié de Suisse',
       originPortugal: 'Livraison Suivie (3-5 jours)',
       originCommon: 'Expédition Prioritaire',
-      notAvailableCountry: 'Non disponible dans votre pays',
+      notAvailableCountry: 'Non disponible',
+      notAvailable: 'Non disponible',
     },
     checkout: {
       title: 'Validation de votre Commande',
@@ -227,7 +229,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       originSwitzerland: 'Versand aus der Schweiz',
       originPortugal: 'Sendungsverfolgung (3-5 Tage)',
       originCommon: 'Priority-Versand',
-      notAvailableCountry: 'In Ihrem Land nicht verfügbar',
+      notAvailableCountry: 'Nicht verfügbar',
+      notAvailable: 'Nicht verfügbar',
     },
     checkout: {
       title: 'Bestellung abschliessen',
@@ -304,7 +307,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       originSwitzerland: 'Spedito dalla Svizzera',
       originPortugal: 'Spedizione Tracciata (3-5 giorni)',
       originCommon: 'Spedizione Prioritaria',
-      notAvailableCountry: 'Non disponibile nel tuo paese',
+      notAvailableCountry: 'Non disponibile',
+      notAvailable: 'Non disponibile',
     },
     checkout: {
       title: 'Completa il tuo Ordine',
@@ -381,7 +385,8 @@ export const TRANSLATIONS: Record<SupportedLocale, TranslationDictionary> = {
       originSwitzerland: 'Shipped from Switzerland',
       originPortugal: 'Tracked Delivery (3-5 days)',
       originCommon: 'Priority Shipping',
-      notAvailableCountry: 'Not available in your country',
+      notAvailableCountry: 'Not available',
+      notAvailable: 'Not available',
     },
     checkout: {
       title: 'Secure Checkout',

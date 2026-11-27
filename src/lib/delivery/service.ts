@@ -330,9 +330,9 @@ export async function resolveBatchEstimates(
         stockStatus: 'out_of_stock',
         stockCount: availableStock,
         stockPillText: {
-          fr: 'Non disponible dans votre pays',
-          en: 'Not available in your country',
-          de: 'In Ihrem Land nicht verfügbar'
+          fr: 'Non disponible',
+          en: 'Not available',
+          de: 'Nicht verfügbar'
         },
         estimate: undefined,
         displayDates: null,

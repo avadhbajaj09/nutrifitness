@@ -30,7 +30,7 @@ export async function getAvailability(
     labelOverride?: string,
     commonNote?: string
   ): AvailabilityResult => {
-    let label = '❌ Non disponible dans votre pays';
+    let label = '❌ Non disponible';
     if (available) {
       label = `Livraison en ${etaMin}–${etaMax} jours ouvrables`;
     }
@@ -115,5 +115,5 @@ export async function getAvailability(
   }
 
   // Blocked for Europe (Swiss shop ships exclusively to Switzerland)
-  return getResult(false, undefined, undefined, undefined, false, "❌ Non disponible dans votre pays");
+  return getResult(false, undefined, undefined, undefined, false, "❌ Non disponible");
 }

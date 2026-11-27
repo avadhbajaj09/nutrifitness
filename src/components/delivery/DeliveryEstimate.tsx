@@ -69,10 +69,10 @@ export function DeliveryEstimate({
   // If product is not available in destination country
   if (estimate && !estimate.isAvailable && estimate.stockPillText) {
     const notAvailText = currentLocale === 'en'
-      ? 'Not available in your country'
+      ? 'Not available'
       : currentLocale === 'de'
-      ? 'In Ihrem Land nicht verfügbar'
-      : 'Non livrable dans votre pays';
+      ? 'Nicht verfügbar'
+      : 'Non disponible';
 
     return (
       <div className={`space-y-1 text-left ${className}`}>

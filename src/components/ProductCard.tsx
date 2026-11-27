@@ -199,12 +199,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
                   className="inline-flex items-center justify-center min-h-[34px] px-2.5 py-1 text-[9.5px] font-bold uppercase tracking-wider text-red-300/80 bg-red-950/40 rounded-xl border border-red-800/40 cursor-not-allowed text-center whitespace-nowrap"
                   title={
                     locale === 'en'
-                      ? 'Not available in your country'
+                      ? 'Not available'
                       : locale === 'de'
-                      ? 'In Ihrem Land nicht verfügbar'
+                      ? 'Nicht verfügbar'
                       : locale === 'it'
-                      ? 'Non disponible nel tuo paese'
-                      : 'Non disponible dans votre pays'
+                      ? 'Non disponibile'
+                      : 'Non disponible'
                   }
                 >
                   Indisponible

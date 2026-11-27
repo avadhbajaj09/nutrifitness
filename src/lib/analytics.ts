@@ -92,26 +92,30 @@ export function pushDataLayer(payload: Record<string, unknown>): void {
     logDataLayerDebug({ ...payload, _tracking_excluded: true });
     return;
   }
-  window.dataLayer = window.dataLayer || [];
+  try {
+    window.dataLayer = window.dataLayer || [];
 
-  // Enable GA4 DebugView automatically when debug query param or non-production is active
-  const isDebug =
-    process.env.NODE_ENV !== 'production' ||
-    (typeof window !== 'undefined' &&
-      (window.location.search.includes('gtm_debug') ||
-       window.location.search.includes('debug_dl=1') ||
-       window.location.search.includes('ga_debug') ||
-       window.location.search.includes('debug_mode')));
+    // Enable GA4 DebugView automatically when debug query param or non-production is active
+    const isDebug =
+      process.env.NODE_ENV !== 'production' ||
+      (typeof window !== 'undefined' &&
+        (window.location.search.includes('gtm_debug') ||
+         window.location.search.includes('debug_dl=1') ||
+         window.location.search.includes('ga_debug') ||
+         window.location.search.includes('debug_mode')));
 
-  if (isDebug) {
-    payload.debug_mode = true;
-    if (payload.ecommerce && typeof payload.ecommerce === 'object') {
-      (payload.ecommerce as any).debug_mode = true;
+    if (isDebug) {
+      payload.debug_mode = true;
+      if (payload.ecommerce && typeof payload.ecommerce === 'object') {
+        (payload.ecommerce as any).debug_mode = true;
+      }
     }
-  }
 
-  logDataLayerDebug(payload);
-  window.dataLayer.push(payload);
+    logDataLayerDebug(payload);
+    window.dataLayer.push(payload);
+  } catch (err) {
+    console.warn('[Analytics] dataLayer push error:', err);
+  }
 }
 
 /**

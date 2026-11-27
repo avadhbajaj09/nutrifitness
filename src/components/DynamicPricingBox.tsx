@@ -254,7 +254,7 @@ export default function DynamicPricingBox({
                 <AlertCircle className="w-3.5 h-3.5" />
                 <span>
                   {!isDeliverable
-                    ? (locale === 'en' ? 'Not available in your country' : locale === 'de' ? 'In Ihrem Land nicht verfügbar' : locale === 'it' ? 'Non disponibile nel tuo paese' : 'Non disponible dans votre pays')
+                    ? (locale === 'en' ? 'Not available' : locale === 'de' ? 'Nicht verfügbar' : locale === 'it' ? 'Non disponibile' : 'Non disponible')
                     : (locale === 'en' ? 'Out of stock' : locale === 'de' ? 'Nicht vorrätig' : locale === 'it' ? 'Esaurito' : 'Rupture de stock')}
                 </span>
               </div>
@@ -387,13 +387,13 @@ export default function DynamicPricingBox({
           >
             <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
             <span>
-              {t.common.notAvailableCountry || (locale === 'en'
-                ? 'Not available in your country'
+              {t.common.notAvailable || (locale === 'en'
+                ? 'Not available'
                 : locale === 'de'
-                ? 'In Ihrem Land nicht verfügbar'
+                ? 'Nicht verfügbar'
                 : locale === 'it'
-                ? 'Non disponibile nel tuo paese'
-                : 'Non disponible dans votre pays')}
+                ? 'Non disponibile'
+                : 'Non disponible')}
             </span>
           </button>
         ) : isSelectedVariantOutOfStock ? (
@@ -405,7 +405,7 @@ export default function DynamicPricingBox({
             <AlertCircle className="w-4 h-4 shrink-0 text-red-400" />
             <span>
               {isSwissDest
-                ? (locale === 'de' ? 'In der Schweiz nicht vorrätig' : locale === 'en' ? 'Out of stock in Switzerland' : 'Rupture de stock en Suisse')
+                ? (locale === 'de' ? 'Nicht vorrätig' : locale === 'en' ? 'Out of stock' : 'Rupture de stock')
                 : (locale === 'de' ? 'Dieser Geschmack ist ausverkauft' : locale === 'en' ? 'This flavor is out of stock' : 'Cette saveur est en rupture de stock')}
             </span>
           </button>
