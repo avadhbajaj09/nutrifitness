@@ -257,3 +257,25 @@ old_path,new_path,type,note
 /brand/applied-nutrition/,/marque/applied-nutrition/,exact,Old /brand/ pattern pointing to clean /marque/<slug>/
 /marque/prozis/,/marques/,fallback,Brand mapped per instructions
 /categorie-produit/PERTE-DE-POIDS,/categorie/perte-de-poids/,exact,Case-insensitive variant without slash
+/boutique-de-nutrition-sportive-montreux/,/boutique-geneve/,exact,Legacy Montreux boutique page
+/ashwagandha/,/produit/ashwagandha-ksm-66-600mg/,exact,Generic ashwagandha legacy URL
+/ashwagzndha/,/produit/ashwagandha-ksm-66-600mg/,exact,Common ashwagandha typo URL
+/ballonnements-retention-deau-silhouette-floue/,/categorie/bien-etre-sommeil-digestion/,exact,Legacy bloating and water retention guide
+/proteines-et-whey-proteine-le-guide-complet-pour-optimiser-performance-et-recuperation-sportive/,/categorie/proteines/,exact,Legacy whey protein guide
+/produit/,/boutique/,exact,Bare product directory route
+/complements-alimentaires/,/boutique/,exact,Generic dietary supplements URL
+/alimentation-nutrition-sportive/,/boutique/,exact,Generic sports nutrition URL
+/produit-creatine-geneve/,/creatine-geneve/,exact,City creatine SEO - Geneve
+/produit-creatine-lausanne/,/categorie/creatine/,exact,City creatine SEO - Lausanne
+/produit-creatine-montreux/,/categorie/creatine/,exact,City creatine SEO - Montreux
+/produit-creatine-vevey/,/categorie/creatine/,exact,City creatine SEO - Vevey
+/produit-creatine-nyon/,/categorie/creatine/,exact,City creatine SEO - Nyon
+/produit-creatine-fribourg/,/categorie/creatine/,exact,City creatine SEO - Fribourg
+/produit-creatine-sion/,/categorie/creatine/,exact,City creatine SEO - Sion
+/produit-creatine-neuchatel/,/categorie/creatine/,exact,City creatine SEO - Neuchatel
+/produit-creatine-bienne/,/categorie/creatine/,exact,City creatine SEO - Bienne
+/produit-creatine-bern/,/categorie/creatine/,exact,City creatine SEO - Bern
+/produit-creatine-zurich/,/categorie/creatine/,exact,City creatine SEO - Zurich
+/produit-creatine-bale/,/categorie/creatine/,exact,City creatine SEO - Bale
+/produit-creatine-lugano/,/categorie/creatine/,exact,City creatine SEO - Lugano
+/produit-creatine-morges/,/categorie/creatine/,exact,City creatine SEO - Morges

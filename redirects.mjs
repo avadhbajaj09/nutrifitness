@@ -27,14 +27,26 @@ export function getRedirects() {
   const rows = parseCsv(fs.readFileSync(csvPath, 'utf8'));
 
   // Rows with type "same" or "check" with identical source & dest are NOT redirected
-  const explicit = rows
-    .filter((r) => ['exact', 'fallback', 'guess'].includes(r.type))
-    .filter((r) => r.old_path !== r.new_path)
-    .map((r) => ({
+  const explicit = [];
+  for (const r of rows) {
+    if (!['exact', 'fallback', 'guess'].includes(r.type)) continue;
+    if (r.old_path === r.new_path) continue;
+
+    explicit.push({
       source: r.old_path,
       destination: r.new_path,
       permanent: true,
-    }));
+    });
+
+    // Also support source without trailing slash to prevent a 2-hop chain via middleware
+    if (r.old_path.length > 1 && r.old_path.endsWith('/')) {
+      explicit.push({
+        source: r.old_path.slice(0, -1),
+        destination: r.new_path,
+        permanent: true,
+      });
+    }
+  }
 
   // Safety nets for anything not listed above (specific rules above always win)
   const patterns = [
@@ -44,6 +56,15 @@ export function getRedirects() {
     { source: '/author/:slug*', destination: '/a-propos/', permanent: true },
     { source: '/brand/:slug*', destination: '/marques/', permanent: true },
     { source: '/categorie-produit/:path*', destination: '/boutique/', permanent: true },
+    // Local SEO creatine city landings -> /categorie/creatine/
+    { source: '/produit-creatine:slug*', destination: '/categorie/creatine/', permanent: true },
+    // Legacy sports nutrition local pages -> /boutique-geneve/
+    { source: '/alimentation-nutrition-sportive:slug*', destination: '/boutique-geneve/', permanent: true },
+    // Legacy dietary supplements local pages (excluding /complements-alimentaires-geneve/) -> /boutique-geneve/
+    { source: '/complements-alimentaires-:slug((?!geneve).*)', destination: '/boutique-geneve/', permanent: true },
+    // Bare product directory route
+    { source: '/produit', destination: '/boutique/', permanent: true },
+    { source: '/produit/', destination: '/boutique/', permanent: true },
     // Old WordPress search: /?s=whey -> /boutique/?q=whey
     {
       source: '/',
