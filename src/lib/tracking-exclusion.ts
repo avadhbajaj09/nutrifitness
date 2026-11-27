@@ -77,8 +77,6 @@ export function isClientDevEnvironment(): boolean {
   if (typeof window === 'undefined') {
     return process.env.NODE_ENV !== 'production' || process.env.VERCEL_ENV === 'preview' || process.env.VERCEL_ENV === 'development';
   }
-  // Allow explicit testing override if needed
-  if (window.location.search.includes('force_tracking=1')) return false;
 
   if (process.env.NODE_ENV !== 'production') return true;
   if (process.env.NEXT_PUBLIC_VERCEL_ENV === 'preview') return true;

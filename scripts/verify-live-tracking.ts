@@ -74,14 +74,14 @@ async function runLiveVerification() {
     })()
   `);
 
-  console.log('2. Navigating to Checkout with GA4 DebugView parameters (?debug_mode=1&force_tracking=1)...');
-  await page.goto(`${BASE_URL}/commande/?debug_mode=1&force_tracking=1`, { waitUntil: 'networkidle2' });
+  console.log('2. Navigating to Checkout with GA4 DebugView parameters (?debug_mode=1)...');
+  await page.goto(`${BASE_URL}/commande/?debug_mode=1`, { waitUntil: 'networkidle2' });
 
   // Wait for React hydration
   await new Promise(r => setTimeout(r, 2500));
 
   // Inspect initial dataLayer state
-  const initialDataLayer: any[] = await page.evaluate('window.dataLayer || []');
+  const initialDataLayer = (await page.evaluate(() => (window as any).dataLayer || [])) as any[];
   console.log(`  dataLayer total entries: ${initialDataLayer.length}`);
 
   // Find begin_checkout event

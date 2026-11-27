@@ -36,7 +36,7 @@ export default function GoogleAnalytics() {
 
               // 1. Dev / preview / staging environment check
               var isDev = host === 'localhost' || host === '127.0.0.1' || host.indexOf('.local') !== -1 || host.indexOf('.internal') !== -1 || host.indexOf('vercel.app') !== -1;
-              if (isDev && search.indexOf('force_tracking=1') === -1) {
+              if (isDev) {
                 console.log('[Tracking] GA4 and Meta Pixel disabled in development/preview environment (' + host + ')');
                 window.__tracking_excluded = true;
                 return;
