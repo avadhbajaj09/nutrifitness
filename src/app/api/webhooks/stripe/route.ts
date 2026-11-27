@@ -2,6 +2,7 @@ import { NextResponse } from 'next/server';
 import crypto from 'crypto';
 import { stripe } from '@/lib/stripe';
 import { sendMetaConversionEvent } from '@/lib/meta-capi';
+import { isServerTrackingExcluded } from '@/lib/tracking-exclusion';
 import { getAdminSupabase } from '@/lib/supabase';
 import { sendOrderNotificationToAdmin, sendOrderConfirmationToCustomer } from '@/lib/email/resend';
 
@@ -186,22 +187,33 @@ export async function POST(req: Request) {
         ).toUpperCase();
 
         // Send Meta Conversion API (non-blocking / error-isolated)
-        try {
-          await sendMetaConversionEvent({
-            eventName: 'Purchase',
-            eventId: String(orderNumber),
-            eventSourceUrl: 'https://nutrifitness.ch/commande',
-            value,
-            currency,
+        const isStaffOrder =
+          session.metadata?.is_staff === 'true' ||
+          isServerTrackingExcluded({
             email,
-            phone,
-            fbp: session.metadata?.fbp,
-            fbc: session.metadata?.fbc,
-            clientIp: session.metadata?.client_ip,
-            clientUserAgent: session.metadata?.client_user_agent,
-          });
-        } catch (metaErr) {
-          console.warn('[Stripe Webhook] Non-critical Meta CAPI tracking failed:', metaErr);
+            eventSourceUrl: 'https://nutrifitness.ch/commande',
+          }).excluded;
+
+        if (isStaffOrder) {
+          console.log(`[Stripe Webhook] Skipped Meta CAPI purchase tracking for staff/admin order #${orderNumber}`);
+        } else {
+          try {
+            await sendMetaConversionEvent({
+              eventName: 'Purchase',
+              eventId: String(orderNumber),
+              eventSourceUrl: 'https://nutrifitness.ch/commande',
+              value,
+              currency,
+              email,
+              phone,
+              fbp: session.metadata?.fbp,
+              fbc: session.metadata?.fbc,
+              clientIp: session.metadata?.client_ip,
+              clientUserAgent: session.metadata?.client_user_agent,
+            });
+          } catch (metaErr) {
+            console.warn('[Stripe Webhook] Non-critical Meta CAPI tracking failed:', metaErr);
+          }
         }
 
         // Idempotent Order Persistence in Supabase
@@ -454,22 +466,33 @@ export async function POST(req: Request) {
         const value = pi.amount ? pi.amount / 100 : undefined;
         const currency = pi.currency ? pi.currency.toUpperCase() : 'CHF';
 
-        try {
-          await sendMetaConversionEvent({
-            eventName: 'Purchase',
-            eventId: String(orderNumber),
-            eventSourceUrl: 'https://nutrifitness.ch/commande',
-            value,
-            currency,
+        const isStaffOrderPI =
+          pi.metadata?.is_staff === 'true' ||
+          isServerTrackingExcluded({
             email,
-            phone,
-            fbp: pi.metadata?.fbp,
-            fbc: pi.metadata?.fbc,
-            clientIp: pi.metadata?.client_ip,
-            clientUserAgent: pi.metadata?.client_user_agent,
-          });
-        } catch (metaErr) {
-          console.warn('[Stripe Webhook] Non-critical Meta CAPI tracking failed on PI:', metaErr);
+            eventSourceUrl: 'https://nutrifitness.ch/commande',
+          }).excluded;
+
+        if (isStaffOrderPI) {
+          console.log(`[Stripe Webhook] Skipped Meta CAPI purchase tracking on PI for staff/admin order #${orderNumber}`);
+        } else {
+          try {
+            await sendMetaConversionEvent({
+              eventName: 'Purchase',
+              eventId: String(orderNumber),
+              eventSourceUrl: 'https://nutrifitness.ch/commande',
+              value,
+              currency,
+              email,
+              phone,
+              fbp: pi.metadata?.fbp,
+              fbc: pi.metadata?.fbc,
+              clientIp: pi.metadata?.client_ip,
+              clientUserAgent: pi.metadata?.client_user_agent,
+            });
+          } catch (metaErr) {
+            console.warn('[Stripe Webhook] Non-critical Meta CAPI tracking failed on PI:', metaErr);
+          }
         }
 
         // If order exists in database and is pending, update it

@@ -123,6 +123,8 @@ export default function AdminSidebar({
   const handleLogout = () => {
     try {
       localStorage.removeItem('nutrifitness_admin_auth');
+      localStorage.removeItem('nf_admin_auth');
+      document.cookie = 'nf_is_staff=; path=/; max-age=0; SameSite=Lax';
     } catch {}
     window.location.reload();
   };

@@ -9,6 +9,8 @@
  * - Includes dev-only debug logger for all dataLayer events
  */
 
+import { isTrackingExcluded } from '@/lib/tracking-exclusion';
+
 export interface ConsentPreferences {
   necessary: boolean; // Always true
   analytics: boolean;
@@ -84,11 +86,13 @@ function logDataLayerDebug(payload: Record<string, unknown>): void {
  */
 export function pushDataLayer(payload: Record<string, unknown>): void {
   if (typeof window === 'undefined') return;
+  if (isTrackingExcluded()) {
+    logDataLayerDebug({ ...payload, _tracking_excluded: true });
+    return;
+  }
   window.dataLayer = window.dataLayer || [];
   logDataLayerDebug(payload);
   window.dataLayer.push(payload);
-
-
 }
 
 /**
@@ -155,7 +159,7 @@ export function saveConsent(choices: { analytics: boolean; marketing: boolean })
   document.cookie = `${CONSENT_COOKIE_NAME}=${encodeURIComponent(JSON.stringify(prefs))}; path=/; max-age=${maxAge}; SameSite=Lax`;
 
   // Update Google Consent Mode v2
-  if (typeof window !== 'undefined' && typeof window.gtag === 'function') {
+  if (typeof window !== 'undefined' && typeof window.gtag === 'function' && !isTrackingExcluded()) {
     window.gtag('consent', 'update', {
       analytics_storage: choices.analytics ? 'granted' : 'denied',
       ad_storage: choices.marketing ? 'granted' : 'denied',
@@ -359,6 +363,7 @@ export function trackPurchase(params: {
  * Generic Meta event pusher with shared event_id for CAPI deduplication
  */
 export function trackMetaEvent(payload: MetaEventPayload): void {
+  if (isTrackingExcluded()) return;
   if (!hasMarketingConsent()) return;
 
   const eventData: Record<string, unknown> = {

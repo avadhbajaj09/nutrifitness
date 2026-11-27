@@ -79,15 +79,17 @@ export default function RootLayout({
         />
       </head>
       <body className="flex flex-col min-h-screen bg-[#0A0A0A] text-white antialiased">
-        {/* Google Tag Manager (noscript fallback for non-JS clients) */}
-        <noscript>
-          <iframe
-            src="https://www.googletagmanager.com/ns.html?id=GTM-PN4QDH2B"
-            height="0"
-            width="0"
-            style={{ display: 'none', visibility: 'hidden' }}
-          />
-        </noscript>
+        {/* Google Tag Manager (noscript fallback for non-JS clients - production only) */}
+        {process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV !== 'preview' && (
+          <noscript>
+            <iframe
+              src="https://www.googletagmanager.com/ns.html?id=GTM-PN4QDH2B"
+              height="0"
+              width="0"
+              style={{ display: 'none', visibility: 'hidden' }}
+            />
+          </noscript>
+        )}
         <GoogleAnalytics />
         <StoreProvider>
           <AppShell>

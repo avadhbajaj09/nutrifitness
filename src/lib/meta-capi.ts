@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import { isServerTrackingExcluded } from './tracking-exclusion';
 
 export interface MetaCapiEventParams {
   eventName: string;
@@ -37,7 +38,18 @@ export async function sendMetaConversionEvent(params: MetaCapiEventParams): Prom
   ok: boolean;
   skipped?: boolean;
   error?: string;
+  reason?: string;
 }> {
+  // Governance: Skip if running in dev/preview, for staff email, or on admin event source URL
+  const exclusion = isServerTrackingExcluded({
+    eventSourceUrl: params.eventSourceUrl,
+    email: params.email,
+  });
+
+  if (exclusion.excluded) {
+    return { ok: true, skipped: true, reason: exclusion.reason };
+  }
+
   const pixelId = process.env.META_PIXEL_ID || process.env.NEXT_PUBLIC_META_PIXEL_ID;
   const accessToken = process.env.META_CAPI_TOKEN || process.env.META_CAPI_ACCESS_TOKEN;
 

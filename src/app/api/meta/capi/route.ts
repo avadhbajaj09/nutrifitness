@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { sendMetaConversionEvent } from '@/lib/meta-capi';
+import { isServerTrackingExcluded } from '@/lib/tracking-exclusion';
 
 export async function POST(req: Request) {
   try {
@@ -13,6 +14,26 @@ export async function POST(req: Request) {
 
     // Extract fbp and fbc from cookies header
     const cookieHeader = req.headers.get('cookie') || '';
+    const refererHeader = req.headers.get('referer');
+    const hostHeader = req.headers.get('x-forwarded-host') || req.headers.get('host');
+
+    // 1. Governance: Exclude admin pages, logged-in staff, and development/preview environments
+    const exclusionCheck = isServerTrackingExcluded({
+      cookieHeader,
+      refererHeader,
+      hostHeader,
+      eventSourceUrl: body.event_source_url,
+      email: body.email,
+    });
+
+    if (exclusionCheck.excluded) {
+      return NextResponse.json({
+        ok: true,
+        skipped: true,
+        reason: exclusionCheck.reason || 'Excluded: admin/staff/development environment',
+      });
+    }
+
     const fbpMatch = cookieHeader.match(/(?:^|; )_fbp=([^;]*)/);
     const fbcMatch = cookieHeader.match(/(?:^|; )_fbc=([^;]*)/);
     const fbp = fbpMatch ? decodeURIComponent(fbpMatch[1]) : body.fbp;

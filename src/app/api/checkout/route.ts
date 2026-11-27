@@ -4,6 +4,7 @@ import { PRODUCTS } from '@/lib/catalog';
 import { isCountrySupported } from '@/lib/delivery/defaults';
 import { stripe } from '@/lib/stripe';
 import { getAdminSupabase } from '@/lib/supabase';
+import { isServerTrackingExcluded } from '@/lib/tracking-exclusion';
 
 export async function POST(req: Request) {
   try {
@@ -255,6 +256,15 @@ export async function POST(req: Request) {
     const clientIp = forwardedFor ? forwardedFor.split(',')[0].trim() : realIp || '';
     const userAgent = req.headers.get('user-agent') || '';
 
+    const refererHeader = req.headers.get('referer');
+    const hostHeader = req.headers.get('x-forwarded-host') || req.headers.get('host');
+    const isStaffOrDev = isServerTrackingExcluded({
+      cookieHeader,
+      refererHeader,
+      hostHeader,
+      email: customerEmail,
+    }).excluded;
+
     // Create session parameters
     // TWINT is shown automatically by Stripe when currency=CHF and TWINT is enabled in Dashboard
     const sessionParams: Stripe.Checkout.SessionCreateParams = {
@@ -269,6 +279,7 @@ export async function POST(req: Request) {
         customer_phone: customerPhone || '',
         payment_selected: paymentMethod || 'card',
         coupon_applied: couponCode || '',
+        is_staff: isStaffOrDev ? 'true' : 'false',
         fbp,
         fbc,
         client_ip: clientIp,
