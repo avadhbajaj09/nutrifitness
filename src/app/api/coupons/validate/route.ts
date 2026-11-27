@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { stripe } from '@/lib/stripe';
+import { getBlackFridayConfig, isBlackFridayActive } from '@/lib/black-friday';
 
 interface LocalCoupon {
   rate: number;
@@ -50,6 +51,19 @@ const LOCAL_FALLBACK_COUPONS: Record<string, LocalCoupon> = {
 
 export async function POST(req: Request) {
   try {
+    // Check if Black Friday automatic discount system is active
+    const bfConfig = await getBlackFridayConfig();
+    if (isBlackFridayActive(bfConfig)) {
+      return NextResponse.json(
+        {
+          valid: false,
+          error: 'Les codes promo sont temporairement désactivés pendant le Black Friday. Vos remises jusqu’à −25% sont appliquées automatiquement dans votre panier dès CHF 50 d’achats !',
+          blackFridayActive: true,
+        },
+        { status: 400 }
+      );
+    }
+
     const body = await req.json();
     const rawCode = body?.code;
 

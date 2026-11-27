@@ -14,6 +14,7 @@
     "test:middleware": "tsx src/middleware.test.ts",
     "test:stripe-webhook": "tsx --env-file=.env.local src/app/api/webhooks/stripe/__tests__/route.test.ts",
     "test:tracking": "tsx src/lib/__tests__/tracking-exclusion.test.ts",
+    "test:black-friday": "tsx src/lib/__tests__/black-friday.test.ts",
     "import:woo": "tsx scripts/import-woocommerce.ts",
     "test:acceptance": "tsx scripts/verify-acceptance.ts",
     "check:sitemap": "tsx scripts/check-sitemap.ts",

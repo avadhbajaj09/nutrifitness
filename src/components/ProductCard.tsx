@@ -15,7 +15,7 @@ interface ProductCardProps {
 }
 
 export default function ProductCard({ product, priority = false }: ProductCardProps) {
-  const { addToCart, closeCart, openQuickView, getProductPricing, locale, countryCode, t, getCatalogOverride, getProductStock } = useStore();
+  const { addToCart, closeCart, openQuickView, getProductPricing, locale, countryCode, t, getCatalogOverride, getProductStock, blackFriday } = useStore();
 
   const [mounted, setMounted] = React.useState(false);
   const [isMobile, setIsMobile] = React.useState(false);
@@ -106,6 +106,12 @@ export default function ProductCard({ product, priority = false }: ProductCardPr
       <div className="relative block aspect-square w-full bg-[#1A1A1A] p-3 sm:p-6 overflow-hidden">
         {/* Badges (Top Left) */}
         <div className="absolute top-2.5 left-2.5 sm:top-3 sm:left-3 z-10 flex flex-col gap-1 items-start pointer-events-none">
+          {blackFriday?.isActive && (
+            <span className="inline-flex items-center gap-1 bg-gradient-to-r from-red-600 via-[#F80404] to-amber-500 text-white text-[9px] sm:text-[10px] font-black uppercase px-2 py-0.5 rounded-full shadow-md border border-white/20 tracking-wider">
+              <span>🔥</span>
+              <span>BLACK FRIDAY — JUSQU’À −25%</span>
+            </span>
+          )}
           {!hasStock && (
             <span className="inline-flex items-center bg-black/80 text-white/90 border border-white/20 text-[9px] sm:text-[10px] font-bold px-2 py-0.5 rounded-full shadow-sm">
               Épuisé

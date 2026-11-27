@@ -6,6 +6,7 @@ import Link from 'next/link';
 import { useSearchParams } from 'next/navigation';
 import AdminSidebar from '@/components/admin/AdminSidebar';
 import HeroBannersManager from '@/components/admin/HeroBannersManager';
+import BlackFridayManager from '@/components/admin/BlackFridayManager';
 import AICopilotTab from '@/components/admin/AICopilotTab';
 import { PRODUCTS, CATEGORIES } from '@/lib/catalog';
 import { TWINT_CONFIG } from '@/lib/twint';
@@ -295,12 +296,12 @@ export default function AdminDashboardClient() {
   // 2. DASHBOARD NAVIGATION & TIME
   const searchParams = useSearchParams();
   const tabParam = searchParams.get('tab');
-  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned' | 'ai'>('pos');
+  const [activeTab, setActiveTab] = useState<'pos' | 'catalog' | 'banners' | 'blackfriday' | 'sales' | 'abandoned' | 'ai'>('pos');
   const [heroBannersCount, setHeroBannersCount] = useState<number>(5);
 
   useEffect(() => {
-    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'banners' || tabParam === 'sales' || tabParam === 'abandoned' || tabParam === 'ai') {
-      setActiveTab(tabParam);
+    if (tabParam === 'pos' || tabParam === 'catalog' || tabParam === 'banners' || tabParam === 'blackfriday' || tabParam === 'sales' || tabParam === 'abandoned' || tabParam === 'ai') {
+      setActiveTab(tabParam as any);
     }
   }, [tabParam]);
 
@@ -2497,6 +2498,7 @@ export default function AdminDashboardClient() {
                 {activeTab === 'pos' && (adminLang === 'fr' ? 'Caisse POS (Magasin Genève)' : 'Point of Sale (POS Register)')}
                 {activeTab === 'catalog' && (adminLang === 'fr' ? 'Catalogue Général' : 'Global Products Catalog')}
                 {activeTab === 'banners' && (adminLang === 'fr' ? 'Gestion des Bannières de la Page d’Accueil' : 'Homepage Hero Banners Management')}
+                {activeTab === 'blackfriday' && (adminLang === 'fr' ? 'Configuration de l’Opération Black Friday (Remises Automatiques)' : 'Black Friday Automatic Discounts & Campaign')}
                 {activeTab === 'sales' && (adminLang === 'fr' ? 'Journal des Commandes & Ventes' : 'Orders & Sales Journal')}
                 {activeTab === 'abandoned' && (adminLang === 'fr' ? 'Paniers Abandonnés & Relances Clients' : 'Abandoned Carts & Customer Recovery')}
                 {activeTab === 'ai' && (adminLang === 'fr' ? 'Copilote IA Webmaster (Contrôle du site par prompt)' : 'AI Store Copilot (Natural Language Control)')}
@@ -3464,6 +3466,13 @@ export default function AdminDashboardClient() {
           allProducts={allProducts}
           onBannerCountChange={(count) => setHeroBannersCount(count)}
         />
+      )}
+
+      {/* =========================================================
+          MAIN BODY: TAB 2C — BLACK FRIDAY AUTOMATIC DISCOUNTS & CAMPAIGN
+          ========================================================= */}
+      {activeTab === 'blackfriday' && (
+        <BlackFridayManager />
       )}
 
       {/* =========================================================
