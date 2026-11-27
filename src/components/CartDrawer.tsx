@@ -16,7 +16,6 @@ export default function CartDrawer() {
     freeShippingProgress, 
     updateQuantity, 
     removeFromCart, 
-    addToCart,
     getProductPricing,
     formatPrice,
     t,
@@ -247,35 +246,6 @@ export default function CartDrawer() {
         {/* Footer */}
         {cart.length > 0 && (
           <div className="p-5 border-t border-white/10 bg-black/60 space-y-4">
-            {/* Upsell Booster */}
-            <div className="bg-[#181818] p-3 rounded-xl border border-white/10 flex items-center justify-between gap-3">
-              <div className="flex items-center gap-3">
-                <div className="relative w-10 h-10 rounded-lg bg-black/40 p-1 shrink-0 border border-white/10">
-                  <Image src="/images/categories/categorie-accessoires.webp" alt="Shaker" fill className="object-contain p-1" />
-                </div>
-                <div>
-                  <p className="text-[11px] font-bold text-white leading-tight">Shaker Pro 700ml Sans BPA</p>
-                  <p className="text-[10px] text-white/50">+{formatPrice(8.90)} · Accessoire</p>
-                </div>
-              </div>
-              <button 
-                type="button"
-                onClick={() => addToCart({
-                  id: 'nf-shaker-600ml',
-                  slug: 'nf-shaker-600ml',
-                  name: 'Shaker NutriFitness Pro 600ml',
-                  brand: 'NutriFitness',
-                  priceChf: 8.90,
-                  flavor: 'Noir Mat',
-                  size: '600 ml',
-                  image: '/images/categories/categorie-accessoires.webp'
-                })}
-                className="px-2.5 py-1.5 bg-white/10 hover:bg-[#F80404] hover:text-black text-white text-[10px] font-bold uppercase rounded-lg border border-white/10 transition-colors shrink-0"
-              >
-                + Ajouter
-              </button>
-            </div>
-
             {/* Subtotal & Black Friday Breakdown */}
             <div className="space-y-1.5">
               {blackFriday.isActive && blackFriday.discountPercent > 0 ? (
