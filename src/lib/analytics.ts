@@ -26,8 +26,10 @@ export interface EcommerceItem {
   item_name: string;
   item_brand?: string;
   item_category?: string;
+  item_variant?: string; // flavor / format / option
   price: number;
   quantity?: number;
+  discount?: number; // item-level discount in currency units
 }
 
 export type MetaStandardEvent =
@@ -91,6 +93,23 @@ export function pushDataLayer(payload: Record<string, unknown>): void {
     return;
   }
   window.dataLayer = window.dataLayer || [];
+
+  // Enable GA4 DebugView automatically when debug query param or non-production is active
+  const isDebug =
+    process.env.NODE_ENV !== 'production' ||
+    (typeof window !== 'undefined' &&
+      (window.location.search.includes('gtm_debug') ||
+       window.location.search.includes('debug_dl=1') ||
+       window.location.search.includes('ga_debug') ||
+       window.location.search.includes('debug_mode')));
+
+  if (isDebug) {
+    payload.debug_mode = true;
+    if (payload.ecommerce && typeof payload.ecommerce === 'object') {
+      (payload.ecommerce as any).debug_mode = true;
+    }
+  }
+
   logDataLayerDebug(payload);
   window.dataLayer.push(payload);
 }
@@ -189,14 +208,23 @@ export function saveConsent(choices: { analytics: boolean; marketing: boolean })
 // -------------------------------------------------------------
 
 function sanitizeItem(item: EcommerceItem): Record<string, unknown> {
-  return {
-    item_id: item.item_id,
-    item_name: item.item_name,
+  const result: Record<string, unknown> = {
+    item_id: String(item.item_id || '').trim(),
+    item_name: String(item.item_name || 'Produit').trim(),
     item_brand: item.item_brand || 'NutriFitness',
     item_category: item.item_category || 'Nutrition Sportive',
-    price: Number(item.price) || 0,
-    quantity: item.quantity !== undefined ? Number(item.quantity) : 1,
+    price: Number.isFinite(Number(item.price)) ? Math.round(Number(item.price) * 100) / 100 : 0,
+    quantity: item.quantity !== undefined && Number.isFinite(Number(item.quantity)) ? Math.max(1, Math.floor(Number(item.quantity))) : 1,
   };
+
+  if (item.item_variant && String(item.item_variant).trim()) {
+    result.item_variant = String(item.item_variant).trim();
+  }
+  if (typeof item.discount === 'number' && Number.isFinite(item.discount) && item.discount > 0) {
+    result.discount = Math.round(item.discount * 100) / 100;
+  }
+
+  return result;
 }
 
 /**
@@ -209,7 +237,7 @@ export function trackViewItemList(params: {
   currency?: string;
 }): void {
   if (!hasAnalyticsConsent()) return;
-  const currency = params.currency || 'CHF';
+  const currency = (params.currency || 'CHF').toUpperCase();
   const value = params.items.reduce((acc, it) => acc + (it.price * (it.quantity || 1)), 0);
 
   pushDataLayer({ ecommerce: null });
@@ -230,12 +258,13 @@ export function trackViewItemList(params: {
  */
 export function trackViewItem(item: EcommerceItem, currency: string): void {
   if (!hasAnalyticsConsent()) return;
+  const cleanCurrency = (currency || 'CHF').toUpperCase();
 
   pushDataLayer({ ecommerce: null });
   pushDataLayer({
     event: 'view_item',
     ecommerce: {
-      currency,
+      currency: cleanCurrency,
       value: Number(item.price) || 0,
       items: [sanitizeItem(item)],
     },
@@ -247,13 +276,14 @@ export function trackViewItem(item: EcommerceItem, currency: string): void {
  */
 export function trackAddToCart(item: EcommerceItem, currency: string, quantity = 1): void {
   if (!hasAnalyticsConsent()) return;
+  const cleanCurrency = (currency || 'CHF').toUpperCase();
   const itemWithQty = { ...item, quantity };
 
   pushDataLayer({ ecommerce: null });
   pushDataLayer({
     event: 'add_to_cart',
     ecommerce: {
-      currency,
+      currency: cleanCurrency,
       value: Math.round(item.price * quantity * 100) / 100,
       items: [sanitizeItem(itemWithQty)],
     },
@@ -265,13 +295,14 @@ export function trackAddToCart(item: EcommerceItem, currency: string, quantity =
  */
 export function trackRemoveFromCart(item: EcommerceItem, currency: string, quantity = 1): void {
   if (!hasAnalyticsConsent()) return;
+  const cleanCurrency = (currency || 'CHF').toUpperCase();
   const itemWithQty = { ...item, quantity };
 
   pushDataLayer({ ecommerce: null });
   pushDataLayer({
     event: 'remove_from_cart',
     ecommerce: {
-      currency,
+      currency: cleanCurrency,
       value: Math.round(item.price * quantity * 100) / 100,
       items: [sanitizeItem(itemWithQty)],
     },
@@ -279,79 +310,184 @@ export function trackRemoveFromCart(item: EcommerceItem, currency: string, quant
 }
 
 /**
- * 5. begin_checkout
+ * 5. begin_checkout (Standard GA4)
+ * Triggers when customer initiates checkout.
  */
-export function trackBeginCheckout(items: EcommerceItem[], totalValue: number, currency: string): void {
+export function trackBeginCheckout(
+  param1: {
+    items: EcommerceItem[];
+    totalValue: number;
+    currency: string;
+    coupon?: string;
+  } | EcommerceItem[],
+  totalValLegacy?: number,
+  currLegacy?: string
+): void {
   if (!hasAnalyticsConsent()) return;
+
+  let items: EcommerceItem[];
+  let totalValue: number;
+  let currency: string;
+  let coupon: string | undefined;
+
+  if (Array.isArray(param1)) {
+    items = param1;
+    totalValue = totalValLegacy !== undefined
+      ? totalValLegacy
+      : items.reduce((acc, it) => acc + (it.price * (it.quantity || 1)), 0);
+    currency = currLegacy || 'CHF';
+  } else {
+    items = param1.items || [];
+    totalValue = param1.totalValue !== undefined
+      ? param1.totalValue
+      : items.reduce((acc, it) => acc + (it.price * (it.quantity || 1)), 0);
+    currency = param1.currency || 'CHF';
+    coupon = param1.coupon;
+  }
+
+  const cleanCurrency = (currency || 'CHF').toUpperCase();
 
   pushDataLayer({ ecommerce: null });
   pushDataLayer({
     event: 'begin_checkout',
     ecommerce: {
-      currency,
+      currency: cleanCurrency,
       value: Math.round(totalValue * 100) / 100,
+      coupon: coupon || undefined,
       items: items.map(sanitizeItem),
     },
   });
 }
 
 /**
- * 6. add_payment_info
+ * 6. add_shipping_info (Standard GA4)
+ * Triggers when customer selects/completes their shipping tier and details.
  */
-export function trackAddPaymentInfo(params: {
+export function trackAddShippingInfo(params: {
   items: EcommerceItem[];
   totalValue: number;
   currency: string;
-  paymentType?: string;
+  shippingTier?: string;
+  shippingCost?: number;
+  coupon?: string;
 }): void {
   if (!hasAnalyticsConsent()) return;
+  const cleanCurrency = (params.currency || 'CHF').toUpperCase();
 
   pushDataLayer({ ecommerce: null });
   pushDataLayer({
-    event: 'add_payment_info',
+    event: 'add_shipping_info',
     ecommerce: {
-      currency: params.currency,
+      currency: cleanCurrency,
       value: Math.round(params.totalValue * 100) / 100,
-      payment_type: params.paymentType,
+      shipping_tier: params.shippingTier || 'PostPac Priority',
+      coupon: params.coupon || undefined,
       items: params.items.map(sanitizeItem),
     },
   });
 }
 
 /**
- * 7. purchase
+ * 7. add_payment_info (Standard GA4)
+ * Triggers when customer selects/submits their payment method.
+ */
+export function trackAddPaymentInfo(params: {
+  items: EcommerceItem[];
+  totalValue: number;
+  currency: string;
+  paymentType?: string;
+  coupon?: string;
+}): void {
+  if (!hasAnalyticsConsent()) return;
+  const cleanCurrency = (params.currency || 'CHF').toUpperCase();
+
+  pushDataLayer({ ecommerce: null });
+  pushDataLayer({
+    event: 'add_payment_info',
+    ecommerce: {
+      currency: cleanCurrency,
+      value: Math.round(params.totalValue * 100) / 100,
+      payment_type: params.paymentType || 'card',
+      coupon: params.coupon || undefined,
+      items: params.items.map(sanitizeItem),
+    },
+  });
+}
+
+export const GA4_PURCHASE_DEDUP_PREFIX = 'nf_ga4_purchase_';
+
+/**
+ * Checks whether a purchase with the given transaction ID has already been tracked.
+ */
+export function isPurchaseTracked(transactionId: string): boolean {
+  if (typeof window === 'undefined' || !transactionId) return false;
+  try {
+    const key = GA4_PURCHASE_DEDUP_PREFIX + transactionId.trim();
+    const sessionVal = sessionStorage.getItem(key);
+    const localVal = localStorage.getItem(key);
+    return Boolean(sessionVal || localVal);
+  } catch {
+    return false;
+  }
+}
+
+/**
+ * Marks a transaction ID as tracked across sessionStorage and localStorage.
+ */
+export function markPurchaseTracked(transactionId: string): void {
+  if (typeof window === 'undefined' || !transactionId) return;
+  try {
+    const key = GA4_PURCHASE_DEDUP_PREFIX + transactionId.trim();
+    sessionStorage.setItem(key, '1');
+    localStorage.setItem(key, Date.now().toString());
+  } catch {}
+}
+
+/**
+ * 8. purchase (Standard GA4)
+ * Triggers ONLY after verified successful payment.
+ * Automatically de-duplicates using unique transaction IDs across sessions.
  */
 export function trackPurchase(params: {
   transaction_id: string;
   value: number;
-  shipping: number;
-  tax: number;
+  shipping?: number;
+  tax?: number;
   currency: string;
   items: EcommerceItem[];
   coupon?: string;
-}): void {
-  if (!hasAnalyticsConsent() || !params.transaction_id?.trim()) return;
-  if (!['CHF', 'EUR'].includes(params.currency.toUpperCase())) return;
-  if (!Number.isFinite(params.value) || params.value < 0 || !params.items.length) return;
-  const key = 'nf_ga4_purchase_' + params.transaction_id;
-  try {
-    if (sessionStorage.getItem(key)) return;
-    sessionStorage.setItem(key, '1');
-  } catch { /* GA4 transaction ID also supports deduplication */ }
+}): boolean {
+  if (!hasAnalyticsConsent() || !params.transaction_id?.trim()) return false;
+  const cleanCurrency = (params.currency || 'CHF').toUpperCase();
+  if (!['CHF', 'EUR'].includes(cleanCurrency)) return false;
+  if (!Number.isFinite(params.value) || params.value < 0 || !params.items.length) return false;
+
+  const txId = params.transaction_id.trim();
+
+  // Deduplication guard
+  if (isPurchaseTracked(txId)) {
+    if (process.env.NODE_ENV !== 'production') {
+      console.warn(`[GA4] Purchase event already tracked for transaction ${txId}. Suppressing duplicate.`);
+    }
+    return false;
+  }
+  markPurchaseTracked(txId);
 
   pushDataLayer({ ecommerce: null });
   pushDataLayer({
     event: 'purchase',
     ecommerce: {
-      transaction_id: params.transaction_id,
+      transaction_id: txId,
       value: Math.round(params.value * 100) / 100,
-      shipping: Math.round(params.shipping * 100) / 100,
-      tax: Math.round(params.tax * 100) / 100,
-      currency: params.currency,
-      coupon: params.coupon,
+      shipping: Math.round((params.shipping || 0) * 100) / 100,
+      tax: Math.round((params.tax || 0) * 100) / 100,
+      currency: cleanCurrency,
+      coupon: params.coupon || undefined,
       items: params.items.map(sanitizeItem),
     },
   });
+
+  return true;
 }
 
 // -------------------------------------------------------------

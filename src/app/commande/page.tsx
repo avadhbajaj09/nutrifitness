@@ -28,11 +28,13 @@ import { useDeliveryEstimates } from '@/hooks/useDeliveryEstimate';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 import { 
   trackBeginCheckout, 
+  trackAddShippingInfo,
   trackPurchase, 
   trackAddPaymentInfo, 
   trackMetaInitiateCheckout, 
   trackMetaAddPaymentInfo,
-  trackMetaPurchase 
+  trackMetaPurchase,
+  EcommerceItem 
 } from '@/lib/analytics';
 import { TWINT_CONFIG } from '@/lib/twint';
 
@@ -64,6 +66,43 @@ const SUPPORTED_COUNTRIES: SupportedCountry[] = [
   { code: 'NO', name: 'Norvège', isEu: false, flag: '🇳🇴' },
   { code: 'IS', name: 'Islande', isEu: false, flag: '🇮🇸' },
 ];
+
+function buildEcommerceItems(
+  items: any[],
+  discountRatio = 0
+): EcommerceItem[] {
+  if (!items || !Array.isArray(items)) return [];
+  return items.map((item) => {
+    const rawName = typeof item.name === 'object' && item.name !== null
+      ? ((item.name as any).fr || Object.values(item.name)[0] || 'Produit')
+      : String(item.name || 'Produit');
+
+    const flavorStr = typeof item.flavor === 'object' && item.flavor !== null
+      ? ((item.flavor as any).fr || '')
+      : (item.flavor && item.flavor !== 'Standard' && item.flavor !== 'neutre' ? String(item.flavor) : '');
+
+    const sizeStr = typeof item.size === 'object' && item.size !== null
+      ? ((item.size as any).fr || '')
+      : (item.size && item.size !== 'Format standard' ? String(item.size) : (item.format && item.format !== 'Standard' ? String(item.format) : ''));
+
+    const variantParts = [flavorStr, sizeStr].filter(Boolean);
+    const itemVariant = variantParts.length > 0 ? variantParts.join(' / ') : undefined;
+
+    const price = Number(item.price) || 0;
+    const discount = discountRatio > 0 ? Math.round(price * discountRatio * 100) / 100 : undefined;
+
+    return {
+      item_id: String(item.sku || item.productId || item.id || item.itemKey || rawName).trim(),
+      item_name: rawName.trim(),
+      item_brand: item.brand || 'NutriFitness',
+      item_category: item.categorySlug || 'Nutrition Sportive',
+      item_variant: itemVariant,
+      price,
+      quantity: Number(item.quantity) || 1,
+      discount,
+    };
+  });
+}
 
 export default function CheckoutPage() {
   const { 
@@ -105,6 +144,8 @@ export default function CheckoutPage() {
   const checkoutLeadIdRef = useRef<string>('');
   const lastSavedPayloadRef = useRef<string>('');
   const isSavingLeadRef = useRef(false);
+  const hasFiredBeginCheckoutRef = useRef(false);
+  const lastTrackedShippingRef = useRef<string>('');
 
   // Submission & Success state
   const [isSuccess, setIsSuccess] = useState(false);
@@ -322,32 +363,47 @@ export default function CheckoutPage() {
               window.dispatchEvent(new Event('storage'));
             } catch {}
 
-            // Fire Purchase tracking events
-            const purchaseItems = (paidOrderPayload.items || []).map((item: any) => ({
-              item_id: item.sku || item.itemKey || item.id || item.name,
-              item_name: item.name,
-              item_brand: item.brand || 'NutriFitness',
-              item_category: item.categorySlug || 'Nutrition Sportive',
-              price: item.price,
-              quantity: item.quantity,
-            }));
+            // Fire Purchase tracking events (only verified, deduplicated)
+            const rawItems = paidOrderPayload.items || pendingOrder?.items || (cart && cart.length > 0 ? cart : []);
+            const purchaseDiscountRatio = (pendingOrder?.discountAmount && pendingOrder?.subtotal)
+              ? (pendingOrder.discountAmount / pendingOrder.subtotal)
+              : 0;
+            const purchaseItems = buildEcommerceItems(rawItems, purchaseDiscountRatio);
 
-            trackPurchase({
+            const verifiedTotal = typeof data.amount_total === 'number' && data.amount_total > 0
+              ? data.amount_total
+              : (pendingOrder?.total || cartSubtotal);
+
+            const verifiedShipping = typeof data.amount_shipping === 'number'
+              ? data.amount_shipping
+              : (pendingOrder?.shipping?.cost || 0);
+
+            const verifiedTax = typeof data.amount_tax === 'number' && data.amount_tax > 0
+              ? data.amount_tax
+              : (pendingOrder?.vatAmount || verifiedTotal * 0.026);
+
+            const verifiedCoupon = data.metadata?.coupon_applied || pendingOrder?.couponCode || undefined;
+            const verifiedCurrency = (data.currency || currency || 'CHF').toUpperCase();
+
+            const wasTracked = trackPurchase({
               transaction_id: finalOrderNum,
-              value: data.amount_total || cartSubtotal,
-              shipping: 0,
-              tax: (data.amount_total || cartSubtotal) * 0.026,
-              currency: data.currency || currency || 'CHF',
+              value: verifiedTotal,
+              shipping: verifiedShipping,
+              tax: verifiedTax,
+              currency: verifiedCurrency,
               items: purchaseItems,
+              coupon: verifiedCoupon,
             });
 
-            trackMetaPurchase({
-              transaction_id: finalOrderNum,
-              eventId: finalOrderNum,
-              value: data.amount_total || cartSubtotal,
-              currency: data.currency || currency || 'CHF',
-              items: purchaseItems,
-            });
+            if (wasTracked) {
+              trackMetaPurchase({
+                transaction_id: finalOrderNum,
+                eventId: finalOrderNum,
+                value: verifiedTotal,
+                currency: verifiedCurrency,
+                items: purchaseItems,
+              });
+            }
 
             setConfirmedItems(paidOrderPayload.items || []);
             clearCart();
@@ -400,23 +456,6 @@ export default function CheckoutPage() {
           }
         })
         .catch(err => console.warn('[Checkout] Restore error:', err));
-    }
-  }, []);
-
-  // Track GA4 begin_checkout and Meta InitiateCheckout
-  useEffect(() => {
-    if (cart && cart.length > 0) {
-      const items = cart.map(item => ({
-        item_id: (item as any).sku || item.itemKey || item.name,
-        item_name: item.name,
-        item_brand: (item as any).brand || 'NutriFitness',
-        item_category: (item as any).categorySlug || 'Nutrition Sportive',
-        price: item.price,
-        quantity: item.quantity,
-      }));
-      const activeCurr = currency || 'CHF';
-      trackBeginCheckout(items, cartSubtotal, activeCurr);
-      trackMetaInitiateCheckout({ items, totalValue: cartSubtotal, currency: activeCurr });
     }
   }, []);
 
@@ -749,6 +788,138 @@ export default function CheckoutPage() {
     }
   }, [currency, grandTotal, paymentMethod]);
 
+  // Track GA4 begin_checkout and Meta InitiateCheckout
+  useEffect(() => {
+    if (typeof window === 'undefined') return;
+    const urlParams = new URLSearchParams(window.location.search);
+    const isReturningFromStripe = Boolean(urlParams.get('session_id'));
+
+    // Check if begin_checkout was already fired from cart page transition within last 30s
+    let isRecentFromCart = false;
+    try {
+      const lastBeginAt = sessionStorage.getItem('nf_begin_checkout_at');
+      if (lastBeginAt && Date.now() - Number(lastBeginAt) < 30000) {
+        isRecentFromCart = true;
+        sessionStorage.removeItem('nf_begin_checkout_at');
+      }
+    } catch {}
+
+    if (
+      cart && 
+      cart.length > 0 && 
+      !isReturningFromStripe && 
+      !isRecentFromCart && 
+      !hasFiredBeginCheckoutRef.current
+    ) {
+      hasFiredBeginCheckoutRef.current = true;
+      const ratio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
+      const ecommerceItems = buildEcommerceItems(cart, ratio);
+      const activeCurr = (currency || 'CHF').toUpperCase();
+      const activeCoupon = blackFriday.isActive
+        ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
+        : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
+
+      trackBeginCheckout({
+        items: ecommerceItems,
+        totalValue: discountedSubtotal,
+        currency: activeCurr,
+        coupon: activeCoupon,
+      });
+
+      trackMetaInitiateCheckout({
+        items: ecommerceItems,
+        totalValue: discountedSubtotal,
+        currency: activeCurr,
+      });
+    }
+  }, [cart, cartSubtotal, currency, discountAmount, discountedSubtotal, blackFriday, appliedCoupon, discountRate, couponCode]);
+
+  // Record shipping info helper for GA4 add_shipping_info
+  const recordShippingInfo = useCallback((force = false) => {
+    if (!cart || cart.length === 0 || !isAddressCompleted || !postalValidation.isValid) return;
+
+    const shippingTier = isMixedCart
+      ? `Expédition Combinée (${genevaShippingMethod === 'clickcollect' ? 'Click & Collect' : 'PostPac Priority'} + Livraison Directe)`
+      : genevaItems.length > 0
+      ? (genevaShippingMethod === 'clickcollect' ? 'Click & Collect (Boutique)' : 'PostPac Priority (La Poste Suisse)')
+      : 'Transporteur Express International';
+
+    const shippingFingerprint = `${customerCountry}|${customerPostalCode}|${customerCity}|${shippingTier}|${totalShippingCost}|${cart.length}|${discountedSubtotal}`;
+    if (!force && lastTrackedShippingRef.current === shippingFingerprint) return;
+    lastTrackedShippingRef.current = shippingFingerprint;
+
+    const ratio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
+    const ecommerceItems = buildEcommerceItems(cart, ratio);
+    const activeCurr = (currency || 'CHF').toUpperCase();
+    const activeCoupon = blackFriday.isActive
+      ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
+      : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
+
+    trackAddShippingInfo({
+      items: ecommerceItems,
+      totalValue: grandTotal,
+      currency: activeCurr,
+      shippingTier,
+      shippingCost: totalShippingCost,
+      coupon: activeCoupon,
+    });
+  }, [
+    cart, 
+    isAddressCompleted, 
+    postalValidation.isValid, 
+    isMixedCart, 
+    genevaShippingMethod, 
+    genevaItems.length, 
+    customerCountry, 
+    customerPostalCode, 
+    customerCity, 
+    totalShippingCost, 
+    discountedSubtotal, 
+    cartSubtotal, 
+    discountAmount, 
+    currency, 
+    blackFriday, 
+    appliedCoupon, 
+    discountRate, 
+    couponCode, 
+    grandTotal
+  ]);
+
+  // Track add_shipping_info when address is verified & shipping tier is selected
+  useEffect(() => {
+    if (isAddressCompleted && postalValidation.isValid) {
+      recordShippingInfo();
+    }
+  }, [isAddressCompleted, postalValidation.isValid, genevaShippingMethod, customerCountry, recordShippingInfo]);
+
+  // Handle explicit payment method toggle
+  const handlePaymentMethodSelect = (method: 'card' | 'twint' | 'postfinance') => {
+    setPaymentMethod(method);
+    if (cart.length > 0 && isAddressCompleted && postalValidation.isValid) {
+      const ratio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
+      const ecommerceItems = buildEcommerceItems(cart, ratio);
+      const activeCurr = (currency || 'CHF').toUpperCase();
+      const activeCoupon = blackFriday.isActive
+        ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
+        : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
+
+      trackAddPaymentInfo({
+        items: ecommerceItems,
+        totalValue: grandTotal,
+        currency: activeCurr,
+        paymentType: method,
+        coupon: activeCoupon,
+      });
+
+      trackMetaAddPaymentInfo({
+        items: ecommerceItems,
+        totalValue: grandTotal,
+        currency: activeCurr,
+        paymentType: method,
+      });
+    }
+  };
+
   // Real-time Abandoned Cart Auto-Capture & Alert
   const saveAbandonedLead = useCallback(async (overrides?: Record<string, any>) => {
     if (isSuccess || isRedirectingToStripe || isProcessingStripe) return;
@@ -942,26 +1113,27 @@ export default function CheckoutPage() {
       sessionStorage.setItem('nf_pending_order', JSON.stringify(newOrder));
     } catch {}
 
-    // 2. Track GA4 add_payment_info
-    const activeCurr = currency || 'CHF';
-    const purchaseItems = (cart || []).map(item => ({
-      item_id: (item as any).sku || item.itemKey || item.name,
-      item_name: item.name,
-      item_brand: (item as any).brand || 'NutriFitness',
-      item_category: (item as any).categorySlug || 'Nutrition Sportive',
-      price: item.price,
-      quantity: item.quantity,
-    }));
+    // 2. Ensure GA4 add_shipping_info has fired before proceeding to payment
+    recordShippingInfo(true);
+
+    // 3. Track GA4 add_payment_info and Meta AddPaymentInfo
+    const activeCurr = (currency || 'CHF').toUpperCase();
+    const ratio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
+    const checkoutItems = buildEcommerceItems(cart, ratio);
+    const activeCoupon = blackFriday.isActive
+      ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
+      : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
 
     trackAddPaymentInfo({
-      items: purchaseItems,
+      items: checkoutItems,
       totalValue: grandTotal,
       currency: activeCurr,
       paymentType: paymentMethod,
+      coupon: activeCoupon,
     });
 
     trackMetaAddPaymentInfo({
-      items: purchaseItems,
+      items: checkoutItems,
       totalValue: grandTotal,
       currency: activeCurr,
       paymentType: paymentMethod,
@@ -1740,7 +1912,7 @@ export default function CheckoutPage() {
                   type="radio" 
                   name="payment" 
                   checked={paymentMethod === 'card'} 
-                  onChange={() => setPaymentMethod('card')}
+                  onChange={() => handlePaymentMethodSelect('card')}
                   className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
                 />
                 <div className="flex-1 text-xs">
@@ -1777,7 +1949,7 @@ export default function CheckoutPage() {
                       type="radio" 
                       name="payment" 
                       checked={paymentMethod === 'twint'} 
-                      onChange={() => setPaymentMethod('twint')}
+                      onChange={() => handlePaymentMethodSelect('twint')}
                       className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
                     />
                     <div className="flex-1 text-xs space-y-2">
@@ -1827,7 +1999,7 @@ export default function CheckoutPage() {
                   type="radio" 
                   name="payment" 
                   checked={paymentMethod === 'postfinance'} 
-                  onChange={() => setPaymentMethod('postfinance')}
+                  onChange={() => handlePaymentMethodSelect('postfinance')}
                   className="mt-1 text-[#F80404] focus:ring-[#F80404]" 
                 />
                 <div className="flex-1 text-xs">

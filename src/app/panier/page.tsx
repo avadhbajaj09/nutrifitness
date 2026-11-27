@@ -163,6 +163,57 @@ export default function CartPage() {
   const estimatedVat = (discountedSubtotal * 0.026) / 1.026;
   const totalCost = discountedSubtotal + shippingCost;
 
+  const handleBeginCheckoutClick = () => {
+    try {
+      sessionStorage.setItem('nf_begin_checkout_at', Date.now().toString());
+    } catch {}
+
+    const discountRatio = cartSubtotal > 0 ? (discountAmount / cartSubtotal) : 0;
+    const items = cart.map(item => {
+      const rawName = typeof item.name === 'object' && item.name !== null 
+        ? ((item.name as any).fr || Object.values(item.name)[0] || 'Produit') 
+        : String(item.name || 'Produit');
+      const flavorStr = typeof item.flavor === 'object' && item.flavor !== null 
+        ? ((item.flavor as any).fr || '') 
+        : (item.flavor && item.flavor !== 'Standard' && item.flavor !== 'neutre' ? String(item.flavor) : '');
+      const sizeStr = typeof item.size === 'object' && item.size !== null 
+        ? ((item.size as any).fr || '') 
+        : (item.size && item.size !== 'Format standard' ? String(item.size) : '');
+      const variantParts = [flavorStr, sizeStr].filter(Boolean);
+      const itemVariant = variantParts.length > 0 ? variantParts.join(' / ') : undefined;
+      const price = Number(item.price) || 0;
+      const itemDiscount = discountRatio > 0 ? Math.round(price * discountRatio * 100) / 100 : undefined;
+
+      return {
+        item_id: String(item.sku || item.itemKey || item.id || rawName).trim(),
+        item_name: rawName.trim(),
+        item_brand: item.brand || 'NutriFitness',
+        item_category: (item as any).categorySlug || 'Nutrition Sportive',
+        item_variant: itemVariant,
+        price,
+        quantity: item.quantity,
+        discount: itemDiscount,
+      };
+    });
+
+    const activeCurr = (currency || 'CHF').toUpperCase();
+    const activeCoupon = blackFriday.isActive
+      ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
+      : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined));
+
+    trackBeginCheckout({
+      items,
+      totalValue: discountedSubtotal,
+      currency: activeCurr,
+      coupon: activeCoupon,
+    });
+    trackMetaInitiateCheckout({
+      items,
+      totalValue: discountedSubtotal,
+      currency: activeCurr,
+    });
+  };
+
   return (
     <div className="py-4">
       {/* Breadcrumbs */}
@@ -495,19 +546,7 @@ export default function CartPage() {
           ) : (
             <Link 
               href="/commande/"
-              onClick={() => {
-                const items = cart.map(item => ({
-                  item_id: (item as any).sku || item.itemKey || item.name,
-                  item_name: item.name,
-                  item_brand: (item as any).brand || 'NutriFitness',
-                  item_category: (item as any).categorySlug || 'Nutrition Sportive',
-                  price: item.price,
-                  quantity: item.quantity,
-                }));
-                const activeCurr = currency || 'CHF';
-                trackBeginCheckout(items, cartSubtotal, activeCurr);
-                trackMetaInitiateCheckout({ items, totalValue: cartSubtotal, currency: activeCurr });
-              }}
+              onClick={handleBeginCheckoutClick}
               className="w-full min-h-[48px] px-6 py-3.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-lg hover:shadow-[#F80404]/25 flex items-center justify-center gap-2 active:scale-98"
             >
               <span>{t.common.checkout}</span>
@@ -560,19 +599,7 @@ export default function CartPage() {
             ) : (
               <Link
                 href="/commande/"
-                onClick={() => {
-                  const items = cart.map(item => ({
-                    item_id: (item as any).sku || item.itemKey || item.name,
-                    item_name: item.name,
-                    item_brand: (item as any).brand || 'NutriFitness',
-                    item_category: (item as any).categorySlug || 'Nutrition Sportive',
-                    price: item.price,
-                    quantity: item.quantity,
-                  }));
-                  const activeCurr = currency || 'CHF';
-                  trackBeginCheckout(items, cartSubtotal, activeCurr);
-                  trackMetaInitiateCheckout({ items, totalValue: cartSubtotal, currency: activeCurr });
-                }}
+                onClick={handleBeginCheckoutClick}
                 className="shrink-0 min-h-[44px] px-6 py-2.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-md active:scale-95 flex items-center gap-2"
               >
                 <span>Commander</span>

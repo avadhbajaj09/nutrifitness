@@ -35,6 +35,7 @@ export const STAFF_STORAGE_KEYS = [
 export const STAFF_COOKIE_NAMES = [
   'nf_maintenance_bypass',
   'nf_is_staff',
+  'is_staff',
   'nf_admin_auth',
   'nutrifitness_admin_auth',
   'nutrifitness_omar_auth',
