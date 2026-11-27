@@ -78,7 +78,8 @@ export default function CheckoutPage() {
     setCurrency, 
     locale, 
     countryCode,
-    setCountryCode
+    setCountryCode,
+    blackFriday
   } = useStore();
 
   // Step 1: Customer Contact
@@ -726,13 +727,16 @@ export default function CheckoutPage() {
   }, [cartSubtotal, genevaShippingMethod, isGenevaAddress, portugalItems.length, isMixedCart, genevaShippingCost, portugalShippingCost, genevaItems.length]);
 
   const discountAmount = useMemo(() => {
+    if (blackFriday.isActive) {
+      return blackFriday.discountAmount;
+    }
     if (!appliedCoupon && discountRate === 0) return 0;
     if (appliedCoupon && appliedCoupon.discountType === 'amount' && appliedCoupon.amountOff) {
       return Math.min(cartSubtotal, appliedCoupon.amountOff);
     }
     const effRate = appliedCoupon?.rate ?? discountRate;
     return cartSubtotal * effRate;
-  }, [cartSubtotal, appliedCoupon, discountRate]);
+  }, [cartSubtotal, appliedCoupon, discountRate, blackFriday]);
 
   const discountedSubtotal = Math.max(0, cartSubtotal - discountAmount);
   const vatEst = (discountedSubtotal * 0.026) / 1.026;
@@ -980,7 +984,9 @@ export default function CheckoutPage() {
           shippingCost: totalShippingCost,
           shippingMethod: genevaShippingMethod,
           paymentMethod,
-          couponCode: appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined),
+          couponCode: blackFriday.isActive
+            ? (blackFriday.discountPercent > 0 ? `BLACK_FRIDAY_-${blackFriday.discountPercent}%` : undefined)
+            : (appliedCoupon?.code || (discountRate > 0 ? couponCode : undefined)),
           shippingAddress: {
             street: customerAddress,
             city: customerCity,
@@ -1047,7 +1053,17 @@ export default function CheckoutPage() {
         )}
       </div>
 
-      {appliedCoupon ? (
+      {blackFriday.isActive ? (
+        <div className="p-4 bg-gradient-to-r from-red-950/60 to-black/80 border border-red-500/40 rounded-2xl flex items-center gap-3">
+          <span className="text-2xl animate-pulse">🔥</span>
+          <div className="text-xs">
+            <p className="font-bold text-white uppercase tracking-wider font-heading">Promotion Black Friday Active</p>
+            <p className="text-white/70 mt-0.5 leading-relaxed">
+              Vos remises jusqu&apos;à −25% s&apos;appliquent automatiquement dès CHF 50 d&apos;achats. Les codes promo sont temporairement désactivés.
+            </p>
+          </div>
+        </div>
+      ) : appliedCoupon ? (
         <div className="bg-emerald-950/40 border border-emerald-500/40 rounded-xl p-3 flex items-center justify-between gap-3">
           <div className="space-y-0.5 min-w-0">
             <div className="flex items-center gap-1.5">
@@ -1910,13 +1926,26 @@ export default function CheckoutPage() {
           <div className="space-y-2.5 text-xs text-white/70 pt-4 border-t border-white/10">
             <div className="flex justify-between">
               <span>{t.common.subtotal} ({currency}) :</span>
-              <span className="font-bold text-white">{formatPrice(cartSubtotal)}</span>
+              <span className={`font-bold ${blackFriday.isActive && blackFriday.discountPercent > 0 ? 'line-through text-white/50' : 'text-white'}`}>
+                {formatPrice(cartSubtotal)}
+              </span>
             </div>
 
             {discountAmount > 0 && (
               <div className="flex justify-between text-emerald-400 text-xs font-bold">
-                <span>Remise ({couponCode}) :</span>
+                <span>
+                  {blackFriday.isActive
+                    ? `Remise Black Friday (−${blackFriday.discountPercent}%) :`
+                    : `Remise (${appliedCoupon?.code || couponCode}) :`}
+                </span>
                 <span>-{formatPrice(discountAmount)}</span>
+              </div>
+            )}
+
+            {blackFriday.isActive && blackFriday.discountPercent > 0 && (
+              <div className="flex justify-between text-white font-bold pt-1 border-t border-white/5 text-xs">
+                <span>Total après remise :</span>
+                <span className="text-white font-black">{formatPrice(discountedSubtotal)}</span>
               </div>
             )}
 

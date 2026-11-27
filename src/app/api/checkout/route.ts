@@ -5,6 +5,7 @@ import { isCountrySupported } from '@/lib/delivery/defaults';
 import { stripe } from '@/lib/stripe';
 import { getAdminSupabase } from '@/lib/supabase';
 import { isServerTrackingExcluded } from '@/lib/tracking-exclusion';
+import { getBlackFridayConfig, isBlackFridayActive, calculateBlackFridayDiscount } from '@/lib/black-friday';
 
 export async function POST(req: Request) {
   try {
@@ -107,6 +108,13 @@ export async function POST(req: Request) {
       item.shippingOrigin = fromGeneva ? 'switzerland' : 'portugal';
     }
     const subtotal = items.reduce((sum: number, item: any) => sum + item.price * item.quantity, 0);
+
+    // Evaluate Black Friday automatic tiered discount
+    const bfConfig = await getBlackFridayConfig();
+    const isBf = isBlackFridayActive(bfConfig);
+    const bfCalc = isBf ? calculateBlackFridayDiscount(subtotal, bfConfig) : null;
+    const bfDiscountAmount = bfCalc ? bfCalc.discountAmount : 0;
+
     const pickup = body.shippingMethod === 'clickcollect' && country === 'CH' && portugalItems === 0 && /^12\d{2}$/.test(String(shippingAddress?.postalCode || ''));
     const expectedShipping = !physicalItems || subtotal >= 75 || pickup ? 0 : 9.90;
     if (!Number.isFinite(Number(shippingCost)) || Math.abs(Number(shippingCost) - expectedShipping) > 0.005) {
@@ -143,7 +151,8 @@ export async function POST(req: Request) {
       });
 
       const subtotalVal = cleanItems.reduce((acc: number, it: any) => acc + (it.price * it.quantity), 0);
-      const totalVal = subtotalVal + Number(shippingCost || 0);
+      const effectiveSubtotal = isBf ? (bfCalc ? bfCalc.finalSubtotal : subtotalVal) : subtotalVal;
+      const totalVal = Math.round((effectiveSubtotal + Number(shippingCost || 0)) * 100) / 100;
 
       const { error: orderError } = await supabase.from('orders').insert({
         order_number: orderNum,
@@ -168,7 +177,9 @@ export async function POST(req: Request) {
           shippingMethod: pickup ? 'store_pickup' : 'post_priority',
           shippingLabel: pickup ? 'Retrait boutique Genève' : 'Livraison suivie',
           subtotal: subtotalVal,
-          couponCode: couponCode || ''
+          couponCode: isBf ? (bfDiscountAmount > 0 ? `BLACK_FRIDAY_-${bfCalc?.discountPercent}%` : '') : (couponCode || ''),
+          blackFridayDiscount: isBf ? bfDiscountAmount : 0,
+          blackFridayPercent: isBf ? (bfCalc?.discountPercent || 0) : 0,
         }
       });
       if (orderError) throw orderError;
@@ -295,8 +306,32 @@ export async function POST(req: Request) {
       },
     };
 
-    // Apply pre-selected coupon or allow typing promo code in Stripe Checkout
-    if (couponCode && typeof couponCode === 'string') {
+    // Apply Black Friday automatic discount or standard coupon codes
+    if (isBf) {
+      // During Black Friday: all external coupons disabled, no code stacking allowed
+      sessionParams.allow_promotion_codes = false;
+      sessionParams.metadata = {
+        ...sessionParams.metadata,
+        black_friday_active: 'true',
+        black_friday_percent: String(bfCalc?.discountPercent || 0),
+        black_friday_discount: bfDiscountAmount.toFixed(2),
+        coupon_applied: bfDiscountAmount > 0 ? `BLACK_FRIDAY_-${bfCalc?.discountPercent}%` : '',
+      };
+
+      if (bfDiscountAmount > 0) {
+        try {
+          const bfStripeCoupon = await stripe.coupons.create({
+            amount_off: Math.round(bfDiscountAmount * 100),
+            currency: normalizedCurrency,
+            duration: 'once',
+            name: `Remise Black Friday (-${bfCalc?.discountPercent}%)`,
+          });
+          sessionParams.discounts = [{ coupon: bfStripeCoupon.id }];
+        } catch (bfCouponErr) {
+          console.warn('[Checkout API] Could not create dynamic Stripe coupon for Black Friday:', bfCouponErr);
+        }
+      }
+    } else if (couponCode && typeof couponCode === 'string') {
       const cleanCoupon = couponCode.trim().toUpperCase();
       try {
         const promoRes = await stripe.promotionCodes.list({

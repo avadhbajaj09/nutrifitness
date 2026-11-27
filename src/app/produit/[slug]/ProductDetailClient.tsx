@@ -26,7 +26,7 @@ interface Props {
 }
 
 export default function ProductDetailClient({ product, relatedProducts }: Props) {
-  const { addToCart, formatPrice, locale, countryCode, currency, t, getProductStock } = useStore();
+  const { addToCart, formatPrice, locale, countryCode, currency, t, getProductStock, blackFriday } = useStore();
   const [mounted, setMounted] = useState(false);
   useEffect(() => {
     setMounted(true);
@@ -305,6 +305,41 @@ export default function ProductDetailClient({ product, relatedProducts }: Props)
 
         {/* Product Purchase Details (5 cols on lg, 3rd on mobile) */}
         <div className="lg:col-span-5 flex flex-col space-y-5">
+          {/* Black Friday Promotional Banner & Discount Conditions */}
+          {blackFriday?.isActive && (
+            <div className="p-4 rounded-2xl bg-gradient-to-br from-red-950/70 via-black/85 to-red-950/50 border border-red-500/40 shadow-xl space-y-3">
+              <div className="flex items-center justify-between gap-2 flex-wrap">
+                <span className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-gradient-to-r from-red-600 via-[#F80404] to-amber-500 text-white font-black text-xs uppercase tracking-wider shadow-md">
+                  <span>🔥</span>
+                  <span>BLACK FRIDAY — JUSQU’À −25%</span>
+                </span>
+                <span className="text-[11px] font-bold text-amber-400 bg-amber-400/10 px-2 py-0.5 rounded-full border border-amber-400/20">
+                  Offre Limitée
+                </span>
+              </div>
+
+              {/* Conditions Breakdown Milestones */}
+              <div className="grid grid-cols-3 gap-2 text-center">
+                <div className="p-2 rounded-xl bg-white/5 border border-white/10 hover:border-emerald-500/40 transition-colors">
+                  <p className="text-sm font-black text-emerald-400">−10%</p>
+                  <p className="text-[10px] text-white/70 font-bold uppercase tracking-tight">dès CHF 50</p>
+                </div>
+                <div className="p-2 rounded-xl bg-white/5 border border-white/10 hover:border-amber-500/40 transition-colors">
+                  <p className="text-sm font-black text-amber-400">−15%</p>
+                  <p className="text-[10px] text-white/70 font-bold uppercase tracking-tight">dès CHF 110</p>
+                </div>
+                <div className="p-2 rounded-xl bg-white/5 border border-white/10 hover:border-red-500/40 transition-colors">
+                  <p className="text-sm font-black text-[#F80404]">−25%</p>
+                  <p className="text-[10px] text-white/70 font-bold uppercase tracking-tight">dès CHF 200</p>
+                </div>
+              </div>
+
+              <p className="text-[11px] text-white/80 text-center font-medium bg-black/40 py-1.5 px-3 rounded-lg border border-white/5">
+                « Remise automatique dans le panier — Aucun code nécessaire. »
+              </p>
+            </div>
+          )}
+
           {/* Short Description - Right below image on mobile */}
           <div className="bg-white/[0.03] lg:bg-transparent p-3.5 lg:p-0 rounded-2xl border border-white/10 lg:border-0">
             <div

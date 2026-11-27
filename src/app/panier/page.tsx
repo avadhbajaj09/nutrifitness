@@ -7,6 +7,7 @@ import { useStore } from '@/context/StoreContext';
 import { isProductDeliverableToCountry } from '@/lib/delivery/defaults';
 
 import CartShipmentGroups from '@/components/fulfillment/CartShipmentGroups';
+import BlackFridayProgressBar from '@/components/BlackFridayProgressBar';
 import { trackBeginCheckout, trackMetaInitiateCheckout } from '@/lib/analytics';
 
 export default function CartPage() {
@@ -22,7 +23,8 @@ export default function CartPage() {
     t, 
     currency, 
     countryCode,
-    locale 
+    locale,
+    blackFriday 
   } = useStore();
 
   const [mounted, setMounted] = useState(false);
@@ -145,13 +147,16 @@ export default function CartPage() {
   };
 
   const discountAmount = useMemo(() => {
+    if (blackFriday.isActive) {
+      return blackFriday.discountAmount;
+    }
     if (!appliedCoupon && discountRate === 0) return 0;
     if (appliedCoupon && appliedCoupon.discountType === 'amount' && appliedCoupon.amountOff) {
       return Math.min(cartSubtotal, appliedCoupon.amountOff);
     }
     const effRate = appliedCoupon?.rate ?? discountRate;
     return cartSubtotal * effRate;
-  }, [cartSubtotal, appliedCoupon, discountRate]);
+  }, [cartSubtotal, appliedCoupon, discountRate, blackFriday]);
 
   const discountedSubtotal = Math.max(0, cartSubtotal - discountAmount);
   const shippingCost = freeShippingProgress.isFree ? 0 : 9.90;
@@ -181,6 +186,9 @@ export default function CartPage() {
         {/* Left Column: Cart Items (8 cols) */}
         <div className="lg:col-span-8 bg-[#141414] rounded-2xl border border-white/10 p-6 space-y-6">
           
+          {/* Black Friday Real-Time Discount Progress Bar */}
+          {cart.length > 0 && <BlackFridayProgressBar className="mb-2" />}
+
           {/* Free Shipping Bar */}
           <div className="bg-[#181818] border border-white/10 rounded-2xl p-4">
             <div className="flex items-center justify-between text-xs font-bold text-white mb-2">
@@ -380,8 +388,18 @@ export default function CartPage() {
             {t.checkout.orderSummary}
           </h2>
 
-          {/* Coupon Input */}
-          {appliedCoupon ? (
+          {/* Coupon Input or Black Friday Automatic Promotion Notice */}
+          {blackFriday.isActive ? (
+            <div className="p-4 bg-gradient-to-r from-red-950/60 to-black/80 border border-red-500/40 rounded-2xl flex items-center gap-3">
+              <span className="text-2xl animate-pulse">🔥</span>
+              <div className="text-xs">
+                <p className="font-bold text-white uppercase tracking-wider font-heading">Promotion Black Friday Active</p>
+                <p className="text-white/70 mt-0.5 leading-relaxed">
+                  Vos remises automatiques jusqu&apos;à −25% s&apos;appliquent directement dans le panier. Les codes promo sont temporairement désactivés.
+                </p>
+              </div>
+            </div>
+          ) : appliedCoupon ? (
             <div className="bg-emerald-950/40 border border-emerald-500/40 rounded-xl p-3 flex items-center justify-between gap-3">
               <div className="space-y-0.5 min-w-0">
                 <span className="text-xs font-black text-emerald-300 uppercase tracking-wide">
@@ -432,13 +450,26 @@ export default function CartPage() {
           <div className="space-y-2.5 text-xs text-white/70 pt-2 border-t border-white/10">
             <div className="flex justify-between">
               <span>{t.common.subtotal} :</span>
-              <span className="font-bold text-white">{formatPrice(cartSubtotal)}</span>
+              <span className={`font-bold ${blackFriday.isActive && blackFriday.discountPercent > 0 ? 'line-through text-white/50' : 'text-white'}`}>
+                {formatPrice(cartSubtotal)}
+              </span>
             </div>
 
             {discountAmount > 0 && (
               <div className="flex justify-between text-emerald-400 font-bold">
-                <span>Remise ({appliedCoupon?.code || couponCode}) :</span>
+                <span>
+                  {blackFriday.isActive
+                    ? `Remise Black Friday (−${blackFriday.discountPercent}%) :`
+                    : `Remise (${appliedCoupon?.code || couponCode}) :`}
+                </span>
                 <span>-{formatPrice(discountAmount)}</span>
+              </div>
+            )}
+
+            {blackFriday.isActive && blackFriday.discountPercent > 0 && (
+              <div className="flex justify-between text-white font-bold pt-1 border-t border-white/5">
+                <span>Total après remise :</span>
+                <span className="text-white font-black">{formatPrice(discountedSubtotal)}</span>
               </div>
             )}
 

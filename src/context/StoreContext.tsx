@@ -1,6 +1,6 @@
 'use client';
 
-import React, { createContext, useContext, useState, useEffect } from 'react';
+import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
 import { getLocalized } from '@/lib/types';
 import type { SupportedLocale } from '@/lib/types';
 import { TRANSLATIONS, TranslationDictionary, SupportedCurrency } from '@/lib/translations';
@@ -8,6 +8,12 @@ import { formatPrice as taxFormatPrice, convertPrice as taxConvertPrice } from '
 import { isEbookItem } from '@/lib/reviews';
 import { isProductDeliverableToCountry, isCountrySupported } from '@/lib/delivery/defaults';
 import { trackAddToCart, trackRemoveFromCart, trackMetaAddToCart } from '@/lib/analytics';
+import {
+  calculateBlackFridayDiscount,
+  DEFAULT_BLACK_FRIDAY_CONFIG,
+  type BlackFridayCalculation,
+  type BlackFridayConfig
+} from '@/lib/black-friday';
 
 export interface CartItem {
   itemKey: string;
@@ -95,6 +101,10 @@ interface StoreContextType {
   catalogOverrides: Record<string, any>;
   getCatalogOverride: (itemOrSlug: any) => any;
   refreshCatalogOverrides: () => Promise<void>;
+  blackFriday: BlackFridayCalculation;
+  blackFridayConfig: BlackFridayConfig | null;
+  isBlackFridayActive: boolean;
+  refreshBlackFriday: () => Promise<void>;
 }
 
 const StoreContext = createContext<StoreContextType | undefined>(undefined);
@@ -308,10 +318,27 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     return catalogOverrides[pid] || catalogOverrides[cleanId] || catalogOverrides[`prod-${cleanId}`] || (s ? catalogOverrides[s] : null) || null;
   };
 
+  const [bfConfig, setBfConfig] = useState<BlackFridayConfig>(DEFAULT_BLACK_FRIDAY_CONFIG);
+  const [isBfActive, setIsBfActive] = useState<boolean>(true);
+
+  const refreshBlackFriday = async () => {
+    try {
+      const res = await fetch('/api/campaigns/black-friday', { cache: 'no-store' });
+      if (res.ok) {
+        const data = await res.json();
+        if (data.config) {
+          setBfConfig(data.config);
+          setIsBfActive(Boolean(data.active));
+        }
+      }
+    } catch {}
+  };
+
   useEffect(() => {
     refreshHiddenProducts();
     refreshStock();
     refreshCatalogOverrides();
+    refreshBlackFriday();
   }, []);
 
   const isProductDeliverable = (itemOrSlug: any, targetCountry: string = countryCode): boolean => {
@@ -938,6 +965,19 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
     threshold: FREE_SHIPPING_THRESHOLD_CHF
   };
 
+  const blackFriday = useMemo(() => {
+    return calculateBlackFridayDiscount(cartSubtotal, isBfActive ? bfConfig : { ...bfConfig, enabled: false });
+  }, [cartSubtotal, isBfActive, bfConfig]);
+
+  // Purge any stored coupon when Black Friday is active (no stacking allowed)
+  useEffect(() => {
+    if (blackFriday.isActive) {
+      try {
+        localStorage.removeItem('nf_applied_coupon');
+      } catch {}
+    }
+  }, [blackFriday.isActive]);
+
   return (
     <StoreContext.Provider
       value={{
@@ -982,7 +1022,11 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
         refreshStock,
         catalogOverrides,
         getCatalogOverride,
-        refreshCatalogOverrides
+        refreshCatalogOverrides,
+        blackFriday,
+        blackFridayConfig: bfConfig,
+        isBlackFridayActive: isBfActive,
+        refreshBlackFriday
       }}
     >
       {children}

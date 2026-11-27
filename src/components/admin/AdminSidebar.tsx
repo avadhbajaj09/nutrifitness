@@ -15,12 +15,13 @@ import {
   Lock,
   ShoppingCart,
   Image as ImageIcon,
-  Sparkles
+  Sparkles,
+  Flame
 } from 'lucide-react';
 
 interface AdminSidebarProps {
-  activeTab?: 'pos' | 'catalog' | 'banners' | 'sales' | 'locations' | 'abandoned' | 'ai';
-  onSelectTab?: (tab: 'pos' | 'catalog' | 'banners' | 'sales' | 'abandoned' | 'ai') => void;
+  activeTab?: 'pos' | 'catalog' | 'banners' | 'blackfriday' | 'sales' | 'locations' | 'abandoned' | 'ai';
+  onSelectTab?: (tab: 'pos' | 'catalog' | 'banners' | 'blackfriday' | 'sales' | 'abandoned' | 'ai') => void;
   posCount?: number;
   catalogCount?: number;
   bannersCount?: number;
@@ -65,6 +66,14 @@ export default function AdminSidebar({
       icon: ImageIcon,
       badge: bannersCount,
       href: '/wp-admin?tab=banners',
+      isRoute: false,
+    },
+    {
+      id: 'blackfriday',
+      label: 'Black Friday Promo',
+      icon: Flame,
+      badge: 'PROMO',
+      href: '/wp-admin?tab=blackfriday',
       isRoute: false,
     },
     {

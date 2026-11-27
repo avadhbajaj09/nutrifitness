@@ -4,6 +4,7 @@ import React from 'react';
 import Link from 'next/link';
 import Image from 'next/image';
 import { useStore } from '@/context/StoreContext';
+import BlackFridayProgressBar from '@/components/BlackFridayProgressBar';
 
 export default function CartDrawer() {
   const { 
@@ -22,7 +23,8 @@ export default function CartDrawer() {
     currency,
     countryCode,
     locale,
-    getProductStock
+    getProductStock,
+    blackFriday
   } = useStore();
 
   if (!isCartOpen) return null;
@@ -92,6 +94,9 @@ export default function CartDrawer() {
             />
           </div>
         </div>
+
+        {/* Black Friday Automatic Tiered Discount Progress Bar */}
+        {cart.length > 0 && <BlackFridayProgressBar compact className="m-3 mb-0" />}
 
         {/* Cart Items List */}
         <div className="flex-1 overflow-y-auto p-4 space-y-3">
@@ -271,12 +276,29 @@ export default function CartDrawer() {
               </button>
             </div>
 
-            {/* Subtotal */}
-            <div className="space-y-1">
-              <div className="flex justify-between items-baseline">
-                <span className="text-xs font-bold uppercase tracking-wider text-white/70">{t.common.subtotal} :</span>
-                <span className="text-xl font-black text-white font-heading">{formatPrice(cartSubtotal)}</span>
-              </div>
+            {/* Subtotal & Black Friday Breakdown */}
+            <div className="space-y-1.5">
+              {blackFriday.isActive && blackFriday.discountPercent > 0 ? (
+                <>
+                  <div className="flex justify-between items-baseline text-xs text-white/70">
+                    <span className="uppercase tracking-wider">Sous-total :</span>
+                    <span className="font-semibold text-white/80 line-through">{formatPrice(cartSubtotal)}</span>
+                  </div>
+                  <div className="flex justify-between items-baseline text-xs text-emerald-400 font-bold">
+                    <span>Remise Black Friday (−{blackFriday.discountPercent}%) :</span>
+                    <span>−{formatPrice(blackFriday.discountAmount)}</span>
+                  </div>
+                  <div className="flex justify-between items-baseline pt-1 border-t border-white/10">
+                    <span className="text-xs font-black uppercase tracking-wider text-white">Total après remise :</span>
+                    <span className="text-xl font-black text-white font-heading">{formatPrice(blackFriday.finalSubtotal)}</span>
+                  </div>
+                </>
+              ) : (
+                <div className="flex justify-between items-baseline">
+                  <span className="text-xs font-bold uppercase tracking-wider text-white/70">{t.common.subtotal} :</span>
+                  <span className="text-xl font-black text-white font-heading">{formatPrice(cartSubtotal)}</span>
+                </div>
+              )}
               <p className="text-[10px] text-white/40">
                 Frais de port calculés à l'étape suivante ({currency}).
               </p>
@@ -289,7 +311,7 @@ export default function CartDrawer() {
                 onClick={closeCart}
                 className="w-full min-h-[48px] px-6 py-3.5 bg-[#F80404] hover:bg-[#FF3D00] text-black font-black uppercase tracking-wider text-xs rounded-xl transition-all shadow-lg hover:shadow-[#F80404]/25 flex items-center justify-center gap-2 active:scale-98"
               >
-                <span>{t.common.checkout} ({formatPrice(cartSubtotal)})</span>
+                <span>{t.common.checkout} ({formatPrice(blackFriday.isActive ? blackFriday.finalSubtotal : cartSubtotal)})</span>
                 <span>→</span>
               </Link>
 
