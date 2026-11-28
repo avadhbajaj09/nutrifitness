@@ -1,5 +1,5 @@
 import assert from 'assert';
-import { getBlackFridayConfig, calculateBlackFridayDiscount } from '../black-friday';
+import { DEFAULT_BLACK_FRIDAY_CONFIG, calculateBlackFridayDiscount } from '../black-friday';
 
 // Test matrix specified by user
 const TEST_SUBTOTALS = [
@@ -85,7 +85,7 @@ async function runRegressionSuite() {
   console.log('  STRIPE CHECKOUT & BLACK FRIDAY PARAMETER CONFLICT REGRESSION SUITE');
   console.log('========================================================================\n');
 
-  const bfConfig = await getBlackFridayConfig();
+  const bfConfig = DEFAULT_BLACK_FRIDAY_CONFIG;
 
   console.log('--- TEST 1: ALL 10 CART SUBTOTAL THRESHOLDS & DISCOUNTS ---');
   for (const tc of TEST_SUBTOTALS) {
