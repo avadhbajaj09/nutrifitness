@@ -113,6 +113,23 @@ export function pushDataLayer(payload: Record<string, unknown>): void {
 
     logDataLayerDebug(payload);
     window.dataLayer.push(payload);
+
+    // Safely forward e-commerce and analytics events directly to GA4 gtag
+    if (
+      typeof window.gtag === 'function' &&
+      payload.event &&
+      typeof payload.event === 'string' &&
+      payload.event !== 'dataLayer_push' &&
+      !payload.event.startsWith('meta_')
+    ) {
+      const eventName = payload.event;
+      if (payload.ecommerce && typeof payload.ecommerce === 'object') {
+        window.gtag('event', eventName, payload.ecommerce as Record<string, any>);
+      } else {
+        const { event, ...rest } = payload;
+        window.gtag('event', eventName, rest);
+      }
+    }
   } catch (err) {
     console.warn('[Analytics] dataLayer push error:', err);
   }

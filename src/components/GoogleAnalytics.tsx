@@ -5,8 +5,8 @@ import Script from 'next/script';
 import { usePathname } from 'next/navigation';
 import { isAdminPath } from '@/lib/tracking-exclusion';
 
-const GTM_CONTAINER_ID = 'GTM-PN4QDH2B';
-export const GA_MEASUREMENT_ID = 'G-PM7DDRRRRC';
+export const GTM_CONTAINER_ID = process.env.NEXT_PUBLIC_GTM_CONTAINER_ID || 'GTM-PV57BJ6S';
+export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID || 'G-PM7DDRRRRC';
 export const META_PIXEL_ID = process.env.NEXT_PUBLIC_META_PIXEL_ID || '467149266332568';
 
 export default function GoogleAnalytics() {
@@ -101,7 +101,28 @@ export default function GoogleAnalytics() {
         }}
       />
 
-      {/* 2. Google Tag Manager Container (Loaded via next/script afterInteractive, guarded against exclusion) */}
+      {/* 2. Google Analytics 4 (gtag.js) direct feed to G-PM7DDRRRRC */}
+      <Script
+        id="ga4-script"
+        strategy="afterInteractive"
+        src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+      />
+      <Script
+        id="ga4-config"
+        strategy="afterInteractive"
+        dangerouslySetInnerHTML={{
+          __html: `
+            if (!window.__tracking_excluded) {
+              gtag('js', new Date());
+              gtag('config', '${GA_MEASUREMENT_ID}', {
+                send_page_view: true
+              });
+            }
+          `,
+        }}
+      />
+
+      {/* 3. Google Tag Manager Container (Loaded via next/script afterInteractive, guarded against exclusion) */}
       <Script
         id="gtm-loader"
         strategy="afterInteractive"

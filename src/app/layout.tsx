@@ -83,7 +83,7 @@ export default function RootLayout({
         {process.env.NODE_ENV === 'production' && process.env.VERCEL_ENV !== 'preview' && (
           <noscript>
             <iframe
-              src="https://www.googletagmanager.com/ns.html?id=GTM-PN4QDH2B"
+              src={`https://www.googletagmanager.com/ns.html?id=${process.env.NEXT_PUBLIC_GTM_CONTAINER_ID || 'GTM-PV57BJ6S'}`}
               height="0"
               width="0"
               style={{ display: 'none', visibility: 'hidden' }}
