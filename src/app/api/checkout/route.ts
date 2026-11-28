@@ -308,8 +308,6 @@ export async function POST(req: Request) {
 
     // Apply Black Friday automatic discount or standard coupon codes
     if (isBf) {
-      // During Black Friday: all external coupons disabled, no code stacking allowed
-      sessionParams.allow_promotion_codes = false;
       sessionParams.metadata = {
         ...sessionParams.metadata,
         black_friday_active: 'true',
@@ -326,10 +324,19 @@ export async function POST(req: Request) {
             duration: 'once',
             name: `Remise Black Friday (-${bfCalc?.discountPercent}%)`,
           });
+          // Attach Black Friday discount. Do NOT set allow_promotion_codes (mutually exclusive in Stripe)
           sessionParams.discounts = [{ coupon: bfStripeCoupon.id }];
-        } catch (bfCouponErr) {
-          console.warn('[Checkout API] Could not create dynamic Stripe coupon for Black Friday:', bfCouponErr);
+        } catch (bfCouponErr: any) {
+          console.error('[Checkout API] Failed to create dynamic Stripe coupon for Black Friday:', bfCouponErr);
+          // Never silently charge the customer the undiscounted amount if coupon creation fails
+          return NextResponse.json(
+            { error: 'DISCOUNT_APPLICATION_FAILED', message: 'Impossible d\'appliquer votre remise Black Friday. Veuillez réessayer.' },
+            { status: 500 }
+          );
         }
+      } else {
+        // Under CHF 50: no Black Friday discount unlocked, explicitly disable external promo codes
+        sessionParams.allow_promotion_codes = false;
       }
     } else if (couponCode && typeof couponCode === 'string') {
       const cleanCoupon = couponCode.trim().toUpperCase();
@@ -357,6 +364,11 @@ export async function POST(req: Request) {
       }
     } else {
       sessionParams.allow_promotion_codes = true;
+    }
+
+    // Safety invariant: Stripe forbids specifying both allow_promotion_codes and discounts
+    if (sessionParams.discounts && sessionParams.discounts.length > 0) {
+      delete (sessionParams as any).allow_promotion_codes;
     }
 
     // If shipping address details are provided, pre-fill them
